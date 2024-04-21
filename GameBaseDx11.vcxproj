@@ -125,6 +125,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Component.cpp" />
     <ClCompile Include="Engine\ImGui\imgui.cpp" />
     <ClCompile Include="Engine\ImGui\imgui_draw.cpp" />
     <ClCompile Include="Engine\ImGui\imgui_impl_dx11.cpp" />
@@ -155,9 +156,11 @@
     <ClCompile Include="Engine\ResourceManager\Text.cpp" />
     <ClCompile Include="Engine\DirectX\Texture.cpp" />
     <ClCompile Include="Engine\GameObject\Transform.cpp" />
+    <ClCompile Include="StageObject.cpp" />
     <ClCompile Include="TestScene.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Component.h" />
     <ClInclude Include="Engine\ImGui\imconfig.h" />
     <ClInclude Include="Engine\ImGui\imgui.h" />
     <ClInclude Include="Engine\ImGui\imgui_impl_dx11.h" />
@@ -191,6 +194,7 @@
     <ClInclude Include="Engine\ResourceManager\Text.h" />
     <ClInclude Include="Engine\DirectX\Texture.h" />
     <ClInclude Include="Engine\GameObject\Transform.h" />
+    <ClInclude Include="StageObject.h" />
     <ClInclude Include="TestScene.h" />
   </ItemGroup>
   <ItemGroup>

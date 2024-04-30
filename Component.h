@@ -13,8 +13,8 @@ using std::vector;
 class Component
 {
 protected:
-    string name_;            // コンポーネント名
-    StageObject* holder_;    // コンポ―ネント保有者のポインタ
+    string name_;                           // コンポーネント名
+    StageObject* holder_;                   // コンポ―ネント保有者のポインタ
     vector<Component*> childComponents_;    // 子コンポーネント群
 
 public:
@@ -36,6 +36,11 @@ public:
     virtual void Update() = 0;
 
     /// <summary>
+    /// 開放処理を行う純粋仮想関数
+    /// </summary>
+    virtual void Release() = 0;
+
+    /// <summary>
     /// jsonファイルに現在のデータを保存する純粋仮想関数
     /// </summary>
     /// <param name="_saveObj">セーブするデータ</param>
@@ -55,6 +60,11 @@ public:
 	/// 自身＆子コンポーネントを更新
 	/// </summary>
 	void ChildUpdate();
+
+    /// <summary>
+    /// 自身＆子コンポーネントを解放
+    /// </summary>
+    void ChildRelease();
 
 	/// <summary>
 	/// 自身＆子コンポーネントを保存

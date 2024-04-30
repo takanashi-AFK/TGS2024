@@ -12,9 +12,9 @@ using std::vector;
 class StageObject:public GameObject
 {
 private:
-    vector<Component*> myComponents_;
-    string modelFilePath_;
-
+    vector<Component*> myComponents_;   // 自身が保有するコンポーネント群
+    string modelFilePath_;              // モデルのファイルパス
+    int modelHandle_;                   // モデル番号
 public:
     /// <summary>
     /// コンストラクタ
@@ -38,12 +38,12 @@ public:
     /// <summary>
     /// 初期化
     /// </summary>
-    void Initialize();
+    void Initialize() override;
 
     /// <summary>
     /// 更新
     /// </summary>
-    void Update();
+    void Update() override;
 
     /// <summary>
     /// 描画
@@ -56,5 +56,11 @@ public:
     void Release() override;
 };
 
-
+/// <summary>
+/// ステージオブジェクトを生成する関数
+/// </summary>
+/// <param name="_name"> オブジェクト名</param>
+/// <param name="_modelFilePath"> モデルのファイルパス</param>
+/// <param name="_parent"> 親オブジェクト</param>
+/// <returns>オブジェクトのアドレス</returns>
 StageObject* CreateStageObject(string _name, string _modelFilePath, GameObject* _parent);

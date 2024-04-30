@@ -23,6 +23,16 @@ void Component::ChildUpdate()
 	for (auto comp : childComponents_)comp->ChildUpdate();
 }
 
+void Component::ChildRelease()
+{
+	// 子コンポーネントの開放
+	for (auto comp : childComponents_) comp->ChildRelease();
+	childComponents_.clear();
+	
+	// 自身の開放
+	this->Release();
+}
+
 void Component::ChildSave(json& _saveObj)
 {
 	// 自身の保存

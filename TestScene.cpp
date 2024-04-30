@@ -1,4 +1,5 @@
 #include "TestScene.h"
+#include "StageObject.h"
 
 //コンストラクタ
 TestScene::TestScene(GameObject * parent)
@@ -9,7 +10,7 @@ TestScene::TestScene(GameObject * parent)
 //初期化
 void TestScene::Initialize()
 {
-
+	CreateStageObject("obj", "DebugCollision/BoxCollider.fbx", this);
 }
 
 //更新

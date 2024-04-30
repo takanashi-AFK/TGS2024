@@ -12,7 +12,7 @@ using std::vector;
 
 // コンポーネントタイプ
 enum ComponentType {
-
+    RotationY,
 };
 
 
@@ -96,11 +96,9 @@ public:
 	/// </summary>
 	void ChildDrawData();
 
-    /// <summary>
-    /// 自身のコンポーネントタイプを取得
-    /// </summary>
-    /// <returns>コンポーネントタイプ</returns>
+// getter
     ComponentType GetType() { return type_; }
+    string GetName() { return name_; }
 };
 
 /// <summary>
@@ -108,4 +106,4 @@ public:
     /// </summary>
     /// <param name="_type">コンポーネントタイプ</param>
     /// <returns>生成したコンポーネント</returns>
-Component* LoadComponent(ComponentType _type, json& _loadObj);
+Component* LoadComponent(StageObject* _holder,ComponentType _type, json& _loadObj);

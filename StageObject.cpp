@@ -10,9 +10,12 @@ StageObject::StageObject(string _name, string _modelFilePath, GameObject* _paren
 
 bool StageObject::AddComponent(Component* _comp)
 {
-	// エラー処理
+	// nullチェック
 	if (_comp == nullptr) 
 	return false;
+
+	// 初期化
+	_comp->ChildIntialize();
 
 	// コンポーネントのvectorに追加する
 	myComponents_.push_back(_comp); 
@@ -56,6 +59,9 @@ void StageObject::Draw()
 	// モデルの描画
 	Model::SetTransform(modelHandle_, transform_);
 	Model::Draw(modelHandle_);
+
+	// ImGuiで情報を描画
+	DrawData();
 }
 
 void StageObject::Release()
@@ -77,21 +83,27 @@ void StageObject::Save(json& _saveObj)
 	_saveObj["modelFilePath_"] = modelFilePath_;
 	
 	// 保有するコンポーネントを保存
-	for (auto comp : myComponents_)comp->Save(_saveObj["myComponents_"][comp->GetType()]);
+	for (auto comp : myComponents_)comp->ChildSave(_saveObj["myComponents_"][comp->GetName()]);
 }
 
 void StageObject::Load(json& _loadObj)
 {
-	// 自身の変形行列情報を読込
+	// 変形行列情報を読込
 	transform_.position_ = { _loadObj["position_"][0].get<float>(),_loadObj["position_"][1].get<float>(), _loadObj["position_"][2].get<float>() };
 	transform_.rotate_ = { _loadObj["rotate_"][0].get<float>(),_loadObj["rotate_"][1].get<float>(), _loadObj["rotate_"][2].get<float>() };
 	transform_.scale_ = { _loadObj["scale_"][0].get<float>(),_loadObj["scale_"][1].get<float>(), _loadObj["scale_"][2].get<float>() };
 
-	// 自身のモデルのファイルパスを保存
+	// モデルのファイルパスを読込
 	modelFilePath_ = _loadObj["modelFilePath_"];
 
-	// 自身のコンポーネントを読込
-	for (auto it = _loadObj["myComponents_"].begin(); it != _loadObj["myComponents_"].end(); ++it) LoadComponent((ComponentType)std::stoi(it.key()),it.value());
+	// コンポーネントを読込
+	for (auto it = _loadObj["myComponents_"].begin(); it != _loadObj["myComponents_"].end(); ++it)AddComponent(LoadComponent(this,(ComponentType)std::stoi(it.key()),it.value()));
+}
+
+void StageObject::DrawData()
+{
+	// 保有するコンポーネントの情報を描画
+	for (auto comp : myComponents_)comp->ChildDrawData();
 }
 
 StageObject* CreateStageObject(string _name, string _modelFilePath, GameObject* _parent)

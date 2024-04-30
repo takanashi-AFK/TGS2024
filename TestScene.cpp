@@ -2,6 +2,8 @@
 #include "StageObject.h"
 #include "Engine/ImGui/imgui.h"
 
+#include "RotationYComponent.h"
+
 //コンストラクタ
 TestScene::TestScene(GameObject * parent)
 	: GameObject(parent, "TestScene")
@@ -14,6 +16,7 @@ void TestScene::Initialize()
 {
 
 	obj = CreateStageObject("obj", "DebugCollision/BoxCollider.fbx", this);
+	obj->AddComponent(new RotationYComponent(obj));
 }
 
 //更新
@@ -30,7 +33,6 @@ void TestScene::Update()
 		obj->Save(savaObj);
 		JsonReader::Save("testdata.json", savaObj);
 	}
-
 }
 
 //描画

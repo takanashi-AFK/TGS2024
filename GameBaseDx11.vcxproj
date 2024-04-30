@@ -156,6 +156,7 @@
     <ClCompile Include="Engine\ResourceManager\Text.cpp" />
     <ClCompile Include="Engine\DirectX\Texture.cpp" />
     <ClCompile Include="Engine\GameObject\Transform.cpp" />
+    <ClCompile Include="RotationYComponent.cpp" />
     <ClCompile Include="StageObject.cpp" />
     <ClCompile Include="TestScene.cpp" />
   </ItemGroup>
@@ -194,6 +195,7 @@
     <ClInclude Include="Engine\ResourceManager\Text.h" />
     <ClInclude Include="Engine\DirectX\Texture.h" />
     <ClInclude Include="Engine\GameObject\Transform.h" />
+    <ClInclude Include="RotationYComponent.h" />
     <ClInclude Include="StageObject.h" />
     <ClInclude Include="TestScene.h" />
   </ItemGroup>

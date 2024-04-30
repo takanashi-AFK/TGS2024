@@ -66,6 +66,11 @@ public:
     /// </summary>
     /// <param name="_loadObj">読み込んだjsonオブジェクト</param>
     void Load(json& _loadObj);
+
+    /// <summary>
+    /// 自身が持っているデータをImGuiに表示する関数
+    /// </summary>
+    void DrawData();
 };
 
 /// <summary>

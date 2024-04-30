@@ -1,5 +1,7 @@
 #include "Component.h"
 
+#include "RotationYComponent.h"
+
 Component::Component(StageObject* _holder, string _name,ComponentType _type)
     :holder_(_holder), name_(_name),type_(_type)
 {
@@ -36,10 +38,10 @@ void Component::ChildRelease()
 void Component::ChildSave(json& _saveObj)
 {
 	// 自身の保存
-	this->Save(_saveObj);
+	this->Save(_saveObj[this->type_]);
 
 	// 子コンポーネントの初期化
-	for (auto comp : childComponents_)comp->ChildSave(_saveObj);
+	for (auto comp : childComponents_)comp->ChildSave(_saveObj["childComponents_"]);
 }
 
 void Component::ChildLoad(json& _loadObj)
@@ -48,7 +50,7 @@ void Component::ChildLoad(json& _loadObj)
 	this->Load(_loadObj);
 
 	// 自身のコンポーネントを読込
-	for (auto it = _loadObj["childComponents_"].begin(); it != _loadObj["childComponents_"].end(); ++it) LoadComponent((ComponentType)std::stoi(it.key()), it.value());
+	for (auto it = _loadObj["childComponents_"].begin(); it != _loadObj["childComponents_"].end(); ++it) LoadComponent(holder_,(ComponentType)std::stoi(it.key()), it.value());
 }
 
 void Component::ChildDrawData()
@@ -60,12 +62,12 @@ void Component::ChildDrawData()
 	for (auto comp : childComponents_)comp->ChildDrawData();
 }
 
-Component* LoadComponent(ComponentType _type, json& _loadObj)
+Component* LoadComponent(StageObject* _holder,ComponentType _type, json& _loadObj)
 {
 	// コンポーネントを生成
 	Component* comp = nullptr;
 	switch (_type){
-
+	case RotationY: new RotationYComponent(_holder);
 	}
 
 	// コンポーネントに必要な情報を読込

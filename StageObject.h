@@ -13,12 +13,13 @@ class StageObject:public GameObject
 {
 private:
     vector<Component*> myComponents_;
+    string modelFilePath_;
 
 public:
     /// <summary>
     /// コンストラクタ
     /// </summary>
-    StageObject();
+    StageObject(string _name,string _modelFilePath,GameObject* _parent);
 
     /// <summary>
     /// 使用するコンポーネントを追加
@@ -35,12 +36,25 @@ public:
     bool DeleteComponent(Component* _comp);
 
     /// <summary>
-    /// 使用するコンポーネントの初期化
+    /// 初期化
     /// </summary>
     void Initialize();
 
     /// <summary>
-    /// 使用するコンポーネントの更新
+    /// 更新
     /// </summary>
     void Update();
+
+    /// <summary>
+    /// 描画
+    /// </summary>
+    void Draw() override;
+
+    /// <summary>
+    /// 開放
+    /// </summary>
+    void Release() override;
 };
+
+
+StageObject* CreateStageObject(string _name, string _modelFilePath, GameObject* _parent);

@@ -1,6 +1,7 @@
 #include "StageObject.h"
 
-StageObject::StageObject()
+StageObject::StageObject(string _name, string _modelFilePath, GameObject* _parent)
+	:GameObject(_parent,_name),modelFilePath_(_modelFilePath)
 {
 }
 
@@ -31,12 +32,22 @@ bool StageObject::DeleteComponent(Component* _comp)
 
 void StageObject::Initialize()
 {
+	// 保有するコンポーネントの初期化処理
 	for (auto comp : myComponents_)
 		comp->ChildIntialize();
 }
 
 void StageObject::Update()
 {
+	// 保有するコンポーネントの更新処理
 	for (auto comp : myComponents_)
 		comp->ChildUpdate();
+}
+
+StageObject* CreateStageObject(string _name, string _modelFilePath, GameObject* _parent)
+{
+	StageObject* obj = new StageObject(_name, _modelFilePath, _parent);
+	obj->Initialize();
+	if (_parent != nullptr)_parent->PushBackChild(obj);
+	return obj;
 }

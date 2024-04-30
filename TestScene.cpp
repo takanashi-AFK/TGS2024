@@ -14,8 +14,10 @@ static StageObject* obj = nullptr;
 //初期化
 void TestScene::Initialize()
 {
-
+	// オブジェクトを生成
 	obj = CreateStageObject("obj", "DebugCollision/BoxCollider.fbx", this);
+	
+	// コンポーネントを追加
 	obj->AddComponent(new RotationYComponent(obj));
 }
 

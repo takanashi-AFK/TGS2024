@@ -43,15 +43,13 @@ void StageObject::Initialize()
 	assert(modelHandle_ >= 0);
 
 	// 保有するコンポーネントの初期化処理
-	for (auto comp : myComponents_)
-		comp->ChildIntialize();
+	for (auto comp : myComponents_)comp->ChildIntialize();
 }
 
 void StageObject::Update()
 {
 	// 保有するコンポーネントの更新処理
-	for (auto comp : myComponents_)
-		comp->ChildUpdate();
+	for (auto comp : myComponents_)comp->ChildUpdate();
 }
 
 void StageObject::Draw()
@@ -82,8 +80,6 @@ void StageObject::Save(json& _saveObj)
 	// 自身のモデルのファイルパスを保存
 	_saveObj["modelFilePath_"] = modelFilePath_;
 	
-	// 保有するコンポーネントを保存
-	for (auto comp : myComponents_)comp->ChildSave(_saveObj["myComponents_"][comp->GetName()]);
 }
 
 void StageObject::Load(json& _loadObj)
@@ -95,9 +91,6 @@ void StageObject::Load(json& _loadObj)
 
 	// モデルのファイルパスを読込
 	modelFilePath_ = _loadObj["modelFilePath_"];
-
-	// コンポーネントを読込
-	for (auto it = _loadObj["myComponents_"].begin(); it != _loadObj["myComponents_"].end(); ++it)AddComponent(LoadComponent(this,(ComponentType)std::stoi(it.key()),it.value()));
 }
 
 void StageObject::DrawData()

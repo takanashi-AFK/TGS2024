@@ -9,21 +9,19 @@ class StageObject;
 // using宣言
 using std::vector;
 
-
 // コンポーネントタイプ
 enum ComponentType {
     RotationY,
 };
-
 
 // コンポ―ネント基底クラス
 class Component
 {
 protected:
     string name_;                           // コンポーネント名
+    ComponentType type_;                    // コンポーネントタイプ
     StageObject* holder_;                   // コンポ―ネント保有者のポインタ
     vector<Component*> childComponents_;    // 子コンポーネント群
-    ComponentType type_;
 public:
     /// <summary>
     /// コンストラクタ
@@ -80,18 +78,6 @@ public:
     void ChildRelease();
 
 	/// <summary>
-	/// 自身＆子コンポーネントを保存
-	/// </summary>
-	/// <param name="_saveObj"></param>
-	void ChildSave(json& _saveObj);
-
-    /// <summary>
-    /// 自身＆子コンポーネントを保存
-    /// </summary>
-    /// <param name="_saveObj"></param>
-    void ChildLoad(json& _saveObj);
-
-	/// <summary>
 	/// 自身＆子コンポーネントを描画
 	/// </summary>
 	void ChildDrawData();
@@ -100,10 +86,3 @@ public:
     ComponentType GetType() { return type_; }
     string GetName() { return name_; }
 };
-
-/// <summary>
-    /// コンポーネントインスタンスを生成
-    /// </summary>
-    /// <param name="_type">コンポーネントタイプ</param>
-    /// <returns>生成したコンポーネント</returns>
-Component* LoadComponent(StageObject* _holder,ComponentType _type, json& _loadObj);

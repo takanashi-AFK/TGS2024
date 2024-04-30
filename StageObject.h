@@ -25,14 +25,14 @@ public:
     /// 使用するコンポーネントを追加
     /// </summary>
     /// <param name="_comp">使用するコンポーネントのアドレス</param>
-    /// <returns>成功失敗判定</returns>
+    /// <returns>追加できたかどうか</returns>
     bool AddComponent(Component* _comp);
 
     /// <summary>
     /// 追加されたコンポーネントを削除
     /// </summary>
     /// <param name="_comp">削除するコンポーネントのアドレス</param>
-    /// <returns></returns>
+    /// <returns>消去できたかどうか</returns>
     bool DeleteComponent(Component* _comp);
 
     /// <summary>
@@ -54,6 +54,18 @@ public:
     /// 開放
     /// </summary>
     void Release() override;
+
+    /// <summary>
+    /// 保存
+    /// </summary>
+    /// <param name="_saveObj">保存先のjsonオブジェクト</param>
+    void Save(json& _saveObj);
+
+    /// <summary>
+    /// 読込
+    /// </summary>
+    /// <param name="_loadObj">読み込んだjsonオブジェクト</param>
+    void Load(json& _loadObj);
 };
 
 /// <summary>

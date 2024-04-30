@@ -1,5 +1,6 @@
 #include "TestScene.h"
 #include "StageObject.h"
+#include "Engine/ImGui/imgui.h"
 
 //コンストラクタ
 TestScene::TestScene(GameObject * parent)
@@ -7,15 +8,29 @@ TestScene::TestScene(GameObject * parent)
 {
 }
 
+static StageObject* obj = nullptr;
 //初期化
 void TestScene::Initialize()
 {
-	CreateStageObject("obj", "DebugCollision/BoxCollider.fbx", this);
+
+	obj = CreateStageObject("obj", "DebugCollision/BoxCollider.fbx", this);
 }
 
 //更新
 void TestScene::Update()
 {
+	if (ImGui::Button("load")) {
+		json loadObj;
+		JsonReader::Load("testdata.json", loadObj);
+		obj->Load(loadObj);
+	}
+	
+	if (ImGui::Button("save")) {
+		json savaObj;
+		obj->Save(savaObj);
+		JsonReader::Save("testdata.json", savaObj);
+	}
+
 }
 
 //描画

@@ -15,8 +15,7 @@ StageObject::StageObject(string _name, string _modelFilePath, GameObject* _paren
 bool StageObject::AddComponent(Component* _comp)
 {
 	// ヌルチェック
-	if (_comp == nullptr) 
-	return false;
+	if (_comp == nullptr) return false;
 
 	// 初期化
 	_comp->ChildIntialize();
@@ -32,12 +31,10 @@ bool StageObject::DeleteComponent(Component* _comp)
 	auto it = std::find(myComponents_.begin(), myComponents_.end(), _comp);
 
 	// イテレータがリストの最後まで到達したら関数終了
-	if (it == myComponents_.end()) 
-	return false;
+	if (it == myComponents_.end()) return false;
 
 	// イテレータのコンポーネントを消す
-	myComponents_.erase(it); 
-	return true;
+	myComponents_.erase(it); return true;
 }
 
 bool StageObject::DeleteAllComponent()
@@ -128,6 +125,8 @@ void StageObject::Load(json& _loadObj)
 void StageObject::DrawData()
 {
 	if (ImGui::TreeNode(objectName_.c_str())) {
+		if(ImGui::Button("Add"))AddComponent(CreateComponent(RotationY, this));
+
 		// 保有するコンポーネントの情報を描画
 		for (auto comp : myComponents_)comp->ChildDrawData();
 		ImGui::TreePop();

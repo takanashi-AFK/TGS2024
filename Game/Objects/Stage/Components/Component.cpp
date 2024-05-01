@@ -1,4 +1,6 @@
 #include "Component.h"
+
+#include "../../../../Engine/ImGui/imgui.h"
 #include "../StageObject.h"
 
 #include "RotationYComponent.h"

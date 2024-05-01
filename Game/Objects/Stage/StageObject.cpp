@@ -1,7 +1,10 @@
 #include "StageObject.h"
+
+// インクルード
 #include "../../../Engine/ResourceManager/Model.h"
 
-#define REFERENCE_XMFLOAT3(p) p.x,p.y,p.z
+// マクロ
+#define REFERENCE_XMFLOAT3(p) p.x,p.y,p.z // XMFLOAT3型の変数をコンマ区切りで表示する
 
 StageObject::StageObject(string _name, string _modelFilePath, GameObject* _parent)
 	:GameObject(_parent,_name),modelFilePath_(_modelFilePath),modelHandle_(-1)
@@ -10,7 +13,7 @@ StageObject::StageObject(string _name, string _modelFilePath, GameObject* _paren
 
 bool StageObject::AddComponent(Component* _comp)
 {
-	// nullチェック
+	// ヌルチェック
 	if (_comp == nullptr) 
 	return false;
 
@@ -38,6 +41,7 @@ bool StageObject::DeleteComponent(Component* _comp)
 
 bool StageObject::DeleteAllComponent()
 {
+	// リスト内にある要素をすべて削除
 	for (auto comp : myComponents_)if(DeleteComponent(comp) == false)return false;
 	myComponents_.clear();
 	return true;
@@ -74,7 +78,6 @@ void StageObject::Release()
 	// 保有するコンポーネントの開放処理
 	for (auto comp : myComponents_) comp->ChildRelease();
 	myComponents_.clear();
-
 }
 
 void StageObject::Save(json& _saveObj)

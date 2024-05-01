@@ -14,6 +14,5 @@ public:
 	void Save(json& _saveObj) override;
 	void Load(json& _loadObj) override;
 	void DrawData() override;
-
 };
 

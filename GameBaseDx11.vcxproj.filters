@@ -30,6 +30,21 @@
     <Filter Include="01Engine\ImGui">
       <UniqueIdentifier>{18d8c8ed-9f3f-4b9d-8ed3-80d9cdf0cbae}</UniqueIdentifier>
     </Filter>
+    <Filter Include="03Game">
+      <UniqueIdentifier>{d2cc464f-8c2b-4ce9-b6d7-4c8115c33a4b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03Game\Objects">
+      <UniqueIdentifier>{f988fa13-57fc-43ef-8b7d-ccdcb934cba7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03Game\Scenes">
+      <UniqueIdentifier>{0cd1f8c9-f6bb-460e-be8c-4c190dbe92c9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03Game\Objects\Stage">
+      <UniqueIdentifier>{6b38a87a-4678-47ba-97b4-3e72a77f831b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03Game\Objects\Stage\Components">
+      <UniqueIdentifier>{635e6c4e-3dfb-47a0-9f51-96fceb97f32c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine\Collider\BoxCollider.cpp">
@@ -86,7 +101,6 @@
     <ClCompile Include="Engine\GameObject\Transform.cpp">
       <Filter>01Engine\GameObject</Filter>
     </ClCompile>
-    <ClCompile Include="TestScene.cpp" />
     <ClCompile Include="Engine\ResourceManager\Audio.cpp">
       <Filter>01Engine\ResourceManager</Filter>
     </ClCompile>
@@ -123,8 +137,21 @@
     <ClCompile Include="Engine\ImGui\imgui_widgets.cpp">
       <Filter>01Engine\ImGui</Filter>
     </ClCompile>
-    <ClCompile Include="Component.cpp" />
-    <ClCompile Include="StageObject.cpp" />
+    <ClCompile Include="Game\Objects\Stage\Components\Component.cpp">
+      <Filter>03Game\Objects\Stage\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Objects\Stage\Components\RotationYComponent.cpp">
+      <Filter>03Game\Objects\Stage\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Objects\Stage\Stage.cpp">
+      <Filter>03Game\Objects\Stage</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Objects\Stage\StageObject.cpp">
+      <Filter>03Game\Objects\Stage</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Scenes\TestScene.cpp">
+      <Filter>03Game\Scenes</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Collider\BoxCollider.h">
@@ -181,7 +208,6 @@
     <ClInclude Include="Engine\GameObject\Transform.h">
       <Filter>01Engine\GameObject</Filter>
     </ClInclude>
-    <ClInclude Include="TestScene.h" />
     <ClInclude Include="Engine\ResourceManager\Audio.h">
       <Filter>01Engine\ResourceManager</Filter>
     </ClInclude>
@@ -227,8 +253,21 @@
     <ClInclude Include="Engine\ImGui\imstb_truetype.h">
       <Filter>01Engine\ImGui</Filter>
     </ClInclude>
-    <ClInclude Include="Component.h" />
-    <ClInclude Include="StageObject.h" />
+    <ClInclude Include="Game\Objects\Stage\Components\Component.h">
+      <Filter>03Game\Objects\Stage\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Objects\Stage\Components\RotationYComponent.h">
+      <Filter>03Game\Objects\Stage\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Objects\Stage\Stage.h">
+      <Filter>03Game\Objects\Stage</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Objects\Stage\StageObject.h">
+      <Filter>03Game\Objects\Stage</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Scenes\TestScene.h">
+      <Filter>03Game\Scenes</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Assets\Shader\Simple2D.hlsl">

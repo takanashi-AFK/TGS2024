@@ -67,6 +67,6 @@ void Stage::DeleteStageObject(StageObject* _obj)
 void Stage::DeleteAllStageObject()
 {
 	// ƒŠƒXƒg“à‚É‚ ‚é—v‘f‚ð‚·‚×‚Äíœ
-	for (auto obj : objects_)DeleteStageObject(obj);
+	for (auto obj : objects_) obj->KillMe();
 	objects_.clear();
 }

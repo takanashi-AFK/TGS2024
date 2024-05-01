@@ -72,6 +72,5 @@ public:
 	/// リスト内のオブジェクトをすべて削除
 	/// </summary>
 	void DeleteAllStageObject();
-
 };
 

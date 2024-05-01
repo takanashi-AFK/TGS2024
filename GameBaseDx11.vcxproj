@@ -71,12 +71,12 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>C:\Program Files\Autodesk\FBX\FBX SDK\2020.2\include</IncludePath>
-    <LibraryPath>C:\Program Files\Autodesk\FBX\FBX SDK\2020.2\lib\vs2019\x64\debug;$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\Program Files\Autodesk\FBX\FBX SDK\2020.3.7\include</IncludePath>
+    <LibraryPath>C:\Program Files\Autodesk\FBX\FBX SDK\2020.3.7\lib\x64\debug;C:\Program Files\Autodesk\FBX\FBX SDK\2020.2\lib\vs2019\x64\debug;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <IncludePath>C:\Program Files\Autodesk\FBX\FBX SDK\2020.2\include</IncludePath>
-    <LibraryPath>C:\Program Files\Autodesk\FBX\FBX SDK\2020.2\lib\vs2019\x64\release;$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\Program Files\Autodesk\FBX\FBX SDK\2020.3.7\include</IncludePath>
+    <LibraryPath>C:\Program Files\Autodesk\FBX\FBX SDK\2020.3.7\lib\x64\release;C:\Program Files\Autodesk\FBX\FBX SDK\2020.2\lib\vs2019\x64\release;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -125,7 +125,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Component.cpp" />
+    <ClCompile Include="Game\Objects\Stage\Components\Component.cpp" />
     <ClCompile Include="Engine\ImGui\imgui.cpp" />
     <ClCompile Include="Engine\ImGui\imgui_draw.cpp" />
     <ClCompile Include="Engine\ImGui\imgui_impl_dx11.cpp" />
@@ -156,12 +156,12 @@
     <ClCompile Include="Engine\ResourceManager\Text.cpp" />
     <ClCompile Include="Engine\DirectX\Texture.cpp" />
     <ClCompile Include="Engine\GameObject\Transform.cpp" />
-    <ClCompile Include="RotationYComponent.cpp" />
-    <ClCompile Include="StageObject.cpp" />
-    <ClCompile Include="TestScene.cpp" />
+    <ClCompile Include="Game\Objects\Stage\Components\RotationYComponent.cpp" />
+    <ClCompile Include="Game\Objects\Stage\StageObject.cpp" />
+    <ClCompile Include="Game\Scenes\TestScene.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Component.h" />
+    <ClInclude Include="Game\Objects\Stage\Components\Component.h" />
     <ClInclude Include="Engine\ImGui\imconfig.h" />
     <ClInclude Include="Engine\ImGui\imgui.h" />
     <ClInclude Include="Engine\ImGui\imgui_impl_dx11.h" />
@@ -195,9 +195,9 @@
     <ClInclude Include="Engine\ResourceManager\Text.h" />
     <ClInclude Include="Engine\DirectX\Texture.h" />
     <ClInclude Include="Engine\GameObject\Transform.h" />
-    <ClInclude Include="RotationYComponent.h" />
-    <ClInclude Include="StageObject.h" />
-    <ClInclude Include="TestScene.h" />
+    <ClInclude Include="Game\Objects\Stage\Components\RotationYComponent.h" />
+    <ClInclude Include="Game\Objects\Stage\StageObject.h" />
+    <ClInclude Include="Game\Scenes\TestScene.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Assets\Shader\BillBoard.hlsl">

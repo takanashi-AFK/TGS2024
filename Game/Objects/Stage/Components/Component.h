@@ -1,7 +1,7 @@
 #pragma once
 
 // インクルード
-#include "Engine/Json/JsonReader.h"
+#include "../../../../Engine/Json/JsonReader.h"
 
 // 前方宣言
 class StageObject;
@@ -82,7 +82,37 @@ public:
 	/// </summary>
 	void ChildDrawData();
 
+    /// <summary>
+    /// 自身＆子コンポーネントを保存
+    /// </summary>
+    void ChildSave(json& _saveObj);
+
+    /// <summary>
+    /// 自身＆子コンポーネントを読込
+    /// </summary>
+    void ChildLoad(json& _loadObj);
+
+    /// <summary>
+    /// 子コンポーネントを追加
+    /// </summary>
+    /// <param name="comp"></param>
+    bool AddChildComponent(Component* _comp);
+
+    /// <summary>
+    /// 子コンポーネントを削除
+    /// </summary>
+    /// <param name="comp"></param>
+    bool DeleteChildComponent(Component* _comp);
+
 // getter
     ComponentType GetType() { return type_; }
     string GetName() { return name_; }
 };
+
+/// <summary>
+///コンポーネントを作成する
+/// </summary>
+/// <param name="_type">コンポーネントタイプ</param>
+/// <param name="_holder">保有者</param>
+/// <returns>作成したコンポーネント</returns>
+Component* CreateComponent(ComponentType _type,StageObject* _holder);

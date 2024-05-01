@@ -1,6 +1,7 @@
 #include "sceneManager.h"
 
-#include "../TestScene.h"
+#include "../Game/Scenes/TestScene.h"
+
 #include "ResourceManager/Model.h"
 #include "ResourceManager/Image.h"
 #include "ResourceManager/Audio.h"

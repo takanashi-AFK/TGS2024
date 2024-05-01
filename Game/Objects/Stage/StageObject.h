@@ -1,8 +1,8 @@
 #pragma once
 
 // インクルード
-#include "Engine/GameObject/GameObject.h"
-#include "Component.h"
+#include "../../../Engine/GameObject/GameObject.h"
+#include "Components/Component.h"
 #include <vector>
 
 // using宣言
@@ -34,6 +34,12 @@ public:
     /// <param name="_comp">削除するコンポーネントのアドレス</param>
     /// <returns>消去できたかどうか</returns>
     bool DeleteComponent(Component* _comp);
+
+    /// <summary>
+    /// 追加されたコンポーネントをすべて削除
+    /// </summary>
+    /// <returns>削除できたかどうか</returns>
+    bool DeleteAllComponent();
 
     /// <summary>
     /// 初期化

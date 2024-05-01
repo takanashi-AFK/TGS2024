@@ -1,5 +1,5 @@
 #include "StageObject.h"
-#include "Engine/ResourceManager/Model.h"
+#include "../../../Engine/ResourceManager/Model.h"
 
 #define REFERENCE_XMFLOAT3(p) p.x,p.y,p.z
 
@@ -33,6 +33,13 @@ bool StageObject::DeleteComponent(Component* _comp)
 
 	// イテレータのコンポーネントを消す
 	myComponents_.erase(it); 
+	return true;
+}
+
+bool StageObject::DeleteAllComponent()
+{
+	for (auto comp : myComponents_)if(DeleteComponent(comp) == false)return false;
+	myComponents_.clear();
 	return true;
 }
 
@@ -79,11 +86,16 @@ void StageObject::Save(json& _saveObj)
 	
 	// 自身のモデルのファイルパスを保存
 	_saveObj["modelFilePath_"] = modelFilePath_;
-	
+
+	// コンポーネント情報を保存
+	for (auto comp : myComponents_)comp->ChildSave(_saveObj["myComponents_"][comp->GetName()]);
 }
 
 void StageObject::Load(json& _loadObj)
 {
+	// 現在のすべてのコンポーネント情報を削除
+	this->DeleteAllComponent();
+
 	// 変形行列情報を読込
 	transform_.position_ = { _loadObj["position_"][0].get<float>(),_loadObj["position_"][1].get<float>(), _loadObj["position_"][2].get<float>() };
 	transform_.rotate_ = { _loadObj["rotate_"][0].get<float>(),_loadObj["rotate_"][1].get<float>(), _loadObj["rotate_"][2].get<float>() };
@@ -91,6 +103,23 @@ void StageObject::Load(json& _loadObj)
 
 	// モデルのファイルパスを読込
 	modelFilePath_ = _loadObj["modelFilePath_"];
+
+	// コンポーネントインスタンスを生成
+	for (auto& obj : _loadObj["myComponents_"]) {
+		
+		// コンポーネントを生成
+		Component* comp = CreateComponent(obj["type_"], this);
+
+		// 子コンポーネントを生成
+		for (auto& child : obj["childComponents_"])comp->AddChildComponent(CreateComponent(child["type_"], this));
+
+		// "myComponents_"に追加
+		this->AddComponent(comp);
+	}
+
+	// コンポーネント情報を読込
+	for (auto comp : myComponents_)comp->ChildLoad(_loadObj["myComponents_"][comp->GetName()]);
+
 }
 
 void StageObject::DrawData()

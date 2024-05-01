@@ -8,10 +8,6 @@ Stage::Stage(GameObject* _parent)
 
 void Stage::Initialize()
 {
-	AddStageObject(CreateStageObject("object1", "DebugCollision/BoxCollider.fbx", this));
-	AddStageObject(CreateStageObject("object2", "DebugCollision/SphereCollider.fbx", this));
-
-	for (auto obj : objects_)obj->AddComponent(CreateComponent(RotationY, obj));
 }
 
 void Stage::Update()
@@ -34,19 +30,20 @@ void Stage::Save(json& _saveObj)
 
 void Stage::Load(json& _loadObj)
 {
-	//// ステージオブジェクトをすべて削除
+	// ステージオブジェクトをすべて削除
+	DeleteAllStageObject();
 
-	//for (auto it = _loadObj.begin(); it != _loadObj.end();++it) {
-	//	
-	//	// オブジェクトのインスタンスを生成
-	//	StageObject* obj = CreateStageObject(it.key(), it.value()["modelFilePath_"], this);
-	//	
-	//	// オブジェクト情報を読込
-	//	obj->Load(it.value());
+	for (auto it = _loadObj.begin(); it != _loadObj.end();++it) {
+		
+		// オブジェクトのインスタンスを生成
+		StageObject* obj = CreateStageObject(it.key(), it.value()["modelFilePath_"], this);
+		
+		// オブジェクト情報を読込
+		obj->Load(it.value());
 
-	//	// オブジェクトをリストに追加
-	//	Add
-	//}
+		// オブジェクトをリストに追加
+		AddStageObject(obj);
+	}
 }
 
 void Stage::AddStageObject(StageObject* _obj)

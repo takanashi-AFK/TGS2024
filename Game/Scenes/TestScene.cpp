@@ -31,6 +31,12 @@ void TestScene::Update()
 		JsonReader::Load("testData.json", loadObj);
 		pStage_->Load(loadObj);
 	}
+
+	ImGui::SameLine();
+
+	if (ImGui::Button("Delete")) {
+		pStage_->DeleteAllStageObject();
+	}
 }
 
 //•`‰æ

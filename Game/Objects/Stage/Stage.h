@@ -49,5 +49,29 @@ public:
 	/// </summary>
 	/// <param name="_saveObj"></param>
 	void Save(json& _saveObj);
+
+	/// <summary>
+	/// 読込
+	/// </summary>
+	/// <param name="_saveObj"></param>
+	void Load(json& _loadObj);
+
+	/// <summary>
+	/// オブジェクトをリストに追加
+	/// </summary>
+	/// <param name="_obj">追加するオブジェクトのアドレス</param>
+	void AddStageObject(StageObject* _obj);
+
+	/// <summary>
+	/// オブジェクトをリストから削除
+	/// </summary>
+	/// <param name="_obj">削除するオブジェクトのアドレス</param>
+	void DeleteStageObject(StageObject* _obj);
+
+	/// <summary>
+	/// リスト内のオブジェクトをすべて削除
+	/// </summary>
+	void DeleteAllStageObject();
+
 };
 

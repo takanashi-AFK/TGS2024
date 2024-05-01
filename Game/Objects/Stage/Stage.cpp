@@ -8,8 +8,10 @@ Stage::Stage(GameObject* _parent)
 
 void Stage::Initialize()
 {
-	CreateStageObject("object1", "DebugCollision/BoxCollider.fbx", this);
-	CreateStageObject("object2", "DebugCollision/SphereCollider.fbx", this);
+	AddStageObject(CreateStageObject("object1", "DebugCollision/BoxCollider.fbx", this));
+	AddStageObject(CreateStageObject("object2", "DebugCollision/SphereCollider.fbx", this));
+
+	for (auto obj : objects_)obj->AddComponent(CreateComponent(RotationY, obj));
 }
 
 void Stage::Update()
@@ -28,4 +30,46 @@ void Stage::Save(json& _saveObj)
 {
 	// オブジェクト群を保存
 	for (auto obj : objects_)obj->Save(_saveObj[obj->GetObjectName()]);
+}
+
+void Stage::Load(json& _loadObj)
+{
+	//// ステージオブジェクトをすべて削除
+
+	//for (auto it = _loadObj.begin(); it != _loadObj.end();++it) {
+	//	
+	//	// オブジェクトのインスタンスを生成
+	//	StageObject* obj = CreateStageObject(it.key(), it.value()["modelFilePath_"], this);
+	//	
+	//	// オブジェクト情報を読込
+	//	obj->Load(it.value());
+
+	//	// オブジェクトをリストに追加
+	//	Add
+	//}
+}
+
+void Stage::AddStageObject(StageObject* _obj)
+{
+	// リストに追加
+	if (_obj != nullptr)objects_.push_back(_obj);
+}
+
+void Stage::DeleteStageObject(StageObject* _obj)
+{
+	// オブジェクトを削除する
+	_obj->KillMe();
+
+	// オブジェクトのイテレータを取得する
+	auto it = std::find(objects_.begin(), objects_.end(), _obj);
+
+	// イテレータが見つかった場合、ベクターから削除する
+	if (it != objects_.end()) objects_.erase(it);
+}
+
+void Stage::DeleteAllStageObject()
+{
+	// リスト内にある要素をすべて削除
+	for (auto obj : objects_)DeleteStageObject(obj);
+	objects_.clear();
 }

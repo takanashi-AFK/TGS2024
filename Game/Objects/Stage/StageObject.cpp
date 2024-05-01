@@ -2,6 +2,7 @@
 
 // インクルード
 #include "../../../Engine/ResourceManager/Model.h"
+#include "../../../Engine/ImGui/imgui.h"
 
 // マクロ
 #define REFERENCE_XMFLOAT3(p) p.x,p.y,p.z // XMFLOAT3型の変数をコンマ区切りで表示する
@@ -122,13 +123,15 @@ void StageObject::Load(json& _loadObj)
 
 	// コンポーネント情報を読込
 	for (auto comp : myComponents_)comp->ChildLoad(_loadObj["myComponents_"][comp->GetName()]);
-
 }
 
 void StageObject::DrawData()
 {
-	// 保有するコンポーネントの情報を描画
-	for (auto comp : myComponents_)comp->ChildDrawData();
+	if (ImGui::TreeNode(objectName_.c_str())) {
+		// 保有するコンポーネントの情報を描画
+		for (auto comp : myComponents_)comp->ChildDrawData();
+		ImGui::TreePop();
+	}
 }
 
 StageObject* CreateStageObject(string _name, string _modelFilePath, GameObject* _parent)

@@ -100,6 +100,8 @@ Component* CreateComponent(ComponentType _type, StageObject* _holder)
 	switch (_type)
 	{
 	case RotationY:comp = new RotationYComponent(_holder);break;
+
+	default:/* その他コンポーネントを追加する時は上記のように追加*/ break;
 	}
 	return comp;
 }

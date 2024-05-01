@@ -1,0 +1,53 @@
+#pragma once
+
+// インクルード
+#include "../../../Engine/GameObject/GameObject.h"
+#include "../../../Engine/Json/JsonReader.h"
+#include <vector>
+
+// using宣言
+using std::vector;
+
+// 前方宣言
+class StageObject;
+
+// ステージを管理するクラス
+class Stage : public GameObject
+{
+private:
+	vector<StageObject*> objects_;	// 自身が保有するステージオブジェクト群
+
+public:
+	/// <summary>
+	/// コンストラクタ
+	/// </summary>
+	/// <param name="_parent">親オブジェクト</param>
+	Stage(GameObject* _parent);
+
+	/// <summary>
+	/// 初期化
+	/// </summary>
+	void Initialize() override;
+
+	/// <summary>
+	/// 更新
+	/// </summary>
+	void Update() override;
+
+	/// <summary>
+	/// 描画
+	/// </summary>
+	void Draw() override;
+
+	/// <summary>
+	/// 解放
+	/// </summary>
+	void Release() override;
+
+	/// <summary>
+	/// 保存
+	/// </summary>
+	/// <param name="_saveObj"></param>
+	void Save(json& _saveObj);
+};
+

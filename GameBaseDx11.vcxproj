@@ -159,6 +159,7 @@
     <ClCompile Include="Game\Objects\Stage\Components\RotationYComponent.cpp" />
     <ClCompile Include="Game\Objects\Stage\StageObject.cpp" />
     <ClCompile Include="Game\Scenes\TestScene.cpp" />
+    <ClCompile Include="Game\Objects\Stage\Stage.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game\Objects\Stage\Components\Component.h" />
@@ -198,6 +199,7 @@
     <ClInclude Include="Game\Objects\Stage\Components\RotationYComponent.h" />
     <ClInclude Include="Game\Objects\Stage\StageObject.h" />
     <ClInclude Include="Game\Scenes\TestScene.h" />
+    <ClInclude Include="Game\Objects\Stage\Stage.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Assets\Shader\BillBoard.hlsl">

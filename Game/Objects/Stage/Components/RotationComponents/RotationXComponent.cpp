@@ -1,7 +1,6 @@
 #include "RotationXComponent.h"
-#include "../StageObject.h"
-#include "../../../../Engine/ImGui/imgui.h"
-
+#include "../../StageObject.h"
+#include "../../../../../Engine/ImGui/imgui.h"
 RotationXComponent::RotationXComponent(StageObject* _holeder)
 	:Component(_holeder,"RotationXComponent",RotationX), angleX_(0), rotateSpeed_(0)
 {

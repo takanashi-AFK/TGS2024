@@ -1,12 +1,10 @@
 #pragma once
-#include "Component.h"
+#include "../Component.h"
 
-class RotationYComponent : public Component
+class RotationComponent : public Component
 {
-	float rotateSpeed_;
-	float angleY_;
 public:
-	RotationYComponent(StageObject* _holeder);
+	RotationComponent(StageObject* _holeder);
 	void Initialize() override;
 	void Update() override;
 	void Release() override;

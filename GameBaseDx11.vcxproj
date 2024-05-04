@@ -164,13 +164,13 @@
     <ClCompile Include="Engine\ResourceManager\Text.cpp" />
     <ClCompile Include="Engine\DirectX\Texture.cpp" />
     <ClCompile Include="Engine\GameObject\Transform.cpp" />
-    <ClCompile Include="Game\Objects\Stage\Components\RotationYComponent.cpp" />
+    <ClCompile Include="Game\Objects\Stage\Components\RotationComponents\RotationYComponent.cpp" />
     <ClCompile Include="Game\Objects\Stage\StageObject.cpp" />
     <ClCompile Include="Game\Scenes\TestScene.cpp" />
     <ClCompile Include="Game\Objects\Stage\Stage.cpp" />
-    <ClCompile Include="Game\Objects\Stage\Components\RotationComponent.cpp" />
-    <ClCompile Include="Game\Objects\Stage\Components\RotationXComponent.cpp" />
-    <ClCompile Include="Game\Objects\Stage\Components\RotationZComponent.cpp" />
+    <ClCompile Include="Game\Objects\Stage\Components\RotationComponents\RotationComponent.cpp" />
+    <ClCompile Include="Game\Objects\Stage\Components\RotationComponents\RotationXComponent.cpp" />
+    <ClCompile Include="Game\Objects\Stage\Components\RotationComponents\RotationZComponent.cpp" />
     <ClCompile Include="Game\Objects\Stage\Components\MoveXComponent.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -208,13 +208,13 @@
     <ClInclude Include="Engine\ResourceManager\Text.h" />
     <ClInclude Include="Engine\DirectX\Texture.h" />
     <ClInclude Include="Engine\GameObject\Transform.h" />
-    <ClInclude Include="Game\Objects\Stage\Components\RotationYComponent.h" />
+    <ClInclude Include="Game\Objects\Stage\Components\RotationComponents\RotationYComponent.h" />
     <ClInclude Include="Game\Objects\Stage\StageObject.h" />
     <ClInclude Include="Game\Scenes\TestScene.h" />
     <ClInclude Include="Game\Objects\Stage\Stage.h" />
-    <ClInclude Include="Game\Objects\Stage\Components\RotationComponent.h" />
-    <ClInclude Include="Game\Objects\Stage\Components\RotationXComponent.h" />
-    <ClInclude Include="Game\Objects\Stage\Components\RotationZComponent.h" />
+    <ClInclude Include="Game\Objects\Stage\Components\RotationComponents\RotationComponent.h" />
+    <ClInclude Include="Game\Objects\Stage\Components\RotationComponents\RotationXComponent.h" />
+    <ClInclude Include="Game\Objects\Stage\Components\RotationComponents\RotationZComponent.h" />
     <ClInclude Include="Game\Objects\Stage\Components\MoveXComponent.h" />
   </ItemGroup>
   <ItemGroup>

@@ -1,6 +1,6 @@
 #include "RotationZComponent.h"
-#include "../StageObject.h"
-#include "../../../../Engine/ImGui/imgui.h"
+#include "../../StageObject.h"
+#include "../../../../../Engine/ImGui/imgui.h"
 
 RotationZComponent::RotationZComponent(StageObject* _holeder)
 	:Component(_holeder, "RotationZComponent", RotationZ), angleZ_(0), rotateSpeed_(0)

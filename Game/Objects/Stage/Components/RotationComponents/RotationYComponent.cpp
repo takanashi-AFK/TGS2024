@@ -1,6 +1,6 @@
 #include "RotationYComponent.h"
-#include "../StageObject.h"
-#include "../../../../Engine/ImGui/imgui.h"
+#include "../../StageObject.h"
+#include "../../../../../Engine/ImGui/imgui.h"
 
 RotationYComponent::RotationYComponent(StageObject* _holeder)
 	:Component(_holeder,"RotationYComponent",RotationY),angleY_(0),rotateSpeed_(0)

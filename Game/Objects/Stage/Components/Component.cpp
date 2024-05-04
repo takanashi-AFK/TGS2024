@@ -3,10 +3,10 @@
 #include "../../../../Engine/ImGui/imgui.h"
 #include "../StageObject.h"
 
-#include "RotationComponent.h"
-#include "RotationYComponent.h"
-#include "RotationXComponent.h"
-#include "RotationZComponent.h"
+#include "RotationComponents/RotationComponent.h"
+#include "RotationComponents/RotationYComponent.h"
+#include "RotationComponents/RotationXComponent.h"
+#include "RotationComponents/RotationZComponent.h"
 #include "MoveXComponent.h"
 
 

@@ -7,7 +7,7 @@
 #include "RotationComponents/RotationYComponent.h"
 #include "RotationComponents/RotationXComponent.h"
 #include "RotationComponents/RotationZComponent.h"
-#include "MoveXComponent.h"
+#include "MoveComponents/MoveXComponent.h"
 
 
 Component::Component(StageObject* _holder, string _name,ComponentType _type)

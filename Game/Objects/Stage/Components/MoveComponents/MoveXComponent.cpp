@@ -1,6 +1,6 @@
 #include "MoveXComponent.h"
-#include "../StageObject.h"
-#include "../../../../Engine/ImGui/imgui.h"
+#include "../../StageObject.h"
+#include "../../../../../Engine/ImGui/imgui.h"
 
 MoveXComponent::MoveXComponent(StageObject* _holeder)
 	:Component(_holeder,"MoveXComponent",MoveX),moveSpeedX_(0)

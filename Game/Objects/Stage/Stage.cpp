@@ -10,20 +10,6 @@ Stage::Stage(GameObject* _parent)
 
 void Stage::Initialize()
 {
-	// ‰¼’u‚«
-	{
-		/*StageObject* sObj = CreateStageObject("object01", "DebugCollision/BoxCollider.fbx", this); {
-			sObj->AddComponent(CreateComponent(Rotation, sObj));
-		}
-		this->AddStageObject(sObj);
-
-		sObj = CreateStageObject("object02", "DebugCollision/SphereCollider.fbx", this); {
-			sObj->AddComponent(CreateComponent(RotationX, sObj));
-			sObj->AddComponent(CreateComponent(MoveX, sObj));
-		}
-		this->AddStageObject(sObj);*/
-
-	}
 }
 
 void Stage::Update()

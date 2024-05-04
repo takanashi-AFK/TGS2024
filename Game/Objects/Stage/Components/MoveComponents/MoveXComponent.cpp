@@ -43,4 +43,7 @@ void MoveXComponent::Load(json& _loadObj)
 void MoveXComponent::DrawData()
 {
 	ImGui::DragFloat("moveSpeedX_",&moveSpeedX_,0.1f);
+	if (ImGui::Button("reset")) {
+		moveSpeedX_ = 0; holder_->SetPosition(0, 0, 0);
+	}
 }

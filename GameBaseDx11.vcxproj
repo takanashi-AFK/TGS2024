@@ -175,6 +175,7 @@
     <ClCompile Include="Game\Objects\Stage\Components\MoveComponents\MoveXComponent.cpp" />
     <ClCompile Include="Game\Objects\Stage\SkySphere.cpp" />
     <ClCompile Include="Game\Scenes\SplashScene.cpp" />
+    <ClCompile Include="Game\Otheres\StageEditor.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\ResourceManager\Transition.h" />
@@ -222,6 +223,7 @@
     <ClInclude Include="Game\Objects\Stage\Components\MoveComponents\MoveXComponent.h" />
     <ClInclude Include="Game\Objects\Stage\SkySphere.h" />
     <ClInclude Include="Game\Scenes\SplashScene.h" />
+    <ClInclude Include="Game\Otheres\StageEditor.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Assets\Shader\BillBoard.hlsl">

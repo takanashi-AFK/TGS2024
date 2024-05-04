@@ -64,13 +64,6 @@ void StageObject::Draw()
 	// ƒ‚ƒfƒ‹‚Ì•`‰æ
 	Model::SetTransform(modelHandle_, transform_);
 	Model::Draw(modelHandle_);
-
-#ifdef _DEBUG
-	// ImGui‚Åî•ñ‚ğ•`‰æ
-	DrawData();
-
-#endif // _DEBUG
-
 }
 
 void StageObject::Release()
@@ -143,7 +136,6 @@ void StageObject::DrawData()
 				ImGui::TreePop();
 			}
 		}
-
 		ImGui::TreePop();
 	}
 }

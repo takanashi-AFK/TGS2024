@@ -14,6 +14,8 @@ class StageObject;
 // ステージを管理するクラス
 class Stage : public GameObject
 {
+	friend class StageEditor;
+
 private:
 	vector<StageObject*> objects_;	// 自身が保有するステージオブジェクト群
 
@@ -55,6 +57,11 @@ public:
 	/// </summary>
 	/// <param name="_saveObj"></param>
 	void Load(json& _loadObj);
+
+	/// <summary>
+	/// ImGui描画
+	/// </summary>
+	void DrawData();
 
 	/// <summary>
 	/// オブジェクトをリストに追加

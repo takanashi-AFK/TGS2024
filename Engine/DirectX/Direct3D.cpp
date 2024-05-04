@@ -118,9 +118,14 @@ namespace Direct3D
 
 		// ビューポートの設定
 		//レンダリング結果を表示する範囲
+		float viewPortMagnification = 1.f;
+#ifdef _DEBUG
+		viewPortMagnification = 0.7f;
+#endif // _DEBUG
+
 		D3D11_VIEWPORT vp;
-		vp.Width = (float)screenWidth;			//幅
-		vp.Height = (float)screenHeight;		//高さ
+		vp.Height = (float)screenHeight * viewPortMagnification;		//高さ
+		vp.Width = (float)screenWidth * viewPortMagnification;			//幅
 		vp.MinDepth = 0.0f;		//手前
 		vp.MaxDepth = 1.0f;		//奥
 		vp.TopLeftX = 0;		//左

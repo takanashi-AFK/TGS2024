@@ -50,6 +50,9 @@
     <Filter Include="03Game\Objects\Stage\Components\RotationComponents">
       <UniqueIdentifier>{19ec8ed2-0f53-4dbc-8bd5-2d4a58e4275b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="03Game\Otheres">
+      <UniqueIdentifier>{c2efa7cb-5f10-4c3c-b6f4-cff055139e25}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine\Collider\BoxCollider.cpp">
@@ -177,6 +180,9 @@
     </ClCompile>
     <ClCompile Include="Game\Scenes\SplashScene.cpp">
       <Filter>03Game\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Otheres\StageEditor.cpp">
+      <Filter>03Game\Otheres</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -314,6 +320,9 @@
     </ClInclude>
     <ClInclude Include="Game\Scenes\SplashScene.h">
       <Filter>03Game\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Otheres\StageEditor.h">
+      <Filter>03Game\Otheres</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

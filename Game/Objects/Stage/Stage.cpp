@@ -48,6 +48,11 @@ void Stage::Load(json& _loadObj)
 	}
 }
 
+void Stage::DrawData()
+{
+	for (auto obj : objects_)obj->DrawData();
+}
+
 void Stage::AddStageObject(StageObject* _obj)
 {
 	// ƒŠƒXƒg‚É’Ç‰Á

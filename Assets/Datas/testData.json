@@ -1,6 +1,6 @@
 {
     "object01": {
-        "modelFilePath_": "DebugCollision/BoxCollider.fbx",
+        "modelFilePath_": "Models/DebugCollision/BoxCollider.fbx",
         "myComponents_": {
             "RotationComponent": {
                 "childComponents_": {
@@ -40,7 +40,7 @@
         ]
     },
     "object02": {
-        "modelFilePath_": "DebugCollision/SphereCollider.fbx",
+        "modelFilePath_": "Models/DebugCollision/SphereCollider.fbx",
         "myComponents_": {
             "MoveXComponent": {
                 "moveSpeedX_": 0.0,

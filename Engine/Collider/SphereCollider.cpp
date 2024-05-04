@@ -14,7 +14,7 @@ SphereCollider::SphereCollider(XMFLOAT3 center, float radius)
 	//リリース時は判定枠は表示しない
 #ifdef _DEBUG
 	//テスト表示用判定枠
-	hDebugModel_ = Model::Load("DebugCollision/sphereCollider.fbx");
+	hDebugModel_ = Model::Load("Models/DebugCollision/sphereCollider.fbx");
 #endif
 }
 

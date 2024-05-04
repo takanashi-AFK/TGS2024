@@ -1,10 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="リソース ファイル">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
-    </Filter>
     <Filter Include="01Engine">
       <UniqueIdentifier>{e5fccdcb-f299-4448-bdb6-01fa28039576}</UniqueIdentifier>
     </Filter>
@@ -44,6 +40,15 @@
     </Filter>
     <Filter Include="03Game\Objects\Stage\Components">
       <UniqueIdentifier>{635e6c4e-3dfb-47a0-9f51-96fceb97f32c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03Game\Objects\Stage\StageObjects">
+      <UniqueIdentifier>{acd2e8da-cefc-4962-a08d-21834c85660b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03Game\Objects\Stage\Components\MoveComponents">
+      <UniqueIdentifier>{75ad066e-987b-46d3-a42a-b30e23af65c2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03Game\Objects\Stage\Components\RotationComponents">
+      <UniqueIdentifier>{19ec8ed2-0f53-4dbc-8bd5-2d4a58e4275b}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -137,20 +142,35 @@
     <ClCompile Include="Engine\ImGui\imgui_widgets.cpp">
       <Filter>01Engine\ImGui</Filter>
     </ClCompile>
-    <ClCompile Include="Game\Objects\Stage\Components\Component.cpp">
-      <Filter>03Game\Objects\Stage\Components</Filter>
-    </ClCompile>
-    <ClCompile Include="Game\Objects\Stage\Components\RotationYComponent.cpp">
-      <Filter>03Game\Objects\Stage\Components</Filter>
-    </ClCompile>
     <ClCompile Include="Game\Objects\Stage\Stage.cpp">
-      <Filter>03Game\Objects\Stage</Filter>
-    </ClCompile>
-    <ClCompile Include="Game\Objects\Stage\StageObject.cpp">
       <Filter>03Game\Objects\Stage</Filter>
     </ClCompile>
     <ClCompile Include="Game\Scenes\TestScene.cpp">
       <Filter>03Game\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Objects\Stage\SkySphere.cpp">
+      <Filter>03Game\Objects\Stage\StageObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Objects\Stage\StageObject.cpp">
+      <Filter>03Game\Objects\Stage\StageObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Objects\Stage\Components\MoveComponents\MoveXComponent.cpp">
+      <Filter>03Game\Objects\Stage\Components\MoveComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Objects\Stage\Components\RotationComponents\RotationComponent.cpp">
+      <Filter>03Game\Objects\Stage\Components\RotationComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Objects\Stage\Components\RotationComponents\RotationXComponent.cpp">
+      <Filter>03Game\Objects\Stage\Components\RotationComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Objects\Stage\Components\RotationComponents\RotationYComponent.cpp">
+      <Filter>03Game\Objects\Stage\Components\RotationComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Objects\Stage\Components\RotationComponents\RotationZComponent.cpp">
+      <Filter>03Game\Objects\Stage\Components\RotationComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Objects\Stage\Components\Component.cpp">
+      <Filter>03Game\Objects\Stage\Components</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -253,20 +273,35 @@
     <ClInclude Include="Engine\ImGui\imstb_truetype.h">
       <Filter>01Engine\ImGui</Filter>
     </ClInclude>
-    <ClInclude Include="Game\Objects\Stage\Components\Component.h">
-      <Filter>03Game\Objects\Stage\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="Game\Objects\Stage\Components\RotationYComponent.h">
-      <Filter>03Game\Objects\Stage\Components</Filter>
-    </ClInclude>
     <ClInclude Include="Game\Objects\Stage\Stage.h">
-      <Filter>03Game\Objects\Stage</Filter>
-    </ClInclude>
-    <ClInclude Include="Game\Objects\Stage\StageObject.h">
       <Filter>03Game\Objects\Stage</Filter>
     </ClInclude>
     <ClInclude Include="Game\Scenes\TestScene.h">
       <Filter>03Game\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Objects\Stage\SkySphere.h">
+      <Filter>03Game\Objects\Stage\StageObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Objects\Stage\StageObject.h">
+      <Filter>03Game\Objects\Stage\StageObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Objects\Stage\Components\MoveComponents\MoveXComponent.h">
+      <Filter>03Game\Objects\Stage\Components\MoveComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Objects\Stage\Components\RotationComponents\RotationComponent.h">
+      <Filter>03Game\Objects\Stage\Components\RotationComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Objects\Stage\Components\RotationComponents\RotationXComponent.h">
+      <Filter>03Game\Objects\Stage\Components\RotationComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Objects\Stage\Components\RotationComponents\RotationYComponent.h">
+      <Filter>03Game\Objects\Stage\Components\RotationComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Objects\Stage\Components\RotationComponents\RotationZComponent.h">
+      <Filter>03Game\Objects\Stage\Components\RotationComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Objects\Stage\Components\Component.h">
+      <Filter>03Game\Objects\Stage\Components</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -280,6 +315,9 @@
       <Filter>02Shader</Filter>
     </FxCompile>
     <FxCompile Include="Assets\Shader\BillBoard.hlsl">
+      <Filter>02Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="Assets\Shader\Sky.hlsl">
       <Filter>02Shader</Filter>
     </FxCompile>
   </ItemGroup>

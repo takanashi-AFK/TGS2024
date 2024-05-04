@@ -172,6 +172,7 @@
     <ClCompile Include="Game\Objects\Stage\Components\RotationComponents\RotationXComponent.cpp" />
     <ClCompile Include="Game\Objects\Stage\Components\RotationComponents\RotationZComponent.cpp" />
     <ClCompile Include="Game\Objects\Stage\Components\MoveComponents\MoveXComponent.cpp" />
+    <ClCompile Include="Game\Objects\Stage\SkySphere.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game\Objects\Stage\Components\Component.h" />
@@ -216,6 +217,7 @@
     <ClInclude Include="Game\Objects\Stage\Components\RotationComponents\RotationXComponent.h" />
     <ClInclude Include="Game\Objects\Stage\Components\RotationComponents\RotationZComponent.h" />
     <ClInclude Include="Game\Objects\Stage\Components\MoveComponents\MoveXComponent.h" />
+    <ClInclude Include="Game\Objects\Stage\SkySphere.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Assets\Shader\BillBoard.hlsl">
@@ -232,6 +234,12 @@
       <EntryPointName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">VS</EntryPointName>
     </FxCompile>
     <FxCompile Include="Assets\Shader\Simple3D.hlsl">
+      <EntryPointName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">VS</EntryPointName>
+      <EntryPointName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">VS</EntryPointName>
+    </FxCompile>
+    <FxCompile Include="Assets\Shader\Sky.hlsl">
+      <EntryPointName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">VS</EntryPointName>
+      <EntryPointName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">VS</EntryPointName>
       <EntryPointName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">VS</EntryPointName>
       <EntryPointName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">VS</EntryPointName>
     </FxCompile>

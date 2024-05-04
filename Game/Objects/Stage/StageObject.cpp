@@ -65,8 +65,12 @@ void StageObject::Draw()
 	Model::SetTransform(modelHandle_, transform_);
 	Model::Draw(modelHandle_);
 
+#ifdef _DEBUG
 	// ImGui‚Åî•ñ‚ğ•`‰æ
 	DrawData();
+
+#endif // _DEBUG
+
 }
 
 void StageObject::Release()

@@ -7,6 +7,7 @@ RotationComponent::RotationComponent(StageObject* _holeder)
 
 void RotationComponent::Initialize()
 {
+	// 各軸の回転用コンポーネントを追加
 	if (FindChildComponent(RotationX) == false)AddChildComponent(CreateComponent(RotationX, holder_));
 	if (FindChildComponent(RotationY) == false)AddChildComponent(CreateComponent(RotationY, holder_));
 	if (FindChildComponent(RotationZ) == false)AddChildComponent(CreateComponent(RotationZ, holder_));

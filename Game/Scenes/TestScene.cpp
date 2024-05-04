@@ -22,6 +22,8 @@ void TestScene::Initialize()
 
 void TestScene::Update()
 {
+#ifdef _DEBUG
+
 	// •Û‘¶
 	if (ImGui::Button("Save")) {
 		json saveObj;
@@ -42,6 +44,8 @@ void TestScene::Update()
 	if (ImGui::Button("Delete")) {
 		pStage_->DeleteAllStageObject();
 	}
+	ImGui::Separator();
+#endif // _DEBUG
 }
 
 void TestScene::Draw()

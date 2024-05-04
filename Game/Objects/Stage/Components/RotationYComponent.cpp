@@ -23,7 +23,6 @@ void RotationYComponent::Release()
 
 void RotationYComponent::Save(json& _saveObj)
 {
-	_saveObj["type_"] = type_;
 	_saveObj["rotateSpeed_"] = rotateSpeed_;
 }
 

@@ -40,9 +40,7 @@ bool StageObject::DeleteComponent(Component* _comp)
 bool StageObject::DeleteAllComponent()
 {
 	// リスト内にある要素をすべて削除
-	for (auto comp : myComponents_)if(DeleteComponent(comp) == false)return false;
-	myComponents_.clear();
-	return true;
+	myComponents_.clear();return true;
 }
 
 void StageObject::Initialize()
@@ -125,7 +123,6 @@ void StageObject::Load(json& _loadObj)
 void StageObject::DrawData()
 {
 	if (ImGui::TreeNode(objectName_.c_str())) {
-		if(ImGui::Button("Add"))AddComponent(CreateComponent(RotationY, this));
 
 		// 保有するコンポーネントの情報を描画
 		for (auto comp : myComponents_)comp->ChildDrawData();

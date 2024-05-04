@@ -12,7 +12,14 @@ TestScene::TestScene(GameObject * parent)
 //初期化
 void TestScene::Initialize()
 {
+
+	// ステージを作成
 	pStage_ = Instantiate<Stage>(this);
+	
+	// ステージ情報を読込
+	json loadObj;
+	JsonReader::Load("testData.json", loadObj);
+	pStage_->Load(loadObj);
 }
 
 //更新

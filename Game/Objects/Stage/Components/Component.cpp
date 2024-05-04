@@ -3,7 +3,11 @@
 #include "../../../../Engine/ImGui/imgui.h"
 #include "../StageObject.h"
 
+#include "RotationComponent.h"
 #include "RotationYComponent.h"
+#include "RotationXComponent.h"
+#include "RotationZComponent.h"
+#include "MoveXComponent.h"
 
 
 Component::Component(StageObject* _holder, string _name,ComponentType _type)
@@ -41,20 +45,26 @@ void Component::ChildRelease()
 
 void Component::ChildDrawData()
 {
-	// 自身の情報を描画
-	this->DrawData();
+	if (ImGui::TreeNode(this->name_.c_str())) {
+		
+		// 自身の情報を描画
+		this->DrawData();
 
-	// 子コンポーネントの情報を描画
-	for (auto comp : childComponents_)comp->ChildDrawData();
+		// 子コンポーネントの情報を描画
+		for (auto comp : childComponents_) comp->ChildDrawData();
+		
+		ImGui::TreePop();
+	}
 }
 
 void Component::ChildSave(json& _saveObj)
 {
 	// 自身の情報を保存
+	_saveObj["type_"] = type_;
 	this->Save(_saveObj);
 
 	// 子コンポーネントの情報を保存
-	for (auto comp : childComponents_)comp->Save(_saveObj["childComponents_"][comp->GetName()]);
+	for (auto comp : childComponents_)comp->ChildSave(_saveObj["childComponents_"][comp->GetName()]);
 }
 
 void Component::ChildLoad(json& _loadObj)
@@ -63,7 +73,7 @@ void Component::ChildLoad(json& _loadObj)
 	this->Load(_loadObj);
 
 	// 子コンポーネントの情報を読込
-	for (auto comp : childComponents_)comp->Load(_loadObj["childComponents_"][comp->GetName()]);
+	for (auto comp : childComponents_)comp->ChildLoad(_loadObj["childComponents_"][comp->GetName()]);
 }
 
 bool Component::AddChildComponent(Component* _comp)
@@ -101,7 +111,11 @@ Component* CreateComponent(ComponentType _type, StageObject* _holder)
 	// タイプ(識別番号にしたがってコンポーネントを作成)
 	switch (_type)
 	{
-	case RotationY:comp = new RotationYComponent(_holder);break;
+	case Rotation:comp = new RotationComponent(_holder);break;
+	case RotationY:comp = new RotationYComponent(_holder); break;
+	case RotationX:comp = new RotationXComponent(_holder); break;
+	case RotationZ:comp = new RotationZComponent(_holder); break;
+	case MoveX:comp = new MoveXComponent(_holder); break;
 
 	default:/* その他コンポーネントを追加する時は上記のように追加*/ break;
 	}

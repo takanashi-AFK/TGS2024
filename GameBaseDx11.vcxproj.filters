@@ -172,6 +172,12 @@
     <ClCompile Include="Game\Objects\Stage\Components\Component.cpp">
       <Filter>03Game\Objects\Stage\Components</Filter>
     </ClCompile>
+    <ClCompile Include="Engine\ResourceManager\Transition.cpp">
+      <Filter>01Engine\ResourceManager</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Scenes\SplashScene.cpp">
+      <Filter>03Game\Scenes</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Collider\BoxCollider.h">
@@ -302,6 +308,12 @@
     </ClInclude>
     <ClInclude Include="Game\Objects\Stage\Components\Component.h">
       <Filter>03Game\Objects\Stage\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\ResourceManager\Transition.h">
+      <Filter>01Engine\ResourceManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Scenes\SplashScene.h">
+      <Filter>03Game\Scenes</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

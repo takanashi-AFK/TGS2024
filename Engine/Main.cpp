@@ -16,6 +16,7 @@
 #include "DirectX/Input.h"
 #include "ResourceManager/Audio.h"
 #include "ResourceManager/VFX.h"
+#include "ResourceManager/Transition.h"
 
 #include "ImGui/imgui.h"
 #include "ImGui/imgui.h"
@@ -72,6 +73,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	//オーディオ（効果音）の準備
 	Audio::Initialize();
 
+	//トランジションの初期化
+	Transition::Initialize();
 
 	//ルートオブジェクト準備
 	//すべてのゲームオブジェクトの親となるオブジェクト
@@ -145,6 +148,9 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 				//エフェクトの更新
 				VFX::Update();
 
+				//トランジションの更新
+				Transition::Update();
+
 				//このフレームの描画開始
 				Direct3D::BeginDraw();
 
@@ -155,15 +161,15 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 				//エフェクトの描画
 				VFX::Draw();
 
+				//トランジションの描画
+				Transition::Draw();
+
 				//ImGuiの描画
 				ImGui::Render();
 				ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
 
 				//描画終了
 				Direct3D::EndDraw();
-
-
-
 				
 				//ちょっと休ませる
 				Sleep(1);
@@ -177,6 +183,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	ImGui::DestroyContext();
 
 	//いろいろ解放
+	Transition::Release();
 	VFX::Release();
 	Audio::AllRelease();
 	Model::AllRelease();

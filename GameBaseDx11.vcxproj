@@ -133,6 +133,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Engine\ResourceManager\Transition.cpp" />
     <ClCompile Include="Game\Objects\Stage\Components\Component.cpp" />
     <ClCompile Include="Engine\ImGui\imgui.cpp" />
     <ClCompile Include="Engine\ImGui\imgui_draw.cpp" />
@@ -173,8 +174,10 @@
     <ClCompile Include="Game\Objects\Stage\Components\RotationComponents\RotationZComponent.cpp" />
     <ClCompile Include="Game\Objects\Stage\Components\MoveComponents\MoveXComponent.cpp" />
     <ClCompile Include="Game\Objects\Stage\SkySphere.cpp" />
+    <ClCompile Include="Game\Scenes\SplashScene.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Engine\ResourceManager\Transition.h" />
     <ClInclude Include="Game\Objects\Stage\Components\Component.h" />
     <ClInclude Include="Engine\ImGui\imconfig.h" />
     <ClInclude Include="Engine\ImGui\imgui.h" />
@@ -218,6 +221,7 @@
     <ClInclude Include="Game\Objects\Stage\Components\RotationComponents\RotationZComponent.h" />
     <ClInclude Include="Game\Objects\Stage\Components\MoveComponents\MoveXComponent.h" />
     <ClInclude Include="Game\Objects\Stage\SkySphere.h" />
+    <ClInclude Include="Game\Scenes\SplashScene.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Assets\Shader\BillBoard.hlsl">

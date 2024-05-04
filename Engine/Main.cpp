@@ -50,9 +50,6 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	int fpsLimit = GetPrivateProfileInt("GAME", "Fps", 60, ".\\setup.ini");				//FPS（画面更新速度）
 	int isDrawFps = GetPrivateProfileInt("DEBUG", "ViewFps", 0, ".\\setup.ini");		//キャプションに現在のFPSを表示するかどうか
 
-
-
-
 	//ウィンドウを作成
 	HWND hWnd = InitApp(hInstance, screenWidth, screenHeight, nCmdShow);
 
@@ -63,6 +60,16 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	ImGui::CreateContext();
 	ImGui_ImplWin32_Init(hWnd);
 	ImGui_ImplDX11_Init(Direct3D::pDevice_, Direct3D::pContext_);
+
+	// ウィンドウの色を変更する
+	{
+		ImGuiStyle& style = ImGui::GetStyle();
+		style.Colors[ImGuiCol_WindowBg] = ImVec4(0.1f, 0.1f, 0.1f, 1.0f); // RGBAで指定
+		style.Colors[ImGuiCol_TitleBgActive] = ImVec4(0.1f, 0.5f, 0.5f, 1.0f); // RGBAで指定
+		style.Colors[ImGuiCol_TitleBg] = ImVec4(0.1f, 0.2f, 0.2f, 1.0f); // RGBAで指定
+		style.Colors[ImGuiCol_Button] = ImVec4(0.1f, 0.5f, 0.5f, 1.0f); // RGBAで指定
+	}
+
 
 	//カメラを準備
 	Camera::Initialize();

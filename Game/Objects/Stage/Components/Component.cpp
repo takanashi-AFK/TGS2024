@@ -111,6 +111,12 @@ bool Component::DeleteChildComponent(Component* _comp)
 	return true;
 }
 
+bool Component::FindChildComponent(ComponentType _type)
+{
+	for (auto comp : childComponents_) if (comp->type_ == _type)return true;
+	return false;
+}
+
 Component* CreateComponent(ComponentType _type, StageObject* _holder)
 {
 	Component* comp = nullptr;

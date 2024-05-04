@@ -110,6 +110,13 @@ public:
     /// <param name="comp"></param>
     bool DeleteChildComponent(Component* _comp);
 
+    /// <summary>
+    /// 子コンポーネントに該当のタイプのコンポーネントがあるかを探す
+    /// </summary>
+    /// <param name="_type"></param>
+    /// <returns></returns>
+    bool FindChildComponent(ComponentType _type);
+
 /* getter: */
 
     /// <summary>

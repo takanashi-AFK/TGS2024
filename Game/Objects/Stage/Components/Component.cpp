@@ -1,17 +1,18 @@
 #include "Component.h"
 
+// インクルード
 #include "../../../../Engine/ImGui/imgui.h"
 #include "../StageObject.h"
 
+// 作成したコンポーネントのインクルード
 #include "RotationComponents/RotationComponent.h"
 #include "RotationComponents/RotationYComponent.h"
 #include "RotationComponents/RotationXComponent.h"
 #include "RotationComponents/RotationZComponent.h"
 #include "MoveComponents/MoveXComponent.h"
 
-
 Component::Component(StageObject* _holder, string _name,ComponentType _type)
-    :holder_(_holder), name_(_name),type_(_type)
+    :holder_(_holder), name_(_name),type_(_type),childComponents_()
 {
 }
 
@@ -51,8 +52,14 @@ void Component::ChildDrawData()
 		this->DrawData();
 
 		// 子コンポーネントの情報を描画
-		for (auto comp : childComponents_) comp->ChildDrawData();
-		
+		if (childComponents_.empty() == false) {
+			if (ImGui::TreeNode("childComponents_")) {
+				// 子コンポーネントの情報を描画
+				for (auto comp : childComponents_) comp->ChildDrawData();
+
+				ImGui::TreePop();
+			}
+		}
 		ImGui::TreePop();
 	}
 }

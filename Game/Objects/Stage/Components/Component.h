@@ -27,6 +27,7 @@ protected:
     ComponentType type_;                    // コンポーネントタイプ
     StageObject* holder_;                   // コンポ―ネント保有者のポインタ
     vector<Component*> childComponents_;    // 子コンポーネント群
+
 public:
     /// <summary>
     /// コンストラクタ
@@ -53,13 +54,13 @@ public:
     /// <summary>
     /// jsonファイルに現在のデータを保存する純粋仮想関数
     /// </summary>
-    /// <param name="_saveObj">セーブするデータ</param>
+    /// <param name="_saveObj">保存情報</param>
     virtual void Save(json& _saveObj) = 0;
 
     /// <summary>
     /// jsonファイルに現在のデータを保存する純粋仮想関数
     /// </summary>
-    /// <param name="_saveObj">セーブするデータ</param>
+    /// <param name="_saveObj">読込情報</param>
     virtual void Load(json& _loadObj) = 0;
 
     /// <summary>
@@ -109,8 +110,18 @@ public:
     /// <param name="comp"></param>
     bool DeleteChildComponent(Component* _comp);
 
-// getter
-    ComponentType GetType() { return type_; }
+/* getter: */
+
+    /// <summary>
+    /// 識別子を取得
+    /// </summary>
+    /// <returns>コンポーネント識別子</returns>
+    ComponentType GetType() const { return type_; }
+
+    /// <summary>
+    /// 名前を取得
+    /// </summary>
+    /// <returns>コンポーネント名</returns>
     string GetName() { return name_; }
 };
 

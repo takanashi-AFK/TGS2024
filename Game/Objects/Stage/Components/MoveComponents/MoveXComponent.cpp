@@ -1,4 +1,6 @@
 #include "MoveXComponent.h"
+
+// インクルード
 #include "../../StageObject.h"
 #include "../../../../../Engine/ImGui/imgui.h"
 
@@ -32,17 +34,22 @@ void MoveXComponent::Release()
 
 void MoveXComponent::Save(json& _saveObj)
 {
+	// 移動速度を保存
 	_saveObj["moveSpeedX_"] = moveSpeedX_;
 }
 
 void MoveXComponent::Load(json& _loadObj)
 {
+	// 移動速度を読込
 	moveSpeedX_ = _loadObj["moveSpeedX_"];
 }
 
 void MoveXComponent::DrawData()
 {
+	// 移動速度を編集
 	ImGui::DragFloat("moveSpeedX_",&moveSpeedX_,0.1f);
+	
+	// 移動をリセット
 	if (ImGui::Button("reset")) {
 		moveSpeedX_ = 0; holder_->SetPosition(0, 0, 0);
 	}

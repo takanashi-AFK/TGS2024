@@ -1,26 +1,41 @@
 #pragma once
+
+// インクルード
 #include "../../Engine/GameObject/GameObject.h"
 
+// 前方宣言
 class Stage;
 
 //テストシーンを管理するクラス
 class TestScene : public GameObject
 {
-	Stage* pStage_;
+private:
+	Stage* pStage_;	//ステージクラスへのポインタ
+
 public:
-	//コンストラクタ
-	//引数：parent  親オブジェクト（SceneManager）
+	/// <summary>
+	/// コンストラクタ
+	/// </summary>
+	/// <param name="parent">親オブジェクト</param>
 	TestScene(GameObject* parent);
 
-	//初期化
+	/// <summary>
+	/// 初期化
+	/// </summary>
 	void Initialize() override;
 
-	//更新
+	/// <summary>
+	/// 更新
+	/// </summary>
 	void Update() override;
 
-	//描画
+	/// <summary>
+	/// 描画
+	/// </summary>
 	void Draw() override;
 
-	//開放
+	/// <summary>
+	/// 開放
+	/// </summary>
 	void Release() override;
 };

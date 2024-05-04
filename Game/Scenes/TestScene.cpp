@@ -1,18 +1,16 @@
 #include "TestScene.h"
+
+// インクルード
 #include "../Objects/Stage/Stage.h"
 #include "../../Engine/ImGui/imgui.h"
 
-
-//コンストラクタ
 TestScene::TestScene(GameObject * parent)
-	: GameObject(parent, "TestScene")
+	: GameObject(parent, "TestScene"),pStage_(nullptr)
 {
 }
 
-//初期化
 void TestScene::Initialize()
 {
-
 	// ステージを作成
 	pStage_ = Instantiate<Stage>(this);
 	
@@ -22,36 +20,34 @@ void TestScene::Initialize()
 	pStage_->Load(loadObj);
 }
 
-//更新
 void TestScene::Update()
 {
+	// 保存
 	if (ImGui::Button("Save")) {
 		json saveObj;
 		pStage_->Save(saveObj);
 		JsonReader::Save("testData.json", saveObj);
 	}
-
 	ImGui::SameLine();
 
+	// 読込
 	if (ImGui::Button("Load")) {
 		json loadObj;
 		JsonReader::Load("testData.json", loadObj);
 		pStage_->Load(loadObj);
 	}
-
 	ImGui::SameLine();
 
+	// 削除
 	if (ImGui::Button("Delete")) {
 		pStage_->DeleteAllStageObject();
 	}
 }
 
-//描画
 void TestScene::Draw()
 {
 }
 
-//開放
 void TestScene::Release()
 {
 }

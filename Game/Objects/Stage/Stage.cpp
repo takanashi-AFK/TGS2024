@@ -1,8 +1,10 @@
 #include "Stage.h"
+
+// インクルード
 #include "StageObject.h"
 
 Stage::Stage(GameObject* _parent)
-	:GameObject(_parent,"Stage")
+	:GameObject(_parent,"Stage"),objects_()
 {
 }
 

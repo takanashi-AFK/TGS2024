@@ -8,7 +8,7 @@
 #define REFERENCE_XMFLOAT3(p) p.x,p.y,p.z // XMFLOAT3型の変数をコンマ区切りで表示する
 
 StageObject::StageObject(string _name, string _modelFilePath, GameObject* _parent)
-	:GameObject(_parent,_name),modelFilePath_(_modelFilePath),modelHandle_(-1)
+	:GameObject(_parent,_name),modelFilePath_(_modelFilePath),modelHandle_(-1),myComponents_()
 {
 }
 
@@ -124,8 +124,22 @@ void StageObject::DrawData()
 {
 	if (ImGui::TreeNode(objectName_.c_str())) {
 
+		// 自身の変形情報を描画
+		if (ImGui::TreeNode("transform_")) {
+			ImGui::DragFloat3("position_", &transform_.position_.x, 0.1f);
+			ImGui::DragFloat3("rotate_", &transform_.rotate_.x, 1.f,-360.f,360.f);
+			ImGui::DragFloat3("scale_", &transform_.scale_.x, 0.1f,0.f,LONG_MAX);
+			ImGui::TreePop();
+		}
+
 		// 保有するコンポーネントの情報を描画
-		for (auto comp : myComponents_)comp->ChildDrawData();
+		if (myComponents_.empty() == false) {
+			if (ImGui::TreeNode("myComponents_")) {
+				for (auto comp : myComponents_)comp->ChildDrawData();
+				ImGui::TreePop();
+			}
+		}
+
 		ImGui::TreePop();
 	}
 }

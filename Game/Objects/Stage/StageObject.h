@@ -15,6 +15,7 @@ private:
     vector<Component*> myComponents_;   // 自身が保有するコンポーネント群
     string modelFilePath_;              // モデルのファイルパス
     int modelHandle_;                   // モデル番号
+
 public:
     /// <summary>
     /// コンストラクタ

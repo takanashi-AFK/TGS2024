@@ -6,8 +6,8 @@
 #include "ResourceManager/Audio.h"
 
 // 各シーン のインクルード
-#include "../Game/Scenes/TestScene.h"
-#include "../Game/Scenes/SplashScene.h"
+#include "../Game/Scenes/Scene_Test.h"
+#include "../Game/Scenes/Scene_Splash.h"
 
 //コンストラクタ
 SceneManager::SceneManager(GameObject * parent)
@@ -22,7 +22,7 @@ void SceneManager::Initialize()
 #ifdef _DEBUG
 	currentSceneID_ = SCENE_ID_TEST;
 	nextSceneID_ = currentSceneID_;
-	Instantiate<TestScene>(this);
+	Instantiate<Scene_Test>(this);
 #else
 	currentSceneID_ = SCENE_ID_SPLASH;
 	nextSceneID_ = currentSceneID_;
@@ -51,8 +51,8 @@ void SceneManager::Update()
 		//次のシーンを作成
 		switch (nextSceneID_)
 		{
-		case SCENE_ID_TEST: Instantiate<TestScene>(this); break;
-		case SCENE_ID_SPLASH: Instantiate<SplashScene>(this); break;
+		case SCENE_ID_TEST: Instantiate<Scene_Test>(this); break;
+		case SCENE_ID_SPLASH: Instantiate<Scene_Splash>(this); break;
 		}
 		Audio::Initialize();
 		currentSceneID_ = nextSceneID_;

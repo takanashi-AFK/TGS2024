@@ -7,7 +7,7 @@
 class Stage;
 
 //テストシーンを管理するクラス
-class TestScene : public GameObject
+class Scene_Test : public GameObject
 {
 private:
 	Stage* pStage_;	//ステージクラスへのポインタ
@@ -17,7 +17,7 @@ public:
 	/// コンストラクタ
 	/// </summary>
 	/// <param name="parent">親オブジェクト</param>
-	TestScene(GameObject* parent);
+	Scene_Test(GameObject* parent);
 
 	/// <summary>
 	/// 初期化

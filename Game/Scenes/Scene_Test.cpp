@@ -1,4 +1,4 @@
-#include "TestScene.h"
+#include "Scene_Test.h"
 
 // インクルード
 #include "../Objects/Stage/Stage.h"
@@ -6,12 +6,12 @@
 #include "../Objects/Stage/SkySphere.h"
 #include "../Otheres/StageEditor.h"
 
-TestScene::TestScene(GameObject * parent)
-	: GameObject(parent, "TestScene"),pStage_(nullptr)
+Scene_Test::Scene_Test(GameObject * parent)
+	: GameObject(parent, "Scene_Test"),pStage_(nullptr)
 {
 }
 
-void TestScene::Initialize()
+void Scene_Test::Initialize()
 {
 	// スカイスフィアを標準で生成
 	Instantiate<SkySphere>(this);
@@ -34,14 +34,14 @@ void TestScene::Initialize()
 #endif // _DEBUG
 }
 
-void TestScene::Update()
+void Scene_Test::Update()
 {
 }
 
-void TestScene::Draw()
+void Scene_Test::Draw()
 {
 }
 
-void TestScene::Release()
+void Scene_Test::Release()
 {
 }

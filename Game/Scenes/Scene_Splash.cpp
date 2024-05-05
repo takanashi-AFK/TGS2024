@@ -1,4 +1,4 @@
-#include "SplashScene.h"
+#include "Scene_Splash.h"
 
 // インクルード
 #include "../../Engine/ResourceManager/Image.h"
@@ -11,12 +11,12 @@ namespace {
 	const float IMAGE_REDUCTION_RATE = 0.67f;	// スプラッシュ画像の縮小倍率
 }
 
-SplashScene::SplashScene(GameObject* _parent)
-	:GameObject(_parent,"SplashScene"),imageHandle_(-1),count_(0)
+Scene_Splash::Scene_Splash(GameObject* _parent)
+	:GameObject(_parent,"Scene_Splash"),imageHandle_(-1),count_(0)
 {
 }
 
-void SplashScene::Initialize()
+void Scene_Splash::Initialize()
 {
 	// 画像の読込
 	imageHandle_ = Image::Load("Images/splash_Image_dungeon_Path.png");
@@ -26,7 +26,7 @@ void SplashScene::Initialize()
 	transform_.scale_ = { IMAGE_REDUCTION_RATE,IMAGE_REDUCTION_RATE,1.f };
 }
 
-void SplashScene::Update()
+void Scene_Splash::Update()
 {
 	// n秒経過したらシーンを移動
 	if (count_ >= LIMIT_TIME * FPS)((SceneManager*)FindObject("SceneManager"))->ChangeScene(SCENE_ID_TEST, TID_BLACKOUT);
@@ -35,13 +35,13 @@ void SplashScene::Update()
 	count_++;
 }
 
-void SplashScene::Draw()
+void Scene_Splash::Draw()
 {
 	// 画像の描画
 	Image::SetTransform(imageHandle_,transform_);
 	Image::Draw(imageHandle_);
 }
 
-void SplashScene::Release()
+void Scene_Splash::Release()
 {
 }

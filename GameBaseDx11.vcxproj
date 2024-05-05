@@ -167,14 +167,14 @@
     <ClCompile Include="Engine\GameObject\Transform.cpp" />
     <ClCompile Include="Game\Objects\Stage\Components\RotationComponents\RotationYComponent.cpp" />
     <ClCompile Include="Game\Objects\Stage\StageObject.cpp" />
-    <ClCompile Include="Game\Scenes\TestScene.cpp" />
+    <ClCompile Include="Game\Scenes\Scene_Test.cpp" />
     <ClCompile Include="Game\Objects\Stage\Stage.cpp" />
     <ClCompile Include="Game\Objects\Stage\Components\RotationComponents\RotationComponent.cpp" />
     <ClCompile Include="Game\Objects\Stage\Components\RotationComponents\RotationXComponent.cpp" />
     <ClCompile Include="Game\Objects\Stage\Components\RotationComponents\RotationZComponent.cpp" />
     <ClCompile Include="Game\Objects\Stage\Components\MoveComponents\MoveXComponent.cpp" />
     <ClCompile Include="Game\Objects\Stage\SkySphere.cpp" />
-    <ClCompile Include="Game\Scenes\SplashScene.cpp" />
+    <ClCompile Include="Game\Scenes\Scene_Splash.cpp" />
     <ClCompile Include="Game\Otheres\StageEditor.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -215,14 +215,14 @@
     <ClInclude Include="Engine\GameObject\Transform.h" />
     <ClInclude Include="Game\Objects\Stage\Components\RotationComponents\RotationYComponent.h" />
     <ClInclude Include="Game\Objects\Stage\StageObject.h" />
-    <ClInclude Include="Game\Scenes\TestScene.h" />
+    <ClInclude Include="Game\Scenes\Scene_Test.h" />
     <ClInclude Include="Game\Objects\Stage\Stage.h" />
     <ClInclude Include="Game\Objects\Stage\Components\RotationComponents\RotationComponent.h" />
     <ClInclude Include="Game\Objects\Stage\Components\RotationComponents\RotationXComponent.h" />
     <ClInclude Include="Game\Objects\Stage\Components\RotationComponents\RotationZComponent.h" />
     <ClInclude Include="Game\Objects\Stage\Components\MoveComponents\MoveXComponent.h" />
     <ClInclude Include="Game\Objects\Stage\SkySphere.h" />
-    <ClInclude Include="Game\Scenes\SplashScene.h" />
+    <ClInclude Include="Game\Scenes\Scene_Splash.h" />
     <ClInclude Include="Game\Otheres\StageEditor.h" />
   </ItemGroup>
   <ItemGroup>

@@ -4,7 +4,7 @@
 #include "../../Engine/GameObject/GameObject.h"
 
 // スプラッシュシーンを管理するクラス
-class SplashScene : public GameObject
+class Scene_Splash : public GameObject
 {
 private:
 	int imageHandle_;	// 画像番号
@@ -14,7 +14,7 @@ public:
 	/// コンストラクタ
 	/// </summary>
 	/// <param name="_parent">親オブジェクト</param>
-	SplashScene(GameObject* _parent);
+	Scene_Splash(GameObject* _parent);
 
 	/// <summary>
 	/// 初期化

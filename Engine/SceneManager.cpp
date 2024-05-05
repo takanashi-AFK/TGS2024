@@ -26,7 +26,7 @@ void SceneManager::Initialize()
 #else
 	currentSceneID_ = SCENE_ID_SPLASH;
 	nextSceneID_ = currentSceneID_;
-	Instantiate<SplashScene>(this);
+	Instantiate<Scene_Splash>(this);
 #endif // _DEBUG
 
 }

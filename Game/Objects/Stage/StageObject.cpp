@@ -3,6 +3,7 @@
 // インクルード
 #include "../../../Engine/ResourceManager/Model.h"
 #include "../../../Engine/ImGui/imgui.h"
+#include "Stage.h"
 
 // マクロ
 #define REFERENCE_XMFLOAT3(p) p.x,p.y,p.z // XMFLOAT3型の変数をコンマ区切りで表示する
@@ -120,6 +121,9 @@ void StageObject::Load(json& _loadObj)
 void StageObject::DrawData()
 {
 	if (ImGui::TreeNode(objectName_.c_str())) {
+
+		ImGui::SameLine();
+		if (ImGui::SmallButton("delete")) ((Stage*)FindObject("Stage"))->DeleteStageObject(this);
 
 		// 自身の変形情報を描画
 		if (ImGui::TreeNode("transform_")) {

@@ -7,7 +7,8 @@
 // 定数
 namespace {
 	const float FPS = 60.f;			// フレームレート
-	const float LIMIT_TIME = 0.5f;	// シーンを切り替えるまでに掛かる時間（秒）
+	const float LIMIT_TIME = 1.f;	// シーンを切り替えるまでに掛かる時間（秒）
+	const float IMAGE_REDUCTION_RATE = 0.67f;	// スプラッシュ画像の縮小倍率
 }
 
 SplashScene::SplashScene(GameObject* _parent)
@@ -18,8 +19,11 @@ SplashScene::SplashScene(GameObject* _parent)
 void SplashScene::Initialize()
 {
 	// 画像の読込
-	imageHandle_ = Image::Load("Images/splash_Image.png");
+	imageHandle_ = Image::Load("Images/splash_Image_dungeon_Path.png");
 	assert(imageHandle_ >= 0);
+
+	// 画像サイズを指定
+	transform_.scale_ = { IMAGE_REDUCTION_RATE,IMAGE_REDUCTION_RATE,1.f };
 }
 
 void SplashScene::Update()

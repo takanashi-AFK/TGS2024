@@ -24,40 +24,18 @@ void TestScene::Initialize()
 	JsonReader::Load("Datas/testData.json", loadObj);
 	pStage_->Load(loadObj);
 
+#ifdef _DEBUG
 	// ステージエディターを実行
 	StageEditor* pSe = Instantiate<StageEditor>(this); {
 
 		// 編集対象を設定
 		pSe->SetEditTarget(pStage_);
 	}
+#endif // _DEBUG
 }
 
 void TestScene::Update()
 {
-#ifdef _DEBUG
-
-	//// 保存
-	//if (ImGui::Button("Save")) {
-	//	json saveObj;
-	//	pStage_->Save(saveObj);
-	//	JsonReader::Save("Datas/testData.json", saveObj);
-	//}
-	//ImGui::SameLine();
-
-	//// 読込
-	//if (ImGui::Button("Load")) {
-	//	json loadObj;
-	//	JsonReader::Load("Datas/testData.json", loadObj);
-	//	pStage_->Load(loadObj);
-	//}
-	//ImGui::SameLine();
-
-	//// 削除
-	//if (ImGui::Button("Delete")) {
-	//	pStage_->DeleteAllStageObject();
-	//}
-	//ImGui::Separator();
-#endif // _DEBUG
 }
 
 void TestScene::Draw()

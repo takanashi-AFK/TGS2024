@@ -8,7 +8,7 @@ class SplashScene : public GameObject
 {
 private:
 	int imageHandle_;	// 画像番号
-	float count_;
+	float count_;		// 経過時間
 public:
 	/// <summary>
 	/// コンストラクタ

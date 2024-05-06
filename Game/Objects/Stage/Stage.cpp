@@ -10,6 +10,7 @@ Stage::Stage(GameObject* _parent)
 
 void Stage::Initialize()
 {
+	
 }
 
 void Stage::Update()

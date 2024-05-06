@@ -1,32 +1,29 @@
 #pragma once
-
-// インクルード
 #include "../Component.h"
 
-// X軸回転を行うコンポーネントのクラス
-class RotationXComponent : public Component
+// X方向に平行移動を行うコンポーネントのクラス
+class Component_MoveX : public Component
 {
 private:
-	float rotateSpeed_;	// 回転速度
-	float angle_;		// 角度
+	float moveSpeedX_;	// 移動速度
 
 public:
 	/// <summary>
 	/// コンストラクタ
 	/// </summary>
 	/// <param name="_holeder">保有者</param>
-	RotationXComponent(StageObject* _holeder);
+	Component_MoveX(StageObject* _holeder);
 
 	/// <summary>
 	/// 初期化
 	/// </summary>
 	void Initialize() override;
-
+	
 	/// <summary>
 	/// 更新
 	/// </summary>
 	void Update() override;
-
+	
 	/// <summary>
 	/// 開放
 	/// </summary>
@@ -43,7 +40,7 @@ public:
 	/// </summary>
 	/// <param name="_loadObj">読込情報</param>
 	void Load(json& _loadObj) override;
-
+	
 	/// <summary>
 	/// ImGui表示
 	/// </summary>

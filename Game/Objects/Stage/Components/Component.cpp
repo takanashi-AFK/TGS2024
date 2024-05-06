@@ -5,11 +5,11 @@
 #include "../StageObject.h"
 
 // 作成したコンポーネントのインクルード
-#include "RotationComponents/RotationComponent.h"
-#include "RotationComponents/RotationYComponent.h"
-#include "RotationComponents/RotationXComponent.h"
-#include "RotationComponents/RotationZComponent.h"
-#include "MoveComponents/MoveXComponent.h"
+#include "RotationComponents/Component_Rotation.h"
+#include "RotationComponents/Component_RotationY.h"
+#include "RotationComponents/Component_RotationX.h"
+#include "RotationComponents/Component_RotationZ.h"
+#include "MoveComponents/Component_MoveX.h"
 
 Component::Component(StageObject* _holder, string _name,ComponentType _type)
     :holder_(_holder), name_(_name),type_(_type),childComponents_()
@@ -124,11 +124,11 @@ Component* CreateComponent(ComponentType _type, StageObject* _holder)
 	// タイプ(識別番号にしたがってコンポーネントを作成)
 	switch (_type)
 	{
-	case Rotation:comp = new RotationComponent(_holder);break;
-	case RotationY:comp = new RotationYComponent(_holder); break;
-	case RotationX:comp = new RotationXComponent(_holder); break;
-	case RotationZ:comp = new RotationZComponent(_holder); break;
-	case MoveX:comp = new MoveXComponent(_holder); break;
+	case Rotation:comp = new Component_Rotation(_holder);break;
+	case RotationY:comp = new Component_RotationY(_holder); break;
+	case RotationX:comp = new Component_RotationX(_holder); break;
+	case RotationZ:comp = new Component_RotationZ(_holder); break;
+	case MoveX:comp = new Component_MoveX(_holder); break;
 
 	default:/* その他コンポーネントを追加する時は上記のように追加*/ break;
 	}

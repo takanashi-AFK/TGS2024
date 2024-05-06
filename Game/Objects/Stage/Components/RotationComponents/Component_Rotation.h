@@ -4,14 +4,14 @@
 #include "../Component.h"
 
 // 全軸回転を行うコンポーネントのクラス
-class RotationComponent : public Component
+class Component_Rotation : public Component
 {
 public:
 	/// <summary>
 	/// コンストラクタ
 	/// </summary>
 	/// <param name="_holeder">保有者</param>
-	RotationComponent(StageObject* _holeder);
+	Component_Rotation(StageObject* _holeder);
 	
 	/// <summary>
 	/// 初期化

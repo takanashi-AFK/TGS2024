@@ -1,21 +1,21 @@
-#include "RotationYComponent.h"
+#include "Component_RotationX.h"
 
 // インクルード
 #include "../../StageObject.h"
 #include "../../../../../Engine/ImGui/imgui.h"
 
-RotationYComponent::RotationYComponent(StageObject* _holeder)
-	:Component(_holeder,"RotationYComponent",RotationY),angle_(0),rotateSpeed_(0)
+Component_RotationX::Component_RotationX(StageObject* _holeder)
+	:Component(_holeder,"Component_RotationX",RotationX), angle_(0), rotateSpeed_(0)
 {
 }
 
-void RotationYComponent::Initialize()
+void Component_RotationX::Initialize()
 {
 }
 
-void RotationYComponent::Update()
+void Component_RotationX::Update()
 {
-	// Ｙ軸に回転させる
+	// X軸に回転させる
 	angle_ += rotateSpeed_;
 
 	// 回転速度の値が正の値である かつ 角度が360度を上回った時、角度を０に戻す
@@ -25,14 +25,14 @@ void RotationYComponent::Update()
 	if (std::signbit(rotateSpeed_) && angle_ <= -360.f)angle_ = 0.f;
 
 	// 回転速度が０ではない時、角度を適応させる
-	if (rotateSpeed_ != 0.f)holder_->SetRotateY(angle_);
+	if (rotateSpeed_ != 0.f)holder_->SetRotateX(angle_);
 }
 
-void RotationYComponent::Release()
+void Component_RotationX::Release()
 {
 }
 
-void RotationYComponent::Save(json& _saveObj)
+void Component_RotationX::Save(json& _saveObj)
 {
 	// 回転速度を保存
 	_saveObj["rotateSpeed_"] = rotateSpeed_;
@@ -41,7 +41,7 @@ void RotationYComponent::Save(json& _saveObj)
 	_saveObj["angle_"] = angle_;
 }
 
-void RotationYComponent::Load(json& _loadObj)
+void Component_RotationX::Load(json& _loadObj)
 {
 	// 回転速度を読込
 	rotateSpeed_ = _loadObj["rotateSpeed_"];
@@ -50,8 +50,8 @@ void RotationYComponent::Load(json& _loadObj)
 	angle_ = _loadObj["angle_"];
 }
 
-void RotationYComponent::DrawData()
+void Component_RotationX::DrawData()
 {
 	// 回転速度を表示
-	ImGui::DragFloat("rotateSpeed_", &rotateSpeed_,0.1f);
+	ImGui::DragFloat("rotateSpeed_", &rotateSpeed_, 0.1f);
 }

@@ -4,7 +4,7 @@
 #include "../Component.h"
 
 // Y軸回転を行うコンポーネントのクラス
-class RotationYComponent : public Component
+class Component_RotationY : public Component
 {
 private:
 	float rotateSpeed_;	// 回転速度
@@ -15,7 +15,7 @@ public:
 	/// コンストラクタ
 	/// </summary>
 	/// <param name="_holeder">保有者</param>
-	RotationYComponent(StageObject* _holeder);
+	Component_RotationY(StageObject* _holeder);
 	
 	/// <summary>
 	/// 初期化

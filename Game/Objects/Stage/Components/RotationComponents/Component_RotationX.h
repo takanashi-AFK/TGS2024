@@ -3,8 +3,8 @@
 // インクルード
 #include "../Component.h"
 
-// Z軸回転を行うコンポーネントのクラス
-class RotationZComponent : public Component
+// X軸回転を行うコンポーネントのクラス
+class Component_RotationX : public Component
 {
 private:
 	float rotateSpeed_;	// 回転速度
@@ -15,18 +15,18 @@ public:
 	/// コンストラクタ
 	/// </summary>
 	/// <param name="_holeder">保有者</param>
-	RotationZComponent(StageObject* _holeder);
+	Component_RotationX(StageObject* _holeder);
 
 	/// <summary>
 	/// 初期化
 	/// </summary>
 	void Initialize() override;
-	
+
 	/// <summary>
 	/// 更新
 	/// </summary>
 	void Update() override;
-	
+
 	/// <summary>
 	/// 開放
 	/// </summary>

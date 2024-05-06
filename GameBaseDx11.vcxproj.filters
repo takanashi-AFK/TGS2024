@@ -148,28 +148,25 @@
     <ClCompile Include="Game\Objects\Stage\Stage.cpp">
       <Filter>03Game\Objects\Stage</Filter>
     </ClCompile>
-    <ClCompile Include="Game\Scenes\TestScene.cpp">
-      <Filter>03Game\Scenes</Filter>
-    </ClCompile>
     <ClCompile Include="Game\Objects\Stage\SkySphere.cpp">
       <Filter>03Game\Objects\Stage\StageObjects</Filter>
     </ClCompile>
     <ClCompile Include="Game\Objects\Stage\StageObject.cpp">
       <Filter>03Game\Objects\Stage\StageObjects</Filter>
     </ClCompile>
-    <ClCompile Include="Game\Objects\Stage\Components\MoveComponents\MoveXComponent.cpp">
+    <ClCompile Include="Game\Objects\Stage\Components\MoveComponents\Component_MoveX.cpp">
       <Filter>03Game\Objects\Stage\Components\MoveComponents</Filter>
     </ClCompile>
-    <ClCompile Include="Game\Objects\Stage\Components\RotationComponents\RotationComponent.cpp">
+    <ClCompile Include="Game\Objects\Stage\Components\RotationComponents\Component_Rotation.cpp">
       <Filter>03Game\Objects\Stage\Components\RotationComponents</Filter>
     </ClCompile>
-    <ClCompile Include="Game\Objects\Stage\Components\RotationComponents\RotationXComponent.cpp">
+    <ClCompile Include="Game\Objects\Stage\Components\RotationComponents\Component_RotationX.cpp">
       <Filter>03Game\Objects\Stage\Components\RotationComponents</Filter>
     </ClCompile>
-    <ClCompile Include="Game\Objects\Stage\Components\RotationComponents\RotationYComponent.cpp">
+    <ClCompile Include="Game\Objects\Stage\Components\RotationComponents\Component_RotationY.cpp">
       <Filter>03Game\Objects\Stage\Components\RotationComponents</Filter>
     </ClCompile>
-    <ClCompile Include="Game\Objects\Stage\Components\RotationComponents\RotationZComponent.cpp">
+    <ClCompile Include="Game\Objects\Stage\Components\RotationComponents\Component_RotationZ.cpp">
       <Filter>03Game\Objects\Stage\Components\RotationComponents</Filter>
     </ClCompile>
     <ClCompile Include="Game\Objects\Stage\Components\Component.cpp">
@@ -178,11 +175,14 @@
     <ClCompile Include="Engine\ResourceManager\Transition.cpp">
       <Filter>01Engine\ResourceManager</Filter>
     </ClCompile>
-    <ClCompile Include="Game\Scenes\SplashScene.cpp">
-      <Filter>03Game\Scenes</Filter>
-    </ClCompile>
     <ClCompile Include="Game\Otheres\StageEditor.cpp">
       <Filter>03Game\Otheres</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Scenes\Scene_Splash.cpp">
+      <Filter>03Game\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Scenes\Scene_Test.cpp">
+      <Filter>03Game\Scenes</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -288,28 +288,25 @@
     <ClInclude Include="Game\Objects\Stage\Stage.h">
       <Filter>03Game\Objects\Stage</Filter>
     </ClInclude>
-    <ClInclude Include="Game\Scenes\TestScene.h">
-      <Filter>03Game\Scenes</Filter>
-    </ClInclude>
     <ClInclude Include="Game\Objects\Stage\SkySphere.h">
       <Filter>03Game\Objects\Stage\StageObjects</Filter>
     </ClInclude>
     <ClInclude Include="Game\Objects\Stage\StageObject.h">
       <Filter>03Game\Objects\Stage\StageObjects</Filter>
     </ClInclude>
-    <ClInclude Include="Game\Objects\Stage\Components\MoveComponents\MoveXComponent.h">
+    <ClInclude Include="Game\Objects\Stage\Components\MoveComponents\Component_MoveX.h">
       <Filter>03Game\Objects\Stage\Components\MoveComponents</Filter>
     </ClInclude>
-    <ClInclude Include="Game\Objects\Stage\Components\RotationComponents\RotationComponent.h">
+    <ClInclude Include="Game\Objects\Stage\Components\RotationComponents\Component_Rotation.h">
       <Filter>03Game\Objects\Stage\Components\RotationComponents</Filter>
     </ClInclude>
-    <ClInclude Include="Game\Objects\Stage\Components\RotationComponents\RotationXComponent.h">
+    <ClInclude Include="Game\Objects\Stage\Components\RotationComponents\Component_RotationX.h">
       <Filter>03Game\Objects\Stage\Components\RotationComponents</Filter>
     </ClInclude>
-    <ClInclude Include="Game\Objects\Stage\Components\RotationComponents\RotationYComponent.h">
+    <ClInclude Include="Game\Objects\Stage\Components\RotationComponents\Component_RotationY.h">
       <Filter>03Game\Objects\Stage\Components\RotationComponents</Filter>
     </ClInclude>
-    <ClInclude Include="Game\Objects\Stage\Components\RotationComponents\RotationZComponent.h">
+    <ClInclude Include="Game\Objects\Stage\Components\RotationComponents\Component_RotationZ.h">
       <Filter>03Game\Objects\Stage\Components\RotationComponents</Filter>
     </ClInclude>
     <ClInclude Include="Game\Objects\Stage\Components\Component.h">
@@ -318,11 +315,14 @@
     <ClInclude Include="Engine\ResourceManager\Transition.h">
       <Filter>01Engine\ResourceManager</Filter>
     </ClInclude>
-    <ClInclude Include="Game\Scenes\SplashScene.h">
-      <Filter>03Game\Scenes</Filter>
-    </ClInclude>
     <ClInclude Include="Game\Otheres\StageEditor.h">
       <Filter>03Game\Otheres</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Scenes\Scene_Splash.h">
+      <Filter>03Game\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Scenes\Scene_Test.h">
+      <Filter>03Game\Scenes</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

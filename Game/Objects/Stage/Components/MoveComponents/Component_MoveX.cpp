@@ -1,19 +1,19 @@
-#include "MoveXComponent.h"
+#include "Component_MoveX.h"
 
 // インクルード
 #include "../../StageObject.h"
 #include "../../../../../Engine/ImGui/imgui.h"
 
-MoveXComponent::MoveXComponent(StageObject* _holeder)
-	:Component(_holeder,"MoveXComponent",MoveX),moveSpeedX_(0)
+Component_MoveX::Component_MoveX(StageObject* _holeder)
+	:Component(_holeder,"Component_MoveX",MoveX),moveSpeedX_(0)
 {
 }
 
-void MoveXComponent::Initialize()
+void Component_MoveX::Initialize()
 {
 }
 
-void MoveXComponent::Update()
+void Component_MoveX::Update()
 {
 	// 現在の位置を取得
 	XMFLOAT3 position = holder_->GetPosition();
@@ -28,23 +28,23 @@ void MoveXComponent::Update()
 	holder_->SetPosition(position);
 }
 
-void MoveXComponent::Release()
+void Component_MoveX::Release()
 {
 }
 
-void MoveXComponent::Save(json& _saveObj)
+void Component_MoveX::Save(json& _saveObj)
 {
 	// 移動速度を保存
 	_saveObj["moveSpeedX_"] = moveSpeedX_;
 }
 
-void MoveXComponent::Load(json& _loadObj)
+void Component_MoveX::Load(json& _loadObj)
 {
 	// 移動速度を読込
 	moveSpeedX_ = _loadObj["moveSpeedX_"];
 }
 
-void MoveXComponent::DrawData()
+void Component_MoveX::DrawData()
 {
 	// 移動速度を編集
 	ImGui::DragFloat("moveSpeedX_",&moveSpeedX_,0.1f);

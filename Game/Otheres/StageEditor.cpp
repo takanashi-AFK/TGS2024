@@ -62,7 +62,7 @@ void StageEditor::DrawWorldOutLiner()
 
 	// 固定ウィンドウを表示
 	ImGui::Begin("World Outliner", NULL,
-		ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoCollapse); 
+		ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoCollapse| ImGuiWindowFlags_AlwaysHorizontalScrollbar);
 	{
 		ImGui::Text("object menu");
 

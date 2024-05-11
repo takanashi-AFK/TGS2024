@@ -10,7 +10,10 @@ Stage::Stage(GameObject* _parent)
 
 void Stage::Initialize()
 {
-	
+	StageObject* obj = CreateStageObject("Timer", "Models/DebugCollision/BoxCollider.fbx", this);
+	obj->AddComponent(CreateComponent(ComponentType::Timer, obj));
+
+	this->AddStageObject(obj);
 }
 
 void Stage::Update()

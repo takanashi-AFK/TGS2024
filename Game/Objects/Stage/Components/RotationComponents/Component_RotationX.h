@@ -14,8 +14,8 @@ public:
 	/// <summary>
 	/// コンストラクタ
 	/// </summary>
-	/// <param name="_holeder">保有者</param>
-	Component_RotationX(StageObject* _holeder);
+	/// <param name="_holder">保有者</param>
+	Component_RotationX(StageObject* _holder);
 
 	/// <summary>
 	/// 初期化

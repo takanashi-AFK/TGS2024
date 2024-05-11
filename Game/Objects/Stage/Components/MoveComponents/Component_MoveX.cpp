@@ -4,8 +4,8 @@
 #include "../../StageObject.h"
 #include "../../../../../Engine/ImGui/imgui.h"
 
-Component_MoveX::Component_MoveX(StageObject* _holeder)
-	:Component(_holeder,"Component_MoveX",MoveX),moveSpeedX_(0)
+Component_MoveX::Component_MoveX(StageObject* _holder)
+	:Component(_holder,"Component_MoveX",MoveX),moveSpeedX_(0)
 {
 }
 

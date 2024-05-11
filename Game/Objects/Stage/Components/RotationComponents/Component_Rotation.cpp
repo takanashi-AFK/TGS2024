@@ -1,7 +1,7 @@
 #include "Component_Rotation.h"
 
-Component_Rotation::Component_Rotation(StageObject* _holeder)
-	:Component(_holeder,"Component_Rotation",Rotation)
+Component_Rotation::Component_Rotation(StageObject* _holder)
+	:Component(_holder,"Component_Rotation",Rotation)
 {
 }
 

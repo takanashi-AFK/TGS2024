@@ -10,6 +10,8 @@
 #include "RotationComponents/Component_RotationX.h"
 #include "RotationComponents/Component_RotationZ.h"
 #include "MoveComponents/Component_MoveX.h"
+#include "DetectorComponents/Component_CircleRangeDetector.h"
+
 
 Component::Component(StageObject* _holder, string _name,ComponentType _type)
     :holder_(_holder), name_(_name),type_(_type),childComponents_()
@@ -129,6 +131,7 @@ Component* CreateComponent(ComponentType _type, StageObject* _holder)
 	case RotationX:comp = new Component_RotationX(_holder); break;
 	case RotationZ:comp = new Component_RotationZ(_holder); break;
 	case MoveX:comp = new Component_MoveX(_holder); break;
+	case CircleRangeDetector:comp = new Component_CircleRangeDetector(_holder); break;
 
 	default:/* その他コンポーネントを追加する時は上記のように追加*/ break;
 	}

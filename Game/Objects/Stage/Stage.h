@@ -79,5 +79,7 @@ public:
 	/// リスト内のオブジェクトをすべて削除
 	/// </summary>
 	void DeleteAllStageObject();
+
+	vector<StageObject*>& GetStageObjects() { return objects_; }
 };
 

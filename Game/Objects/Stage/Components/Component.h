@@ -17,6 +17,7 @@ enum ComponentType {
     RotationZ,
     MoveX,
 	CircleRangeDetector,
+    OtiBehavior
     // コンポーネント追加時に識別番号を追加
 };
 
@@ -131,6 +132,13 @@ public:
     /// </summary>
     /// <returns>コンポーネント名</returns>
     string GetName() { return name_; }
+
+    /// <summary>
+    /// 子コンポーネントを取得
+    /// </summary>
+    /// <param name="_type">識別子</param>
+    /// <returns>子コンポーネント</returns>
+    Component* GetChildComponent(ComponentType _type);
 };
 
 /// <summary>

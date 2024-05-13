@@ -10,7 +10,14 @@ Stage::Stage(GameObject* _parent)
 
 void Stage::Initialize()
 {
-	
+	// デバッグ用のオブジェクトを生成
+	StageObject* obj = CreateStageObject("DetectorObject", "Models/DebugCollision/BoxCollider.fbx", this);
+	obj->AddComponent(CreateComponent(OtiBehavior, obj));
+	AddStageObject(obj);
+
+	// デバッグ用のオブジェクトを生成
+	obj = CreateStageObject("TargetObject", "Models/DebugCollision/SphereCollider.fbx", this);
+	AddStageObject(obj);
 }
 
 void Stage::Update()

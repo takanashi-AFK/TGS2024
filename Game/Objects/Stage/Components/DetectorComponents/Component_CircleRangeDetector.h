@@ -25,12 +25,8 @@ public:
 
 // getter
 	float GetRadius() { return radius_; }
-	bool IsContains() { return isContains_; }
 	StageObject* GetTarget() { return target_; }
-
-private:
-	// ”ÍˆÍ“à‚É“ü‚Á‚Ä‚¢‚é‚©‚Ç‚¤‚©‚ð”»’è
-	bool Contains();
+	bool IsContains();
 
 };
 

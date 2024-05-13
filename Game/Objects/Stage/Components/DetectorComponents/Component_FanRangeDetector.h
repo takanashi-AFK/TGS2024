@@ -12,6 +12,8 @@ private:
 	float length_;			// ’·‚³
 	float angle_;			// Šp“x
 	XMVECTOR direction_;	// •ûŒü
+	bool isContains_;		// “–‚½‚è”»’èƒtƒ‰ƒO
+
 public:
 	Component_FanRangeDetector(StageObject* _holder);
 
@@ -23,8 +25,7 @@ public:
 	void Load(json& _loadObj) override;
 	void DrawData() override;
 
-private:
 	// ”ÍˆÍ“à‚É“ü‚Á‚Ä‚¢‚é‚©‚Ç‚¤‚©‚ð”»’è
-	bool Contains();
+	bool IsContains();
 };
 

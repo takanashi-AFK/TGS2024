@@ -25,8 +25,7 @@ void Component_CircleRangeDetector::Update()
 
 	// ‰~Œ`”ÍˆÍ”»’è
 	// ”ÍˆÍ“à‚É“ü‚Á‚Ä‚¢‚é‚©‚Ç‚¤‚©‚ğ”»’è
-	if (Contains())isContains_ = true;
-	else isContains_ = false;
+	isContains_ = IsContains();
 }
 
 void Component_CircleRangeDetector::Release()
@@ -81,7 +80,7 @@ void Component_CircleRangeDetector::DrawData()
 	}
 }
 
-bool Component_CircleRangeDetector::Contains()
+bool Component_CircleRangeDetector::IsContains()
 {
 	// ‘ÎÛ‚ª‘¶İ‚µ‚È‚¢ê‡‚Íˆ—‚ğs‚í‚È‚¢
 	if (target_ == nullptr)return false;

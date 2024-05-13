@@ -48,5 +48,11 @@ public:
 	/// ImGui•\Ž¦
 	/// </summary>
 	void DrawData() override;
+
+	float GetRotateSpeed() { return rotateSpeed_; }
+	float GetAngle() { return angle_; }
+	void SetRotationSpeed(float _rotateSpeed) { rotateSpeed_ = _rotateSpeed; }
+	void SetAngle(float _angle) { angle_ = _angle; }
+
 };
 

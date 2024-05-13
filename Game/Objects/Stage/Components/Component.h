@@ -17,7 +17,8 @@ enum ComponentType {
     RotationZ,
     MoveX,
 	CircleRangeDetector,
-    OtiBehavior
+    OtiBehavior,
+    FanRangeDetector
     // コンポーネント追加時に識別番号を追加
 };
 

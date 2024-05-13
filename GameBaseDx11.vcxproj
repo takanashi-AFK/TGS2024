@@ -133,6 +133,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Game\Objects\Stage\Components\DetectorComponents\Component_FanRangeDetector.cpp" />
     <ClCompile Include="Game\Objects\Stage\Components\EnemyComponents\Component_OtiBehavior.cpp" />
     <ClCompile Include="Game\Objects\Stage\Components\DetectorComponents\Component_CircleRangeDetector.cpp" />
     <ClCompile Include="Engine\ResourceManager\Transition.cpp" />
@@ -180,6 +181,7 @@
     <ClCompile Include="Game\Otheres\StageEditor.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Game\Objects\Stage\Components\DetectorComponents\Component_FanRangeDetector.h" />
     <ClInclude Include="Game\Objects\Stage\Components\EnemyComponents\Component_OtiBehavior.h" />
     <ClInclude Include="Game\Objects\Stage\Components\DetectorComponents\Component_CircleRangeDetector.h" />
     <ClInclude Include="Engine\ResourceManager\Transition.h" />

@@ -11,7 +11,9 @@
 #include "RotationComponents/Component_RotationZ.h"
 #include "MoveComponents/Component_MoveX.h"
 #include "DetectorComponents/Component_CircleRangeDetector.h"
+#include "DetectorComponents/Component_FanRangeDetector.h"
 #include "EnemyComponents/Component_OtiBehavior.h"
+
 
 Component::Component(StageObject* _holder, string _name,ComponentType _type)
     :holder_(_holder), name_(_name),type_(_type),childComponents_()
@@ -139,7 +141,8 @@ Component* CreateComponent(ComponentType _type, StageObject* _holder)
 	case MoveX:comp = new Component_MoveX(_holder); break;
 	case CircleRangeDetector:comp = new Component_CircleRangeDetector(_holder); break;
 	case OtiBehavior:comp = new Component_OtiBehavior(_holder); break;
-
+	case FanRangeDetector :comp = new Component_FanRangeDetector(_holder); break;
+	
 	default:/* その他コンポーネントを追加する時は上記のように追加*/ break;
 	}
 	return comp;

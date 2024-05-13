@@ -69,7 +69,11 @@ public:
 	/// <summary>
 	/// タイマーが終了したか
 	/// </summary>	/// <returns>終了したらtrue</returns>
+<<<<<<< HEAD
 	bool GetIsEnd();
+=======
+	bool GetEnd();
+>>>>>>> f70783316d3c90d38158e45362162afe10d6ae91
 
 	/// <param name="_time">カウントする秒数</param>
 	void SetTime(int _time);

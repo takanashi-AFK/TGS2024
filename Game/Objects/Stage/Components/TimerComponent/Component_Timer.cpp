@@ -79,7 +79,11 @@ float Component_Timer::GetNowTime()
 	return time_;
 }
 
+<<<<<<< HEAD
 bool Component_Timer::GetIsEnd()
+=======
+bool Component_Timer::GetEnd()
+>>>>>>> f70783316d3c90d38158e45362162afe10d6ae91
 {
 	return isEnd_;
 }

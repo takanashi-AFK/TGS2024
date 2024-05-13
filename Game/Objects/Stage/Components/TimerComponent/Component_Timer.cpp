@@ -43,23 +43,39 @@ void Component_Timer::Load(json& _loadObj)
 
 void Component_Timer::DrawData()
 {
-	ImGui::Text("%f", nowTime_/FPS);
-	//ImGui::DragFloat("Time", &time_, 1.f);
+
+	ImGui::Text("%f", GetNowTime());
+	ImGui::DragFloat("Time", &time, 1.f,0,100);
 	if (ImGui::Button("Set")){
 		SetTime(10);
 	}
-	if (ImGui::Button("Start"))
-	{
+	if (ImGui::Button("Start")){
 		Start();
 	}
-	if (ImGui::Button("Stop"))
-	{
+	if (ImGui::Button("Stop")){
 		Stop();
 	}
-	if (ImGui::Button("Reset"))
-	{
+	if (ImGui::Button("Reset")){
 		Reset();
 	}
+	if (ImGui::Button("IsEnd")) {
+		if(GetIsEnd())ImGui::Text("true");
+	}
+
+		if (IsOnTime(5)) {
+			ImGui::Text("true");
+		}
+		else {
+			ImGui::Text("false");
+		}
+
+		if (IsIntervalTime(3)) {
+			ImGui::Text("true");
+		}
+		else {
+			ImGui::Text("false");
+		}
+		
 
 }
 
@@ -76,14 +92,11 @@ void Component_Timer::Stop()
 
 float Component_Timer::GetNowTime()
 {
-	return time_;
+	return nowTime_ / FPS;
 }
 
-<<<<<<< HEAD
+
 bool Component_Timer::GetIsEnd()
-=======
-bool Component_Timer::GetEnd()
->>>>>>> f70783316d3c90d38158e45362162afe10d6ae91
 {
 	return isEnd_;
 }
@@ -102,11 +115,13 @@ void Component_Timer::Reset()
 
 bool Component_Timer::IsOnTime(float _time)
 {
-	if (nowTime_ == _time);
-	//‰½‚É‘Î‚µ‚Ä’Ê’m‚ð‚·‚é‚ÌH
+	if (nowTime_ > _time*FPS)return true;
+	return false;
 }
 
-float Component_Timer::IsIntervalTime(float _time)
+bool Component_Timer::IsIntervalTime(float _time)
 {
-	return 0.0f;
+	if (static_cast<int>(nowTime_) % (static_cast<int>(_time) * FPS) == 0)
+		return true;
+	return false;
 }

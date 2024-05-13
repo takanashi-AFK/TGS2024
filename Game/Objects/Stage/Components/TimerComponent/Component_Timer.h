@@ -13,6 +13,7 @@ private:
 	bool isEnd_;
 	bool countNow_;
 	bool isInfinity_;
+	float time = 0;
 
 public:
 	/// <summary>
@@ -69,11 +70,7 @@ public:
 	/// <summary>
 	/// タイマーが終了したか
 	/// </summary>	/// <returns>終了したらtrue</returns>
-<<<<<<< HEAD
 	bool GetIsEnd();
-=======
-	bool GetEnd();
->>>>>>> f70783316d3c90d38158e45362162afe10d6ae91
 
 	/// <param name="_time">カウントする秒数</param>
 	void SetTime(int _time);
@@ -95,7 +92,7 @@ public:
 	/// </summary>
 	/// <param name="_time"></param>
 	/// <returns></returns>
-	float IsIntervalTime(float _time);
+	bool IsIntervalTime(float _time);
 
 };
 

@@ -56,6 +56,9 @@
     <Filter Include="03Game\Objects\Stage\Components\DetectorComponents">
       <UniqueIdentifier>{1dfc5a77-2666-438e-b4a0-ccdf1e982c3a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="03Game\Objects\Stage\Components\EnemyComponents">
+      <UniqueIdentifier>{b2d24188-4d4a-4098-a2d5-87aeda1fadfa}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine\Collider\BoxCollider.cpp">
@@ -189,6 +192,12 @@
     </ClCompile>
     <ClCompile Include="Game\Objects\Stage\Components\DetectorComponents\Component_CircleRangeDetector.cpp">
       <Filter>03Game\Objects\Stage\Components\DetectorComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Objects\Stage\Components\DetectorComponents\Component_FanRangeDetector.cpp">
+      <Filter>03Game\Objects\Stage\Components\DetectorComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Objects\Stage\Components\EnemyComponents\Component_OtiBehavior.cpp">
+      <Filter>03Game\Objects\Stage\Components\EnemyComponents</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -332,6 +341,12 @@
     </ClInclude>
     <ClInclude Include="Game\Objects\Stage\Components\DetectorComponents\Component_CircleRangeDetector.h">
       <Filter>03Game\Objects\Stage\Components\DetectorComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Objects\Stage\Components\DetectorComponents\Component_FanRangeDetector.h">
+      <Filter>03Game\Objects\Stage\Components\DetectorComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Objects\Stage\Components\EnemyComponents\Component_OtiBehavior.h">
+      <Filter>03Game\Objects\Stage\Components\EnemyComponents</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

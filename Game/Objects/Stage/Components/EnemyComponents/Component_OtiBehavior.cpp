@@ -43,7 +43,6 @@ void Component_OtiBehavior::Update()
 		// îŒ`”ÍˆÍ“à‚É“ü‚Á‚Ä‚¢‚È‚¢ê‡‚Ìˆ—
 		((Component_RotationY*)GetChildComponent(RotationY))->SetRotationSpeed(0.f);
 	}
-
 }
 
 void Component_OtiBehavior::Release()

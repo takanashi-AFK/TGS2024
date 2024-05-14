@@ -18,6 +18,10 @@ void Stage::Initialize()
 	// デバッグ用のオブジェクトを生成
 	obj = CreateStageObject("TargetObject", "Models/DebugCollision/SphereCollider.fbx", this);
 	AddStageObject(obj);
+	StageObject* obj = CreateStageObject("Timer", "Models/DebugCollision/BoxCollider.fbx", this);
+	obj->AddComponent(CreateComponent(ComponentType::Timer, obj));
+
+	this->AddStageObject(obj);
 }
 
 void Stage::Update()

@@ -2,12 +2,11 @@
 
 // インクルード
 #include "../../../../../Engine/ImGui/imgui.h"
-#include "../../StageObject.h"
 #include "../../Stage.h"
+#include "../../StageObject.h"
 
 // マクロ定義
 #define REFERENCE_XMFLOAT3(p) p.x,p.y,p.z // XMFLOAT3型の変数をコンマ区切りで表示する
-
 
 Component_CircleRangeDetector::Component_CircleRangeDetector(StageObject* _holder)
     : Component(_holder, "CircleRangeDetector", CircleRangeDetector), radius_(0.0f), isContains_(false), target_(nullptr)

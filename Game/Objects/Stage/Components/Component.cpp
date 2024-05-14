@@ -143,7 +143,6 @@ Component* CreateComponent(ComponentType _type, StageObject* _holder)
 	case CircleRangeDetector:comp = new Component_CircleRangeDetector(_holder); break;
 	case OtiBehavior:comp = new Component_OtiBehavior(_holder); break;
 	case FanRangeDetector :comp = new Component_FanRangeDetector(_holder); break;
-	
 	case Timer:comp = new Component_Timer(_holder); break;
 
 

@@ -95,7 +95,6 @@ float Component_Timer::GetNowTime()
 	return nowTime_ / FPS;
 }
 
-
 bool Component_Timer::GetIsEnd()
 {
 	return isEnd_;
@@ -109,6 +108,7 @@ void Component_Timer::SetTime(int _time)
 
 void Component_Timer::Reset()
 {
+	countNow_ = false;
 	nowTime_ = 0;
 	isEnd_ = false;
 }

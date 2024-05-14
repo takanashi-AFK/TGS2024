@@ -20,7 +20,7 @@ void Component_OtiBehavior::Initialize()
 
 void Component_OtiBehavior::Update()
 {
-	// 範囲内に入っているかどうかを判定
+	// 円形範囲内に入っているかどうかを判定
 	if (((Component_CircleRangeDetector*)GetChildComponent(CircleRangeDetector))->IsContains()){
 		
 		// 範囲内に入っている場合の処理
@@ -29,6 +29,18 @@ void Component_OtiBehavior::Update()
 	else{
 		
 		// 範囲内に入っていない場合の処理
+		((Component_RotationY*)GetChildComponent(RotationY))->SetRotationSpeed(0.f);
+	}
+
+	// 扇形範囲内に入っているかどうかを判定
+	if (((Component_FanRangeDetector*)GetChildComponent(FanRangeDetector))->IsContains()) {
+
+		// 扇形範囲内に入っている場合の処理
+		((Component_RotationY*)GetChildComponent(RotationY))->SetRotationSpeed(5.f);
+	}
+	else {
+
+		// 扇形範囲内に入っていない場合の処理
 		((Component_RotationY*)GetChildComponent(RotationY))->SetRotationSpeed(0.f);
 	}
 

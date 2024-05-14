@@ -44,7 +44,8 @@ public:
 	/// <param name="_loadobj">ƒf[ƒ^‚Ì“Çî•ñ</param>
 	void Load(json& _loadobj) override;
 
-
+	//’Ç]ŠÖ”
+	void Chase();
 	
 };
 

@@ -13,21 +13,7 @@ void Component_Chase::Initialize()
 
 void Component_Chase::Update()
 {
-	XMFLOAT3 targetPos = target_->GetPosition();
-	XMFLOAT3 holderPos = holder_->GetPosition();
-
-	XMVECTOR targetVec= XMLoadFloat3(&targetPos);
-	XMVECTOR holderVec = XMLoadFloat3(&holderPos);
-
-	XMVECTOR chaseDirection = XMVector3Normalize(XMVectorSetY(targetVec - holderVec, 0));
-    
-	double rotateangle = atan2(XMVectorGetX(-chaseDirection), XMVectorGetZ(-chaseDirection));
-
-	holder_->SetRotateY(rotateangle);
-
-	XMStoreFloat3(&holderPos, holderVec + (chaseDirection * move_));
-
-	holder_->SetPosition(holderPos);
+	Chase();
 
 }
 
@@ -45,4 +31,23 @@ void Component_Chase::Load(json& _loadobj)
 {
 	if (_loadobj.find("move_") != _loadobj.end())move_ = _loadobj["move"];
 	if (_loadobj.find("target_") != _loadobj.end())target_ = (StageObject*)holder_->FindObject(_loadobj["target_"]);
+}
+
+void Component_Chase::Chase()
+{
+	XMFLOAT3 targetPos = target_->GetPosition();
+	XMFLOAT3 holderPos = holder_->GetPosition();
+
+	XMVECTOR targetVec = XMLoadFloat3(&targetPos);
+	XMVECTOR holderVec = XMLoadFloat3(&holderPos);
+
+	XMVECTOR chaseDirection = XMVector3Normalize(XMVectorSetY(targetVec - holderVec, 0));
+
+	double rotateangle = atan2(XMVectorGetX(-chaseDirection), XMVectorGetZ(-chaseDirection));
+
+	holder_->SetRotateY(rotateangle);
+
+	XMStoreFloat3(&holderPos, holderVec + (chaseDirection * move_));
+
+	holder_->SetPosition(holderPos);
 }

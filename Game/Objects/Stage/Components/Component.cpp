@@ -10,6 +10,7 @@
 #include "RotationComponents/Component_RotationX.h"
 #include "RotationComponents/Component_RotationZ.h"
 #include "MoveComponents/Component_MoveX.h"
+#include "HealthManagerComponents/Component_HealthManager.h"
 
 Component::Component(StageObject* _holder, string _name,ComponentType _type)
     :holder_(_holder), name_(_name),type_(_type),childComponents_()

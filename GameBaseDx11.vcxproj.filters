@@ -53,6 +53,9 @@
     <Filter Include="03Game\Otheres">
       <UniqueIdentifier>{c2efa7cb-5f10-4c3c-b6f4-cff055139e25}</UniqueIdentifier>
     </Filter>
+    <Filter Include="03Game\Objects\Stage\Components\HealthManagerComponents">
+      <UniqueIdentifier>{253bc07e-fe5e-486e-93dd-e51a1f20aea0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine\Collider\BoxCollider.cpp">
@@ -183,6 +186,9 @@
     </ClCompile>
     <ClCompile Include="Game\Scenes\Scene_Test.cpp">
       <Filter>03Game\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Objects\Stage\Components\HealthManagerComponents\Component_HealthManager.cpp">
+      <Filter>03Game\Objects\Stage\Components\HealthManagerComponents</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -323,6 +329,9 @@
     </ClInclude>
     <ClInclude Include="Game\Scenes\Scene_Test.h">
       <Filter>03Game\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Objects\Stage\Components\HealthManagerComponents\Component_HealthManager.h">
+      <Filter>03Game\Objects\Stage\Components\HealthManagerComponents</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

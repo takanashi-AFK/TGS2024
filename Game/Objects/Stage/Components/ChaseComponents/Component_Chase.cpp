@@ -1,7 +1,7 @@
 #include "Component_Chase.h"
 #include "../../StageObject.h"
 Component_Chase::Component_Chase(StageObject* _holder)
-	:Component(_holder,"Component_Chase",Chase),move_(0.0f),target_(nullptr)
+	:Component(_holder,"Component_Chase",ChaseComponent),move_(0.0f),target_(nullptr)
 {
 }
 

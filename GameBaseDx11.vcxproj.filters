@@ -187,7 +187,7 @@
     <ClCompile Include="Game\Scenes\Scene_Test.cpp">
       <Filter>03Game\Scenes</Filter>
     </ClCompile>
-    <ClCompile Include="Component_Chase.cpp">
+    <ClCompile Include="Game\Objects\Stage\Components\ChaseComponents\Component_Chase.cpp">
       <Filter>03Game\Objects\Stage\Components\ChaseComponents</Filter>
     </ClCompile>
   </ItemGroup>
@@ -330,7 +330,7 @@
     <ClInclude Include="Game\Scenes\Scene_Test.h">
       <Filter>03Game\Scenes</Filter>
     </ClInclude>
-    <ClInclude Include="Component_Chase.h">
+    <ClInclude Include="Game\Objects\Stage\Components\ChaseComponents\Component_Chase.h">
       <Filter>03Game\Objects\Stage\Components\ChaseComponents</Filter>
     </ClInclude>
   </ItemGroup>

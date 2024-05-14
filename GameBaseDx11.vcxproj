@@ -133,6 +133,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Game\Objects\Stage\Components\ChaseComponents\Component_Chase.cpp" />
     <ClCompile Include="Engine\ResourceManager\Transition.cpp" />
     <ClCompile Include="Game\Objects\Stage\Components\Component.cpp" />
     <ClCompile Include="Engine\ImGui\imgui.cpp" />
@@ -178,6 +179,7 @@
     <ClCompile Include="Game\Otheres\StageEditor.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Game\Objects\Stage\Components\ChaseComponents\Component_Chase.h" />
     <ClInclude Include="Engine\ResourceManager\Transition.h" />
     <ClInclude Include="Game\Objects\Stage\Components\Component.h" />
     <ClInclude Include="Engine\ImGui\imconfig.h" />

@@ -46,37 +46,17 @@ void Component_Timer::DrawData()
 
 	ImGui::Text("%f", GetNowTime());
 	ImGui::DragFloat("Time", &time, 1.f,0,100);
-	if (ImGui::Button("Set")){
-		SetTime(10);
-	}
-	if (ImGui::Button("Start")){
-		Start();
-	}
-	if (ImGui::Button("Stop")){
-		Stop();
-	}
-	if (ImGui::Button("Reset")){
-		Reset();
-	}
-	if (ImGui::Button("IsEnd")) {
-		if(GetIsEnd())ImGui::Text("true");
-	}
+	if (ImGui::Button("Set"))SetTime(10);
+	ImGui::SameLine();
+	if (ImGui::Button("Start"))Start();
+	ImGui::SameLine();
 
-		if (IsOnTime(5)) {
-			ImGui::Text("true");
-		}
-		else {
-			ImGui::Text("false");
-		}
+	if (ImGui::Button("Stop"))Stop();
+	ImGui::SameLine();
 
-		if (IsIntervalTime(3)) {
-			ImGui::Text("true");
-		}
-		else {
-			ImGui::Text("false");
-		}
-		
+	if (ImGui::Button("Reset"))Reset();
 
+	ImGui::Text("isEnd_ : %s",isEnd_ ? "true" : "false");
 }
 
 void Component_Timer::Start()

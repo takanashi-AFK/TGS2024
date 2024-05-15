@@ -130,6 +130,7 @@ Component* CreateComponent(ComponentType _type, StageObject* _holder)
 	case RotationX:comp = new Component_RotationX(_holder); break;
 	case RotationZ:comp = new Component_RotationZ(_holder); break;
 	case MoveX:comp = new Component_MoveX(_holder); break;
+	case HealthManager:comp = new Component_HealthManager(_holder); break;
 
 	default:/* その他コンポーネントを追加する時は上記のように追加*/ break;
 	}

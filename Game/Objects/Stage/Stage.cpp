@@ -10,7 +10,10 @@ Stage::Stage(GameObject* _parent)
 
 void Stage::Initialize()
 {
-	
+	// デバッグ用のオブジェクトを生成
+	StageObject* obj = CreateStageObject("HealthManagerObj", "Models/DebugCollision/BoxCollider.fbx", this);
+	obj->AddComponent(CreateComponent(HealthManager, obj));
+	AddStageObject(obj);
 }
 
 void Stage::Update()

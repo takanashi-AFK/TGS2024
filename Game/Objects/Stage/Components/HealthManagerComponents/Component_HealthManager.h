@@ -2,13 +2,13 @@
 //インクルード
 #include"../Component.h"
 
-//作成者-叶内
+//作成者-叶内,高梨
 class Component_HealthManager :public Component {
 
 private:
 
-	int max_;
-	int hp_;
+	float max_;
+	float hp_;
 
 public:
 
@@ -60,19 +60,25 @@ public:
 	/// HPの値を設定
 	/// </summary>
 	/// <param name="_newHP">与えられたHP</param>
-	void SetHP(int _newHP);
+	void SetHP(float _newHP);
+
+	float GetMax() const;
+
+	void SetMax(float _newMax);
 
 	/// <summary>
 	/// ダメージを受けた際の計算
 	/// </summary>
 	/// <param name="_damageValue">ダメージ値</param>
-	void TakeDamage(int _damageValue);
+	void TakeDamage(float _damageValue);
 
 	/// <summary>
 	/// 回復の計算
 	/// </summary>
 	/// <param name="_healValue">回復値</param>
-	void Heal(int _healValue);
+	void Heal(float _healValue);
+
+	void Reset();
 
 
 

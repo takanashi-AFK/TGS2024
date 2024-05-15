@@ -8,7 +8,7 @@ class Component_Chase:public Component
 {
 private:
 	StageObject* target_;//追従の対象オブジェクト
-	float move_;//
+	float movingdistance_;//
 public:
 	/// <summary>
 	/// コンストラクタ

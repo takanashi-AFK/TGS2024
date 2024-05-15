@@ -26,6 +26,7 @@ void Stage::Initialize()
 	AddStageObject(tbj);
 
 
+
 }
 
 void Stage::Update()

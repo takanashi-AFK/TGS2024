@@ -5,7 +5,7 @@
 #include "../../../../../Engine/ImGui/imgui.h"
 // コンストラクタ
 Component_Fall::Component_Fall(StageObject* _holder)
-    : Component(_holder,"Component_Fall",Fall), fallSpeed_(0.0f), riseSpeed_(0.0f)
+    : Component(_holder,"Component_Fall",Fall), fallSpeed_(0), riseSpeed_(0)
 {
 }
 
@@ -13,19 +13,39 @@ Component_Fall::Component_Fall(StageObject* _holder)
 void Component_Fall::Initialize()
 {
     // 初期化
-    fallSpeed_ = 1.0f; 
-    riseSpeed_ = 1.0f; 
+    fallSpeed_ = 0.5f; 
+    fallSpeedplus_ = 0.05f;
+    riseSpeed_ = 0.05f; 
+   
 }
 
 // 更新
 void Component_Fall::Update()
-{
-    //降下と上昇
-    if (holder_->GetPosition().y > 0) {
-        holder_->SetPosition(holder_->GetPosition().x, holder_->GetPosition().y - fallSpeed_, holder_->GetPosition().z);
+
+{   // 現在の位置を取得
+    XMFLOAT3 position_ = holder_->GetPosition();
+
+
+    if (isRising == true) {
+        // 上昇中の処理
+        if (position_.y < 5.0f) { 
+            holder_->SetPosition(position_.x, position_.y += riseSpeed_, position_.z);
+        }
+        else {
+            // 物体が一定高さに達したら上昇を停止する
+            isRising = false;
+        }
     }
     else {
-        holder_->SetPosition(holder_->GetPosition().x, holder_->GetPosition().y + riseSpeed_, holder_->GetPosition().z);
+        // 降下中の処理
+        if (position_.y > -5.0f) {
+            //holder_->SetPosition(position_.x, position_.y -= fallSpeed_, position_.z);
+            holder_->SetPosition(position_.x, position_.y -= (fallSpeed_ += fallSpeedplus_), position_.z);
+        }
+        else {
+            // 物体が一定の高さに達したら上昇を開始する
+            isRising = true;
+        }
     }
 }
 
@@ -60,6 +80,7 @@ void Component_Fall::DrawData()
 {
     // ImGui描画
     ImGui::Text("Component_Fall");
-    ImGui::SliderFloat("Fall Speed", &fallSpeed_, 0.0f, 10.0f);
-    ImGui::SliderFloat("Rise Speed", &riseSpeed_, 0.0f, 10.0f);
+    ImGui::DragFloat("fallSpeed_", &fallSpeed_, 0.1f);
+    //ImGui::SliderFloat("Fall Speed", &fallSpeed_, 0.0f, 10.0f);
+    //ImGui::SliderFloat("Rise Speed", &riseSpeed_, 0.0f, 10.0f);
 }

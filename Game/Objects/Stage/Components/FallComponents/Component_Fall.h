@@ -5,8 +5,12 @@
 class Component_Fall : public Component
 {
 private:
-	float fallSpeed_; //降下速度
-	float riseSpeed_; //上昇速度
+	
+	float fallSpeed_;//降下速度
+	float fallSpeedplus_;//降下速度を上げるやつ
+	float riseSpeed_;//上昇速度
+
+	bool isRising = false;
 public:
 	///<summary>
 	/// コンストラクタ

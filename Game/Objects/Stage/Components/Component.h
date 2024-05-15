@@ -16,7 +16,7 @@ enum ComponentType {
     RotationX,
     RotationZ,
     MoveX,
-    ChaseComponent
+    Chase
     // コンポーネント追加時に識別番号を追加
 };
 

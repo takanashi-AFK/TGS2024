@@ -20,9 +20,9 @@ void Scene_Test::Initialize()
 	pStage_ = Instantiate<Stage>(this);
 
 	// ステージ情報を読込
-	json loadObj;
+	/*json loadObj;
 	JsonReader::Load("Datas/testData.json", loadObj);
-	pStage_->Load(loadObj);
+	pStage_->Load(loadObj);*/
 
 #ifdef _DEBUG
 	// ステージエディターを実行

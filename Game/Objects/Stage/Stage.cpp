@@ -3,6 +3,8 @@
 // インクルード
 #include "StageObject.h"
 
+#include "../Stage/Components/ChaseComponents/Component_Chase.h"
+
 Stage::Stage(GameObject* _parent)
 	:GameObject(_parent,"Stage"),objects_()
 {
@@ -10,7 +12,20 @@ Stage::Stage(GameObject* _parent)
 
 void Stage::Initialize()
 {
+	// 対象オブジェクトを生成
+	StageObject* tbj = CreateStageObject("TargetObject", "Models/DebugCollision/BoxCollider.fbx", this);
+
+	// デバッグ用のオブジェクトを生成
+	StageObject* obj = CreateStageObject("StageObject", "Models/DebugCollision/SphereCollider.fbx", this);
 	
+	Component* comp = CreateComponent(Chase, obj);
+	((Component_Chase*)comp)->SetTarget(tbj);
+
+	obj->AddComponent(comp);
+	AddStageObject(obj);
+	AddStageObject(tbj);
+
+
 }
 
 void Stage::Update()

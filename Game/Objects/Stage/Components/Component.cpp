@@ -130,7 +130,7 @@ Component* CreateComponent(ComponentType _type, StageObject* _holder)
 	case RotationX:comp = new Component_RotationX(_holder); break;
 	case RotationZ:comp = new Component_RotationZ(_holder); break;
 	case MoveX:comp = new Component_MoveX(_holder); break;
-	case ChaseComponent:comp = new Component_Chase(_holder); break;
+	case Chase:comp = new Component_Chase(_holder); break;
 	default:/* その他コンポーネントを追加する時は上記のように追加*/ break;
 	}
 	return comp;

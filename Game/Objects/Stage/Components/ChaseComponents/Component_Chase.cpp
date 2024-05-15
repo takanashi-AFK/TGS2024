@@ -1,19 +1,17 @@
 #include "Component_Chase.h"
 #include "../../StageObject.h"
 Component_Chase::Component_Chase(StageObject* _holder)
-	:Component(_holder,"Component_Chase",ChaseComponent),move_(0.0f),target_(nullptr)
+	:Component(_holder,"Component_Chase",Chase),move_(0.0f),target_(nullptr)
 {
 }
 
 void Component_Chase::Initialize()
 {
-	target_->FindObject("target_");
-	
 }
 
 void Component_Chase::Update()
 {
-	Chase();
+	ChaseMove();
 
 }
 
@@ -33,8 +31,10 @@ void Component_Chase::Load(json& _loadobj)
 	if (_loadobj.find("target_") != _loadobj.end())target_ = (StageObject*)holder_->FindObject(_loadobj["target_"]);
 }
 
-void Component_Chase::Chase()
+void Component_Chase::ChaseMove()
 {
+	if(target_ == nullptr)return;
+
 	XMFLOAT3 targetPos = target_->GetPosition();
 	XMFLOAT3 holderPos = holder_->GetPosition();
 

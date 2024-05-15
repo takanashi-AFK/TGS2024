@@ -17,6 +17,7 @@ public:
 	Component_Chase(StageObject* _holder);
 
 
+
 	/// <summary>
 	/// 初期化
 	/// </summary>
@@ -45,7 +46,9 @@ public:
 	void Load(json& _loadobj) override;
 
 	//追従関数
-	void Chase();
+	void ChaseMove();
 	
+	// ターゲットの設定
+	void SetTarget(StageObject* _target) { target_ = _target; }
 };
 

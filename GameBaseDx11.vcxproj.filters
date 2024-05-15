@@ -59,6 +59,9 @@
     <Filter Include="03Game\Objects\Stage\Components\EnemyComponents">
       <UniqueIdentifier>{b2d24188-4d4a-4098-a2d5-87aeda1fadfa}</UniqueIdentifier>
     </Filter>
+    <Filter Include="03Game\Objects\Stage\Components\TimerComponent">
+      <UniqueIdentifier>{e193f086-ad1a-497c-8887-062579a167cb}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine\Collider\BoxCollider.cpp">
@@ -198,6 +201,9 @@
     </ClCompile>
     <ClCompile Include="Game\Objects\Stage\Components\EnemyComponents\Component_OtiBehavior.cpp">
       <Filter>03Game\Objects\Stage\Components\EnemyComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Objects\Stage\Components\TimerComponent\Component_Timer.cpp">
+      <Filter>03Game\Objects\Stage\Components\TimerComponent</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -347,6 +353,9 @@
     </ClInclude>
     <ClInclude Include="Game\Objects\Stage\Components\EnemyComponents\Component_OtiBehavior.h">
       <Filter>03Game\Objects\Stage\Components\EnemyComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Objects\Stage\Components\TimerComponent\Component_Timer.h">
+      <Filter>03Game\Objects\Stage\Components\TimerComponent</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

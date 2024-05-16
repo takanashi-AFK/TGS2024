@@ -45,7 +45,7 @@ void Component_Timer::DrawData()
 {
 
 	ImGui::Text("%f", GetNowTime());
-	ImGui::DragFloat("Time", &time, 1.f,0,100);
+	ImGui::DragFloat("Time", &time_, 1.f,0,100);
 	if (ImGui::Button("Set"))SetTime(10);
 	ImGui::SameLine();
 	if (ImGui::Button("Start"))Start();

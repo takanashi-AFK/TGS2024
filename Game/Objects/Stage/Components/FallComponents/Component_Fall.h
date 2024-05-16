@@ -10,7 +10,7 @@ private:
 	float fallSpeedplus_;//降下速度を上げるやつ
 	float riseSpeed_;//上昇速度
 	float tempFallSpeed_;//降下速度保存用変数
-	bool isRising = false;
+	bool isRising_;
 public:
 	///<summary>
 	/// コンストラクタ
@@ -51,8 +51,8 @@ public:
 	void DrawData() override;
 
 
-	void Rising() { isRising = true; }
+	void Rising() { isRising_ = true; }
 
-	void Falling() { isRising = false; }
+	void Falling() { isRising_ = false; }
 };
 

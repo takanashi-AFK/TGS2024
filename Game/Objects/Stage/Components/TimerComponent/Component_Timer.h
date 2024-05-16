@@ -13,7 +13,6 @@ private:
 	bool isEnd_;
 	bool countNow_;
 	bool isInfinity_;
-	float time = 0;
 
 public:
 	/// <summary>

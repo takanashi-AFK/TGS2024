@@ -5,7 +5,7 @@
 #include "../../../../../Engine/ImGui/imgui.h"
 // コンストラクタ
 Component_Fall::Component_Fall(StageObject* _holder)
-    : Component(_holder,"Component_Fall",Fall), fallSpeed_(0), riseSpeed_(0), isRising(true)
+    : Component(_holder,"Component_Fall",Fall), fallSpeed_(0), riseSpeed_(0), isRising_(false), tempFallSpeed_(0)
 {
 }
 
@@ -26,14 +26,14 @@ void Component_Fall::Update()
     XMFLOAT3 position_ = holder_->GetPosition();
 
 
-    if (isRising == true) {
+    if (isRising_ == true) {
         // 上昇中の処理
         if (position_.y < 5.0f) { 
             holder_->SetPosition(position_.x, position_.y += riseSpeed_, position_.z);
         }
         else {
             // 物体が一定高さに達したら上昇を停止する
-            isRising = false;
+            isRising_ = false;
             fallSpeed_ = tempFallSpeed_;
         }
     }
@@ -45,7 +45,7 @@ void Component_Fall::Update()
         }
         else {
             // 物体が一定の高さに達したら上昇を開始する
-            isRising = true;
+            isRising_ = true;
            
         }
     }

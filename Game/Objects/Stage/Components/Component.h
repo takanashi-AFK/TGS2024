@@ -20,6 +20,7 @@ enum ComponentType {
     OtiBehavior,
     FanRangeDetector,
     Timer,
+    Fall,
     // コンポーネント追加時に識別番号を追加
 };
 

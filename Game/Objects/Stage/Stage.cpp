@@ -2,7 +2,6 @@
 
 // インクルード
 #include "StageObject.h"
-
 Stage::Stage(GameObject* _parent)
 	:GameObject(_parent,"Stage"),objects_()
 {
@@ -10,13 +9,22 @@ Stage::Stage(GameObject* _parent)
 
 void Stage::Initialize()
 {
-	// デバッグ用のオブジェクトを生成
+	//// デバッグ用のオブジェクトを生成
+	//StageObject* obj = CreateStageObject("DetectorObject", "Models/DebugCollision/BoxCollider.fbx", this);
+	//obj->AddComponent(CreateComponent(OtiBehavior, obj));
+	//AddStageObject(obj);
+
+	//// デバッグ用のオブジェクトを生成
+	//obj = CreateStageObject("TargetObject", "Models/DebugCollision/SphereCollider.fbx", this);
+	//AddStageObject(obj);
+
+
 	StageObject* obj = CreateStageObject("DetectorObject", "Models/DebugCollision/BoxCollider.fbx", this);
-	obj->AddComponent(CreateComponent(OtiBehavior, obj));
+
 	AddStageObject(obj);
 
-	// デバッグ用のオブジェクトを生成
-	obj = CreateStageObject("TargetObject", "Models/DebugCollision/SphereCollider.fbx", this);
+	obj = CreateStageObject("FallObject", "Models/DebugCollision/SphereCollider.fbx", this);
+	obj->AddComponent(CreateComponent(Fall, obj));
 	AddStageObject(obj);
 
 }
@@ -41,20 +49,20 @@ void Stage::Save(json& _saveObj)
 
 void Stage::Load(json& _loadObj)
 {
-	// ステージオブジェクトをすべて削除
-	DeleteAllStageObject();
+	//// ステージオブジェクトをすべて削除
+	//DeleteAllStageObject();
 
-	for (auto it = _loadObj.begin(); it != _loadObj.end();++it) {
-		
-		// オブジェクトのインスタンスを生成
-		StageObject* obj = CreateStageObject(it.key(), it.value()["modelFilePath_"], this);
-		
-		// オブジェクト情報を読込
-		obj->Load(it.value());
+	//for (auto it = _loadObj.begin(); it != _loadObj.end();++it) {
+	//	
+	//	// オブジェクトのインスタンスを生成
+	//	StageObject* obj = CreateStageObject(it.key(), it.value()["modelFilePath_"], this);
+	//	
+	//	// オブジェクト情報を読込
+	//	obj->Load(it.value());
 
-		// オブジェクトをリストに追加
-		AddStageObject(obj);
-	}
+	//	// オブジェクトをリストに追加
+	//	AddStageObject(obj);
+	//}
 }
 
 void Stage::DrawData()

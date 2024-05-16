@@ -13,7 +13,7 @@
 #include "DetectorComponents/Component_CircleRangeDetector.h"
 #include "DetectorComponents/Component_FanRangeDetector.h"
 #include "EnemyComponents/Component_OtiBehavior.h"
-
+#include "FallComponents/Component_Fall.h"
 #include "TimerComponent/Component_Timer.h"
 
 Component::Component(StageObject* _holder, string _name,ComponentType _type)
@@ -144,6 +144,8 @@ Component* CreateComponent(ComponentType _type, StageObject* _holder)
 	case OtiBehavior:comp = new Component_OtiBehavior(_holder); break;
 	case FanRangeDetector :comp = new Component_FanRangeDetector(_holder); break;
 	case Timer:comp = new Component_Timer(_holder); break;
+	case Fall:comp = new Component_Fall(_holder); break;
+
 
 
 	default:/* その他コンポーネントを追加する時は上記のように追加*/ break;

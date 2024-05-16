@@ -169,6 +169,7 @@
     <ClCompile Include="Engine\ResourceManager\Text.cpp" />
     <ClCompile Include="Engine\DirectX\Texture.cpp" />
     <ClCompile Include="Engine\GameObject\Transform.cpp" />
+    <ClCompile Include="Game\Objects\Stage\Components\FallComponents\Component_Fall.cpp" />
     <ClCompile Include="Game\Objects\Stage\Components\RotationComponents\Component_RotationY.cpp" />
     <ClCompile Include="Game\Objects\Stage\StageObject.cpp" />
     <ClCompile Include="Game\Scenes\Scene_Test.cpp" />
@@ -221,6 +222,7 @@
     <ClInclude Include="Engine\ResourceManager\Text.h" />
     <ClInclude Include="Engine\DirectX\Texture.h" />
     <ClInclude Include="Engine\GameObject\Transform.h" />
+    <ClInclude Include="Game\Objects\Stage\Components\FallComponents\Component_Fall.h" />
     <ClInclude Include="Game\Objects\Stage\Components\RotationComponents\Component_RotationY.h" />
     <ClInclude Include="Game\Objects\Stage\StageObject.h" />
     <ClInclude Include="Game\Scenes\Scene_Test.h" />

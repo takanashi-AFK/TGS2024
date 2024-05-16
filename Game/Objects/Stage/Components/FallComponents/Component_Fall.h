@@ -9,7 +9,7 @@ private:
 	float fallSpeed_;//降下速度
 	float fallSpeedplus_;//降下速度を上げるやつ
 	float riseSpeed_;//上昇速度
-
+	float tempFallSpeed_;//降下速度保存用変数
 	bool isRising = false;
 public:
 	///<summary>
@@ -49,5 +49,10 @@ public:
 	/// ImGui表示
 	/// </summary>
 	void DrawData() override;
+
+
+	void Rising() { isRising = true; }
+
+	void Falling() { isRising = false; }
 };
 

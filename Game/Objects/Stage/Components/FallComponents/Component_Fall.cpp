@@ -5,7 +5,7 @@
 #include "../../../../../Engine/ImGui/imgui.h"
 // コンストラクタ
 Component_Fall::Component_Fall(StageObject* _holder)
-    : Component(_holder,"Component_Fall",Fall), fallSpeed_(0), riseSpeed_(0)
+    : Component(_holder,"Component_Fall",Fall), fallSpeed_(0), riseSpeed_(0), isRising(true)
 {
 }
 
@@ -34,6 +34,7 @@ void Component_Fall::Update()
         else {
             // 物体が一定高さに達したら上昇を停止する
             isRising = false;
+            fallSpeed_ = tempFallSpeed_;
         }
     }
     else {
@@ -45,6 +46,7 @@ void Component_Fall::Update()
         else {
             // 物体が一定の高さに達したら上昇を開始する
             isRising = true;
+           
         }
     }
 }
@@ -80,7 +82,14 @@ void Component_Fall::DrawData()
 {
     // ImGui描画
     ImGui::Text("Component_Fall");
-    ImGui::DragFloat("fallSpeed_", &fallSpeed_, 0.1f);
+    ImGui::DragFloat("fallSpeed_", &tempFallSpeed_, 0.1f);
+
+    if (ImGui::Button("fall")) {
+        Falling();
+    }
+    if (ImGui::Button("rise")) {
+		Rising();
+	}
     //ImGui::SliderFloat("Fall Speed", &fallSpeed_, 0.0f, 10.0f);
     //ImGui::SliderFloat("Rise Speed", &riseSpeed_, 0.0f, 10.0f);
 }

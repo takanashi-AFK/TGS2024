@@ -40,24 +40,29 @@ void Component_Chase::ChaseMove()
 	XMFLOAT3 targetPos = target_->GetPosition();
 	XMFLOAT3 holderPos = holder_->GetPosition();
 
-	//ポジションをVector型に変更し追従する方向を決める
+	//距離計算
+	float chasedist = sqrt((targetPos.x - targetPos.x) * (targetPos.x - targetPos.x) + (targetPos.z - targetPos.z) * (targetPos.z - targetPos.z));
+	
+	//ポジションをVector型に変更し追従する方向と長さを決める
 	XMVECTOR targetVec = XMLoadFloat3(&targetPos);
 	XMVECTOR holderVec = XMLoadFloat3(&holderPos);
+	float chasedist2 = XMVectorGetX(XMVector3Length(targetVec - holderVec));
 	XMVECTOR chaseDirection = XMVector3Normalize(XMVectorSetY(targetVec - holderVec, 0));
 
-       double rotateangle = atan2(XMVectorGetX(-chaseDirection), XMVectorGetZ(-chaseDirection));
-  //移動後の位置を求める　
-		XMStoreFloat3(&holderPos, holderVec + (chaseDirection * movingdistance_));
 	//追従する方向に体の向きを回転させる
-	float c = (targetPos.x*targetPos.x - holderPos.x*holderPos.x) + (targetPos.z * targetPos.z -holderPos.z * holderPos.z);
-		
-	if( c <=0.005f)
+	double rotateangle = atan2(XMVectorGetX(-chaseDirection), XMVectorGetZ(-chaseDirection));
+
+	XMStoreFloat3(&holderPos, holderVec + (chaseDirection * movingdistance_));
+	if (chasedist2 > 0.5)
+	{
+		//移動後の位置を適応
+		holder_->SetRotateY(rotateangle);
+		holder_->SetPosition(holderPos);
+	}
+	else
 	{
 		rotateangle = 0;
-
 	}
 
-	//移動後の位置を適応
-	holder_->SetRotateY(rotateangle);
-	holder_->SetPosition(holderPos);
+	
 }

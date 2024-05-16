@@ -8,7 +8,8 @@ class Component_Chase:public Component
 {
 private:
 	StageObject* target_;//追従の対象オブジェクト
-	float movingdistance_;//
+	float speed_;//速度
+	const float LIMIT_DISTANCE{ 0.5f };
 public:
 	/// <summary>
 	/// コンストラクタ

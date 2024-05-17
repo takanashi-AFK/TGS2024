@@ -6,7 +6,7 @@ namespace {
 
 Component_Timer::Component_Timer(StageObject* _holder)
 	:Component(_holder, "Component_Timer", Timer)
-	, time_(0), nowTime_(0), isEnd_(false), countNow_(false), isInfinity_(true)
+	, maxTime_(0), nowTime_(0), isEnd_(false), countNow_(false), isInfinity_(true)
 {
 }
 
@@ -18,7 +18,7 @@ void Component_Timer::Update()
 {
 	if (!countNow_) return;
 	nowTime_++;
-	if (nowTime_ >= time_ && !isInfinity_) Stop();
+	if (nowTime_ >= maxTime_ && !isInfinity_) Stop();
 }
 
 void Component_Timer::Release()
@@ -27,7 +27,7 @@ void Component_Timer::Release()
 
 void Component_Timer::Save(json& _saveObj)
 {
-	_saveObj["time_"] = time_;
+	_saveObj["time_"] = maxTime_;
 	_saveObj["nowTime_"] = nowTime_;
 	_saveObj["isEnd_"] = isEnd_;
 	_saveObj["countNow_"] = countNow_;
@@ -35,7 +35,7 @@ void Component_Timer::Save(json& _saveObj)
 
 void Component_Timer::Load(json& _loadObj)
 {
-	if (_loadObj.find("time_") != _loadObj.end()) 	time_ = _loadObj["time_"];
+	if (_loadObj.find("time_") != _loadObj.end()) 	maxTime_ = _loadObj["time_"];
 	if (_loadObj.find("nowTime_") != _loadObj.end()) 	nowTime_ = _loadObj["nowTime_"];
 	if (_loadObj.find("isEnd_") != _loadObj.end())   isEnd_ = _loadObj["isEnd_"];
 	if (_loadObj.find("countNow_") != _loadObj.end())   countNow_ = _loadObj["countNow_"];
@@ -45,8 +45,8 @@ void Component_Timer::DrawData()
 {
 
 	ImGui::Text("%f", GetNowTime());
-	ImGui::DragFloat("Time", &time_, 1.f,0,100);
-	if (ImGui::Button("Set"))SetTime(10);
+	ImGui::DragFloat("Time", &tempMax_, 1.f,0,100);
+	if (ImGui::Button("Set"))SetTime(tempMax_);
 	ImGui::SameLine();
 	if (ImGui::Button("Start"))Start();
 	ImGui::SameLine();
@@ -82,7 +82,7 @@ bool Component_Timer::GetIsEnd()
 
 void Component_Timer::SetTime(int _time)
 {
-	time_ = _time * FPS;
+	maxTime_ = _time * FPS;
 	isInfinity_ = false;
 }
 

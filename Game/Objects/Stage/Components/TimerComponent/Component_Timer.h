@@ -8,8 +8,9 @@ class Component_Timer : public Component
 {
 private:
 
-	float time_;
+	float maxTime_;
 	float nowTime_;
+	float tempMax_;
 	bool isEnd_;
 	bool countNow_;
 	bool isInfinity_;

@@ -41,7 +41,7 @@ void Component_Chase::ChaseMove()
 	//対象と保有者のポジションを取得
 	XMFLOAT3 targetPos = target_->GetPosition();
 	XMFLOAT3 holderPos = holder_->GetPosition();
-	
+	targetPos.y = 0;
 	//ポジションをVector型に変更し追従する方向と長さを決める
 	XMVECTOR targetVec = XMLoadFloat3(&targetPos);
 	XMVECTOR holderVec = XMLoadFloat3(&holderPos);

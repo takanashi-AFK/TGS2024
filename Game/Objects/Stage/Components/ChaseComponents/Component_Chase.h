@@ -17,8 +17,6 @@ public:
 	/// <param name="_holder">保有者</param>
 	Component_Chase(StageObject* _holder);
 
-
-
 	/// <summary>
 	/// 初期化
 	/// </summary>
@@ -45,6 +43,8 @@ public:
 	/// </summary>
 	/// <param name="_loadobj">データの読込情報</param>
 	void Load(json& _loadobj) override;
+
+	void DrawData()override;
 
 	//追従関数
 	void ChaseMove();

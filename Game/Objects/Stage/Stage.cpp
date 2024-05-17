@@ -11,7 +11,7 @@ void Stage::Initialize()
 {
 	// デバッグ用のオブジェクトを生成
 	StageObject* obj = CreateStageObject("DetectorObject", "Models/DebugCollision/BoxCollider.fbx", this);
-	obj->AddComponent(CreateComponent(OtiBehavior, obj));
+	obj->AddComponent(CreateComponent(Chase, obj));
 	AddStageObject(obj);
 
 	// デバッグ用のオブジェクトを生成

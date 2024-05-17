@@ -16,9 +16,9 @@ void Component_Timer::Initialize()
 
 void Component_Timer::Update()
 {
+	if (nowTime_ >= maxTime_ && !isInfinity_) Stop();
 	if (!countNow_) return;
 	nowTime_++;
-	if (nowTime_ >= maxTime_ && !isInfinity_) Stop();
 }
 
 void Component_Timer::Release()
@@ -95,7 +95,7 @@ void Component_Timer::Reset()
 
 bool Component_Timer::IsOnTime(float _time)
 {
-	if (nowTime_ > _time*FPS)return true;
+	if (nowTime_ >= _time*FPS)return true;
 	return false;
 }
 

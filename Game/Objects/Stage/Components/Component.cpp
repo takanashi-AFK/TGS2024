@@ -10,6 +10,7 @@
 #include "RotationComponents/Component_RotationX.h"
 #include "RotationComponents/Component_RotationZ.h"
 #include "MoveComponents/Component_MoveX.h"
+#include"ChaseComponents/Component_Chase.h"
 #include "DetectorComponents/Component_CircleRangeDetector.h"
 #include "DetectorComponents/Component_FanRangeDetector.h"
 #include "EnemyComponents/Component_OtiBehavior.h"
@@ -140,13 +141,6 @@ Component* CreateComponent(ComponentType _type, StageObject* _holder)
 	case RotationX:comp = new Component_RotationX(_holder); break;
 	case RotationZ:comp = new Component_RotationZ(_holder); break;
 	case MoveX:comp = new Component_MoveX(_holder); break;
-	case CircleRangeDetector:comp = new Component_CircleRangeDetector(_holder); break;
-	case OtiBehavior:comp = new Component_OtiBehavior(_holder); break;
-	case FanRangeDetector :comp = new Component_FanRangeDetector(_holder); break;
-	case Timer:comp = new Component_Timer(_holder); break;
-	case Fall:comp = new Component_Fall(_holder); break;
-
-
 
 	default:/* その他コンポーネントを追加する時は上記のように追加*/ break;
 	}

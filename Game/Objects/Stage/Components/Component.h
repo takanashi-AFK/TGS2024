@@ -16,6 +16,7 @@ enum ComponentType {
     RotationX,
     RotationZ,
     MoveX,
+    Chase
 	CircleRangeDetector,
     OtiBehavior,
     FanRangeDetector,

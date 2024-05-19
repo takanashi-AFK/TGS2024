@@ -10,11 +10,11 @@
 #include "RotationComponents/Component_RotationX.h"
 #include "RotationComponents/Component_RotationZ.h"
 #include "MoveComponents/Component_MoveX.h"
-#include"ChaseComponents/Component_Chase.h"
+#include "MoveComponents/Component_Chase.h"
 #include "DetectorComponents/Component_CircleRangeDetector.h"
 #include "DetectorComponents/Component_FanRangeDetector.h"
 #include "EnemyComponents/Component_OtiBehavior.h"
-#include "FallComponents/Component_Fall.h"
+#include "MoveComponents/Component_Fall.h"
 #include "TimerComponent/Component_Timer.h"
 
 Component::Component(StageObject* _holder, string _name,ComponentType _type)

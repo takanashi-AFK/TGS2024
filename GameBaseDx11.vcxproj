@@ -137,7 +137,7 @@
     <ClCompile Include="Game\Objects\Stage\Components\EnemyComponents\Component_OtiBehavior.cpp" />
     <ClCompile Include="Game\Objects\Stage\Components\DetectorComponents\Component_CircleRangeDetector.cpp" />
     <ClCompile Include="Game\Objects\Stage\Components\TimerComponent\Component_Timer.cpp" />
-    <ClCompile Include="Game\Objects\Stage\Components\ChaseComponents\Component_Chase.cpp" />
+    <ClCompile Include="Game\Objects\Stage\Components\MoveComponents\Component_Chase.cpp" />
     <ClCompile Include="Engine\ResourceManager\Transition.cpp" />
     <ClCompile Include="Game\Objects\Stage\Components\Component.cpp" />
     <ClCompile Include="Engine\ImGui\imgui.cpp" />
@@ -170,7 +170,7 @@
     <ClCompile Include="Engine\ResourceManager\Text.cpp" />
     <ClCompile Include="Engine\DirectX\Texture.cpp" />
     <ClCompile Include="Engine\GameObject\Transform.cpp" />
-    <ClCompile Include="Game\Objects\Stage\Components\FallComponents\Component_Fall.cpp" />
+    <ClCompile Include="Game\Objects\Stage\Components\MoveComponents\Component_Fall.cpp" />
     <ClCompile Include="Game\Objects\Stage\Components\RotationComponents\Component_RotationY.cpp" />
     <ClCompile Include="Game\Objects\Stage\StageObject.cpp" />
     <ClCompile Include="Game\Scenes\Scene_Test.cpp" />
@@ -185,6 +185,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\ResourceManager\Transition.h" />
+    <ClInclude Include="Game\Objects\Stage\Components\MoveComponents\Component_Chase.h" />
     <ClInclude Include="Game\Objects\Stage\Components\Component.h" />
     <ClInclude Include="Engine\ImGui\imconfig.h" />
     <ClInclude Include="Engine\ImGui\imgui.h" />
@@ -219,8 +220,12 @@
     <ClInclude Include="Engine\ResourceManager\Text.h" />
     <ClInclude Include="Engine\DirectX\Texture.h" />
     <ClInclude Include="Engine\GameObject\Transform.h" />
-    <ClInclude Include="Game\Objects\Stage\Components\FallComponents\Component_Fall.h" />
+    <ClInclude Include="Game\Objects\Stage\Components\DetectorComponents\Component_CircleRangeDetector.h" />
+    <ClInclude Include="Game\Objects\Stage\Components\DetectorComponents\Component_FanRangeDetector.h" />
+    <ClInclude Include="Game\Objects\Stage\Components\EnemyComponents\Component_OtiBehavior.h" />
+    <ClInclude Include="Game\Objects\Stage\Components\MoveComponents\Component_Fall.h" />
     <ClInclude Include="Game\Objects\Stage\Components\RotationComponents\Component_RotationY.h" />
+    <ClInclude Include="Game\Objects\Stage\Components\TimerComponent\Component_Timer.h" />
     <ClInclude Include="Game\Objects\Stage\StageObject.h" />
     <ClInclude Include="Game\Scenes\Scene_Test.h" />
     <ClInclude Include="Game\Objects\Stage\Stage.h" />

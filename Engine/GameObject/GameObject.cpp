@@ -344,7 +344,6 @@ void GameObject::ReleaseSub()
 	//コライダーを削除
 	ClearCollider();
 	
-
 	for (auto it = childList_.begin(); it != childList_.end(); it++)
 	{
 		(*it)->ReleaseSub();

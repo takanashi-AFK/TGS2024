@@ -15,33 +15,16 @@ void Component_OtiBehavior::Initialize()
 {
 	// 子コンポーネントの追加
 	if (FindChildComponent(CircleRangeDetector) == false)AddChildComponent(CreateComponent(CircleRangeDetector, holder_));
-	if (FindChildComponent(FanRangeDetector) == false)AddChildComponent(CreateComponent(FanRangeDetector, holder_));
-	if (FindChildComponent(RotationY) == false)AddChildComponent(CreateComponent(RotationY, holder_));
 	if (FindChildComponent(Timer) == false)AddChildComponent(CreateComponent(Timer, holder_));
+	if (FindChildComponent(Fall) == false)AddChildComponent(CreateComponent(Fall, holder_));
+	if (FindChildComponent(Chase) == false)AddChildComponent(CreateComponent(Chase, holder_));
+
 }
 
 void Component_OtiBehavior::Update()
 {
-	// 円形範囲内に入っているかどうかを判定
-	if (((Component_CircleRangeDetector*)GetChildComponent(CircleRangeDetector))->IsContains()){
+	if (((Component_CircleRangeDetector*)GetChildComponent(CircleRangeDetector))->IsContains()) {
 
-		// タイマーを開始
-		((Component_Timer*)GetChildComponent(Timer))->Reset();
-		((Component_Timer*)GetChildComponent(Timer))->Start();
-
-		// 回転速度を設定
-		((Component_RotationY*)GetChildComponent(RotationY))->SetRotationSpeed(5.f);
-	}
-	else{
-		// タイマーが５秒を観測したら
-		if (((Component_Timer*)GetChildComponent(Timer))->IsOnTime(5)) {
-			
-			// タイマーを停止
-			((Component_Timer*)GetChildComponent(Timer))->Stop();
-
-			// 回転速度を設定
-			((Component_RotationY*)GetChildComponent(RotationY))->SetRotationSpeed(0.f);
-		}		
 	}
 }
 

@@ -53,9 +53,6 @@
     <Filter Include="03Game\Otheres">
       <UniqueIdentifier>{c2efa7cb-5f10-4c3c-b6f4-cff055139e25}</UniqueIdentifier>
     </Filter>
-    <Filter Include="03Game\Objects\Stage\Components\ChaseComponents">
-      <UniqueIdentifier>{37580c59-c1a2-44a2-9fbb-e006fc08411c}</UniqueIdentifier>
-    </Filter>
     <Filter Include="03Game\Objects\Stage\Components\DetectorComponents">
       <UniqueIdentifier>{1dfc5a77-2666-438e-b4a0-ccdf1e982c3a}</UniqueIdentifier>
     </Filter>
@@ -196,6 +193,24 @@
     <ClCompile Include="Game\Scenes\Scene_Test.cpp">
       <Filter>03Game\Scenes</Filter>
     </ClCompile>
+    <ClCompile Include="Game\Objects\Stage\Components\MoveComponents\Component_Chase.cpp">
+      <Filter>03Game\Objects\Stage\Components\MoveComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Objects\Stage\Components\DetectorComponents\Component_CircleRangeDetector.cpp">
+      <Filter>03Game\Objects\Stage\Components\DetectorComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Objects\Stage\Components\DetectorComponents\Component_FanRangeDetector.cpp">
+      <Filter>03Game\Objects\Stage\Components\DetectorComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Objects\Stage\Components\MoveComponents\Component_Fall.cpp">
+      <Filter>03Game\Objects\Stage\Components\MoveComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Objects\Stage\Components\EnemyComponents\Component_OtiBehavior.cpp">
+      <Filter>03Game\Objects\Stage\Components\EnemyComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Objects\Stage\Components\TimerComponent\Component_Timer.cpp">
+      <Filter>03Game\Objects\Stage\Components\TimerComponent</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Collider\BoxCollider.h">
@@ -335,6 +350,24 @@
     </ClInclude>
     <ClInclude Include="Game\Scenes\Scene_Test.h">
       <Filter>03Game\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Objects\Stage\Components\MoveComponents\Component_Chase.h">
+      <Filter>03Game\Objects\Stage\Components\MoveComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Objects\Stage\Components\DetectorComponents\Component_CircleRangeDetector.h">
+      <Filter>03Game\Objects\Stage\Components\DetectorComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Objects\Stage\Components\DetectorComponents\Component_FanRangeDetector.h">
+      <Filter>03Game\Objects\Stage\Components\DetectorComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Objects\Stage\Components\MoveComponents\Component_Fall.h">
+      <Filter>03Game\Objects\Stage\Components\MoveComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Objects\Stage\Components\EnemyComponents\Component_OtiBehavior.h">
+      <Filter>03Game\Objects\Stage\Components\EnemyComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Objects\Stage\Components\TimerComponent\Component_Timer.h">
+      <Filter>03Game\Objects\Stage\Components\TimerComponent</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

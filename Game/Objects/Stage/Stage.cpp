@@ -9,6 +9,22 @@ Stage::Stage(GameObject* _parent)
 
 void Stage::Initialize()
 {
+	// オブジェクトを作成
+	StageObject* obj = CreateStageObject("enemy Oti", "Models/DebugCollision/BoxCollider.fbx", this);
+	
+	// コンポーネントを追加
+	obj->AddComponent(CreateComponent(OtiBehavior, obj));
+
+	// オブジェクトをリストに追加
+	AddStageObject(obj);
+
+	// オブジェクトを作成
+	obj = CreateStageObject("target", "Models/DebugCollision/BoxCollider.fbx", this);
+
+	// オブジェクトをリストに追加
+	AddStageObject(obj);
+
+
 }
 
 void Stage::Update()

@@ -2,6 +2,11 @@
 #include "../../StageObject.h"
 #include "../../Stage.h"
 #include "../../../../../Engine/ImGui/imgui.h"
+
+namespace {
+	const float LIMIT_DISTANCE = 0.5f;
+}
+
 Component_Chase::Component_Chase(StageObject* _holder)
 	:Component(_holder,"Component_Chase",Chase), speed_(0.0f),target_(nullptr)
 {
@@ -14,8 +19,31 @@ void Component_Chase::Initialize()
 
 void Component_Chase::Update()
 {
-	ChaseMove();
+	if (target_ == nullptr)return;
 
+	//対象と保有者のポジションを取得
+	XMFLOAT3 targetPos = target_->GetPosition();
+	XMFLOAT3 holderPos = holder_->GetPosition();
+
+	// 追従する方向を計算
+	XMVECTOR direction = CalcDirection(holderPos, targetPos);
+
+	// ホルダーの向きを計算
+	float rotateAngle = CalcRotateAngle(direction);
+
+	// 距離を計算
+	float distance = CalcDistance(holderPos, targetPos);
+
+
+	if (distance > LIMIT_DISTANCE) {
+		//移動後の位置を適応
+		holder_->SetRotateY(rotateAngle);
+		holder_->SetPosition(holderPos);
+	}
+	else
+	{
+		rotateAngle = 0;
+	}
 }
 
 void Component_Chase::Release()
@@ -54,34 +82,25 @@ void Component_Chase::DrawData()
 	else target_ = (StageObject*)holder_->FindObject(objNames[select]);
 }
 
-
-void Component_Chase::ChaseMove()
+XMVECTOR Component_Chase::CalcDirection(XMFLOAT3 _holderPos, XMFLOAT3 _targetPos)
 {
-	if(target_ == nullptr)return;
+	return XMVector3Normalize(XMLoadFloat3(&_targetPos) - XMLoadFloat3(&_holderPos));
+}
 
-	//対象と保有者のポジションを取得
-	XMFLOAT3 targetPos = target_->GetPosition();
-	XMFLOAT3 holderPos = holder_->GetPosition();
-	targetPos.y = 0;
-	//ポジションをVector型に変更し追従する方向と長さを決める
-	XMVECTOR targetVec = XMLoadFloat3(&targetPos);
-	XMVECTOR holderVec = XMLoadFloat3(&holderPos);
-	float distance = XMVectorGetX(XMVector3Length(targetVec - holderVec));
-	XMVECTOR direction = XMVector3Normalize(XMVectorSetY(targetVec - holderVec, 0));
+void Component_Chase::Move(XMVECTOR _direction)
+{
+	XMFLOAT3 holderPosition = holder_->GetPosition();
+	XMStoreFloat3(&holderPosition, XMLoadFloat3(&holderPosition) + (_direction * speed_));
+	holder_->SetPosition(holderPosition);
+}
 
-	//追従する方向に体の向きを回転させる
-	double rotateAngle = atan2(XMVectorGetX(-direction), XMVectorGetZ(-direction));
+float Component_Chase::CalcDistance(XMFLOAT3 _holderPos, XMFLOAT3 _targetPos)
+{
+	return XMVectorGetX(XMVector3Length(XMLoadFloat3(&_targetPos) - XMLoadFloat3(&_holderPos)));
+}
 
-	XMStoreFloat3(&holderPos, holderVec + (direction * speed_));
-	if (distance > LIMIT_DISTANCE){
-		//移動後の位置を適応
-		holder_->SetRotateY(rotateAngle);
-		holder_->SetPosition(holderPos);
-	}
-	else
-	{
-		rotateAngle = 0;
-	}
-
-	
+float Component_Chase::CalcRotateAngle(XMVECTOR _direction)
+{
+	// 回転角度を計算
+	return atan2(XMVectorGetX(-_direction), XMVectorGetZ(-_direction));
 }

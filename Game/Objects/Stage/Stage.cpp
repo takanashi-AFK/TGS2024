@@ -10,11 +10,12 @@ Stage::Stage(GameObject* _parent)
 void Stage::Initialize()
 {
 	StageObject* obj = CreateStageObject("DetectorObject", "Models/DebugCollision/BoxCollider.fbx", this);
-	obj->AddComponent(CreateComponent(Fall, obj));
+	//obj->AddComponent(CreateComponent(Fall, obj));
 	AddStageObject(obj);
 	obj = CreateStageObject("FallObject", "Models/DebugCollision/SphereCollider.fbx", this);
-	obj->AddComponent(CreateComponent(Fall, obj));
+	//obj->AddComponent(CreateComponent(Fall, obj));
 	AddStageObject(obj);
+	
 }
 
 void Stage::Update()

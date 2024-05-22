@@ -11,21 +11,8 @@ void Stage::Initialize()
 {
 	// デバッグ用のオブジェクトを生成
 	StageObject* obj = CreateStageObject("DetectorObject", "Models/DebugCollision/BoxCollider.fbx", this);
-	obj->AddComponent(CreateComponent(Chase, obj));
+	obj->AddComponent(CreateComponent(CactanAttack, obj));
 	AddStageObject(obj);
-
-	// デバッグ用のオブジェクトを生成
-	obj = CreateStageObject("TargetObject", "Models/DebugCollision/SphereCollider.fbx", this);
-	AddStageObject(obj);
-
-
-	/*StageObject* obj = CreateStageObject("DetectorObject", "Models/DebugCollision/BoxCollider.fbx", this);
-
-	AddStageObject(obj);
-
-	obj = CreateStageObject("FallObject", "Models/DebugCollision/SphereCollider.fbx", this);
-	obj->AddComponent(CreateComponent(Timer, obj));
-	AddStageObject(obj);*/
 
 }
 

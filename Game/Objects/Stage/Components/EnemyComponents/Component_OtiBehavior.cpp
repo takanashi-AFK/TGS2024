@@ -15,11 +15,10 @@ Component_OtiBehavior::Component_OtiBehavior(StageObject* _holder)
 void Component_OtiBehavior::Initialize()
 {
 	// 子コンポーネントの追加
-	//if (FindChildComponent(CircleRangeDetector) == false)AddChildComponent(CreateComponent(CircleRangeDetector, holder_));
-	//if (FindChildComponent(FanRangeDetector) == false)AddChildComponent(CreateComponent(FanRangeDetector, holder_));
+	if (FindChildComponent(CircleRangeDetector) == false)AddChildComponent(CreateComponent(CircleRangeDetector, holder_));
 	//if (FindChildComponent(Timer) == false)AddChildComponent(CreateComponent(Timer, holder_));
 	//if (FindChildComponent(Fall) == false)AddChildComponent(CreateComponent(Fall, holder_));
-	if (FindChildComponent(Chase) == false)AddChildComponent(CreateComponent(Chase, holder_));
+	//if (FindChildComponent(Chase) == false)AddChildComponent(CreateComponent(Chase, holder_));
 
 }
 

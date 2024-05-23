@@ -31,7 +31,6 @@ class FbxParts
 		XMMATRIX worldVewProj;	//ワールド、ビュー、プロジェクション行列の合成（頂点変換に使用）
 		XMMATRIX normalTrans;	//回転行列と拡大行列の逆行列を合成したもの（法線の変形に使用）
 		XMMATRIX world;			//ワールド行列
-		//XMMATRIX shadow;		//影行列
 		XMFLOAT4 lightDirection;//ライトの向き
 		XMFLOAT4 diffuse;		//ディフューズカラー。マテリアルの色。（テクスチャ貼ってるときは使わない）
 		XMFLOAT4 ambient;		//アンビエント

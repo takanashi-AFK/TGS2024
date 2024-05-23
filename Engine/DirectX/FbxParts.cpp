@@ -428,13 +428,7 @@ void FbxParts::Draw(Transform& transform)
 	Direct3D::pContext_->VSSetConstantBuffers(0, 1, &pConstantBuffer_);
 	Direct3D::pContext_->PSSetConstantBuffers(0, 1, &pConstantBuffer_);
 
-	 // 光源の位置
-	//XMFLOAT3 lightPos = { 1, 1, 1 };
-
-	//// 平面ベクトル（ここでは x-z 平面）
-	//XMVECTOR planeNormal = { 0, 1, 0 ,0 };
-	/*XMVECTOR planeD = { 0.0f, 0.0f, 0.0f, 1.0f };
-	XMVECTOR plane = XMPlaneFromPointNormal(planeD, planeNormal);*/
+	
 
 	
 
@@ -461,7 +455,6 @@ void FbxParts::Draw(Transform& transform)
 		cb.shininess = pMaterial_[i].shininess;
 		cb.cameraPosition = XMFLOAT4(Camera::GetPosition().x, Camera::GetPosition().y, Camera::GetPosition().z, 0);
 		cb.lightDirection = XMFLOAT4(1, -1, 1, 0);
-		//cb.shadow = XMMatrixShadow(planeNormal, XMLoadFloat4(&cb.lightDirection));
 		cb.isTexture = pMaterial_[i].pTexture != nullptr;
 
 

@@ -13,9 +13,9 @@ Component_Fall::Component_Fall(StageObject* _holder)
 void Component_Fall::Initialize()
 {
     // èâä˙âª
-    fallSpeed_ = 0.5f; 
-    fallSpeedplus_ = 0.05f;
-    riseSpeed_ = 0.05f; 
+    //fallSpeed_ = 0.5f; 
+    //fallSpeedplus_ = 0.05f;
+    //riseSpeed_ = 0.05f; 
    
 }
 
@@ -69,12 +69,10 @@ void Component_Fall::Save(json& _saveObj)
 void Component_Fall::Load(json& _loadObj)
 {
     // ì«çû
-    if (_loadObj.contains("fallSpeed")) {
-        fallSpeed_ = _loadObj["fallSpeed"];
-    }
-    if (_loadObj.contains("riseSpeed")) {
-        riseSpeed_ = _loadObj["riseSpeed"];
-    }
+    if (_loadObj.contains("fallSpeed"))fallSpeed_ = _loadObj["fallSpeed"];
+    
+    if (_loadObj.contains("riseSpeed"))riseSpeed_ = _loadObj["riseSpeed"];
+    
 }
 
 // ImGuiï\é¶

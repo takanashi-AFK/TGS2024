@@ -6,11 +6,11 @@ class Component_Fall : public Component
 {
 private:
 	
-	float fallSpeed_;//降下速度
-	float fallSpeedplus_;//降下速度を上げるやつ
-	float riseSpeed_;//上昇速度
-	float tempFallSpeed_;//降下速度保存用変数
-	bool isRising_;
+	float fallSpeed_;		//降下速度
+	float fallSpeedplus_;	//降下速度を上げるやつ
+	float riseSpeed_;		//上昇速度
+	float tempFallSpeed_;	//降下速度保存用変数
+	bool isRising_;			//上昇中かどうか
 public:
 	///<summary>
 	/// コンストラクタ

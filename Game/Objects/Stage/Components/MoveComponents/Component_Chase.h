@@ -12,6 +12,7 @@ class Component_Chase:public Component
 private:
 	StageObject* target_;	//追従の対象オブジェクト
 	float speed_;			//速度
+	bool isActive_;			//追従が有効かどうか
 public:
 	/// <summary>
 	/// コンストラクタ
@@ -48,19 +49,30 @@ public:
 
 	void DrawData()override;
 
+	// ターゲットの設定
+	void SetTarget(StageObject* _target) { target_ = _target; }
+
+	// 追従の開始
+	void Start() { isActive_ = true; }
+
+	// 追従の停止
+	void Stop() { isActive_ = false; }
+
+	// 追従が有効かどうか
+	bool IsActive() { return isActive_; }
+
+private:
+
 	// 方向の計算
 	XMVECTOR CalcDirection(XMFLOAT3 _holderPos, XMFLOAT3 _targetPos);
 
-	// 移動
-	void Move(XMVECTOR _direction);
-	
 	// 距離を求める
 	float CalcDistance(XMFLOAT3 _holderPos, XMFLOAT3 _targetPos);
 	
 	// ホルダーの向きを回転させる
 	float CalcRotateAngle(XMVECTOR _direction);
-
-	// ターゲットの設定
-	void SetTarget(StageObject* _target) { target_ = _target; }
+	
+	// 移動
+	void Move(XMVECTOR _direction);
 };
 

@@ -9,8 +9,9 @@
 #define REFERENCE_XMFLOAT3(p) p.x,p.y,p.z // XMFLOAT3å^ÇÃïœêîÇÉRÉìÉ}ãÊêÿÇËÇ≈ï\é¶Ç∑ÇÈ
 
 StageObject::StageObject(string _name, string _modelFilePath, GameObject* _parent)
-	:GameObject(_parent,_name),modelFilePath_(_modelFilePath),modelHandle_(-1),myComponents_()
+	:GameObject(_parent,_name),modelFilePath_(_modelFilePath),modelHandle_(-1),myComponents_(), localPosition_(0.0f, 0.0f, 0.0f)
 {
+
 }
 
 bool StageObject::AddComponent(Component* _comp)
@@ -142,6 +143,16 @@ void StageObject::DrawData()
 		}
 		ImGui::TreePop();
 	}
+}
+
+XMFLOAT3 StageObject::GetLocalPosition() const
+{
+	return localPosition_;
+}
+
+void StageObject::SetLocalPosition(float x, float y, float z)
+{
+	localPosition_ = XMFLOAT3(x, y, z);
 }
 
 StageObject* CreateStageObject(string _name, string _modelFilePath, GameObject* _parent)

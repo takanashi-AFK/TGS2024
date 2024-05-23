@@ -15,8 +15,9 @@ protected:
     vector<Component*> myComponents_;   // 自身が保有するコンポーネント群
     string modelFilePath_;              // モデルのファイルパス
     int modelHandle_;                   // モデル番号
-
+    XMFLOAT3 localPosition_;
 public:
+    
     /// <summary>
     /// コンストラクタ
     /// </summary>
@@ -78,6 +79,10 @@ public:
     /// 自身が持っているデータをImGuiに表示する関数
     /// </summary>
     void DrawData();
+
+    XMFLOAT3 GetLocalPosition() const;
+    void SetLocalPosition(float x, float y, float z);
+    void UpdateTransform();
 };
 
 /// <summary>

@@ -3,9 +3,10 @@
 //インクルード
 #include "../../StageObject.h"
 #include "../../../../../Engine/ImGui/imgui.h"
+
 // コンストラクタ
 Component_Fall::Component_Fall(StageObject* _holder)
-    : Component(_holder,"Component_Fall",Fall), fallSpeed_(0), riseSpeed_(0)
+    : Component(_holder,"Component_Fall",Fall), fallSpeed_(0), riseSpeed_(0), isRising(false)
 {
 }
 
@@ -22,14 +23,13 @@ void Component_Fall::Initialize()
 // 更新
 void Component_Fall::Update()
 
-{   // 現在の位置を取得
-    XMFLOAT3 position_ = holder_->GetPosition();
+{   // 現在のローカル位置を取得
+    DirectX::XMFLOAT3 localPosition_ = holder_->GetLocalPosition();
 
-
-    if (isRising == true) {
+    if (isRising) {
         // 上昇中の処理
-        if (position_.y < 5.0f) { 
-            holder_->SetPosition(position_.x, position_.y += riseSpeed_, position_.z);
+        if (localPosition_.y < 5.0f) {
+            localPosition_.y += riseSpeed_;
         }
         else {
             // 物体が一定高さに達したら上昇を停止する
@@ -38,15 +38,19 @@ void Component_Fall::Update()
     }
     else {
         // 降下中の処理
-        if (position_.y > -5.0f) {
-            //holder_->SetPosition(position_.x, position_.y -= fallSpeed_, position_.z);
-            holder_->SetPosition(position_.x, position_.y -= (fallSpeed_ += fallSpeedplus_), position_.z);
+        if (localPosition_.y > -5.0f) {
+            localPosition_.y -= (fallSpeed_ += fallSpeedplus_);
         }
         else {
             // 物体が一定の高さに達したら上昇を開始する
             isRising = true;
+            fallSpeed_ = 0.5f; // fallSpeed_をリセット
         }
     }
+
+    // ローカル位置を設定
+    holder_->SetLocalPosition(localPosition_.x, localPosition_.y, localPosition_.z);
+   
 }
 
 // 開放

@@ -11,6 +11,8 @@ class Scene_Test : public GameObject
 {
 private:
 	Stage* pStage_;	//ステージクラスへのポインタ
+	int handleModel1_;
+	int handleModel2_;
 
 public:
 	/// <summary>

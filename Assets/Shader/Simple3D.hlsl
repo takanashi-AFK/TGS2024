@@ -13,7 +13,7 @@ cbuffer global
 	float4x4	g_matWVP;			// ワールド・ビュー・プロジェクションの合成行列
 	float4x4	g_matNormalTrans;	// 法線の変換行列（回転行列と拡大の逆行列）
 	float4x4	g_matWorld;			// ワールド変換行列
-    float4x4	g_matShadow;		// 影行列
+    //float4x4	g_matShadow;		// 影行列
 	float4		g_vecLightDir;		// ライトの方向ベクトル
 	float4		g_vecDiffuse;		// ディフューズカラー（マテリアルの色）
 	float4		g_vecAmbient;		// アンビエントカラー（影の色）
@@ -60,7 +60,7 @@ VS_OUT VS(float4 pos : POSITION, float4 Normal : NORMAL, float2 Uv : TEXCOORD)
 	//UV「座標
 	outData.uv = Uv;	//そのままピクセルシェーダーへ
 
-    outData.pos = mul(outData.pos,g_matShadow); //影行列を使って影の位置を計算
+   // outData.pos = mul(outData.pos,g_matShadow); //影行列を使って影の位置を計算
 	//まとめて出力
 	return outData;
 }

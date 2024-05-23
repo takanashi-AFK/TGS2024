@@ -1,7 +1,7 @@
 #include "Component_Attack.h"
 
 Component_Attack::Component_Attack(StageObject* _holder) :
-	Component(_holder, "Component_Attack", Attack)
+	Component(_holder, "Component_Attack", Attack),isAttack_(false)
 {
 }
 

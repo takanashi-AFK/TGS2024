@@ -1,5 +1,6 @@
 #include "Component_CactanAttack.h"
 #include "../../../../../../Engine/ImGui/imgui.h"
+#include "../../../Bullet.h"
 
 Component_CactanAttack::Component_CactanAttack(StageObject* _holder):
 	Component_Attack(_holder, "Component_CactanAttack", CactanAttack)
@@ -15,7 +16,8 @@ void Component_CactanAttack::Update()
 	if (isAttack_) {
 		frame++;
 
-		//‚±‚±‚ÉUŒ‚ˆ—‚ğ‘‚­
+		Bullet* bullet =;
+		bullet->Attack()
 	}
 	else {
 		//I‚í‚Á‚½‚çisAttack_‚ğfalse‚É‚·‚é

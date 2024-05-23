@@ -133,6 +133,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Game\Objects\Stage\Bullet.cpp" />
     <ClCompile Include="Game\Objects\Stage\Components\AttackComponents\Component_CactanAttack\Component_CactanAttack.cpp" />
     <ClCompile Include="Game\Objects\Stage\Components\AttackComponents\Component_Attack.cpp" />
     <ClCompile Include="Game\Objects\Stage\Components\DetectorComponents\Component_FanRangeDetector.cpp" />
@@ -186,6 +187,7 @@
     <ClCompile Include="Game\Otheres\StageEditor.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Game\Objects\Stage\Bullet.h" />
     <ClInclude Include="Game\Objects\Stage\Components\AttackComponents\Component_CactanAttack\Component_CactanAttack.h" />
     <ClInclude Include="Game\Objects\Stage\Components\AttackComponents\Component_Attack.h" />
     <ClInclude Include="Engine\ResourceManager\Transition.h" />

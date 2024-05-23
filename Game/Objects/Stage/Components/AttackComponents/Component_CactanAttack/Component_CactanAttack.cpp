@@ -43,3 +43,9 @@ void Component_CactanAttack::DrawData()
 	if(ImGui::Button("Attack"))
 	Execute();
 }
+
+void Component_CactanAttack::Attack(XMFLOAT3 _playerPosition, XMVECTOR direction)
+{
+	transform_.position_ = _playerPos;
+}
+

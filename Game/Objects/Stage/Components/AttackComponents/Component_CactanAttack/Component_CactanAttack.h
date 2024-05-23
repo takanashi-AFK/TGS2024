@@ -1,10 +1,12 @@
 #pragma once
 #include"../../Component.h"
 #include"../Component_Attack.h"
+#include"../../../../../../Engine/GameObject/GameObject.h"
 //ì¬Ò:‚—œ
 class Component_CactanAttack :public Component_Attack
 {
 	int frame;
+
 	public:
 	 	Component_CactanAttack(StageObject* _holder);
 	 	

@@ -23,8 +23,6 @@ void Stage::Initialize()
 
 	// オブジェクトをリストに追加
 	AddStageObject(obj);
-
-
 }
 
 void Stage::Update()

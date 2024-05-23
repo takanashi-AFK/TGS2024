@@ -29,7 +29,7 @@ void Component_Chase::Update()
 	XMVECTOR direction = XMVectorSetY(CalcDirection(holderPos, targetPos),0);
 
 	// ホルダーの向きを計算
-	float rotateAngle = CalcRotateAngle(direction);
+	float rotateAngle = XMConvertToDegrees(CalcRotateAngle(direction));
 
 	// 距離を計算
 	float distance = CalcDistance(holderPos, targetPos);

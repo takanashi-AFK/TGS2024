@@ -33,7 +33,7 @@ struct VS_OUT
 	float4 normal	 : TEXCOORD2;	//法線
 	float2 uv		 : TEXCOORD0;	//UV座標
 	float4 eye		 : TEXCOORD1;	//視線
-    float4 shadowPos : TEXCOORD3;	//影の位置	
+    //float4 shadowPos : TEXCOORD3;	//影の位置	
 };
 
 //───────────────────────────────────────
@@ -60,7 +60,7 @@ VS_OUT VS(float4 pos : POSITION, float4 Normal : NORMAL, float2 Uv : TEXCOORD)
 	//UV「座標
 	outData.uv = Uv;	//そのままピクセルシェーダーへ
 
-    outData.shadowPos = mul(pos, g_matShadow); //影行列を使って影の位置を計算
+    outData.pos = mul(outData.pos,g_matShadow); //影行列を使って影の位置を計算
 	//まとめて出力
 	return outData;
 }

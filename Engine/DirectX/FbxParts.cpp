@@ -428,6 +428,16 @@ void FbxParts::Draw(Transform& transform)
 	Direct3D::pContext_->VSSetConstantBuffers(0, 1, &pConstantBuffer_);
 	Direct3D::pContext_->PSSetConstantBuffers(0, 1, &pConstantBuffer_);
 
+	 // 光源の位置
+	XMFLOAT3 lightPos = { 1, 1, 1 };
+
+	// 平面ベクトル（ここでは x-z 平面）
+	XMVECTOR planeNormal = { 0, 1, 0 ,0 };
+	/*XMVECTOR planeD = { 0.0f, 0.0f, 0.0f, 1.0f };
+	XMVECTOR plane = XMPlaneFromPointNormal(planeD, planeNormal);*/
+
+	
+
 
 	//シェーダーのコンスタントバッファーに各種データを渡す
 	for (DWORD i = 0; i < materialCount_; i++)
@@ -437,11 +447,6 @@ void FbxParts::Draw(Transform& transform)
 		UINT    offset = 0;
 		Direct3D::pContext_->IASetIndexBuffer(ppIndexBuffer_[i], DXGI_FORMAT_R32_UINT, 0);
 
-		// 平面ベクトル　※平面に垂直な上向きの法線ベクトル
-		XMVECTOR planeNormal = { 0, 1, 0 ,0 };
-
-		// 光源の位置
-		XMFLOAT3 lightPos = { 1, 1, 1 };
 
 		
 		// パラメータの受け渡し
@@ -450,6 +455,7 @@ void FbxParts::Draw(Transform& transform)
 		cb.worldVewProj =	XMMatrixTranspose(transform.GetWorldMatrix() * Camera::GetViewMatrix() * Camera::GetProjectionMatrix());						// リソースへ送る値をセット
 		cb.world =		XMMatrixTranspose(transform.GetWorldMatrix());
 		cb.normalTrans =	XMMatrixTranspose(transform.matRotate_ * XMMatrixInverse(nullptr, transform.matScale_));
+		cb.shadow = XMMatrixShadow(planeNormal, XMLoadFloat3(&lightPos));
 		cb.ambient = pMaterial_[i].ambient;
 		cb.diffuse = pMaterial_[i].diffuse;
 		cb.speculer = pMaterial_[i].specular;
@@ -474,6 +480,8 @@ void FbxParts::Draw(Transform& transform)
 			ID3D11ShaderResourceView*	pSRV = pMaterial_[i].pTexture->GetSRV();
 			Direct3D::pContext_->PSSetShaderResources(0, 1, &pSRV);
 		}
+
+
 		Direct3D::pContext_->Unmap(pConstantBuffer_, 0);									// GPUからのリソースアクセスを再開
 
 		 //ポリゴンメッシュを描画する

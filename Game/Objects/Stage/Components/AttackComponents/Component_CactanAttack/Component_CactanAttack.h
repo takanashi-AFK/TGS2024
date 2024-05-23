@@ -2,10 +2,13 @@
 #include"../../Component.h"
 #include"../Component_Attack.h"
 #include"../../../../../../Engine/GameObject/GameObject.h"
+#include "../../../Bullet.h"
 //ì¬Ò:‚—œ
 class Component_CactanAttack :public Component_Attack
 {
 	int frame;
+
+	Bullet * pBullet;
 
 	public:
 	 	Component_CactanAttack(StageObject* _holder);

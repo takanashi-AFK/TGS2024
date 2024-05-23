@@ -25,7 +25,8 @@ public:
 
 
 	void Initialize() override;
-	void Update() override;
+	//void Update() override;
+	void Update(XMFLOAT3 _objctPosition, XMVECTOR _direction);
 	void Draw() override;
 	void Release() override;
 

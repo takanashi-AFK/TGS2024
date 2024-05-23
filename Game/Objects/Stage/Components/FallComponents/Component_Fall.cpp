@@ -22,16 +22,16 @@ void Component_Fall::Initialize()
 
 // 更新
 void Component_Fall::Update()
-
-{   // 現在のローカル位置を取得
+{   
+    // 現在のローカル位置を取得
     DirectX::XMFLOAT3 localPosition_ = holder_->GetLocalPosition();
-
+    
     if (isRising) {
         // 上昇中の処理
-        if (localPosition_.y < 5.0f) {
+        if (localPosition_.y < 5.0f){
             localPosition_.y += riseSpeed_;
         }
-        else {
+        else{
             // 物体が一定高さに達したら上昇を停止する
             isRising = false;
         }
@@ -39,7 +39,7 @@ void Component_Fall::Update()
     else {
         // 降下中の処理
         if (localPosition_.y > -5.0f) {
-            localPosition_.y -= (fallSpeed_ += fallSpeedplus_);
+            localPosition_.y -= (fallSpeed_ += fallSpeedplus_);   
         }
         else {
             // 物体が一定の高さに達したら上昇を開始する
@@ -47,10 +47,8 @@ void Component_Fall::Update()
             fallSpeed_ = 0.5f; // fallSpeed_をリセット
         }
     }
-
     // ローカル位置を設定
     holder_->SetLocalPosition(localPosition_.x, localPosition_.y, localPosition_.z);
-   
 }
 
 // 開放

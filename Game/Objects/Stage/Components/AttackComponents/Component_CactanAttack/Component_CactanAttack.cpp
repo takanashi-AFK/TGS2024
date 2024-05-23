@@ -16,14 +16,12 @@ void Component_CactanAttack::Update()
 	if (isAttack_) {
 		frame++;
 
-		Bullet* bullet =;
-		bullet->Attack()
+		Bullet * pBullet = Instantiate<Bullet>(holder_->GetParent());
+		pBullet->Attack(holder_->GetPosition(), { 0,0,1 });	
+		
+		//Bullet* pBullet = (Bullet*)CreateStageObject("Bullet", "Models/DebugCollision/SphereCollider.fbx", holder_->GetParent());
+		//pBullet->Attack(holder_->GetPosition(), {0,0,1});
 	}
-	else {
-		//I‚í‚Á‚½‚çisAttack_‚ğfalse‚É‚·‚é
-	}
-
-
 }
 	
 

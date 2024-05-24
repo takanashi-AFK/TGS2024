@@ -155,6 +155,7 @@ void StageObject::SetLocalPosition(float x, float y, float z)
 	localPosition_ = XMFLOAT3(x, y, z);
 }
 
+
 StageObject* CreateStageObject(string _name, string _modelFilePath, GameObject* _parent)
 {
 	// オブジェクトのインスタンスを生成

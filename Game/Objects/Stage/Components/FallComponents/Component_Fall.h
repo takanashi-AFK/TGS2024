@@ -1,7 +1,7 @@
 #pragma once
 
 #include "../Component.h"
-
+#include "DirectXMath.h"
 class Component_Fall : public Component
 {
 private:
@@ -9,7 +9,9 @@ private:
 	float fallSpeed_;//ç~â∫ë¨ìx
 	float fallSpeedplus_;//ç~â∫ë¨ìxÇè„Ç∞ÇÈÇ‚Ç¬
 	float riseSpeed_;//è„è∏ë¨ìx
-	
+	static float startRisePosition_;
+	static float startFallPosition_;
+	DirectX::XMFLOAT3 localPosition;
 	
 	bool isRising = false;
 public:

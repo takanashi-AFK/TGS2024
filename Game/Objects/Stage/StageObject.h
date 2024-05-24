@@ -4,7 +4,7 @@
 #include "../../../Engine/GameObject/GameObject.h"
 #include "Components/Component.h"
 #include <vector>
-
+#include "DirectXMath.h"
 // using宣言
 using std::vector;
 
@@ -15,7 +15,8 @@ protected:
     vector<Component*> myComponents_;   // 自身が保有するコンポーネント群
     string modelFilePath_;              // モデルのファイルパス
     int modelHandle_;                   // モデル番号
-    XMFLOAT3 localPosition_;
+    DirectX::XMFLOAT3 localPosition_;
+   
 public:
     
     /// <summary>
@@ -82,7 +83,7 @@ public:
 
     XMFLOAT3 GetLocalPosition() const;
     void SetLocalPosition(float x, float y, float z);
-    void UpdateTransform();
+    
 };
 
 /// <summary>

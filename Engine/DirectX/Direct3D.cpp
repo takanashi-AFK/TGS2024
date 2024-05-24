@@ -120,7 +120,7 @@ namespace Direct3D
 		//ƒŒƒ“ƒ_ƒŠƒ“ƒOŒ‹‰Ê‚ð•\Ž¦‚·‚é”ÍˆÍ
 		float viewPortMagnification = 1.f;
 #ifdef _DEBUG
-		viewPortMagnification = 0.7f;
+		//viewPortMagnification = 0.7f;
 #endif // _DEBUG
 
 		D3D11_VIEWPORT vp;

@@ -11,7 +11,7 @@ TestObject_Box::TestObject_Box(GameObject* _parent)
 
 void TestObject_Box::Initialize()
 {
-	modelHandle_ = Model::Load("Models/DebugCollision/BoxCollider.fbx");
+	modelHandle_ = Model::Load("Models/player.fbx");
 	assert(modelHandle_ >= 0);
 }
 
@@ -33,6 +33,8 @@ void TestObject_Box::Draw()
 	Model::SetTransform(modelHandle_, transform_);
 	Model::Draw(modelHandle_);
 	Direct3D::SetShader(Direct3D::SHADER_3D);
+	
+
 }
 
 void TestObject_Box::Release()

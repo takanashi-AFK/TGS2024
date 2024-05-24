@@ -77,48 +77,7 @@ VS_OUT VS(float4 pos : POSITION, float4 Normal : NORMAL, float2 Uv : TEXCOORD)
 //───────────────────────────────────────
 float4 PS(VS_OUT inData) : SV_Target
 {
-	//ライトの向き
-    float4 lightDir = g_vecLightDir; //グルーバル変数は変更できないので、いったんローカル変数へ
-    lightDir = normalize(lightDir); //向きだけが必要なので正規化
-
-	//法線はピクセルシェーダーに持ってきた時点で補完され長さが変わっている
-	//正規化しておかないと面の明るさがおかしくなる
-    inData.normal = normalize(inData.normal);
-
-	//拡散反射光（ディフューズ）
-	//法線と光のベクトルの内積が、そこの明るさになる
-    float4 shade = saturate(dot(inData.normal, -lightDir));
-    shade.a = 1; //暗いところが透明になるので、強制的にアルファは1
-
-    float4 diffuse;
-	//テクスチャ有無
-    if (g_isTexture == true)
-    {
-		//テクスチャの色
-        diffuse = g_texture.Sample(g_sampler, inData.uv);
-    }
-    else
-    {
-		//マテリアルの色
-        diffuse = g_vecDiffuse;
-    }
-
-	//環境光（アンビエント）
-	//これはMaya側で指定し、グローバル変数で受け取ったものをそのまま
-    float4 ambient = g_vecAmbient;
-
-	//鏡面反射光（スペキュラー）
-    float4 speculer = float4(0, 0, 0, 0); //とりあえずハイライトは無しにしておいて…
-    if (g_vecSpeculer.a != 0)	//スペキュラーの情報があれば
-    {
-        float4 R = reflect(lightDir, inData.normal); //正反射ベクトル
-        speculer = pow(saturate(dot(R, inData.eye)), g_shuniness) * g_vecSpeculer; //ハイライトを求める
-    }
-
-	//最終的な色
-    return diffuse * shade + diffuse * ambient + speculer;
-    
     // 黒表示
-    //return float4(0, 1, 0, 1);
+    return float4(0, 0, 0, 1);
     
 }

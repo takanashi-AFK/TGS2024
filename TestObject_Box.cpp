@@ -2,6 +2,7 @@
 
 #include "Engine/ResourceManager/Model.h"
 #include "Engine/ImGui/imgui.h"
+#include "Engine/DirectX/Direct3D.h"
 
 TestObject_Box::TestObject_Box(GameObject* _parent)
 	:GameObject(_parent,"TestObject_Box")
@@ -27,6 +28,11 @@ void TestObject_Box::Draw()
 {
 	Model::SetTransform(modelHandle_, transform_);
 	Model::Draw(modelHandle_);
+
+	Direct3D::SetShader(Direct3D::SHADER_SHADOW);
+	Model::SetTransform(modelHandle_, transform_);
+	Model::Draw(modelHandle_);
+	Direct3D::SetShader(Direct3D::SHADER_3D);
 }
 
 void TestObject_Box::Release()

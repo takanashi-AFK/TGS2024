@@ -13,6 +13,11 @@ cbuffer global
     float4x4 g_matWVP; // ワールド・ビュー・プロジェクションの合成行列
     float4x4 g_matNormalTrans; // 法線の変換行列（回転行列と拡大の逆行列）
     float4x4 g_matWorld; // ワールド変換行列
+    
+/* 追加 */
+    float4x4 g_matShadow; // シャドウマップ用行列
+/* 追加 */
+    
     float4 g_vecLightDir; // ライトの方向ベクトル
     float4 g_vecDiffuse; // ディフューズカラー（マテリアルの色）
     float4 g_vecAmbient; // アンビエントカラー（影の色）
@@ -58,6 +63,10 @@ VS_OUT VS(float4 pos : POSITION, float4 Normal : NORMAL, float2 Uv : TEXCOORD)
 	//UV「座標
     outData.uv = Uv; //そのままピクセルシェーダーへ
 
+/* 追加 */
+    // XMMatrixShadowで計算された行列を掛ける
+    outData.pos = mul(outData.pos, g_matShadow);
+/* 追加 */
 
 	//まとめて出力
     return outData;
@@ -108,4 +117,8 @@ float4 PS(VS_OUT inData) : SV_Target
 
 	//最終的な色
     return diffuse * shade + diffuse * ambient + speculer;
+    
+    // 黒表示
+    return float4(0, 1, 0, 1);
+    
 }

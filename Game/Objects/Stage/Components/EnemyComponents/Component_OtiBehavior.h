@@ -3,6 +3,8 @@
 
 class Component_OtiBehavior : public Component
 {
+private:
+	
 public:
 	Component_OtiBehavior(StageObject* _holder);
 	

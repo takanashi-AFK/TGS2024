@@ -10,6 +10,7 @@ private:
 	float fallSpeedplus_;	//~‰º‘¬“x‚ğã‚°‚é‚â‚Â
 	float riseSpeed_;		//ã¸‘¬“x
 	float tempFallSpeed_;	//~‰º‘¬“x•Û‘¶—p•Ï”
+	bool isActive_;
 	bool isRising_;			//ã¸’†‚©‚Ç‚¤‚©
 public:
 	///<summary>
@@ -50,6 +51,11 @@ public:
 	/// </summary>
 	void DrawData() override;
 
+	// ’Ç]‚ÌŠJn
+	void Start() { isActive_ = true; }
+
+	// ’Ç]‚Ì’â~
+	void Stop() { isActive_ = false; }
 
 	void Rising() { isRising_ = true; }
 

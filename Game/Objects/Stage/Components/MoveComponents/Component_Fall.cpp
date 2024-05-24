@@ -13,9 +13,9 @@ Component_Fall::Component_Fall(StageObject* _holder)
 void Component_Fall::Initialize()
 {
     // èâä˙âª
-    //fallSpeed_ = 0.5f; 
-    //fallSpeedplus_ = 0.05f;
-    //riseSpeed_ = 0.05f; 
+    fallSpeed_ = 0.5f; 
+    fallSpeedplus_ = 0.05f;
+    riseSpeed_ = 0.05f; 
    
 }
 

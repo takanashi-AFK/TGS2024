@@ -17,22 +17,33 @@ void Component_OtiBehavior::Initialize()
 	// 子コンポーネントの追加
 	if (FindChildComponent(CircleRangeDetector) == false)AddChildComponent(CreateComponent(CircleRangeDetector, holder_));
 	//if (FindChildComponent(Timer) == false)AddChildComponent(CreateComponent(Timer, holder_));
-	//if (FindChildComponent(Fall) == false)AddChildComponent(CreateComponent(Fall, holder_));
+	if (FindChildComponent(Fall) == false)AddChildComponent(CreateComponent(Fall, holder_));
 	if (FindChildComponent(Chase) == false)AddChildComponent(CreateComponent(Chase, holder_));
 }
 
 void Component_OtiBehavior::Update()
 {
+	(((Component_CircleRangeDetector*)GetChildComponent(CircleRangeDetector))->SetRadius(5));
 	// 範囲内にプレイヤーがいるかどうか
 	if (((Component_CircleRangeDetector*)GetChildComponent(CircleRangeDetector))->IsContains()) 
 	{
 		// 追従行動を開始
 		((Component_Chase*)GetChildComponent(Chase))->Start();
+		
 	}
 	else 
 	{
 		// 追従行動を停止
 		((Component_Chase*)GetChildComponent(Chase))->Stop();
+	}
+	(((Component_CircleRangeDetector*)GetChildComponent(CircleRangeDetector))->SetRadius(1));
+	if (((Component_CircleRangeDetector*)GetChildComponent(CircleRangeDetector))->IsContains())
+	{
+		((Component_Fall*)GetChildComponent(Fall))->Start();
+	}
+	else
+	{
+		((Component_Fall*)GetChildComponent(Fall))->Stop();
 	}
 }
 

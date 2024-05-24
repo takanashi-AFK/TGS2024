@@ -5,6 +5,7 @@
 #include "../Objects/Stage/SkySphere.h"
 #include "../../TestObject_Box.h"
 #include "../../Engine/GameObject/Camera.h"
+#include "../../TestObject_Plane.h"
 
 Scene_Test::Scene_Test(GameObject * parent)
 	: GameObject(parent, "Scene_Test"),pStage_(nullptr)
@@ -15,6 +16,8 @@ void Scene_Test::Initialize()
 {
 	// スカイスフィアを標準で生成
 	Instantiate<SkySphere>(this);
+
+	Instantiate<TestObject_Plane>(this);
 
 	// テストオブジェクトを生成
 	Instantiate<TestObject_Box>(this);

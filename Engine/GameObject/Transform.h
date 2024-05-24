@@ -33,6 +33,9 @@ public:
 	//引数：なし
 	//戻値：その時点でのワールド行列
 	XMMATRIX GetWorldMatrix();
+	XMMATRIX GetTranslateMatrix();
+	XMMATRIX GetRotateMatrix();
+	XMMATRIX GetScaleMatrix();
 
 
 	static XMFLOAT3 Float3Add(XMFLOAT3 a, XMFLOAT3 b)

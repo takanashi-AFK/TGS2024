@@ -215,6 +215,7 @@
       <Filter>03Game\Objects\Stage\Components\TimerComponent</Filter>
     </ClCompile>
     <ClCompile Include="TestObject_Box.cpp" />
+    <ClCompile Include="TestObject_Plane.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Collider\BoxCollider.h">
@@ -374,6 +375,7 @@
       <Filter>03Game\Objects\Stage\Components\TimerComponent</Filter>
     </ClInclude>
     <ClInclude Include="TestObject_Box.h" />
+    <ClInclude Include="TestObject_Plane.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Assets\Shader\Simple2D.hlsl">

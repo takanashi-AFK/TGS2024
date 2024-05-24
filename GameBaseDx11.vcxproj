@@ -183,6 +183,7 @@
     <ClCompile Include="Game\Scenes\Scene_Splash.cpp" />
     <ClCompile Include="Game\Otheres\StageEditor.cpp" />
     <ClCompile Include="TestObject_Box.cpp" />
+    <ClCompile Include="TestObject_Plane.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\ResourceManager\Transition.h" />
@@ -238,6 +239,7 @@
     <ClInclude Include="Game\Scenes\Scene_Splash.h" />
     <ClInclude Include="Game\Otheres\StageEditor.h" />
     <ClInclude Include="TestObject_Box.h" />
+    <ClInclude Include="TestObject_Plane.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Assets\Shader\BillBoard.hlsl">

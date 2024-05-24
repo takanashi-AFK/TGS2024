@@ -44,3 +44,18 @@ XMMATRIX Transform::GetWorldMatrix()
 	return  matScale_ * matRotate_ * matTranslate_;
 }
 
+XMMATRIX Transform::GetTranslateMatrix()
+{
+	return matTranslate_;
+}
+
+XMMATRIX Transform::GetRotateMatrix()
+{
+	return matRotate_;
+}
+
+XMMATRIX Transform::GetScaleMatrix()
+{
+	return matScale_;
+}
+

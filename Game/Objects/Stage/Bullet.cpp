@@ -36,9 +36,9 @@ void Bullet::Update(XMFLOAT3 _objctPosition, XMVECTOR _direction)
 	XMVECTOR shotDirection = XMVector3Normalize(_direction);
 	XMStoreFloat3(&Move_Position, shotDirection * BULLET_SPEED);
 
-	transform_.position_.x += Move_Position.x;
-	transform_.position_.y += Move_Position.y;
-	transform_.position_.z += Move_Position.z;
+	//transform_.position_.x += Move_Position.x;
+	//transform_.position_.y += Move_Position.y;
+	//transform_.position_.z += Move_Position.z;
 }
 
 void Bullet::Draw()
@@ -57,6 +57,13 @@ void Bullet::Attack(XMFLOAT3 _playerPosition, XMVECTOR _direction)
 	transform_.position_ = _playerPosition;
 	XMVECTOR shotDirection = XMVector3Normalize(_direction);
 	XMStoreFloat3(&Move_Position, shotDirection * BULLET_SPEED);
+}
+
+void Bullet::TestAttack()
+{
+	transform_.position_.x += Move_Position.x;
+	transform_.position_.y += Move_Position.y;
+	transform_.position_.z += Move_Position.z;
 }
 
 

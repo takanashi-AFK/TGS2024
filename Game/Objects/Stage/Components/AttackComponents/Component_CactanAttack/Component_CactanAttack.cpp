@@ -20,6 +20,7 @@ void Component_CactanAttack::Update()
 		//pBullet->Update(holder_->GetPosition(), {0,0,1});
 
 		pBullet->Update(holder_->GetPosition(), {0,0,1});
+		pBullet->TestAttack();
 		
 		//pBullet->Attack(holder_->GetPosition(), {0,0,1});
 		

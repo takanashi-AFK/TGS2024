@@ -31,6 +31,7 @@ public:
 	void Release() override;
 
 	void Attack(XMFLOAT3 _playerPosition, XMVECTOR _direction);
+	void TestAttack();
 
 };
 

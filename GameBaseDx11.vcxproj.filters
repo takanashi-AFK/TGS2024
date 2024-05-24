@@ -391,5 +391,8 @@
     <FxCompile Include="Assets\Shader\Sky.hlsl">
       <Filter>02Shader</Filter>
     </FxCompile>
+    <FxCompile Include="Assets\Shader\Shadow.hlsl">
+      <Filter>02Shader</Filter>
+    </FxCompile>
   </ItemGroup>
 </Project>

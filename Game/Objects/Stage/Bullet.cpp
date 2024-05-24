@@ -1,8 +1,8 @@
 #include "Bullet.h"
 #include "../../../Engine/ResourceManager/Model.h"
-
+#include "../../../Engine/ImGui/imgui.h"
 Bullet::Bullet(GameObject* _parent) 
-:StageObject("Bullet","Models/DebugCollision/SphereCollider.fbx", _parent),isShot_(false)
+:StageObject("Bullet","Models/DebugCollision/SphereCollider.fbx", _parent),isShot_(false),frame(0)
 {
 }
 
@@ -26,14 +26,14 @@ void Bullet::Update()
 {
 	transform_.position_.x += Move_Position.x;
 	transform_.position_.y += Move_Position.y;
-	transform_.position_.z += Move_Position.z;
-	if (isShot_) {
-		frame++;
-		if (frame > 60) {
-			KillMe();
-			isShot_ = false;
-		}
+	transform_.position_.z += Move_Position.z;	
+	if (frame>60) {
+		frame = 0;
+		KillMe();
 	}
+	else
+		frame++;
+	
 }
 
 void Bullet::Draw()

@@ -42,5 +42,8 @@ class Component_CactanAttack :public Component_Attack
 	 	
 	 	void DrawData()override;
 
+		void Attack();
+
+
 };
 

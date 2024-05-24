@@ -12,8 +12,8 @@ void Component_CactanAttack::Initialize()
 void Component_CactanAttack::Update()
 {
 	if (isAttack_) {
-		Bullet* pBullet = Instantiate<Bullet>(holder_->GetParent());
-		pBullet->Attack(holder_->GetPosition(), XMVectorSet(0,0,1,0));
+		this->Attack();
+		
 		isAttack_ = false;
 	}
 }
@@ -37,3 +37,8 @@ void Component_CactanAttack::DrawData()
 	Execute();
 }
 
+void Component_CactanAttack::Attack()
+{
+	Bullet* pBullet = Instantiate<Bullet>(holder_->GetParent());
+	pBullet->Attack(holder_->GetPosition(), XMVectorSet(0, 0, 1, 0));
+}

@@ -1,6 +1,5 @@
 #include "Component_CactanAttack.h"
 #include "../../../../../../Engine/ImGui/imgui.h"
-
 Component_CactanAttack::Component_CactanAttack(StageObject* _holder):
 	Component_Attack(_holder, "Component_CactanAttack", CactanAttack),pBullet(nullptr)
 {
@@ -14,18 +13,9 @@ void Component_CactanAttack::Initialize()
 void Component_CactanAttack::Update()
 {
 	if (isAttack_) {
-		frame++;
-
-		//Bullet * pBullet = Instantiate<Bullet>(holder_->GetParent());
-		//pBullet->Update(holder_->GetPosition(), {0,0,1});
-
-		pBullet->Update(holder_->GetPosition(), {0,0,1});
-		pBullet->TestAttack();
-		
-		//pBullet->Attack(holder_->GetPosition(), {0,0,1});
-		
-		//Bullet* pBullet = (Bullet*)CreateStageObject("Bullet", "Models/DebugCollision/SphereCollider.fbx", holder_->GetParent());
-		//pBullet->Attack(holder_->GetPosition(), {0,0,1});
+		Bullet* pBullet = Instantiate<Bullet>(holder_->GetParent());
+		pBullet->Attack(holder_->GetPosition(), XMVectorSet(0,0,1,0));
+		isAttack_ = false;
 	}
 }
 	

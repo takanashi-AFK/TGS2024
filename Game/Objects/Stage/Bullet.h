@@ -11,7 +11,8 @@ private:
 	XMVECTOR Move_Direction;
 	SphereCollider* collision;
 	int modelHandle_;
-	bool isHit_;
+	bool isShot_;
+	int frame;
 public:
 
 	Bullet(GameObject* _parent);
@@ -25,8 +26,7 @@ public:
 
 
 	void Initialize() override;
-	//void Update() override;
-	void Update(XMFLOAT3 _objctPosition, XMVECTOR _direction);
+	void Update() override;
 	void Draw() override;
 	void Release() override;
 

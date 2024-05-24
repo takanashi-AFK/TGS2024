@@ -7,7 +7,6 @@ Component_CactanAttack::Component_CactanAttack(StageObject* _holder):
 
 void Component_CactanAttack::Initialize()
 {
-	pBullet = Instantiate<Bullet>(holder_->GetParent());
 }
 
 void Component_CactanAttack::Update()
@@ -34,7 +33,6 @@ void Component_CactanAttack::Load(json& _loadobj)
 
 void Component_CactanAttack::DrawData()
 {
-	ImGui::Text("%d", frame);
 	if(ImGui::Button("Attack"))
 	Execute();
 }

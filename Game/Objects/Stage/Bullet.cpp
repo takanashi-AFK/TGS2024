@@ -2,7 +2,7 @@
 #include "../../../Engine/ResourceManager/Model.h"
 
 Bullet::Bullet(GameObject* _parent) 
-:StageObject("Bullet","Models/DebugCollision/BoxCollider.fbx", _parent),isShot_(false)
+:StageObject("Bullet","Models/DebugCollision/SphereCollider.fbx", _parent),isShot_(false)
 {
 }
 
@@ -18,7 +18,7 @@ void Bullet::Initialize()
 	//サイズは後で変更
 	collision = new SphereCollider(transform_.position_, 1.0f);
 	AddCollider(collision);
-	transform_.scale_ = XMFLOAT3(1.0f, 1.0f, 1.0f);
+	transform_.scale_ = XMFLOAT3(0.3,0.3,0.3);
 }
 
 

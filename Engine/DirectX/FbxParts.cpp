@@ -443,6 +443,16 @@ void FbxParts::Draw(Transform& transform)
 		CONSTANT_BUFFER cb;
 		cb.worldVewProj =	XMMatrixTranspose(transform.GetWorldMatrix() * Camera::GetViewMatrix() * Camera::GetProjectionMatrix());						// リソースへ送る値をセット
 		cb.world =		XMMatrixTranspose(transform.GetWorldMatrix());
+		
+	/* 追加 */
+		
+		// ビュー行列とプロジェクション行列を個別で送信
+		cb.view = XMMatrixTranspose(Camera::GetViewMatrix());
+		cb.projection = XMMatrixTranspose(Camera::GetProjectionMatrix());
+
+		cb.shadow = XMMatrixTranspose(XMMatrixShadow(XMVectorSet(0, 1, 0.5, 0), XMVectorSet(10, 20, 10, 0)));
+
+	/* 追加 */
 		cb.normalTrans =	XMMatrixTranspose(transform.matRotate_ * XMMatrixInverse(nullptr, transform.matScale_));
 		cb.ambient = pMaterial_[i].ambient;
 		cb.diffuse = pMaterial_[i].diffuse;
@@ -451,7 +461,6 @@ void FbxParts::Draw(Transform& transform)
 		cb.cameraPosition = XMFLOAT4(Camera::GetPosition().x, Camera::GetPosition().y, Camera::GetPosition().z, 0);
 		cb.lightDirection = XMFLOAT4(1, -1, 1, 0);
 		cb.isTexture = pMaterial_[i].pTexture != nullptr;
-		cb.shadow = XMMatrixTranspose(transform.GetWorldMatrix() * XMMatrixShadow(XMVectorSet(0, 1, 0.5, 0), XMVectorSet(10, 20, 10, 0)));
 
 		Direct3D::pContext_->Map(pConstantBuffer_, 0, D3D11_MAP_WRITE_DISCARD, 0, &pdata);	// GPUからのリソースアクセスを一時止める
 		memcpy_s(pdata.pData, pdata.RowPitch, (void*)(&cb), sizeof(cb));		// リソースへ値を送る

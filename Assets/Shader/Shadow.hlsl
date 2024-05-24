@@ -13,6 +13,8 @@ cbuffer global
     float4x4 g_matWVP; // ワールド・ビュー・プロジェクションの合成行列
     float4x4 g_matNormalTrans; // 法線の変換行列（回転行列と拡大の逆行列）
     float4x4 g_matWorld; // ワールド変換行列
+    float4x4 g_matView; // ビュー変換行列
+    float4x4 g_matProjection; // プロジェクション変換行列
     
 /* 追加 */
     float4x4 g_matShadow; // シャドウマップ用行列
@@ -44,31 +46,35 @@ struct VS_OUT
 //───────────────────────────────────────
 VS_OUT VS(float4 pos : POSITION, float4 Normal : NORMAL, float2 Uv : TEXCOORD)
 {
-	//ピクセルシェーダーへ渡す情報
+    // ピクセルシェーダーへ渡す情報
     VS_OUT outData;
 
-	//ローカル座標に、ワールド・ビュー・プロジェクション行列をかけて
-	//スクリーン座標に変換し、ピクセルシェーダーへ
-    outData.pos = mul(pos, g_matWVP);
+    // ローカル座標に、ワールド・ビュー・プロジェクション行列をかけて
+    // スクリーン座標に変換し、ピクセルシェーダーへ
+    float4 worldPos = mul(pos, g_matWorld);
+    float4 viewPos = mul(worldPos, g_matView);
+    outData.pos = mul(viewPos, g_matProjection);
 
-	//法線の変形
-    Normal.w = 0; //4次元目は使わないので0
-    Normal = mul(Normal, g_matNormalTrans); //オブジェクトが変形すれば法線も変形
-    outData.normal = Normal; //これをピクセルシェーダーへ
+    // 法線の変形
+    Normal.w = 0; // 4次元目は使わないので0
+    Normal = mul(Normal, g_matNormalTrans); // オブジェクトが変形すれば法線も変形
+    outData.normal = Normal; // これをピクセルシェーダーへ
 
-	//視線ベクトル（ハイライトの計算に必要
-    float4 worldPos = mul(pos, g_matWorld); //ローカル座標にワールド行列をかけてワールド座標へ
-    outData.eye = normalize(g_vecCameraPosition - worldPos); //視点から頂点位置を引き算し視線を求めてピクセルシェーダーへ
+    // 視線ベクトル（ハイライトの計算に必要
+    outData.eye = normalize(g_vecCameraPosition - worldPos); // 視点から頂点位置を引き算し視線を求めてピクセルシェーダーへ
 
-	//UV「座標
-    outData.uv = Uv; //そのままピクセルシェーダーへ
+    // UV座標
+    outData.uv = Uv; // そのままピクセルシェーダーへ
 
-/* 追加 */
+    /* 追加 */
     // XMMatrixShadowで計算された行列を掛ける
-    outData.pos = mul(outData.pos, g_matShadow);
-/* 追加 */
+    float4 shadowPos = mul(worldPos, g_matShadow);
+    shadowPos = mul(shadowPos, g_matView);
+    shadowPos = mul(shadowPos, g_matProjection);
+    outData.pos = shadowPos;
+    /* 追加 */
 
-	//まとめて出力
+    // まとめて出力
     return outData;
 }
 

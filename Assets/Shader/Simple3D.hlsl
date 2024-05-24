@@ -13,6 +13,8 @@ cbuffer global
 	float4x4	g_matWVP;			// ワールド・ビュー・プロジェクションの合成行列
 	float4x4	g_matNormalTrans;	// 法線の変換行列（回転行列と拡大の逆行列）
 	float4x4	g_matWorld;			// ワールド変換行列
+	float4x4	g_matView;			// ビュー変換行列
+	float4x4	g_matProjection;	// プロジェクション変換行列
 	
 /* 追加 */
     float4x4 g_matShadow; // シャドウマップ用行列

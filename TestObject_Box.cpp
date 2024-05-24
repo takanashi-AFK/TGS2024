@@ -30,11 +30,10 @@ void TestObject_Box::Draw()
 	Model::Draw(modelHandle_);
 
 	Direct3D::SetShader(Direct3D::SHADER_SHADOW);
+
 	Model::SetTransform(modelHandle_, transform_);
 	Model::Draw(modelHandle_);
 	Direct3D::SetShader(Direct3D::SHADER_3D);
-	
-
 }
 
 void TestObject_Box::Release()

@@ -26,6 +26,7 @@ void Component_Fall::Update()
     // Œ»İ‚Ìƒ[ƒJƒ‹ˆÊ’u‚ğæ“¾
     DirectX::XMFLOAT3 localPosition_ = holder_->GetLocalPosition();
     
+
     if (isRising) {
         // ã¸’†‚Ìˆ—
         if (localPosition_.y < 5.0f){

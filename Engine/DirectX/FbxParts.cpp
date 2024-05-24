@@ -428,7 +428,6 @@ void FbxParts::Draw(Transform& transform)
 	Direct3D::pContext_->VSSetConstantBuffers(0, 1, &pConstantBuffer_);
 	Direct3D::pContext_->PSSetConstantBuffers(0, 1, &pConstantBuffer_);
 
-	
 
 	
 

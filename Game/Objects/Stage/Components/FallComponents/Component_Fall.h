@@ -10,7 +10,7 @@ private:
 	float fallSpeedplus_;//~‰º‘¬“x‚ğã‚°‚é‚â‚Â
 	float riseSpeed_;//ã¸‘¬“x
 	
-	XMFLOAT3 fallStartPosition_;
+	
 	bool isRising = false;
 public:
 	///<summary>

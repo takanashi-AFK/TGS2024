@@ -184,9 +184,11 @@
     <ClCompile Include="Game\Scenes\Scene_Test.cpp">
       <Filter>03Game\Scenes</Filter>
     </ClCompile>
-    <ClCompile Include="Game\Objects\Stage\Components\FallComponents\Component_Fall.cpp" />
     <ClCompile Include="Game\Objects\Stage\Stage.cpp">
       <Filter>03Game\Objects\Stage</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Objects\Stage\Components\FallComponents\Component_Fall.cpp">
+      <Filter>03Game\Objects\Stage\Components\FallComponents</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -328,7 +330,9 @@
     <ClInclude Include="Game\Scenes\Scene_Test.h">
       <Filter>03Game\Scenes</Filter>
     </ClInclude>
-    <ClInclude Include="Game\Objects\Stage\Components\FallComponents\Component_Fall.h" />
+    <ClInclude Include="Game\Objects\Stage\Components\FallComponents\Component_Fall.h">
+      <Filter>03Game\Objects\Stage\Components\FallComponents</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Assets\Shader\Simple2D.hlsl">

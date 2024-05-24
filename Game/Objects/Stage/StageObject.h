@@ -4,7 +4,7 @@
 #include "../../../Engine/GameObject/GameObject.h"
 #include "Components/Component.h"
 #include <vector>
-#include "DirectXMath.h"
+#include <DirectXMath.h>
 // usingéŒ¾
 using std::vector;
 

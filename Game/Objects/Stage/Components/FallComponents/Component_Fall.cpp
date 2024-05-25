@@ -6,7 +6,7 @@
 
 // コンストラクタ
 Component_Fall::Component_Fall(StageObject* _holder)
-    : Component(_holder,"Component_Fall",Fall), fallSpeed_(0), riseSpeed_(0), isRising(false)
+    : Component(_holder,"Component_Fall",Fall), fallSpeed_(0), riseSpeed_(0), isRising(false),isFirstTime(true)
 {
 }
 
@@ -24,7 +24,7 @@ void Component_Fall::Initialize()
 void Component_Fall::Update()
 {   
     
-    bool isFirstTime = true;
+   
 
     if (isFirstTime) {
         // 現在のローカル位置を取得

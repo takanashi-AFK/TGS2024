@@ -12,7 +12,7 @@ private:
 	 float startRisePosition_;
 	 float startFallPosition_;
 	DirectX::XMFLOAT3 localPosition;
-	
+	bool isFirstTime = true;
 	bool isRising = false;
 public:
 	///<summary>

@@ -1,7 +1,8 @@
 #include "Component_CactanAttack.h"
 #include "../../../../../../Engine/ImGui/imgui.h"
 Component_CactanAttack::Component_CactanAttack(StageObject* _holder):
-	Component_Attack(_holder, "Component_CactanAttack", CactanAttack),pBullet(nullptr)
+	Component_Attack(_holder, "Component_CactanAttack", CactanAttack),
+	frame(0)
 {
 }
 
@@ -13,7 +14,6 @@ void Component_CactanAttack::Update()
 {
 	if (isAttack_) {
 		this->Attack();
-		
 		isAttack_ = false;
 	}
 }
@@ -40,5 +40,7 @@ void Component_CactanAttack::DrawData()
 void Component_CactanAttack::Attack()
 {
 	Bullet* pBullet = Instantiate<Bullet>(holder_->GetParent());
-	pBullet->Attack(holder_->GetPosition(), XMVectorSet(0, 0, 1, 0));
+	pBullet->SetDirection(XMVectorSet(0, 0, 1, 0));
+	pBullet->SetSpeed(2.f);
+	pBullet->Attack(holder_->GetPosition());
 }

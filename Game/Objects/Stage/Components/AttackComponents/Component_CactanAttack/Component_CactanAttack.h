@@ -7,8 +7,7 @@
 class Component_CactanAttack :public Component_Attack
 {
 	int frame;
-
-	Bullet * pBullet;
+	XMVECTOR direction_;
 
 	public:
 	 	Component_CactanAttack(StageObject* _holder);

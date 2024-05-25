@@ -2,7 +2,12 @@
 #include "../../../Engine/ResourceManager/Model.h"
 #include "../../../Engine/ImGui/imgui.h"
 Bullet::Bullet(GameObject* _parent) 
-:StageObject("Bullet","Models/DebugCollision/SphereCollider.fbx", _parent),isShot_(false),frame(0)
+:StageObject("Bullet","Models/DebugCollision/SphereCollider.fbx", _parent),
+isShot_(false),
+frame(0),
+speed_(0.1f),
+direction_(XMVectorSet(0,0,1,0))
+
 {
 }
 
@@ -27,6 +32,7 @@ void Bullet::Update()
 	transform_.position_.x += Move_Position.x;
 	transform_.position_.y += Move_Position.y;
 	transform_.position_.z += Move_Position.z;	
+
 	if (frame>60) {
 		frame = 0;
 		KillMe();
@@ -47,18 +53,10 @@ void Bullet::Release()
 }
 
 
-void Bullet::Attack(XMFLOAT3 _playerPosition, XMVECTOR _direction)
+void Bullet::Attack(XMFLOAT3 _playerPosition)
 {
 	transform_.position_ = _playerPosition;
-	XMVECTOR shotDirection = XMVector3Normalize(_direction);
-	XMStoreFloat3(&Move_Position, shotDirection * BULLET_SPEED);
+	XMVECTOR shotDirection = XMVector3Normalize(direction_);
+	XMStoreFloat3(&Move_Position, shotDirection * speed_);
 }
-
-void Bullet::TestAttack()
-{
-	transform_.position_.x += Move_Position.x;
-	transform_.position_.y += Move_Position.y;
-	transform_.position_.z += Move_Position.z;
-}
-
 

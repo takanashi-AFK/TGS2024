@@ -3,16 +3,17 @@
 
 //ゲームオブジェクトじゃなくてステージオブジェクトを継承するように変更
 
-const float BULLET_SPEED = 2.0f;
+
 class Bullet :public StageObject
 {
 private:
 	XMFLOAT3 Move_Position;
-	XMVECTOR Move_Direction;
 	SphereCollider* collision;
 	int modelHandle_;
 	bool isShot_;
 	int frame;
+	float speed_;
+	XMVECTOR direction_;
 public:
 
 	Bullet(GameObject* _parent);
@@ -30,8 +31,9 @@ public:
 	void Draw() override;
 	void Release() override;
 
-	void Attack(XMFLOAT3 _playerPosition, XMVECTOR _direction);
-	void TestAttack();
+	void Attack(XMFLOAT3 _playerPosition);
 
+	void SetSpeed(float _speed) { speed_ = _speed; }
+	void SetDirection(XMVECTOR _direction) { direction_ = _direction; }
 };
 

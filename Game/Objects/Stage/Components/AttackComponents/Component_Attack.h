@@ -50,7 +50,7 @@ public:
 	void DrawData()override;
 
 	/// <summary>
-	/// 攻撃開始 継承先のUpdateを呼び出す
+	/// 攻撃開始
 	/// </summary>
 	void Execute() { isAttack_ = true; }
 };

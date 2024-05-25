@@ -11,13 +11,9 @@ void Component_CactanAttack::Initialize()
 }
 
 void Component_CactanAttack::Update()
-{
-	if (isAttack_) {
-		this->Attack();
-		isAttack_ = false;
-	}
+{	
+
 }
-	
 
 void Component_CactanAttack::Release()
 {
@@ -29,18 +25,27 @@ void Component_CactanAttack::Save(json& _saveobj)
 
 void Component_CactanAttack::Load(json& _loadobj)
 {
+
 }
 
 void Component_CactanAttack::DrawData()
 {
-	if(ImGui::Button("Attack"))
-	Execute();
+	XMFLOAT3 dir;
+	ImGui::DragFloat("Speed", &speed_);
+	XMStoreFloat3(&dir, direction_);
+	ImGui::DragFloat3("Direction", &dir.x);
+	direction_ = XMLoadFloat3(&dir);
+
+	if (ImGui::Button("Attack")) {
+	Bullet* pBullet = Instantiate<Bullet>(holder_->GetParent());
+	pBullet->SetDirection(direction_);
+	pBullet->SetSpeed(speed_);
+	pBullet->SetPosition(holder_->GetPosition());
+	pBullet->Execute();
+	}
 }
 
 void Component_CactanAttack::Attack()
 {
-	Bullet* pBullet = Instantiate<Bullet>(holder_->GetParent());
-	pBullet->SetDirection(XMVectorSet(0, 0, 1, 0));
-	pBullet->SetSpeed(2.f);
-	pBullet->Attack(holder_->GetPosition());
+
 }

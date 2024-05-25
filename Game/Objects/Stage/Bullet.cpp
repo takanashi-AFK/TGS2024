@@ -3,10 +3,9 @@
 #include "../../../Engine/ImGui/imgui.h"
 Bullet::Bullet(GameObject* _parent) 
 :StageObject("Bullet","Models/DebugCollision/SphereCollider.fbx", _parent),
-isShot_(false),
 frame(0),
-speed_(0.1f),
-direction_(XMVectorSet(0,0,1,0))
+speed_(0.f),
+direction_(XMVectorSet(0,0,1,0)),
 
 {
 }
@@ -24,22 +23,24 @@ void Bullet::Initialize()
 	collision = new SphereCollider(transform_.position_, 1.0f);
 	AddCollider(collision);
 	transform_.scale_ = XMFLOAT3(0.3,0.3,0.3);
+
 }
 
 
 void Bullet::Update()
 {
-	transform_.position_.x += Move_Position.x;
-	transform_.position_.y += Move_Position.y;
-	transform_.position_.z += Move_Position.z;	
+	if(isActive_){
 
-	if (frame>60) {
-		frame = 0;
-		KillMe();
+		XMVECTOR shotDirection = XMVector3Normalize(direction_);
+		XMStoreFloat3(&transform_.position_, XMLoadFloat3(&transform_.position_) + (shotDirection * speed_));
+		if (frame > 60) {
+			frame = 0;
+			isActive_ = false;
+			KillMe();
+		}
+		else
+			frame++;
 	}
-	else
-		frame++;
-	
 }
 
 void Bullet::Draw()
@@ -52,11 +53,19 @@ void Bullet::Release()
 {
 }
 
-
-void Bullet::Attack(XMFLOAT3 _playerPosition)
+void Bullet::DrawData()
 {
-	transform_.position_ = _playerPosition;
-	XMVECTOR shotDirection = XMVector3Normalize(direction_);
-	XMStoreFloat3(&Move_Position, shotDirection * speed_);
 }
+
+void Bullet::Save(json& _saveobj)
+{
+	_saveobj["speed"] = speed_;
+}
+
+void Bullet::Load(json& _loadobj)
+{
+	if(_loadobj.contains("speed"))speed_ = _loadobj["speed"];
+}
+
+
 

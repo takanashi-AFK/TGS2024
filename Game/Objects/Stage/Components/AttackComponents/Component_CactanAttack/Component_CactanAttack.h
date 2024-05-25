@@ -8,7 +8,7 @@ class Component_CactanAttack :public Component_Attack
 {
 	int frame;
 	XMVECTOR direction_;
-
+	float speed_;
 	public:
 	 	Component_CactanAttack(StageObject* _holder);
 	 	

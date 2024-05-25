@@ -7,10 +7,9 @@
 class Bullet :public StageObject
 {
 private:
-	XMFLOAT3 Move_Position;
 	SphereCollider* collision;
 	int modelHandle_;
-	bool isShot_;
+	bool isActive_;
 	int frame;
 	float speed_;
 	XMVECTOR direction_;
@@ -30,10 +29,17 @@ public:
 	void Update() override;
 	void Draw() override;
 	void Release() override;
-
-	void Attack(XMFLOAT3 _playerPosition);
+	void DrawData() override;
+	void Save(json& _saveobj) override;
+	void Load(json& _loadobj) override;
 
 	void SetSpeed(float _speed) { speed_ = _speed; }
 	void SetDirection(XMVECTOR _direction) { direction_ = _direction; }
+
+
+	/// <summary>
+	/// çUåÇäJén
+	/// </summary>
+	void Execute() { isActive_ = true; }
 };
 

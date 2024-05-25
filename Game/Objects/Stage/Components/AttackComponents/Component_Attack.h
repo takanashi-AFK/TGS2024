@@ -9,6 +9,7 @@ class Component_Attack :public Component
 
 protected:
 	bool isAttack_;
+	int  power_;
 private:
 
 public:
@@ -49,9 +50,5 @@ public:
 
 	void DrawData()override;
 
-	/// <summary>
-	/// UŒ‚ŠJn
-	/// </summary>
-	void Execute() { isAttack_ = true; }
 };
 

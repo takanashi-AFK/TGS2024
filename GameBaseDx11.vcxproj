@@ -186,6 +186,7 @@
     <ClCompile Include="TestObject_Plane.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Engine\GameObject\Camera.h" />
     <ClInclude Include="Engine\ResourceManager\Transition.h" />
     <ClInclude Include="Game\Objects\Stage\Components\MoveComponents\Component_Chase.h" />
     <ClInclude Include="Game\Objects\Stage\Components\Component.h" />
@@ -202,7 +203,6 @@
     <ClInclude Include="Engine\ResourceManager\Audio.h" />
     <ClInclude Include="Engine\DirectX\BillBoard.h" />
     <ClInclude Include="Engine\Collider\BoxCollider.h" />
-    <ClInclude Include="Engine\GameObject\Camera.h" />
     <ClInclude Include="Engine\Collider\Collider.h" />
     <ClInclude Include="Engine\ResourceManager\CsvReader.h" />
     <ClInclude Include="Engine\ResourceManager\Debug.h" />

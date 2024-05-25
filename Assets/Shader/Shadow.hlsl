@@ -67,11 +67,9 @@ VS_OUT VS(float4 pos : POSITION, float4 Normal : NORMAL, float2 Uv : TEXCOORD)
     outData.uv = Uv; // そのままピクセルシェーダーへ
 
     /* 追加 */
-    // XMMatrixShadowで計算された行列を掛ける
+    // 影の行列を掛ける順番を修正
     float4 shadowPos = mul(worldPos, g_matShadow);
-    shadowPos = mul(shadowPos, g_matView);
-    shadowPos = mul(shadowPos, g_matProjection);
-    outData.pos = shadowPos;
+    outData.pos = mul(mul(shadowPos, g_matView), g_matProjection);
     /* 追加 */
 
     // まとめて出力
@@ -84,6 +82,6 @@ VS_OUT VS(float4 pos : POSITION, float4 Normal : NORMAL, float2 Uv : TEXCOORD)
 float4 PS(VS_OUT inData) : SV_Target
 {
     // 黒表示
-    return float4(0, 0, 0, 1);
+    return float4(0, 0, 0, 0.8f);
     
 }

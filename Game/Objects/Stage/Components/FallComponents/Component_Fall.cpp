@@ -1,8 +1,9 @@
 #include "Component_Fall.h"
 
-//インクルード
+// インクルード
 #include "../../StageObject.h"
 #include "../../../../../Engine/ImGui/imgui.h"
+
 
 // コンストラクタ
 Component_Fall::Component_Fall(StageObject* _holder)
@@ -17,52 +18,48 @@ void Component_Fall::Initialize()
     fallSpeed_ = 0.5f; 
     fallSpeedplus_ = 0.05f;
     riseSpeed_ = 0.05f; 
-   
 }
 
 // 更新
 void Component_Fall::Update()
 {   
-    
-   
-
+    // 現在のローカル位置を取得
+    localPosition = holder_->GetLocalPosition();
     if (isFirstTime) {
-        // 現在のローカル位置を取得
-        localPosition = holder_->GetLocalPosition();
+        
+        
 
         // 下降・上昇の開始位置を保持する変数
-         startRisePosition_ = localPosition.y;
-         startFallPosition_ = localPosition.y;
+        startRisePosition_.y = localPosition.y;
+        startFallPosition_.y = localPosition.y;
         
         isFirstTime = false;
     }
 
     if (isRising) {
         // 上昇中の処理
-        if (localPosition.y < startRisePosition_ + 5.0f) {
+        if (localPosition.y < startRisePosition_.y + 5.0f) {
             localPosition.y += riseSpeed_;
-        }
-        else {
+        } else {
             // 物体が一定高さに達したら上昇を停止し、降下を開始する
             isRising = false;
-            startFallPosition_ = localPosition.y;  // 降下開始位置を記録
+            startFallPosition_.y = localPosition.y;  // 降下開始位置を記録
             fallSpeed_ = 0.5f;  // 降下速度を初期化
         }
-    }
-    else {
+    } else {
         // 降下中の処理
-        if (localPosition.y > startFallPosition_ - 5.0f) {
+        if (localPosition.y > startFallPosition_.y - 5.0f) {
             localPosition.y -= (fallSpeed_ += fallSpeedplus_);
-        }
-        else {
+        } else {
             // 物体が一定の高さに達したら上昇を開始する
             isRising = true;
-            startRisePosition_ = localPosition.y;  // 上昇開始位置を記録
+            startRisePosition_.y = localPosition.y;  // 上昇開始位置を記録
         }
     }
+    
     // ローカル位置を設定
     holder_->SetLocalPosition(localPosition.x, localPosition.y, localPosition.z);
-
+   
 }
 
 // 開放

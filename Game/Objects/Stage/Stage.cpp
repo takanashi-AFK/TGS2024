@@ -10,10 +10,12 @@ Stage::Stage(GameObject* _parent)
 void Stage::Initialize()
 {
 	// デバッグ用のオブジェクトを生成
-	StageObject* obj = CreateStageObject("DetectorObject", "Models/DebugCollision/BoxCollider.fbx", this);
-	obj->AddComponent(CreateComponent(CactanAttack, obj));
-	AddStageObject(obj);
+	StageObject* kaktan = CreateStageObject("Kaktan", "Models/DebugCollision/BoxCollider.fbx", this);
+	kaktan->AddComponent(CreateComponent(CactanAttack, kaktan));
+	AddStageObject(kaktan);
 
+	StageObject* target = CreateStageObject("Target", "Models/DebugCollision/SphereCollider.fbx", this);
+	AddStageObject(target);
 }
 
 void Stage::Update()

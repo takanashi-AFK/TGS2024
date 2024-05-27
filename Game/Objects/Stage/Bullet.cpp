@@ -5,8 +5,7 @@ Bullet::Bullet(GameObject* _parent)
 :StageObject("Bullet","Models/DebugCollision/SphereCollider.fbx", _parent),
 frame(0),
 speed_(0.f),
-direction_(XMVectorSet(0,0,1,0)),
-
+direction_(XMVectorSet(0,0,1,0))
 {
 }
 
@@ -23,17 +22,15 @@ void Bullet::Initialize()
 	collision = new SphereCollider(transform_.position_, 1.0f);
 	AddCollider(collision);
 	transform_.scale_ = XMFLOAT3(0.3,0.3,0.3);
-
 }
 
 
 void Bullet::Update()
 {
 	if(isActive_){
-
 		XMVECTOR shotDirection = XMVector3Normalize(direction_);
 		XMStoreFloat3(&transform_.position_, XMLoadFloat3(&transform_.position_) + (shotDirection * speed_));
-		if (frame > 60) {
+		if (frame > FPS) {
 			frame = 0;
 			isActive_ = false;
 			KillMe();
@@ -66,6 +63,4 @@ void Bullet::Load(json& _loadobj)
 {
 	if(_loadobj.contains("speed"))speed_ = _loadobj["speed"];
 }
-
-
 

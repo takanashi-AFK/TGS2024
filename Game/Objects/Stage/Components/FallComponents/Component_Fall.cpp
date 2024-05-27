@@ -7,7 +7,7 @@
 
 // コンストラクタ
 Component_Fall::Component_Fall(StageObject* _holder)
-    : Component(_holder,"Component_Fall",Fall), fallSpeed_(0), riseSpeed_(0), isRising(false),isFirstTime(true)
+    : Component(_holder,"Component_Fall",Fall), fallSpeed_(0), riseSpeed_(0), isRising_(false),isFirstTime_(true)
 {
 }
 
@@ -24,7 +24,7 @@ void Component_Fall::Initialize()
 void Component_Fall::Update()
 {   
    
-    if (isFirstTime) {
+    if (isFirstTime_) {
         
         // 現在のローカル位置を取得
         localPosition = holder_->GetLocalPosition();
@@ -33,33 +33,40 @@ void Component_Fall::Update()
         startRisePosition_.y = localPosition.y;
         startFallPosition_.y = localPosition.y;
         
-        isFirstTime = false;
+        isFirstTime_ = false;
     }
-
-    if (isRising) {
-        // 上昇中の処理
-        if (localPosition.y < startRisePosition_.y) {
-            localPosition.y += riseSpeed_;
-        } else {
-            // 物体が一定高さに達したら上昇を停止し、降下を開始する
-            isRising = false;
-            //startFallPosition_.y = localPosition.y;  // 降下開始位置を記録
-            fallSpeed_ = 0.5f;  // 降下速度を初期化
+    if (isActive_) {
+        if (isRising_) {
+            // 上昇中の処理
+            if (localPosition.y < startRisePosition_.y) {
+                localPosition.y += riseSpeed_;
+                
+            }
+            else {
+                // 物体が一定高さに達したら上昇を停止し、降下を開始する
+                isRising_ = false;
+                isActive_ = false;
+                startFallPosition_.y = localPosition.y;  // 降下開始位置を記録
+                fallSpeed_ = 0.5f;  // 降下速度を初期化
+            }
         }
-    } else {
-        // 降下中の処理
-        if (localPosition.y > startFallPosition_.y - 5.0f) {
-            localPosition.y -= (fallSpeed_ += fallSpeedplus_);
-        } else {
-            // 物体が一定の高さに達したら上昇を開始する
-            isRising = true;
-            //startRisePosition_.y = localPosition.y;  // 上昇開始位置を記録
+        else {
+            // 降下中の処理
+            if (localPosition.y > startFallPosition_.y - 5.0f) {
+                localPosition.y -= (fallSpeed_ += fallSpeedplus_);
+            }
+            else {
+                // 物体が一定の高さに達したら上昇を開始する
+                isRising_ = true;
+                //startRisePosition_.y = localPosition.y;  // 上昇開始位置を記録
+            }
         }
+        // ローカル位置を設定
+        holder_->SetLocalPosition(localPosition.x, localPosition.y, localPosition.z);
+        holder_->SetPosition(localPosition);
+        
     }
     
-    // ローカル位置を設定
-    holder_->SetLocalPosition(localPosition.x, localPosition.y, localPosition.z);
-    holder_->SetPosition(localPosition);
 }
 
 // 開放
@@ -94,6 +101,9 @@ void Component_Fall::DrawData()
     // ImGui描画
     ImGui::Text("Component_Fall");
     ImGui::DragFloat("fallSpeed_", &fallSpeed_, 0.1f);
+    if (ImGui::Button("Falling")) {
+        Execute();
+    }
     //ImGui::SliderFloat("Fall Speed", &fallSpeed_, 0.0f, 10.0f);
     //ImGui::SliderFloat("Rise Speed", &riseSpeed_, 0.0f, 10.0f);
 }

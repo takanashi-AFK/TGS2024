@@ -12,8 +12,9 @@ private:
 	 DirectX::XMFLOAT3 startRisePosition_;
 	 DirectX::XMFLOAT3 startFallPosition_;
 	DirectX::XMFLOAT3 localPosition;
-	bool isFirstTime = true;
-	bool isRising = false;
+	bool isFirstTime_ = true;
+	bool isRising_ = false;
+	bool isActive_;
 public:
 	///<summary>
 	/// コンストラクタ
@@ -52,5 +53,10 @@ public:
 	/// ImGui表示
 	/// </summary>
 	void DrawData() override;
+
+	/// <summary>
+	/// 攻撃開始
+	/// </summary>
+	void Execute() { isActive_ = true; }
 };
 

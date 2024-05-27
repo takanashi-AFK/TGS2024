@@ -52,6 +52,20 @@ void Component_CactanAttack::Attack()
 	XMFLOAT3 h = holder_->GetPosition();
 	XMVECTOR dir = XMLoadFloat3(&t) - XMLoadFloat3(&h);
 
+void Component_CactanAttack::Attack()
+{
+	ImGui::DragFloat("Speed", &speed_,0.1f,0,2.f);
+	
+	//XMFLOAT3 dir;
+	//XMStoreFloat3(&dir, direction_);
+	//ImGui::DragFloat3("Direction", &dir.x);
+	//direction_ = XMLoadFloat3(&dir);
+	SetTarget();
+	if (target_ == nullptr)return;
+	XMFLOAT3 t = target_->GetPosition();
+	XMFLOAT3 h = holder_->GetPosition();
+	XMVECTOR dir = XMLoadFloat3(&t) - XMLoadFloat3(&h);
+
 	if (ImGui::Button("Attack")) {
 		Bullet* pBullet = Instantiate<Bullet>(holder_->GetParent());
 		pBullet->SetDirection(dir);

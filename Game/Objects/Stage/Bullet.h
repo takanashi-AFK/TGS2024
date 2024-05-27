@@ -13,6 +13,7 @@ private:
 	int frame;
 	float speed_;
 	XMVECTOR direction_;
+	const int FPS = GetPrivateProfileInt("GAME", "Fps", 60, ".\\setup.ini");
 public:
 
 	Bullet(GameObject* _parent);

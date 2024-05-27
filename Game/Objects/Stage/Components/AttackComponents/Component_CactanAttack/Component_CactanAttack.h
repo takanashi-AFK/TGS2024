@@ -7,6 +7,7 @@
 class Component_CactanAttack :public Component_Attack
 {
 	int frame;
+	StageObject* target_;//追従の対象オブジェクト
 	XMVECTOR direction_;
 	float speed_;
 	public:
@@ -42,6 +43,8 @@ class Component_CactanAttack :public Component_Attack
 	 	void DrawData()override;
 
 		void Attack();
+
+		void SetTarget();
 
 
 };

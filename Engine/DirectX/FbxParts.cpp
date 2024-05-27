@@ -454,9 +454,11 @@ void FbxParts::Draw(Transform& transform)
 		// ライトの位置を設定
 		static XMFLOAT3 lightPos = XMFLOAT3(10, 20, 10);
 		ImGui::DragFloat3("LightPos", &lightPos.x, 0.1f);
+		XMVECTOR plane = XMPlaneFromPointNormal({ 0, 0.01f, 0 }, { 0, 1, 0 });
+		XMMATRIX shadow = XMMatrixShadow(plane, XMLoadFloat3(&lightPos));
 
 		// 影行列を送信
-		cb.shadow = XMMatrixTranspose(XMMatrixShadow(XMVectorSet(0, 1, 0.5, 0), XMLoadFloat3(&lightPos)));
+		cb.shadow = XMMatrixTranspose(shadow);
 
 	/* 追加 */
 		cb.normalTrans =	XMMatrixTranspose(transform.matRotate_ * XMMatrixInverse(nullptr, transform.matScale_));

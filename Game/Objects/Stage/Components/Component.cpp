@@ -18,6 +18,7 @@
 #include "TimerComponent/Component_Timer.h"
 #include "AttackComponents/Component_Attack.h"
 #include "AttackComponents/Component_CactanAttack/Component_CactanAttack.h"
+#include "HealthManagerComponents/Component_HealthManager.h"
 
 Component::Component(StageObject* _holder, string _name,ComponentType _type)
     :holder_(_holder), name_(_name),type_(_type),childComponents_()
@@ -143,14 +144,6 @@ Component* CreateComponent(ComponentType _type, StageObject* _holder)
 	case RotationX:comp = new Component_RotationX(_holder); break;
 	case RotationZ:comp = new Component_RotationZ(_holder); break;
 	case MoveX:comp = new Component_MoveX(_holder); break;
-	case Chase:comp = new Component_Chase(_holder); break;
-	case CircleRangeDetector:comp = new Component_CircleRangeDetector(_holder); break;
-	case FanRangeDetector:comp = new Component_FanRangeDetector(_holder); break;
-	case OtiBehavior:comp = new Component_OtiBehavior(_holder); break;
-	case Timer:comp = new Component_Timer(_holder); break;
-	case Fall:comp = new Component_Fall(_holder); break;
-	case Attack:comp = new Component_Attack(_holder); break;
-	case CactanAttack:comp = new Component_CactanAttack(_holder); break;
 
 	default:/* その他コンポーネントを追加する時は上記のように追加*/ break;
 	}

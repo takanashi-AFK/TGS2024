@@ -65,6 +65,9 @@
     <Filter Include="03Game\Objects\Stage\Components\TimerComponent">
       <UniqueIdentifier>{e193f086-ad1a-497c-8887-062579a167cb}</UniqueIdentifier>
     </Filter>
+    <Filter Include="03Game\Objects\Stage\Components\HealthManagerComponents">
+      <UniqueIdentifier>{253bc07e-fe5e-486e-93dd-e51a1f20aea0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine\Collider\BoxCollider.cpp">
@@ -202,6 +205,9 @@
     <ClCompile Include="Game\Objects\Stage\Components\TimerComponent\Component_Timer.cpp" />
     <ClCompile Include="Game\Objects\Stage\Components\ChaseComponents\Component_Chase.cpp" />
     <ClCompile Include="Game\Objects\Stage\Components\FallComponents\Component_Fall.cpp" />
+    <ClCompile Include="Game\Objects\Stage\Components\HealthManagerComponents\Component_HealthManager.cpp">
+      <Filter>03Game\Objects\Stage\Components\HealthManagerComponents</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Collider\BoxCollider.h">
@@ -343,6 +349,9 @@
       <Filter>03Game\Scenes</Filter>
     </ClInclude>
     <ClInclude Include="Game\Objects\Stage\Components\FallComponents\Component_Fall.h" />
+    <ClInclude Include="Game\Objects\Stage\Components\HealthManagerComponents\Component_HealthManager.h">
+      <Filter>03Game\Objects\Stage\Components\HealthManagerComponents</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Assets\Shader\Simple2D.hlsl">

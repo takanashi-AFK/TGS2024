@@ -14,7 +14,6 @@ void Component_CactanAttack::Initialize()
 
 void Component_CactanAttack::Update()
 {	
-
 }
 
 void Component_CactanAttack::Release()
@@ -32,13 +31,8 @@ void Component_CactanAttack::Load(json& _loadobj)
 
 void Component_CactanAttack::DrawData()
 {
-	Attack();
-}
+	ImGui::DragFloat("Speed", &speed_, 0.1f, 0, 2.f);
 
-void Component_CactanAttack::Attack()
-{
-	ImGui::DragFloat("Speed", &speed_,0.1f,0,2.f);
-	
 	//ターゲット指定
 	SetTarget();
 	if (target_ == nullptr)return;
@@ -54,7 +48,7 @@ void Component_CactanAttack::Attack()
 	if (ImGui::Button("Attack")) {
 		//弾を生成
 		Bullet* pBullet = Instantiate<Bullet>(holder_->GetParent());
-		
+
 		//弾の方向とスピード、初期地点を設定
 		pBullet->SetDirection(dir);
 		pBullet->SetSpeed(speed_);
@@ -63,6 +57,11 @@ void Component_CactanAttack::Attack()
 		//発射
 		pBullet->Execute();
 	}
+}
+
+void Component_CactanAttack::Attack()
+{
+
 }
 
 void Component_CactanAttack::SetTarget()

@@ -11,8 +11,8 @@
 class Component_CactanAttack :public Component_Attack
 {
 private:
-	float speed_;
-	StageObject* target_;
+	float speed_;		 // 弾の速度
+	StageObject* target_;// 誰を狙うか
 public:
 	/// <summary>
 	/// コンストラクタ

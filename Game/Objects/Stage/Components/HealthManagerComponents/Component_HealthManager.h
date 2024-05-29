@@ -2,7 +2,6 @@
 //インクルード
 #include"../Component.h"
 
-//作成者-叶内,高梨
 
 /// <summary>
 /// 体力の増減を管理するコンポーネント
@@ -11,8 +10,8 @@ class Component_HealthManager :public Component
 {
 private:
 
-	float max_;
-	float hp_;
+	float max_; //体力の上限
+	float hp_; //体力
 
 public:
 

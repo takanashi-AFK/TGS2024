@@ -22,6 +22,7 @@ void Component_Fall::Initialize()
 // XV
 void Component_Fall::Update()
 {   
+	//ŽÀs‚µ‚½‚©‚Ç‚¤‚©
 	if (isActive_) {
 
 		XMFLOAT3 pPos = holder_->GetPosition();

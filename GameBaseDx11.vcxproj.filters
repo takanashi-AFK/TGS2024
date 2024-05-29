@@ -50,9 +50,6 @@
     <Filter Include="03Game\Objects\Stage\Components\RotationComponents">
       <UniqueIdentifier>{19ec8ed2-0f53-4dbc-8bd5-2d4a58e4275b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="03Game\Otheres">
-      <UniqueIdentifier>{c2efa7cb-5f10-4c3c-b6f4-cff055139e25}</UniqueIdentifier>
-    </Filter>
     <Filter Include="03Game\Objects\Stage\Components\DetectorComponents">
       <UniqueIdentifier>{1dfc5a77-2666-438e-b4a0-ccdf1e982c3a}</UniqueIdentifier>
     </Filter>
@@ -64,6 +61,15 @@
     </Filter>
     <Filter Include="03Game\Objects\Stage\Components\HealthManagerComponents">
       <UniqueIdentifier>{253bc07e-fe5e-486e-93dd-e51a1f20aea0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03Game\Objects\Stage\Components\AttackComponents">
+      <UniqueIdentifier>{89b3ed5f-a98e-4fe9-8112-e3c5e40330d7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03Game\Objects\Stage\Components\AttackComponents\CactanAttackComponent">
+      <UniqueIdentifier>{b9d431c3-052e-467e-8c1f-563b6fe34d8f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03Game\Objects\Otheres">
+      <UniqueIdentifier>{c2efa7cb-5f10-4c3c-b6f4-cff055139e25}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -185,7 +191,7 @@
       <Filter>01Engine\ResourceManager</Filter>
     </ClCompile>
     <ClCompile Include="Game\Otheres\StageEditor.cpp">
-      <Filter>03Game\Otheres</Filter>
+      <Filter>03Game\Objects\Otheres</Filter>
     </ClCompile>
     <ClCompile Include="Game\Scenes\Scene_Splash.cpp">
       <Filter>03Game\Scenes</Filter>
@@ -193,17 +199,38 @@
     <ClCompile Include="Game\Scenes\Scene_Test.cpp">
       <Filter>03Game\Scenes</Filter>
     </ClCompile>
-    <ClCompile Include="Game\Objects\Stage\Bullet.cpp" />
-    <ClCompile Include="Game\Objects\Stage\Components\AttackComponents\Component_CactanAttack\Component_CactanAttack.cpp" />
-    <ClCompile Include="Game\Objects\Stage\Components\AttackComponents\Component_Attack.cpp" />
-    <ClCompile Include="Game\Objects\Stage\Components\DetectorComponents\Component_FanRangeDetector.cpp" />
-    <ClCompile Include="Game\Objects\Stage\Components\EnemyComponents\Component_OtiBehavior.cpp" />
-    <ClCompile Include="Game\Objects\Stage\Components\DetectorComponents\Component_CircleRangeDetector.cpp" />
-    <ClCompile Include="Game\Objects\Stage\Components\TimerComponent\Component_Timer.cpp" />
-    <ClCompile Include="Game\Objects\Stage\Components\ChaseComponents\Component_Chase.cpp" />
-    <ClCompile Include="Game\Objects\Stage\Components\FallComponents\Component_Fall.cpp" />
     <ClCompile Include="Game\Objects\Stage\Components\HealthManagerComponents\Component_HealthManager.cpp">
       <Filter>03Game\Objects\Stage\Components\HealthManagerComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Objects\Stage\Components\MoveComponents\Component_Chase.cpp">
+      <Filter>03Game\Objects\Stage\Components\MoveComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Objects\Stage\Components\MoveComponents\Component_Fall.cpp">
+      <Filter>03Game\Objects\Stage\Components\MoveComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Objects\Stage\Components\DetectorComponents\Component_CircleRangeDetector.cpp">
+      <Filter>03Game\Objects\Stage\Components\DetectorComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Objects\Stage\Components\DetectorComponents\Component_FanRangeDetector.cpp">
+      <Filter>03Game\Objects\Stage\Components\DetectorComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Objects\Stage\Components\TimerComponent\Component_Timer.cpp">
+      <Filter>03Game\Objects\Stage\Components\TimerComponent</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Objects\Stage\Components\AttackComponents\Component_Attack.cpp">
+      <Filter>03Game\Objects\Stage\Components\AttackComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Objects\Stage\Components\AttackComponents\Component_CactanAttack\Component_CactanAttack.cpp">
+      <Filter>03Game\Objects\Stage\Components\AttackComponents\CactanAttackComponent</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Objects\Stage\Stage.cpp">
+      <Filter>03Game\Objects\Stage</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Objects\Stage\Bullet.cpp">
+      <Filter>03Game\Objects\Stage\StageObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Objects\Stage\Components\EnemyComponents\Component_OtiBehavior.cpp">
+      <Filter>03Game\Objects\Stage\Components\EnemyComponents</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -337,7 +364,7 @@
       <Filter>01Engine\ResourceManager</Filter>
     </ClInclude>
     <ClInclude Include="Game\Otheres\StageEditor.h">
-      <Filter>03Game\Otheres</Filter>
+      <Filter>03Game\Objects\Otheres</Filter>
     </ClInclude>
     <ClInclude Include="Game\Scenes\Scene_Splash.h">
       <Filter>03Game\Scenes</Filter>
@@ -345,9 +372,35 @@
     <ClInclude Include="Game\Scenes\Scene_Test.h">
       <Filter>03Game\Scenes</Filter>
     </ClInclude>
-    <ClInclude Include="Game\Objects\Stage\Components\FallComponents\Component_Fall.h" />
     <ClInclude Include="Game\Objects\Stage\Components\HealthManagerComponents\Component_HealthManager.h">
       <Filter>03Game\Objects\Stage\Components\HealthManagerComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Objects\Stage\Components\MoveComponents\Component_Chase.h">
+      <Filter>03Game\Objects\Stage\Components\MoveComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Objects\Stage\Components\MoveComponents\Component_Fall.h">
+      <Filter>03Game\Objects\Stage\Components\MoveComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Objects\Stage\Components\DetectorComponents\Component_CircleRangeDetector.h">
+      <Filter>03Game\Objects\Stage\Components\DetectorComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Objects\Stage\Components\DetectorComponents\Component_FanRangeDetector.h">
+      <Filter>03Game\Objects\Stage\Components\DetectorComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Objects\Stage\Components\TimerComponent\Component_Timer.h">
+      <Filter>03Game\Objects\Stage\Components\TimerComponent</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Objects\Stage\Components\AttackComponents\Component_Attack.h">
+      <Filter>03Game\Objects\Stage\Components\AttackComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Objects\Stage\Components\AttackComponents\Component_CactanAttack\Component_CactanAttack.h">
+      <Filter>03Game\Objects\Stage\Components\AttackComponents\CactanAttackComponent</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Objects\Stage\Bullet.h">
+      <Filter>03Game\Objects\Stage\StageObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Objects\Stage\Components\EnemyComponents\Component_OtiBehavior.h">
+      <Filter>03Game\Objects\Stage\Components\EnemyComponents</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

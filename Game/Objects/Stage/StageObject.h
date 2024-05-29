@@ -4,45 +4,28 @@
 #include "../../../Engine/GameObject/GameObject.h"
 #include "Components/Component.h"
 #include <vector>
-#include <DirectXMath.h>
+
 // using宣言
 using std::vector;
 
-// ステージに登場するオブジェクトのクラス
-class StageObject:public GameObject
+/// <summary>
+/// ステージに登場するオブジェクトのクラス
+/// </summary>
+class StageObject : public GameObject
 {
 protected:
     vector<Component*> myComponents_;   // 自身が保有するコンポーネント群
     string modelFilePath_;              // モデルのファイルパス
     int modelHandle_;                   // モデル番号
-    DirectX::XMFLOAT3 localPosition_;
    
 public:
-    
     /// <summary>
     /// コンストラクタ
     /// </summary>
+    /// <param name="_name">オブジェクト名</param>
+    /// <param name="_modelFilePath">モデルファイルパス</param>
+    /// <param name="_parent">親オブジェクト</param>
     StageObject(string _name,string _modelFilePath,GameObject* _parent);
-
-    /// <summary>
-    /// 使用するコンポーネントを追加
-    /// </summary>
-    /// <param name="_comp">使用するコンポーネントのアドレス</param>
-    /// <returns>追加できたかどうか</returns>
-    bool AddComponent(Component* _comp);
-
-    /// <summary>
-    /// 追加されたコンポーネントを削除
-    /// </summary>
-    /// <param name="_comp">削除するコンポーネントのアドレス</param>
-    /// <returns>消去できたかどうか</returns>
-    bool DeleteComponent(Component* _comp);
-
-    /// <summary>
-    /// 追加されたコンポーネントをすべて削除
-    /// </summary>
-    /// <returns>削除できたかどうか</returns>
-    bool DeleteAllComponent();
 
     /// <summary>
     /// 初期化
@@ -77,16 +60,36 @@ public:
     virtual  void Load(json& _loadObj);
 
     /// <summary>
-    /// 自身が持っているデータをImGuiに表示する関数
+    /// ImGuiパネル表示
     /// </summary>
     virtual void DrawData();
+
+    /// <summary>
+    /// コンポーネントをリストに追加
+    /// </summary>
+    /// <param name="_comp">追加するコンポーネント</param>
+    /// <returns>追加できたかどうか</returns>
+    bool AddComponent(Component* _comp);
+
+    /// <summary>
+    /// コンポーネントをリストから削除
+    /// </summary>
+    /// <param name="_comp">削除するコンポーネント</param>
+    /// <returns>削除できたかどうか</returns>
+    bool DeleteComponent(Component* _comp);
+
+    /// <summary>
+    /// コンポーネントをリストから全て削除
+    /// </summary>
+    /// <returns>削除できたかどうか</returns>
+    bool DeleteAllComponent();
 };
 
 /// <summary>
 /// ステージオブジェクトを生成する関数
 /// </summary>
 /// <param name="_name"> オブジェクト名</param>
-/// <param name="_modelFilePath"> モデルのファイルパス</param>
+/// <param name="_modelFilePath"> モデルファイルパス</param>
 /// <param name="_parent"> 親オブジェクト</param>
-/// <returns>オブジェクトのアドレス</returns>
+/// <returns>作成したオブジェクトのポインタ</returns>
 StageObject* CreateStageObject(string _name, string _modelFilePath, GameObject* _parent);

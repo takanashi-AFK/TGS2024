@@ -1,17 +1,14 @@
 #include "StageObject.h"
 
 // インクルード
-#include "../../../Engine/ResourceManager/Model.h"
+#include "../../../Engine/Global.h"
 #include "../../../Engine/ImGui/imgui.h"
+#include "../../../Engine/ResourceManager/Model.h"
 #include "Stage.h"
 
-// マクロ
-#define REFERENCE_XMFLOAT3(p) p.x,p.y,p.z // XMFLOAT3型の変数をコンマ区切りで表示する
-
 StageObject::StageObject(string _name, string _modelFilePath, GameObject* _parent)
-	:GameObject(_parent,_name),modelFilePath_(_modelFilePath),modelHandle_(-1),myComponents_(), localPosition_(0.0f, 0.0f, 0.0f)
+	:GameObject(_parent,_name),modelFilePath_(_modelFilePath),modelHandle_(-1),myComponents_()
 {
-
 }
 
 bool StageObject::AddComponent(Component* _comp)
@@ -121,9 +118,12 @@ void StageObject::Load(json& _loadObj)
 
 void StageObject::DrawData()
 {
+	// オブジェクト名を表示
 	if (ImGui::TreeNode(objectName_.c_str())) {
 
 		ImGui::SameLine();
+		
+		// オブジェクトの削除ボタン
 		if (ImGui::SmallButton("delete")) ((Stage*)FindObject("Stage"))->DeleteStageObject(this);
 
 		// 自身の変形情報を描画

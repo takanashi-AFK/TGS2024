@@ -1,3 +1,5 @@
+//
+
 #pragma once
 
 #include "../Component.h"
@@ -9,9 +11,11 @@ private:
 	float fallSpeed_;//ç~â∫ë¨ìx
 	float fallSpeedplus_;//ç~â∫ë¨ìxÇè„Ç∞ÇÈÇ‚Ç¬
 	float riseSpeed_;//è„è∏ë¨ìx
+	float fallDistance_;
+
 	 DirectX::XMFLOAT3 startRisePosition_;
 	 DirectX::XMFLOAT3 startFallPosition_;
-	DirectX::XMFLOAT3 localPosition;
+	
 	bool isFirstTime_ = true;
 	bool isRising_ = false;
 	bool isActive_;

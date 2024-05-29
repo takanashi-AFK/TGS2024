@@ -4,6 +4,10 @@
 #include "../Component.h"
 
 // 作成者-高梨
+
+/// <summary>
+/// タイマーを管理するコンポーネント
+/// </summary>
 class Component_Timer : public Component
 {
 private:
@@ -50,7 +54,7 @@ public:
 	void Load(json& _loadObj) override;
 
 	/// <summary>
-	/// ImGui表示
+	/// ImGuiパネル表示
 	/// </summary>
 	void DrawData() override;
 
@@ -64,15 +68,13 @@ public:
 	/// </summary>
 	void Stop();
 
-	/// <returns>現在の時間</returns>
+	/// <returns>現在の時間(秒)</returns>
 	float GetNowTime();
 
-	/// <summary>
-	/// タイマーが終了したか
-	/// </summary>	/// <returns>終了したらtrue</returns>
+	/// <returns>タイマーが終了したか</returns>
 	bool GetIsEnd();
 
-	/// <param name="_time">カウントする秒数</param>
+	/// <param name="_time">カウントする時間(秒)</param>
 	void SetTime(int _time);
 
 	/// <summary>
@@ -80,19 +82,19 @@ public:
 	/// </summary>
 	void Reset();
 
-	/// <summary>
-	/// 指定の時間になったら通知
-	/// </summary>
-	/// <param name="_time"></param>
-	/// <returns></returns>
+	/// <param name="_time">通知してほしい時間(秒)</param>
+	/// <returns>指定の時間になったらtrue(停止はしない)</returns>
 	bool IsOnTime(float _time);
 
-	/// <summary>
-	/// 一定時間ごとに通知
-	/// </summary>
-	/// <param name="_time"></param>
-	/// <returns></returns>
+
+	/// <param name="_time">何秒ごとに通知するか(秒)</param>
+	/// <returns>一定時間ごとにtrue</returns>
 	bool IsIntervalTime(float _time);
+
+	/// <summary>
+	/// 無限にカウントするかどうか
+	/// </summary>
+	void SetInfinity(bool _isInfinity) { isInfinity_ = _isInfinity; }
 
 };
 

@@ -4,6 +4,10 @@
 #include "../../../../../../Engine/GameObject/GameObject.h"
 #include "../../../Bullet.h"
 //作成者:高梨
+
+/// <summary>
+/// cactan(遠距離攻撃Enemy)の攻撃コンポーネント
+/// </summary>
 class Component_CactanAttack :public Component_Attack
 {
 private:

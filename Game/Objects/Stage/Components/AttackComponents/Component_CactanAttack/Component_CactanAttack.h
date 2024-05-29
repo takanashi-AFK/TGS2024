@@ -6,13 +6,14 @@
 //作成者:高梨
 class Component_CactanAttack :public Component_Attack
 {
-	int frame;
+private:
 	float speed_;
-	StageObject* target_;//追従の対象オブジェクト
-	XMVECTOR direction_;
-
-	public:
-
+	StageObject* target_;
+public:
+	/// <summary>
+	/// コンストラクタ
+	/// </summary>
+	/// <param name="_holder">コンポーネントの保持者</param>
 	Component_CactanAttack(StageObject* _holder);
 	
 	/// <summary>
@@ -42,10 +43,19 @@ class Component_CactanAttack :public Component_Attack
 	/// <param name="_loadobj">データの読込情報</param>
 	void Load(json& _loadobj) override;
 	
+	/// <summary>
+	/// ImGuiパネル表示
+	/// </summary>
 	void DrawData()override;
 
+	/// <summary>
+	/// 攻撃実行
+	/// </summary>
 	void Attack();
 
+	/// <summary>
+	/// ターゲットの設定
+	/// </summary>
 	void SetTarget();
 };
 

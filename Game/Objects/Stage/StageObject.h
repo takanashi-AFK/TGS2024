@@ -4,7 +4,7 @@
 #include "../../../Engine/GameObject/GameObject.h"
 #include "Components/Component.h"
 #include <vector>
-
+#include <DirectXMath.h>
 // using宣言
 using std::vector;
 
@@ -15,8 +15,10 @@ protected:
     vector<Component*> myComponents_;   // 自身が保有するコンポーネント群
     string modelFilePath_;              // モデルのファイルパス
     int modelHandle_;                   // モデル番号
-
+    DirectX::XMFLOAT3 localPosition_;
+   
 public:
+    
     /// <summary>
     /// コンストラクタ
     /// </summary>

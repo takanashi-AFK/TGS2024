@@ -1,7 +1,9 @@
+//
+
 #pragma once
 
 #include "../Component.h"
-
+#include <DirectXMath.h>
 class Component_Fall : public Component
 {
 private:
@@ -9,8 +11,14 @@ private:
 	float fallSpeed_;//降下速度
 	float fallSpeedplus_;//降下速度を上げるやつ
 	float riseSpeed_;//上昇速度
-	float tempFallSpeed_;//降下速度保存用変数
-	bool isRising_;
+	float fallDistance_;
+
+	 DirectX::XMFLOAT3 startRisePosition_;
+	 DirectX::XMFLOAT3 startFallPosition_;
+	
+	bool isFirstTime_ = true;
+	bool isRising_ = false;
+	bool isActive_;
 public:
 	///<summary>
 	/// コンストラクタ
@@ -50,9 +58,9 @@ public:
 	/// </summary>
 	void DrawData() override;
 
-
-	void Rising() { isRising_ = true; }
-
-	void Falling() { isRising_ = false; }
+	/// <summary>
+	/// 攻撃開始
+	/// </summary>
+	void Execute() { isActive_ = true; }
 };
 

@@ -16,7 +16,6 @@ void Component_OtiBehavior::Initialize()
 {
 	// 子コンポーネントの追加
 	if (FindChildComponent(CircleRangeDetector) == false)AddChildComponent(CreateComponent(CircleRangeDetector, holder_));
-	//if (FindChildComponent(Timer) == false)AddChildComponent(CreateComponent(Timer, holder_));
 	if (FindChildComponent(Fall) == false)AddChildComponent(CreateComponent(Fall, holder_));
 	if (FindChildComponent(Chase) == false)AddChildComponent(CreateComponent(Chase, holder_));
 }
@@ -36,13 +35,17 @@ void Component_OtiBehavior::Update()
 		// 追従行動を停止
 		((Component_Chase*)GetChildComponent(Chase))->Stop();
 	}
+
+	// 範囲内にプレイヤーがいるかどうか
 	(((Component_CircleRangeDetector*)GetChildComponent(CircleRangeDetector))->SetRadius(1));
 	if (((Component_CircleRangeDetector*)GetChildComponent(CircleRangeDetector))->IsContains())
 	{
+		// 落下行動を開始
 		((Component_Fall*)GetChildComponent(Fall))->Start();
 	}
 	else
 	{
+		// 落下行動を停止
 		((Component_Fall*)GetChildComponent(Fall))->Stop();
 	}
 }

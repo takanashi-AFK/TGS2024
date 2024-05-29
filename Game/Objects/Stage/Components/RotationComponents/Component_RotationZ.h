@@ -3,7 +3,9 @@
 // インクルード
 #include "../Component.h"
 
-// Z軸回転を行うコンポーネントのクラス
+/// <summary>
+/// Z軸回転を行うコンポーネントのクラス
+/// </summary>
 class Component_RotationZ : public Component
 {
 private:
@@ -45,7 +47,7 @@ public:
 	void Load(json& _loadObj) override;
 
 	/// <summary>
-	/// ImGui表示
+	/// ImGuiパネル表示
 	/// </summary>
 	void DrawData() override;
 };

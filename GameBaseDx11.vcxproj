@@ -199,7 +199,6 @@
     <ClInclude Include="Game\Objects\Stage\Components\DetectorComponents\Component_FanRangeDetector.h" />
     <ClInclude Include="Game\Objects\Stage\Components\EnemyComponents\Component_OtiBehavior.h" />
     <ClInclude Include="Game\Objects\Stage\Components\MoveComponents\Component_Chase.h" />
-    <ClInclude Include="Game\Objects\Stage\Components\ChaseComponents\Component_Chase.h" />
     <ClInclude Include="Game\Objects\Stage\Components\Component.h" />
     <ClInclude Include="Engine\ImGui\imconfig.h" />
     <ClInclude Include="Engine\ImGui\imgui.h" />
@@ -234,7 +233,6 @@
     <ClInclude Include="Engine\ResourceManager\Text.h" />
     <ClInclude Include="Engine\DirectX\Texture.h" />
     <ClInclude Include="Engine\GameObject\Transform.h" />
-    <ClInclude Include="Game\Objects\Stage\Components\FallComponents\Component_Fall.h" />
     <ClInclude Include="Game\Objects\Stage\Components\MoveComponents\Component_Fall.h" />
     <ClInclude Include="Game\Objects\Stage\Components\RotationComponents\Component_RotationY.h" />
     <ClInclude Include="Game\Objects\Stage\Components\TimerComponent\Component_Timer.h" />

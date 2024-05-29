@@ -3,12 +3,16 @@
 // インクルード
 #include "../../Engine/GameObject/GameObject.h"
 
-// スプラッシュシーンを管理するクラス
+
+/// <summary>
+/// スプラッシュシーンを管理するクラス
+/// </summary>
 class Scene_Splash : public GameObject
 {
 private:
 	int imageHandle_;	// 画像番号
 	float count_;		// 経過時間
+
 public:
 	/// <summary>
 	/// コンストラクタ

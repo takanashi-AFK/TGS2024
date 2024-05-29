@@ -3,17 +3,11 @@
 // インクルード
 #include "../../Engine/GameObject/GameObject.h"
 
-// 前方宣言
-class Stage;
-
-//テストシーンを管理するクラス
+/// <summary>
+/// テストシーンを管理するクラス
+/// </summary>
 class Scene_Test : public GameObject
 {
-private:
-	Stage* pStage_;	//ステージクラスへのポインタ
-	//int handleModel1_;
-	//int handleModel2_;
-
 public:
 	/// <summary>
 	/// コンストラクタ

@@ -1,18 +1,18 @@
 #include "Scene_Splash.h"
 
 // インクルード
+#include "../../Engine/Global.h"
 #include "../../Engine/ResourceManager/Image.h"
 #include "../../Engine/SceneManager.h"
 
 // 定数
 namespace {
-	const float FPS = 60.f;			// フレームレート
-	const float LIMIT_TIME = 1.f;	// シーンを切り替えるまでに掛かる時間（秒）
+	const float LIMIT_TIME = 1.f;				// シーンを切り替えるまでに掛かる時間（秒）
 	const float IMAGE_REDUCTION_RATE = 0.67f;	// スプラッシュ画像の縮小倍率
 }
 
 Scene_Splash::Scene_Splash(GameObject* _parent)
-	:GameObject(_parent,"Scene_Splash"),imageHandle_(-1),count_(0)
+	:GameObject(_parent,"Scene_Splash"),imageHandle_(-1),count_()
 {
 }
 
@@ -23,7 +23,7 @@ void Scene_Splash::Initialize()
 	assert(imageHandle_ >= 0);
 
 	// 画像サイズを指定
-	transform_.scale_ = { IMAGE_REDUCTION_RATE,IMAGE_REDUCTION_RATE,1.f };
+	SetScale2D(IMAGE_REDUCTION_RATE);
 }
 
 void Scene_Splash::Update()

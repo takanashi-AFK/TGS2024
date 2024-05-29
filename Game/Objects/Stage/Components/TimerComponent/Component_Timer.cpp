@@ -6,7 +6,7 @@ namespace {
 
 Component_Timer::Component_Timer(StageObject* _holder)
 	:Component(_holder, "Component_Timer", Timer)
-	, maxTime_(0), nowTime_(0),tempMax_(0), isEnd_(false), countNow_(false), isInfinity_(true)
+	, maxTime_(0), nowTime_(0),tempMax_(0), isEnd_(false), isCountNow_(false), isInfinity_(true)
 {
 }
 
@@ -18,7 +18,7 @@ void Component_Timer::Update()
 {
 	if (nowTime_ >= maxTime_ && !isInfinity_) Stop();
 	// カウント中でない場合,カウントを進める
-	if (!countNow_) return;
+	if (!isCountNow_) return;
 	nowTime_++;
 }
 
@@ -28,18 +28,14 @@ void Component_Timer::Release()
 
 void Component_Timer::Save(json& _saveObj)
 {
-	_saveObj["time_"] = maxTime_;
+	_saveObj["maxTime_"] = maxTime_;
 	_saveObj["nowTime_"] = nowTime_;
-	_saveObj["isEnd_"] = isEnd_;
-	_saveObj["countNow_"] = countNow_;
 }
 
 void Component_Timer::Load(json& _loadObj)
 {
-	if (_loadObj.find("time_") != _loadObj.end()) 	maxTime_ = _loadObj["time_"];
+	if (_loadObj.find("maxTime_") != _loadObj.end()) 	maxTime_ = _loadObj["maxTime_"];
 	if (_loadObj.find("nowTime_") != _loadObj.end()) 	nowTime_ = _loadObj["nowTime_"];
-	if (_loadObj.find("isEnd_") != _loadObj.end())   isEnd_ = _loadObj["isEnd_"];
-	if (_loadObj.find("countNow_") != _loadObj.end())   countNow_ = _loadObj["countNow_"];
 }
 
 void Component_Timer::DrawData()
@@ -70,14 +66,14 @@ void Component_Timer::DrawData()
 void Component_Timer::Start()
 {
 	//countNow_をtrueにし、タイマーを開始
-	countNow_ = true;
+	isCountNow_ = true;
 	isEnd_ = false;
 }
 
 void Component_Timer::Stop()
 {
 	//countNow_をfalseにし、タイマーを停止
-	countNow_ = false;
+	isCountNow_ = false;
 	isEnd_ = true;
 }
 
@@ -99,7 +95,7 @@ void Component_Timer::SetTime(int _time)
 
 void Component_Timer::Reset()
 {
-	countNow_ = false;
+	isCountNow_ = false;
 	nowTime_ = 0;
 	isEnd_ = false;
 }
@@ -107,14 +103,11 @@ void Component_Timer::Reset()
 bool Component_Timer::IsOnTime(float _time)
 {
 	//今の時間が指定された秒の時trueを返す
-	if (nowTime_ >= _time*FPS)return true;
-	return false;
+	return nowTime_ >= _time * FPS;
 }
 
 bool Component_Timer::IsIntervalTime(float _time)
 {
 	//今の時間が指定された秒の倍数の時trueを返す
-	if (static_cast<int>(nowTime_) % (static_cast<int>(_time) * FPS) == 0)
-		return true;
-	return false;
+	return static_cast<int>(nowTime_) % (static_cast<int>(_time) * FPS) == 0;
 }

@@ -3,21 +3,18 @@
 // インクルード
 #include "../Component.h"
 
-// 作成者-高梨
-
 /// <summary>
 /// タイマーを管理するコンポーネント
 /// </summary>
 class Component_Timer : public Component
 {
 private:
-
-	float maxTime_;
-	float nowTime_;
-	float tempMax_;
-	bool isEnd_;
-	bool countNow_;
-	bool isInfinity_;
+	float maxTime_;		// 最大時間
+	float nowTime_;		// 現在の時間
+	float tempMax_;		// 一時的な最大時間
+	bool isEnd_;		// 終了したか/
+	bool isCountNow_;		// カウント中か
+	bool isInfinity_;	// 無限にカウントするか
 
 public:
 	/// <summary>
@@ -44,13 +41,13 @@ public:
 	/// <summary>
 	/// 保存
 	/// </summary>
-	/// <param name="_saveObj">保存情報</param>
+	/// <param name="_saveObj">保存データ</param>
 	void Save(json& _saveObj) override;
 
 	/// <summary>
 	/// 読込
 	/// </summary>
-	/// <param name="_loadObj">読込情報</param>
+	/// <param name="_loadObj">読込データ</param>
 	void Load(json& _loadObj) override;
 
 	/// <summary>
@@ -68,13 +65,19 @@ public:
 	/// </summary>
 	void Stop();
 
-	/// <returns>現在の時間(秒)</returns>
+	/// <returns>
+	/// 現在の時間(秒)を取得
+	/// </returns>
 	float GetNowTime();
 
-	/// <returns>タイマーが終了したか</returns>
+	/// <returns>
+	/// タイマーが終了したかを取得
+	/// </returns>
 	bool GetIsEnd();
 
-	/// <param name="_time">カウントする時間(秒)</param>
+	/// <param name="_time">
+	/// カウントする時間(秒)
+	/// </param>
 	void SetTime(int _time);
 
 	/// <summary>
@@ -82,18 +85,22 @@ public:
 	/// </summary>
 	void Reset();
 
+	/// <returns>
+	/// 指定の時間になったらtrue(停止はしない)
+	/// </returns>
 	/// <param name="_time">通知してほしい時間(秒)</param>
-	/// <returns>指定の時間になったらtrue(停止はしない)</returns>
 	bool IsOnTime(float _time);
 
-
+	/// <returns>
+	/// 一定時間ごとにtrue
+	/// </returns>
 	/// <param name="_time">何秒ごとに通知するか(秒)</param>
-	/// <returns>一定時間ごとにtrue</returns>
 	bool IsIntervalTime(float _time);
 
 	/// <summary>
 	/// 無限にカウントするかどうか
 	/// </summary>
+	/// <param name="_isInfinity">∞にするか</param>
 	void SetInfinity(bool _isInfinity) { isInfinity_ = _isInfinity; }
 
 };

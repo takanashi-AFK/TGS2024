@@ -5,7 +5,7 @@
 #include <DirectXMath.h>
 
 /// <summary>
-/// オブジェクトの降下・上昇を行うコンポーネント
+/// オブジェクトの降下・上昇を行うコンポーネントのクラス
 /// </summary>
 class Component_Fall : public Component
 {

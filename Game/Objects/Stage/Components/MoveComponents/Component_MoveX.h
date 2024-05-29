@@ -1,7 +1,10 @@
 #pragma once
+//インクルード
 #include "../Component.h"
 
-// X方向に平行移動を行うコンポーネントのクラス
+/// <summary>
+/// X方向に平行移動を行うコンポーネントのクラス
+/// </summary>
 class Component_MoveX : public Component
 {
 private:

@@ -5,20 +5,20 @@
 #include "../StageObject.h"
 
 // 作成したコンポーネントのインクルード
-#include "RotationComponents/Component_Rotation.h"
-#include "RotationComponents/Component_RotationY.h"
-#include "RotationComponents/Component_RotationX.h"
-#include "RotationComponents/Component_RotationZ.h"
-#include "MoveComponents/Component_MoveX.h"
-#include "MoveComponents/Component_Chase.h"
+#include "AttackComponents/Component_Attack.h"
+#include "AttackComponents/Component_CactanAttack/Component_CactanAttack.h"
 #include "DetectorComponents/Component_CircleRangeDetector.h"
 #include "DetectorComponents/Component_FanRangeDetector.h"
 #include "EnemyComponents/Component_OtiBehavior.h"
-#include "MoveComponents/Component_Fall.h"
-#include "TimerComponent/Component_Timer.h"
-#include "AttackComponents/Component_Attack.h"
-#include "AttackComponents/Component_CactanAttack/Component_CactanAttack.h"
 #include "HealthManagerComponents/Component_HealthManager.h"
+#include "MoveComponents/Component_Chase.h"
+#include "MoveComponents/Component_Fall.h"
+#include "MoveComponents/Component_MoveX.h"
+#include "RotationComponents/Component_Rotation.h"
+#include "RotationComponents/Component_RotationX.h"
+#include "RotationComponents/Component_RotationY.h"
+#include "RotationComponents/Component_RotationZ.h"
+#include "TimerComponent/Component_Timer.h"
 
 Component::Component(StageObject* _holder, string _name,ComponentType _type)
     :holder_(_holder), name_(_name),type_(_type),childComponents_()
@@ -122,12 +122,14 @@ bool Component::DeleteChildComponent(Component* _comp)
 
 bool Component::FindChildComponent(ComponentType _type)
 {
+	// リスト内のコンポーネントを探す
 	for (auto comp : childComponents_) if (comp->type_ == _type)return true;
 	return false;
 }
 
 Component* Component::GetChildComponent(ComponentType _type)
 {
+	// リスト内のコンポーネントを探す
 	for(auto comp : childComponents_) if(comp->type_ == _type)return comp;
 	return nullptr;
 }
@@ -144,6 +146,15 @@ Component* CreateComponent(ComponentType _type, StageObject* _holder)
 	case RotationX:comp = new Component_RotationX(_holder); break;
 	case RotationZ:comp = new Component_RotationZ(_holder); break;
 	case MoveX:comp = new Component_MoveX(_holder); break;
+	case Fall:comp = new Component_Fall(_holder); break;
+	case Chase:comp = new Component_Chase(_holder); break;
+	case CircleRangeDetector:comp = new Component_CircleRangeDetector(_holder); break;
+	case FanRangeDetector:comp = new Component_FanRangeDetector(_holder); break;
+	case OtiBehavior:comp = new Component_OtiBehavior(_holder); break;
+	case Timer:comp = new Component_Timer(_holder); break;
+	case HealthManager:comp = new Component_HealthManager(_holder); break;
+	case Attack:comp = new Component_Attack(_holder); break;
+	case CactanAttack:comp = new Component_CactanAttack(_holder); break;
 
 	default:/* その他コンポーネントを追加する時は上記のように追加*/ break;
 	}

@@ -46,34 +46,34 @@ public:
     Component(StageObject* _holder, string _name,ComponentType _type);
 
     /// <summary>
-    /// 初期化処理を行う純粋仮想関数
+    /// 初期化
     /// </summary>
     virtual void Initialize() = 0;
 
     /// <summary>
-    /// 更新処理を行う純粋仮想関数
+    /// 更新
     /// </summary>
     virtual void Update() = 0;
 
     /// <summary>
-    /// 開放処理を行う純粋仮想関数
+    /// 開放
     /// </summary>
     virtual void Release() = 0;
 
     /// <summary>
-    /// jsonファイルに現在のデータを保存する純粋仮想関数
+    /// 保存
     /// </summary>
     /// <param name="_saveObj">保存情報</param>
     virtual void Save(json& _saveObj) = 0;
 
     /// <summary>
-    /// jsonファイルに現在のデータを保存する純粋仮想関数
+    /// 読込
     /// </summary>
     /// <param name="_saveObj">読込情報</param>
     virtual void Load(json& _loadObj) = 0;
 
     /// <summary>
-    /// コンポーネントが持っているデータをImGuiに表示する関数
+    /// ImGuiパネル表示
     /// </summary>
     virtual void DrawData() {};
 
@@ -108,43 +108,38 @@ public:
     void ChildLoad(json& _loadObj);
 
     /// <summary>
-    /// 子コンポーネントを追加
+    /// 子コンポーネントをリストに追加
     /// </summary>
-    /// <param name="comp"></param>
+    /// <param name="comp">コンポーネントタイプ</param>
     bool AddChildComponent(Component* _comp);
 
     /// <summary>
-    /// 子コンポーネントを削除
+    /// 子コンポーネントをリストから削除
     /// </summary>
-    /// <param name="comp"></param>
+    /// <param name="comp">コンポーネントタイプ</param>
     bool DeleteChildComponent(Component* _comp);
 
     /// <summary>
-    /// 子コンポーネントに該当のタイプのコンポーネントがあるかを探す
+    /// 子コンポーネントに該当のタイプのコンポーネントがリストにあるかを探す
     /// </summary>
-    /// <param name="_type"></param>
-    /// <returns></returns>
+    /// <param name="_type">コンポーネントタイプ</param>
+    /// <returns>見つかったかどうか</returns>
     bool FindChildComponent(ComponentType _type);
 
-/* getter: */
-
-    /// <summary>
-    /// 識別子を取得
-    /// </summary>
-    /// <returns>コンポーネント識別子</returns>
+    /// <returns>
+    /// コンポーネントタイプを取得
+    /// </returns>
     ComponentType GetType() const { return type_; }
 
-    /// <summary>
-    /// 名前を取得
-    /// </summary>
-    /// <returns>コンポーネント名</returns>
+    /// <returns>
+    /// コンポーネント名を取得
+    /// </returns>
     string GetName() { return name_; }
 
-    /// <summary>
+    /// <returns>
     /// 子コンポーネントを取得
-    /// </summary>
-    /// <param name="_type">識別子</param>
-    /// <returns>子コンポーネント</returns>
+    /// </returns>
+    /// <param name="_type">コンポーネントタイプ</param>
     Component* GetChildComponent(ComponentType _type);
 };
 

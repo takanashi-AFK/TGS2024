@@ -3,7 +3,9 @@
 // インクルード
 #include "../Component.h"
 
-// X軸回転を行うコンポーネントのクラス
+/// <summary>
+/// X軸回転を行うコンポーネントのクラス
+/// </summary>
 class Component_RotationX : public Component
 {
 private:
@@ -45,7 +47,7 @@ public:
 	void Load(json& _loadObj) override;
 
 	/// <summary>
-	/// ImGui表示
+	/// ImGuiパネル表示
 	/// </summary>
 	void DrawData() override;
 };

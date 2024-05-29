@@ -9,7 +9,7 @@
 Component_Fall::Component_Fall(StageObject* _holder)
     : Component(_holder,"Component_Fall",Fall)
 	, fallSpeed_(0.5f), fallSpeedplus_(0.05f), riseSpeed_(0.05f),fallDistance_(5.0f),
-	isRising_(false), isFirstTime_(true)
+	isFalling_(false), isFirstTime_(true)
 {
 }
 
@@ -34,14 +34,14 @@ void Component_Fall::Update()
 			isFirstTime_ = false;
 		}
 
-		if (isRising_) {
+		if (isFalling_) {
 			// 上昇中の処理
 			if (pPos.y < startRisePosition_.y) {
 				pPos.y += riseSpeed_;
 			}
 			else {
 				// 物体が一定高さに達したら上昇を停止し、降下を開始する
-				isRising_ = false;
+				isFalling_ = false;
 				isActive_ = false;
 				isFirstTime_ = true;
 				pPos.y = startRisePosition_.y;  // 上昇開始位置に戻す
@@ -55,7 +55,7 @@ void Component_Fall::Update()
 			}
 			else {
 				// 物体が一定の高さに達したら上昇を開始する
-				isRising_ = true;
+				isFalling_ = true;
 				pPos.y = startFallPosition_.y - fallDistance_;
 			}
 		}

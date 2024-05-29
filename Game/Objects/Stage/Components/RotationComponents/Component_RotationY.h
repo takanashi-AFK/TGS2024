@@ -49,8 +49,22 @@ public:
 	/// </summary>
 	void DrawData() override;
 
+	
+	/// <returns>
+	///‰ñ“]‚Ì‘¬“x‚ðŽæ“¾
+	///</returns>
 	float GetRotateSpeed() { return rotateSpeed_; }
+
+	
+	/// <returns>
+	///ƒAƒ“ƒOƒ‹‚ðŽæ“¾
+	/// </returns>
 	float GetAngle() { return angle_; }
+
+	/// <summary>
+	/// 
+	/// </summary>
+	/// <param name="_rotateSpeed"></param>
 	void SetRotationSpeed(float _rotateSpeed) { rotateSpeed_ = _rotateSpeed; }
 	void SetAngle(float _angle) { angle_ = _angle; }
 

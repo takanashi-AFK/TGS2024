@@ -9,8 +9,9 @@
 #define REFERENCE_XMFLOAT3(p) p.x,p.y,p.z // XMFLOAT3Œ^‚Ì•Ï”‚ğƒRƒ“ƒ}‹æØ‚è‚Å•\¦‚·‚é
 
 StageObject::StageObject(string _name, string _modelFilePath, GameObject* _parent)
-	:GameObject(_parent,_name),modelFilePath_(_modelFilePath),modelHandle_(-1),myComponents_()
+	:GameObject(_parent,_name),modelFilePath_(_modelFilePath),modelHandle_(-1),myComponents_(), localPosition_(0.0f, 0.0f, 0.0f)
 {
+
 }
 
 bool StageObject::AddComponent(Component* _comp)

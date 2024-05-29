@@ -157,9 +157,6 @@
     <ClCompile Include="Engine\ImGui\imgui_widgets.cpp">
       <Filter>01Engine\ImGui</Filter>
     </ClCompile>
-    <ClCompile Include="Game\Objects\Stage\Stage.cpp">
-      <Filter>03Game\Objects\Stage</Filter>
-    </ClCompile>
     <ClCompile Include="Game\Objects\Stage\SkySphere.cpp">
       <Filter>03Game\Objects\Stage\StageObjects</Filter>
     </ClCompile>
@@ -345,15 +342,7 @@
     <ClInclude Include="Game\Scenes\Scene_Test.h">
       <Filter>03Game\Scenes</Filter>
     </ClInclude>
-    <ClInclude Include="Game\Objects\Stage\Bullet.h" />
-    <ClInclude Include="Game\Objects\Stage\Components\AttackComponents\Component_CactanAttack\Component_CactanAttack.h" />
-    <ClInclude Include="Game\Objects\Stage\Components\AttackComponents\Component_Attack.h" />
-    <ClInclude Include="Game\Objects\Stage\Components\ChaseComponents\Component_Chase.h" />
-    <ClInclude Include="Game\Objects\Stage\Components\DetectorComponents\Component_CircleRangeDetector.h" />
-    <ClInclude Include="Game\Objects\Stage\Components\DetectorComponents\Component_FanRangeDetector.h" />
-    <ClInclude Include="Game\Objects\Stage\Components\EnemyComponents\Component_OtiBehavior.h" />
     <ClInclude Include="Game\Objects\Stage\Components\FallComponents\Component_Fall.h" />
-    <ClInclude Include="Game\Objects\Stage\Components\TimerComponent\Component_Timer.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Assets\Shader\Simple2D.hlsl">
@@ -369,6 +358,9 @@
       <Filter>02Shader</Filter>
     </FxCompile>
     <FxCompile Include="Assets\Shader\Sky.hlsl">
+      <Filter>02Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="Assets\Shader\Shadow.hlsl">
       <Filter>02Shader</Filter>
     </FxCompile>
   </ItemGroup>

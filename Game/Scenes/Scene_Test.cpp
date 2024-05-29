@@ -5,14 +5,16 @@
 #include "../../Engine/ImGui/imgui.h"
 #include "../Objects/Stage/SkySphere.h"
 #include "../Otheres/StageEditor.h"
-
+#include "../../Engine/ResourceManager/Model.h"
 Scene_Test::Scene_Test(GameObject * parent)
-	: GameObject(parent, "Scene_Test"),pStage_(nullptr)
+	: GameObject(parent, "Scene_Test"),pStage_(nullptr)//,handleModel1_(-1),handleModel2_(-1)
 {
 }
 
 void Scene_Test::Initialize()
 {
+
+	
 	// スカイスフィアを標準で生成
 	Instantiate<SkySphere>(this);
 
@@ -32,6 +34,7 @@ void Scene_Test::Initialize()
 		pSe->SetEditTarget(pStage_);
 	}
 #endif // _DEBUG
+
 }
 
 void Scene_Test::Update()
@@ -40,6 +43,10 @@ void Scene_Test::Update()
 
 void Scene_Test::Draw()
 {
+	/*Model::SetTransform(handleModel1_, transform_);
+	Model::Draw(handleModel1_);
+	Model::SetTransform(handleModel2_, transform_);
+	Model::Draw(handleModel2_);*/
 }
 
 void Scene_Test::Release()

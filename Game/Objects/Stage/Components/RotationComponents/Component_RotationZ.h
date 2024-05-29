@@ -3,7 +3,9 @@
 // インクルード
 #include "../Component.h"
 
-// Z軸回転を行うコンポーネントのクラス
+/// <summary>
+/// Z軸回転を行うコンポーネントのクラス
+/// </summary>
 class Component_RotationZ : public Component
 {
 private:

@@ -62,10 +62,15 @@ public:
 	float GetAngle() { return angle_; }
 
 	/// <summary>
-	/// 
+	/// 回転速度を設定
 	/// </summary>
-	/// <param name="_rotateSpeed"></param>
+	/// <param name="_direction">回転速度</param>
 	void SetRotationSpeed(float _rotateSpeed) { rotateSpeed_ = _rotateSpeed; }
+
+	/// <summary>
+	/// アングルを設定
+	/// </summary>
+	/// <param name="_angle">アングル</param>
 	void SetAngle(float _angle) { angle_ = _angle; }
 
 };

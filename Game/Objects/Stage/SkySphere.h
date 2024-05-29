@@ -1,7 +1,11 @@
 #pragma once
+
+// インクルード
 #include "StageObject.h"
 
-// スカイスフィアを管理するクラス
+/// <summary>
+/// スカイスフィアを管理するクラス
+/// </summary>
 class SkySphere : public StageObject
 {
 public:

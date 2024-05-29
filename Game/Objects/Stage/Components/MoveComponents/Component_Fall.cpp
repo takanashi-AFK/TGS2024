@@ -1,8 +1,8 @@
 #include "Component_Fall.h"
 
 // インクルード
-#include "../../StageObject.h"
 #include "../../../../../Engine/ImGui/imgui.h"
+#include "../../StageObject.h"
 
 
 // コンストラクタ
@@ -16,7 +16,7 @@ Component_Fall::Component_Fall(StageObject* _holder)
 // 初期化
 void Component_Fall::Initialize()
 {
-    // 初期化
+    
 }
 
 // 更新

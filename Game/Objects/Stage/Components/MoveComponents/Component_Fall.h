@@ -1,9 +1,10 @@
-//
+
 
 #pragma once
 
 #include "../Component.h"
 #include <DirectXMath.h>
+
 class Component_Fall : public Component
 {
 private:
@@ -58,17 +59,17 @@ public:
 	/// </summary>
 	void DrawData() override;
 
-	// 追従の開始
+	/// <summary>
+	/// 落下の開始
+	/// </summary>
 	void Start() { isActive_ = true; }
-
-	// 追従の停止
+	/// <summary>
+	/// 落下の停止
+	/// </summary>
 	void Stop() { isActive_ = false; }
 
-	void Rising() { isRising_ = true; }
-
-	void Falling() { isRising_ = false; }
 	/// <summary>
-	/// 攻撃開始
+	/// 実行されているかどうか
 	/// </summary>
 	void Execute() { isActive_ = true; }
 };

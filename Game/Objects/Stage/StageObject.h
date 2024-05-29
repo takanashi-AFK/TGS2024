@@ -50,13 +50,13 @@ public:
     /// <summary>
     /// 保存
     /// </summary>
-    /// <param name="_saveObj">保存先のjsonオブジェクト</param>
+    /// <param name="_saveObj">保存データ</param>
     virtual void Save(json& _saveObj);
 
     /// <summary>
     /// 読込
     /// </summary>
-    /// <param name="_loadObj">読み込んだjsonオブジェクト</param>
+    /// <param name="_loadObj">読込データ</param>
     virtual  void Load(json& _loadObj);
 
     /// <summary>

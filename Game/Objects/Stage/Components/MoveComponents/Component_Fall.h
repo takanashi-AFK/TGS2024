@@ -19,9 +19,9 @@ private:
 	 DirectX::XMFLOAT3 startRisePosition_; //上昇し始めの位置
 	 DirectX::XMFLOAT3 startFallPosition_; //降下し始めの位置
 	
-	bool isFirstTime_ = true;
-	bool isRising_ = false;
-	bool isActive_;
+	bool isFirstTime_ = true; //最初の状態を保存するか
+	bool isFalling_ = false; //落下するかどうか
+	bool isActive_; //実行されたかどうか
 public:
 	///<summary>
 	/// コンストラクタ

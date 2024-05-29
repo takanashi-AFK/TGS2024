@@ -51,10 +51,13 @@ void Component_CircleRangeDetector::DrawData()
 	// ImGuiでデータを描画
 	
 	ImGui::Text("isContains_ : %s", isContains_ ? "true" : "false");
+
+	// 半径の入力
 	ImGui::DragFloat("radius_", &radius_);
 
 	ImGui::Separator();
 	
+	//対象の選択
 	vector<string> objNames;
 	objNames.push_back("null");
 

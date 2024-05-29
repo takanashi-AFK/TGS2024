@@ -3,7 +3,9 @@
 // インクルード
 #include "../Component.h"
 
-// 全軸回転を行うコンポーネントのクラス
+/// <summary>
+/// 全軸回転を行うコンポーネントのクラス
+/// </summary>
 class Component_Rotation : public Component
 {
 public:
@@ -41,7 +43,7 @@ public:
 	void Load(json& _loadObj) override;
 	
 	/// <summary>
-	/// ImGui表示
+	/// ImGuiパネル表示
 	/// </summary>
 	void DrawData() override;
 };

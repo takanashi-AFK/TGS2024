@@ -6,7 +6,9 @@
 using namespace DirectX;
 
 
-//作成者:佐藤唯人
+/// <summary>
+/// ターゲットに対して追従するコンポーネントのクラス
+/// </summary>
 class Component_Chase:public Component
 {
 private:
@@ -47,32 +49,51 @@ public:
 	/// <param name="_loadobj">データの読込情報</param>
 	void Load(json& _loadobj) override;
 
+	/// <summary>
+	/// ImGuiパネル表示
+	/// </summary>
 	void DrawData()override;
 
-	// ターゲットの設定
+	/// <summary>
+	/// ターゲットの設定
+	/// </summary>
 	void SetTarget(StageObject* _target) { target_ = _target; }
 
-	// 追従の開始
+	/// <summary>
+	/// 追従の開始
+	/// </summary>
 	void Start() { isActive_ = true; }
 
-	// 追従の停止
+	/// <summary>
+	/// 追従の停止
+	/// </summary>
 	void Stop() { isActive_ = false; }
 
-	// 追従が有効かどうか
+	/// <summary>
+	/// 追従が有効かどうか
+	/// </summary>
 	bool IsActive() { return isActive_; }
 
 private:
 
-	// 方向の計算
+	/// <summary>
+	/// 方向の計算
+	/// </summary>
 	XMVECTOR CalcDirection(XMFLOAT3 _holderPos, XMFLOAT3 _targetPos);
 
-	// 距離を求める
+	/// <summary>
+	/// 距離を求める
+	/// </summary>
 	float CalcDistance(XMFLOAT3 _holderPos, XMFLOAT3 _targetPos);
 	
-	// ホルダーの向きを回転させる
+	/// <summary>
+	/// ホルダーの向きを回転させる
+	/// </summary>
 	float CalcRotateAngle(XMVECTOR _direction);
 	
-	// 移動
+	/// <summary>
+	/// 移動
+	/// </summary>
 	void Move(XMVECTOR _direction);
 };
 

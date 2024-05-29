@@ -2,7 +2,8 @@
 #include "../../../../../Engine/ImGui/imgui.h"
 
 Component_HealthManager::Component_HealthManager(StageObject* _holder)
-	:Component(_holder, "Component_HealthManager", HealthManager),max_(0),hp_(0) {
+	:Component(_holder, "Component_HealthManager", HealthManager),max_(0),hp_(0) 
+{
 
 }
 
@@ -28,6 +29,7 @@ void Component_HealthManager::Load(json& _loadObj)
 
 void Component_HealthManager::DrawData()
 {
+	
 	if (ImGui::Button("HP Heal"))
 	{
 		Heal(10.f);
@@ -86,7 +88,7 @@ void Component_HealthManager::SetMax(float _newMax)
 void Component_HealthManager::TakeDamage(float _damageValue)
 {
 	hp_ -= _damageValue;
-
+	//HP‚ª0ˆÈ‰º‚É‚È‚ç‚È‚¢‚æ‚¤‚É‚·‚é
 	if (hp_ < 0)
 		hp_ = 0;
 }

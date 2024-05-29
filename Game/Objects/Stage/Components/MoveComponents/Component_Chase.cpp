@@ -1,7 +1,7 @@
-#include "Component_Chase.h"
-#include "../../StageObject.h"
-#include "../../Stage.h"
 #include "../../../../../Engine/ImGui/imgui.h"
+#include "../../Stage.h"
+#include "../../StageObject.h"
+#include "Component_Chase.h"
 
 namespace {
 	const float LIMIT_DISTANCE = 0.5f; // ‚±‚Ì‹——£ˆÈ‰º‚É‚È‚Á‚½‚ç’Ç]‚ğ‚â‚ß‚é

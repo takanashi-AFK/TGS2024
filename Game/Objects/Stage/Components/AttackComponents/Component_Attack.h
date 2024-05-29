@@ -8,8 +8,8 @@ class Component_Attack :public Component
 {
 
 protected:
-	bool isAttack_;
-	int  power_;
+	bool isAttack_;//攻撃フラグ
+	int  power_;//攻撃力
 private:
 
 public:
@@ -19,6 +19,13 @@ public:
 	/// <param name="_holder">保有者</param>
 	Component_Attack(StageObject* _holder);
 
+
+	/// <summary>
+	/// ほかコンポーネントを継承した際のコンストラクタ
+	/// </summary>
+	/// <param name="_holder">保有者</param>
+	/// <param name="_name">自身のコンポーネント名</param>
+	/// <param name="_type">自身のコンポーネントID</param>
 	Component_Attack(StageObject* _holder, string _name, ComponentType _type);
 
 	/// <summary>
@@ -48,6 +55,9 @@ public:
 	/// <param name="_loadobj">データの読込情報</param>
 	void Load(json& _loadobj) override;
 
+	/// <summary>
+	/// ImGuiパネル表示
+	/// </summary>
 	void DrawData()override;
 
 };

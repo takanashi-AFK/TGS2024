@@ -53,9 +53,6 @@
     <Filter Include="03Game\Otheres">
       <UniqueIdentifier>{c2efa7cb-5f10-4c3c-b6f4-cff055139e25}</UniqueIdentifier>
     </Filter>
-    <Filter Include="03Game\Objects\Stage\Components\ChaseComponents">
-      <UniqueIdentifier>{37580c59-c1a2-44a2-9fbb-e006fc08411c}</UniqueIdentifier>
-    </Filter>
     <Filter Include="03Game\Objects\Stage\Components\DetectorComponents">
       <UniqueIdentifier>{1dfc5a77-2666-438e-b4a0-ccdf1e982c3a}</UniqueIdentifier>
     </Filter>

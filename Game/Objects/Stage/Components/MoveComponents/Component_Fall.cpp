@@ -83,12 +83,10 @@ void Component_Fall::Save(json& _saveObj)
 void Component_Fall::Load(json& _loadObj)
 {
     // ì«çû
-    if (_loadObj.contains("fallSpeed")) {
-        fallSpeed_ = _loadObj["fallSpeed"];
-    }
-    if (_loadObj.contains("riseSpeed")) {
-        riseSpeed_ = _loadObj["riseSpeed"];
-    }
+    if (_loadObj.contains("fallSpeed"))fallSpeed_ = _loadObj["fallSpeed"];
+    
+    if (_loadObj.contains("riseSpeed"))riseSpeed_ = _loadObj["riseSpeed"];
+    
 }
 
 // ImGuiï\é¶

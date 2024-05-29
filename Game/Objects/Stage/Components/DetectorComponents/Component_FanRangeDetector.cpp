@@ -51,17 +51,20 @@ void Component_FanRangeDetector::DrawData()
 	
 	// ImGuiでデータを描画
 	ImGui::Text("isContains_ : %s", isContains_ ? "true" : "false");
+	
+	// 長さの入力
 	ImGui::DragFloat("length_", &length_);
+	
+	// 角度の入力
 	ImGui::DragFloat("angle_", &angle_);
 	
+	// 方向ベクトルの入力
 	XMFLOAT3 direction;
 	XMStoreFloat3(&direction, direction_);
 	ImGui::DragFloat3("direction_",&direction.x,0.1f);
 	direction_ = XMLoadFloat3(&direction);
 
-	ImGui::Separator();
-
-
+	// 対象の選択
 	vector<string> objNames;
 	objNames.push_back("null");
 

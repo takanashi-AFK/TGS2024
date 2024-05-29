@@ -58,6 +58,15 @@ public:
 	/// </summary>
 	void DrawData() override;
 
+	// ’Ç]‚ÌŠJn
+	void Start() { isActive_ = true; }
+
+	// ’Ç]‚Ì’â~
+	void Stop() { isActive_ = false; }
+
+	void Rising() { isRising_ = true; }
+
+	void Falling() { isRising_ = false; }
 	/// <summary>
 	/// UŒ‚ŠJn
 	/// </summary>

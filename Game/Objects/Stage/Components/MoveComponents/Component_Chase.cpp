@@ -2,6 +2,11 @@
 #include "../../StageObject.h"
 #include "../../Stage.h"
 #include "../../../../../Engine/ImGui/imgui.h"
+
+namespace {
+	const float LIMIT_DISTANCE = 0.5f; // この距離以下になったら追従をやめる
+}
+
 Component_Chase::Component_Chase(StageObject* _holder)
 	:Component(_holder,"Component_Chase",Chase), speed_(0.0f),target_(nullptr)
 {
@@ -14,8 +19,33 @@ void Component_Chase::Initialize()
 
 void Component_Chase::Update()
 {
-	ChaseMove();
+	if (target_ == nullptr || isActive_ == false)return;
 
+	//対象と保有者のポジションを取得
+	XMFLOAT3 targetPos = target_->GetPosition();
+	XMFLOAT3 holderPos = holder_->GetPosition();
+
+	// 追従する方向を計算
+	XMVECTOR direction = XMVectorSetY(CalcDirection(holderPos, targetPos),0);
+
+	// ホルダーの向きを計算
+	float rotateAngle = XMConvertToDegrees(CalcRotateAngle(direction));
+
+	// 距離を計算
+	float distance = CalcDistance(holderPos, targetPos);
+
+	if (distance > LIMIT_DISTANCE) {
+		
+		//向きをを適応
+		holder_->SetRotateY(rotateAngle);
+
+		//移動
+		Move(direction);
+	}
+	else
+	{
+		rotateAngle = 0;
+	}
 }
 
 void Component_Chase::Release()
@@ -24,64 +54,67 @@ void Component_Chase::Release()
 
 void Component_Chase::Save(json& _saveobj)
 {
-	_saveobj[" movingdistance_"] = speed_;
-	if (target_ != nullptr)_saveobj["targetName"] = target_->GetObjectName();
+	_saveobj["speed_"] = speed_;
+	_saveobj["isActive_"] = isActive_;
+	if(target_ != nullptr)_saveobj["target_"] = target_->GetObjectName();
 }
 
 void Component_Chase::Load(json& _loadobj)
 {
-	if (_loadobj.find("move_") != _loadobj.end()) speed_ = _loadobj[" movingdistance_"];
-	if (_loadobj.find("target_") != _loadobj.end())target_ = (StageObject*)holder_->FindObject(_loadobj["target_"]);
+	if(_loadobj.contains("speed_"))speed_ = _loadobj["speed_"];
+	if(_loadobj.contains("isActive_"))isActive_ = _loadobj["isActive_"];
+	if(_loadobj.contains("target_"))target_ = (StageObject*)holder_->FindObject(_loadobj["target_"]);
 }
 
 void Component_Chase::DrawData()
 {
-	vector<string> objNames;
-	objNames.push_back("null");
 
-	for (auto obj : ((Stage*)holder_->GetParent())->GetStageObjects())objNames.push_back(obj->GetObjectName());
+	// 追従の有効無効
+	ImGui::Checkbox("isActive", &isActive_);
+	
+	// 速度の設定
+	ImGui::DragFloat("speed", &speed_, 0.01f, 0.0f, 10.0f);
 
-	static int select = 0;
-	if (ImGui::BeginCombo("target_", objNames[select].c_str())) {
-		for (int i = 0; i < objNames.size(); i++) {
-			bool is_selected = (select == i);
-			if (ImGui::Selectable(objNames[i].c_str(), is_selected))select = i;
-			if (is_selected)ImGui::SetItemDefaultFocus();
+	// ターゲットの選択
+	{
+		vector<string> objNames;
+		objNames.push_back("null");
+
+		for (auto obj : ((Stage*)holder_->GetParent())->GetStageObjects())objNames.push_back(obj->GetObjectName());
+
+		static int select = 0;
+		if (ImGui::BeginCombo("target_", objNames[select].c_str())) {
+			for (int i = 0; i < objNames.size(); i++) {
+				bool is_selected = (select == i);
+				if (ImGui::Selectable(objNames[i].c_str(), is_selected))select = i;
+				if (is_selected)ImGui::SetItemDefaultFocus();
+			}
+			ImGui::EndCombo();
 		}
-		ImGui::EndCombo();
+		if (select == 0)target_ = nullptr;
+		else target_ = (StageObject*)holder_->FindObject(objNames[select]);
 	}
-	if (select == 0)target_ = nullptr;
-	else target_ = (StageObject*)holder_->FindObject(objNames[select]);
 }
 
-
-void Component_Chase::ChaseMove()
+XMVECTOR Component_Chase::CalcDirection(XMFLOAT3 _holderPos, XMFLOAT3 _targetPos)
 {
-	if(target_ == nullptr)return;
+	return XMVector3Normalize(XMLoadFloat3(&_targetPos) - XMLoadFloat3(&_holderPos));
+}
 
-	//対象と保有者のポジションを取得
-	XMFLOAT3 targetPos = target_->GetPosition();
-	XMFLOAT3 holderPos = holder_->GetPosition();
-	targetPos.y = 0;
-	//ポジションをVector型に変更し追従する方向と長さを決める
-	XMVECTOR targetVec = XMLoadFloat3(&targetPos);
-	XMVECTOR holderVec = XMLoadFloat3(&holderPos);
-	float distance = XMVectorGetX(XMVector3Length(targetVec - holderVec));
-	XMVECTOR direction = XMVector3Normalize(XMVectorSetY(targetVec - holderVec, 0));
+void Component_Chase::Move(XMVECTOR _direction)
+{
+	XMFLOAT3 holderPosition = holder_->GetPosition();
+	XMStoreFloat3(&holderPosition, XMLoadFloat3(&holderPosition) + (_direction * speed_));
+	holder_->SetPosition(holderPosition);
+}
 
-	//追従する方向に体の向きを回転させる
-	double rotateAngle = atan2(XMVectorGetX(-direction), XMVectorGetZ(-direction));
+float Component_Chase::CalcDistance(XMFLOAT3 _holderPos, XMFLOAT3 _targetPos)
+{
+	return XMVectorGetX(XMVector3Length(XMLoadFloat3(&_targetPos) - XMLoadFloat3(&_holderPos)));
+}
 
-	XMStoreFloat3(&holderPos, holderVec + (direction * speed_));
-	if (distance > LIMIT_DISTANCE){
-		//移動後の位置を適応
-		holder_->SetRotateY(rotateAngle);
-		holder_->SetPosition(holderPos);
-	}
-	else
-	{
-		rotateAngle = 0;
-	}
-
-	
+float Component_Chase::CalcRotateAngle(XMVECTOR _direction)
+{
+	// 回転角度を計算
+	return atan2(XMVectorGetX(-_direction), XMVectorGetZ(-_direction));
 }

@@ -1,11 +1,9 @@
 #include "Component_FanRangeDetector.h"
 
+#include "../../../../../Engine/Global.h"
 #include "../../../../../Engine/ImGui/imgui.h"
-#include "../../StageObject.h"
 #include "../../Stage.h"
-
-// マクロ定義
-#define REFERENCE_XMFLOAT3(p) p.x,p.y,p.z // XMFLOAT3型の変数をコンマ区切りで表示する
+#include "../../StageObject.h"
 
 Component_FanRangeDetector::Component_FanRangeDetector(StageObject* _holder)
 	: Component(_holder, "Component_FanRangeDetector", FanRangeDetector)

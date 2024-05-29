@@ -12,8 +12,8 @@ private:
 	float maxTime_;		// 最大時間
 	float nowTime_;		// 現在の時間
 	float tempMax_;		// 一時的な最大時間
-	bool isEnd_;		// 終了したか/
-	bool isCountNow_;		// カウント中か
+	bool isEnd_;		// 終了したか
+	bool isCountNow_;	// カウント中か
 	bool isInfinity_;	// 無限にカウントするか
 
 public:
@@ -66,12 +66,12 @@ public:
 	void Stop();
 
 	/// <returns>
-	/// 現在の時間(秒)を取得
+	/// 現在の時間(秒)
 	/// </returns>
 	float GetNowTime();
 
 	/// <returns>
-	/// タイマーが終了したかを取得
+	/// タイマーが終了したか
 	/// </returns>
 	bool GetIsEnd();
 
@@ -100,8 +100,7 @@ public:
 	/// <summary>
 	/// 無限にカウントするかどうか
 	/// </summary>
-	/// <param name="_isInfinity">∞にするか</param>
+	/// <param name="_isInfinity">無限にするか</param>
 	void SetInfinity(bool _isInfinity) { isInfinity_ = _isInfinity; }
-
 };
 

@@ -35,11 +35,6 @@ public:
 	/// •`‰æ
 	/// </summary>
 	void Draw() override;
-	
-	/// <summary>
-	/// ŠJ•ú
-	/// </summary>
-	void Release() override;
 
 	/// <summary>
 	/// ˆÚ“®‘¬“x‚ğİ’è

@@ -1,13 +1,17 @@
 #pragma once
+// インクルード
 #include "../Component.h"
 
+/// <summary>
+/// 円形範囲に入った対象を検出するコンポーネント
+/// </summary>
 class Component_CircleRangeDetector : public Component
 {
 private:
 	
-	StageObject* target_;	// 対象オブジェクト
-	float radius_;			// 半径
-	bool isContains_;		// 当たり判定フラグ
+	StageObject* target_;	// 検出対象
+	float radius_;			// 検出範囲の半径
+	bool isContains_;		// 検出フラグ
 
 public:
 	/// <summary>
@@ -47,24 +51,30 @@ public:
 	/// ImGuiパネル表示
 	/// </summary>
 	void DrawData() override;
-
-// setter
 	
-	/// <param name="_radius">捜索範囲の半径</param>
+	/// <param name="_radius">
+	/// 捜索範囲の半径
+	/// </param>
 	void SetRadius(float _radius) { radius_ = _radius; }
 
-	/// <param name="_target">捜索対象</param>
+	/// <param name="_target">
+	/// 捜索対象
+	/// </param>
 	void SetTarget(StageObject* _target) { target_ = _target; }
 
-// getter
-
-	/// <returns>捜索範囲の半径</returns>
+	/// <returns>
+	/// 捜索範囲の半径
+	/// </returns>
 	float GetRadius() { return radius_; }
 
-	/// <returns>捜索対象</returns>
+	/// <returns>
+	/// 捜索対象
+	/// </returns>
 	StageObject* GetTarget() { return target_; }
 
-	/// <returns>捜索対象が捜索範囲内にいたらtrue</returns>
+	/// <returns>
+	/// 捜索対象が捜索範囲内にいたらtrue
+	/// </returns>
 	bool IsContains();
 
 };

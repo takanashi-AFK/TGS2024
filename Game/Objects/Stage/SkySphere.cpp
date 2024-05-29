@@ -1,8 +1,8 @@
 #include "SkySphere.h"
 
 // インクルード
-#include "../../../Engine/ResourceManager/Model.h"
 #include "../../../Engine/DirectX/Direct3D.h"
+#include "../../../Engine/ResourceManager/Model.h"
 
 SkySphere::SkySphere(GameObject* _parent)
 	:StageObject("SkySphere", "Models/SkySphere/SkySphere.fbx", _parent)

@@ -5,14 +5,17 @@
 
 using namespace DirectX;
 
+/// <summary>
+/// 扇形範囲に入った対象を検出するコンポーネント
+/// </summary>
 class Component_FanRangeDetector : public Component
 {
 private:
-	StageObject* target_;	// 対象オブジェクト
-	float length_;			// 長さ
-	float angle_;			// 角度
-	XMVECTOR direction_;	// 方向
-	bool isContains_;		// 当たり判定フラグ
+	StageObject* target_;	// 検出対象
+	float length_;			// 検出範囲の長さ
+	float angle_;			// 検出範囲の角度
+	XMVECTOR direction_;	// 検出範囲の方向
+	bool isContains_;		// 検出フラグ
 
 public:
 
@@ -54,7 +57,9 @@ public:
 	/// </summary>
 	void DrawData() override;
 
-	// 範囲内に入っているかどうかを判定
+	/// <returns>
+	/// 検出範囲内に入っているかどうか
+	/// </returns>
 	bool IsContains();
 };
 

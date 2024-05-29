@@ -1,9 +1,13 @@
 #include "Component_CactanAttack.h"
+
+// インクルード
 #include "../../../../../../Engine/ImGui/imgui.h"
+#include "../../../Bullet.h"
 #include "../../../Stage.h"
+
 Component_CactanAttack::Component_CactanAttack(StageObject* _holder):
 	Component_Attack(_holder, "Component_CactanAttack", CactanAttack),
-	speed_(0.5f),
+	bulletSpeed_(0.5f),
 	target_{}
 {
 }
@@ -20,18 +24,23 @@ void Component_CactanAttack::Release()
 {
 }
 
-void Component_CactanAttack::Save(json& _saveobj)
+void Component_CactanAttack::Save(json& _saveObj)
 {
+	// 保存
+	_saveObj["bulletSpeed_"] = bulletSpeed_;
+	_saveObj["target_"] = target_->GetObjectName();
 }
 
-void Component_CactanAttack::Load(json& _loadobj)
+void Component_CactanAttack::Load(json& _loadObj)
 {
-
+	// 読込
+	if (_loadObj.contains("bulletSpeed_"))bulletSpeed_ = _loadObj["bulletSpeed_"];
+	if (_loadObj.contains("target_"))target_ = (StageObject*)holder_->FindObject(_loadObj["target_"]);
 }
 
 void Component_CactanAttack::DrawData()
 {
-	ImGui::DragFloat("Speed", &speed_, 0.1f, 0, 2.f);
+	ImGui::DragFloat("Speed", &bulletSpeed_, 0.1f, 0, 2.f);
 
 	//ターゲット指定
 	SetTarget();
@@ -51,7 +60,7 @@ void Component_CactanAttack::DrawData()
 
 		//弾の方向とスピード、初期地点を設定
 		pBullet->SetDirection(dir);
-		pBullet->SetSpeed(speed_);
+		pBullet->SetSpeed(bulletSpeed_);
 		pBullet->SetPosition(holder_->GetPosition());
 
 		//発射

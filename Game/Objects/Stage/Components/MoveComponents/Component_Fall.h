@@ -11,32 +11,33 @@ class Component_Fall : public Component
 {
 private:
 	
-	float fallSpeed_; //降下速度
-	float fallSpeedplus_; //降下速度を上げるやつ
-	float riseSpeed_; //上昇速度
-	float fallDistance_; //降下しきるまでの距離
+	float fallSpeed_;		//降下速度
+	float fallSpeedplus_;	//降下速度を上げるやつ
+	float riseSpeed_;		//上昇速度
+	float fallDistance_;	//降下しきるまでの距離
 
-	 DirectX::XMFLOAT3 startRisePosition_; //上昇し始めの位置
-	 DirectX::XMFLOAT3 startFallPosition_; //降下し始めの位置
+	DirectX::XMFLOAT3 startRisePosition_; //上昇し始めの位置
+	DirectX::XMFLOAT3 startFallPosition_; //降下し始めの位置
 	
-	bool isFirstTime_ = true; //最初の状態を保存するか
-	bool isFalling_ = false; //落下するかどうか
-	bool isActive_; //実行されたかどうか
+	bool isFirstTime_ = true;	//最初の状態を保存するか
+	bool isFalling_ = false;	//落下するかどうか
+	bool isActive_;				//実行されたかどうか
 public:
-	///<summary>
+
+	/// <summary>
 	/// コンストラクタ
-	///</summary>
-	///<param name="_holder">保有者</param>
+	/// </summary>
+	/// <param name="_holder">保有者</param>
 	Component_Fall(StageObject* _holder);
 
-	///<summary>
+	/// <summary>
 	/// 初期化
-	///</summary>
+	/// </summary>
 	void Initialize() override;
 
-	///<summary>
+	/// <summary>
 	/// 更新
-	///</summary>
+	/// </summary>
 	void Update() override;
 
 	/// <summary>
@@ -65,6 +66,7 @@ public:
 	/// 降下の開始
 	/// </summary>
 	void Start() { isActive_ = true; }
+
 	/// <summary>
 	/// 降下の停止
 	/// </summary>

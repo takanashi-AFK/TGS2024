@@ -44,7 +44,7 @@ public:
 	void Save(json& _saveobj) override;
 
 	/// <summary>
-	/// “Ç‚İ‚İ
+	/// “Ç
 	/// </summary>
 	/// <param name="_loadobj">ƒf[ƒ^‚Ì“Çî•ñ</param>
 	void Load(json& _loadobj) override;

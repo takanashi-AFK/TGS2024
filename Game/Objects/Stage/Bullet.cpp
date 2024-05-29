@@ -36,10 +36,6 @@ void Bullet::Draw()
 	Model::Draw(modelHandle_);
 }
 
-void Bullet::Release()
-{
-}
-
 void Bullet::Move(XMVECTOR _dir, float _speed)
 {
 	// 移動
@@ -48,7 +44,7 @@ void Bullet::Move(XMVECTOR _dir, float _speed)
 
 void Bullet::AutoDelete(float _sec)
 {
-	// ０以下なら終了
+	// 0以下なら終了
 	if (_sec <= 0)return;
 
 	// 経過フレームが指定秒数を超えたら削除

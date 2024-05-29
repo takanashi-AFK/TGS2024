@@ -1,6 +1,8 @@
-#include "Component_Timer.h"
 #include "../../../../../Engine/ImGui/imgui.h"
-namespace {
+#include "Component_Timer.h"
+
+namespace
+{
 	const int FPS = 60;
 }
 
@@ -17,7 +19,6 @@ void Component_Timer::Initialize()
 void Component_Timer::Update()
 {
 	if (nowTime_ >= maxTime_ && !isInfinity_) Stop();
-	// カウント中でない場合,カウントを進める
 	if (!isCountNow_) return;
 	nowTime_++;
 }

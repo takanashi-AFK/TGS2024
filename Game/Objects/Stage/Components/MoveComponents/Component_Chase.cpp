@@ -98,18 +98,23 @@ void Component_Chase::DrawData()
 
 XMVECTOR Component_Chase::CalcDirection(XMFLOAT3 _holderPos, XMFLOAT3 _targetPos)
 {
+	// 方向を計算
 	return XMVector3Normalize(XMLoadFloat3(&_targetPos) - XMLoadFloat3(&_holderPos));
 }
 
 void Component_Chase::Move(XMVECTOR _direction)
 {
+	// 所有者の位置を取得
 	XMFLOAT3 holderPosition = holder_->GetPosition();
+
+	// 移動
 	XMStoreFloat3(&holderPosition, XMLoadFloat3(&holderPosition) + (_direction * speed_));
 	holder_->SetPosition(holderPosition);
 }
 
 float Component_Chase::CalcDistance(XMFLOAT3 _holderPos, XMFLOAT3 _targetPos)
 {
+	// 所有者から対象までの距離を計算
 	return XMVectorGetX(XMVector3Length(XMLoadFloat3(&_targetPos) - XMLoadFloat3(&_holderPos)));
 }
 

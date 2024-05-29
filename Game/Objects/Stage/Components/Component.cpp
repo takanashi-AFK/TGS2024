@@ -5,7 +5,6 @@
 #include "../StageObject.h"
 
 // 作成したコンポーネントのインクルード
-#include "AttackComponents/Component_Attack.h"
 #include "AttackComponents/Component_CactanAttack/Component_CactanAttack.h"
 #include "DetectorComponents/Component_CircleRangeDetector.h"
 #include "DetectorComponents/Component_FanRangeDetector.h"
@@ -153,7 +152,6 @@ Component* CreateComponent(ComponentType _type, StageObject* _holder)
 	case OtiBehavior:comp = new Component_OtiBehavior(_holder); break;
 	case Timer:comp = new Component_Timer(_holder); break;
 	case HealthManager:comp = new Component_HealthManager(_holder); break;
-	case Attack:comp = new Component_Attack(_holder); break;
 	case CactanAttack:comp = new Component_CactanAttack(_holder); break;
 
 	default:/* その他コンポーネントを追加する時は上記のように追加*/ break;

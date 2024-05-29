@@ -1,4 +1,6 @@
 #include "Component_HealthManager.h"
+
+// インクルード
 #include "../../../../../Engine/ImGui/imgui.h"
 
 Component_HealthManager::Component_HealthManager(StageObject* _holder)
@@ -21,10 +23,14 @@ void Component_HealthManager::Release()
 
 void Component_HealthManager::Save(json& _saveObj)
 {
+	_saveObj["max_"] = max_;
+	_saveObj["hp_"] = hp_;
 }
 
 void Component_HealthManager::Load(json& _loadObj)
 {
+	if (_loadObj.contains("max_"))max_ = _loadObj["max_"];
+	if (_loadObj.contains("hp_"))hp_ = _loadObj["hp_"];
 }
 
 void Component_HealthManager::DrawData()
@@ -95,6 +101,7 @@ void Component_HealthManager::TakeDamage(float _damageValue)
 
 void Component_HealthManager::Heal(float _healValue)
 {
+	//HPが最大値を超えないようにする
 	if (hp_ + _healValue <= max_)
 		hp_ += _healValue;
 	return;

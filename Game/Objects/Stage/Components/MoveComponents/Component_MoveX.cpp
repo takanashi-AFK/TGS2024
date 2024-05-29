@@ -41,7 +41,7 @@ void Component_MoveX::Save(json& _saveObj)
 void Component_MoveX::Load(json& _loadObj)
 {
 	// ˆÚ“®‘¬“x‚ğ“Ç
-	moveSpeedX_ = _loadObj["moveSpeedX_"];
+	if(_loadObj.contains("moveSpeedX_"))moveSpeedX_ = _loadObj["moveSpeedX_"];
 }
 
 void Component_MoveX::DrawData()

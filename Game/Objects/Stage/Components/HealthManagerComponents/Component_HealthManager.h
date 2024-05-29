@@ -11,7 +11,7 @@ class Component_HealthManager :public Component
 private:
 
 	float max_; //‘Ì—Í‚ÌãŒÀ
-	float hp_; //‘Ì—Í
+	float hp_;  //‘Ì—Í
 
 public:
 

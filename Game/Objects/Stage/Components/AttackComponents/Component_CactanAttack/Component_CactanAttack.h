@@ -1,18 +1,16 @@
 #pragma once
-#include "../../Component.h"
+
+// インクルード
 #include "../Component_Attack.h"
-#include "../../../../../../Engine/GameObject/GameObject.h"
-#include "../../../Bullet.h"
-//作成者:高梨
 
 /// <summary>
-/// cactan(遠距離攻撃Enemy)の攻撃コンポーネント
+/// カクタン(遠距離攻撃Enemy)の攻撃コンポーネント
 /// </summary>
 class Component_CactanAttack :public Component_Attack
 {
 private:
-	float speed_;		 // 弾の速度
-	StageObject* target_;// 誰を狙うか
+	float bulletSpeed_;	 // 弾の速度
+	StageObject* target_;// 攻撃対象
 public:
 	/// <summary>
 	/// コンストラクタ
@@ -38,14 +36,14 @@ public:
 	/// <summary>
 	/// 保存
 	/// </summary>
-	/// <param name="_saveobj">データの保存情報</param>
-	void Save(json& _saveobj) override;
+	/// <param name="_savebj">データの保存情報</param>
+	void Save(json& _saveObj) override;
 	
 	/// <summary>
-	/// 読み込み
+	/// 読込
 	/// </summary>
-	/// <param name="_loadobj">データの読込情報</param>
-	void Load(json& _loadobj) override;
+	/// <param name="_loadObj">データの読込情報</param>
+	void Load(json& _loadObj) override;
 	
 	/// <summary>
 	/// ImGuiパネル表示

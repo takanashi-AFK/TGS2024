@@ -144,7 +144,7 @@ public:
 };
 
 /// <summary>
-///コンポーネントを作成する
+/// コンポーネントを作成する
 /// </summary>
 /// <param name="_type">コンポーネントタイプ</param>
 /// <param name="_holder">保有者</param>

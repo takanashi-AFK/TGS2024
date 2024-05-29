@@ -66,18 +66,18 @@ public:
     /// 保存
     /// </summary>
     /// <param name="_saveObj">保存先のjsonオブジェクト</param>
-    void Save(json& _saveObj);
+    virtual void Save(json& _saveObj);
 
     /// <summary>
     /// 読込
     /// </summary>
     /// <param name="_loadObj">読み込んだjsonオブジェクト</param>
-    void Load(json& _loadObj);
+    virtual  void Load(json& _loadObj);
 
     /// <summary>
     /// 自身が持っているデータをImGuiに表示する関数
     /// </summary>
-    void DrawData();
+    virtual void DrawData();
 };
 
 /// <summary>

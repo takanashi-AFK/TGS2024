@@ -196,6 +196,15 @@
     <ClCompile Include="Game\Scenes\Scene_Test.cpp">
       <Filter>03Game\Scenes</Filter>
     </ClCompile>
+    <ClCompile Include="Game\Objects\Stage\Bullet.cpp" />
+    <ClCompile Include="Game\Objects\Stage\Components\AttackComponents\Component_CactanAttack\Component_CactanAttack.cpp" />
+    <ClCompile Include="Game\Objects\Stage\Components\AttackComponents\Component_Attack.cpp" />
+    <ClCompile Include="Game\Objects\Stage\Components\DetectorComponents\Component_FanRangeDetector.cpp" />
+    <ClCompile Include="Game\Objects\Stage\Components\EnemyComponents\Component_OtiBehavior.cpp" />
+    <ClCompile Include="Game\Objects\Stage\Components\DetectorComponents\Component_CircleRangeDetector.cpp" />
+    <ClCompile Include="Game\Objects\Stage\Components\TimerComponent\Component_Timer.cpp" />
+    <ClCompile Include="Game\Objects\Stage\Components\ChaseComponents\Component_Chase.cpp" />
+    <ClCompile Include="Game\Objects\Stage\Components\FallComponents\Component_Fall.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Collider\BoxCollider.h">
@@ -336,6 +345,15 @@
     <ClInclude Include="Game\Scenes\Scene_Test.h">
       <Filter>03Game\Scenes</Filter>
     </ClInclude>
+    <ClInclude Include="Game\Objects\Stage\Bullet.h" />
+    <ClInclude Include="Game\Objects\Stage\Components\AttackComponents\Component_CactanAttack\Component_CactanAttack.h" />
+    <ClInclude Include="Game\Objects\Stage\Components\AttackComponents\Component_Attack.h" />
+    <ClInclude Include="Game\Objects\Stage\Components\ChaseComponents\Component_Chase.h" />
+    <ClInclude Include="Game\Objects\Stage\Components\DetectorComponents\Component_CircleRangeDetector.h" />
+    <ClInclude Include="Game\Objects\Stage\Components\DetectorComponents\Component_FanRangeDetector.h" />
+    <ClInclude Include="Game\Objects\Stage\Components\EnemyComponents\Component_OtiBehavior.h" />
+    <ClInclude Include="Game\Objects\Stage\Components\FallComponents\Component_Fall.h" />
+    <ClInclude Include="Game\Objects\Stage\Components\TimerComponent\Component_Timer.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Assets\Shader\Simple2D.hlsl">

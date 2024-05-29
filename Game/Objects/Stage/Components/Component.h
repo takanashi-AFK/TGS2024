@@ -22,6 +22,8 @@ enum ComponentType {
     OtiBehavior,
     Timer,
     Fall,
+    Attack,
+    CactanAttack,
     // コンポーネント追加時に識別番号を追加
 };
 

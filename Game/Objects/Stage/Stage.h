@@ -11,12 +11,13 @@ using std::vector;
 // 前方宣言
 class StageObject;
 
-// ステージを管理するクラス
+/// <summary>
+/// ステージを管理するクラス
+/// </summary>
 class Stage : public GameObject
 {
-	friend class StageEditor;
-
 private:
+	friend class StageEditor;		// StageEditorクラスをフレンド宣言
 	vector<StageObject*> objects_;	// 自身が保有するステージオブジェクト群
 
 public:
@@ -49,37 +50,40 @@ public:
 	/// <summary>
 	/// 保存
 	/// </summary>
-	/// <param name="_saveObj"></param>
+	/// <param name="_saveObj">保存データ</param>
 	void Save(json& _saveObj);
 
 	/// <summary>
 	/// 読込
 	/// </summary>
-	/// <param name="_saveObj"></param>
+	/// <param name="_loadObj">読込データ</param>
 	void Load(json& _loadObj);
 
 	/// <summary>
-	/// ImGui描画
+	/// ImGuiパネル表示
 	/// </summary>
 	void DrawData();
 
 	/// <summary>
 	/// オブジェクトをリストに追加
 	/// </summary>
-	/// <param name="_obj">追加するオブジェクトのアドレス</param>
+	/// <param name="_obj">追加するオブジェクト</param>
 	void AddStageObject(StageObject* _obj);
 
 	/// <summary>
 	/// オブジェクトをリストから削除
 	/// </summary>
-	/// <param name="_obj">削除するオブジェクトのアドレス</param>
+	/// <param name="_obj">削除するオブジェクト</param>
 	void DeleteStageObject(StageObject* _obj);
 
 	/// <summary>
-	/// リスト内のオブジェクトをすべて削除
+	/// リスト内のオブジェクトを全て削除
 	/// </summary>
 	void DeleteAllStageObject();
 
+	/// <returns>
+	/// オブジェクトリストを取得
+	/// </returns>
 	vector<StageObject*>& GetStageObjects() { return objects_; }
 };
 

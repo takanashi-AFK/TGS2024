@@ -2,6 +2,7 @@
 
 // インクルード
 #include "StageObject.h"
+
 Stage::Stage(GameObject* _parent)
 	:GameObject(_parent,"Stage"),objects_()
 {
@@ -63,6 +64,7 @@ void Stage::Load(json& _loadObj)
 
 void Stage::DrawData()
 {
+	// オブジェクトを描画
 	for (auto obj : objects_)obj->DrawData();
 }
 

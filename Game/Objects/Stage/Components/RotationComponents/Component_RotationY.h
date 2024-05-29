@@ -45,7 +45,7 @@ public:
 	void Load(json& _loadObj) override;
 	
 	/// <summary>
-	/// ImGui表示
+	/// ImGuiパネル表示
 	/// </summary>
 	void DrawData() override;
 

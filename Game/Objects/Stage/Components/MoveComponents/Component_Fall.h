@@ -1,21 +1,23 @@
-
-
 #pragma once
 
+//インクルード
 #include "../Component.h"
 #include <DirectXMath.h>
 
+/// <summary>
+/// オブジェクトの降下・上昇を行うコンポーネントのクラス
+/// </summary>
 class Component_Fall : public Component
 {
 private:
 	
-	float fallSpeed_;//降下速度
-	float fallSpeedplus_;//降下速度を上げるやつ
-	float riseSpeed_;//上昇速度
-	float fallDistance_;
+	float fallSpeed_; //降下速度
+	float fallSpeedplus_; //降下速度を上げるやつ
+	float riseSpeed_; //上昇速度
+	float fallDistance_; //降下しきるまでの距離
 
-	 DirectX::XMFLOAT3 startRisePosition_;
-	 DirectX::XMFLOAT3 startFallPosition_;
+	 DirectX::XMFLOAT3 startRisePosition_; //上昇し始めの位置
+	 DirectX::XMFLOAT3 startFallPosition_; //降下し始めの位置
 	
 	bool isFirstTime_ = true;
 	bool isRising_ = false;
@@ -55,16 +57,16 @@ public:
 	void Load(json& _loadObj) override;
 
 	/// <summary>
-	/// ImGui表示
+	/// ImGuiパネル表示
 	/// </summary>
 	void DrawData() override;
 
 	/// <summary>
-	/// 落下の開始
+	/// 降下の開始
 	/// </summary>
 	void Start() { isActive_ = true; }
 	/// <summary>
-	/// 落下の停止
+	/// 降下の停止
 	/// </summary>
 	void Stop() { isActive_ = false; }
 

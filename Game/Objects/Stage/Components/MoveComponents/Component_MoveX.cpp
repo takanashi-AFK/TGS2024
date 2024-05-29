@@ -1,8 +1,8 @@
 #include "Component_MoveX.h"
 
 // インクルード
-#include "../../StageObject.h"
 #include "../../../../../Engine/ImGui/imgui.h"
+#include "../../StageObject.h"
 
 Component_MoveX::Component_MoveX(StageObject* _holder)
 	:Component(_holder,"Component_MoveX",MoveX),moveSpeedX_(0)

@@ -3,8 +3,12 @@
 #include"../Component.h"
 
 //作成者-叶内,高梨
-class Component_HealthManager :public Component {
 
+/// <summary>
+/// 体力の増減を管理するコンポーネント
+/// </summary>
+class Component_HealthManager :public Component 
+{
 private:
 
 	float max_;
@@ -62,8 +66,12 @@ public:
 	/// <param name="_newHP">与えられたHP</param>
 	void SetHP(float _newHP);
 
+	/// <returns>体力の最大値</returns>
 	float GetMax() const;
 
+	/// <summary>
+	/// 体力の最大値を設定
+	/// </summary>
 	void SetMax(float _newMax);
 
 	/// <summary>
@@ -78,8 +86,8 @@ public:
 	/// <param name="_healValue">回復値</param>
 	void Heal(float _healValue);
 
+	/// <summary>
+	/// 体力のリセット(最大値に戻す)
+	/// </summary>
 	void Reset();
-
-
-
 };

@@ -64,10 +64,10 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	// ウィンドウの色を変更する
 	{
 		ImGuiStyle& style = ImGui::GetStyle();
-		style.Colors[ImGuiCol_WindowBg] = ImVec4(0.1f, 0.1f, 0.1f, 1.0f); // RGBAで指定
-		style.Colors[ImGuiCol_TitleBgActive] = ImVec4(0.1f, 0.5f, 0.5f, 1.0f); // RGBAで指定
-		style.Colors[ImGuiCol_TitleBg] = ImVec4(0.1f, 0.2f, 0.2f, 1.0f); // RGBAで指定
-		style.Colors[ImGuiCol_Button] = ImVec4(0.1f, 0.5f, 0.5f, 1.0f); // RGBAで指定
+		style.Colors[ImGuiCol_WindowBg] = ImVec4(0.3f, 0.3f, 0.3f, 1.f); // RGBAで指定
+		style.Colors[ImGuiCol_TitleBgActive] = ImVec4(0.5f, 0.1f, 0.5f, 1.0f); // RGBAで指定
+		style.Colors[ImGuiCol_TitleBg] = ImVec4(0.2f, 0.1f, 0.2f, 1.0f); // RGBAで指定
+		style.Colors[ImGuiCol_Button] = ImVec4(0.5f, 0.1f, 0.5f, 1.0f); // RGBAで指定
 	}
 
 
@@ -145,6 +145,16 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 				ImGui_ImplWin32_NewFrame();
 				ImGui::NewFrame();
 
+#ifdef _DEBUG
+				// ImGuiで表示するウィンドウの設定を行う
+				ImGui::SetNextWindowPos(ImVec2(0, Direct3D::screenHeight_ * 0.7f));
+				ImGui::SetNextWindowSize(ImVec2(Direct3D::screenWidth_ * 0.7f, Direct3D::screenHeight_ * 0.3f));
+
+				// ウィンドウを表示
+				ImGui::Begin("Debug", NULL,
+					ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoCollapse);
+#endif // _DEBUG
+
 				//全オブジェクトの更新処理
 				//ルートオブジェクトのUpdateを呼んだあと、自動的に子、孫のUpdateが呼ばれる
 				pRootObject->UpdateSub();
@@ -170,6 +180,10 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 				//トランジションの描画
 				Transition::Draw();
+
+#ifdef _DEBUG
+				ImGui::End();
+#endif // _DEBUG
 
 				//ImGuiの描画
 				ImGui::Render();

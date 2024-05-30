@@ -2,7 +2,7 @@
 
 #include"../../Engine/ResourceManager/Image.h"
 
-UIObject::UIObject(std::string _name, GameObject* _parent)
+UIObject::UIObject(string _name, string _modelFilePath, GameObject* _parent)
 {
 }
 

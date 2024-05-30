@@ -192,6 +192,7 @@
     <ClCompile Include="Game\Otheres\StageEditor.cpp" />
     <ClCompile Include="Game\Otheres\UIObject.cpp" />
     <ClCompile Include="Game\Objects\UI\UIButton.cpp" />
+    <ClCompile Include="Game\Objects\UI\UIPanel.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\DirectX\EasingFunction.h" />
@@ -253,6 +254,7 @@
     <ClInclude Include="Game\Otheres\StageEditor.h" />
     <ClInclude Include="Game\Otheres\UIObject.h" />
     <ClInclude Include="Game\Objects\UI\UIButton.h" />
+    <ClInclude Include="Game\Objects\UI\UIPanel.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Assets\Shader\BillBoard.hlsl">

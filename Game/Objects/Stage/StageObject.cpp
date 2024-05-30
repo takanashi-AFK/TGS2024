@@ -34,7 +34,7 @@ namespace {
 	void DrawSetComponentNameWindow(StageObject* _object)
 	{
 		ImGui::Begin("Set Component Name",&isShowSetComponentNameWindow_); {
-			static char buffer[256] = "";
+            static char buffer[256] = "";
 			ImGui::InputTextWithHint("##Input", "Input New name...", buffer, IM_ARRAYSIZE(buffer));
 			ImGui::SameLine();
 			if (ImGui::Button("create")) {

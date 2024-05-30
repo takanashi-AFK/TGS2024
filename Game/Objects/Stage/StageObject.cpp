@@ -6,6 +6,50 @@
 #include "../../../Engine/ResourceManager/Model.h"
 #include "Stage.h"
 
+namespace {
+	static bool isShowAddComponentWindow_ = false; // コンポーネント追加ウィンドウの表示フラグ
+	static bool isShowSetComponentNameWindow_ = false; // コンポーネント追加ウィンドウの表示フラグ
+	static ComponentType selectComponentType_; // 選択されたコンポーネントタイプ
+
+	void DrawAddComponentWindow(StageObject* _holder)
+	{
+		ImGui::Begin("Components that can be added", &isShowAddComponentWindow_); {
+			for (int i = 0; i < ComponentType::Max; i++) {
+				if (ImGui::Selectable(ComponentTypeToString((ComponentType)i).c_str(), selectComponentType_ == i)) {
+
+					// 選択しているコンポーネントタイプを代入
+					selectComponentType_ = (ComponentType)i;
+
+					// ウィンドウを閉じる
+					isShowAddComponentWindow_ = false;
+
+					// コンポーネント名を入力するウィンドウを表示
+					isShowSetComponentNameWindow_ = true;	
+				}
+			}
+		}
+		ImGui::End();
+	}
+
+	void DrawSetComponentNameWindow(StageObject* _object)
+	{
+		ImGui::Begin("Set Component Name",&isShowSetComponentNameWindow_); {
+			static char buffer[256] = "";
+			ImGui::InputTextWithHint("##Input", "Input New name...", buffer, IM_ARRAYSIZE(buffer));
+			ImGui::SameLine();
+			if (ImGui::Button("create")) {
+
+				// コンポーネントを作成
+				_object->AddComponent(CreateComponent(buffer, selectComponentType_, _object));
+
+				isShowSetComponentNameWindow_ = false;
+			}
+		}
+		ImGui::End();
+	}
+}
+
+
 StageObject::StageObject(string _name, string _modelFilePath, GameObject* _parent)
 	:GameObject(_parent,_name),modelFilePath_(_modelFilePath),modelHandle_(-1),myComponents_()
 {
@@ -118,31 +162,57 @@ void StageObject::Load(json& _loadObj)
 
 void StageObject::DrawData()
 {
+	// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
 	// オブジェクト名を表示
-	if (ImGui::TreeNode(objectName_.c_str())) {
+	// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
+	ImGui::Text(this->objectName_.c_str());
+	ImGui::SameLine();
 
-		ImGui::SameLine();
-		
-		// オブジェクトの削除ボタン
-		if (ImGui::SmallButton("delete")) ((Stage*)FindObject("Stage"))->DeleteStageObject(this);
+	// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
+	// オブジェクトの削除ボタン
+	// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
+	if(ImGui::SmallButton("delete"))((Stage*)FindObject("Stage"))->DeleteStageObject(this);
+	ImGui::Separator();
 
-		// 自身の変形情報を描画
-		if (ImGui::TreeNode("transform_")) {
-			ImGui::DragFloat3("position_", &transform_.position_.x, 0.1f);
-			ImGui::DragFloat3("rotate_", &transform_.rotate_.x, 1.f,-360.f,360.f);
-			ImGui::DragFloat3("scale_", &transform_.scale_.x, 0.1f,0.f,LONG_MAX);
-			ImGui::TreePop();
-		}
-
-		// 保有するコンポーネントの情報を描画
-		if (myComponents_.empty() == false) {
-			if (ImGui::TreeNode("myComponents_")) {
-				for (auto comp : myComponents_)comp->ChildDrawData();
-				ImGui::TreePop();
-			}
-		}
+	// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
+	// オブジェクトの名前を変更
+	// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
+	if (ImGui::TreeNode("name")) {
+		ImGui::Text("Current name : %s", this->objectName_.c_str());
+		char buffer[256] = "";
+		if (ImGui::InputTextWithHint("##Input", "Input New name...", buffer, IM_ARRAYSIZE(buffer)))
+			this->objectName_ = buffer;
 		ImGui::TreePop();
 	}
+
+	// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
+	// 自身の変形情報を描画
+	// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
+	if (ImGui::TreeNode("transform_")) {
+		ImGui::DragFloat3("position_", &transform_.position_.x, 0.1f);
+		ImGui::DragFloat3("rotate_", &transform_.rotate_.x, 1.f, -360.f, 360.f);
+		ImGui::DragFloat3("scale_", &transform_.scale_.x, 0.1f, 0.f, LONG_MAX);
+		ImGui::TreePop();
+	}
+
+	// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
+	// コンポーネントの情報を描画
+	// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
+	if (ImGui::TreeNode("myComponents_")) {
+		ImGui::SameLine();
+
+		// コンポーネント追加ボタンを描画
+		if (ImGui::SmallButton("AddComponent")) isShowAddComponentWindow_ = true;
+
+		// 保有するコンポーネントの情報を描画
+		for (auto comp : myComponents_)comp->ChildDrawData();
+		ImGui::TreePop();
+	}
+
+	// コンポーネント追加ウィンドウを描画
+	if (isShowAddComponentWindow_)DrawAddComponentWindow(this);
+	if (isShowSetComponentNameWindow_)DrawSetComponentNameWindow(this);
+
 }
 
 StageObject* CreateStageObject(string _name, string _modelFilePath, GameObject* _parent)

@@ -160,3 +160,24 @@ Component* CreateComponent(string _name,ComponentType _type, StageObject* _holde
 	}
 	return comp;
 }
+
+string ComponentTypeToString(ComponentType _type)
+{
+	switch (_type)
+	{
+	case Rotation: return "RotationComponent";
+	case RotationY: return "RotationYComponent";
+	case RotationX: return "RotationXComponent";
+	case RotationZ: return "RotationZComponent";
+	case MoveX: return "MoveXComponent";
+	case Fall: return "FallComponent";
+	case Chase: return "ChaseComponent";
+	case CircleRangeDetector: return "CircleRangeDetectorComponent";
+	case FanRangeDetector: return "FanRangeDetectorComponent";
+	case OtiBehavior: return "OtiBehaviorComponent";
+	case Timer: return "TimerComponent";
+	case HealthManager: return "HealthManagerComponent";
+	case CactanAttack: return "CactanAttackComponent";
+	}
+	return "None";
+}

@@ -11,10 +11,8 @@ class StageObject;
 class StageEditor : public GameObject
 {
 private:
-	Stage* editStage_;
-
-	// 編集対象
-	int selectEditObjectIndex_;
+	Stage* editStage_;				// 編集対象のステージ
+	int selectEditObjectIndex_;		// 選択中のオブジェクトのインデックス
 
 public:
 	StageEditor(GameObject* _parent);

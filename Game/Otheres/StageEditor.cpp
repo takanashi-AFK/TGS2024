@@ -102,8 +102,6 @@ void StageEditor::DrawDatails()
 	ImGui::Begin("Details", NULL,
 				ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_AlwaysHorizontalScrollbar);
 	{
-		ImGui::Text("object details");
-
 		if (selectEditObjectIndex_ >= 0 && selectEditObjectIndex_ < editStage_->GetStageObjects().size()) {
 
 			editStage_->GetStageObjects()[selectEditObjectIndex_]->DrawData();

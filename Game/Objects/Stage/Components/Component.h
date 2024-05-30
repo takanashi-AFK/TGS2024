@@ -26,6 +26,7 @@ enum ComponentType {
     Attack,
     CactanAttack,
     // コンポーネント追加時に識別番号を追加
+    Max
 };
 
 // コンポ―ネント基底クラス
@@ -151,3 +152,8 @@ public:
 /// <param name="_holder">保有者</param>
 /// <returns>作成したコンポーネント</returns>
 Component* CreateComponent(string _name,ComponentType _type,StageObject* _holder);
+
+/// <summary>
+/// コンポーネントタイプを文字列に変換する 
+/// </summary>
+string ComponentTypeToString(ComponentType _type);

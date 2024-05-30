@@ -14,9 +14,8 @@ private:
 	/// コンストラクタ
 	/// </summary>
 	/// <param name="_name">UIオブジェクトの名前</param>
-	/// <param name="_modelFilePath">モデルファイルパス</param>
 	/// <param name="_parent">親のオブジェクト</param>
-	UIPanel(string _name, string _modelFilePath, GameObject* _parent);
+	UIPanel(string _name,GameObject* _parent);
 
 	/// <summary>
 	/// 初期化

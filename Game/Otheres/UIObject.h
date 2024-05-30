@@ -5,13 +5,13 @@ class UIObject: public GameObject
 {
 
 public:
-    /// <summary>
-       /// コンストラクタ
-       /// </summary>
-       /// <param name="_name">オブジェクト名</param>
-       /// <param name="_modelFilePath">モデルファイルパス</param>
-       /// <param name="_parent">親オブジェクト</param>
-    UIObject(string _name, string _modelFilePath, GameObject* _parent);
+   
+	/// <summary>
+	/// コンストラクタ
+	/// </summary>
+	/// <param name="_name">UIオブジェクトの名前</param>
+	/// <param name="_parent">親のオブジェクト</param>
+    UIObject(string _name, GameObject* _parent);
 
 	 /// <summary>
     /// 初期化

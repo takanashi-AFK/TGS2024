@@ -190,9 +190,10 @@
     <ClCompile Include="Game\Objects\Stage\SkySphere.cpp" />
     <ClCompile Include="Game\Scenes\Scene_Splash.cpp" />
     <ClCompile Include="Game\Otheres\StageEditor.cpp" />
-    <ClCompile Include="UiObject.cpp" />
+    <ClCompile Include="Game\Otheres\UIObject.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Engine\DirectX\EasingFunction.h" />
     <ClInclude Include="Game\Objects\Stage\Components\HealthManagerComponents\Component_HealthManager.h" />
     <ClInclude Include="Game\Objects\Stage\Bullet.h" />
     <ClInclude Include="Game\Objects\Stage\Components\AttackComponents\Component_CactanAttack\Component_CactanAttack.h" />
@@ -249,7 +250,7 @@
     <ClInclude Include="Game\Objects\Stage\SkySphere.h" />
     <ClInclude Include="Game\Scenes\Scene_Splash.h" />
     <ClInclude Include="Game\Otheres\StageEditor.h" />
-    <ClInclude Include="UiObject.h" />
+    <ClInclude Include="Game\Otheres\UIObject.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Assets\Shader\BillBoard.hlsl">

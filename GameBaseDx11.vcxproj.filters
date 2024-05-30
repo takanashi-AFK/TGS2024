@@ -232,6 +232,7 @@
     <ClCompile Include="Game\Objects\Stage\Components\EnemyComponents\Component_OtiBehavior.cpp">
       <Filter>03Game\Objects\Stage\Components\EnemyComponents</Filter>
     </ClCompile>
+    <ClCompile Include="Game\Otheres\UIObject.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Collider\BoxCollider.h">
@@ -402,6 +403,8 @@
     <ClInclude Include="Game\Objects\Stage\Components\EnemyComponents\Component_OtiBehavior.h">
       <Filter>03Game\Objects\Stage\Components\EnemyComponents</Filter>
     </ClInclude>
+    <ClInclude Include="Game\Otheres\UIObject.h" />
+    <ClInclude Include="Engine\DirectX\EasingFunction.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Assets\Shader\Simple2D.hlsl">

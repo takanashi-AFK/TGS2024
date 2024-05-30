@@ -18,32 +18,6 @@ void Component_OtiBehavior::Initialize()
 
 void Component_OtiBehavior::Update()
 {
-	(((Component_CircleRangeDetector*)GetChildComponent(CircleRangeDetector))->SetRadius(5));
-	// 範囲内にプレイヤーがいるかどうか
-	if (((Component_CircleRangeDetector*)GetChildComponent(CircleRangeDetector))->IsContains()) 
-	{
-		// 追従行動を開始
-		((Component_Chase*)GetChildComponent(Chase))->Start();
-		
-	}
-	else 
-	{
-		// 追従行動を停止
-		((Component_Chase*)GetChildComponent(Chase))->Stop();
-	}
-
-	// 範囲内にプレイヤーがいるかどうか
-	(((Component_CircleRangeDetector*)GetChildComponent(CircleRangeDetector))->SetRadius(1));
-	if (((Component_CircleRangeDetector*)GetChildComponent(CircleRangeDetector))->IsContains())
-	{
-		// 落下行動を開始
-		((Component_Fall*)GetChildComponent(Fall))->Start();
-	}
-	else
-	{
-		// 落下行動を停止
-		((Component_Fall*)GetChildComponent(Fall))->Stop();
-	}
 }
 
 void Component_OtiBehavior::Release()

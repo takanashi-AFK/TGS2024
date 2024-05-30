@@ -8,9 +8,9 @@ Component_Rotation::Component_Rotation(string _name, StageObject* _holder)
 void Component_Rotation::Initialize()
 {
 	// 各軸の回転用コンポーネントを追加
-	if (FindChildComponent(RotationX) == false)AddChildComponent(CreateComponent("RotationX01", RotationX, holder_));
-	if (FindChildComponent(RotationY) == false)AddChildComponent(CreateComponent("RotationY01", RotationY, holder_));
-	if (FindChildComponent(RotationZ) == false)AddChildComponent(CreateComponent("RotationZ01", RotationZ, holder_));
+	if (FindChildComponent("rotate_x") == false)AddChildComponent(CreateComponent("rotate_x", RotationX, holder_));
+	if (FindChildComponent("rotate_y") == false)AddChildComponent(CreateComponent("rotate_y", RotationY, holder_));
+	if (FindChildComponent("rotate_z") == false)AddChildComponent(CreateComponent("rotate_z", RotationZ, holder_));
 }
 
 void Component_Rotation::Update()

@@ -121,17 +121,17 @@ public:
     bool DeleteChildComponent(Component* _comp);
 
     /// <summary>
-    /// 子コンポーネントに該当のタイプのコンポーネントがリストにあるかを探す
+    /// コンポーネントをリスト内あるかに探す
     /// </summary>
-    /// <param name="_type">コンポーネントタイプ</param>
-    /// <returns>見つかったかどうか</returns>
-    bool FindChildComponent(ComponentType _type);
+    /// <param name="_name">コンポーネント名</param>
+    /// <returns>コンポーネントがあるかどうか</returns>
+    bool FindChildComponent(string _name);
 
     /// <returns>
     /// 子コンポーネントを取得
     /// </returns>
     /// <param name="_type">コンポーネントタイプ</param>
-    Component* GetChildComponent(ComponentType _type);
+    Component* GetChildComponent(string _name);
     
     /// <returns>
     /// コンポーネントタイプを取得

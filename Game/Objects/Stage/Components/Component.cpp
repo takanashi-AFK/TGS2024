@@ -120,19 +120,30 @@ bool Component::DeleteChildComponent(Component* _comp)
 	childComponents_.erase(it);
 	return true;
 }
-
-bool Component::FindChildComponent(ComponentType _type)
+bool Component::FindChildComponent(string _name)
 {
-	// リスト内のコンポーネントを探す
-	for (auto comp : childComponents_) if (comp->type_ == _type)return true;
-	return false;
+    // リスト内のコンポーネントを探す
+    for (auto comp : childComponents_)
+    {
+        if (comp->name_ == _name)
+        {
+            return true;
+        }
+    }
+    return false;
 }
 
-Component* Component::GetChildComponent(ComponentType _type)
+Component* Component::GetChildComponent(string _name)
 {
-	// リスト内のコンポーネントを探す
-	for(auto comp : childComponents_) if(comp->type_ == _type)return comp;
-	return nullptr;
+    // リスト内のコンポーネントを探す
+    for (auto comp : childComponents_)
+    {
+        if (comp->name_ == _name)
+        {
+            return comp;
+        }
+    }
+    return nullptr;
 }
 
 Component* CreateComponent(string _name,ComponentType _type, StageObject* _holder)

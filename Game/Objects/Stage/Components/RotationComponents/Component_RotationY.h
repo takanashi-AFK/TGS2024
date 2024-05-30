@@ -15,7 +15,7 @@ public:
 	/// コンストラクタ
 	/// </summary>
 	/// <param name="_holder">保有者</param>
-	Component_RotationY(StageObject* _holder);
+	Component_RotationY(string _name, StageObject* _holder);
 	
 	/// <summary>
 	/// 初期化

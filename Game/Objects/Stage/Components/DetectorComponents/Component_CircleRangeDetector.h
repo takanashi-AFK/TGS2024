@@ -18,7 +18,7 @@ public:
 	/// コンストラクタ
 	/// </summary>
 	/// <param name="_holder">保有者</param>
-	Component_CircleRangeDetector(StageObject* _holder);
+	Component_CircleRangeDetector(string _name, StageObject* _holder);
 
 	/// <summary>
 	/// 初期化

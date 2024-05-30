@@ -24,7 +24,7 @@ void Scene_Test::Initialize()
 	StageEditor* pSe = Instantiate<StageEditor>(this); 
 
 	// •ÒW‘ÎÛ‚ðÝ’è
-	pSe->SetEditTarget(pStage);
+	pSe->SetEditStage(pStage);
 	
 #endif // _DEBUG
 }

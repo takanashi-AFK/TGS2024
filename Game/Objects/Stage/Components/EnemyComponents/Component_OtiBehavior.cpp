@@ -7,17 +7,13 @@
 #include "../MoveComponents/Component_Fall.h"
 #include "../MoveComponents/Component_Chase.h"
 
-Component_OtiBehavior::Component_OtiBehavior(StageObject* _holder)
-	: Component(_holder, "Component_OtiBehavior", OtiBehavior)
+Component_OtiBehavior::Component_OtiBehavior(string _name, StageObject* _holder)
+	: Component(_holder, _name, OtiBehavior)
 {
 }
 
 void Component_OtiBehavior::Initialize()
 {
-	// 子コンポーネントの追加
-	if (FindChildComponent(CircleRangeDetector) == false)AddChildComponent(CreateComponent(CircleRangeDetector, holder_));
-	if (FindChildComponent(Fall) == false)AddChildComponent(CreateComponent(Fall, holder_));
-	if (FindChildComponent(Chase) == false)AddChildComponent(CreateComponent(Chase, holder_));
 }
 
 void Component_OtiBehavior::Update()

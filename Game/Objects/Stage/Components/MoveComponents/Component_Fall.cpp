@@ -5,8 +5,8 @@
 #include "../../StageObject.h"
 
 // コンストラクタ
-Component_Fall::Component_Fall(StageObject* _holder)
-	: Component(_holder,"Component_Fall",Fall)
+Component_Fall::Component_Fall(string _name, StageObject* _holder)
+	: Component(_holder,_name,Fall)
 	, fallSpeed_(0.5f), fallSpeedplus_(0.05f), riseSpeed_(0.05f),fallDistance_(5.0f),
 	isFalling_(false), isFirstTime_(true), isActive_(false), startRisePosition_(), startFallPosition_()
 {

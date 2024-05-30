@@ -28,7 +28,7 @@ public:
 	/// コンストラクタ
 	/// </summary>
 	/// <param name="_holder">保有者</param>
-	Component_Fall(StageObject* _holder);
+	Component_Fall(string _name, StageObject* _holder);
 
 	/// <summary>
 	/// 初期化

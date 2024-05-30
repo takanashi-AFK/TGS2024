@@ -76,6 +76,8 @@ void Component::ChildSave(json& _saveObj)
 {
 	// 自身の情報を保存
 	_saveObj["type_"] = type_;
+	_saveObj["name_"] = name_;
+
 	this->Save(_saveObj);
 
 	// 子コンポーネントの情報を保存
@@ -133,26 +135,26 @@ Component* Component::GetChildComponent(ComponentType _type)
 	return nullptr;
 }
 
-Component* CreateComponent(ComponentType _type, StageObject* _holder)
+Component* CreateComponent(string _name,ComponentType _type, StageObject* _holder)
 {
 	Component* comp = nullptr;
 
 	// タイプ(識別番号にしたがってコンポーネントを作成)
 	switch (_type)
 	{
-	case Rotation:comp = new Component_Rotation(_holder);break;
-	case RotationY:comp = new Component_RotationY(_holder); break;
-	case RotationX:comp = new Component_RotationX(_holder); break;
-	case RotationZ:comp = new Component_RotationZ(_holder); break;
-	case MoveX:comp = new Component_MoveX(_holder); break;
-	case Fall:comp = new Component_Fall(_holder); break;
-	case Chase:comp = new Component_Chase(_holder); break;
-	case CircleRangeDetector:comp = new Component_CircleRangeDetector(_holder); break;
-	case FanRangeDetector:comp = new Component_FanRangeDetector(_holder); break;
-	case OtiBehavior:comp = new Component_OtiBehavior(_holder); break;
-	case Timer:comp = new Component_Timer(_holder); break;
-	case HealthManager:comp = new Component_HealthManager(_holder); break;
-	case CactanAttack:comp = new Component_CactanAttack(_holder); break;
+	case Rotation:comp = new Component_Rotation(_name,_holder);break;
+	case RotationY:comp = new Component_RotationY(_name,_holder); break;
+	case RotationX:comp = new Component_RotationX(_name,_holder); break;
+	case RotationZ:comp = new Component_RotationZ(_name,_holder); break;
+	case MoveX:comp = new Component_MoveX(_name,_holder); break;
+	case Fall:comp = new Component_Fall(_name,_holder); break;
+	case Chase:comp = new Component_Chase(_name,_holder); break;
+	case CircleRangeDetector:comp = new Component_CircleRangeDetector(_name,_holder); break;
+	case FanRangeDetector:comp = new Component_FanRangeDetector(_name,_holder); break;
+	case OtiBehavior:comp = new Component_OtiBehavior(_name,_holder); break;
+	case Timer:comp = new Component_Timer(_name,_holder); break;
+	case HealthManager:comp = new Component_HealthManager(_name,_holder); break;
+	case CactanAttack:comp = new Component_CactanAttack(_name,_holder); break;
 
 	default:/* その他コンポーネントを追加する時は上記のように追加*/ break;
 	}

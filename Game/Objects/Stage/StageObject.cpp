@@ -103,10 +103,10 @@ void StageObject::Load(json& _loadObj)
 	for (auto& obj : _loadObj["myComponents_"]) {
 		
 		// コンポーネントを生成
-		Component* comp = CreateComponent(obj["type_"], this);
+		Component* comp = CreateComponent(obj["name_"], obj["type_"], this);
 
 		// 子コンポーネントを生成
-		for (auto& child : obj["childComponents_"])comp->AddChildComponent(CreateComponent(child["type_"], this));
+		for (auto& child : obj["childComponents_"])comp->AddChildComponent(CreateComponent(child["name_"], child["type_"], this));
 
 		// "myComponents_"に追加
 		this->AddComponent(comp);

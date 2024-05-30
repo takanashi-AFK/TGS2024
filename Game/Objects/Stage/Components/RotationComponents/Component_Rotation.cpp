@@ -1,16 +1,16 @@
 #include "Component_Rotation.h"
 
-Component_Rotation::Component_Rotation(StageObject* _holder)
-	:Component(_holder,"Component_Rotation",Rotation)
+Component_Rotation::Component_Rotation(string _name, StageObject* _holder)
+	:Component(_holder,_name,Rotation)
 {
 }
 
 void Component_Rotation::Initialize()
 {
 	// 各軸の回転用コンポーネントを追加
-	if (FindChildComponent(RotationX) == false)AddChildComponent(CreateComponent(RotationX, holder_));
-	if (FindChildComponent(RotationY) == false)AddChildComponent(CreateComponent(RotationY, holder_));
-	if (FindChildComponent(RotationZ) == false)AddChildComponent(CreateComponent(RotationZ, holder_));
+	if (FindChildComponent(RotationX) == false)AddChildComponent(CreateComponent("RotationX01", RotationX, holder_));
+	if (FindChildComponent(RotationY) == false)AddChildComponent(CreateComponent("RotationY01", RotationY, holder_));
+	if (FindChildComponent(RotationZ) == false)AddChildComponent(CreateComponent("RotationZ01", RotationZ, holder_));
 }
 
 void Component_Rotation::Update()

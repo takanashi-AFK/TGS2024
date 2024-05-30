@@ -7,8 +7,8 @@ namespace {
 	const float LIMIT_DISTANCE = 0.5f; // ‚±‚Ì‹——£ˆÈ‰º‚É‚È‚Á‚½‚ç’Ç]‚ğ‚â‚ß‚é
 }
 
-Component_Chase::Component_Chase(StageObject* _holder)
-	:Component(_holder,"Component_Chase",Chase), speed_(0.0f),target_(nullptr)
+Component_Chase::Component_Chase(string _name, StageObject* _holder)
+	:Component(_holder,_name,Chase), speed_(0.0f),target_(nullptr)
 {
 }
 

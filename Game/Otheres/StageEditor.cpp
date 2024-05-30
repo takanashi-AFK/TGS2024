@@ -33,7 +33,7 @@ namespace {
 }
 
 StageEditor::StageEditor(GameObject* _parent)
-	:GameObject(_parent,"StageEditor"),editTarget_(nullptr)
+	:GameObject(_parent,"StageEditor"),editStage_(nullptr)
 {
 }
 
@@ -48,6 +48,7 @@ void StageEditor::Update()
 void StageEditor::Draw()
 {
 	DrawWorldOutLiner();
+	DrawDatails();
 }
 
 void StageEditor::Release()
@@ -75,14 +76,39 @@ void StageEditor::DrawWorldOutLiner()
 		if (ImGui::Button("Load"))LoadStage();
 		ImGui::SameLine();
 
-		if (ImGui::Button("Delete"))editTarget_->DeleteAllStageObject();
+		if (ImGui::Button("Delete"))editStage_->DeleteAllStageObject();
 
 		ImGui::Separator();
 
-		ImGui::BeginChild("list"); {
-			editTarget_->DrawData();
+		ImGui::BeginChild("ObjectList"); {
+			// リストを表示
+			for (int i = 0; i < editStage_->GetStageObjects().size(); ++i)
+				if (ImGui::Selectable(editStage_->GetStageObjects()[i]->GetObjectName().c_str(), selectEditObjectIndex_ == i)) {
+					selectEditObjectIndex_ = i;
+				}
 		}
 		ImGui::EndChild();
+	}
+	ImGui::End();
+}
+
+void StageEditor::DrawDatails()
+{
+	// ImGuiで表示するウィンドウの設定を行う
+	ImGui::SetNextWindowPos(ImVec2(Direct3D::screenWidth_ * 0.7f, Direct3D::screenHeight_ * 0.5f));
+	ImGui::SetNextWindowSize(ImVec2(Direct3D::screenWidth_ * 0.3f, Direct3D::screenHeight_ * 0.5f));
+
+	// 固定ウィンドウを表示
+	ImGui::Begin("Details", NULL,
+				ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_AlwaysHorizontalScrollbar);
+	{
+		ImGui::Text("object details");
+
+		if (selectEditObjectIndex_ >= 0 && selectEditObjectIndex_ < editStage_->GetStageObjects().size()) {
+
+			editStage_->GetStageObjects()[selectEditObjectIndex_]->DrawData();
+		}
+		else ImGui::Text("No information to display");
 	}
 	ImGui::End();
 }
@@ -90,7 +116,7 @@ void StageEditor::DrawWorldOutLiner()
 void StageEditor::AddStageObject()
 {
 	// 追加するオブジェクトの初期名を設定
-	string name = "object" + std::to_string(editTarget_->objects_.size());
+	string name = "object" + std::to_string(editStage_->objects_.size());
 
 	//現在のカレントディレクトリを覚えておく
 	char defaultCurrentDir[MAX_PATH];
@@ -132,7 +158,7 @@ void StageEditor::AddStageObject()
 	}
 
 	// オブジェクトを作成・追加
-	editTarget_->AddStageObject(CreateStageObject(name, filePath, editTarget_));
+	editStage_->AddStageObject(CreateStageObject(name, filePath, editStage_));
 }
 
 void StageEditor::SaveStage()
@@ -178,7 +204,7 @@ void StageEditor::SaveStage()
 
 	// ファイルにステージ情報を保存
 	json saveObj;
-	editTarget_->Save(saveObj);
+	editStage_->Save(saveObj);
 	if (JsonReader::Save(filePath, saveObj) == false) MessageBox(NULL, "保存に失敗しました。", 0, 0);
 	
 }
@@ -227,5 +253,5 @@ void StageEditor::LoadStage()
 	// ファイルを読み込みステージを生成
 	json loadObj;
 	if (JsonReader::Load(filePath, loadObj) == false) MessageBox(NULL, "読込に失敗しました。", 0, 0);
-	editTarget_->Load(loadObj);
+	editStage_->Load(loadObj);
 }

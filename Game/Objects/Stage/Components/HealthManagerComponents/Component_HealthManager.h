@@ -19,7 +19,7 @@ public:
 	/// コンストラクタ
 	/// </summary>
 	/// <param name="_holder">保有者</param>
-	Component_HealthManager(StageObject* _holder);
+	Component_HealthManager(string _name, StageObject* _holder);
 
 	/// <summary>
 	/// 初期化

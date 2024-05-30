@@ -6,8 +6,8 @@
 #include "../../Stage.h"
 #include "../../StageObject.h"
 
-Component_CircleRangeDetector::Component_CircleRangeDetector(StageObject* _holder)
-    : Component(_holder, "CircleRangeDetector", CircleRangeDetector), radius_(0.0f), isContains_(false), target_(nullptr)
+Component_CircleRangeDetector::Component_CircleRangeDetector(string _name, StageObject* _holder)
+    : Component(_holder, _name, CircleRangeDetector), radius_(0.0f), isContains_(false), target_(nullptr)
 {
 }
 

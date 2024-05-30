@@ -4,8 +4,8 @@
 #include "../../../../../Engine/ImGui/imgui.h"
 #include "../../StageObject.h"
 
-Component_RotationX::Component_RotationX(StageObject* _holder)
-	:Component(_holder,"Component_RotationX",RotationX), angle_(0), rotateSpeed_(0)
+Component_RotationX::Component_RotationX(string _name, StageObject* _holder)
+	:Component(_holder,_name,RotationX), angle_(0), rotateSpeed_(0)
 {
 }
 

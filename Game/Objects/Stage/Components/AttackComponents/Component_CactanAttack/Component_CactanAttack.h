@@ -16,7 +16,7 @@ public:
 	/// コンストラクタ
 	/// </summary>
 	/// <param name="_holder">コンポーネントの保持者</param>
-	Component_CactanAttack(StageObject* _holder);
+	Component_CactanAttack(string _name, StageObject* _holder);
 	
 	/// <summary>
 	/// 初期化

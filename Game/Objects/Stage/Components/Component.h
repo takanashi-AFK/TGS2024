@@ -127,6 +127,12 @@ public:
     bool FindChildComponent(ComponentType _type);
 
     /// <returns>
+    /// 子コンポーネントを取得
+    /// </returns>
+    /// <param name="_type">コンポーネントタイプ</param>
+    Component* GetChildComponent(ComponentType _type);
+    
+    /// <returns>
     /// コンポーネントタイプを取得
     /// </returns>
     ComponentType GetType() const { return type_; }
@@ -136,11 +142,6 @@ public:
     /// </returns>
     string GetName() { return name_; }
 
-    /// <returns>
-    /// 子コンポーネントを取得
-    /// </returns>
-    /// <param name="_type">コンポーネントタイプ</param>
-    Component* GetChildComponent(ComponentType _type);
 };
 
 /// <summary>
@@ -149,4 +150,4 @@ public:
 /// <param name="_type">コンポーネントタイプ</param>
 /// <param name="_holder">保有者</param>
 /// <returns>作成したコンポーネント</returns>
-Component* CreateComponent(ComponentType _type,StageObject* _holder);
+Component* CreateComponent(string _name,ComponentType _type,StageObject* _holder);

@@ -6,8 +6,8 @@ namespace
 	const int FPS = 60;
 }
 
-Component_Timer::Component_Timer(string _name, StageObject* _holder)
-	:Component(_holder, _name, Timer)
+Component_Timer::Component_Timer(string _name, StageObject* _holder, Component* _parent)
+	:Component(_holder, _name, Timer,_parent)
 	, maxTime_(0), nowTime_(0),tempMax_(0), isEnd_(false), isCountNow_(false), isInfinity_(true)
 {
 }

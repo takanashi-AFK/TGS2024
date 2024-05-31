@@ -37,6 +37,7 @@ protected:
     ComponentType type_;                    // コンポーネントタイプ
     StageObject* holder_;                   // コンポ―ネント保有者のポインタ
     vector<Component*> childComponents_;    // 子コンポーネント群
+    Component* parent_;                     // 親コンポーネント
 
 public:
     /// <summary>
@@ -44,7 +45,8 @@ public:
     /// </summary>
     /// <param name="_holder">保有者</param>
     /// <param name="_name">名前</param>
-    Component(StageObject* _holder, string _name,ComponentType _type);
+    Component(StageObject* _holder, string _name, ComponentType _type);
+    Component(StageObject* _holder, string _name,ComponentType _type,Component* _parent);
 
     /// <summary>
     /// 初期化
@@ -118,7 +120,7 @@ public:
     /// 子コンポーネントをリストから削除
     /// </summary>
     /// <param name="comp">コンポーネントタイプ</param>
-    bool DeleteChildComponent(Component* _comp);
+    bool DeleteChildComponent(string _name);
 
     /// <summary>
     /// コンポーネントをリスト内あるかに探す
@@ -151,7 +153,9 @@ public:
 /// <param name="_type">コンポーネントタイプ</param>
 /// <param name="_holder">保有者</param>
 /// <returns>作成したコンポーネント</returns>
+Component* CreateComponent(string _name,ComponentType _type,StageObject* _holder, Component* _parent);
 Component* CreateComponent(string _name,ComponentType _type,StageObject* _holder);
+
 
 /// <summary>
 /// コンポーネントタイプを文字列に変換する 

@@ -20,7 +20,12 @@
 #include "TimerComponent/Component_Timer.h"
 
 Component::Component(StageObject* _holder, string _name,ComponentType _type)
-    :holder_(_holder), name_(_name),type_(_type),childComponents_()
+    :holder_(_holder), name_(_name),type_(_type),childComponents_(),parent_(nullptr)
+{
+}
+
+Component::Component(StageObject* _holder, string _name, ComponentType _type, Component* _parent)
+	: holder_(_holder), name_(_name), type_(_type), childComponents_(),parent_(_parent)
 {
 }
 
@@ -56,6 +61,16 @@ void Component::ChildDrawData()
 {
 	if (ImGui::TreeNode(this->name_.c_str())) {
 		
+		ImGui::SameLine();
+		
+		// コンポーネントの削除
+		if (ImGui::SmallButton("Delete")) {
+
+			if(parent_ != nullptr)parent_->DeleteChildComponent(this->name_);
+			holder_->DeleteComponent(this);
+		}
+		
+
 		// 自身の情報を描画
 		this->DrawData();
 
@@ -106,19 +121,21 @@ bool Component::AddChildComponent(Component* _comp)
 	childComponents_.push_back(_comp);
 	return true;
 }
-
-bool Component::DeleteChildComponent(Component* _comp)
+bool Component::DeleteChildComponent(string _name)
 {
-	// イテレータに、"childComponents_"内で探したいデータを登録
-	auto it = std::find(childComponents_.begin(), childComponents_.end(), _comp);
-
-	// イテレータがリストの最後まで到達したら関数終了
-	if (it == childComponents_.end())
-		return false;
-
-	// イテレータのコンポーネントを消す
-	childComponents_.erase(it);
-	return true;
+    // リスト内のコンポーネントを探す
+    for (auto it = childComponents_.begin(); it != childComponents_.end(); ++it)
+    {
+        if ((*it)->name_ == _name)
+        {
+            // 子コンポーネントを開放
+            (*it)->ChildRelease();
+            // リストから削除
+            childComponents_.erase(it);
+            return true;
+        }
+    }
+    return false;
 }
 bool Component::FindChildComponent(string _name)
 {
@@ -146,30 +163,35 @@ Component* Component::GetChildComponent(string _name)
     return nullptr;
 }
 
-Component* CreateComponent(string _name,ComponentType _type, StageObject* _holder)
+Component* CreateComponent(string _name,ComponentType _type, StageObject* _holder, Component* _parent)
 {
 	Component* comp = nullptr;
 
 	// タイプ(識別番号にしたがってコンポーネントを作成)
 	switch (_type)
 	{
-	case Rotation:comp = new Component_Rotation(_name,_holder);break;
-	case RotationY:comp = new Component_RotationY(_name,_holder); break;
-	case RotationX:comp = new Component_RotationX(_name,_holder); break;
-	case RotationZ:comp = new Component_RotationZ(_name,_holder); break;
-	case MoveX:comp = new Component_MoveX(_name,_holder); break;
-	case Fall:comp = new Component_Fall(_name,_holder); break;
-	case Chase:comp = new Component_Chase(_name,_holder); break;
-	case CircleRangeDetector:comp = new Component_CircleRangeDetector(_name,_holder); break;
-	case FanRangeDetector:comp = new Component_FanRangeDetector(_name,_holder); break;
-	case OtiBehavior:comp = new Component_OtiBehavior(_name,_holder); break;
-	case Timer:comp = new Component_Timer(_name,_holder); break;
-	case HealthManager:comp = new Component_HealthManager(_name,_holder); break;
-	case CactanAttack:comp = new Component_CactanAttack(_name,_holder); break;
+	case Rotation:comp = new Component_Rotation(_name,_holder,_parent);break;
+	case RotationY:comp = new Component_RotationY(_name,_holder, _parent); break;
+	case RotationX:comp = new Component_RotationX(_name,_holder, _parent); break;
+	case RotationZ:comp = new Component_RotationZ(_name,_holder, _parent); break;
+	case MoveX:comp = new Component_MoveX(_name,_holder, _parent); break;
+	case Fall:comp = new Component_Fall(_name,_holder, _parent); break;
+	case Chase:comp = new Component_Chase(_name,_holder, _parent); break;
+	case CircleRangeDetector:comp = new Component_CircleRangeDetector(_name,_holder, _parent); break;
+	case FanRangeDetector:comp = new Component_FanRangeDetector(_name,_holder, _parent); break;
+	case OtiBehavior:comp = new Component_OtiBehavior(_name,_holder, _parent); break;
+	case Timer:comp = new Component_Timer(_name,_holder, _parent); break;
+	case HealthManager:comp = new Component_HealthManager(_name,_holder, _parent); break;
+	case CactanAttack:comp = new Component_CactanAttack(_name,_holder, _parent); break;
 
 	default:/* その他コンポーネントを追加する時は上記のように追加*/ break;
 	}
 	return comp;
+}
+
+Component* CreateComponent(string _name, ComponentType _type, StageObject* _holder)
+{
+	return CreateComponent(_name,_type,_holder,nullptr);
 }
 
 string ComponentTypeToString(ComponentType _type)

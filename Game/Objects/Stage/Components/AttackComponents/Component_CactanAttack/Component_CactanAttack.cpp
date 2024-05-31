@@ -5,8 +5,8 @@
 #include "../../../Bullet.h"
 #include "../../../Stage.h"
 
-Component_CactanAttack::Component_CactanAttack(string _name, StageObject* _holder):
-	Component_Attack(_holder, _name, CactanAttack),
+Component_CactanAttack::Component_CactanAttack(string _name, StageObject* _holder, Component* _parent):
+	Component_Attack(_holder, _name, CactanAttack,_parent),
 	bulletSpeed_(0.5f),
 	target_{}
 {

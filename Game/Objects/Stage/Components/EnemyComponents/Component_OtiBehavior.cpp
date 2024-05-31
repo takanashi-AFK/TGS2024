@@ -7,8 +7,8 @@
 #include "../MoveComponents/Component_Fall.h"
 #include "../MoveComponents/Component_Chase.h"
 
-Component_OtiBehavior::Component_OtiBehavior(string _name, StageObject* _holder)
-	: Component(_holder, _name, OtiBehavior)
+Component_OtiBehavior::Component_OtiBehavior(string _name, StageObject* _holder, Component* _parent)
+	: Component(_holder, _name, OtiBehavior,_parent)
 {
 }
 

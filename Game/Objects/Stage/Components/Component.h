@@ -21,6 +21,7 @@ enum ComponentType {
 	CircleRangeDetector,
     FanRangeDetector,
     OtiBehavior,
+	CactanBihavior,
     Timer,
     Fall,
     ShootAttack,

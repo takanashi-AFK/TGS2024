@@ -23,8 +23,7 @@ enum ComponentType {
     OtiBehavior,
     Timer,
     Fall,
-    Attack,
-    CactanAttack,
+    ShootAttack,
     // コンポーネント追加時に識別番号を追加
     Max
 };

@@ -139,7 +139,7 @@
   <ItemGroup>
     <ClCompile Include="Game\Objects\Stage\Components\HealthManagerComponents\Component_HealthManager.cpp" />
     <ClCompile Include="Game\Objects\Stage\Bullet.cpp" />
-    <ClCompile Include="Game\Objects\Stage\Components\AttackComponents\Component_CactanAttack\Component_CactanAttack.cpp" />
+    <ClCompile Include="Game\Objects\Stage\Components\AttackComponents\Component_ShootAttack.cpp" />
     <ClCompile Include="Game\Objects\Stage\Components\AttackComponents\Component_Attack.cpp" />
     <ClCompile Include="Game\Objects\Stage\Components\DetectorComponents\Component_FanRangeDetector.cpp" />
     <ClCompile Include="Game\Objects\Stage\Components\EnemyComponents\Component_OtiBehavior.cpp" />
@@ -194,7 +194,7 @@
   <ItemGroup>
     <ClInclude Include="Game\Objects\Stage\Components\HealthManagerComponents\Component_HealthManager.h" />
     <ClInclude Include="Game\Objects\Stage\Bullet.h" />
-    <ClInclude Include="Game\Objects\Stage\Components\AttackComponents\Component_CactanAttack\Component_CactanAttack.h" />
+    <ClInclude Include="Game\Objects\Stage\Components\AttackComponents\Component_ShootAttack.h" />
     <ClInclude Include="Game\Objects\Stage\Components\AttackComponents\Component_Attack.h" />
     <ClInclude Include="Engine\ResourceManager\Transition.h" />
     <ClInclude Include="Game\Objects\Stage\Components\DetectorComponents\Component_CircleRangeDetector.h" />

@@ -1,22 +1,25 @@
 #pragma once
 
 // インクルード
-#include "../Component_Attack.h"
+#include "Component_Attack.h"
+#include <DirectXMath.h>
+
+using namespace DirectX;
 
 /// <summary>
-/// カクタン(遠距離攻撃Enemy)の攻撃コンポーネント
+/// ○〇を撃ち放つ攻撃コンポーネント
 /// </summary>
-class Component_CactanAttack :public Component_Attack
+class Component_ShootAttack :public Component_Attack
 {
 private:
-	float bulletSpeed_;	 // 弾の速度
-	StageObject* target_;// 攻撃対象
+	float bulletSpeed_;			// 弾の速度
+	XMVECTOR bulletDirection_;	// 弾の方向
 public:
 	/// <summary>
 	/// コンストラクタ
 	/// </summary>
 	/// <param name="_holder">コンポーネントの保持者</param>
-	Component_CactanAttack(string _name, StageObject* _holder, Component* _parent);
+	Component_ShootAttack(string _name, StageObject* _holder, Component* _parent);
 	
 	/// <summary>
 	/// 初期化
@@ -50,14 +53,5 @@ public:
 	/// </summary>
 	void DrawData()override;
 
-	/// <summary>
-	/// 攻撃実行
-	/// </summary>
-	void Attack();
-
-	/// <summary>
-	/// ターゲットの設定
-	/// </summary>
-	void SetTarget();
 };
 

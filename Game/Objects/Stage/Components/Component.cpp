@@ -5,7 +5,7 @@
 #include "../StageObject.h"
 
 // 作成したコンポーネントのインクルード
-#include "AttackComponents/Component_CactanAttack/Component_CactanAttack.h"
+#include "AttackComponents/Component_ShootAttack.h"
 #include "DetectorComponents/Component_CircleRangeDetector.h"
 #include "DetectorComponents/Component_FanRangeDetector.h"
 #include "EnemyComponents/Component_OtiBehavior.h"
@@ -182,7 +182,7 @@ Component* CreateComponent(string _name,ComponentType _type, StageObject* _holde
 	case OtiBehavior:comp = new Component_OtiBehavior(_name,_holder, _parent); break;
 	case Timer:comp = new Component_Timer(_name,_holder, _parent); break;
 	case HealthManager:comp = new Component_HealthManager(_name,_holder, _parent); break;
-	case CactanAttack:comp = new Component_CactanAttack(_name,_holder, _parent); break;
+	case ShootAttack:comp = new Component_ShootAttack(_name,_holder, _parent); break;
 
 	default:/* その他コンポーネントを追加する時は上記のように追加*/ break;
 	}
@@ -210,7 +210,7 @@ string ComponentTypeToString(ComponentType _type)
 	case OtiBehavior: return "OtiBehaviorComponent";
 	case Timer: return "TimerComponent";
 	case HealthManager: return "HealthManagerComponent";
-	case CactanAttack: return "CactanAttackComponent";
+	case ShootAttack: return "CactanAttackComponent";
 	}
 	return "None";
 }

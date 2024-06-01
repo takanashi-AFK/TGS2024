@@ -2,13 +2,17 @@
 #include "../../Otheres/UIObject.h"
 #include <list>
 
+//using宣言
+using std::list;
+
+
 class UIPanel : public UIObject
 {
 protected:
 
-	std::list<UIObject*> childList;	//子オブジェクトリスト
+	list<UIObject*> childList;	//子オブジェクトリスト
 
-private:
+public:
 
 	/// <summary>
 	/// コンストラクタ
@@ -64,6 +68,6 @@ private:
 	/// <summary>
 	/// パネル内の子オブジェクトを全て削除
 	/// </summary>
-	void ClearChild();
+	void ClearChildren();
 };
 

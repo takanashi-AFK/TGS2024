@@ -20,7 +20,7 @@ enum ComponentType {
     Chase,
 	CircleRangeDetector,
     FanRangeDetector,
-    OtiBehavior,
+    HelingoBehavior,
 	CactanBihavior,
     Timer,
     Fall,

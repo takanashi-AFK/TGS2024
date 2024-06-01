@@ -8,7 +8,7 @@
 #include "AttackComponents/Component_ShootAttack.h"
 #include "DetectorComponents/Component_CircleRangeDetector.h"
 #include "DetectorComponents/Component_FanRangeDetector.h"
-#include "EnemyComponents/Component_OtiBehavior.h"
+#include "EnemyComponents/Component_HelingoBehavior.h"
 #include "EnemyComponents/Component_CactanBehavior.h"
 #include "HealthManagerComponents/Component_HealthManager.h"
 #include "MoveComponents/Component_Chase.h"
@@ -139,6 +139,7 @@ bool Component::DeleteChildComponent(string _name)
     }
     return false;
 }
+
 bool Component::FindChildComponent(string _name)
 {
     // リスト内のコンポーネントを探す
@@ -181,7 +182,7 @@ Component* CreateComponent(string _name,ComponentType _type, StageObject* _holde
 	case Chase:comp = new Component_Chase(_name,_holder, _parent); break;
 	case CircleRangeDetector:comp = new Component_CircleRangeDetector(_name,_holder, _parent); break;
 	case FanRangeDetector:comp = new Component_FanRangeDetector(_name,_holder, _parent); break;
-	case OtiBehavior:comp = new Component_OtiBehavior(_name,_holder, _parent); break;
+	case HelingoBehavior:comp = new Component_HelingoBehavior(_name,_holder, _parent); break;
 	case CactanBihavior:comp = new Component_CactanBehavior(_name, _holder, _parent); break;
 	case Timer:comp = new Component_Timer(_name,_holder, _parent); break;
 	case HealthManager:comp = new Component_HealthManager(_name,_holder, _parent); break;
@@ -210,7 +211,7 @@ string ComponentTypeToString(ComponentType _type)
 	case Chase: return "ChaseComponent";
 	case CircleRangeDetector: return "CircleRangeDetectorComponent";
 	case FanRangeDetector: return "FanRangeDetectorComponent";
-	case OtiBehavior: return "OtiBehaviorComponent";
+	case HelingoBehavior: return "HelingoBehaviorComponent";
 	case CactanBihavior: return "CactanBihaviorComponent";
 	case Timer: return "TimerComponent";
 	case HealthManager: return "HealthManagerComponent";

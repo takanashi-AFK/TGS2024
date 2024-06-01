@@ -76,5 +76,7 @@ public:
 	/// Às‚³‚ê‚Ä‚¢‚é‚©‚Ç‚¤‚©
 	/// </summary>
 	void Execute() { isActive_ = true; }
+
+	bool IsActived() { return isActive_; }
 };
 

@@ -13,6 +13,8 @@ class Component_Chase:public Component
 {
 private:
 	StageObject* target_;	//追従の対象オブジェクト
+	string targetName_;		//追従の対象オブジェクト名
+
 	float speed_;			//速度
 	bool isActive_;			//追従が有効かどうか
 public:
@@ -41,13 +43,13 @@ public:
 	/// 保存
 	/// </summary>
 	/// <param name="_saveobj">データの保存情報</param>
-	void Save(json& _saveobj) override;
+	void Save(json& _saveObj) override;
 
 	/// <summary>
 	/// 読込
 	/// </summary>
 	/// <param name="_loadobj">データの読込情報</param>
-	void Load(json& _loadobj) override;
+	void Load(json& _loadObj) override;
 
 	/// <summary>
 	/// ImGuiパネル表示

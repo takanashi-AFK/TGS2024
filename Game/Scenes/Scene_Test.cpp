@@ -20,7 +20,7 @@ void Scene_Test::Initialize()
 	
 	// ステージを読み込み
 	json stageData;
-	JsonReader::Load("Datas/test_DebugStage01.json", stageData);
+	JsonReader::Load("Datas/test_DebugStage02.json", stageData);
 	pStage->Load(stageData);
 
 

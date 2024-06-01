@@ -19,6 +19,7 @@ void Component_Chase::Initialize()
 
 void Component_Chase::Update()
 {
+	if (target_ == nullptr)target_ = (StageObject*)holder_->FindObject(targetName_);
 	if (target_ == nullptr || isActive_ == false)return;
 
 	//対象と保有者のポジションを取得
@@ -59,11 +60,11 @@ void Component_Chase::Save(json& _saveobj)
 	if(target_ != nullptr)_saveobj["target_"] = target_->GetObjectName();
 }
 
-void Component_Chase::Load(json& _loadobj)
+void Component_Chase::Load(json& _loadObj)
 {
-	if(_loadobj.contains("speed_"))speed_ = _loadobj["speed_"];
-	if(_loadobj.contains("isActive_"))isActive_ = _loadobj["isActive_"];
-	if(_loadobj.contains("target_"))target_ = (StageObject*)holder_->FindObject(_loadobj["target_"]);
+	if(_loadObj.contains("speed_"))speed_ = _loadObj["speed_"];
+	if(_loadObj.contains("isActive_"))isActive_ = _loadObj["isActive_"];
+	if (_loadObj.contains("target_"))targetName_ = _loadObj["target_"];
 }
 
 void Component_Chase::DrawData()

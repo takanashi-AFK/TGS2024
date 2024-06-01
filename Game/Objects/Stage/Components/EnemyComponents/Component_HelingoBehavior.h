@@ -1,16 +1,21 @@
 #pragma once
 #include "../Component.h"
 
-class Component_OtiBehavior : public Component
+class Component_HelingoBehavior : public Component
 {
 private:
-	
+	StageObject* target_;	// ターゲット
+	string targetName_;		// ターゲット名
+
+	float fallrange_;		// 落下範囲
+	float discoveryrange_;			// 発見範囲
+
 public:
 	/// <summary>
 	/// コンストラクタ
 	/// </summary>
 	/// <param name="_holder">保有者</param>
-	Component_OtiBehavior(string _name, StageObject* _holder, Component* _parent);
+	Component_HelingoBehavior(string _name, StageObject* _holder, Component* _parent);
 	
 	/// <summary>
 	/// 初期化

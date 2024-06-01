@@ -2,6 +2,8 @@
 
 // インクルード
 #include "StageObject.h"
+#include "../../../Engine/ImGui/imgui.h"
+#include "../../../Engine/GameObject/Camera.h"
 
 Stage::Stage(GameObject* _parent)
 	:GameObject(_parent,"Stage"),objects_()
@@ -14,6 +16,15 @@ void Stage::Initialize()
 
 void Stage::Update()
 {
+	static XMFLOAT3 camPos = { 0,1,-5 };
+	static XMFLOAT3 camTgt = { 0,0,0 };
+
+	ImGui::DragFloat3("Camera Position", &camPos.x, 0.1f);
+	ImGui::DragFloat3("Camera Target", &camTgt.x, 0.1f);
+
+	// カメラの位置を設定
+	Camera::SetPosition(camPos);
+	Camera::SetTarget(camTgt);
 }
 
 void Stage::Draw()

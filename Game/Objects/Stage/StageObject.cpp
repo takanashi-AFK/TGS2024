@@ -43,6 +43,10 @@ namespace {
 				_object->AddComponent(CreateComponent(buffer, selectComponentType_, _object));
 
 				isShowSetComponentNameWindow_ = false;
+				
+				// バッファをクリア
+				memset(buffer, 0, sizeof(buffer));
+
 			}
 		}
 		ImGui::End();

@@ -7,7 +7,7 @@
 // コンストラクタ
 Component_Fall::Component_Fall(string _name, StageObject* _holder, Component* _parent)
 	: Component(_holder,_name,Fall,_parent)
-	, fallSpeed_(0.5f), fallSpeedplus_(0.05f), riseSpeed_(0.05f),fallDistance_(5.0f),
+	, fallSpeed_(), fallSpeedplus_(), riseSpeed_(),fallDistance_(),
 	isFalling_(false), isFirstTime_(true), isActive_(false), startRisePosition_(), startFallPosition_()
 {
 }
@@ -73,6 +73,9 @@ void Component_Fall::Save(json& _saveObj)
 	// 保存
 	_saveObj["fallSpeed_"] = fallSpeed_;
 	_saveObj["riseSpeed_"] = riseSpeed_;
+	_saveObj["fallDistance_"] = fallDistance_;
+
+
 }
 
 // 読込
@@ -81,6 +84,7 @@ void Component_Fall::Load(json& _loadObj)
 	// 読込
 	if (_loadObj.contains("fallSpeed_"))fallSpeed_ = _loadObj["fallSpeed_"];
 	if (_loadObj.contains("riseSpeed_"))riseSpeed_ = _loadObj["riseSpeed_"];
+	if (_loadObj.contains("fallDistance_"))fallDistance_ = _loadObj["fallDistance_"];
 }
 
 // ImGui表示

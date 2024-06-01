@@ -12,8 +12,8 @@ using namespace DirectX;
 class Component_ShootAttack :public Component_Attack
 {
 private:
-	float bulletSpeed_;			// 弾の速度
-	XMVECTOR bulletDirection_;	// 弾の方向
+	float shootingSpeed_;			// 弾の速度
+	XMVECTOR shootingDirection_;	// 弾の方向
 public:
 	/// <summary>
 	/// コンストラクタ

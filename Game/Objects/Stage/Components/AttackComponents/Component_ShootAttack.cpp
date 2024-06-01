@@ -4,10 +4,11 @@
 #include "../../../../../Engine/ImGui/imgui.h"
 #include "../../Bullet.h"
 #include "../../Stage.h"
+#include "../../../../../Engine/Global.h"
 
 Component_ShootAttack::Component_ShootAttack(string _name, StageObject* _holder, Component* _parent):
 	Component_Attack(_holder, _name, ShootAttack,_parent),
-	bulletSpeed_(0.5f)
+	shootingSpeed_()
 {
 }
 
@@ -23,10 +24,10 @@ void Component_ShootAttack::Update()
 	Bullet* bulletPrefab = Instantiate<Bullet>(holder_->GetParent());
 	
 	// 撃ち放つ速度を設定
-	bulletPrefab->SetSpeed(bulletSpeed_);
+	bulletPrefab->SetSpeed(shootingSpeed_);
 
 	// 撃ち放つ方向を設定
-	bulletPrefab->SetDirection(bulletDirection_);
+	bulletPrefab->SetDirection(shootingDirection_);
 
 	// 撃ち放つ位置を設定
 	bulletPrefab->SetPosition(holder_->GetPosition());
@@ -44,19 +45,23 @@ void Component_ShootAttack::Release()
 
 void Component_ShootAttack::Save(json& _saveObj)
 {
+	_saveObj["shootingSpeed_"] = shootingSpeed_;
+	_saveObj["shootingDirection_"] = { REFERENCE_XMVECTOR3(shootingDirection_)};
 }
 
 void Component_ShootAttack::Load(json& _loadObj)
 {
+	if (_loadObj.contains("shootingSpeed_"))shootingSpeed_ = _loadObj["shootingSpeed_"];
+	if (_loadObj.contains("shootingDirection_"))shootingDirection_ = XMVectorSet(_loadObj["shootingDirection_"][0], _loadObj["shootingDirection_"][1],_loadObj["shootingDirection_"][2],0);
 }
 
 void Component_ShootAttack::DrawData()
 {
 	// 速度の設定
-	ImGui::DragFloat("Speed", &bulletSpeed_, 0.1f, 0, 2.f);
+	ImGui::DragFloat("Speed", &shootingSpeed_, 0.1f,0.f);
 	
 	// 方向の設定
-	ImGui::DragFloat3("Direction", (float*)&bulletDirection_, 0.1f);
+	ImGui::DragFloat3("Direction", (float*)&shootingDirection_, 0.1f);
 
 	// 攻撃ボタン
 	if (ImGui::Button("Execute"))this->Execute();

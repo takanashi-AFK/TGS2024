@@ -11,6 +11,8 @@
 // XMFLOAT3型の変数をコンマ区切りで表示するマクロ
 #define REFERENCE_XMFLOAT3(p) p.x,p.y,p.z 
 
+#define REFERENCE_XMVECTOR3(p) XMVectorGetX(p),XMVectorGetY(p),XMVectorGetZ(p)
+
 // ＝＝ 定数 ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝ //
 
 const float FPS = 60.0f;	// フレームレート

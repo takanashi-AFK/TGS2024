@@ -24,6 +24,7 @@ enum ComponentType {
 	CactanBihavior,
     Timer,
     Fall,
+    WASDInputMove,
     ShootAttack,
     // コンポーネント追加時に識別番号を追加
     Max
@@ -67,13 +68,13 @@ public:
     /// 保存
     /// </summary>
     /// <param name="_saveObj">保存情報</param>
-    virtual void Save(json& _saveObj) = 0;
+    virtual void Save(json& _saveObj) {};
 
     /// <summary>
     /// 読込
     /// </summary>
     /// <param name="_saveObj">読込情報</param>
-    virtual void Load(json& _loadObj) = 0;
+    virtual void Load(json& _loadObj) {};
 
     /// <summary>
     /// ImGuiパネル表示

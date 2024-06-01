@@ -53,5 +53,9 @@ public:
 	/// </summary>
 	void DrawData()override;
 
+
+	void SetShootingSpeed(float _speed) { shootingSpeed_ = _speed; }
+	void SetShootingDirection(XMVECTOR _direction) { shootingDirection_ = _direction; }
+
 };
 

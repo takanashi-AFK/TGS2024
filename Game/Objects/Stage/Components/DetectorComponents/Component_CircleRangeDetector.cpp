@@ -17,6 +17,8 @@ void Component_CircleRangeDetector::Initialize()
 
 void Component_CircleRangeDetector::Update()
 {
+
+	if (target_ == nullptr)target_ = (StageObject*)holder_->FindObject(targetName_);
 	// 対象が存在しない場合は処理を行わない
 	if (target_ == nullptr)return;
 
@@ -33,7 +35,7 @@ void Component_CircleRangeDetector::Save(json& _saveObj)
 {
 	// 自身の情報を保存
 	_saveObj["radius_"] = radius_;
-	if(target_ != nullptr)_saveObj["target_"] = target_->GetObjectName();
+	if (target_ != nullptr)_saveObj["target_"] = target_->GetObjectName();
 }
 
 void Component_CircleRangeDetector::Load(json& _loadObj)
@@ -41,11 +43,14 @@ void Component_CircleRangeDetector::Load(json& _loadObj)
 	// 自身の情報を読み込み
 	if(_loadObj.find("radius_") != _loadObj.end())radius_ = _loadObj["radius_"];
 	if (_loadObj.find("isContains_") != _loadObj.end())isContains_ = _loadObj["isContains_"];
-	if (_loadObj.find("target_") != _loadObj.end())target_ = (StageObject*)holder_->FindObject(_loadObj["target_"]);
+	if (_loadObj.contains("target_"))targetName_ = _loadObj["target_"];
 }
 
 void Component_CircleRangeDetector::DrawData()
 {
+#ifdef _DEBUG
+
+
 	// ImGuiでデータを描画
 	
 	ImGui::Text("isContains_ : %s", isContains_ ? "true" : "false");
@@ -78,6 +83,7 @@ void Component_CircleRangeDetector::DrawData()
 		XMFLOAT3 pos = target_->GetPosition();
 		ImGui::Text("position_ = %f,%f,%f", REFERENCE_XMFLOAT3(pos));
 	}
+#endif // _DEBUG
 }
 
 bool Component_CircleRangeDetector::IsContains()

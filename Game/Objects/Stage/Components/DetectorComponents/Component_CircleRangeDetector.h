@@ -10,6 +10,7 @@ class Component_CircleRangeDetector : public Component
 private:
 	
 	StageObject* target_;	// 検出対象
+	string targetName_;		// 検出対象の名前
 	float radius_;			// 検出範囲の半径
 	bool isContains_;		// 検出フラグ
 

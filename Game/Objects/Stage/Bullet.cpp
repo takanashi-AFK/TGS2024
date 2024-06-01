@@ -15,6 +15,8 @@ void Bullet::Initialize()
 	// ƒ‚ƒfƒ‹‚Ì“Ç‚Ýž‚Ý
 	modelHandle_ = Model::Load(modelFilePath_);
 	assert(modelHandle_ >= 0);
+
+	SetScale(0.2f);
 }
 
 void Bullet::Update()

@@ -137,6 +137,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Game\Objects\Stage\Components\MoveComponents\Component_WASDInputMove.cpp" />
     <ClCompile Include="Game\Objects\Stage\Components\EnemyComponents\Component_CactanBehavior.cpp" />
     <ClCompile Include="Game\Objects\Stage\Components\HealthManagerComponents\Component_HealthManager.cpp" />
     <ClCompile Include="Game\Objects\Stage\Bullet.cpp" />
@@ -193,6 +194,7 @@
     <ClCompile Include="Game\Otheres\StageEditor.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Game\Objects\Stage\Components\MoveComponents\Component_WASDInputMove.h" />
     <ClInclude Include="Game\Objects\Stage\Components\EnemyComponents\Component_CactanBehavior.h" />
     <ClInclude Include="Game\Objects\Stage\Components\HealthManagerComponents\Component_HealthManager.h" />
     <ClInclude Include="Game\Objects\Stage\Bullet.h" />

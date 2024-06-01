@@ -17,6 +17,12 @@ void Scene_Test::Initialize()
 
 	// ステージを作成
 	Stage* pStage = Instantiate<Stage>(this);
+	
+	// ステージを読み込み
+	json stageData;
+	JsonReader::Load("Datas/test_DebugStage01.json", stageData);
+	pStage->Load(stageData);
+
 
 #ifdef _DEBUG
 

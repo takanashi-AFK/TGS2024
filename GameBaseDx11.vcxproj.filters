@@ -65,9 +65,6 @@
     <Filter Include="03Game\Objects\Stage\Components\AttackComponents">
       <UniqueIdentifier>{89b3ed5f-a98e-4fe9-8112-e3c5e40330d7}</UniqueIdentifier>
     </Filter>
-    <Filter Include="03Game\Objects\Stage\Components\AttackComponents\CactanAttackComponent">
-      <UniqueIdentifier>{b9d431c3-052e-467e-8c1f-563b6fe34d8f}</UniqueIdentifier>
-    </Filter>
     <Filter Include="03Game\Objects\Otheres">
       <UniqueIdentifier>{c2efa7cb-5f10-4c3c-b6f4-cff055139e25}</UniqueIdentifier>
     </Filter>
@@ -217,20 +214,26 @@
     <ClCompile Include="Game\Objects\Stage\Components\TimerComponent\Component_Timer.cpp">
       <Filter>03Game\Objects\Stage\Components\TimerComponent</Filter>
     </ClCompile>
-    <ClCompile Include="Game\Objects\Stage\Components\AttackComponents\Component_Attack.cpp">
-      <Filter>03Game\Objects\Stage\Components\AttackComponents</Filter>
-    </ClCompile>
-    <ClCompile Include="Game\Objects\Stage\Components\AttackComponents\Component_CactanAttack\Component_CactanAttack.cpp">
-      <Filter>03Game\Objects\Stage\Components\AttackComponents\CactanAttackComponent</Filter>
-    </ClCompile>
     <ClCompile Include="Game\Objects\Stage\Stage.cpp">
       <Filter>03Game\Objects\Stage</Filter>
     </ClCompile>
     <ClCompile Include="Game\Objects\Stage\Bullet.cpp">
       <Filter>03Game\Objects\Stage\StageObjects</Filter>
     </ClCompile>
-    <ClCompile Include="Game\Objects\Stage\Components\EnemyComponents\Component_OtiBehavior.cpp">
+    <ClCompile Include="Game\Objects\Stage\Components\EnemyComponents\Component_CactanBehavior.cpp">
       <Filter>03Game\Objects\Stage\Components\EnemyComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Objects\Stage\Components\EnemyComponents\Component_HelingoBehavior.cpp">
+      <Filter>03Game\Objects\Stage\Components\EnemyComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Objects\Stage\Components\AttackComponents\Component_ShootAttack.cpp">
+      <Filter>03Game\Objects\Stage\Components\AttackComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Objects\Stage\Components\AttackComponents\Component_Attack.cpp">
+      <Filter>03Game\Objects\Stage\Components\MoveComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Objects\Stage\Components\MoveComponents\Component_WASDInputMove.cpp">
+      <Filter>03Game\Objects\Stage\Components\MoveComponents</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -393,14 +396,20 @@
     <ClInclude Include="Game\Objects\Stage\Components\AttackComponents\Component_Attack.h">
       <Filter>03Game\Objects\Stage\Components\AttackComponents</Filter>
     </ClInclude>
-    <ClInclude Include="Game\Objects\Stage\Components\AttackComponents\Component_CactanAttack\Component_CactanAttack.h">
-      <Filter>03Game\Objects\Stage\Components\AttackComponents\CactanAttackComponent</Filter>
-    </ClInclude>
     <ClInclude Include="Game\Objects\Stage\Bullet.h">
       <Filter>03Game\Objects\Stage\StageObjects</Filter>
     </ClInclude>
-    <ClInclude Include="Game\Objects\Stage\Components\EnemyComponents\Component_OtiBehavior.h">
+    <ClInclude Include="Game\Objects\Stage\Components\EnemyComponents\Component_CactanBehavior.h">
       <Filter>03Game\Objects\Stage\Components\EnemyComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Objects\Stage\Components\EnemyComponents\Component_HelingoBehavior.h">
+      <Filter>03Game\Objects\Stage\Components\EnemyComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Objects\Stage\Components\AttackComponents\Component_ShootAttack.h">
+      <Filter>03Game\Objects\Stage\Components\AttackComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Objects\Stage\Components\MoveComponents\Component_WASDInputMove.h">
+      <Filter>03Game\Objects\Stage\Components\MoveComponents</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

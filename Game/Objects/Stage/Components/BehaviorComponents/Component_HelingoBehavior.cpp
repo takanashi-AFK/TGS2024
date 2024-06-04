@@ -54,28 +54,27 @@ void Component_HelingoBehavior::Update()
 			chase->Stop();
 
 			if (!timer->GetIsCountNow()) {  // タイマーが動作していない場合
-				timer->SetTime(0.5f);
+				timer->SetTime(2.f);
 				timer->Start();
 			}
-			{
-				//ここに予備動作の内容を記述
-			}
-			if (timer->GetIsEnd()) {
+
+			ImGui::Text("OmenNow");
+			ImGui::Text("Time:%f", timer->GetNowTime());
+			bool a = timer->GetIsEnd();
+			if (a == true) {
 				fall->Start();
-				timer->Reset();  // タイマーをリセットして次回に備える
 			}
 		}
+		else {
+			timer->Reset();
+		}
+
 	}
 	else {
 		auto chase = dynamic_cast<Component_Chase*>(GetChildComponent("Chase"));
 		if (chase == nullptr) return;
 		chase->Stop();
-	}
-
-	// タイマーが終了している場合にフラグをリセットする
-	if (timer->GetIsEnd()) {
-		fall->Start();
-		timer->Reset();  // タイマーをリセットして次回に備える
+		
 	}
 }
 

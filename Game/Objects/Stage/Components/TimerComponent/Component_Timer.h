@@ -90,6 +90,8 @@ public:
 	/// </summary>
 	void Reset();
 
+	void End();
+
 	/// <returns>
 	/// Žw’è‚ÌŽžŠÔ‚É‚È‚Á‚½‚çtrue(’âŽ~‚Í‚µ‚È‚¢)
 	/// </returns>

@@ -18,12 +18,11 @@ void Component_Timer::Initialize()
 
 void Component_Timer::Update()
 {
-	if (nowTime_ >= maxTime_ && !isInfinity_) Stop();
-	if (!isCountNow_) return;
-	nowTime_++;
+	if (nowTime_ >= maxTime_ && !isInfinity_)
+		End();
 
-	if(isEnd_)
-		ImGui::Text("End");
+	nowTime_++;
+	if (!isCountNow_) return;
 }
 
 void Component_Timer::Release()
@@ -71,13 +70,11 @@ void Component_Timer::Start()
 {
 	//countNow_をtrueにし、タイマーを開始
 	isCountNow_ = true;
-	isEnd_ = false;
 }
 
 void Component_Timer::Stop()
 {
 	//countNow_をfalseにし、タイマーを停止
-	isEnd_ = true;
 	isCountNow_ = false;
 }
 
@@ -108,6 +105,12 @@ bool Component_Timer::IsOnTime(float _time)
 {
 	//今の時間が指定された秒の時trueを返す
 	return nowTime_ >= _time * FPS;
+}
+
+void Component_Timer::End()
+{
+	Stop(); 
+	isEnd_ = true;
 }
 
 bool Component_Timer::IsIntervalTime(float _time)

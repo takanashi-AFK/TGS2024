@@ -7,7 +7,7 @@
 // コンストラクタ
 Component_Fall::Component_Fall(string _name, StageObject* _holder, Component* _parent)
 	: Component(_holder,_name,Fall,_parent)
-	, fallSpeed_(), fallSpeedplus_(), riseSpeed_(),fallDistance_(),
+	, fallSpeed_(), riseSpeed_(),fallDistance_(),
 	isFalling_(false), isFirstTime_(true), isActive_(false), startRisePosition_(), startFallPosition_()
 {
 }
@@ -35,7 +35,7 @@ void Component_Fall::Update()
 		if (isFalling_) {
 			// 降下中の処理
 			if (pPos.y > startFallPosition_.y - fallDistance_) {
-				pPos.y -= (fallSpeed_ + fallSpeedplus_);
+				pPos.y -= fallSpeed_;
 			}
 			else {
 				// 物体が一定の高さに達したら上昇を開始する
@@ -75,8 +75,6 @@ void Component_Fall::Save(json& _saveObj)
 	_saveObj["fallSpeed_"] = fallSpeed_;
 	_saveObj["riseSpeed_"] = riseSpeed_;
 	_saveObj["fallDistance_"] = fallDistance_;
-
-
 }
 
 // 読込
@@ -94,10 +92,8 @@ void Component_Fall::DrawData()
 	// ImGui描画
 	ImGui::Text("Component_Fall");
 	ImGui::DragFloat("fallSpeed_", &fallSpeed_, 0.1f);
-	ImGui::DragFloat("fallSpeedPuls_", &fallSpeedplus_, 0.1f);
 	ImGui::DragFloat("riseSpeed_", &riseSpeed_, 0.1f);
 	ImGui::DragFloat("fallDistance_", &fallDistance_, 0.1f);
-	if (ImGui::Button("Falling")) {
-		Execute();
-	}
+	if (ImGui::Button("Execute"))Execute();
+	
 }

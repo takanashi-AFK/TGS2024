@@ -12,7 +12,6 @@ class Component_Fall : public Component
 private:
 	
 	float fallSpeed_;		//~‰º‘¬“x
-	float fallSpeedplus_;	//~‰º‘¬“x‚ğã‚°‚é‚â‚Â
 	float riseSpeed_;		//ã¸‘¬“x
 	float fallDistance_;	//~‰º‚µ‚«‚é‚Ü‚Å‚Ì‹——£
 

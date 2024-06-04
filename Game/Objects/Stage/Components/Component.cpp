@@ -59,6 +59,15 @@ void Component::ChildRelease()
 	this->Release();
 }
 
+void Component::ChildOnCollision(GameObject* _target)
+{
+	// 自身の衝突処理
+	this->OnCollision(_target);
+
+	// 子コンポーネントの衝突処理
+	for (auto comp : childComponents_)comp->ChildOnCollision(_target);
+}
+
 void Component::ChildDrawData()
 {
 	if (ImGui::TreeNode(this->name_.c_str())) {

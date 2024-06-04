@@ -8,6 +8,7 @@
 #include "../MoveComponents/Component_Chase.h"
 #include "../../Stage.h"
 #include "../../../../../Engine/ImGui/imgui.h"
+#include "../../../../../Engine/Collider/BoxCollider.h"
 
 Component_HelingoBehavior::Component_HelingoBehavior(string _name, StageObject* _holder, Component* _parent)
 	: Component(_holder, _name, HelingoBehavior,_parent)
@@ -16,6 +17,10 @@ Component_HelingoBehavior::Component_HelingoBehavior(string _name, StageObject* 
 
 void Component_HelingoBehavior::Initialize()
 {
+	// コライダーの追加
+	holder_->AddCollider(new BoxCollider(XMFLOAT3(0, 0, 0), XMFLOAT3(1, 1, 1)));
+
+	// 子コンポーネントの追加
 	if (FindChildComponent("CircleRangeDetector") == false)AddChildComponent(CreateComponent("CircleRangeDetector", CircleRangeDetector, holder_, this));
 	if (FindChildComponent("Timer") == false)AddChildComponent(CreateComponent("Timer", Timer, holder_, this));
 	if (FindChildComponent("Fall") == false)AddChildComponent(CreateComponent("Fall", Fall, holder_, this));
@@ -64,6 +69,16 @@ void Component_HelingoBehavior::Update()
 
 void Component_HelingoBehavior::Release()
 {
+}
+
+void Component_HelingoBehavior::OnCollision(GameObject* _target)
+{
+	// プレイヤーと衝突した場合
+	if (_target->GetObjectName() == "Player") {
+
+		// プレイヤーを消す
+		((Stage*)holder_->FindObject("Stage"))->DeleteStageObject((StageObject*)_target);
+	}
 }
 
 void Component_HelingoBehavior::Save(json& _saveObj)

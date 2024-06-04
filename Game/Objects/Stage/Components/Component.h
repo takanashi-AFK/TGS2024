@@ -5,6 +5,7 @@
 
 // 前方宣言
 class StageObject;
+class GameObject;
 
 // using宣言
 using std::vector;
@@ -64,6 +65,11 @@ public:
     /// </summary>
     virtual void Release() = 0;
 
+	/// <summary>
+	/// 衝突処理
+	/// </summary>
+	virtual void OnCollision(GameObject* _target) {};
+
     /// <summary>
     /// 保存
     /// </summary>
@@ -95,6 +101,11 @@ public:
     /// 自身＆子コンポーネントを解放
     /// </summary>
     void ChildRelease();
+
+	/// <summary>
+	/// 衝突処理
+	/// </summary>
+	void ChildOnCollision(GameObject* _target);
 
 	/// <summary>
 	/// 自身＆子コンポーネントを描画

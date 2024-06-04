@@ -33,28 +33,29 @@ void Component_Fall::Update()
 		}
 
 		if (isFalling_) {
-			// 上昇中の処理
-			if (pPos.y < startRisePosition_.y) {
-				pPos.y += riseSpeed_;
-			}
-			else {
-				// 物体が一定高さに達したら上昇を停止し、降下を開始する
-				isFalling_ = false;
-				isActive_ = false;
-				isFirstTime_ = true;
-				pPos.y = startRisePosition_.y;  // 上昇開始位置に戻す
-				startFallPosition_.y = pPos.y;  // 降下開始位置を記録
-			}
-		}
-		else {
 			// 降下中の処理
 			if (pPos.y > startFallPosition_.y - fallDistance_) {
 				pPos.y -= (fallSpeed_ + fallSpeedplus_);
 			}
 			else {
 				// 物体が一定の高さに達したら上昇を開始する
-				isFalling_ = true;
+				isFalling_ = false;
 				pPos.y = startFallPosition_.y - fallDistance_;
+			}
+		}
+		else {
+			
+			// 上昇中の処理
+			if (pPos.y < startRisePosition_.y) {
+				pPos.y += riseSpeed_;
+			}
+			else {
+				// 物体が一定高さに達したら上昇を停止し、降下を開始する
+				isFalling_ = true;
+				isActive_ = false;
+				isFirstTime_ = true;
+				pPos.y = startRisePosition_.y;  // 上昇開始位置に戻す
+				startFallPosition_.y = pPos.y;  // 降下開始位置を記録
 			}
 		}
 		// 位置を確定

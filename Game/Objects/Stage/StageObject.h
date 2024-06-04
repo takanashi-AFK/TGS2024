@@ -48,6 +48,11 @@ public:
 	void Release() override;
 
 	/// <summary>
+	/// Õ“Ëˆ—
+	/// </summary>
+	void OnCollision(GameObject* _target) override;
+
+	/// <summary>
 	/// •Û‘¶
 	/// </summary>
 	/// <param name="_saveObj">•Û‘¶ƒf[ƒ^</param>

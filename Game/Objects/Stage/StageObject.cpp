@@ -120,6 +120,12 @@ void StageObject::Release()
 	myComponents_.clear();
 }
 
+void StageObject::OnCollision(GameObject* _target)
+{
+	// 保有するコンポーネントの衝突処理
+	for (auto comp : myComponents_)comp->ChildOnCollision(_target);
+}
+
 void StageObject::Save(json& _saveObj)
 {
 	// 自身の変形行列情報を保存

@@ -77,6 +77,11 @@ public:
 	bool AddComponent(Component* _comp);
 
 	/// <summary>
+	/// コンポーネントをリストから探す
+	/// </summary>
+	Component* FindComponent(string _name);
+
+	/// <summary>
 	/// コンポーネントをリストから削除
 	/// </summary>
 	/// <param name="_comp">削除するコンポーネント</param>

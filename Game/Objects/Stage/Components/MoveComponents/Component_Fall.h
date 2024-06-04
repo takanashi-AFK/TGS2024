@@ -77,5 +77,7 @@ public:
 	void Execute() { isActive_ = true; }
 
 	bool IsActived() { return isActive_; }
+
+	bool IsFalling() { return isFalling_; }
 };
 

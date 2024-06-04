@@ -9,6 +9,7 @@
 #include "../../Stage.h"
 #include "../../../../../Engine/ImGui/imgui.h"
 #include "../../../../../Engine/Collider/BoxCollider.h"
+#include "../HealthManagerComponents/Component_HealthManager.h"
 
 Component_HelingoBehavior::Component_HelingoBehavior(string _name, StageObject* _holder, Component* _parent)
 	: Component(_holder, _name, HelingoBehavior,_parent)
@@ -76,8 +77,20 @@ void Component_HelingoBehavior::OnCollision(GameObject* _target)
 	// プレイヤーと衝突した場合
 	if (_target->GetObjectName() == "Char_Player") {
 
-		// プレイヤーを消す
-		((Stage*)holder_->FindObject("Stage"))->DeleteStageObject((StageObject*)_target);
+		// プレイヤーのHPマネージャーコンポーネントを取得
+        Component* hm = ((StageObject*)_target)->FindComponent("HealthManager");
+		if (hm == nullptr)return;
+
+		// プレイヤーのHPを減らす
+		auto fall = dynamic_cast<Component_Fall*>(GetChildComponent("Fall"));
+		if(fall->IsFalling())((Component_HealthManager*)hm)->TakeDamage(5);
+
+		// プレイヤーのHPが0以下の場合
+		if (((Component_HealthManager*)hm)->GetHP() <= 0) {
+
+			// プレイヤーを消す
+			((Stage*)holder_->FindObject("Stage"))->DeleteStageObject((StageObject*)_target);
+		}
 	}
 }
 

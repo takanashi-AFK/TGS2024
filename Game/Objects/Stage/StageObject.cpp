@@ -72,6 +72,23 @@ bool StageObject::AddComponent(Component* _comp)
 	return true;
 }
 
+Component* StageObject::FindComponent(string _name)
+{
+	Component* result = nullptr;
+
+	for (auto comp : myComponents_) {
+		if (comp->GetName() == _name) {
+			result = comp;
+			break;
+		}
+
+		// 子コンポーネントを再帰的に検索
+		result = comp->GetChildComponent(_name);
+		if (result != nullptr)break;
+	}
+	return result;
+}
+
 bool StageObject::DeleteComponent(Component* _comp)
 {
 	// イテレータに、"myComponents_"内で探したいデータを登録

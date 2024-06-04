@@ -3,6 +3,8 @@
 // インクルード
 #include "../../../../../Engine/Collider/BoxCollider.h"
 #include "../../StageObject.h"
+#include "../HealthManagerComponents/Component_HealthManager.h"
+#include "../../../../../Engine/ImGui/imgui.h"
 
 Component_PlayerBehavior::Component_PlayerBehavior(string _name, StageObject* _holder, Component* _parent)
 	: Component(_holder, _name, PlayerBehavior,_parent)
@@ -11,11 +13,20 @@ Component_PlayerBehavior::Component_PlayerBehavior(string _name, StageObject* _h
 
 void Component_PlayerBehavior::Initialize()
 {
+	// コライダーの追加
 	holder_->AddCollider(new BoxCollider(XMFLOAT3(0, 0, 0), XMFLOAT3(1, 1, 1)));
+
+	// 子コンポーネントの追加
+	if (FindChildComponent("InputMove") == false)AddChildComponent(CreateComponent("InputMove", WASDInputMove, holder_, this));
+	if (FindChildComponent("HealthManager") == false)AddChildComponent(CreateComponent("HealthManager", HealthManager, holder_, this));
+	//if (FindChildComponent("ShootAttack") == false)AddChildComponent(CreateComponent("ShootAttack", ShootAttack, holder_, this));
 }
 
 void Component_PlayerBehavior::Update()
 {
+	auto hm = dynamic_cast<Component_HealthManager*>(GetChildComponent("HealthManager"));
+
+	ImGui::Text("Player HP : %f", hm->GetHP());
 }
 
 void Component_PlayerBehavior::Release()

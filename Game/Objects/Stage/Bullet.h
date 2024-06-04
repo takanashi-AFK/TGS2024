@@ -37,6 +37,11 @@ public:
 	void Draw() override;
 
 	/// <summary>
+	/// Õ“Ëˆ—
+	/// </summary>
+	void OnCollision(GameObject* _target) override;
+
+	/// <summary>
 	/// ˆÚ“®‘¬“x‚ğİ’è
 	/// </summary>
 	/// <param name="_speed">‘¬“x</param>

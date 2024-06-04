@@ -35,39 +35,10 @@ void Component_HealthManager::Load(json& _loadObj)
 
 void Component_HealthManager::DrawData()
 {
-	
-	if (ImGui::Button("HP Heal"))
-	{
-		Heal(10.f);
-	}
-	if (ImGui::Button("Damage"))
-	{
-		TakeDamage(10.f);
-	}
+	ImGui::DragFloat("MaxHP", &max_, 1.0f);
+	ImGui::DragFloat("HP", &hp_, 1.0f, 0.0f, max_);
 
-
-	static float tempHP = 0;
-	ImGui::DragFloat("HP", &tempHP, 1.0f, 0.0f, 100.0f);
-	if (ImGui::Button("DragSetHP"))
-	{
-		SetHP(tempHP);
-	}
-
-	static float tempMax = 0;
-	ImGui::DragFloat("Max", &tempMax, 1.0f, 0.0f, 100.0f);
-	if (ImGui::Button("DragSetMax"))
-	{
-		SetMax(tempMax);
-	}
-
-	if (ImGui::Button("Reset"))
-	{
-		Reset();
-	}
-
-	ImGui::Text("HP:%f", hp_);
-	ImGui::Text("MaxHP:%f", max_);
-
+	if (ImGui::Button("Reset"))Reset();
 }
 
 float Component_HealthManager::GetHP() const
@@ -77,8 +48,7 @@ float Component_HealthManager::GetHP() const
 
 void Component_HealthManager::SetHP(float _newHP)
 {
-	if(_newHP <= max_)
-	hp_ = _newHP;
+	if(_newHP <= max_)hp_ = _newHP;
 }
 
 float Component_HealthManager::GetMax() const
@@ -95,16 +65,13 @@ void Component_HealthManager::TakeDamage(float _damageValue)
 {
 	hp_ -= _damageValue;
 	//HP‚ª0ˆÈ‰º‚É‚È‚ç‚È‚¢‚æ‚¤‚É‚·‚é
-	if (hp_ < 0)
-		hp_ = 0;
+	if (hp_ < 0)hp_ = 0;
 }
 
 void Component_HealthManager::Heal(float _healValue)
 {
 	//HP‚ªÅ‘å’l‚ð’´‚¦‚È‚¢‚æ‚¤‚É‚·‚é
-	if (hp_ + _healValue <= max_)
-		hp_ += _healValue;
-	return;
+	if (hp_ + _healValue <= max_)hp_ += _healValue;
 }
 
 void Component_HealthManager::Reset()

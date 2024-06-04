@@ -1,6 +1,6 @@
-#include "Component_PlayerBehavior.h"
+ï»¿#include "Component_PlayerBehavior.h"
 
-// ƒCƒ“ƒNƒ‹[ƒh
+// ã‚¤ãƒ³ã‚¯ãƒ«ãƒ¼ãƒ‰
 #include "../../../../../Engine/Collider/BoxCollider.h"
 #include "../../StageObject.h"
 #include "../HealthManagerComponents/Component_HealthManager.h"
@@ -13,10 +13,10 @@ Component_PlayerBehavior::Component_PlayerBehavior(string _name, StageObject* _h
 
 void Component_PlayerBehavior::Initialize()
 {
-	// ƒRƒ‰ƒCƒ_[‚Ì’Ç‰Á
+	// ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼ã®è¿½åŠ 
 	holder_->AddCollider(new BoxCollider(XMFLOAT3(0, 0, 0), XMFLOAT3(1, 1, 1)));
 
-	// qƒRƒ“ƒ|[ƒlƒ“ƒg‚Ì’Ç‰Á
+	// å­ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã®è¿½åŠ 
 	if (FindChildComponent("InputMove") == false)AddChildComponent(CreateComponent("InputMove", WASDInputMove, holder_, this));
 	if (FindChildComponent("HealthManager") == false)AddChildComponent(CreateComponent("HealthManager", HealthManager, holder_, this));
 	//if (FindChildComponent("ShootAttack") == false)AddChildComponent(CreateComponent("ShootAttack", ShootAttack, holder_, this));
@@ -26,7 +26,11 @@ void Component_PlayerBehavior::Update()
 {
 	auto hm = dynamic_cast<Component_HealthManager*>(GetChildComponent("HealthManager"));
 
-	ImGui::Text("Player HP : %f", hm->GetHP());
+	// é€²æ—ã‚’0.0ã€œ1.0ã®ç¯„å›²ã§è¨ˆç®—
+	float progress = hm->GetHP() / hm->GetMax();
+
+	// HPã‚²ãƒ¼ã‚¸ã®è¡¨ç¤º
+	ImGui::ProgressBar(progress, ImVec2(0.0f, 0.0f), "Player HP");
 }
 
 void Component_PlayerBehavior::Release()

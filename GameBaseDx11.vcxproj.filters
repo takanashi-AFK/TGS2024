@@ -53,9 +53,6 @@
     <Filter Include="03Game\Objects\Stage\Components\DetectorComponents">
       <UniqueIdentifier>{1dfc5a77-2666-438e-b4a0-ccdf1e982c3a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="03Game\Objects\Stage\Components\EnemyComponents">
-      <UniqueIdentifier>{b2d24188-4d4a-4098-a2d5-87aeda1fadfa}</UniqueIdentifier>
-    </Filter>
     <Filter Include="03Game\Objects\Stage\Components\TimerComponent">
       <UniqueIdentifier>{e193f086-ad1a-497c-8887-062579a167cb}</UniqueIdentifier>
     </Filter>
@@ -67,6 +64,9 @@
     </Filter>
     <Filter Include="03Game\Objects\Otheres">
       <UniqueIdentifier>{c2efa7cb-5f10-4c3c-b6f4-cff055139e25}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03Game\Objects\Stage\Components\BehaviorComponents">
+      <UniqueIdentifier>{b2d24188-4d4a-4098-a2d5-87aeda1fadfa}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -220,11 +220,11 @@
     <ClCompile Include="Game\Objects\Stage\Bullet.cpp">
       <Filter>03Game\Objects\Stage\StageObjects</Filter>
     </ClCompile>
-    <ClCompile Include="Game\Objects\Stage\Components\EnemyComponents\Component_CactanBehavior.cpp">
-      <Filter>03Game\Objects\Stage\Components\EnemyComponents</Filter>
+    <ClCompile Include="Game\Objects\Stage\Components\BehaviorComponents\Component_CactanBehavior.cpp">
+      <Filter>03Game\Objects\Stage\Components\BehaviorComponents</Filter>
     </ClCompile>
-    <ClCompile Include="Game\Objects\Stage\Components\EnemyComponents\Component_HelingoBehavior.cpp">
-      <Filter>03Game\Objects\Stage\Components\EnemyComponents</Filter>
+    <ClCompile Include="Game\Objects\Stage\Components\BehaviorComponents\Component_HelingoBehavior.cpp">
+      <Filter>03Game\Objects\Stage\Components\BehaviorComponents</Filter>
     </ClCompile>
     <ClCompile Include="Game\Objects\Stage\Components\AttackComponents\Component_ShootAttack.cpp">
       <Filter>03Game\Objects\Stage\Components\AttackComponents</Filter>
@@ -399,11 +399,11 @@
     <ClInclude Include="Game\Objects\Stage\Bullet.h">
       <Filter>03Game\Objects\Stage\StageObjects</Filter>
     </ClInclude>
-    <ClInclude Include="Game\Objects\Stage\Components\EnemyComponents\Component_CactanBehavior.h">
-      <Filter>03Game\Objects\Stage\Components\EnemyComponents</Filter>
+    <ClInclude Include="Game\Objects\Stage\Components\BehaviorComponents\Component_CactanBehavior.h">
+      <Filter>03Game\Objects\Stage\Components\BehaviorComponents</Filter>
     </ClInclude>
-    <ClInclude Include="Game\Objects\Stage\Components\EnemyComponents\Component_HelingoBehavior.h">
-      <Filter>03Game\Objects\Stage\Components\EnemyComponents</Filter>
+    <ClInclude Include="Game\Objects\Stage\Components\BehaviorComponents\Component_HelingoBehavior.h">
+      <Filter>03Game\Objects\Stage\Components\BehaviorComponents</Filter>
     </ClInclude>
     <ClInclude Include="Game\Objects\Stage\Components\AttackComponents\Component_ShootAttack.h">
       <Filter>03Game\Objects\Stage\Components\AttackComponents</Filter>

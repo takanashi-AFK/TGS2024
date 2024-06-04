@@ -138,13 +138,13 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Game\Objects\Stage\Components\MoveComponents\Component_WASDInputMove.cpp" />
-    <ClCompile Include="Game\Objects\Stage\Components\EnemyComponents\Component_CactanBehavior.cpp" />
+    <ClCompile Include="Game\Objects\Stage\Components\BehaviorComponents\Component_CactanBehavior.cpp" />
     <ClCompile Include="Game\Objects\Stage\Components\HealthManagerComponents\Component_HealthManager.cpp" />
     <ClCompile Include="Game\Objects\Stage\Bullet.cpp" />
     <ClCompile Include="Game\Objects\Stage\Components\AttackComponents\Component_ShootAttack.cpp" />
     <ClCompile Include="Game\Objects\Stage\Components\AttackComponents\Component_Attack.cpp" />
     <ClCompile Include="Game\Objects\Stage\Components\DetectorComponents\Component_FanRangeDetector.cpp" />
-    <ClCompile Include="Game\Objects\Stage\Components\EnemyComponents\Component_HelingoBehavior.cpp" />
+    <ClCompile Include="Game\Objects\Stage\Components\BehaviorComponents\Component_HelingoBehavior.cpp" />
     <ClCompile Include="Game\Objects\Stage\Components\DetectorComponents\Component_CircleRangeDetector.cpp" />
     <ClCompile Include="Game\Objects\Stage\Components\TimerComponent\Component_Timer.cpp" />
     <ClCompile Include="Game\Objects\Stage\Components\MoveComponents\Component_Chase.cpp" />
@@ -195,7 +195,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game\Objects\Stage\Components\MoveComponents\Component_WASDInputMove.h" />
-    <ClInclude Include="Game\Objects\Stage\Components\EnemyComponents\Component_CactanBehavior.h" />
+    <ClInclude Include="Game\Objects\Stage\Components\BehaviorComponents\Component_CactanBehavior.h" />
     <ClInclude Include="Game\Objects\Stage\Components\HealthManagerComponents\Component_HealthManager.h" />
     <ClInclude Include="Game\Objects\Stage\Bullet.h" />
     <ClInclude Include="Game\Objects\Stage\Components\AttackComponents\Component_ShootAttack.h" />
@@ -203,7 +203,7 @@
     <ClInclude Include="Engine\ResourceManager\Transition.h" />
     <ClInclude Include="Game\Objects\Stage\Components\DetectorComponents\Component_CircleRangeDetector.h" />
     <ClInclude Include="Game\Objects\Stage\Components\DetectorComponents\Component_FanRangeDetector.h" />
-    <ClInclude Include="Game\Objects\Stage\Components\EnemyComponents\Component_HelingoBehavior.h" />
+    <ClInclude Include="Game\Objects\Stage\Components\BehaviorComponents\Component_HelingoBehavior.h" />
     <ClInclude Include="Game\Objects\Stage\Components\MoveComponents\Component_Chase.h" />
     <ClInclude Include="Game\Objects\Stage\Components\Component.h" />
     <ClInclude Include="Engine\ImGui\imconfig.h" />

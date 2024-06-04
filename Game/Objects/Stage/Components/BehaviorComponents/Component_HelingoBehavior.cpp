@@ -38,6 +38,9 @@ void Component_HelingoBehavior::Update()
 	auto fall = dynamic_cast<Component_Fall*>(GetChildComponent("Fall"));
 	if (fall == nullptr) return;
 
+	auto timer = dynamic_cast<Component_Timer*>(GetChildComponent("Timer"));
+	if (timer == nullptr) return;
+
 	detector->SetRadius(discoveryrange_);
 	if (!fall->IsActived() && detector->IsContains()) {
 		auto chase = dynamic_cast<Component_Chase*>(GetChildComponent("Chase"));
@@ -50,22 +53,16 @@ void Component_HelingoBehavior::Update()
 		if (detector->IsContains()) {
 			chase->Stop();
 
-			auto timer = dynamic_cast<Component_Timer*>(GetChildComponent("Timer"));
-			if (timer == nullptr) return;
-
-			if (!isTimerActive_) {
-				timer->SetTime(3);
+			if (!timer->GetIsCountNow()) {  // タイマーが動作していない場合
+				timer->SetTime(0.5f);
 				timer->Start();
-				isTimerActive_ = true;  
 			}
-
-			ImGui::Text("OmenNow");
-			ImGui::Text("Time:%f", timer->GetNowTime());
-
+			{
+				//ここに予備動作の内容を記述
+			}
 			if (timer->GetIsEnd()) {
 				fall->Start();
-				isTimerActive_ = false;  // タイマーが終了したのでフラグをリセット
-				timer->Reset();
+				timer->Reset();  // タイマーをリセットして次回に備える
 			}
 		}
 	}
@@ -73,12 +70,13 @@ void Component_HelingoBehavior::Update()
 		auto chase = dynamic_cast<Component_Chase*>(GetChildComponent("Chase"));
 		if (chase == nullptr) return;
 		chase->Stop();
-		isTimerActive_ = false;  // 範囲外に出たのでフラグをリセット
-		auto timer = dynamic_cast<Component_Timer*>(GetChildComponent("Timer"));
-		if (timer == nullptr) return;
-		timer->Reset();
 	}
 
+	// タイマーが終了している場合にフラグをリセットする
+	if (timer->GetIsEnd()) {
+		fall->Start();
+		timer->Reset();  // タイマーをリセットして次回に備える
+	}
 }
 
 void Component_HelingoBehavior::Release()

@@ -75,6 +75,11 @@ public:
 	/// </returns>
 	bool GetIsEnd();
 
+	/// <summary>
+	/// 現在カウント中か
+	/// </summary>
+	bool GetIsCountNow();
+
 	/// <param name="_time">
 	/// カウントする時間(秒)
 	/// </param>

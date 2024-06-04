@@ -78,5 +78,7 @@ public:
 	void Execute() { isActive_ = true; }
 
 	bool IsActived() { return isActive_; }
+
+
 };
 

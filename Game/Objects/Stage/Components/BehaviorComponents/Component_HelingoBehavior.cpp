@@ -29,40 +29,54 @@ void Component_HelingoBehavior::Initialize()
 
 void Component_HelingoBehavior::Update()
 {
-	if (target_ == nullptr)target_ = (StageObject*)holder_->FindObject(targetName_);
-	if (target_ == nullptr)return;
+	if (target_ == nullptr) target_ = (StageObject*)holder_->FindObject(targetName_);
+	if (target_ == nullptr) return;
 
 	auto detector = dynamic_cast<Component_CircleRangeDetector*>(GetChildComponent("CircleRangeDetector"));
-	if (detector == nullptr)return;
+	if (detector == nullptr) return;
 
 	auto fall = dynamic_cast<Component_Fall*>(GetChildComponent("Fall"));
+	if (fall == nullptr) return;
 
-	// 範囲内にプレイヤーがいる場合
 	detector->SetRadius(discoveryrange_);
-	if (fall->IsActived() == false && detector->IsContains()) {
-
-		// 追従を開始
+	if (!fall->IsActived() && detector->IsContains()) {
 		auto chase = dynamic_cast<Component_Chase*>(GetChildComponent("Chase"));
-		if (chase == nullptr)return;
+		if (chase == nullptr) return;
 
 		chase->SetTarget(target_);
 		chase->Start();
 
 		detector->SetRadius(fallrange_);
-		if (detector->IsContains() == true) {
-
-			// 落下する
-			
-			if (fall == nullptr)return;
+		if (detector->IsContains()) {
 			chase->Stop();
-			fall->Start();
+
+			auto timer = dynamic_cast<Component_Timer*>(GetChildComponent("Timer"));
+			if (timer == nullptr) return;
+
+			if (!isTimerActive_) {
+				timer->SetTime(3);
+				timer->Start();
+				isTimerActive_ = true;  
+			}
+
+			ImGui::Text("OmenNow");
+			ImGui::Text("Time:%f", timer->GetNowTime());
+
+			if (timer->GetIsEnd()) {
+				fall->Start();
+				isTimerActive_ = false;  // タイマーが終了したのでフラグをリセット
+				timer->Reset();
+			}
 		}
 	}
-	else{
-		// 追従を停止
+	else {
 		auto chase = dynamic_cast<Component_Chase*>(GetChildComponent("Chase"));
-		if (chase == nullptr)return;
+		if (chase == nullptr) return;
 		chase->Stop();
+		isTimerActive_ = false;  // 範囲外に出たのでフラグをリセット
+		auto timer = dynamic_cast<Component_Timer*>(GetChildComponent("Timer"));
+		if (timer == nullptr) return;
+		timer->Reset();
 	}
 
 }

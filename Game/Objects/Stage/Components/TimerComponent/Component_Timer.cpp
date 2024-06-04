@@ -21,6 +21,9 @@ void Component_Timer::Update()
 	if (nowTime_ >= maxTime_ && !isInfinity_) Stop();
 	if (!isCountNow_) return;
 	nowTime_++;
+
+	if(isEnd_)
+		ImGui::Text("End");
 }
 
 void Component_Timer::Release()
@@ -74,8 +77,8 @@ void Component_Timer::Start()
 void Component_Timer::Stop()
 {
 	//countNow_をfalseにし、タイマーを停止
-	isCountNow_ = false;
 	isEnd_ = true;
+	isCountNow_ = false;
 }
 
 float Component_Timer::GetNowTime()
@@ -88,7 +91,7 @@ bool Component_Timer::GetIsEnd()
 	return isEnd_;
 }
 
-void Component_Timer::SetTime(int _time)
+void Component_Timer::SetTime(float _time)
 {
 	maxTime_ = _time * FPS;
 	isInfinity_ = false;

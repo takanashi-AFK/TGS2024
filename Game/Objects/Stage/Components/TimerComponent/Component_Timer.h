@@ -78,7 +78,7 @@ public:
 	/// <param name="_time">
 	/// カウントする時間(秒)
 	/// </param>
-	void SetTime(int _time);
+	void SetTime(float _time);
 
 	/// <summary>
 	/// タイマーをリセット

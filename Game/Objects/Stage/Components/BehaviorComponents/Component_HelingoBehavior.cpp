@@ -74,7 +74,7 @@ void Component_HelingoBehavior::Release()
 void Component_HelingoBehavior::OnCollision(GameObject* _target)
 {
 	// プレイヤーと衝突した場合
-	if (_target->GetObjectName() == "Player") {
+	if (_target->GetObjectName() == "Char_Player") {
 
 		// プレイヤーを消す
 		((Stage*)holder_->FindObject("Stage"))->DeleteStageObject((StageObject*)_target);

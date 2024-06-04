@@ -235,6 +235,9 @@
     <ClCompile Include="Game\Objects\Stage\Components\MoveComponents\Component_WASDInputMove.cpp">
       <Filter>03Game\Objects\Stage\Components\MoveComponents</Filter>
     </ClCompile>
+    <ClCompile Include="Game\Objects\Stage\Components\BehaviorComponents\Component_PlayerBehavior.cpp">
+      <Filter>03Game\Objects\Stage\Components\BehaviorComponents</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Collider\BoxCollider.h">
@@ -410,6 +413,9 @@
     </ClInclude>
     <ClInclude Include="Game\Objects\Stage\Components\MoveComponents\Component_WASDInputMove.h">
       <Filter>03Game\Objects\Stage\Components\MoveComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Objects\Stage\Components\BehaviorComponents\Component_PlayerBehavior.h">
+      <Filter>03Game\Objects\Stage\Components\BehaviorComponents</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

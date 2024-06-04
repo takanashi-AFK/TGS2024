@@ -10,6 +10,7 @@
 #include "DetectorComponents/Component_FanRangeDetector.h"
 #include "BehaviorComponents/Component_HelingoBehavior.h"
 #include "BehaviorComponents/Component_CactanBehavior.h"
+#include "BehaviorComponents/Component_PlayerBehavior.h"
 #include "HealthManagerComponents/Component_HealthManager.h"
 #include "MoveComponents/Component_Chase.h"
 #include "MoveComponents/Component_Fall.h"
@@ -193,6 +194,7 @@ Component* CreateComponent(string _name,ComponentType _type, StageObject* _holde
 	case FanRangeDetector:comp = new Component_FanRangeDetector(_name,_holder, _parent); break;
 	case HelingoBehavior:comp = new Component_HelingoBehavior(_name,_holder, _parent); break;
 	case CactanBihavior:comp = new Component_CactanBehavior(_name, _holder, _parent); break;
+	case PlayerBehavior:comp = new Component_PlayerBehavior(_name, _holder, _parent); break;
 	case Timer:comp = new Component_Timer(_name,_holder, _parent); break;
 	case HealthManager:comp = new Component_HealthManager(_name,_holder, _parent); break;
 	case ShootAttack:comp = new Component_ShootAttack(_name,_holder, _parent); break;
@@ -222,6 +224,7 @@ string ComponentTypeToString(ComponentType _type)
 	case FanRangeDetector: return "FanRangeDetectorComponent";
 	case HelingoBehavior: return "HelingoBehaviorComponent";
 	case CactanBihavior: return "CactanBihaviorComponent";
+	case PlayerBehavior: return "PlayerBehaviorComponent";
 	case Timer: return "TimerComponent";
 	case HealthManager: return "HealthManagerComponent";
 	case ShootAttack: return "ShootAttackComponent";

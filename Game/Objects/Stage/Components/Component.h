@@ -27,6 +27,7 @@ enum ComponentType {
     Fall,
     WASDInputMove,
     ShootAttack,
+	PlayerBehavior,
     // コンポーネント追加時に識別番号を追加
     Max
 };

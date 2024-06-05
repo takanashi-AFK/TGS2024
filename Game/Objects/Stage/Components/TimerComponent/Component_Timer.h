@@ -75,15 +75,22 @@ public:
 	/// </returns>
 	bool GetIsEnd();
 
+	/// <summary>
+	/// 現在カウント中か
+	/// </summary>
+	bool GetIsCountNow();
+
 	/// <param name="_time">
 	/// カウントする時間(秒)
 	/// </param>
-	void SetTime(int _time);
+	void SetTime(float _time);
 
 	/// <summary>
 	/// タイマーをリセット
 	/// </summary>
 	void Reset();
+
+	void End();
 
 	/// <returns>
 	/// 指定の時間になったらtrue(停止はしない)
@@ -102,5 +109,7 @@ public:
 	/// </summary>
 	/// <param name="_isInfinity">無限にするか</param>
 	void SetInfinity(bool _isInfinity) { isInfinity_ = _isInfinity; }
+
+	void SetZeroTime() { nowTime_ = 0;}
 };
 

@@ -9,11 +9,12 @@ private:
 
 	float fallrange_;		// 落下範囲
 	float discoveryrange_;			// 発見範囲
+	bool isTimerActive_;	// タイマーがアクティブかどうか
 
 public:
 	/// <summary>
 	/// コンストラクタ
-	/// </summary>
+	/// </summary>	
 	/// <param name="_holder">保有者</param>
 	Component_HelingoBehavior(string _name, StageObject* _holder, Component* _parent);
 	

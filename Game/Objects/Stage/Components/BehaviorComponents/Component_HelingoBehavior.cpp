@@ -30,41 +30,54 @@ void Component_HelingoBehavior::Initialize()
 
 void Component_HelingoBehavior::Update()
 {
-	if (target_ == nullptr)target_ = (StageObject*)holder_->FindObject(targetName_);
-	if (target_ == nullptr)return;
+	if (target_ == nullptr) target_ = (StageObject*)holder_->FindObject(targetName_);
+	if (target_ == nullptr) return;
 
 	auto detector = dynamic_cast<Component_CircleRangeDetector*>(GetChildComponent("CircleRangeDetector"));
-	if (detector == nullptr)return;
+	if (detector == nullptr) return;
 
 	auto fall = dynamic_cast<Component_Fall*>(GetChildComponent("Fall"));
+	if (fall == nullptr) return;
 
-	// 範囲内にプレイヤーがいる場合
+	auto timer = dynamic_cast<Component_Timer*>(GetChildComponent("Timer"));
+	if (timer == nullptr) return;
+
+	//検知範囲の設定
 	detector->SetRadius(discoveryrange_);
-	if (fall->IsActived() == false && detector->IsContains()) {
 
-		// 追従を開始
+
+	if (!fall->IsActived() && detector->IsContains()) {
 		auto chase = dynamic_cast<Component_Chase*>(GetChildComponent("Chase"));
-		if (chase == nullptr)return;
+		if (chase == nullptr) return;
 
+		// 追跡ターゲットの設定、追跡開始
 		chase->SetTarget(target_);
 		chase->Start();
 
+		// 落下範囲の設定
 		detector->SetRadius(fallrange_);
-		if (detector->IsContains() == true) {
 
-			// 落下する
-			
-			if (fall == nullptr)return;
+		// 落下範囲に入った場合
+		if (detector->IsContains()) {
+			// 追跡を停止
 			chase->Stop();
+
 			fall->Start();
 		}
+		else {// 落下範囲から外れたら
+			// タイマーをリセット
+			fall->Stop();
+			timer->Reset();
+		}
+
 	}
-	else{
-		// 追従を停止
+	else {
 		auto chase = dynamic_cast<Component_Chase*>(GetChildComponent("Chase"));
-		if (chase == nullptr)return;
+		if (chase == nullptr) return;
 		chase->Stop();
+		
 	}
+
 
 }
 

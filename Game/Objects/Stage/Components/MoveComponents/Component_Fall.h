@@ -10,6 +10,14 @@
 class Component_Fall : public Component
 {
 private:
+	enum STATE
+	{
+		NONE = 0,
+		FALL,
+		RISE,
+		WAIT,
+		MAX,
+	};
 	
 	float fallSpeed_;		//降下速度
 	float riseSpeed_;		//上昇速度
@@ -20,7 +28,13 @@ private:
 	
 	bool isFirstTime_ = true;	//最初の状態を保存するか
 	bool isFalling_ = false;	//落下するかどうか
+	bool isRised_ = false;		//上昇するかどうか
 	bool isActive_;				//実行されたかどうか
+
+
+	STATE state_ ;
+	STATE prevState_;
+
 public:
 
 	/// <summary>
@@ -74,10 +88,10 @@ public:
 	/// <summary>
 	/// 実行されているかどうか
 	/// </summary>
-	void Execute() { isActive_ = true; }
-
 	bool IsActived() { return isActive_; }
 
+
 	bool IsFalling() { return isFalling_; }
+	bool GetIsRised() { return isRised_; }
 };
 

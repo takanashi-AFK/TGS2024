@@ -41,32 +41,46 @@ void Component_HelingoBehavior::Update()
 	auto timer = dynamic_cast<Component_Timer*>(GetChildComponent("Timer"));
 	if (timer == nullptr) return;
 
+	//検知範囲の設定
 	detector->SetRadius(discoveryrange_);
+
+
 	if (!fall->IsActived() && detector->IsContains()) {
 		auto chase = dynamic_cast<Component_Chase*>(GetChildComponent("Chase"));
 		if (chase == nullptr) return;
 
+		// 追跡ターゲットの設定、追跡開始
 		chase->SetTarget(target_);
 		chase->Start();
 
+		// 落下範囲の設定
 		detector->SetRadius(fallrange_);
+
+		// 落下範囲に入った場合
 		if (detector->IsContains()) {
+			// 追跡を停止
 			chase->Stop();
 
-			if (!timer->GetIsCountNow()) {  // タイマーが動作していない場合
-				timer->SetTime(2.f);
+			// タイマーがアクティブでない場合
+			if (!timer->GetIsCountNow() && !timer->GetIsEnd()) {
+				// タイマー開始
+				timer->SetTime(3.f);
 				timer->Start();
 			}
 
 			ImGui::Text("OmenNow");
 			ImGui::Text("Time:%f", timer->GetNowTime());
 			
-			if (timer->GetIsEnd()) {
-				fall->Start();
-				timer->SetZeroTime();
+			// タイマーが終了したら
+			if (!timer->GetIsCountNow() && timer->GetIsEnd()) {
+				// 落下開始
+				fall->Start();	
+				timer->Reset();
+
 			}
 		}
-		else {
+		else {// 落下範囲から外れたら
+			// タイマーをリセット
 			timer->Reset();
 		}
 

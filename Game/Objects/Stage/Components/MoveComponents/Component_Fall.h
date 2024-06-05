@@ -21,6 +21,7 @@ private:
 	
 	bool isFirstTime_ = true;	//Å‰‚Ìó‘Ô‚ğ•Û‘¶‚·‚é‚©
 	bool isFalling_ = false;	//—‰º‚·‚é‚©‚Ç‚¤‚©
+	bool isRised_ = false;		//ã¸‚·‚é‚©‚Ç‚¤‚©
 	bool isActive_;				//Às‚³‚ê‚½‚©‚Ç‚¤‚©
 public:
 
@@ -77,6 +78,6 @@ public:
 	/// </summary>
 	bool IsActived() { return isActive_; }
 
-	bool IsFalling() { return isFalling_; }
+	bool GetIsRised() { return isRised_; }
 };
 

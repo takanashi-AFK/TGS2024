@@ -30,6 +30,7 @@ void Component_Fall::Update()
 			startFallPosition_.y = pPos.y;
 
 			isFirstTime_ = false;
+			isRised_ = false;
 		}
 
 		if (isFalling_) {
@@ -54,6 +55,7 @@ void Component_Fall::Update()
 				isFalling_ = true;
 				isActive_ = false;
 				isFirstTime_ = true;
+				isRised_ = true;
 				pPos.y = startRisePosition_.y;  // 上昇開始位置に戻す
 				startFallPosition_.y = pPos.y;  // 降下開始位置を記録
 			}

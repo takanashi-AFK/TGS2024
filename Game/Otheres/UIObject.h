@@ -1,10 +1,6 @@
 #pragma once
 #include"../../Engine/Json/JsonReader.h"
 #include"../../Engine/GameObject/GameObject.h"
-#include"../../Engine/DirectX/EasingFunction.h"
-
-//usingêÈåæ
-using namespace Direct3D;
 
 class UIObject: public GameObject
 {

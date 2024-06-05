@@ -1,8 +1,5 @@
 #include "UIButton.h"
 
-#include "../../../Engine/ResourceManager/Image.h"
-#include "../../../Engine/ImGui/imgui.h"
-
 UIButton::UIButton(string _name ,GameObject* _parent)
 	:UIObject("UIButton", _parent), UIButtonPict_(-1)
 {

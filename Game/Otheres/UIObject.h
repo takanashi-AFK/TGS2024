@@ -1,6 +1,11 @@
 #pragma once
 #include"../../Engine/Json/JsonReader.h"
 #include"../../Engine/GameObject/GameObject.h"
+#include"../../Engine/DirectX/EasingFunction.h"
+
+//using宣言
+using namespace Direct3D;
+
 class UIObject: public GameObject
 {
 
@@ -37,12 +42,12 @@ public:
      /// 保存
     /// </summary>
    /// <param name="_saveUiobj">保存データ</param>
-   virtual void Save(json& _saveUiobj) = 0;
+   virtual void Save(json& _saveUIobj) = 0;
 
 	 /// <summary>
     /// 読込
    /// </summary>
   /// <param name="_loadUiobj">読込データ</param>
-  virtual void Load(json& _loadUiobj) = 0;
+  virtual void Load(json& _loadUIobj) = 0;
 };
 

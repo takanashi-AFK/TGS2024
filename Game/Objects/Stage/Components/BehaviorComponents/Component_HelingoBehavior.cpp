@@ -60,9 +60,10 @@ void Component_HelingoBehavior::Update()
 
 			ImGui::Text("OmenNow");
 			ImGui::Text("Time:%f", timer->GetNowTime());
-			bool a = timer->GetIsEnd();
-			if (a == true) {
+			
+			if (timer->GetIsEnd()) {
 				fall->Start();
+				timer->SetZeroTime();
 			}
 		}
 		else {
@@ -76,6 +77,9 @@ void Component_HelingoBehavior::Update()
 		chase->Stop();
 		
 	}
+
+	ImGui::Text("Time:%f", timer->GetNowTime());
+
 }
 
 void Component_HelingoBehavior::Release()
@@ -88,7 +92,7 @@ void Component_HelingoBehavior::OnCollision(GameObject* _target)
 	if (_target->GetObjectName() == "Char_Player") {
 
 		// ƒvƒŒƒCƒ„[‚ðÁ‚·
-		((Stage*)holder_->FindObject("Stage"))->DeleteStageObject((StageObject*)_target);
+		//((Stage*)holder_->FindObject("Stage"))->DeleteStageObject((StageObject*)_target);
 	}
 }
 

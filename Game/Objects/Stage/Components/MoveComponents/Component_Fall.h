@@ -75,10 +75,8 @@ public:
 	/// <summary>
 	/// é¿çsÇ≥ÇÍÇƒÇ¢ÇÈÇ©Ç«Ç§Ç©
 	/// </summary>
-	void Execute() { isActive_ = true; }
-
 	bool IsActived() { return isActive_; }
 
-
+	bool IsFalling() { return isFalling_; }
 };
 

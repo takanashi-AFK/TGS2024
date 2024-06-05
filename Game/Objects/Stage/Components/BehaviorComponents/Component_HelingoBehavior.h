@@ -10,6 +10,7 @@ private:
 	float fallrange_;		// 落下範囲
 	float discoveryrange_;			// 発見範囲
 	bool isTimerActive_;	// タイマーがアクティブかどうか
+
 public:
 	/// <summary>
 	/// コンストラクタ

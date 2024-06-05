@@ -75,8 +75,6 @@ void Component_Fall::Save(json& _saveObj)
 	_saveObj["fallSpeed_"] = fallSpeed_;
 	_saveObj["riseSpeed_"] = riseSpeed_;
 	_saveObj["fallDistance_"] = fallDistance_;
-
-
 }
 
 // ì«çû
@@ -98,6 +96,6 @@ void Component_Fall::DrawData()
 	ImGui::DragFloat("riseSpeed_", &riseSpeed_, 0.1f);
 	ImGui::DragFloat("fallDistance_", &fallDistance_, 0.1f);
 	if (ImGui::Button("Falling")) {
-		Execute();
+		Start();
 	}
 }

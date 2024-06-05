@@ -109,5 +109,7 @@ public:
 	/// </summary>
 	/// <param name="_isInfinity">–³ŒÀ‚É‚·‚é‚©</param>
 	void SetInfinity(bool _isInfinity) { isInfinity_ = _isInfinity; }
+
+	void SetZeroTime() { nowTime_ = 0;}
 };
 

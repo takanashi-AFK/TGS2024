@@ -21,8 +21,8 @@ void Component_Timer::Update()
 	if (nowTime_ >= maxTime_ && !isInfinity_)
 		End();
 
-	nowTime_++;
 	if (!isCountNow_) return;
+	nowTime_++;
 }
 
 void Component_Timer::Release()

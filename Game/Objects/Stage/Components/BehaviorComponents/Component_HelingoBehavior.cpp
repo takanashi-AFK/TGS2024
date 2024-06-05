@@ -61,26 +61,28 @@ void Component_HelingoBehavior::Update()
 			// 追跡を停止
 			chase->Stop();
 
-			// タイマーがアクティブでない場合
-			if (!timer->GetIsCountNow() && !timer->GetIsEnd()) {
-				// タイマー開始
-				timer->SetTime(3.f);
-				timer->Start();
-			}
+			//// タイマーがアクティブでない場合
+			//if (!timer->GetIsCountNow() && !timer->GetIsEnd()) {
+			//	// タイマー開始
+			//	timer->SetTime(3.f);
+			//	timer->Start();
+			//}
 
-			ImGui::Text("OmenNow");
-			ImGui::Text("Time:%f", timer->GetNowTime());
-			
-			// タイマーが終了したら
-			if (!timer->GetIsCountNow() && timer->GetIsEnd()) {
-				// 落下開始
-				fall->Start();	
-				timer->Reset();
+			//ImGui::Text("OmenNow");
+			//ImGui::Text("Time:%f", timer->GetNowTime());
+			//
+			//// タイマーが終了したら
+			//if (!timer->GetIsCountNow() && timer->GetIsEnd()) {
+			//	// 落下開始
+			//	fall->Start();
+			//	timer->Reset();
+			//}
 
-			}
+			fall->Start();
 		}
 		else {// 落下範囲から外れたら
 			// タイマーをリセット
+			fall->Stop();
 			timer->Reset();
 		}
 
@@ -92,7 +94,6 @@ void Component_HelingoBehavior::Update()
 		
 	}
 
-	ImGui::Text("Time:%f", timer->GetNowTime());
 
 }
 

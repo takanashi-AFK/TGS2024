@@ -10,6 +10,14 @@
 class Component_Fall : public Component
 {
 private:
+	enum STATE
+	{
+		NONE = 0,
+		FALL,
+		RISE,
+		WAIT,
+		MAX,
+	};
 	
 	float fallSpeed_;		//ç~â∫ë¨ìx
 	float fallSpeedplus_;	//ç~â∫ë¨ìxÇè„Ç∞ÇÈÇ‚Ç¬
@@ -23,6 +31,11 @@ private:
 	bool isFalling_ = false;	//óéâ∫Ç∑ÇÈÇ©Ç«Ç§Ç©
 	bool isRised_ = false;		//è„è∏Ç∑ÇÈÇ©Ç«Ç§Ç©
 	bool isActive_;				//é¿çsÇ≥ÇÍÇΩÇ©Ç«Ç§Ç©
+
+
+	STATE state_ ;
+	STATE prevState_;
+
 public:
 
 	/// <summary>

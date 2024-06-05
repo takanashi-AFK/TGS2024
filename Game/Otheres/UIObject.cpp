@@ -4,7 +4,7 @@
 #include "../../Engine/Global.h"
 
 UIObject::UIObject(string _name, GameObject* _parent)
-	: GameObject(_parent,_name)
+	: GameObject(_parent, objectName_)
 {
 }
 
@@ -27,7 +27,7 @@ void UIObject::Release()
 void UIObject::Save(json& _saveUIobj)
 {
 	//é©êgÇÃïœå`çsóÒÇï€ë∂
-	_saveUIobj["UIposition"] = { REFERENCE_XMFLOAT3(transform_.position_)};
+	_saveUIobj["UIposition"] = { REFERENCE_XMFLOAT3(transform_.position_) };
 	_saveUIobj["UIrotate_"] = { REFERENCE_XMFLOAT3(transform_.rotate_) };
 	_saveUIobj["UIscale"] = { REFERENCE_XMFLOAT3(transform_.scale_) };
 }

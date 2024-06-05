@@ -5,14 +5,22 @@ class UIButton : public UIObject
 {
 private:
 
+	//UIの画像
+	int UIButtonPict_;
+	//ボタンが押されたかどうか
+	bool isButtonPushed_;
+	//画像のサイズ
+	XMFLOAT3 size_;
+	//マウスの位置
+	XMFLOAT3 mouseCenter_;
+
 public:
 
 	/// <summary>
 	/// コンストラクタ
 	/// </summary>
 	/// <param name="_name">UIオブジェクトの名前</param>
-	/// <param name="_modelFilePath">モデルファイルパス</param>
-	/// <param name="_parent">親オブジェクト</param>
+	/// <param name="_parent">親のオブジェクト</param>
 	UIButton(string _name, GameObject* _parent);
 
 	/// <summary>
@@ -38,15 +46,38 @@ public:
 	/// <summary>
 	/// 保存
 	/// </summary>
-	/// <param name="_saveUiobj"></param>
-	void Save(json& _saveUiobj) override;
+	/// <param name="_saveUIobj"></param>
+	void Save(json& _saveUIobj) override;
 
 	/// <summary>
 	/// 読み込み
 	/// </summary>
-	/// <param name="_loadUiobj"></param>
-	void Load(json& _loadUiobj) override;
+	/// <param name="_loadUIobj"></param>
+	void Load(json& _loadUIobj) override;
 
+	//Imgui上でイージング関数の仕組みを確認するもの
 
+	/// <summary>
+	/// GUI上で表示
+	/// </summary>
+	void DrawGUI();
+
+	/// <summary>
+	/// 画像を設定
+	/// </summary>
+	void SetImage();
+
+	/// <summary>
+	/// マウスボタンの中に入っているか
+	/// </summary>
+	/// <param name="mousePos">マウスの現在地</param>
+	/// <returns></returns>
+	bool MouseInArea(XMFLOAT3 mousePos);
+
+	/// <summary>
+	/// 押されたか
+	/// </summary>
+	/// <param name="pushed">ボタンが押されたら</param>
+	void ClickButton(bool pushed);
 };
 

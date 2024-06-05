@@ -1,7 +1,7 @@
 #include "UIPanel.h"
 
-UIPanel::UIPanel(string _name,GameObject* _parent) 
-	: UIObject(_name, _parent)
+UIPanel::UIPanel(string _name, GameObject* _parent)
+	: UIObject(objectName_,_parent)
 {
 }
 

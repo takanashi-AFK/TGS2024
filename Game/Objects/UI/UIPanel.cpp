@@ -13,29 +13,25 @@ UIPanel::~UIPanel()
 
 void UIPanel::Initialize()
 {
-	//UIButtonクラスのインスタンスを生成
-	UIButton * button = new UIButton(this);
 
-	button->Initialize();
-	AddChild(button);
 }
 
 void UIPanel::Update()
 {
-	//子オブジェクトを更新
-	for (UIObject* child : childList) {
-		child->Update();
-	}
+	////子オブジェクトを更新
+	//for (UIObject* child : childList) {
+	//	child->Update();
+	//}
 
 	//UIObject::Update();
 }
 
 void UIPanel::Draw()
 {
-	//子オブジェクトを描画
-	for (UIObject* child : childList) {
-		child->Draw();
-	}
+	////子オブジェクトを描画
+	//for (UIObject* child : childList) {
+	//	child->Draw();
+	//}
 	//UIObject::Draw();
 }
 
@@ -67,12 +63,4 @@ void UIPanel::RemoveChild(UIObject* _child)
 
 void UIPanel::ClearChildren()
 {
-	// childListの中身を参照してループ処理
-	for (UIObject* child : childList) {
-		// 子オブジェクトを解放
-		child->Release();
-		delete child;
-	}
-	// childListの中身を全て削除
-	childList.clear();
 }

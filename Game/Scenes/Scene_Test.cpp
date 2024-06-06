@@ -16,6 +16,7 @@
 Scene_Test::Scene_Test(GameObject * parent)
 	: GameObject(parent, "Scene_Test"), panel(nullptr)
 {
+
 }
 
 void Scene_Test::Initialize()
@@ -23,12 +24,13 @@ void Scene_Test::Initialize()
 	// スカイスフィアを標準で生成
 	Instantiate<SkySphere>(this);
 
-	panel = Instantiate<UIPanel>(this);
-	panel->Initialize();
+	
+	panel = Instantiate<UIPanel>(this); //this はScene_Testのことを指してる。
+	button = Instantiate<UIButton>(panel);
 
 	//UIButtonクラスのインスタンスを生成
-	UIButton * button = new UIButton(panel);//UIButtonをUIPanelの子オブジェクトに設定
-	button->Initialize();
+	//UIButton * button = new UIButton(panel);//UIButtonをUIPanelの子オブジェクトに設定
+	//button->Initialize();
 
 	//UIButtonをUIPanelの子オブジェクトに追加
 	panel->AddChild(button);

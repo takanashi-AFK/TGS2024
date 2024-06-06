@@ -20,7 +20,7 @@ private:
 
 	//テスト中
 	//ボタンクラスのインスタンス
-	//UIButton* button;
+	UIButton* button;
 
 	//UIパネルクラスのインスタンス
 	UIPanel* panel;

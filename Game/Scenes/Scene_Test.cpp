@@ -5,6 +5,11 @@
 #include "../Objects/Stage/Stage.h"
 #include "../Otheres/StageEditor.h"
 
+//UIButton追加インクルード
+#include "../Objects/UI/UIButton.h"
+#include "../../Engine/DirectX/Input.h"
+#include "../../Engine/ImGui/imgui.h"
+
 Scene_Test::Scene_Test(GameObject * parent)
 	: GameObject(parent, "Scene_Test")
 {
@@ -31,6 +36,10 @@ void Scene_Test::Initialize()
 
 void Scene_Test::Update()
 {
+	if (button->ClickButton())
+	{
+		PostQuitMessage(0);
+	}
 }
 
 void Scene_Test::Draw()

@@ -62,7 +62,7 @@ void Component_HelingoBehavior::Update()
 			// 追跡を停止
 			chase->Stop();
 
-			fall->Start();
+			fall->Execute();
 		}
 		else {// 落下範囲から外れたら
 			// タイマーをリセット

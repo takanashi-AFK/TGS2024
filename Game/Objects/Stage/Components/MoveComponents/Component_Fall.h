@@ -17,21 +17,18 @@ private:
 	STATE nowState_ ;					// 現在の状態	
 	STATE prevState_;					// １フレーム前の状態
 
-	float fallSpeed_;		//降下速度
-	float riseSpeed_;		//上昇速度
-	float fallDistance_;	//降下する距離
+	float fallSpeed_;					//降下速度
+	float riseSpeed_;					//上昇速度
+	float fallDistance_;				//降下する距離
 
-	float startRiseHeight_;	//上昇開始高さ
+	float startHeight_;					//開始の高さ
 
-	XMFLOAT3 startRisePosition_; //上昇開始位置
-	XMFLOAT3 startFallPosition_; //降下開始位置
-	
+	float startRiseHeight_;				//上昇開始の高さ
+	float startFallHeight_;				//降下開始の高さ
 	bool isFirstTime_ = true;	//最初の状態を保存するか
 	bool isFalling_ = false;	//落下するかどうか
 	bool isRised_ = false;		//上昇するかどうか
 	bool isActive_;				//実行されたかどうか
-
-
 
 public:
 
@@ -76,7 +73,7 @@ public:
 	/// <summary>
 	/// 降下の開始
 	/// </summary>
-	void Start() { isActive_ = true; }
+	void Execute() { isActive_ = true; }
 
 	/// <summary>
 	/// 降下の停止
@@ -91,5 +88,11 @@ public:
 
 	bool IsFalling() { return isFalling_; }
 	bool GetIsRised() { return isRised_; }
+
+	void SetState(STATE _state) { nowState_ = _state; }
+private:
+	void FallMove(float& _height);	//降下
+	void RiseMove(float& _height);	//上昇
+	void Wait();	//待機
 };
 

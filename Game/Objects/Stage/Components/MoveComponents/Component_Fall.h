@@ -4,27 +4,27 @@
 #include "../Component.h"
 #include <DirectXMath.h>
 
+// usingディレクティブ
+using namespace DirectX;
+
 /// <summary>
 /// オブジェクトの降下・上昇を行うコンポーネントのクラス
 /// </summary>
 class Component_Fall : public Component
 {
 private:
-	enum STATE
-	{
-		NONE = 0,
-		FALL,
-		RISE,
-		WAIT,
-		MAX,
-	};
-	
+	enum STATE { FALL, RISE, WAIT, };	// 状態
+	STATE nowState_ ;					// 現在の状態	
+	STATE prevState_;					// １フレーム前の状態
+
 	float fallSpeed_;		//降下速度
 	float riseSpeed_;		//上昇速度
-	float fallDistance_;	//降下しきるまでの距離
+	float fallDistance_;	//降下する距離
 
-	DirectX::XMFLOAT3 startRisePosition_; //上昇し始めの位置
-	DirectX::XMFLOAT3 startFallPosition_; //降下し始めの位置
+	float startRiseHeight_;	//上昇開始高さ
+
+	XMFLOAT3 startRisePosition_; //上昇開始位置
+	XMFLOAT3 startFallPosition_; //降下開始位置
 	
 	bool isFirstTime_ = true;	//最初の状態を保存するか
 	bool isFalling_ = false;	//落下するかどうか
@@ -32,8 +32,6 @@ private:
 	bool isActive_;				//実行されたかどうか
 
 
-	STATE state_ ;
-	STATE prevState_;
 
 public:
 

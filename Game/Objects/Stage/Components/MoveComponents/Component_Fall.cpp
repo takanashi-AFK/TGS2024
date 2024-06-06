@@ -16,7 +16,7 @@ namespace
 Component_Fall::Component_Fall(string _name, StageObject* _holder, Component* _parent)
 	: Component(_holder, _name, Fall, _parent)
 	, fallSpeed_(), riseSpeed_(), fallDistance_(),
-	isFalling_(false), isFirstTime_(true), isActive_(false), startRisePosition_(), startFallPosition_(), state_(WAIT), prevState_(RISE)
+	isFalling_(false), isFirstTime_(true), isActive_(false), startRisePosition_(), startFallPosition_(), nowState_(WAIT), prevState_(RISE)
 {
 }
 
@@ -43,7 +43,7 @@ void Component_Fall::Update()
 			isRised_ = false;
 		}
 
-		switch (state_)
+		switch (nowState_)
 		{
 		case FALL:
 			// 降下中の処理
@@ -56,7 +56,7 @@ void Component_Fall::Update()
 				timer->Reset();
 				holderPos.y = startFallPosition_.y - fallDistance_;
 				prevState_ = FALL;
-				state_ = WAIT;
+				nowState_ = WAIT;
 			}
 			break;
 
@@ -70,7 +70,7 @@ void Component_Fall::Update()
 				// 物体が一定高さに達したら上昇を停止し、降下を開始する
 				timer->Reset();
 				prevState_ = RISE;
-				state_ = WAIT;
+				nowState_ = WAIT;
 				isActive_ = false;
 				isFirstTime_ = true;
 				holderPos.y = startRisePosition_.y;  // 上昇開始位置に戻す
@@ -84,14 +84,14 @@ void Component_Fall::Update()
 				timer->SetTime(riseWaitTime_);
 				timer->Start();
 				if (timer->GetIsEnd()) {
-					state_ = RISE;
+					nowState_ = RISE;
 				}
 			}
 			else if (prevState_ == RISE) {
 				timer->SetTime(fallWaitTime_);
 				timer->Start();
 				if (timer->GetIsEnd()) {
-					state_ = FALL;
+					nowState_ = FALL;
 				}
 			}
 			ImGui::Text("Time:%f", timer->GetNowTime());

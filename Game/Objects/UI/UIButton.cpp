@@ -1,6 +1,7 @@
 #include "UIButton.h"
 #include "../../../Engine/ResourceManager/Image.h"
 #include "../../../Engine/DirectX/Input.h"
+#include "../../../Engine/DirectX/EasingFunction.h"
 
 UIButton::UIButton(string _name ,GameObject* _parent)
 	:UIObject("UIButton", _parent), UIButtonPict_(-1), isButtonPushed_(false)
@@ -49,6 +50,8 @@ void UIButton::DrawGUI()
 {
 	std::vector<std::string> easingFunc;
 	static int currentEasing = 0;
+	//for(const auto& pair : EaseFunc)
+	//	easingFunc.push_back(pair.first);
 
 }
 

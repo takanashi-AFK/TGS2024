@@ -4,7 +4,7 @@
 #include "../../Engine/Global.h"
 
 UIObject::UIObject(string _name, GameObject* _parent)
-	: GameObject(_parent, objectName_)
+	: GameObject(_parent, _name)
 {
 }
 
@@ -22,6 +22,7 @@ void UIObject::Draw()
 
 void UIObject::Release()
 {
+
 }
 
 void UIObject::Save(json& _saveUIobj)
@@ -39,3 +40,5 @@ void UIObject::Load(json& _loadUIobj)
 	transform_.rotate_ = { _loadUIobj["UIrotate_"][0].get<float>(),_loadUIobj["UIrotate_"][1].get<float>(),_loadUIobj["UIrotate_"][2].get<float>() };
 	transform_.scale_ = { _loadUIobj["UIscale_"][0].get<float>(),_loadUIobj["UIscale_"][1].get<float>(),_loadUIobj["UIscale_"][2].get<float>() };
 }
+
+

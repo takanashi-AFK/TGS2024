@@ -14,7 +14,7 @@
 #include "../Objects/UI/UIPanel.h"
 
 Scene_Test::Scene_Test(GameObject * parent)
-	: GameObject(parent, "Scene_Test")
+	: GameObject(parent, "Scene_Test"), panel(nullptr)
 {
 }
 
@@ -45,16 +45,9 @@ void Scene_Test::Initialize()
 	*/
 }
 
+
 void Scene_Test::Update()
 {
-	/*
- if (button->ClickButton())
-	{
-		PostQuitMessage(0);
-	}
- */
-
-
 	panel->Update();
 }
 
@@ -65,8 +58,5 @@ void Scene_Test::Draw()
 
 void Scene_Test::Release()
 {
-	if (panel != nullptr)
-	{
-		panel->Release();
-	}
+
 }

@@ -3,14 +3,18 @@
 #include "../../Objects/UI/UIButton.h"
 
 UIPanel::UIPanel(GameObject* _parent)
-	: UIObject("UIPanel", _parent)
+	: UIObject("UIPanel", _parent), button(nullptr) // Initialize button to nullptr
+{
+}
+
+UIPanel::~UIPanel()
 {
 }
 
 void UIPanel::Initialize()
 {
 	//UIButtonクラスのインスタンスを生成
-	UIButton * button = new UIButton(this);
+	button = new UIButton(this);
 
 	button->Initialize();
 	AddChild(button);
@@ -23,7 +27,7 @@ void UIPanel::Update()
 		child->Update();
 	}
 
-	UIObject::Update();
+	//UIObject::Update();
 }
 
 void UIPanel::Draw()
@@ -32,21 +36,13 @@ void UIPanel::Draw()
 	for (UIObject* child : childList) {
 		child->Draw();
 	}
-	UIObject::Draw();
+	//UIObject::Draw();
 }
 
 void UIPanel::Release()
 {
-	//子オブジェクトをすべて削除
+	// 子オブジェクトをすべて削除
 	ClearChildren();
-	//UIObjectのリソースを解放
-	UIObject::Release();
-
-	for (UIObject*& child : childList) {
-		child = nullptr;
-	}
-	//childListの中身を全て削除
-	childList.clear();
 }
 
 void UIPanel::Save(json& _saveUiobj)
@@ -71,17 +67,17 @@ void UIPanel::RemoveChild(UIObject* _child)
 
 void UIPanel::ClearChildren()
 {
-	//子オブジェクトをすべて削除
-
-	//chaildListの中身を参照してループ処理
+	// childListの中身を参照してループ処理
 	for (UIObject* child : childList) {
-		//子オブジェクトを解放
+		// 子オブジェクトを解放
 		child->Release();
+		delete child;
 	}
-	//childListの中身を全て削除
+	// childListの中身を全て削除
 	childList.clear();
-
 }
+
+
 
 
 

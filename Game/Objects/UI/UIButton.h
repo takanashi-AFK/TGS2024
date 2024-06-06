@@ -26,6 +26,11 @@ public:
 	UIButton(GameObject* _parent);
 
 	/// <summary>
+	/// デストラクタ
+	/// </summary>
+	~UIButton();
+
+	/// <summary>
 	/// 初期化
 	/// </summary>
 	void Initialize() override;

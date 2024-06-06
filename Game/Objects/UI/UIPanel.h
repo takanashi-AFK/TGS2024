@@ -28,6 +28,11 @@ public:
 	UIPanel(GameObject* _parent);
 
 	/// <summary>
+	/// デストラクタ
+	/// </summary>
+	~UIPanel();
+
+	/// <summary>
 	/// 初期化
 	/// </summary>
 	void Initialize() override;
@@ -64,6 +69,7 @@ public:
 	/// </summary>
 	/// <param name="_child">追加したい子オブジェクト</param>
 	void AddChild(UIObject* _child);
+
 
 	/// <summary>
 	/// パネルから指定した子オブジェクトを削除

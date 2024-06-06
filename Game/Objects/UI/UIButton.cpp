@@ -13,6 +13,11 @@ UIButton::UIButton(GameObject* _parent)
 {
 }
 
+UIButton::~UIButton()
+{
+	Release();
+}
+
 void UIButton::Initialize()
 {
 	//ƒ{ƒ^ƒ“‚ª‰Ÿ‚³‚ê‚Ä‚¢‚È‚¢ó‘Ô‚É‚·‚é
@@ -48,7 +53,6 @@ void UIButton::Draw()
 
 void UIButton::Release()
 {
-
 }
 
 void UIButton::Save(json& _saveUIobj)
@@ -119,3 +123,6 @@ bool UIButton::ClickButton()
 
 	return false;
 }
+
+
+

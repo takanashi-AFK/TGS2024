@@ -24,6 +24,7 @@ void Scene_Test::Initialize()
 	Instantiate<SkySphere>(this);
 
 	panel = Instantiate<UIPanel>(this);
+	
 
 	//button = Instantiate<UIButton>(this);
 

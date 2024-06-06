@@ -3,7 +3,7 @@
 #include "../../Objects/UI/UIButton.h"
 
 UIPanel::UIPanel(GameObject* _parent)
-	: UIObject("UIPanel", _parent), button(nullptr) // Initialize button to nullptr
+	: UIObject("UIPanel", _parent)
 {
 }
 
@@ -14,7 +14,7 @@ UIPanel::~UIPanel()
 void UIPanel::Initialize()
 {
 	//UIButtonクラスのインスタンスを生成
-	button = new UIButton(this);
+	UIButton * button = new UIButton(this);
 
 	button->Initialize();
 	AddChild(button);

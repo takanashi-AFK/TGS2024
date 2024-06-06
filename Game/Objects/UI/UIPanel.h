@@ -5,16 +5,9 @@
 //using宣言
 using std::list;
 
-//前方宣言
-class UIButton;
-
-
 class UIPanel : public UIObject
 {
 protected:
-
-	//UIButtonクラスのインスタンス
-	UIButton* button;
 
 	list<UIObject*> childList;	//子オブジェクトリスト
 

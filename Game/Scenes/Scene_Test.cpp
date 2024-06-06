@@ -24,7 +24,15 @@ void Scene_Test::Initialize()
 	Instantiate<SkySphere>(this);
 
 	panel = Instantiate<UIPanel>(this);
-	
+	panel->Initialize();
+
+	//UIButtonクラスのインスタンスを生成
+	UIButton * button = new UIButton(panel);//UIButtonをUIPanelの子オブジェクトに設定
+	button->Initialize();
+
+	//UIButtonをUIPanelの子オブジェクトに追加
+	panel->AddChild(button);
+
 
 	//button = Instantiate<UIButton>(this);
 

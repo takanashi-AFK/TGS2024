@@ -76,10 +76,3 @@ void UIPanel::ClearChildren()
 	// childList‚Ì’†g‚ğ‘S‚Äíœ
 	childList.clear();
 }
-
-
-
-
-
-
-

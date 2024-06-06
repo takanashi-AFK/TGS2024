@@ -20,10 +20,13 @@ private:
 
 	//テスト中
 	//ボタンクラスのインスタンス
-	UIButton* button;
+	//UIButton* button;
 
 	//UIパネルクラスのインスタンス
 	UIPanel* panel;
+
+	//Scene_Testクラスのインスタンス
+	Scene_Test * scene_test_;
 
 public:
 	/// <summary>

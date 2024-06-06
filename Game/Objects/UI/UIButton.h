@@ -69,6 +69,9 @@ public:
 	/// </summary>
 	void SetImage();
 
+
+	void SetPosition(int x, int y);
+
 	/// <summary>
 	/// マウスボタンの中に入っているか
 	/// </summary>
@@ -79,6 +82,6 @@ public:
 	/// <summary>
 	/// 押されたか
 	/// </summary>
-	void ClickButton();
+	bool ClickButton();
 };
 

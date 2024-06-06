@@ -44,7 +44,7 @@ void Component_Fall::Update()
 		holder_->SetPosition(holderPos);
 
 		// 現在の状態を保存
-		prevState_ = nowState_;
+		
 
 	}
 	
@@ -96,7 +96,7 @@ void Component_Fall::DrawData()
 void Component_Fall::FallMove(float& _height)
 {
 	// 前回の状態が待機状態の時、開始の高さを記録
-	if (prevState_ = WAIT) startHeight_ = _height;
+	if (prevState_ == WAIT) startHeight_ = _height;
 
 	// 目標の高さ
 	float  targetHeight = startHeight_ - fallDistance_;

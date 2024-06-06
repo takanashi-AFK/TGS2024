@@ -89,7 +89,7 @@ public:
 	bool IsFalling() { return isFalling_; }
 	bool GetIsRised() { return isRised_; }
 
-	void SetState(STATE _state) { nowState_ = _state; }
+	void SetState(STATE _state) { prevState_ = nowState_; nowState_ = _state; }
 private:
 	void FallMove(float& _height);	//ç~â∫
 	void RiseMove(float& _height);	//è„è∏

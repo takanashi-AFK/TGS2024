@@ -5,10 +5,16 @@
 //using宣言
 using std::list;
 
+//前方宣言
+class UIButton;
+
 
 class UIPanel : public UIObject
 {
 protected:
+
+	//UIButtonクラスのインスタンス
+	UIButton* button;
 
 	list<UIObject*> childList;	//子オブジェクトリスト
 
@@ -19,7 +25,7 @@ public:
 	/// </summary>
 	/// <param name="_name">UIオブジェクトの名前</param>
 	/// <param name="_parent">親のオブジェクト</param>
-	UIPanel(string _name, GameObject* _parent);
+	UIPanel(GameObject* _parent);
 
 	/// <summary>
 	/// 初期化

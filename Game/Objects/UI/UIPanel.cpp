@@ -1,12 +1,19 @@
 #include "UIPanel.h"
 
-UIPanel::UIPanel(string _name, GameObject* _parent)
-	: UIObject(objectName_,_parent)
+#include "../../Objects/UI/UIButton.h"
+
+UIPanel::UIPanel(GameObject* _parent)
+	: UIObject("UIPanel", _parent)
 {
 }
 
 void UIPanel::Initialize()
 {
+	//UIButtonクラスのインスタンスを生成
+	UIButton * button = new UIButton(this);
+
+	button->Initialize();
+	AddChild(button);
 }
 
 void UIPanel::Update()
@@ -15,6 +22,7 @@ void UIPanel::Update()
 	for (UIObject* child : childList) {
 		child->Update();
 	}
+
 	UIObject::Update();
 }
 
@@ -33,6 +41,12 @@ void UIPanel::Release()
 	ClearChildren();
 	//UIObjectのリソースを解放
 	UIObject::Release();
+
+	for (UIObject*& child : childList) {
+		child = nullptr;
+	}
+	//childListの中身を全て削除
+	childList.clear();
 }
 
 void UIPanel::Save(json& _saveUiobj)

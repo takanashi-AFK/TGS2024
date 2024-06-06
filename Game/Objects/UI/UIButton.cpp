@@ -30,6 +30,14 @@ void UIButton::Update()
 	DrawGUI();
 	//マウスの位置を取得
 	mousePos_ = Input::GetMousePosition();
+
+
+	//ボタンがされたかどうか
+	if (ClickButton())
+	{
+		//ウィンドウを閉じる
+		PostQuitMessage(0);
+	}
 }
 
 void UIButton::Draw()

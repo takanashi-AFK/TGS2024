@@ -133,9 +133,6 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 				lastUpdateTime = nowTime;	//現在の時間（最後に画面を更新した時間）を覚えておく
 				FPS++;						//画面更新回数をカウントする
 
-
-
-
 				//入力（キーボード、マウス、コントローラー）情報を更新
 				Input::Update();
 
@@ -247,7 +244,7 @@ HWND InitApp(HINSTANCE hInstance, int screenWidth, int screenHeight, int nCmdSho
 	HWND hWnd = CreateWindow(
 		WIN_CLASS_NAME,					//ウィンドウクラス名
 		caption,						//タイトルバーに表示する内容
-		WS_OVERLAPPEDWINDOW,			//スタイル（普通のウィンドウ）
+		WS_OVERLAPPEDWINDOW & ~WS_THICKFRAME,		//スタイル（普通のウィンドウ）
 		CW_USEDEFAULT,					//表示位置左（おまかせ）
 		CW_USEDEFAULT,					//表示位置上（おまかせ）
 		winRect.right - winRect.left,	//ウィンドウ幅

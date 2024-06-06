@@ -20,11 +20,7 @@ private:
 	float fallSpeed_;					// 降下速度
 	float riseSpeed_;					// 上昇速度
 	float fallDistance_;				// 降下する距離
-
 	float startHeight_;					// 開始の高さ
-
-	float startRiseHeight_;				// 上昇開始の高さ
-	float startFallHeight_;				// 降下開始の高さ
 	bool isActive_;						// 実行されたかどうか
 
 public:
@@ -82,12 +78,20 @@ public:
 	/// </summary>
 	bool IsActived() { return isActive_; }
 
+	/// <summary>
+	/// 落下中かどうか
+	/// </summary>
+	bool IsFalling() { return nowState_ == FALL; }
+private:
+	/// <summary>
+	/// Stateを変更 prevState_に現在のStateを代入	
+	/// </summary>
+	/// <param name="_state"></param>
 	void SetState(STATE _state) { prevState_ = nowState_; nowState_ = _state; }
 
-	bool IsFalling() { return nowState_==FALL ? true:false; }
-private:
-	void FallMove(float& _height);	//降下
-	void RiseMove(float& _height);	//上昇
-	void Wait();	//待機
+
+	void FallMove(float& _height);	// 降下
+	void RiseMove(float& _height);	// 上昇
+	void Wait();					// 待機
 };
 

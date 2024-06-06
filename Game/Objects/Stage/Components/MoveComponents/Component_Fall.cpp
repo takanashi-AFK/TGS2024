@@ -14,8 +14,8 @@ namespace
 
 // コンストラクタ
 Component_Fall::Component_Fall(string _name, StageObject* _holder, Component* _parent)
-	: Component(_holder, _name, Fall, _parent)
-	, fallSpeed_(), riseSpeed_(), fallDistance_(),
+	: Component(_holder, _name, Fall, _parent),
+	fallSpeed_(), riseSpeed_(), fallDistance_(),startHeight_(),
 	isActive_(false), nowState_(WAIT), prevState_(RISE)
 {
 }
@@ -43,7 +43,6 @@ void Component_Fall::Update()
 		// 位置を確定
 		holder_->SetPosition(holderPos);
 	}
-	
 }
 
 // 開放
@@ -100,7 +99,7 @@ void Component_Fall::FallMove(float& _height)
 	// 目標の高さ
 	float  targetHeight = startHeight_ - fallDistance_;
 	
-	// 高さ　が　目標の高さ　に達っしていなかったら...
+	// 高さが目標の高さに達していなかったら...
 	if (_height > targetHeight) {
 		
 		// 降下速度分だけ高さを下げる

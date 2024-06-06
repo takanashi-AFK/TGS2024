@@ -16,7 +16,7 @@ namespace
 Component_Fall::Component_Fall(string _name, StageObject* _holder, Component* _parent)
 	: Component(_holder, _name, Fall, _parent)
 	, fallSpeed_(), riseSpeed_(), fallDistance_(),
-	isFalling_(false), isFirstTime_(true), isActive_(false), nowState_(WAIT), prevState_(RISE)
+	isActive_(false), nowState_(WAIT), prevState_(RISE)
 {
 }
 
@@ -42,10 +42,6 @@ void Component_Fall::Update()
 
 		// 位置を確定
 		holder_->SetPosition(holderPos);
-
-		// 現在の状態を保存
-		
-
 	}
 	
 }
@@ -96,6 +92,7 @@ void Component_Fall::DrawData()
 void Component_Fall::FallMove(float& _height)
 {
 	// 前回の状態が待機状態の時、開始の高さを記録
+	// 2週目でこのifに入らないようにするため、prevStateをFALLに変更
 	if (prevState_ == WAIT) {
 		startHeight_ = _height;
 		prevState_ = FALL;

@@ -8,7 +8,7 @@
 
 using namespace Direct3D;
 
-UIButton::UIButton(string _name ,GameObject* _parent)
+UIButton::UIButton(GameObject* _parent)
 	:UIObject("UIButton", _parent), UIButtonPict_(-1), isButtonPushed_(false)
 {
 }
@@ -18,7 +18,7 @@ void UIButton::Initialize()
 	//ボタンが押されていない状態にする
 	isButtonPushed_ = false;
 	//画像の読み込み
-	UIButtonPict_ = Image::Load("Assets/Image/TestButton.png");
+	UIButtonPict_ = Image::Load("Assets/Images/TestButton.png");
 	//画像の読み込みに失敗した場合
 	assert(UIButtonPict_ >= 0);
 	//画像のサイズを取得

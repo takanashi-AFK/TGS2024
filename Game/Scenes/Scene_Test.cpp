@@ -20,6 +20,10 @@ void Scene_Test::Initialize()
 	// スカイスフィアを標準で生成
 	Instantiate<SkySphere>(this);
 
+	button = Instantiate<UIButton>(this);
+
+	/*
+
 	// ステージを作成
 	Stage* pStage = Instantiate<Stage>(this);
 
@@ -32,6 +36,8 @@ void Scene_Test::Initialize()
 	pSe->SetEditTarget(pStage);
 	
 #endif // _DEBUG
+
+	*/
 }
 
 void Scene_Test::Update()

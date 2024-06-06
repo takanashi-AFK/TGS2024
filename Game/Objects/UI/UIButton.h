@@ -23,7 +23,7 @@ public:
 	/// </summary>
 	/// <param name="_name">UIオブジェクトの名前</param>
 	/// <param name="_parent">親のオブジェクト</param>
-	UIButton(string _name, GameObject* _parent);
+	UIButton(GameObject* _parent);
 
 	/// <summary>
 	/// 初期化

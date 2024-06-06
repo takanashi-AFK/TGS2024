@@ -13,6 +13,8 @@ private:
 	XMFLOAT3 size_;
 	//マウスの位置
 	XMFLOAT3 mouseCenter_;
+	XMFLOAT3 center_;
+	XMFLOAT3 mousePos_;
 
 public:
 
@@ -77,7 +79,6 @@ public:
 	/// <summary>
 	/// 押されたか
 	/// </summary>
-	/// <param name="pushed">ボタンが押されたら</param>
-	void ClickButton(bool pushed);
+	void ClickButton();
 };
 

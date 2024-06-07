@@ -3,30 +3,20 @@
 // インクルード
 #include "../../Engine/GameObject/GameObject.h"
 
-
-//テスト中
 //前方宣言
 class UIButton;
 class UIPanel;
-
 
 /// <summary>
 /// テストシーンを管理するクラス
 /// </summary>
 class Scene_Test : public GameObject
 {
-
 private:
-
-	//テスト中
 	//ボタンクラスのインスタンス
 	UIButton* button;
-
 	//UIパネルクラスのインスタンス
 	UIPanel* panel;
-
-	//Scene_Testクラスのインスタンス
-	Scene_Test * scene_test_;
 
 public:
 	/// <summary>

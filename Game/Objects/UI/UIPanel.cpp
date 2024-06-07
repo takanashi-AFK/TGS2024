@@ -18,21 +18,10 @@ void UIPanel::Initialize()
 
 void UIPanel::Update()
 {
-	////子オブジェクトを更新
-	//for (UIObject* child : childList) {
-	//	child->Update();
-	//}
-
-	//UIObject::Update();
 }
 
 void UIPanel::Draw()
 {
-	////子オブジェクトを描画
-	//for (UIObject* child : childList) {
-	//	child->Draw();
-	//}
-	//UIObject::Draw();
 }
 
 void UIPanel::Release()

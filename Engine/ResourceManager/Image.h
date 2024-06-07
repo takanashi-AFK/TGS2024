@@ -91,23 +91,23 @@ namespace Image
 	//---UIButton用関数---(追記)
 
 	/// <summary>
-	/// 画像の幅を取得
+	/// 画像の幅の取得
 	/// </summary>
-	/// <param name="handle">取得したい画像番号</param>
+	/// <param name="handle">知りたい画像番号</param>
 	/// <returns>画像の幅</returns>
 	int GetWidth(int handle);
 
 	/// <summary>
-	/// 画像の高さを取得
+	/// 画像の高さの取得
 	/// </summary>
-	/// <param name="handle">取得したい画像番号</param>
+	/// <param name="handle">知りたい画像番号</param>
 	/// <returns>画像の高さ</returns>
 	int GetHeight(int handle);
 
 	/// <summary>
-	/// 画像サイズの取得
+	///画像のサイズの取得 
 	/// </summary>
-	/// <param name="handle">取得したい画像番号</param>
+	/// <param name="handle">知りたい画像番号</param>
 	/// <returns>画像のサイズ</returns>
-	XMFLOAT3 GetTextureSize(int handle);
+	XMFLOAT3 GetSize(int handle);
 }

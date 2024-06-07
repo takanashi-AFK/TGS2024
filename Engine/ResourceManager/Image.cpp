@@ -204,8 +204,8 @@ namespace Image
 		return _datas[handle]->pSprite->GetTextureSize().y;
 	}
 
-	//画像サイズの取得
-	XMFLOAT3 GetTextureSize(int handle)
+	//画像のサイズを取得
+	XMFLOAT3 GetSize(int handle)
 	{
 		return _datas[handle]->pSprite->GetTextureSize();
 	}

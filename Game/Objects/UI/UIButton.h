@@ -5,30 +5,15 @@ class UIButton : public UIObject
 {
 private:
 
-	//UIの画像
 	int UIButtonPict_;
-	//ボタンが押されたかどうか
-	bool isButtonPushed_;
-	//画像のサイズ
-	XMFLOAT3 size_;
-	//マウスの位置
-	XMFLOAT3 mouseCenter_;
-	XMFLOAT3 center_;
-	XMFLOAT3 mousePos_;
+	XMFLOAT3 size_;//画像の大きさ
 
 public:
-
 	/// <summary>
-	/// コンストラクタ
-	/// </summary>
-	/// <param name="_name">UIオブジェクトの名前</param>
-	/// <param name="_parent">親のオブジェクト</param>
+		/// コンストラクタ
+		/// </summary>
+		/// <param name="_parent"></param>
 	UIButton(GameObject* _parent);
-
-	/// <summary>
-	/// デストラクタ
-	/// </summary>
-	~UIButton();
 
 	/// <summary>
 	/// 初期化
@@ -53,40 +38,26 @@ public:
 	/// <summary>
 	/// 保存
 	/// </summary>
-	/// <param name="_saveUIobj"></param>
+	/// <param name="_saveUIobj">保存したいボタンの情報</param>
 	void Save(json& _saveUIobj) override;
 
 	/// <summary>
-	/// 読み込み
+	/// 読込
 	/// </summary>
-	/// <param name="_loadUIobj"></param>
+	/// <param name="_loadUIobj">読込したいボタンの情報</param>
 	void Load(json& _loadUIobj) override;
 
-	//Imgui上でイージング関数の仕組みを確認するもの
+	//Imgui上でいーじんぐ関数の仕組み見るためのやつ
+	void DrawGui();
 
-	/// <summary>
-	/// GUI上で表示
-	/// </summary>
-	void DrawGUI();
-
-	/// <summary>
-	/// 画像を設定
-	/// </summary>
-	void SetImage();
-
-
-	void SetPosition(int x, int y);
-
-	/// <summary>
-	/// マウスボタンの中に入っているか
-	/// </summary>
-	/// <param name="mousePos">マウスの現在地</param>
-	/// <returns></returns>
+	//マウスがボタンの中に入ってるかどうか
 	bool MouseInArea(XMFLOAT3 mousePos);
 
-	/// <summary>
-	/// 押されたか
-	/// </summary>
+	//押されたかどうか
 	bool ClickButton();
+
+	//画像の座標敬に変換
+	void ConvertToImageCoordinates(XMFLOAT3& _position);
+
 };
 

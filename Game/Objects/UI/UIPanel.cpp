@@ -18,6 +18,7 @@ void UIPanel::Initialize()
 
 void UIPanel::Update()
 {
+	
 }
 
 void UIPanel::Draw()

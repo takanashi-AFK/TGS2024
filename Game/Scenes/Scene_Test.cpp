@@ -53,12 +53,11 @@ void Scene_Test::Initialize()
 
 void Scene_Test::Update()
 {
-	panel->Update();
+	if (button->ClickButton())PostQuitMessage(0);
 }
 
 void Scene_Test::Draw()
 {
-	panel->Draw();
 }
 
 void Scene_Test::Release()

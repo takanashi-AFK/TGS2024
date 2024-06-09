@@ -1,7 +1,7 @@
 #include "UIObject.h"
 
-#include"../../Engine/ResourceManager/Image.h"
-#include "../../Engine/Global.h"
+#include"../../../Engine/ResourceManager/Debug.h"
+#include "../../../Engine/Global.h"
 
 UIObject::UIObject(string _name, GameObject* _parent)
 	: GameObject(_parent, _name)

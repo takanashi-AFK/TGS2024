@@ -1,5 +1,5 @@
 #pragma once
-#include "../../Otheres/UIObject.h"
+#include "../../Objects/UI/UIObject.h"
 #include <list>
 
 //usingéŒ¾

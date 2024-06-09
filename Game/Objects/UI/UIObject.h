@@ -1,6 +1,6 @@
 #pragma once
-#include"../../Engine/Json/JsonReader.h"
-#include"../../Engine/GameObject/GameObject.h"
+#include"../../../Engine/Json/JsonReader.h"
+#include"../../../Engine/GameObject/GameObject.h"
 
 class UIObject: public GameObject
 {

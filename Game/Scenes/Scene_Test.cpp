@@ -25,14 +25,14 @@ void Scene_Test::Initialize()
 	Instantiate<SkySphere>(this);
 
 	//UIPanelクラスのインスタンスを生成
-	panel = Instantiate<UIPanel>(this); //this はScene_Testのことを指してる
-	button = Instantiate<UIButton>(panel);//buttonをUIPanelの親に設定する
+	//panel = Instantiate<UIPanel>(this); //this はScene_Testのことを指してる
+	//button = Instantiate<UIButton>(panel);//buttonをUIPanelの親に設定する
 
-	//パネルのリストにbuttonを追加
-	panel->AddChild(button);
+	////パネルのリストにbuttonを追加
+	//panel->AddChild(button);
 
 
-	/*
+	
 
 	// ステージを作成
 	Stage* pStage = Instantiate<Stage>(this);
@@ -53,13 +53,13 @@ void Scene_Test::Initialize()
 	
 #endif // _DEBUG
 
-	*/
+	
 }
 
 
 void Scene_Test::Update()
 {
-	if (button->ClickButton())PostQuitMessage(0);
+	// if (button->ClickButton())PostQuitMessage(0);
 }
 
 void Scene_Test::Draw()

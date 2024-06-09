@@ -193,8 +193,12 @@
     <ClCompile Include="Game\Objects\Stage\SkySphere.cpp" />
     <ClCompile Include="Game\Scenes\Scene_Splash.cpp" />
     <ClCompile Include="Game\Otheres\StageEditor.cpp" />
+    <ClCompile Include="Game\Otheres\UIObject.cpp" />
+    <ClCompile Include="Game\Objects\UI\UIButton.cpp" />
+    <ClCompile Include="Game\Objects\UI\UIPanel.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Engine\DirectX\EasingFunction.h" />
     <ClInclude Include="Game\Objects\Stage\Components\BehaviorComponents\Component_PlayerBehavior.h" />
     <ClInclude Include="Game\Objects\Stage\Components\MoveComponents\Component_WASDInputMove.h" />
     <ClInclude Include="Game\Objects\Stage\Components\BehaviorComponents\Component_CactanBehavior.h" />
@@ -254,6 +258,9 @@
     <ClInclude Include="Game\Objects\Stage\SkySphere.h" />
     <ClInclude Include="Game\Scenes\Scene_Splash.h" />
     <ClInclude Include="Game\Otheres\StageEditor.h" />
+    <ClInclude Include="Game\Otheres\UIObject.h" />
+    <ClInclude Include="Game\Objects\UI\UIButton.h" />
+    <ClInclude Include="Game\Objects\UI\UIPanel.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Assets\Shader\BillBoard.hlsl">

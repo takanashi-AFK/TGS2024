@@ -191,5 +191,25 @@ namespace Image
 		}
 		return _datas[handle]->transform.GetWorldMatrix();
 	}
+
+	//‰æ‘œ‚Ì•‚ðŽæ“¾
+	int GetWidth(int handle)
+	{
+		return _datas[handle]->pSprite->GetTextureSize().x;
+	}
+
+	//‰æ‘œ‚Ì‚‚³‚ðŽæ“¾
+	int GetHeight(int handle)
+	{
+		return _datas[handle]->pSprite->GetTextureSize().y;
+	}
+
+	//‰æ‘œ‚ÌƒTƒCƒY‚ðŽæ“¾
+	XMFLOAT3 GetSize(int handle)
+	{
+		return _datas[handle]->pSprite->GetTextureSize();
+	}
+
+
 }
 

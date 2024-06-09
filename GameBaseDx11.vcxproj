@@ -137,6 +137,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Game\Objects\Stage\Components\MoveComponents\Component_OnlyFall.cpp" />
+    <ClCompile Include="Game\Objects\Stage\Components\MoveComponents\Component_OnlyRise.cpp" />
     <ClCompile Include="Game\Objects\Stage\Components\BehaviorComponents\Component_PlayerBehavior.cpp" />
     <ClCompile Include="Game\Objects\Stage\Components\MoveComponents\Component_WASDInputMove.cpp" />
     <ClCompile Include="Game\Objects\Stage\Components\BehaviorComponents\Component_CactanBehavior.cpp" />
@@ -198,6 +200,8 @@
     <ClCompile Include="Game\Objects\UI\UIPanel.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Game\Objects\Stage\Components\MoveComponents\Component_OnlyFall.h" />
+    <ClInclude Include="Game\Objects\Stage\Components\MoveComponents\Component_OnlyRise.h" />
     <ClInclude Include="Engine\DirectX\EasingFunction.h" />
     <ClInclude Include="Game\Objects\Stage\Components\BehaviorComponents\Component_PlayerBehavior.h" />
     <ClInclude Include="Game\Objects\Stage\Components\MoveComponents\Component_WASDInputMove.h" />

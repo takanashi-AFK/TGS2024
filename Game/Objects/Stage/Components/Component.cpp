@@ -21,6 +21,8 @@
 #include "RotationComponents/Component_RotationZ.h"
 #include "TimerComponent/Component_Timer.h"
 #include "MoveComponents/Component_WASDInputMove.h"
+#include "MoveComponents/Component_OnlyFall.h"
+#include "MoveComponents/Component_OnlyRise.h"
 
 Component::Component(StageObject* _holder, string _name,ComponentType _type)
     :holder_(_holder), name_(_name),type_(_type),childComponents_(),parent_(nullptr)
@@ -199,6 +201,9 @@ Component* CreateComponent(string _name,ComponentType _type, StageObject* _holde
 	case HealthManager:comp = new Component_HealthManager(_name,_holder, _parent); break;
 	case ShootAttack:comp = new Component_ShootAttack(_name,_holder, _parent); break;
 	case WASDInputMove:comp = new Component_WASDInputMove(_name, _holder, _parent); break;
+	case OnlyFall:comp = new Component_OnlyFall(_name, _holder, _parent); break;
+	//case OnlyRise:comp = new Component_OnlyRise(_name, _holder, _parent); break;
+
 	default:/* その他コンポーネントを追加する時は上記のように追加*/ break;
 	}
 	return comp;
@@ -229,6 +234,8 @@ string ComponentTypeToString(ComponentType _type)
 	case HealthManager: return "HealthManagerComponent";
 	case ShootAttack: return "ShootAttackComponent";
 	case WASDInputMove: return "WASDInputMoveComponent";
+	case OnlyFall: return "OnlyFallComponent";
+	//case OnlyRise: return "OnlyRiseComponent";
 		// コンポーネント追加時に識別番号を追加
 	}
 	return "None";

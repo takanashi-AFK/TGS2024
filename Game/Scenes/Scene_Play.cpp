@@ -22,9 +22,14 @@ void Scene_Play::Initialize()
 	JsonReader::Load("Datas/stage_Test00_sugawara.json", stageData);
 	pStage->Load(stageData);
 	
-	vector<StageObject*>pSta;
-	pStage->GetStageObjects();
-   
+	for (auto pList : pStage->GetStageObjects()){
+		if (pList->FindComponent("PlayerBehavior")) {
+			if (!pList->FindComponent("HelthManager")) {
+				Component_HealthManager* pPlayerHP;
+				pList->AddComponent(pPlayerHP);
+			}
+		}
+	}
 #ifdef _DEBUG
 
 	// ステージエディターを実行

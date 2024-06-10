@@ -15,7 +15,7 @@ void Component_OnlyRise::Update()
 	if (isActive_) {
 
 		// ‚‚³‚ª–Ú•W‚Ì‚‚³‚É’B‚µ‚Ä‚¢‚È‚©‚Á‚½‚ç...
-		if (height_ < targetHeight_) {
+		if (height_ < targetHeight_ || isInfinity_) {
 
 			// ã¸‘¬“x•ª‚¾‚¯‚‚³‚ğã‚°‚é
 			height_ += riseSpeed_;
@@ -39,6 +39,7 @@ void Component_OnlyRise::Save(json& _saveObj)
 	_saveObj["riseSpeed_"] = riseSpeed_;
 	_saveObj["height_"] = height_;
 	_saveObj["targetHeight_"] = targetHeight_;
+	_saveObj["isInfinity_"] = isInfinity_;
 }
 
 void Component_OnlyRise::Load(json& _loadObj)
@@ -46,10 +47,12 @@ void Component_OnlyRise::Load(json& _loadObj)
 	if (_loadObj.contains("riseSpeed_"))riseSpeed_ = _loadObj["riseSpeed_"];
 	if (_loadObj.contains("height_"))height_ = _loadObj["height_"];
 	if (_loadObj.contains("targetHeight_"))targetHeight_ = _loadObj["targetHeight_"];
+	if (_loadObj.contains("isInfinity_"))isInfinity_ = _loadObj["isInfinity_"];
 }
 
 void Component_OnlyRise::DrawData()
 {
+	ImGui::Checkbox("isInfinity_", &isInfinity_);
 	ImGui::DragFloat("riseSpeed_", &riseSpeed_, 0.1f);
 	ImGui::DragFloat("targetHeight_", &targetHeight_, 0.1f);
 

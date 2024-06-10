@@ -11,7 +11,7 @@ class Component_OnlyRise : public Component
 
 private:
 	bool isActive_;
-	bool isFirst_;
+	bool isInfinity_;
 	float riseSpeed_;
 	float height_;
 	float targetHeight_;
@@ -55,5 +55,9 @@ public:
 	void DrawData() override;
 
 	void Execute() { isActive_ = true; }
+
+	void Stop() { isActive_ = false; }
+
+	void SetInfinity(bool _isInfinity) { isInfinity_ = _isInfinity; }
 };
 

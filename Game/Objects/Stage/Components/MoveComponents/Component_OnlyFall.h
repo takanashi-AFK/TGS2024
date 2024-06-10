@@ -11,11 +11,11 @@ class Component_OnlyFall : public Component
 
 private:
 	bool isActive_;
-	bool isFirst_;
+	bool isInfinity_;
 	float startHeight_;
-	float fallDistance_;
 	float fallSpeed_;
 	float height_;
+	float targetHeight_;
 public:
 	/// <summary>
 	/// コンストラクタ

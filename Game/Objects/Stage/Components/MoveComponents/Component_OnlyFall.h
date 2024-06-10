@@ -11,6 +11,7 @@ class Component_OnlyFall : public Component
 
 private:
 	bool isActive_;
+	bool isEnd_;
 	bool isInfinity_;
 	float startHeight_;
 	float fallSpeed_;
@@ -61,5 +62,7 @@ public:
 	void Stop() { isActive_ = false; }
 
 	bool IsActive() { return isActive_; }
+
+	bool IsEnd() { return isEnd_; }
 };
 

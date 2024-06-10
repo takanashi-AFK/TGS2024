@@ -75,23 +75,19 @@ void Component_HelingoBehavior::Update()
 			chase->Stop();
 
 			fall->Execute();
+			if (fall->IsEnd()) {
+				rise->Execute();
+			}
 		}
 		else {// 落下範囲から外れたら
-			// タイマーをリセット
-			fall->Stop();
+			if(!rise->IsEnd())
 			rise->Execute();
 		}
-
-		/*if (!fall->IsActive()) {
-			fall->Stop();
-			rise->Execute();
-		}*/
 	}
 	else {
 		auto chase = dynamic_cast<Component_Chase*>(GetChildComponent("Chase"));
 		if (chase == nullptr) return;
 		chase->Stop();
-		
 	}
 
 

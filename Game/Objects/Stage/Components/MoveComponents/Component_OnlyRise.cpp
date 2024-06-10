@@ -19,7 +19,7 @@ void Component_OnlyRise::Update()
 	if (isActive_) {
 
 		if (isFirst_) {
-			height_ = 0.0f;;
+			height_ = 0.0f;
 			isFirst_ = false;
 		}
 

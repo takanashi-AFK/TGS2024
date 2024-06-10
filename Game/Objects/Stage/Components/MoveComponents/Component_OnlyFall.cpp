@@ -4,6 +4,7 @@
 #include "../../../../../Engine/ImGui/imgui.h"
 Component_OnlyFall::Component_OnlyFall(string _name, StageObject* _holder, Component* _parent)
 	: Component(_holder, _name, OnlyFall, _parent), isActive_(false), fallSpeed_(0.1f), height_(0.0f), startHeight_(0.0f)
+	, targetHeight_(0.0f), isEnd_(false), isInfinity_(false)
 {
 }
 
@@ -23,7 +24,7 @@ void Component_OnlyFall::Update()
 
 			// ~‰º‘¬“x•ª‚¾‚¯‚‚³‚ð‰º‚°‚é
 			height_ -= fallSpeed_;
-
+			isEnd_ = false;
 		}
 		// ‚‚³‚ªˆê’è‚Ì‚‚³‚É’B‚µ‚½‚ç...
 		else {
@@ -31,6 +32,7 @@ void Component_OnlyFall::Update()
 			// –Ú•W‚Ì‚‚³‚ÉÝ’è
 			height_ = targetHeight_;
 			isActive_ = false;
+			isEnd_= true;
 		}
 		holder_->SetPosition(holder_->GetPosition().x,height_,holder_->GetPosition().z);
 	}

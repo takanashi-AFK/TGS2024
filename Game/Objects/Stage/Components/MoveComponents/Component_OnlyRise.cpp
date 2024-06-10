@@ -1,6 +1,7 @@
 #include "Component_OnlyRise.h"
 #include "../../../../../Engine/ImGui/imgui.h"
 #include "../../StageObject.h"
+#include "../TimerComponent/Component_Timer.h"
 Component_OnlyRise::Component_OnlyRise(string _name, StageObject* _holder, Component* _parent) :
 	Component(_holder, _name, ComponentType::OnlyRise, _parent),
 	riseSpeed_(0.1f),
@@ -33,9 +34,8 @@ void Component_OnlyRise::Update()
 		else {
 			// –Ú•W‚Ì‚‚³‚ÉÝ’è
 			height_ = targetHeight_;
-			isActive_ = false;
 			isFirst_ = true;
-			isEnd_ = true;
+			Stop();
 		}
 		holder_->SetPosition(holder_->GetPosition().x, height_, holder_->GetPosition().z);
 	}
@@ -72,7 +72,6 @@ void Component_OnlyRise::DrawData()
 
 	ImGui::Text("height_ : %f", height_);
 	ImGui::Text(isActive_ ? "Rising" : "Stop");
-	ImGui::Text(isEnd_ ? "End" : "Not End");
 	ImGui::Text(isFirst_ ? "First" : "Not First");
 
 }

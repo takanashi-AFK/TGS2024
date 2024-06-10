@@ -48,8 +48,7 @@ void Component_Fall::Update()
 		{
 		case FALL:
 			fall->Execute(); 
-			if (fall->IsEnd()) {
-				fall->Stop();
+			if (fall->IsActive()) {
 				auto timer = dynamic_cast<Component_Timer*>(GetChildComponent("Timer"));
 				timer->Reset();
 				SetState(WAIT);
@@ -58,10 +57,10 @@ void Component_Fall::Update()
 
 		case RISE:
 			rise->Execute();
-			if (rise->IsEnd()) {
-				rise->Stop();
+			if (rise->IsActive()) {
 				auto timer = dynamic_cast<Component_Timer*>(GetChildComponent("Timer"));
 				timer->Reset();
+				Stop();
 				SetState(WAIT);
 			}
 			break;	// ã¸’†‚Ìˆ—

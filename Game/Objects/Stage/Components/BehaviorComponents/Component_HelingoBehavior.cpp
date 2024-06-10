@@ -10,8 +10,6 @@
 #include "../../../../../Engine/ImGui/imgui.h"
 #include "../../../../../Engine/Collider/BoxCollider.h"
 #include "../HealthManagerComponents/Component_HealthManager.h"
-#include "../MoveComponents/Component_OnlyFall.h"
-#include "../MoveComponents/Component_OnlyRise.h"
 
 
 Component_HelingoBehavior::Component_HelingoBehavior(string _name, StageObject* _holder, Component* _parent)
@@ -27,7 +25,6 @@ void Component_HelingoBehavior::Initialize()
 	// 子コンポーネントの追加
 	if (FindChildComponent("CircleRangeDetector") == false)AddChildComponent(CreateComponent("CircleRangeDetector", CircleRangeDetector, holder_, this));
 	if (FindChildComponent("Timer") == false)AddChildComponent(CreateComponent("Timer", Timer, holder_, this));
-	// if (FindChildComponent("Fall") == false)AddChildComponent(CreateComponent("Fall", Fall, holder_, this));
 	if (FindChildComponent("Chase") == false)AddChildComponent(CreateComponent("Chase", Chase, holder_, this));
 }
 
@@ -42,14 +39,10 @@ void Component_HelingoBehavior::Update()
 	auto fall = dynamic_cast<Component_Fall*>(GetChildComponent("Fall"));
 	if (fall == nullptr) return;
 
-	auto timer = dynamic_cast<Component_Timer*>(GetChildComponent("Timer"));
-	if (timer == nullptr) return;
-
-	//検知範囲の設定
+	// 検知範囲の設定
 	detector->SetRadius(discoveryrange_);
 
-
-	if (!fall->IsActived() && detector->IsContains()) {
+	if (!fall->IsActived()&&detector->IsContains()) {
 		auto chase = dynamic_cast<Component_Chase*>(GetChildComponent("Chase"));
 		if (chase == nullptr) return;
 
@@ -64,22 +57,18 @@ void Component_HelingoBehavior::Update()
 		if (detector->IsContains()) {
 			// 追跡を停止
 			chase->Stop();
-
 			fall->Execute();
 		}
-		else {// 落下範囲から外れたら
-			// タイマーをリセット
-			fall->Stop();
-			timer->Reset();
+		else {
 		}
-
 	}
 	else {
 		auto chase = dynamic_cast<Component_Chase*>(GetChildComponent("Chase"));
 		if (chase == nullptr) return;
 		chase->Stop();
-
 	}
+	ImGui::Text("%f", detector->GetRadius());
+
 }
 
 void Component_HelingoBehavior::Release()

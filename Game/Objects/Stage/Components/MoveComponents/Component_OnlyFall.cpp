@@ -28,11 +28,9 @@ void Component_OnlyFall::Update()
 		}
 		// ‚‚³‚ªˆê’è‚Ì‚‚³‚É’B‚µ‚½‚ç...
 		else {
-			
 			// –Ú•W‚Ì‚‚³‚ÉÝ’è
 			height_ = targetHeight_;
-			isActive_ = false;
-			isEnd_= true;
+			Stop();
 		}
 		holder_->SetPosition(holder_->GetPosition().x,height_,holder_->GetPosition().z);
 	}
@@ -63,7 +61,7 @@ void Component_OnlyFall::DrawData()
 {
 	ImGui::Checkbox("Is Infinity", &isInfinity_);
 	ImGui::DragFloat("Fall Speed", &fallSpeed_, 0.1f, 0.0f, 100.0f);
-	ImGui::DragFloat("targetHeight_", &targetHeight_, 0.1f, 0.0f, 100.0f);
+	ImGui::DragFloat("targetHeight_", &targetHeight_, 0.1f);
 	if (ImGui::Button("Execute"))Execute();
 	if (ImGui::Button("Stop"))Stop();
 	ImGui::Text("height_ : %f", height_);

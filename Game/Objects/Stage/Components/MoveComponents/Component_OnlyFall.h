@@ -62,7 +62,5 @@ public:
 	void Stop() { isActive_ = false; }
 
 	bool IsActive() { return isActive_; }
-
-	bool IsEnd() { return isEnd_; }
 };
 

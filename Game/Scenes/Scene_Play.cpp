@@ -24,8 +24,9 @@ void Scene_Play::Initialize()
 	
 	for (auto pList : pStage->GetStageObjects()){
 		if (pList->FindComponent("PlayerBehavior")) {
-			if (!pList->FindComponent("HelthManager")) {
-				Component_HealthManager* pPlayerHP = (Component_HealthManager*)pPlayerHP->GetChildComponent("HelthManager");
+			Component_PlayerBehavior* playerBeha_ = dynamic_cast<Component_PlayerBehavior*>(pList->FindComponent("PlayerBehavior"));
+			if (playerBeha_ != nullptr) {
+				health =dynamic_cast<Component_HealthManager*>(playerBeha_->GetChildComponent("HealthManager"));
 			}
 		}
 	}
@@ -44,7 +45,10 @@ void Scene_Play::Initialize()
 void Scene_Play::Update()
 {
 	
-	
+	if (health->GetHP() == 0) {
+		SceneManager* pChangeScene = (SceneManager*)FindObject("SceneManager");
+		pChangeScene->ChangeScene(SCENE_ID_END, TID_BLACKOUT);
+	}
 	
 	
 }

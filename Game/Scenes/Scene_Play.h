@@ -1,8 +1,11 @@
 #pragma once
 #include"../../Engine/GameObject/GameObject.h"
 
+class Component_HealthManager;
+
 class Scene_Play:public GameObject
 {
+	Component_HealthManager* health;
 
 	
 public:

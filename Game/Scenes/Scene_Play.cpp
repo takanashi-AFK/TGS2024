@@ -21,13 +21,15 @@ void Scene_Play::Initialize()
 	json stageData;
 	JsonReader::Load("Datas/stage_Test00_sugawara.json", stageData);
 	pStage->Load(stageData);
-
-
+	
+	vector<StageObject*>pSta;
+	pStage->GetStageObjects();
+   
 #ifdef _DEBUG
 
 	// ステージエディターを実行
 	StageEditor* pSe = Instantiate<StageEditor>(this);
-
+	
 	// 編集対象を設定
 	pSe->SetEditStage(pStage);
 
@@ -38,12 +40,7 @@ void Scene_Play::Initialize()
 void Scene_Play::Update()
 {
 	
-	StageObject* stageObj;
 	
-	if (stageObj->FindComponent("PlayerBehavior") == nullptr) {
-		return;
-	}
-	el
 	
 	
 }

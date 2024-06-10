@@ -65,12 +65,8 @@ void UIButton::Load(json& _loadUIobj)
 bool UIButton::MouseInArea(XMFLOAT3 mousePos)
 {
 	// マウスの座標が画像の領域内に入っているかどうか
-	return (mousePos.x > -size_.x / 2 && mousePos.x < size_.x / 2 && mousePos.y > -size_.y / 2 && mousePos.y < size_.y / 2);
-
-
-	return((size_.x * transform_.scale_.x) / Direct3D::screenWidth_ && (size_.y * transform_.scale_.y) / Direct3D::screenHeight_);
-
-
+	return (mousePos.x > -(size_.x * transform_.scale_.x) / 2 && mousePos.x < (size_.x * transform_.scale_.x) / 2
+		&& mousePos.y > -(size_.y * transform_.scale_.y) / 2 && mousePos.y < (size_.y * transform_.scale_.y) / 2);
 }
 
 bool UIButton::ClickButton()

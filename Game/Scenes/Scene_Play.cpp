@@ -25,8 +25,7 @@ void Scene_Play::Initialize()
 	for (auto pList : pStage->GetStageObjects()){
 		if (pList->FindComponent("PlayerBehavior")) {
 			if (!pList->FindComponent("HelthManager")) {
-				Component_HealthManager* pPlayerHP;
-				pList->AddComponent(pPlayerHP);
+				Component_HealthManager* pPlayerHP = (Component_HealthManager*)pPlayerHP->GetChildComponent("HelthManager");
 			}
 		}
 	}

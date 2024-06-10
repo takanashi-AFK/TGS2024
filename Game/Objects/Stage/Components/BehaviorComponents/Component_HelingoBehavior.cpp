@@ -10,6 +10,9 @@
 #include "../../../../../Engine/ImGui/imgui.h"
 #include "../../../../../Engine/Collider/BoxCollider.h"
 #include "../HealthManagerComponents/Component_HealthManager.h"
+#include "../MoveComponents/Component_OnlyFall.h"
+#include "../MoveComponents/Component_OnlyRise.h"
+
 
 Component_HelingoBehavior::Component_HelingoBehavior(string _name, StageObject* _holder, Component* _parent)
 	: Component(_holder, _name, HelingoBehavior,_parent)
@@ -24,8 +27,11 @@ void Component_HelingoBehavior::Initialize()
 	// 子コンポーネントの追加
 	if (FindChildComponent("CircleRangeDetector") == false)AddChildComponent(CreateComponent("CircleRangeDetector", CircleRangeDetector, holder_, this));
 	if (FindChildComponent("Timer") == false)AddChildComponent(CreateComponent("Timer", Timer, holder_, this));
-	if (FindChildComponent("Fall") == false)AddChildComponent(CreateComponent("Fall", Fall, holder_, this));
+	// if (FindChildComponent("Fall") == false)AddChildComponent(CreateComponent("Fall", Fall, holder_, this));
 	if (FindChildComponent("Chase") == false)AddChildComponent(CreateComponent("Chase", Chase, holder_, this));
+
+	if (FindChildComponent("OnlyFall") == false)AddChildComponent(CreateComponent("OnlyFall", OnlyFall, holder_, this));
+	if (FindChildComponent("OnlyRise") == false)AddChildComponent(CreateComponent("OnlyRise", OnlyRise, holder_, this));
 }
 
 void Component_HelingoBehavior::Update()
@@ -36,8 +42,14 @@ void Component_HelingoBehavior::Update()
 	auto detector = dynamic_cast<Component_CircleRangeDetector*>(GetChildComponent("CircleRangeDetector"));
 	if (detector == nullptr) return;
 
-	auto fall = dynamic_cast<Component_Fall*>(GetChildComponent("Fall"));
+	//auto fall = dynamic_cast<Component_Fall*>(GetChildComponent("Fall"));
+	//if (fall == nullptr) return;
+
+	auto fall = dynamic_cast<Component_OnlyFall*>(GetChildComponent("OnlyFall"));
 	if (fall == nullptr) return;
+
+	auto rise = dynamic_cast<Component_OnlyRise*>(GetChildComponent("OnlyRise"));
+	if (rise == nullptr) return;
 
 	auto timer = dynamic_cast<Component_Timer*>(GetChildComponent("Timer"));
 	if (timer == nullptr) return;
@@ -46,7 +58,7 @@ void Component_HelingoBehavior::Update()
 	detector->SetRadius(discoveryrange_);
 
 
-	if (!fall->IsActived() && detector->IsContains()) {
+	if (detector->IsContains()) {
 		auto chase = dynamic_cast<Component_Chase*>(GetChildComponent("Chase"));
 		if (chase == nullptr) return;
 
@@ -67,9 +79,13 @@ void Component_HelingoBehavior::Update()
 		else {// 落下範囲から外れたら
 			// タイマーをリセット
 			fall->Stop();
-			timer->Reset();
+			rise->Execute();
 		}
 
+		/*if (!fall->IsActive()) {
+			fall->Stop();
+			rise->Execute();
+		}*/
 	}
 	else {
 		auto chase = dynamic_cast<Component_Chase*>(GetChildComponent("Chase"));

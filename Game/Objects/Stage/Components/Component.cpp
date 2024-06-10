@@ -202,7 +202,7 @@ Component* CreateComponent(string _name,ComponentType _type, StageObject* _holde
 	case ShootAttack:comp = new Component_ShootAttack(_name,_holder, _parent); break;
 	case WASDInputMove:comp = new Component_WASDInputMove(_name, _holder, _parent); break;
 	case OnlyFall:comp = new Component_OnlyFall(_name, _holder, _parent); break;
-	//case OnlyRise:comp = new Component_OnlyRise(_name, _holder, _parent); break;
+	case OnlyRise:comp = new Component_OnlyRise(_name, _holder, _parent); break;
 
 	default:/* その他コンポーネントを追加する時は上記のように追加*/ break;
 	}
@@ -235,7 +235,7 @@ string ComponentTypeToString(ComponentType _type)
 	case ShootAttack: return "ShootAttackComponent";
 	case WASDInputMove: return "WASDInputMoveComponent";
 	case OnlyFall: return "OnlyFallComponent";
-	//case OnlyRise: return "OnlyRiseComponent";
+	case OnlyRise: return "OnlyRiseComponent";
 		// コンポーネント追加時に識別番号を追加
 	}
 	return "None";

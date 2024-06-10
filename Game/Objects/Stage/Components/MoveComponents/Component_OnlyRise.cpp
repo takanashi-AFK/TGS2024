@@ -2,7 +2,11 @@
 #include "../../../../../Engine/ImGui/imgui.h"
 #include "../../StageObject.h"
 Component_OnlyRise::Component_OnlyRise(string _name, StageObject* _holder, Component* _parent) :
-	Component(_holder, _name, ComponentType::OnlyRise, _parent)
+	Component(_holder, _name, ComponentType::OnlyRise, _parent),
+	riseSpeed_(0.1f),
+		height_(0.0f),
+	targetHeight_(2.0f),
+	isInfinity_(false)
 {
 }
 
@@ -13,6 +17,11 @@ void Component_OnlyRise::Initialize()
 void Component_OnlyRise::Update()
 {
 	if (isActive_) {
+
+		if (isFirst_) {
+			height_ = 0.0f;;
+			isFirst_ = false;
+		}
 
 		// çÇÇ≥Ç™ñ⁄ïWÇÃçÇÇ≥Ç…íBÇµÇƒÇ¢Ç»Ç©Ç¡ÇΩÇÁ...
 		if (height_ < targetHeight_ || isInfinity_) {
@@ -25,6 +34,7 @@ void Component_OnlyRise::Update()
 			// ñ⁄ïWÇÃçÇÇ≥Ç…ê›íË
 			height_ = targetHeight_;
 			isActive_ = false;
+			isFirst_ = true;
 		}
 		holder_->SetPosition(holder_->GetPosition().x, height_, holder_->GetPosition().z);
 	}
@@ -57,4 +67,7 @@ void Component_OnlyRise::DrawData()
 	ImGui::DragFloat("targetHeight_", &targetHeight_, 0.1f);
 
 	if (ImGui::Button("Rising"))Execute();
+	if (ImGui::Button("Stop"))Stop();
+
+	ImGui::Text("height_ : %f", height_);
 }

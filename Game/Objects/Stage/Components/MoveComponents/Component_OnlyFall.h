@@ -57,5 +57,9 @@ public:
 
 
 	void Execute() { isActive_ = true; }
+
+	void Stop() { isActive_ = false; }
+
+	bool IsActive() { return isActive_; }
 };
 

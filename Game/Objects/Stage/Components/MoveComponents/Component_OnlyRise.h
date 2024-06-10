@@ -12,6 +12,7 @@ class Component_OnlyRise : public Component
 private:
 	bool isActive_;
 	bool isInfinity_;
+	bool isFirst_;
 	float riseSpeed_;
 	float height_;
 	float targetHeight_;

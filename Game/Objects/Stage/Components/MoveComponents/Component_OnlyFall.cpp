@@ -3,7 +3,7 @@
 #include "../../Components/TimerComponent/Component_Timer.h"
 #include "../../../../../Engine/ImGui/imgui.h"
 Component_OnlyFall::Component_OnlyFall(string _name, StageObject* _holder, Component* _parent)
-	: Component(_holder, _name, OnlyFall, _parent), isActive_(false), isFirst_(true), fallSpeed_(0.0f), fallDistance_(0.0f), height_(0.0f), startHeight_(0.0f)
+	: Component(_holder, _name, OnlyFall, _parent), isActive_(false), fallSpeed_(0.1f), height_(0.0f), startHeight_(0.0f)
 {
 }
 
@@ -63,4 +63,7 @@ void Component_OnlyFall::DrawData()
 	ImGui::DragFloat("Fall Speed", &fallSpeed_, 0.1f, 0.0f, 100.0f);
 	ImGui::DragFloat("targetHeight_", &targetHeight_, 0.1f, 0.0f, 100.0f);
 	if (ImGui::Button("Execute"))Execute();
+	if (ImGui::Button("Stop"))Stop();
+	ImGui::Text("height_ : %f", height_);
+
 }

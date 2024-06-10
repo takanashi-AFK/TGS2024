@@ -35,6 +35,7 @@ void Component_OnlyRise::Update()
 			height_ = targetHeight_;
 			isActive_ = false;
 			isFirst_ = true;
+			isEnd_ = true;
 		}
 		holder_->SetPosition(holder_->GetPosition().x, height_, holder_->GetPosition().z);
 	}
@@ -70,4 +71,8 @@ void Component_OnlyRise::DrawData()
 	if (ImGui::Button("Stop"))Stop();
 
 	ImGui::Text("height_ : %f", height_);
+	ImGui::Text(isActive_ ? "Rising" : "Stop");
+	ImGui::Text(isEnd_ ? "End" : "Not End");
+	ImGui::Text(isFirst_ ? "First" : "Not First");
+
 }

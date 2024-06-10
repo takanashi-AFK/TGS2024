@@ -5,6 +5,9 @@
 
 #include "../../StageObject.h"
 #include "../TimerComponent/Component_Timer.h"
+#include "../MoveComponents/Component_OnlyFall.h"
+#include "../MoveComponents/Component_OnlyRise.h"
+
 
 namespace
 {
@@ -24,20 +27,46 @@ Component_Fall::Component_Fall(string _name, StageObject* _holder, Component* _p
 void Component_Fall::Initialize()
 {
 	if (FindChildComponent("Timer") == false)AddChildComponent(CreateComponent("Timer", Timer, holder_, this));
+	if (FindChildComponent("OnlyFall") == false)AddChildComponent(CreateComponent("OnlyFall", OnlyFall, holder_, this));
+	if (FindChildComponent("OnlyRise") == false)AddChildComponent(CreateComponent("OnlyRise", OnlyRise, holder_, this));
 }
 
 // 更新
 void Component_Fall::Update()
 {   
+	auto fall = dynamic_cast<Component_OnlyFall*>(GetChildComponent("OnlyFall"));
+	if (fall == nullptr) return;
+
+	auto rise = dynamic_cast<Component_OnlyRise*>(GetChildComponent("OnlyRise"));
+	if (rise == nullptr) return;
+
 	// 実行したかどうか
 	if (isActive_) {
 		XMFLOAT3 holderPos = holder_->GetPosition();
 		
 		switch (nowState_)
 		{
-		case FALL:FallMove(holderPos.y); break;	// 降下中の処理
-		case RISE:RiseMove(holderPos.y); break;	// 上昇中の処理
-		case WAIT:Wait();				 break;	// 待機中の処理
+		case FALL:
+			fall->Execute(); 
+			if (fall->IsEnd()) {
+				fall->Stop();
+				auto timer = dynamic_cast<Component_Timer*>(GetChildComponent("Timer"));
+				timer->Reset();
+				SetState(WAIT);
+			}
+			break;	// 降下中の処理
+
+		case RISE:
+			rise->Execute();
+			if (rise->IsEnd()) {
+				rise->Stop();
+				auto timer = dynamic_cast<Component_Timer*>(GetChildComponent("Timer"));
+				timer->Reset();
+				SetState(WAIT);
+			}
+			break;	// 上昇中の処理
+		case WAIT:
+			Wait();				 break;	// 待機中の処理
 		}
 
 		// 位置を確定
@@ -77,6 +106,10 @@ void Component_Fall::DrawData()
 {
 	// ImGui描画
 	ImGui::Text("Component_Fall");
+	ImGui::Text(nowState_ == FALL ? "FALL" : nowState_ == RISE ? "RISE" : "WAIT");
+	ImGui::Text(prevState_ == FALL ? "FALL" : prevState_ == RISE ? "RISE" : "WAIT");
+	ImGui::Text("isActive_ : %s", isActive_ ? "true" : "false");
+
 	ImGui::DragFloat("fallSpeed_", &fallSpeed_, 0.1f);
 	ImGui::DragFloat("riseSpeed_", &riseSpeed_, 0.1f);
 	ImGui::DragFloat("fallDistance_", &fallDistance_, 0.1f);

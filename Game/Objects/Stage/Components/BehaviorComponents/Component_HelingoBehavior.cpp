@@ -29,9 +29,6 @@ void Component_HelingoBehavior::Initialize()
 	if (FindChildComponent("Timer") == false)AddChildComponent(CreateComponent("Timer", Timer, holder_, this));
 	// if (FindChildComponent("Fall") == false)AddChildComponent(CreateComponent("Fall", Fall, holder_, this));
 	if (FindChildComponent("Chase") == false)AddChildComponent(CreateComponent("Chase", Chase, holder_, this));
-
-	if (FindChildComponent("OnlyFall") == false)AddChildComponent(CreateComponent("OnlyFall", OnlyFall, holder_, this));
-	if (FindChildComponent("OnlyRise") == false)AddChildComponent(CreateComponent("OnlyRise", OnlyRise, holder_, this));
 }
 
 void Component_HelingoBehavior::Update()
@@ -42,14 +39,8 @@ void Component_HelingoBehavior::Update()
 	auto detector = dynamic_cast<Component_CircleRangeDetector*>(GetChildComponent("CircleRangeDetector"));
 	if (detector == nullptr) return;
 
-	//auto fall = dynamic_cast<Component_Fall*>(GetChildComponent("Fall"));
-	//if (fall == nullptr) return;
-
-	auto fall = dynamic_cast<Component_OnlyFall*>(GetChildComponent("OnlyFall"));
+	auto fall = dynamic_cast<Component_Fall*>(GetChildComponent("Fall"));
 	if (fall == nullptr) return;
-
-	auto rise = dynamic_cast<Component_OnlyRise*>(GetChildComponent("OnlyRise"));
-	if (rise == nullptr) return;
 
 	auto timer = dynamic_cast<Component_Timer*>(GetChildComponent("Timer"));
 	if (timer == nullptr) return;
@@ -58,7 +49,7 @@ void Component_HelingoBehavior::Update()
 	detector->SetRadius(discoveryrange_);
 
 
-	if (detector->IsContains()) {
+	if (!fall->IsActived() && detector->IsContains()) {
 		auto chase = dynamic_cast<Component_Chase*>(GetChildComponent("Chase"));
 		if (chase == nullptr) return;
 
@@ -75,22 +66,20 @@ void Component_HelingoBehavior::Update()
 			chase->Stop();
 
 			fall->Execute();
-			if (fall->IsEnd()) {
-				rise->Execute();
-			}
 		}
 		else {// 落下範囲から外れたら
-			if(!rise->IsEnd())
-			rise->Execute();
+			// タイマーをリセット
+			fall->Stop();
+			timer->Reset();
 		}
+
 	}
 	else {
 		auto chase = dynamic_cast<Component_Chase*>(GetChildComponent("Chase"));
 		if (chase == nullptr) return;
 		chase->Stop();
+
 	}
-
-
 }
 
 void Component_HelingoBehavior::Release()
@@ -135,10 +124,11 @@ void Component_HelingoBehavior::Load(json& _loadObj)
 
 void Component_HelingoBehavior::DrawData()
 {
-	ImGui::DragFloat("fallrange_", &fallrange_);
-	ImGui::DragFloat("discoveryrange_", &discoveryrange_);
 #ifdef _DEBUG
 
+
+	ImGui::DragFloat("fallrange_", &fallrange_);
+	ImGui::DragFloat("discoveryrange_", &discoveryrange_);
 	//対象の選択
 	vector<string> objNames;
 	objNames.push_back("null");

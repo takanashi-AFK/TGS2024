@@ -67,5 +67,6 @@ void Component_OnlyFall::DrawData()
 	if (ImGui::Button("Execute"))Execute();
 	if (ImGui::Button("Stop"))Stop();
 	ImGui::Text("height_ : %f", height_);
-
+	ImGui::Text(isActive_ ? "Active" : "Not Active");
+	ImGui::Text(isEnd_ ? "End" : "Not End");
 }

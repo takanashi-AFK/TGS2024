@@ -4,7 +4,7 @@
 #include "../../StageObject.h"
 
 Component_WASDInputMove::Component_WASDInputMove(string _name, StageObject* _holder, Component* _parent)
-	:Component(_holder, _name, WASDInputMove, _parent)
+	:Component(_holder, _name, WASDInputMove, _parent),isActive_(true)
 {
 }
 

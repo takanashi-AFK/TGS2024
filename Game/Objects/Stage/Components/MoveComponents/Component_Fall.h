@@ -10,7 +10,7 @@ using namespace DirectX;
 /// <summary>
 /// オブジェクトの降下・上昇を行うコンポーネントのクラス
 /// </summary>
-class Component_Fall : public Component
+class Component_HelingoFall : public Component
 {
 private:
 	enum STATE { FALL, RISE, WAIT, };	// 状態
@@ -29,7 +29,7 @@ public:
 	/// コンストラクタ
 	/// </summary>
 	/// <param name="_holder">保有者</param>
-	Component_Fall(string _name, StageObject* _holder, Component* _parent);
+	Component_HelingoFall(string _name, StageObject* _holder, Component* _parent);
 
 	/// <summary>
 	/// 初期化

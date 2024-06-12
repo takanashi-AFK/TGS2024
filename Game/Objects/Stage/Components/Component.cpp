@@ -190,7 +190,7 @@ Component* CreateComponent(string _name,ComponentType _type, StageObject* _holde
 	case RotationX:comp = new Component_RotationX(_name,_holder, _parent); break;
 	case RotationZ:comp = new Component_RotationZ(_name,_holder, _parent); break;
 	case MoveX:comp = new Component_MoveX(_name,_holder, _parent); break;
-	case Fall:comp = new Component_Fall(_name,_holder, _parent); break;
+	case Fall:comp = new Component_HelingoFall(_name,_holder, _parent); break;
 	case Chase:comp = new Component_Chase(_name,_holder, _parent); break;
 	case CircleRangeDetector:comp = new Component_CircleRangeDetector(_name,_holder, _parent); break;
 	case FanRangeDetector:comp = new Component_FanRangeDetector(_name,_holder, _parent); break;

@@ -39,7 +39,7 @@ void Component_HelingoBehavior::Update()
 	auto detector = dynamic_cast<Component_CircleRangeDetector*>(GetChildComponent("CircleRangeDetector"));
 	if (detector == nullptr) return;
 
-	auto fall = dynamic_cast<Component_Fall*>(GetChildComponent("Fall"));
+	auto fall = dynamic_cast<Component_HelingoFall*>(GetChildComponent("Fall"));
 	if (fall == nullptr) return;
 
 	// 検知範囲の設定
@@ -89,7 +89,7 @@ void Component_HelingoBehavior::OnCollision(GameObject* _target)
 		if (hm == nullptr)return;
 
 		// プレイヤーのHPを減らす
-		auto fall = dynamic_cast<Component_Fall*>(GetChildComponent("Fall"));
+		auto fall = dynamic_cast<Component_HelingoFall*>(GetChildComponent("Fall"));
 		if (fall == nullptr) return;
 
 		auto onlyFall = dynamic_cast<Component_OnlyFall*>(fall->GetChildComponent("OnlyFall"));

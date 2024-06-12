@@ -16,7 +16,7 @@ namespace
 }
 
 // コンストラクタ
-Component_Fall::Component_Fall(string _name, StageObject* _holder, Component* _parent)
+Component_HelingoFall::Component_HelingoFall(string _name, StageObject* _holder, Component* _parent)
 	: Component(_holder, _name, Fall, _parent),
 	fallSpeed_(), riseSpeed_(), fallDistance_(),startHeight_(),
 	isActive_(false), nowState_(WAIT), prevState_(RISE)
@@ -24,7 +24,7 @@ Component_Fall::Component_Fall(string _name, StageObject* _holder, Component* _p
 }
 
 // 初期化
-void Component_Fall::Initialize()
+void Component_HelingoFall::Initialize()
 {
 	if (FindChildComponent("Timer") == false)AddChildComponent(CreateComponent("Timer", Timer, holder_, this));
 	if (FindChildComponent("OnlyFall") == false)AddChildComponent(CreateComponent("OnlyFall", OnlyFall, holder_, this));
@@ -32,7 +32,7 @@ void Component_Fall::Initialize()
 }
 
 // 更新
-void Component_Fall::Update()
+void Component_HelingoFall::Update()
 {   
 	auto fall = dynamic_cast<Component_OnlyFall*>(GetChildComponent("OnlyFall"));
 	if (fall == nullptr) return;
@@ -74,12 +74,12 @@ void Component_Fall::Update()
 }
 
 // 開放
-void Component_Fall::Release()
+void Component_HelingoFall::Release()
 {
 }
 
 // 保存
-void Component_Fall::Save(json& _saveObj)
+void Component_HelingoFall::Save(json& _saveObj)
 {
 	// 保存
 	_saveObj["fallSpeed_"] = fallSpeed_;
@@ -90,7 +90,7 @@ void Component_Fall::Save(json& _saveObj)
 }
 
 // 読込
-void Component_Fall::Load(json& _loadObj)
+void Component_HelingoFall::Load(json& _loadObj)
 {
 	// 読込
 	if (_loadObj.contains("fallSpeed_"))fallSpeed_ = _loadObj["fallSpeed_"];
@@ -101,7 +101,7 @@ void Component_Fall::Load(json& _loadObj)
 }
 
 // ImGui表示
-void Component_Fall::DrawData()
+void Component_HelingoFall::DrawData()
 {
 	// ImGui描画
 	ImGui::Text("Component_Fall");
@@ -117,7 +117,7 @@ void Component_Fall::DrawData()
 	}
 }
 
-void Component_Fall::FallMove(float& _height)
+void Component_HelingoFall::FallMove(float& _height)
 {
 	// 前回の状態が待機状態の時、開始の高さを記録
 	// 2週目でこのifに入らないようにするため、prevStateをFALLに変更
@@ -149,7 +149,7 @@ void Component_Fall::FallMove(float& _height)
 	}
 }
 
-void Component_Fall::RiseMove(float& _height)
+void Component_HelingoFall::RiseMove(float& _height)
 {
 	// 目標の高さ
 	float targetHeight = startHeight_;
@@ -177,7 +177,7 @@ void Component_Fall::RiseMove(float& _height)
 	}
 }
 
-void Component_Fall::Wait()
+void Component_HelingoFall::Wait()
 {
 	// タイマーを取得
 	auto timer = dynamic_cast<Component_Timer*>(GetChildComponent("Timer"));

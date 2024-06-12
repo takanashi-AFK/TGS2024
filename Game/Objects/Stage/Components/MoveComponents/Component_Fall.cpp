@@ -109,9 +109,6 @@ void Component_Fall::DrawData()
 	ImGui::Text(prevState_ == FALL ? "FALL" : prevState_ == RISE ? "RISE" : "WAIT");
 	ImGui::Text("isActive_ : %s", isActive_ ? "true" : "false");
 
-	ImGui::DragFloat("fallSpeed_", &fallSpeed_, 0.1f);
-	ImGui::DragFloat("riseSpeed_", &riseSpeed_, 0.1f);
-	ImGui::DragFloat("fallDistance_", &fallDistance_, 0.1f);
 	ImGui::DragFloat("riseWaitTime_", &riseWaitTime_, 0.1f);
 	ImGui::DragFloat("fallWaitTime_", &fallWaitTime_, 0.1f);
 

@@ -11,6 +11,7 @@ private:
 	float discoveryrange_;			// 発見範囲
 	bool isTimerActive_;	// タイマーがアクティブかどうか
 
+	bool oneHit_;
 public:
 	/// <summary>
 	/// コンストラクタ

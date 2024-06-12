@@ -10,6 +10,7 @@
 #include "../../../../../Engine/ImGui/imgui.h"
 #include "../../../../../Engine/Collider/BoxCollider.h"
 #include "../HealthManagerComponents/Component_HealthManager.h"
+#include "../MoveComponents/Component_OnlyFall.h"
 
 
 Component_HelingoBehavior::Component_HelingoBehavior(string _name, StageObject* _holder, Component* _parent)
@@ -26,6 +27,8 @@ void Component_HelingoBehavior::Initialize()
 	if (FindChildComponent("CircleRangeDetector") == false)AddChildComponent(CreateComponent("CircleRangeDetector", CircleRangeDetector, holder_, this));
 	if (FindChildComponent("Timer") == false)AddChildComponent(CreateComponent("Timer", Timer, holder_, this));
 	if (FindChildComponent("Chase") == false)AddChildComponent(CreateComponent("Chase", Chase, holder_, this));
+	if (FindChildComponent("Fall") == false)AddChildComponent(CreateComponent("Fall", Fall, holder_, this));
+
 }
 
 void Component_HelingoBehavior::Update()
@@ -58,6 +61,7 @@ void Component_HelingoBehavior::Update()
 			// 追跡を停止
 			chase->Stop();
 			fall->Execute();
+			oneHit_ = false;
 		}
 		else {
 		}
@@ -86,8 +90,15 @@ void Component_HelingoBehavior::OnCollision(GameObject* _target)
 
 		// プレイヤーのHPを減らす
 		auto fall = dynamic_cast<Component_Fall*>(GetChildComponent("Fall"));
-		if(fall->IsFalling())((Component_HealthManager*)hm)->TakeDamage(5);
+		if (fall == nullptr) return;
 
+		auto onlyFall = dynamic_cast<Component_OnlyFall*>(fall->GetChildComponent("OnlyFall"));
+		if (onlyFall == nullptr)return;
+
+		if (onlyFall->IsActive() && oneHit_ == false) {
+			((Component_HealthManager*)hm)->TakeDamage(5);
+			oneHit_ = true;
+		}
 		// プレイヤーのHPが0以下の場合
 		if (((Component_HealthManager*)hm)->GetHP() <= 0) {
 
@@ -114,8 +125,7 @@ void Component_HelingoBehavior::Load(json& _loadObj)
 void Component_HelingoBehavior::DrawData()
 {
 #ifdef _DEBUG
-
-
+	
 	ImGui::DragFloat("fallrange_", &fallrange_);
 	ImGui::DragFloat("discoveryrange_", &discoveryrange_);
 	//対象の選択

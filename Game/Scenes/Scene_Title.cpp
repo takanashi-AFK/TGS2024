@@ -5,20 +5,21 @@
 #include"../../Engine/ResourceManager/Image.h"
 #include"../../Engine/SceneManager.h"
 Scene_Title::Scene_Title(GameObject* parent)
-	: GameObject(parent, "Scene_Title"),panel(nullptr),button(nullptr)
+	: GameObject(parent, "Scene_Title"),panel_(nullptr),button_(nullptr)
 {
 }
 
 void Scene_Title::Initialize()
 {
-	panel = Instantiate<UIPanel>(this);
-	button = Instantiate<UIButton>(panel);
-	panel->AddChild(button);
+	panel_ = Instantiate<UIPanel>(this);
+	button_ = Instantiate<UIButton>(panel_);
+	panel_->AddChild(button_);
 }
 
 void Scene_Title::Update()
 {
-	if (button->ClickButton()) {
+	//ボタンが押されたらプレイシーンに移行
+	if (button_->ClickButton()) {
 		SceneManager* pChangePlay = (SceneManager*)FindObject("SceneManager");
 		pChangePlay->ChangeScene(SCENE_ID_PLAY);
 	}

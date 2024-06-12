@@ -12,19 +12,20 @@ public:
 	/// </summary>
 	/// <param name="_name">UIオブジェクトの名前</param>
 	/// <param name="_parent">親のオブジェクト</param>
-    UIObject(string _name, GameObject* _parent);
+	UIObject(string _name, GameObject* _parent);
+
+	  
+	/// <summary>
+	/// 初期化
+	/// </summary>
+	void Initialize() override;
 
 	 /// <summary>
-    /// 初期化
-   /// </summary>
-   void Initialize() override;
+	/// 更新
+	/// </summary>
+	void Update() override;
 
-     /// <summary>
-    /// 更新
-    /// </summary>
-    void Update() override;
-
-    /// <summary>
+	/// <summary>
    /// 描画
    /// </summary>
    void Draw() override;
@@ -34,16 +35,16 @@ public:
 	/// </summary>
 	void Release() override;
 
-	  /// <summary>
-     /// 保存
-    /// </summary>
-   /// <param name="_saveUiobj">保存データ</param>
-   virtual void Save(json& _saveUIobj) = 0;
+	/// <summary>
+	/// 保存
+	/// </summary>
+	/// <param name="_saveUiobj">保存データ</param>
+	virtual void Save(json& _saveUIobj) = 0;
 
-	 /// <summary>
-    /// 読込
-   /// </summary>
-  /// <param name="_loadUiobj">読込データ</param>
-  virtual void Load(json& _loadUIobj) = 0;
+	/// <summary>
+	/// 読込
+    /// </summary>
+    /// <param name="_loadUiobj">読込データ</param>
+	virtual void Load(json& _loadUIobj) = 0;
 };
 

@@ -5,9 +5,8 @@ class Component_HealthManager;
 
 class Scene_Play:public GameObject
 {
-	Component_HealthManager* health;
+	Component_HealthManager* health_;
 
-	
 public:
 
 	Scene_Play(GameObject* parent);

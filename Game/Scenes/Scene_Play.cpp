@@ -22,14 +22,18 @@ void Scene_Play::Initialize()
 	JsonReader::Load("Datas/stage_Test00_sugawara.json", stageData);
 	pStage->Load(stageData);
 	
+	//範囲for分でオブジェクトリストの取得
 	for (auto pList : pStage->GetStageObjects()){
+		//リスト内でとうろくされているPlayerBehaviorがあったらコンポーネントをキャストして代入
 		if (pList->FindComponent("PlayerBehavior")) {
-			Component_PlayerBehavior* playerBeha_ = dynamic_cast<Component_PlayerBehavior*>(pList->FindComponent("PlayerBehavior"));
-			if (playerBeha_ != nullptr) {
-				health =dynamic_cast<Component_HealthManager*>(playerBeha_->GetChildComponent("HealthManager"));
+			Component_PlayerBehavior* playerBeha = dynamic_cast<Component_PlayerBehavior*>(pList->FindComponent("PlayerBehavior"));
+			if (playerBeha != nullptr) {
+				//playerBehaから子コンポーネントを取得する
+				health_ =dynamic_cast<Component_HealthManager*>(playerBeha->GetChildComponent("HealthManager"));
 			}
 		}
 	}
+
 #ifdef _DEBUG
 
 	// ステージエディターを実行
@@ -44,8 +48,8 @@ void Scene_Play::Initialize()
 
 void Scene_Play::Update()
 {
-	
-	if (health->GetHP() == 0) {
+	//HPが0になったらエンドシーンに移行
+	if (health_->GetHP() == 0) {
 		SceneManager* pChangeScene = (SceneManager*)FindObject("SceneManager");
 		pChangeScene->ChangeScene(SCENE_ID_END, TID_BLACKOUT);
 	}

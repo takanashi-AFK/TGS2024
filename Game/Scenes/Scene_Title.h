@@ -9,9 +9,9 @@ class Scene_Title:public GameObject
 {
 private:
 	//ボタンクラスのインスタンス
-	UIButton* button;
+	UIButton* button_;
 	//UIパネルクラスのインスタンス
-	UIPanel* panel;
+	UIPanel* panel_;
 public:
 
 	//コンストラクタ

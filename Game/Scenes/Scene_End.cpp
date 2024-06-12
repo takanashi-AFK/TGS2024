@@ -13,14 +13,14 @@ void Scene_End::Initialize()
 {
 	Instantiate<SkySphere>(this);
 
-	panel = Instantiate<UIPanel>(this);
-	button = Instantiate<UIButton>(panel);
-	panel->AddChild(button);
+	panel_ = Instantiate<UIPanel>(this);
+	button_ = Instantiate<UIButton>(panel_);
+	panel_->AddChild(button_);
 }
 
 void Scene_End::Update()
 {
-	if (button->ClickButton()) {
+	if (button_->ClickButton()) {
 		SceneManager* pChangeScene = (SceneManager*)FindObject("SceneManager");
 		pChangeScene->ChangeScene(SCENE_ID_TITLE, TID_BLACKOUT);
 	}

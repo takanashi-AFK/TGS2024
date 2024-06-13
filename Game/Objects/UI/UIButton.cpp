@@ -64,6 +64,7 @@ void UIButton::Load(json& _loadUIobj)
 
 bool UIButton::MouseInArea(XMFLOAT3 mousePos)
 {
+	
 	// マウスの座標が画像の領域内に入っているかどうか
 	return (mousePos.x > -(size_.x * transform_.scale_.x) / 2 && mousePos.x < (size_.x * transform_.scale_.x) / 2
 		&& mousePos.y > -(size_.y * transform_.scale_.y) / 2 && mousePos.y < (size_.y * transform_.scale_.y) / 2);

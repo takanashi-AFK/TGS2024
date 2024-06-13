@@ -8,6 +8,13 @@ private:
 	int UIButtonPict_;
 	XMFLOAT3 size_;//画像の大きさ
 
+	struct Rect {
+		float left;
+		float top;
+		float right;
+		float bottom;
+	};
+
 public:
 	/// <summary>
 		/// コンストラクタ

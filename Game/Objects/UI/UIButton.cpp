@@ -23,8 +23,8 @@ void UIButton::Initialize()
 	size_ = Image::GetSize(UIButtonPict_);
 
 	// ウィンドウ上での画像の大きさに変換
-	size_.x /= Direct3D::screenWidth_;
-	size_.y /= Direct3D::screenHeight_;
+	/*size_.x /= Direct3D::screenWidth_;
+	size_.y /= Direct3D::screenHeight_;*/
 
 }
 
@@ -40,6 +40,7 @@ void UIButton::Update()
 	// マウスが画像の領域内に入っているかどうか
 	ImGui::Text("isInArea = %s", MouseInArea(mousePos_) ? "true" : "false");
 
+	
 
 }
 
@@ -64,9 +65,18 @@ void UIButton::Load(json& _loadUIobj)
 
 bool UIButton::MouseInArea(XMFLOAT3 mousePos)
 {
-	// マウスの座標が画像の領域内に入っているかどうか
-	return (mousePos.x > -(size_.x * transform_.scale_.x) / 2 && mousePos.x < (size_.x * transform_.scale_.x) / 2
-		&& mousePos.y > -(size_.y * transform_.scale_.y) / 2 && mousePos.y < (size_.y * transform_.scale_.y) / 2);
+	//ボタンの右の座標
+	float ButtonRight = transform_.position_.x * (Direct3D::screenWidth_ / 2) + (size_.x * transform_.scale_.x )/2;
+	//左の座標
+	float ButtonLeft = transform_.position_.x * (Direct3D::screenWidth_ / 2) - (size_.x * transform_.scale_.x)/2;
+	//ボタンの上の座標
+	float ButtonUp = -transform_.position_.y * (Direct3D::screenHeight_ / 2) + (size_.y * transform_.scale_.y )/2;
+	//下の座標
+	float ButtonButtom = ButtonUp + (size_.y * transform_.scale_.y);
+
+	return(mousePos.x > ButtonLeft && mousePos.x< ButtonRight &&
+		mousePos.y >ButtonUp && mousePos.y < ButtonButtom);
+
 }
 
 bool UIButton::ClickButton()

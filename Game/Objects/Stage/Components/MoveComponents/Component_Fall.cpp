@@ -188,6 +188,10 @@ void Component_HelingoFall::Wait()
 		timer->SetTime(riseWaitTime_);
 		timer->Start();
 
+		auto rise = dynamic_cast<Component_OnlyRise*>(GetChildComponent("OnlyRise"));
+		if (rise == nullptr) return;
+		rise->SetIsEnd(false);
+
 		// タイマーが終了したら、上昇状態に遷移
 		if(timer->GetIsEnd())SetState(RISE);
 	}

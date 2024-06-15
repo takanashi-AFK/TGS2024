@@ -65,5 +65,7 @@ public:
 	bool IsActive() { return isActive_; }
 
 	bool IsEnd() { return isEnd_; }
+
+	void SetIsEnd(bool _isEnd) { isEnd_ = _isEnd; }
 };
 

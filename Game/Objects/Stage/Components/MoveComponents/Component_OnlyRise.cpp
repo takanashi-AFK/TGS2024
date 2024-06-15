@@ -23,6 +23,7 @@ void Component_OnlyRise::Update()
 		if (isFirst_) {
 			height_ = holder_->GetPosition().y;
 			isFirst_ = false;
+			isEnd_ = false;
 		}
 
 		// 高さが目標の高さに達していなかったら...
@@ -30,7 +31,6 @@ void Component_OnlyRise::Update()
 
 			// 上昇速度分だけ高さを上げる
 			height_ += riseSpeed_;
-
 		}
 		else {
 			// 目標の高さに設定

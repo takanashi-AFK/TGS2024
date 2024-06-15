@@ -57,7 +57,7 @@ void Component_HelingoFall::Update()
 
 		case RISE:
 			rise->Execute();
-			if (rise->IsActive()) {
+			if (rise->IsEnd()) {
 				auto timer = dynamic_cast<Component_Timer*>(GetChildComponent("Timer"));
 				timer->Reset();
 				Stop();

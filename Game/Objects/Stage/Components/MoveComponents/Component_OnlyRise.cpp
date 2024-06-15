@@ -5,9 +5,10 @@
 Component_OnlyRise::Component_OnlyRise(string _name, StageObject* _holder, Component* _parent) :
 	Component(_holder, _name, ComponentType::OnlyRise, _parent),
 	riseSpeed_(0.1f),
-		height_(0.0f),
+	height_(0.0f),
 	targetHeight_(2.0f),
-	isInfinity_(false)
+	isInfinity_(false),
+	isEnd_(false)
 {
 }
 
@@ -20,7 +21,7 @@ void Component_OnlyRise::Update()
 	if (isActive_) {
 
 		if (isFirst_) {
-			height_ = 0.0f;
+			height_ = holder_->GetPosition().y;
 			isFirst_ = false;
 		}
 
@@ -35,10 +36,15 @@ void Component_OnlyRise::Update()
 			// –Ú•W‚Ì‚‚³‚ÉÝ’è
 			height_ = targetHeight_;
 			isFirst_ = true;
+			isEnd_ = true;
 			Stop();
 		}
 		holder_->SetPosition(holder_->GetPosition().x, height_, holder_->GetPosition().z);
 	}
+
+	ImGui::Text(isEnd_ ? "isEnd_ = true" : "isEnd_ = false");
+
+	ImGui::Text(isFirst_ ? "isFirst_ = First" : "isFirst_ = Not First");
 }
 
 void Component_OnlyRise::Release()
@@ -72,6 +78,5 @@ void Component_OnlyRise::DrawData()
 
 	ImGui::Text("height_ : %f", height_);
 	ImGui::Text(isActive_ ? "Rising" : "Stop");
-	ImGui::Text(isFirst_ ? "First" : "Not First");
-
+	
 }

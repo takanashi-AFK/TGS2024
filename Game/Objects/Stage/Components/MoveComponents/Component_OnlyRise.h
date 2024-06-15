@@ -13,6 +13,7 @@ private:
 	bool isActive_;
 	bool isInfinity_;
 	bool isFirst_;
+	bool isEnd_;
 	float height_;
 	float riseSpeed_;
 	float targetHeight_;
@@ -62,5 +63,7 @@ public:
 	void SetInfinity(bool _isInfinity) { isInfinity_ = _isInfinity; }
 
 	bool IsActive() { return isActive_; }
+
+	bool IsEnd() { return isEnd_; }
 };
 

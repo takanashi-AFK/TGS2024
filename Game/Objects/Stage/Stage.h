@@ -17,7 +17,7 @@ class StageObject;
 class Stage : public GameObject
 {
 private:
-	friend class StageEditor;		// StageEditorクラスをフレンド宣言
+	friend class GameEditor;		// StageEditorクラスをフレンド宣言
 	vector<StageObject*> objects_;	// 自身が保有するステージオブジェクト群
 
 public:

@@ -192,9 +192,10 @@
     <ClCompile Include="Game\Objects\Stage\Components\MoveComponents\Component_MoveX.cpp" />
     <ClCompile Include="Game\Objects\Stage\SkySphere.cpp" />
     <ClCompile Include="Game\Scenes\Scene_Splash.cpp" />
-    <ClCompile Include="Game\Otheres\StageEditor.cpp" />
+    <ClCompile Include="Game\Otheres\GameEditor.cpp" />
     <ClCompile Include="Game\Objects\UI\UIPanel.cpp" />
     <ClCompile Include="Game\Objects\UI\UIObject.cpp" />
+    <ClCompile Include="Engine\Global.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game\Objects\Stage\Components\BehaviorComponents\Component_PlayerBehavior.h" />
@@ -255,7 +256,7 @@
     <ClInclude Include="Game\Objects\Stage\Components\MoveComponents\Component_MoveX.h" />
     <ClInclude Include="Game\Objects\Stage\SkySphere.h" />
     <ClInclude Include="Game\Scenes\Scene_Splash.h" />
-    <ClInclude Include="Game\Otheres\StageEditor.h" />
+    <ClInclude Include="Game\Otheres\GameEditor.h" />
     <ClInclude Include="Game\Objects\UI\UIPanel.h" />
     <ClInclude Include="Game\Objects\UI\UIObject.h" />
   </ItemGroup>

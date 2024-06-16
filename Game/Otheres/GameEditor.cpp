@@ -1,61 +1,39 @@
-#include "StageEditor.h"
+#include "GameEditor.h"
 #include "../../Engine/ImGui/imgui.h"
 #include "../../Engine/DirectX/Direct3D.h"
 #include "../Objects/Stage/Stage.h"
 #include "../Objects/Stage/StageObject.h"
+#include "../../Engine/Global.h"
 
-namespace {
-	// 文字列内の全ての "\\" を "/" に置換する関数
-	void ReplaceBackslashes(string& str) {
-		size_t found = str.find("\\");
-		while (found != string::npos) {
-			str.replace(found, 1, "/"); // "\\" を "/" に置換する
-			found = str.find("\\", found + 1); // 次の "\\" を検索する
-		}
-	}
+using namespace FileManager;
 
-	// カレントディレクトリからの相対パスを取得する関数
-	std::string GetAssetsRelativePath(const std::string& absolutePath) {
-		const std::string assetsFolder = "Assets\\";
-		// "Assets\\" の位置を検索
-		size_t assetsPos = absolutePath.find(assetsFolder);
-		if (assetsPos != std::string::npos) {
-			// "Assets\\" の部分を除いた、それ以降の部分を取得
-			std::string relativePath = absolutePath.substr(assetsPos + assetsFolder.size());
-			return relativePath;
-		}
-		else {
-			// "Assets\\" が見つからない場合は、元のファイルパスを返す
-			return absolutePath;
-		}
-	}
-
-}
-
-StageEditor::StageEditor(GameObject* _parent)
-	:GameObject(_parent,"StageEditor"),editStage_(nullptr)
+GameEditor::GameEditor(GameObject* _parent)
+	:GameObject(_parent, "StageEditor"), editStage_(nullptr), selectEditStageObjectIndex_(-1), editUIPanel_(nullptr), selectEditUIObjectIndex_(-1), editType_(MAX)
 {
 }
 
-void StageEditor::Initialize()
+void GameEditor::Initialize()
 {
 }
 
-void StageEditor::Update()
+void GameEditor::Update()
 {
 }
 
-void StageEditor::Draw()
+void GameEditor::Draw()
 {
+	// ワールドアウトライナーを描画
 	DrawWorldOutLiner();
+
+	// 詳細ウィンドウを描画
 	DrawDatails();
 }
 
-void StageEditor::Release()
+void GameEditor::Release()
 {
 }
 
-void StageEditor::DrawWorldOutLiner()
+void GameEditor::DrawWorldOutLiner()
 {
 	// ImGuiで表示するウィンドウの設定を行う
 	ImGui::SetNextWindowPos(ImVec2(Direct3D::screenWidth_ * 0.7f, 0));
@@ -65,34 +43,59 @@ void StageEditor::DrawWorldOutLiner()
 	ImGui::Begin("World Outliner", NULL,
 		ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoCollapse| ImGuiWindowFlags_AlwaysHorizontalScrollbar);
 	{
-		ImGui::Text("object menu");
+		ImGui::BeginTabBar("tab Ber");{
 
-		if (ImGui::Button("Add"))AddStageObject();
-		ImGui::SameLine();
+			// ステージオブジェクトのタブを表示
+			if(editStage_ != nullptr)
+				if (ImGui::BeginTabItem("StageObject")) {
+					DrawStageOutLiner();
+					ImGui::EndTabItem();
+				}
 
-		if (ImGui::Button("Save"))SaveStage();
-		ImGui::SameLine();
-
-		if (ImGui::Button("Load"))LoadStage();
-		ImGui::SameLine();
-
-		if (ImGui::Button("Delete"))editStage_->DeleteAllStageObject();
-
-		ImGui::Separator();
-
-		ImGui::BeginChild("ObjectList"); {
-			// リストを表示
-			for (int i = 0; i < editStage_->GetStageObjects().size(); ++i)
-				if (ImGui::Selectable(editStage_->GetStageObjects()[i]->GetObjectName().c_str(), selectEditObjectIndex_ == i)) {
-					selectEditObjectIndex_ = i;
+			// UIオブジェクトのタブを表示
+			if(editUIPanel_ != nullptr)
+				if (ImGui::BeginTabItem("UIPanel")) {
+					DrawUIPanelOutLiner();
+					ImGui::EndTabItem();
 				}
 		}
-		ImGui::EndChild();
+		ImGui::EndTabBar();
 	}
 	ImGui::End();
 }
 
-void StageEditor::DrawDatails()
+void GameEditor::DrawStageOutLiner()
+{
+	ImGui::Text("StageObject menu");
+
+	if (ImGui::Button("Add"))AddStageObject();
+	ImGui::SameLine();
+
+	if (ImGui::Button("Save"))SaveStage();
+	ImGui::SameLine();
+
+	if (ImGui::Button("Load"))LoadStage();
+	ImGui::SameLine();
+
+	if (ImGui::Button("Delete"))editStage_->DeleteAllStageObject();
+
+	ImGui::Separator();
+
+	ImGui::BeginChild("ObjectList"); {
+		// リストを表示
+		for (int i = 0; i < editStage_->GetStageObjects().size(); ++i)
+			if (ImGui::Selectable(editStage_->GetStageObjects()[i]->GetObjectName().c_str(), selectEditStageObjectIndex_ == i)) {
+				selectEditStageObjectIndex_ = i;
+			}
+	}
+	ImGui::EndChild();
+}
+
+void GameEditor::DrawUIPanelOutLiner()
+{
+}
+
+void GameEditor::DrawDatails()
 {
 	// ImGuiで表示するウィンドウの設定を行う
 	ImGui::SetNextWindowPos(ImVec2(Direct3D::screenWidth_ * 0.7f, Direct3D::screenHeight_ * 0.5f));
@@ -102,16 +105,31 @@ void StageEditor::DrawDatails()
 	ImGui::Begin("Details", NULL,
 				ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_AlwaysHorizontalScrollbar);
 	{
-		if (selectEditObjectIndex_ >= 0 && selectEditObjectIndex_ < editStage_->GetStageObjects().size()) {
-
-			editStage_->GetStageObjects()[selectEditObjectIndex_]->DrawData();
+		switch (editType_)
+		{
+		case STAGE:
+			break;
+		case UIPANEL:
+			break;
+		default:ImGui::Text("No information to display");break;
 		}
-		else ImGui::Text("No information to display");
 	}
 	ImGui::End();
 }
 
-void StageEditor::AddStageObject()
+void GameEditor::DrawStageObjectDatails()
+{
+	if (selectEditStageObjectIndex_ >= 0 && selectEditStageObjectIndex_ < editStage_->GetStageObjects().size()) {
+
+		editStage_->GetStageObjects()[selectEditStageObjectIndex_]->DrawData();
+	}
+}
+
+void GameEditor::DrawUIObjectDatails()
+{
+}
+
+void GameEditor::AddStageObject()
 {
 	// 追加するオブジェクトの初期名を設定
 	string name = "object" + std::to_string(editStage_->objects_.size());
@@ -159,7 +177,7 @@ void StageEditor::AddStageObject()
 	editStage_->AddStageObject(CreateStageObject(name, filePath, editStage_));
 }
 
-void StageEditor::SaveStage()
+void GameEditor::SaveStage()
 {
 	//現在のカレントディレクトリを覚えておく
 	char defaultCurrentDir[MAX_PATH];
@@ -207,7 +225,7 @@ void StageEditor::SaveStage()
 	
 }
 
-void StageEditor::LoadStage()
+void GameEditor::LoadStage()
 {
 	//現在のカレントディレクトリを覚えておく
 	char defaultCurrentDir[MAX_PATH];
@@ -252,4 +270,16 @@ void StageEditor::LoadStage()
 	json loadObj;
 	if (JsonReader::Load(filePath, loadObj) == false) MessageBox(NULL, "読込に失敗しました。", 0, 0);
 	editStage_->Load(loadObj);
+}
+
+void GameEditor::AddUIObject()
+{
+}
+
+void GameEditor::SaveUIPanel()
+{
+}
+
+void GameEditor::LoadUIPanel()
+{
 }

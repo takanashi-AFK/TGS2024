@@ -63,10 +63,10 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 	// ウィンドウの色を変更する
 	{
-		//ImGuiStyle& style = ImGui::GetStyle();
-		//style.Colors[ImGuiCol_WindowBg] = ImVec4(0.1f, 0.1f, 0.1f, 1.f); // RGBAで指定
-		//style.Colors[ImGuiCol_TitleBgActive] = ImVec4(0.5f, 0.1f, 0.5f, 1.0f); // RGBAで指定
-		//style.Colors[ImGuiCol_TitleBg] = ImVec4(0.2f, 0.1f, 0.2f, 1.0f); // RGBAで指定
+		ImGuiStyle& style = ImGui::GetStyle();
+		style.Colors[ImGuiCol_WindowBg] = ImVec4(0.15f, 0.15f, 0.15f, 1.f); // RGBAで指定
+		style.Colors[ImGuiCol_TitleBgActive] = ImVec4(0.0f, 0.3f, 0.5f, 1.0f); // RGBAで指定
+		style.Colors[ImGuiCol_TitleBg] = ImVec4(0.0f, 0.2f, 0.3f, 1.0f); // RGBAで指定
 		//style.Colors[ImGuiCol_Button] = ImVec4(0.5f, 0.1f, 0.5f, 1.0f); // RGBAで指定
 	}
 

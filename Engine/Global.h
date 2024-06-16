@@ -17,5 +17,13 @@
 
 const float FPS = 60.0f;	// フレームレート
 
-
 // ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝ //
+
+// ファイル管理namespace
+namespace FileManager {
+	// 文字列内の全ての "\\" を "/" に置換する関数
+	void ReplaceBackslashes(string& str);
+
+	// カレントディレクトリからの相対パスを取得する関数
+	std::string GetAssetsRelativePath(const std::string& absolutePath);
+}

@@ -27,7 +27,7 @@ void UIPanel::Release()
 void UIPanel::Save(json& _saveObj)
 {
 	// 各オブジェクトの保存処理
-	for (auto obj : objects_)obj->Save(_saveObj[obj->GetObjectName()]);
+	for (auto obj : objects_)obj->ChildSave(_saveObj[obj->GetObjectName()]);
 }
 
 void UIPanel::Load(json& _loadObj)

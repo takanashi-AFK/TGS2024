@@ -30,6 +30,8 @@ public:
 	virtual void Load(json& loadObj) {};
 	virtual void DrawData() {};
 
+	void ChildSave(json& _saveObj);
+	void ChildLoad(json& _loadObj);
 };
 
 UIObject* CreateUIObject(string _name, UIType _type, GameObject* _parent);

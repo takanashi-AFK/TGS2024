@@ -196,6 +196,7 @@
     <ClCompile Include="Game\Objects\UI\UIPanel.cpp" />
     <ClCompile Include="Game\Objects\UI\UIObject.cpp" />
     <ClCompile Include="Engine\Global.cpp" />
+    <ClCompile Include="Game\Objects\UI\UIButton.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game\Objects\Stage\Components\BehaviorComponents\Component_PlayerBehavior.h" />
@@ -259,6 +260,7 @@
     <ClInclude Include="Game\Otheres\GameEditor.h" />
     <ClInclude Include="Game\Objects\UI\UIPanel.h" />
     <ClInclude Include="Game\Objects\UI\UIObject.h" />
+    <ClInclude Include="Game\Objects\UI\UIButton.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Assets\Shader\BillBoard.hlsl">

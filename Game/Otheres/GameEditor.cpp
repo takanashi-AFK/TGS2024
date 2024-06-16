@@ -362,6 +362,50 @@ void GameEditor::AddUIObject()
 
 void GameEditor::SaveUIPanel()
 {
+	//現在のカレントディレクトリを覚えておく
+	char defaultCurrentDir[MAX_PATH];
+	GetCurrentDirectory(MAX_PATH, defaultCurrentDir);
+
+	// 保存先のファイルパスを取得
+	string filePath{}; {
+		// 「ファイルを保存」ダイアログの設定用構造体を設定
+		OPENFILENAME ofn; {
+			ZeroMemory(&ofn, sizeof(ofn));
+			ofn.lStructSize = sizeof(OPENFILENAME);
+			ofn.lpstrFilter = TEXT("objectData(*.json)\0*.json\0すべてのファイル(*.*)\0*.*\0\0");
+			char fileName[MAX_PATH] = "無題.json";
+			ofn.lpstrFile = fileName;
+			ofn.nMaxFile = MAX_PATH;
+			ofn.Flags = OFN_OVERWRITEPROMPT;
+			ofn.lpstrDefExt = "json";
+			ofn.nFilterIndex = 1; // 初期選択するフィルター
+			ofn.lpstrInitialDir = TEXT("."); // カレントディレクトリを初期選択位置として設定
+		}
+
+		// ファイルを保存するダイアログの表示
+		if (GetSaveFileName(&ofn) == TRUE) {
+			// ファイルパスを取得
+			filePath = ofn.lpstrFile;
+
+			// カレントディレクトリからの相対パスを取得
+			filePath = GetAssetsRelativePath(filePath);
+
+			// 文字列内の"\\"を"/"に置換
+			ReplaceBackslashes(filePath);
+
+			// ディレクトリを戻す
+			SetCurrentDirectory(defaultCurrentDir);
+		}
+		else {
+			return;
+		}
+	}
+
+	// ファイルにステージ情報を保存
+	json saveObj;
+	editUIPanel_->Save(saveObj);
+	if (JsonReader::Save(filePath, saveObj) == false) MessageBox(NULL, "保存に失敗しました。", 0, 0);
+
 }
 
 void GameEditor::LoadUIPanel()

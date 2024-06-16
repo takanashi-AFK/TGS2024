@@ -1,7 +1,31 @@
 #include "UIObject.h"
 
+#include "UIButton.h"
+#include "../../../Engine/Global.h"
+
 UIObject::UIObject(string _name, UIType _type, GameObject* parent)
 	: GameObject(parent, _name), isEnable_(true), type_(_type)
+{
+}
+
+void UIObject::ChildSave(json& _saveObj)
+{
+	// タイプを保存
+	_saveObj["type_"] = type_;
+	
+	// オブジェクト名を保存
+	_saveObj["name_"] = objectName_;
+
+	// 自身の変形行列情報を保存
+	_saveObj["position_"] = { REFERENCE_XMFLOAT3(transform_.position_) };
+	_saveObj["rotate_"] = { REFERENCE_XMFLOAT3(transform_.rotate_) };
+	_saveObj["scale_"] = { REFERENCE_XMFLOAT3(transform_.scale_) };
+
+	// 自身の固有情報を保存
+	this->Save(_saveObj);
+}
+
+void UIObject::ChildLoad(json& _loadObj)
 {
 }
 
@@ -11,7 +35,7 @@ UIObject* CreateUIObject(string _name, UIType _type, GameObject* _parent)
 	UIObject* obj = nullptr;
 	switch (_type)
 	{
-	case UI_BUTTON:break;
+	case UI_BUTTON:obj = new UIButton(_name, _parent); break;
 	case UI_IMAGE:break;
 	case UI_TEXT:break;
 	default:obj = new UIObject(_name, _type, _parent);break;

@@ -17,7 +17,11 @@ void Scene_Test::Initialize()
 	SkySphere* skySphere = Instantiate<SkySphere>(this);
 
 	// UIパネルの生成
-	UIPanel* uiPanel = Instantiate<UIPanel>(this);
+	UIPanel* uiPanel = Instantiate<UIPanel>(this); {
+		json loadObj;
+		JsonReader::Load("Datas/test_UIsave.json", loadObj);
+		uiPanel->Load(loadObj);
+	}
 
 	// ステージの生成
 	Stage* stage = Instantiate<Stage>(this);

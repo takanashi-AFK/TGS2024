@@ -70,19 +70,17 @@ void UIButton::Load(json& _loadUIobj)
 
 bool UIButton::MouseInArea(XMFLOAT3 mousePos)
 {
-	// ボタンの中心座標
-	XMFLOAT3 centerPos = transform_.position_;
 
 	// ボタンの左上の座標
-	float ButtonLeft = centerPos.x - (size_.x * transform_.scale_.x) / 2;
-	float ButtonUp = centerPos.y - (size_.y * transform_.scale_.y) / 2;
+	float ButtonLeft = transform_.position_.x - size_.x * transform_.scale_.x ;
+	float ButtonUp = transform_.position_.y - size_.y * transform_.scale_.y ;
 
 	// ボタンの右下の座標
-	float ButtonRight = centerPos.x + (size_.x * transform_.scale_.x) / 2;
-	float ButtonButtom = centerPos.y + (size_.y * transform_.scale_.y) / 2;
+	float ButtonRight = transform_.position_.x + size_.x * transform_.scale_.x ;
+	float ButtonButtom = transform_.position_.y + size_.y * transform_.scale_.y;
 
-	return (mousePos.x > ButtonLeft && mousePos.x < ButtonRight &&
-		mousePos.y > ButtonUp && mousePos.y < ButtonButtom);
+	return (mousePos.x >= ButtonLeft && mousePos.x <=ButtonRight &&
+		mousePos.y >= ButtonUp && mousePos.y <= ButtonButtom);
 
 }
 

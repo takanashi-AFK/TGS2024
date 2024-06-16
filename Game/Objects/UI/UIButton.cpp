@@ -70,17 +70,19 @@ void UIButton::Load(json& _loadUIobj)
 
 bool UIButton::MouseInArea(XMFLOAT3 mousePos)
 {
-	//ボタンの右の座標
-	float ButtonRight = size_.x * transform_.position_.x + (size_.x * transform_.scale_.x )/2;
-	//左の座標
-	float ButtonLeft = size_.x  * transform_.position_.x  - (size_.x * transform_.scale_.x)/2;
-	//ボタンの上の座標
-	float ButtonUp = size_.y  * transform_.position_.y+ (size_.y * transform_.scale_.y) / 2;
-	//下の座標
-	float ButtonButtom = size_.y  * transform_.position_.y  - (size_.y * transform_.scale_.y);
+	// ボタンの中心座標
+	XMFLOAT3 centerPos = transform_.position_;
 
-	return(mousePos.x > ButtonLeft && mousePos.x< ButtonRight &&
-		mousePos.y >ButtonUp && mousePos.y < ButtonButtom);
+	// ボタンの左上の座標
+	float ButtonLeft = centerPos.x - (size_.x * transform_.scale_.x) / 2;
+	float ButtonUp = centerPos.y - (size_.y * transform_.scale_.y) / 2;
+
+	// ボタンの右下の座標
+	float ButtonRight = centerPos.x + (size_.x * transform_.scale_.x) / 2;
+	float ButtonButtom = centerPos.y + (size_.y * transform_.scale_.y) / 2;
+
+	return (mousePos.x > ButtonLeft && mousePos.x < ButtonRight &&
+		mousePos.y > ButtonUp && mousePos.y < ButtonButtom);
 
 }
 
@@ -106,10 +108,9 @@ void UIButton::ConvertToImageCoordinates(XMFLOAT3& _position)
 	scHeight = scHeight * 0.7;
 #endif // _DEBUG
 
-
 	// マウスの座標を画像の座標に変換
-	_position.x = (float)(_position.x - ((float)scWidth) / 2) / (float)scWidth;
-	_position.y = (float)(_position.y - (float)scHeight / 2) / (float)scHeight;
+	_position.x = (float)(_position.x * 2.0f) / (float)scWidth - 1.0f;
+	_position.y = 1.0f - (float)(_position.y * 2.0f) / (float)scHeight;
 
 	ImGui::Text("mousePos_ x:%f y:%f", _position.x, _position.y);
 	ImGui::Text("screenWidth_:%d screenHeight_:%d", scWidth, scHeight);

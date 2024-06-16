@@ -22,6 +22,11 @@ void UIButton::Update()
 
 void UIButton::Draw()
 {
+    // 画像が読み込まれていない場合は処理を行わない
+    if (imageHandle_ < 0)return;
+
+	Image::SetTransform(imageHandle_, transform_);
+	Image::Draw(imageHandle_);
 }
 
 void UIButton::Release()
@@ -35,7 +40,10 @@ void UIButton::Save(json& saveObj)
 
 void UIButton::Load(json& loadObj)
 {
-	if(loadObj.contains("imageFilePath_"))imageFilePath_ = loadObj["imageFilePath_"].get<string>();
+    if (loadObj.contains("imageFilePath_")) {
+        imageFilePath_ = loadObj["imageFilePath_"].get<string>();
+        SetImage(imageFilePath_);
+    }
 }
 
 void UIButton::DrawData()
@@ -90,7 +98,17 @@ void UIButton::DrawData()
         }
         ImGui::TreePop();
     }
+	
+	if (ImGui::TreeNode("Data"))
+	{
+        ImGui::Text("OnClick: %s", OnClick() ? "true" : "false");
 
+        XMFLOAT2 mousePos = { Input::GetMousePosition().x,Input::GetMousePosition().y };
+        ConvertToImageCoordinates(mousePos);
+        if (imageHandle_ >= 0)ImGui::Text("IsMouseOver: %s", IsMouseOver(mousePos) ? "true" : "false");
+
+		ImGui::TreePop();
+	}
 }
 
 void UIButton::SetImage(string _imageFilePath)
@@ -113,10 +131,13 @@ bool UIButton::OnClick()
 
 bool UIButton::IsMouseOver(XMFLOAT2 _mousePosition)
 {
+    // 画像が読み込まれていない場合は処理を行わない
+    if (imageHandle_ < 0)return false;
+
 	// マウスカーソルの座標を取得
 	XMFLOAT2 imagesize = Image::GetSize(imageHandle_);
-    float imageHalfWidth = imagesize.x /2;
-    float imageHalfHeight = imagesize.y /2;
+    float imageHalfWidth = imagesize.x;
+    float imageHalfHeight = imagesize.y;
 
     XMFLOAT2 center = { transform_.position_.x,transform_.position_.y };
 

@@ -1,1 +1,1 @@
-{"button":{"imageFilePath_":"kkkkk","objectName_":"button","position_":[0.0,0.0,0.0],"rotate_":[0.0,0.0,0.0],"scale_":[1.0,1.0,1.0],"type_":1},"none":{"objectName_":"none","position_":[0.0,0.0,0.0],"rotate_":[0.0,0.0,0.0],"scale_":[1.0,1.0,1.0],"type_":0}}
+{"button":{"imageFilePath_":"Images/TestButton.png","objectName_":"button","position_":[0.7799999713897705,-0.7799999713897705,0.0],"rotate_":[0.0,0.0,0.0],"scale_":[1.0,1.0,1.0],"type_":1}}

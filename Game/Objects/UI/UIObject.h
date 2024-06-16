@@ -36,5 +36,4 @@ public:
 };
 
 UIObject* CreateUIObject(string _name, UIType _type, GameObject* _parent);
-
 string GetUITypeString(UIType _type);

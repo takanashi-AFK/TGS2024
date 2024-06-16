@@ -205,9 +205,10 @@ namespace Image
 	}
 
 	//‰æ‘œ‚ÌƒTƒCƒY‚ðŽæ“¾
-	XMFLOAT3 GetSize(int handle)
+	XMFLOAT2 GetSize(int handle)
 	{
-		return _datas[handle]->pSprite->GetTextureSize();
+		XMFLOAT3 size = _datas[handle]->pSprite->GetTextureSize();
+		return {size.x,size.y};
 	}
 
 

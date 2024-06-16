@@ -109,5 +109,5 @@ namespace Image
 	/// </summary>
 	/// <param name="handle">知りたい画像番号</param>
 	/// <returns>画像のサイズ</returns>
-	XMFLOAT3 GetSize(int handle);
+	XMFLOAT2 GetSize(int handle);
 }

@@ -2,6 +2,8 @@
 
 #include "UIButton.h"
 #include "../../../Engine/Global.h"
+#include "../../../Engine/ImGui/imgui.h"
+#include "UIPanel.h"
 
 UIObject::UIObject(string _name, UIType _type, GameObject* parent)
 	: GameObject(parent, _name), isEnable_(true), type_(_type)
@@ -40,6 +42,45 @@ void UIObject::ChildLoad(json& _loadObj)
 
 	// 固有情報を読込
 	this->Load(_loadObj);
+}
+
+void UIObject::ChildDrawData()
+{
+	// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
+	// オブジェクト名を表示
+	// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
+	ImGui::Text(this->objectName_.c_str());
+	ImGui::SameLine();
+
+	// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
+	// オブジェクトの削除ボタン
+	// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
+	if (ImGui::SmallButton("delete"))((UIPanel*)FindObject("UIPanel"))->DeleteUIObject(this);
+	ImGui::Separator();
+
+	// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
+	// オブジェクトの名前を変更
+	// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
+	if (ImGui::TreeNode("name")) {
+		ImGui::Text("Current name : %s", this->objectName_.c_str());
+		char buffer[256] = "";
+		if (ImGui::InputTextWithHint("##Input", "Input New name...", buffer, IM_ARRAYSIZE(buffer)))
+			this->objectName_ = buffer;
+		ImGui::TreePop();
+	}
+
+	// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
+	// 自身の変形情報を描画
+	// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
+	if (ImGui::TreeNode("transform_")) {
+		ImGui::DragFloat3("position_", &transform_.position_.x, 0.1f);
+		ImGui::DragFloat3("rotate_", &transform_.rotate_.x, 1.f, -360.f, 360.f);
+		ImGui::DragFloat3("scale_", &transform_.scale_.x, 0.1f, 0.f, LONG_MAX);
+		ImGui::TreePop();
+	}
+
+	// 固有情報を描画
+	this->DrawData();
 }
 
 UIObject* CreateUIObject(string _name, UIType _type, GameObject* _parent)

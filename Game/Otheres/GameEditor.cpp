@@ -162,7 +162,7 @@ void GameEditor::DrawUIObjectDatails()
 
 	if (selectEditUIObjectIndex_ >= 0 && selectEditUIObjectIndex_ < editUIPanel_->GetUIObjects().size()) {
 
-		editUIPanel_->GetUIObjects()[selectEditUIObjectIndex_]->DrawData();
+		editUIPanel_->GetUIObjects()[selectEditUIObjectIndex_]->ChildDrawData();
 	}
 	else ImGui::Text("No object selected");
 }

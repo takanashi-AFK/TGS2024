@@ -1,4 +1,5 @@
 #include "UIButton.h"
+#include "../../../Engine/ImGui/imgui.h"
 
 UIButton::UIButton(string _name, GameObject* parent)
 	: UIObject(_name, UIType::UI_BUTTON, parent)
@@ -33,4 +34,5 @@ void UIButton::Load(json& loadObj)
 
 void UIButton::DrawData()
 {
+	ImGui::Text("ImageFilePath");
 }

@@ -32,6 +32,7 @@ public:
 
 	void ChildSave(json& _saveObj);
 	void ChildLoad(json& _loadObj);
+	void ChildDrawData();
 };
 
 UIObject* CreateUIObject(string _name, UIType _type, GameObject* _parent);

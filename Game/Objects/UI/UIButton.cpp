@@ -28,6 +28,7 @@ void UIButton::Save(json& saveObj)
 
 void UIButton::Load(json& loadObj)
 {
+	if(loadObj.contains("imageFilePath_"))imageFilePath_ = loadObj["imageFilePath_"].get<string>();
 }
 
 void UIButton::DrawData()

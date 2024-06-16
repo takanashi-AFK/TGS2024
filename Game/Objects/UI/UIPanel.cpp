@@ -41,7 +41,7 @@ void UIPanel::Load(json& _loadObj)
 		UIObject* obj = CreateUIObject(it.key(), it.value()["type_"], this);
 
 		// オブジェクト情報を読込
-		obj->Load(it.value());
+		obj->ChildLoad(it.value());
 
 		// オブジェクトをリストに追加
 		AddUIObject(obj);

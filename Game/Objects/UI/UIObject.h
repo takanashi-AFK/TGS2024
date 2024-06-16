@@ -9,7 +9,7 @@ enum UIType {
 	BUTTON,
 	IMAGE,
 	TEXT,
-	MAX
+	MAX,
 };
 
 class UIObject : public GameObject

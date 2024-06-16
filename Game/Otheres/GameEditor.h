@@ -14,7 +14,7 @@ enum EditType
 {
 	STAGE,
 	UIPANEL,
-	MAX
+	NONE
 };
 
 // ステージエディターを管理するクラス

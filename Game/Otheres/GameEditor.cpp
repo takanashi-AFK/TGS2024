@@ -3,12 +3,14 @@
 #include "../../Engine/DirectX/Direct3D.h"
 #include "../Objects/Stage/Stage.h"
 #include "../Objects/Stage/StageObject.h"
+#include "../Objects/UI/UIPanel.h"
+#include "../Objects/UI/UIObject.h"
 #include "../../Engine/Global.h"
 
 using namespace FileManager;
 
 GameEditor::GameEditor(GameObject* _parent)
-	:GameObject(_parent, "StageEditor"), editStage_(nullptr), selectEditStageObjectIndex_(-1), editUIPanel_(nullptr), selectEditUIObjectIndex_(-1), editType_(MAX)
+	:GameObject(_parent, "StageEditor"), editStage_(nullptr), selectEditStageObjectIndex_(-1), editUIPanel_(nullptr), selectEditUIObjectIndex_(-1), editType_(NONE)
 {
 }
 
@@ -49,6 +51,7 @@ void GameEditor::DrawWorldOutLiner()
 			if(editStage_ != nullptr)
 				if (ImGui::BeginTabItem("StageObject")) {
 					DrawStageOutLiner();
+					editType_ = STAGE;
 					ImGui::EndTabItem();
 				}
 
@@ -56,6 +59,7 @@ void GameEditor::DrawWorldOutLiner()
 			if(editUIPanel_ != nullptr)
 				if (ImGui::BeginTabItem("UIPanel")) {
 					DrawUIPanelOutLiner();
+					editType_ = UIPANEL;
 					ImGui::EndTabItem();
 				}
 		}
@@ -107,10 +111,8 @@ void GameEditor::DrawDatails()
 	{
 		switch (editType_)
 		{
-		case STAGE:
-			break;
-		case UIPANEL:
-			break;
+		case STAGE:DrawStageObjectDatails(); break;
+		case UIPANEL:DrawUIObjectDatails();break;
 		default:ImGui::Text("No information to display");break;
 		}
 	}
@@ -119,14 +121,24 @@ void GameEditor::DrawDatails()
 
 void GameEditor::DrawStageObjectDatails()
 {
+	if (editStage_ == nullptr)return;
+
 	if (selectEditStageObjectIndex_ >= 0 && selectEditStageObjectIndex_ < editStage_->GetStageObjects().size()) {
 
 		editStage_->GetStageObjects()[selectEditStageObjectIndex_]->DrawData();
 	}
+	else ImGui::Text("No object selected");
 }
 
 void GameEditor::DrawUIObjectDatails()
 {
+	if (editUIPanel_ == nullptr)return;
+
+	if (selectEditUIObjectIndex_ >= 0 && selectEditUIObjectIndex_ < editUIPanel_->GetUIObjects().size()) {
+
+		editUIPanel_->GetUIObjects()[selectEditUIObjectIndex_]->DrawData();
+	}
+	else ImGui::Text("No object selected");
 }
 
 void GameEditor::AddStageObject()

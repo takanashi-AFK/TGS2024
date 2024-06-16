@@ -20,11 +20,11 @@ void UIButton::Initialize()
 	assert(UIButtonPict_ >= 0);
 
 	// 画像の大きさを取得
-	size_ = Image::GetSize(UIButtonPict_);
+	imagesize_ = Image::GetSize(UIButtonPict_);
 
 	// ウィンドウ上での画像の大きさに変換
-	size_.x /= Direct3D::screenWidth_;
-	size_.y /= Direct3D::screenHeight_;
+	imagesize_.x /= Direct3D::screenWidth_;
+	imagesize_.y /= Direct3D::screenHeight_;
 
 }
 
@@ -71,17 +71,21 @@ void UIButton::Load(json& _loadUIobj)
 bool UIButton::MouseInArea(XMFLOAT3 mousePos)
 {
 
-	// ボタンの左上の座標
-	float ButtonLeft = transform_.position_.x - size_.x * transform_.scale_.x ;
-	float ButtonUp = transform_.position_.y - size_.y * transform_.scale_.y ;
+	float imageHalfWidth = imagesize_.x;
+	float imageHalfHeight = imagesize_.y;
 
-	// ボタンの右下の座標
-	float ButtonRight = transform_.position_.x + size_.x * transform_.scale_.x ;
-	float ButtonButtom = transform_.position_.y + size_.y * transform_.scale_.y;
+	XMFLOAT2 center = { transform_.position_.x,transform_.position_.y };
 
-	return (mousePos.x >= ButtonLeft && mousePos.x <=ButtonRight &&
-		mousePos.y >= ButtonUp && mousePos.y <= ButtonButtom);
+	float scaleX = transform_.scale_.x;
+	float scaleY = transform_.scale_.y;
 
+	float top = center.y - ((imageHalfHeight * 2) * scaleY);
+	float bottom = center.y + ((imageHalfHeight * 2) * scaleY);
+	float left = center.x - ((imageHalfWidth * 2) * scaleX);
+	float right = center.x + ((imageHalfWidth * 2) * scaleX);
+
+	// 判定範囲内にマウスカーソルが入っているかどうかを返す
+	return (mousePos.x >= left && mousePos.x <= right && mousePos.y >= top && mousePos.y <= bottom);
 }
 
 bool UIButton::ClickButton()

@@ -5,8 +5,8 @@ class UIButton : public UIObject
 {
 private:
 
-	int UIButtonPict_;
-	XMFLOAT3 size_;//‰æ‘œ‚Ì‘å‚«‚³
+	int UIButtonPict_;//‰æ‘œ”Ô†
+	XMFLOAT3 imagesize_;//‰æ‘œ‚Ì‘å‚«‚³
 
 public:
 	/// <summary>

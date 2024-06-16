@@ -4,6 +4,13 @@
 #include <Windows.h>
 #include <d3d11.h>
 #include <DirectXMath.h>
+#include <map>
+#include <functional>
+#include <string>
+
+using std::map;
+using std::function;
+using std::string;
 
 //リンカ
 #pragma comment(lib, "d3d11.lib")
@@ -55,17 +62,13 @@ namespace Direct3D
 		BLEND_DEFAULT, BLEND_ADD, BLEND_MAX
 	};
 
-
-
 	//その他
 	extern int		screenWidth_;		//スクリーンの幅
 	extern int		screenHeight_;		//スクリーンの高さ
 	extern bool		isDrawCollision_;	//コリジョンを表示するかフラグ
 
-
-
-
-
+	// イージング関数
+	extern map<string, function<double(double)>> EaseFunc;
 
 	////////////////////////ここからは関数///////////////////////////////
 
@@ -95,7 +98,6 @@ namespace Direct3D
 
 	//開放処理
 	void Release();
-
 
 	//三角形と線分（レイ）の衝突判定（衝突判定に使用）
 	//引数：start　		レイのスタート位置

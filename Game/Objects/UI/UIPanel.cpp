@@ -1,24 +1,19 @@
 #include "UIPanel.h"
 
-#include "../../Objects/UI/UIButton.h"
+// インクルード
+#include "UIObject.h"
 
-UIPanel::UIPanel(GameObject* _parent)
-	: UIObject("UIPanel", _parent)
-{
-}
-
-UIPanel::~UIPanel()
+UIPanel::UIPanel(GameObject* parent)
+	: GameObject(parent, "UIPanel"), objects_()
 {
 }
 
 void UIPanel::Initialize()
 {
-
 }
 
 void UIPanel::Update()
 {
-	
 }
 
 void UIPanel::Draw()
@@ -27,30 +22,59 @@ void UIPanel::Draw()
 
 void UIPanel::Release()
 {
-	// 子オブジェクトをすべて削除
-	ClearChildren();
 }
 
-void UIPanel::Save(json& _saveUiobj)
+void UIPanel::Save(json& _saveObj)
 {
-}
-	
-void UIPanel::Load(json& _loadUiobj)
-{
+	// 各オブジェクトの保存処理
+	for (auto obj : objects_)obj->Save(_saveObj[obj->GetObjectName()]);
 }
 
-void UIPanel::AddChild(UIObject* _child)
+void UIPanel::Load(json& _loadObj)
 {
-	// 子オブジェクトを追加
-	childList.push_back(_child);
+	// 全てのオブジェクトを削除
+	DeleteAllUIObject();
+
+	for (auto it = _loadObj.begin(); it != _loadObj.end(); ++it) {
+
+		// オブジェクトのインスタンスを生成
+		UIObject* obj = CreateUIObject(it.key(), it.value()["type_"], this);
+
+		// オブジェクト情報を読込
+		obj->Load(it.value());
+
+		// オブジェクトをリストに追加
+		AddUIObject(obj);
+	}
 }
 
-void UIPanel::RemoveChild(UIObject* _child)
+void UIPanel::DrawData()
 {
-	// 子オブジェクトを削除
-	childList.remove(_child);
+	// 各オブジェクトの描画処理
+	for (auto obj : objects_)obj->DrawData();
 }
 
-void UIPanel::ClearChildren()
+void UIPanel::AddUIObject(UIObject* _object)
 {
+	// リストに追加
+	if (_object != nullptr)objects_.push_back(_object);
+}
+
+void UIPanel::DeleteUIObject(UIObject* _object)
+{
+	// オブジェクトを削除する
+	_object->KillMe();
+
+	// オブジェクトのイテレータを取得する
+	auto it = std::find(objects_.begin(), objects_.end(), _object);
+
+	// イテレータが見つかった場合、ベクターから削除する
+	if (it != objects_.end()) objects_.erase(it);
+}
+
+void UIPanel::DeleteAllUIObject()
+{
+	// 全てのオブジェクトを削除
+	for (auto obj : objects_)obj->KillMe();
+	objects_.clear();
 }

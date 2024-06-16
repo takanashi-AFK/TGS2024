@@ -1,78 +1,32 @@
 #pragma once
-#include "../../Otheres/UIObject.h"
-#include <list>
+#include "../../../Engine/GameObject/GameObject.h"
+#include "../../../Engine/Json/JsonReader.h"
+#include <vector>
 
-//using宣言
-using std::list;
+class UIObject;
 
-class UIPanel : public UIObject
+using std::vector;
+
+class UIPanel : public GameObject
 {
-protected:
-
-	list<UIObject*> childList;	//子オブジェクトリスト
+private:
+	vector<UIObject*> objects_;
 
 public:
-
-	/// <summary>
-	/// コンストラクタ
-	/// </summary>
-	/// <param name="_name">UIオブジェクトの名前</param>
-	/// <param name="_parent">親のオブジェクト</param>
-	UIPanel(GameObject* _parent);
-
-	/// <summary>
-	/// デストラクタ
-	/// </summary>
-	~UIPanel();
-
-	/// <summary>
-	/// 初期化
-	/// </summary>
+	UIPanel(GameObject* parent);
 	void Initialize() override;
-
-	/// <summary>
-	/// 更新
-	/// </summary>
 	void Update() override;
-
-	/// <summary>
-	/// 描画
-	/// </summary>
 	void Draw() override;
-
-	/// <summary>
-	/// 解放
-	/// </summary>
 	void Release() override;
 
-	/// <summary>
-	/// 保存
-	/// </summary>
-	/// <param name="_saveUiobj">保存データ</param>
-	void Save(json& _saveUiobj) override;
+	void Save(json& _saveObj);
+	void Load(json& _loadObj);
+	void DrawData();
 
-	/// <summary>
-	/// 読み込み
-	/// </summary>
-	/// <param name="_loadUiobj">読み込みデータ</param>
-	void Load(json& _loadUiobj) override;
+	void AddUIObject(UIObject* _object);
+	void DeleteUIObject(UIObject* _object);
+	void DeleteAllUIObject();
 
-	/// <summary>
-	/// パネルに子オブジェクトを追加
-	/// </summary>
-	/// <param name="_child">追加したい子オブジェクト</param>
-	void AddChild(UIObject* _child);
-
-
-	/// <summary>
-	/// パネルから指定した子オブジェクトを削除
-	/// </summary>
-	/// <param name="_child">削除したい子オブジェクト</param>
-	void RemoveChild(UIObject* _child);
-
-	/// <summary>
-	/// パネル内の子オブジェクトを全て削除
-	/// </summary>
-	void ClearChildren();
+	vector<UIObject*> GetUIObjects() { return objects_; };
 };
 

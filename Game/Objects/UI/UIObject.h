@@ -6,10 +6,11 @@
 using std::vector;
 
 enum UIType {
-	BUTTON,
-	IMAGE,
-	TEXT,
-	MAX,
+	UI_NONE,
+	UI_BUTTON,
+	UI_IMAGE,
+	UI_TEXT,
+	UI_MAX,
 };
 
 class UIObject : public GameObject

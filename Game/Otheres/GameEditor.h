@@ -12,9 +12,9 @@ class UIObject;
 
 enum EditType
 {
+	NONE,
 	STAGE,
 	UIPANEL,
-	NONE
 };
 
 // ステージエディターを管理するクラス
@@ -28,6 +28,8 @@ private:
 	int selectEditUIObjectIndex_;		// 選択中のUIオブジェクトのインデックス
 	
 	EditType editType_;				// 編集対象の種類
+
+	bool isShowCreateUIObjectWindow_;	// UIオブジェクト作成ウィンドウを表示するか
 public:
 	GameEditor(GameObject* _parent);
 	void Initialize() override;
@@ -53,5 +55,7 @@ private:
 	void DrawDatails();
 	void DrawStageObjectDatails();
 	void DrawUIObjectDatails();
+
+	void UIObjectClreateWindow();
 };
 

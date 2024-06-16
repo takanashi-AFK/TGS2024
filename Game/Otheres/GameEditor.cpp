@@ -29,6 +29,9 @@ void GameEditor::Draw()
 
 	// 詳細ウィンドウを描画
 	DrawDatails();
+
+	// UIオブジェクト作成ウィンドウを描画
+	if(isShowCreateUIObjectWindow_)UIObjectClreateWindow();
 }
 
 void GameEditor::Release()
@@ -97,6 +100,29 @@ void GameEditor::DrawStageOutLiner()
 
 void GameEditor::DrawUIPanelOutLiner()
 {
+	ImGui::Text("UIObject menu");
+
+	if (ImGui::Button("Add"))AddUIObject();
+	ImGui::SameLine();
+
+	if (ImGui::Button("Save"))SaveUIPanel();
+	ImGui::SameLine();
+
+	if (ImGui::Button("Load"))LoadUIPanel();
+	ImGui::SameLine();
+
+	if (ImGui::Button("Delete"))editUIPanel_->DeleteAllUIObject();
+
+	ImGui::Separator();
+
+	ImGui::BeginChild("ObjectList"); {
+		// リストを表示
+		for (int i = 0; i < editUIPanel_->GetUIObjects().size(); ++i)
+			if (ImGui::Selectable(editUIPanel_->GetUIObjects()[i]->GetObjectName().c_str(), selectEditUIObjectIndex_ == i)) {
+				selectEditUIObjectIndex_ = i;
+			}
+	}
+	ImGui::EndChild();
 }
 
 void GameEditor::DrawDatails()
@@ -139,6 +165,51 @@ void GameEditor::DrawUIObjectDatails()
 		editUIPanel_->GetUIObjects()[selectEditUIObjectIndex_]->DrawData();
 	}
 	else ImGui::Text("No object selected");
+}
+
+void GameEditor::UIObjectClreateWindow()
+{
+	static char nameBuffer[256] = "";
+	if (isShowCreateUIObjectWindow_) {
+		ImGui::Begin("Create UIObject", &isShowCreateUIObjectWindow_); {
+
+			ImGui::NewLine();
+			ImGui::Text("Set the details of the object to be generated!!");
+			ImGui::Separator();
+
+			// 名前を入力
+			ImGui::InputTextWithHint(":seting name", "Input object name...", nameBuffer, IM_ARRAYSIZE(nameBuffer));
+
+			// タイプを選択
+			static UIType uitype = UIType::UI_NONE;	// 初期選択項目
+			static std::string type = "NONE";		// 初期選択項目
+
+			if (ImGui::BeginCombo(":seting type", type.c_str())) {
+				for (int i = 0; i < UIType::UI_MAX; i++) {
+					bool isSelected = (type == GetUITypeString((UIType)i));
+					if (ImGui::Selectable(GetUITypeString((UIType)i).c_str(), isSelected)) {
+						type = GetUITypeString((UIType)i);
+						uitype = (UIType)i;
+					}
+					if (isSelected) {
+						ImGui::SetItemDefaultFocus();
+					}
+				}
+				ImGui::EndCombo();
+			}
+
+			// 生成ボタン
+			if (ImGui::Button("Create")) {
+				// UIオブジェクトを作成・追加
+				UIObject* obj = CreateUIObject(nameBuffer, uitype, editUIPanel_);
+				if (obj != nullptr) {
+					editUIPanel_->AddUIObject(obj);
+					isShowCreateUIObjectWindow_ = false;
+				}
+			}
+		}
+		ImGui::End();
+	}
 }
 
 void GameEditor::AddStageObject()
@@ -286,6 +357,7 @@ void GameEditor::LoadStage()
 
 void GameEditor::AddUIObject()
 {
+	isShowCreateUIObjectWindow_ = true;
 }
 
 void GameEditor::SaveUIPanel()

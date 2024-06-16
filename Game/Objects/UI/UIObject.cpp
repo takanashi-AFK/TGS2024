@@ -11,9 +11,9 @@ UIObject* CreateUIObject(string _name, UIType _type, GameObject* _parent)
 	UIObject* obj = nullptr;
 	switch (_type)
 	{
-	case BUTTON:break;
-	case IMAGE:break;
-	case TEXT:break;
+	case UI_BUTTON:break;
+	case UI_IMAGE:break;
+	case UI_TEXT:break;
 	default:obj = new UIObject(_name, _type, _parent);break;
 	}
 
@@ -34,9 +34,9 @@ string GetUITypeString(UIType _type)
 {
 	switch (_type)
 	{
-	case BUTTON:return "BUTTON";
-	case IMAGE:return "IMAGE";
-	case TEXT:return "TEXT";
+	case UI_BUTTON:return "BUTTON";
+	case UI_IMAGE:return "IMAGE";
+	case UI_TEXT:return "TEXT";
 	default:return "UNKNOWN";
 	}
 }

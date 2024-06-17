@@ -1,24 +1,29 @@
 #pragma once
 #include "../Component.h"
 
-class Component_HelingoBehavior : public Component
+#include <DirectXMath.h>
+
+// usingディレクティブ
+using namespace DirectX;
+
+class Component_Rise : public Component
 {
+
 private:
-	StageObject* target_;	// ターゲット
-	string targetName_;		// ターゲット名
-
-	float fallrange_;		// 落下範囲
-	float discoveryrange_;			// 発見範囲
-	bool isTimerActive_;	// タイマーがアクティブかどうか
-
-	bool oneHit_;
+	bool isActive_;
+	bool isInfinity_;
+	bool isFirst_;
+	bool isEnd_;
+	float height_;
+	float riseSpeed_;
+	float targetHeight_;
 public:
 	/// <summary>
 	/// コンストラクタ
-	/// </summary>	
+	/// </summary>
 	/// <param name="_holder">保有者</param>
-	Component_HelingoBehavior(string _name, StageObject* _holder, Component* _parent);
-	
+	Component_Rise(string _name, StageObject* _holder, Component* _parent);
+
 	/// <summary>
 	/// 初期化
 	/// </summary>
@@ -30,14 +35,9 @@ public:
 	void Update() override;
 
 	/// <summary>
-	/// 解放
+	/// 開放
 	/// </summary>
 	void Release() override;
-
-	/// <summary>
-	/// 衝突処理
-	/// </summary>
-	void OnCollision(GameObject* _target) override;
 
 	/// <summary>
 	/// 保存
@@ -55,5 +55,17 @@ public:
 	/// ImGuiパネル表示
 	/// </summary>
 	void DrawData() override;
+
+	void Execute() { isActive_ = true; }
+
+	void Stop() { isActive_ = false; }
+
+	void SetInfinity(bool _isInfinity) { isInfinity_ = _isInfinity; }
+
+	bool IsActive() { return isActive_; }
+
+	bool IsEnd() { return isEnd_; }
+
+	void SetIsEnd(bool _isEnd) { isEnd_ = _isEnd; }
 };
 

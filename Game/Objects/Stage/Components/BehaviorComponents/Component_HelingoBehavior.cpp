@@ -1,15 +1,17 @@
 #include "Component_HelingoBehavior.h"
 
+#include "../../../../../Engine/Collider/BoxCollider.h"
+#include "../../../../../Engine/ImGui/imgui.h"
+#include "../../Stage.h"
 #include "../../StageObject.h"
 #include "../DetectorComponents/Component_CircleRangeDetector.h"
+#include "../HealthManagerComponents/Component_HealthManager.h"
+#include "../MoveComponents/Component_Chase.h"
+#include "../MoveComponents/Component_HelingoFall.h"
+#include "../MoveComponents/Component_Fall.h"
 #include "../RotationComponents/Component_RotationY.h"
 #include "../TimerComponent/Component_Timer.h"
-#include "../MoveComponents/Component_Fall.h"
-#include "../MoveComponents/Component_Chase.h"
-#include "../../Stage.h"
-#include "../../../../../Engine/ImGui/imgui.h"
-#include "../../../../../Engine/Collider/BoxCollider.h"
-#include "../HealthManagerComponents/Component_HealthManager.h"
+
 
 Component_HelingoBehavior::Component_HelingoBehavior(string _name, StageObject* _holder, Component* _parent)
 	: Component(_holder, _name, HelingoBehavior,_parent)
@@ -24,8 +26,9 @@ void Component_HelingoBehavior::Initialize()
 	// 子コンポーネントの追加
 	if (FindChildComponent("CircleRangeDetector") == false)AddChildComponent(CreateComponent("CircleRangeDetector", CircleRangeDetector, holder_, this));
 	if (FindChildComponent("Timer") == false)AddChildComponent(CreateComponent("Timer", Timer, holder_, this));
-	if (FindChildComponent("Fall") == false)AddChildComponent(CreateComponent("Fall", Fall, holder_, this));
 	if (FindChildComponent("Chase") == false)AddChildComponent(CreateComponent("Chase", Chase, holder_, this));
+	if (FindChildComponent("Fall") == false)AddChildComponent(CreateComponent("Fall", Fall, holder_, this));
+
 }
 
 void Component_HelingoBehavior::Update()
@@ -36,17 +39,13 @@ void Component_HelingoBehavior::Update()
 	auto detector = dynamic_cast<Component_CircleRangeDetector*>(GetChildComponent("CircleRangeDetector"));
 	if (detector == nullptr) return;
 
-	auto fall = dynamic_cast<Component_Fall*>(GetChildComponent("Fall"));
+	auto fall = dynamic_cast<Component_HelingoFall*>(GetChildComponent("Fall"));
 	if (fall == nullptr) return;
 
-	auto timer = dynamic_cast<Component_Timer*>(GetChildComponent("Timer"));
-	if (timer == nullptr) return;
-
-	//検知範囲の設定
+	// 検知範囲の設定
 	detector->SetRadius(discoveryrange_);
 
-
-	if (!fall->IsActived() && detector->IsContains()) {
+	if (!fall->IsActived()&&detector->IsContains()) {
 		auto chase = dynamic_cast<Component_Chase*>(GetChildComponent("Chase"));
 		if (chase == nullptr) return;
 
@@ -61,23 +60,18 @@ void Component_HelingoBehavior::Update()
 		if (detector->IsContains()) {
 			// 追跡を停止
 			chase->Stop();
-
 			fall->Execute();
+			oneHit_ = false;
 		}
-		else {// 落下範囲から外れたら
-			// タイマーをリセット
-			fall->Stop();
-			timer->Reset();
+		else {
 		}
-
 	}
 	else {
 		auto chase = dynamic_cast<Component_Chase*>(GetChildComponent("Chase"));
 		if (chase == nullptr) return;
 		chase->Stop();
-		
 	}
-
+	ImGui::Text("%f", detector->GetRadius());
 
 }
 
@@ -95,9 +89,16 @@ void Component_HelingoBehavior::OnCollision(GameObject* _target)
 		if (hm == nullptr)return;
 
 		// プレイヤーのHPを減らす
-		auto fall = dynamic_cast<Component_Fall*>(GetChildComponent("Fall"));
-		if(fall->IsFalling())((Component_HealthManager*)hm)->TakeDamage(5);
+		auto fall = dynamic_cast<Component_HelingoFall*>(GetChildComponent("Fall"));
+		if (fall == nullptr) return;
 
+		auto onlyFall = dynamic_cast<Component_Fall*>(fall->GetChildComponent("OnlyFall"));
+		if (onlyFall == nullptr)return;
+
+		if (onlyFall->IsActive() && oneHit_ == false) {
+			((Component_HealthManager*)hm)->TakeDamage(5);
+			oneHit_ = true;
+		}
 		// プレイヤーのHPが0以下の場合
 		if (((Component_HealthManager*)hm)->GetHP() <= 0) {
 
@@ -123,10 +124,10 @@ void Component_HelingoBehavior::Load(json& _loadObj)
 
 void Component_HelingoBehavior::DrawData()
 {
+#ifdef _DEBUG
+	
 	ImGui::DragFloat("fallrange_", &fallrange_);
 	ImGui::DragFloat("discoveryrange_", &discoveryrange_);
-#ifdef _DEBUG
-
 	//対象の選択
 	vector<string> objNames;
 	objNames.push_back("null");

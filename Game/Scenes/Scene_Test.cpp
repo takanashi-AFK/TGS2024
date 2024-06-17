@@ -35,7 +35,7 @@ void Scene_Test::Initialize()
 #ifdef _DEBUG
 	// ゲームエディターの生成
 	GameEditor* gameEditor = Instantiate<GameEditor>(this);
-	gameEditor->SetEditStage(stage);
+	gameEditor->SetEditStage(pStage);
 	gameEditor->SetEditUIPanel(uiPanel);
 #endif // _DEBUG
 }

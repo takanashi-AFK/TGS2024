@@ -8,16 +8,9 @@
 #include "../MoveComponents/Component_Fall.h"
 #include "../MoveComponents/Component_Rise.h"
 
-
-namespace
-{
-	float riseWaitTime_ = 5 ;			//上昇
-	float fallWaitTime_ = 0.8;			//降下
-}
-
 // コンストラクタ
 Component_HelingoFall::Component_HelingoFall(string _name, StageObject* _holder, Component* _parent)
-	: Component(_holder, _name, Fall, _parent),
+	: Component(_holder, _name, HelingoFall, _parent),
 	fallSpeed_(), riseSpeed_(), fallDistance_(),startHeight_(),
 	isActive_(false), nowState_(WAIT), prevState_(RISE)
 {
@@ -27,17 +20,17 @@ Component_HelingoFall::Component_HelingoFall(string _name, StageObject* _holder,
 void Component_HelingoFall::Initialize()
 {
 	if (FindChildComponent("Timer") == false)AddChildComponent(CreateComponent("Timer", Timer, holder_, this));
-	if (FindChildComponent("OnlyFall") == false)AddChildComponent(CreateComponent("OnlyFall", OnlyFall, holder_, this));
-	if (FindChildComponent("OnlyRise") == false)AddChildComponent(CreateComponent("OnlyRise", OnlyRise, holder_, this));
+	if (FindChildComponent("Fall") == false)AddChildComponent(CreateComponent("Fall", Fall, holder_, this));
+	if (FindChildComponent("Rise") == false)AddChildComponent(CreateComponent("Rise", Rise, holder_, this));
 }
 
 // 更新
 void Component_HelingoFall::Update()
 {   
-	auto fall = dynamic_cast<Component_Fall*>(GetChildComponent("OnlyFall"));
+	auto fall = dynamic_cast<Component_Fall*>(GetChildComponent("Fall"));
 	if (fall == nullptr) return;
 
-	auto rise = dynamic_cast<Component_Rise*>(GetChildComponent("OnlyRise"));
+	auto rise = dynamic_cast<Component_Rise*>(GetChildComponent("Rise"));
 	if (rise == nullptr) return;
 
 	// 実行したかどうか
@@ -188,7 +181,7 @@ void Component_HelingoFall::Wait()
 		timer->SetTime(riseWaitTime_);
 		timer->Start();
 
-		auto rise = dynamic_cast<Component_Rise*>(GetChildComponent("OnlyRise"));
+		auto rise = dynamic_cast<Component_Rise*>(GetChildComponent("Rise"));
 		if (rise == nullptr) return;
 		rise->SetIsEnd(false);
 

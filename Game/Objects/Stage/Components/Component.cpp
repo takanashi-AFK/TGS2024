@@ -190,7 +190,7 @@ Component* CreateComponent(string _name,ComponentType _type, StageObject* _holde
 	case RotationX:comp = new Component_RotationX(_name,_holder, _parent); break;
 	case RotationZ:comp = new Component_RotationZ(_name,_holder, _parent); break;
 	case MoveX:comp = new Component_MoveX(_name,_holder, _parent); break;
-	case Fall:comp = new Component_HelingoFall(_name,_holder, _parent); break;
+	case HelingoFall:comp = new Component_HelingoFall(_name,_holder, _parent); break;
 	case Chase:comp = new Component_Chase(_name,_holder, _parent); break;
 	case CircleRangeDetector:comp = new Component_CircleRangeDetector(_name,_holder, _parent); break;
 	case FanRangeDetector:comp = new Component_FanRangeDetector(_name,_holder, _parent); break;
@@ -201,8 +201,8 @@ Component* CreateComponent(string _name,ComponentType _type, StageObject* _holde
 	case HealthManager:comp = new Component_HealthManager(_name,_holder, _parent); break;
 	case ShootAttack:comp = new Component_ShootAttack(_name,_holder, _parent); break;
 	case WASDInputMove:comp = new Component_WASDInputMove(_name, _holder, _parent); break;
-	case OnlyFall:comp = new Component_Fall(_name, _holder, _parent); break;
-	case OnlyRise:comp = new Component_Rise(_name, _holder, _parent); break;
+	case Fall:comp = new Component_Fall(_name, _holder, _parent); break;
+	case Rise:comp = new Component_Rise(_name, _holder, _parent); break;
 
 	default:/* その他コンポーネントを追加する時は上記のように追加*/ break;
 	}
@@ -223,7 +223,7 @@ string ComponentTypeToString(ComponentType _type)
 	case RotationX: return "RotationXComponent";
 	case RotationZ: return "RotationZComponent";
 	case MoveX: return "MoveXComponent";
-	case Fall: return "FallComponent";
+	case HelingoFall: return "HelingoFallComponent";
 	case Chase: return "ChaseComponent";
 	case CircleRangeDetector: return "CircleRangeDetectorComponent";
 	case FanRangeDetector: return "FanRangeDetectorComponent";
@@ -234,8 +234,8 @@ string ComponentTypeToString(ComponentType _type)
 	case HealthManager: return "HealthManagerComponent";
 	case ShootAttack: return "ShootAttackComponent";
 	case WASDInputMove: return "WASDInputMoveComponent";
-	case OnlyFall: return "OnlyFallComponent";
-	case OnlyRise: return "OnlyRiseComponent";
+	case Fall: return "FallComponent";
+	case Rise: return "RiseComponent";
 		// コンポーネント追加時に識別番号を追加
 	}
 	return "None";

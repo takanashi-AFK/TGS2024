@@ -27,7 +27,7 @@ void Component_HelingoBehavior::Initialize()
 	if (FindChildComponent("CircleRangeDetector") == false)AddChildComponent(CreateComponent("CircleRangeDetector", CircleRangeDetector, holder_, this));
 	if (FindChildComponent("Timer") == false)AddChildComponent(CreateComponent("Timer", Timer, holder_, this));
 	if (FindChildComponent("Chase") == false)AddChildComponent(CreateComponent("Chase", Chase, holder_, this));
-	if (FindChildComponent("Fall") == false)AddChildComponent(CreateComponent("Fall", Fall, holder_, this));
+	if (FindChildComponent("HelingoFall") == false)AddChildComponent(CreateComponent("HelingoFall", HelingoFall, holder_, this));
 
 }
 
@@ -92,7 +92,7 @@ void Component_HelingoBehavior::OnCollision(GameObject* _target)
 		auto fall = dynamic_cast<Component_HelingoFall*>(GetChildComponent("Fall"));
 		if (fall == nullptr) return;
 
-		auto onlyFall = dynamic_cast<Component_Fall*>(fall->GetChildComponent("OnlyFall"));
+		auto onlyFall = dynamic_cast<Component_Fall*>(fall->GetChildComponent("Fall"));
 		if (onlyFall == nullptr)return;
 
 		if (onlyFall->IsActive() && oneHit_ == false) {

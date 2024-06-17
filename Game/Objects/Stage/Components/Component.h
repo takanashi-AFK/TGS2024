@@ -24,12 +24,12 @@ enum ComponentType {
     HelingoBehavior,
 	CactanBihavior,
     Timer,
-    Fall,
+    HelingoFall,
     WASDInputMove,
     ShootAttack,
 	PlayerBehavior,
-	OnlyFall,
-	OnlyRise,
+	Fall,
+	Rise,
     // コンポーネント追加時に識別番号を追加
     Max
 };

@@ -3,7 +3,7 @@
 #include "../../StageObject.h"
 #include "../TimerComponent/Component_Timer.h"
 Component_Rise::Component_Rise(string _name, StageObject* _holder, Component* _parent) :
-	Component(_holder, _name, ComponentType::OnlyRise, _parent),
+	Component(_holder, _name, Rise, _parent),
 	riseSpeed_(0.1f),
 	height_(0.0f),
 	targetHeight_(2.0f),

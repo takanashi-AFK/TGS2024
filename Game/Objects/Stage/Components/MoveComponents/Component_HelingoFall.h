@@ -23,6 +23,8 @@ private:
 	float startHeight_;					// 開始の高さ
 	bool isActive_;						// 実行されたかどうか
 
+	float riseWaitTime_ = 5;			// 上昇までの待機時間
+	float fallWaitTime_ = 0.8;			// 降下までの待機時間
 public:
 
 	/// <summary>

@@ -23,13 +23,19 @@ void Scene_Test::Initialize()
 		uiPanel->Load(loadObj);
 	}
 
-	// ステージの生成
-	Stage* stage = Instantiate<Stage>(this);
+	// ステージを作成
+	Stage* pStage = Instantiate<Stage>(this);
+	
+	// ステージを読み込み
+	json stageData;
+	JsonReader::Load("Datas/tkanaais.json", stageData);
+	pStage->Load(stageData);
+
 
 #ifdef _DEBUG
 	// ゲームエディターの生成
 	GameEditor* gameEditor = Instantiate<GameEditor>(this);
-	gameEditor->SetEditStage(stage);
+	gameEditor->SetEditStage(pStage);
 	gameEditor->SetEditUIPanel(uiPanel);
 #endif // _DEBUG
 }

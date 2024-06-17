@@ -239,6 +239,10 @@
       <Filter>03Game\Objects\Stage\Components\BehaviorComponents</Filter>
     </ClCompile>
     <ClCompile Include="Game\Otheres\UIObject.cpp" />
+    <ClCompile Include="Game\Objects\UI\UIButton.cpp" />
+    <ClCompile Include="Game\Objects\UI\UIPanel.cpp" />
+    <ClCompile Include="Game\Objects\Stage\Components\MoveComponents\Component_OnlyFall.cpp" />
+    <ClCompile Include="Game\Objects\Stage\Components\MoveComponents\Component_OnlyRise.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Collider\BoxCollider.h">
@@ -420,6 +424,10 @@
     </ClInclude>
     <ClInclude Include="Game\Otheres\UIObject.h" />
     <ClInclude Include="Engine\DirectX\EasingFunction.h" />
+    <ClInclude Include="Game\Objects\UI\UIButton.h" />
+    <ClInclude Include="Game\Objects\UI\UIPanel.h" />
+    <ClInclude Include="Game\Objects\Stage\Components\MoveComponents\Component_OnlyFall.h" />
+    <ClInclude Include="Game\Objects\Stage\Components\MoveComponents\Component_OnlyRise.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Assets\Shader\Simple2D.hlsl">

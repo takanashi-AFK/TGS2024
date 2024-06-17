@@ -12,7 +12,7 @@
 Component_HelingoFall::Component_HelingoFall(string _name, StageObject* _holder, Component* _parent)
 	: Component(_holder, _name, HelingoFall, _parent),
 	fallSpeed_(), riseSpeed_(), fallDistance_(),startHeight_(),
-	isActive_(false), nowState_(WAIT), prevState_(RISE)
+	isActive_(false), nowState_(WAIT), prevState_(RISE), riseWaitTime_(3), fallWaitTime_(0.8f)
 {
 }
 

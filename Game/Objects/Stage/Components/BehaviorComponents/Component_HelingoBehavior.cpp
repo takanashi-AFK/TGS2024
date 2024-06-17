@@ -89,13 +89,13 @@ void Component_HelingoBehavior::OnCollision(GameObject* _target)
 		if (hm == nullptr)return;
 
 		// ÉvÉåÉCÉÑÅ[ÇÃHPÇå∏ÇÁÇ∑
-		auto fall = dynamic_cast<Component_HelingoFall*>(GetChildComponent("Fall"));
-		if (fall == nullptr) return;
+		auto helingoFall = dynamic_cast<Component_HelingoFall*>(GetChildComponent("Fall"));
+		if (helingoFall == nullptr) return;
 
-		auto onlyFall = dynamic_cast<Component_Fall*>(fall->GetChildComponent("Fall"));
-		if (onlyFall == nullptr)return;
+		auto fall = dynamic_cast<Component_Fall*>(helingoFall->GetChildComponent("Fall"));
+		if (fall == nullptr)return;
 
-		if (onlyFall->IsActive() && oneHit_ == false) {
+		if (fall->IsActive() && oneHit_ == false) {
 			((Component_HealthManager*)hm)->TakeDamage(5);
 			oneHit_ = true;
 		}

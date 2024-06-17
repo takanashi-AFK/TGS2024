@@ -143,23 +143,22 @@ bool UIButton::IsMouseOver(XMFLOAT2 _mousePosition)
 #endif // _DEBUG
 
 	// マウスカーソルの座標を取得
-	XMFLOAT2 imagesize = Image::GetSize(imageHandle_);
-    float imageHalfWidth = (imagesize.x / 2) / scWidth;
-    float imageHalfHeight = (imagesize.y /2) / scHeight;
+	XMFLOAT2 imageSize = Image::GetSize(imageHandle_);
+    imageSize.x = imageSize.x / Direct3D::screenWidth_;
+    imageSize.y = imageSize.y / Direct3D::screenHeight_;
 
     XMFLOAT2 center = { transform_.position_.x,transform_.position_.y };
 
     float scaleX = transform_.scale_.x;
     float scaleY = transform_.scale_.y;
 
-    float top = center.y - ((imageHalfHeight * 2) * scaleY);
-    float bottom = center.y + ((imageHalfHeight * 2) * scaleY);
-    float left = center.x - ((imageHalfWidth * 2) * scaleX);
-    float right = center.x + ((imageHalfWidth * 2) * scaleX);
+    float top = center.y - (imageSize.y * scaleY);
+    float bottom = center.y + (imageSize.y * scaleY);
+    float left = center.x - (imageSize.x * scaleX);
+    float right = center.x + (imageSize.x * scaleX);
 
     // 判定範囲内にマウスカーソルが入っているかどうかを返す
     return (_mousePosition.x >= left && _mousePosition.x <= right && _mousePosition.y >= top && _mousePosition.y <= bottom);
-	return false;
 }
 
 void UIButton::ConvertToImageCoordinates(XMFLOAT2& _position)

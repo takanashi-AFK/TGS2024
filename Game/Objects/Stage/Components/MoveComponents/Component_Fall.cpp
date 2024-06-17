@@ -1,211 +1,70 @@
 #include "Component_Fall.h"
-
-// インクルード
-#include "../../../../../Engine/ImGui/imgui.h"
-
 #include "../../StageObject.h"
-#include "../TimerComponent/Component_Timer.h"
-#include "../MoveComponents/Component_OnlyFall.h"
-#include "../MoveComponents/Component_OnlyRise.h"
-
-
-namespace
-{
-	float riseWaitTime_ = 5 ;			//上昇
-	float fallWaitTime_ = 0.8;			//降下
-}
-
-// コンストラクタ
-Component_HelingoFall::Component_HelingoFall(string _name, StageObject* _holder, Component* _parent)
-	: Component(_holder, _name, Fall, _parent),
-	fallSpeed_(), riseSpeed_(), fallDistance_(),startHeight_(),
-	isActive_(false), nowState_(WAIT), prevState_(RISE)
+#include "../../Components/TimerComponent/Component_Timer.h"
+#include "../../../../../Engine/ImGui/imgui.h"
+Component_Fall::Component_Fall(string _name, StageObject* _holder, Component* _parent)
+	: Component(_holder, _name, OnlyFall, _parent), isActive_(false), fallSpeed_(0.1f), height_(0.0f), startHeight_(0.0f)
+	, targetHeight_(0.0f), isEnd_(false), isInfinity_(false)
 {
 }
 
-// 初期化
-void Component_HelingoFall::Initialize()
+void Component_Fall::Initialize()
 {
-	if (FindChildComponent("Timer") == false)AddChildComponent(CreateComponent("Timer", Timer, holder_, this));
-	if (FindChildComponent("OnlyFall") == false)AddChildComponent(CreateComponent("OnlyFall", OnlyFall, holder_, this));
-	if (FindChildComponent("OnlyRise") == false)AddChildComponent(CreateComponent("OnlyRise", OnlyRise, holder_, this));
 }
 
-// 更新
-void Component_HelingoFall::Update()
-{   
-	auto fall = dynamic_cast<Component_OnlyFall*>(GetChildComponent("OnlyFall"));
-	if (fall == nullptr) return;
-
-	auto rise = dynamic_cast<Component_OnlyRise*>(GetChildComponent("OnlyRise"));
-	if (rise == nullptr) return;
-
-	// 実行したかどうか
+void Component_Fall::Update()
+{
 	if (isActive_) {
-		XMFLOAT3 holderPos = holder_->GetPosition();
-		
-		switch (nowState_)
-		{
-		case FALL:
-			fall->Execute(); 
-			if (fall->IsActive()) {
-				auto timer = dynamic_cast<Component_Timer*>(GetChildComponent("Timer"));
-				timer->Reset();
-				SetState(WAIT);
-			}
-			break;	// 降下中の処理
 
-		case RISE:
-			rise->Execute();
-			if (rise->IsEnd()) {
-				auto timer = dynamic_cast<Component_Timer*>(GetChildComponent("Timer"));
-				timer->Reset();
-				Stop();
-				SetState(WAIT);
-			}
-			break;	// 上昇中の処理
-		case WAIT:
-			Wait();				 break;	// 待機中の処理
+		height_ = holder_->GetPosition().y;
+		// 目標の高さ
+
+		// 高さが目標の高さに達していなかったら...
+		if (height_ > targetHeight_ || isInfinity_) {
+
+			// 降下速度分だけ高さを下げる
+			height_ -= fallSpeed_;
+			isEnd_ = false;
 		}
-
-		// 位置を確定
-		holder_->SetPosition(holderPos);
+		// 高さが一定の高さに達したら...
+		else {
+			// 目標の高さに設定
+			height_ = targetHeight_;
+			Stop();
+		}
+		holder_->SetPosition(holder_->GetPosition().x,height_,holder_->GetPosition().z);
 	}
 }
 
-// 開放
-void Component_HelingoFall::Release()
+void Component_Fall::Release()
 {
 }
 
-// 保存
-void Component_HelingoFall::Save(json& _saveObj)
+void Component_Fall::Save(json& _saveObj)
 {
-	// 保存
+	_saveObj["startHeight_"] = startHeight_;
 	_saveObj["fallSpeed_"] = fallSpeed_;
-	_saveObj["riseSpeed_"] = riseSpeed_;
-	_saveObj["fallDistance_"] = fallDistance_;
-	_saveObj["riseWaitTime_"] = riseWaitTime_;
-	_saveObj["fallWaitTime_"] = fallWaitTime_;
+	_saveObj["height_"] = height_;
+	_saveObj["targetHeight_"] = targetHeight_;
+
 }
 
-// 読込
-void Component_HelingoFall::Load(json& _loadObj)
+void Component_Fall::Load(json& _loadObj)
 {
-	// 読込
+	if (_loadObj.contains("startHeight_"))startHeight_ = _loadObj["startHeight_"];
 	if (_loadObj.contains("fallSpeed_"))fallSpeed_ = _loadObj["fallSpeed_"];
-	if (_loadObj.contains("riseSpeed_"))riseSpeed_ = _loadObj["riseSpeed_"];
-	if (_loadObj.contains("fallDistance_"))fallDistance_ = _loadObj["fallDistance_"];
-	if (_loadObj.contains("riseWaitTime_"))riseWaitTime_ = _loadObj["riseWaitTime_"];
-	if (_loadObj.contains("fallWaitTime_"))fallWaitTime_ = _loadObj["fallWaitTime_"];
+	if (_loadObj.contains("height_"))height_ = _loadObj["height_"];
+	if (_loadObj.contains("targetHeight_"))targetHeight_ = _loadObj["targetHeight_"];
 }
 
-// ImGui表示
-void Component_HelingoFall::DrawData()
+void Component_Fall::DrawData()
 {
-	// ImGui描画
-	ImGui::Text("Component_Fall");
-	ImGui::Text(nowState_ == FALL ? "FALL" : nowState_ == RISE ? "RISE" : "WAIT");
-	ImGui::Text(prevState_ == FALL ? "FALL" : prevState_ == RISE ? "RISE" : "WAIT");
-	ImGui::Text("isActive_ : %s", isActive_ ? "true" : "false");
-
-	ImGui::DragFloat("riseWaitTime_", &riseWaitTime_, 0.1f);
-	ImGui::DragFloat("fallWaitTime_", &fallWaitTime_, 0.1f);
-
-	if (ImGui::Button("Falling")) {
-		Execute();
-	}
-}
-
-void Component_HelingoFall::FallMove(float& _height)
-{
-	// 前回の状態が待機状態の時、開始の高さを記録
-	// 2週目でこのifに入らないようにするため、prevStateをFALLに変更
-	if (prevState_ == WAIT) {
-		startHeight_ = _height;
-		prevState_ = FALL;
-	}
-	// 目標の高さ
-	float  targetHeight = startHeight_ - fallDistance_;
-	
-	// 高さが目標の高さに達していなかったら...
-	if (_height > targetHeight) {
-		
-		// 降下速度分だけ高さを下げる
-		_height -= (fallSpeed_);
-
-	}
-	// 高さが一定の高さに達したら...
-	else {
-		// タイマーをリセット
-		auto timer = dynamic_cast<Component_Timer*>(GetChildComponent("Timer"));
-		timer->Reset();
-
-		// 目標の高さに設定
-		_height = targetHeight;
-		
-		// 待機状態に遷移
-		SetState(WAIT);
-	}
-}
-
-void Component_HelingoFall::RiseMove(float& _height)
-{
-	// 目標の高さ
-	float targetHeight = startHeight_;
-
-	// 高さが目標の高さに達していなかったら...
-	if (_height < targetHeight) {
-
-		// 上昇速度分だけ高さを上げる
-		_height += riseSpeed_;
-
-	}
-	else {
-		// タイマーをリセット
-		auto timer = dynamic_cast<Component_Timer*>(GetChildComponent("Timer"));
-		timer->Reset();
-
-		// 目標の高さに設定
-		_height = targetHeight;
-
-		// 待機状態に遷移
-		SetState(WAIT);
-
-		// 動作を終了
-		Stop();
-	}
-}
-
-void Component_HelingoFall::Wait()
-{
-	// タイマーを取得
-	auto timer = dynamic_cast<Component_Timer*>(GetChildComponent("Timer"));
-	
-	if (prevState_ == FALL) {
-
-		// タイマーを開始
-		timer->SetTime(riseWaitTime_);
-		timer->Start();
-
-		auto rise = dynamic_cast<Component_OnlyRise*>(GetChildComponent("OnlyRise"));
-		if (rise == nullptr) return;
-		rise->SetIsEnd(false);
-
-		// タイマーが終了したら、上昇状態に遷移
-		if(timer->GetIsEnd())SetState(RISE);
-	}
-
-	else if (prevState_ == RISE) {
-
-		// タイマーを開始
-		timer->SetTime(fallWaitTime_);
-		timer->Start();
-
-		// タイマーが終了したら、降下状態に遷移
-		if (timer->GetIsEnd())SetState(FALL);
-	}
-
-	float time = timer->GetNowTime();
-	ImGui::Text("time : %f", time);
+	ImGui::Checkbox("Is Infinity", &isInfinity_);
+	ImGui::DragFloat("Fall Speed", &fallSpeed_, 0.1f, 0.0f, 100.0f);
+	ImGui::DragFloat("targetHeight_", &targetHeight_, 0.1f);
+	if (ImGui::Button("Execute"))Execute();
+	if (ImGui::Button("Stop"))Stop();
+	ImGui::Text("height_ : %f", height_);
+	ImGui::Text(isActive_ ? "Active" : "Not Active");
+	ImGui::Text(isEnd_ ? "End" : "Not End");
 }

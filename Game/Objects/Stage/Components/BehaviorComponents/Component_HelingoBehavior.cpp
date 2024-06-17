@@ -1,16 +1,16 @@
 #include "Component_HelingoBehavior.h"
 
+#include "../../../../../Engine/Collider/BoxCollider.h"
+#include "../../../../../Engine/ImGui/imgui.h"
+#include "../../Stage.h"
 #include "../../StageObject.h"
 #include "../DetectorComponents/Component_CircleRangeDetector.h"
+#include "../HealthManagerComponents/Component_HealthManager.h"
+#include "../MoveComponents/Component_Chase.h"
+#include "../MoveComponents/Component_HelingoFall.h"
+#include "../MoveComponents/Component_Fall.h"
 #include "../RotationComponents/Component_RotationY.h"
 #include "../TimerComponent/Component_Timer.h"
-#include "../MoveComponents/Component_Fall.h"
-#include "../MoveComponents/Component_Chase.h"
-#include "../../Stage.h"
-#include "../../../../../Engine/ImGui/imgui.h"
-#include "../../../../../Engine/Collider/BoxCollider.h"
-#include "../HealthManagerComponents/Component_HealthManager.h"
-#include "../MoveComponents/Component_OnlyFall.h"
 
 
 Component_HelingoBehavior::Component_HelingoBehavior(string _name, StageObject* _holder, Component* _parent)
@@ -92,7 +92,7 @@ void Component_HelingoBehavior::OnCollision(GameObject* _target)
 		auto fall = dynamic_cast<Component_HelingoFall*>(GetChildComponent("Fall"));
 		if (fall == nullptr) return;
 
-		auto onlyFall = dynamic_cast<Component_OnlyFall*>(fall->GetChildComponent("OnlyFall"));
+		auto onlyFall = dynamic_cast<Component_Fall*>(fall->GetChildComponent("OnlyFall"));
 		if (onlyFall == nullptr)return;
 
 		if (onlyFall->IsActive() && oneHit_ == false) {

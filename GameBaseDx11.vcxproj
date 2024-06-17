@@ -137,8 +137,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Game\Objects\Stage\Components\MoveComponents\Component_OnlyFall.cpp" />
-    <ClCompile Include="Game\Objects\Stage\Components\MoveComponents\Component_OnlyRise.cpp" />
+    <ClCompile Include="Game\Objects\Stage\Components\MoveComponents\Component_Fall.cpp" />
+    <ClCompile Include="Game\Objects\Stage\Components\MoveComponents\Component_Rise.cpp" />
     <ClCompile Include="Game\Objects\Stage\Components\BehaviorComponents\Component_PlayerBehavior.cpp" />
     <ClCompile Include="Game\Objects\Stage\Components\MoveComponents\Component_WASDInputMove.cpp" />
     <ClCompile Include="Game\Objects\Stage\Components\BehaviorComponents\Component_CactanBehavior.cpp" />
@@ -183,7 +183,7 @@
     <ClCompile Include="Engine\ResourceManager\Text.cpp" />
     <ClCompile Include="Engine\DirectX\Texture.cpp" />
     <ClCompile Include="Engine\GameObject\Transform.cpp" />
-    <ClCompile Include="Game\Objects\Stage\Components\MoveComponents\Component_Fall.cpp" />
+    <ClCompile Include="Game\Objects\Stage\Components\MoveComponents\Component_HelingoFall.cpp" />
     <ClCompile Include="Game\Objects\Stage\Components\RotationComponents\Component_RotationY.cpp" />
     <ClCompile Include="Game\Objects\Stage\StageObject.cpp" />
     <ClCompile Include="Game\Scenes\Scene_Test.cpp" />
@@ -200,8 +200,8 @@
     <ClCompile Include="Game\Objects\UI\UIPanel.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Game\Objects\Stage\Components\MoveComponents\Component_OnlyFall.h" />
-    <ClInclude Include="Game\Objects\Stage\Components\MoveComponents\Component_OnlyRise.h" />
+    <ClInclude Include="Game\Objects\Stage\Components\MoveComponents\Component_Fall.h" />
+    <ClInclude Include="Game\Objects\Stage\Components\MoveComponents\Component_Rise.h" />
     <ClInclude Include="Engine\DirectX\EasingFunction.h" />
     <ClInclude Include="Game\Objects\Stage\Components\BehaviorComponents\Component_PlayerBehavior.h" />
     <ClInclude Include="Game\Objects\Stage\Components\MoveComponents\Component_WASDInputMove.h" />
@@ -249,7 +249,7 @@
     <ClInclude Include="Engine\ResourceManager\Text.h" />
     <ClInclude Include="Engine\DirectX\Texture.h" />
     <ClInclude Include="Engine\GameObject\Transform.h" />
-    <ClInclude Include="Game\Objects\Stage\Components\MoveComponents\Component_Fall.h" />
+    <ClInclude Include="Game\Objects\Stage\Components\MoveComponents\Component_HelingoFall.h" />
     <ClInclude Include="Game\Objects\Stage\Components\RotationComponents\Component_RotationY.h" />
     <ClInclude Include="Game\Objects\Stage\Components\TimerComponent\Component_Timer.h" />
     <ClInclude Include="Game\Objects\Stage\StageObject.h" />

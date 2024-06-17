@@ -1,8 +1,8 @@
-#include "Component_OnlyRise.h"
+#include "Component_Rise.h"
 #include "../../../../../Engine/ImGui/imgui.h"
 #include "../../StageObject.h"
 #include "../TimerComponent/Component_Timer.h"
-Component_OnlyRise::Component_OnlyRise(string _name, StageObject* _holder, Component* _parent) :
+Component_Rise::Component_Rise(string _name, StageObject* _holder, Component* _parent) :
 	Component(_holder, _name, ComponentType::OnlyRise, _parent),
 	riseSpeed_(0.1f),
 	height_(0.0f),
@@ -12,11 +12,11 @@ Component_OnlyRise::Component_OnlyRise(string _name, StageObject* _holder, Compo
 {
 }
 
-void Component_OnlyRise::Initialize()
+void Component_Rise::Initialize()
 {
 }
 
-void Component_OnlyRise::Update()
+void Component_Rise::Update()
 {
 	if (isActive_) {
 
@@ -47,11 +47,11 @@ void Component_OnlyRise::Update()
 	ImGui::Text(isFirst_ ? "isFirst_ = First" : "isFirst_ = Not First");
 }
 
-void Component_OnlyRise::Release()
+void Component_Rise::Release()
 {
 }
 
-void Component_OnlyRise::Save(json& _saveObj)
+void Component_Rise::Save(json& _saveObj)
 {
 	_saveObj["riseSpeed_"] = riseSpeed_;
 	_saveObj["height_"] = height_;
@@ -59,7 +59,7 @@ void Component_OnlyRise::Save(json& _saveObj)
 	_saveObj["isInfinity_"] = isInfinity_;
 }
 
-void Component_OnlyRise::Load(json& _loadObj)
+void Component_Rise::Load(json& _loadObj)
 {
 	if (_loadObj.contains("riseSpeed_"))riseSpeed_ = _loadObj["riseSpeed_"];
 	if (_loadObj.contains("height_"))height_ = _loadObj["height_"];
@@ -67,7 +67,7 @@ void Component_OnlyRise::Load(json& _loadObj)
 	if (_loadObj.contains("isInfinity_"))isInfinity_ = _loadObj["isInfinity_"];
 }
 
-void Component_OnlyRise::DrawData()
+void Component_Rise::DrawData()
 {
 	ImGui::Checkbox("isInfinity_", &isInfinity_);
 	ImGui::DragFloat("riseSpeed_", &riseSpeed_, 0.1f);

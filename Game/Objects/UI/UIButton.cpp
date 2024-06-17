@@ -70,19 +70,15 @@ void UIButton::Load(json& _loadUIobj)
 
 bool UIButton::MouseInArea(XMFLOAT3 mousePos)
 {
-
-	float imageHalfWidth = imagesize_.x;
-	float imageHalfHeight = imagesize_.y;
-
 	XMFLOAT2 center = { transform_.position_.x,transform_.position_.y };
 
 	float scaleX = transform_.scale_.x;
 	float scaleY = transform_.scale_.y;
 
-	float top = center.y - ((imageHalfHeight * 2) * scaleY);
-	float bottom = center.y + ((imageHalfHeight * 2) * scaleY);
-	float left = center.x - ((imageHalfWidth * 2) * scaleX);
-	float right = center.x + ((imageHalfWidth * 2) * scaleX);
+	float top = center.y - (imagesize_.y * scaleY) ;
+	float bottom = center.y + (imagesize_.y * scaleY);
+	float left = center.x - (imagesize_.x * scaleX) ;
+	float right = center.x + (imagesize_.x  * scaleX);
 
 	// 判定範囲内にマウスカーソルが入っているかどうかを返す
 	return (mousePos.x >= left && mousePos.x <= right && mousePos.y >= top && mousePos.y <= bottom);

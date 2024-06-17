@@ -261,6 +261,9 @@
     <ClInclude Include="Game\Objects\UI\UIPanel.h" />
     <ClInclude Include="Game\Objects\UI\UIObject.h" />
     <ClInclude Include="Game\Objects\UI\UIButton.h" />
+    <ClInclude Include="Game\Scenes\Scene_End.h" />
+    <ClInclude Include="Game\Scenes\Scene_Play.h" />
+    <ClInclude Include="Game\Scenes\Scene_Title.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Assets\Shader\BillBoard.hlsl">

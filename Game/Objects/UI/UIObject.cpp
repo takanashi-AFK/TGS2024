@@ -67,7 +67,7 @@ void UIObject::ChildDrawData()
 		if (ImGui::InputTextWithHint("##Input", "Input New name...", buffer, IM_ARRAYSIZE(buffer)))
 			this->objectName_ = buffer;
 		ImGui::TreePop();
-	}
+}
 
 	// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
 	// 自身の変形情報を描画
@@ -77,7 +77,7 @@ void UIObject::ChildDrawData()
 		ImGui::DragFloat3("rotate_", &transform_.rotate_.x, 1.f, -360.f, 360.f);
 		ImGui::DragFloat3("scale_", &transform_.scale_.x, 0.1f, 0.f, LONG_MAX);
 		ImGui::TreePop();
-	}
+}
 
 	// 固有情報を描画
 	this->DrawData();
@@ -88,12 +88,12 @@ UIObject* CreateUIObject(string _name, UIType _type, GameObject* _parent)
 	// インスタンスを生成する
 	UIObject* obj = nullptr;
 	switch (_type)
-	{
+{
 	case UI_BUTTON:obj = new UIButton(_name, _parent); break;
 	case UI_IMAGE:break;
 	case UI_TEXT:break;
 	default:obj = new UIObject(_name, _type, _parent);break;
-	}
+}
 
 	// インスタンスが生成できなかった場合はnullptrを返す
 	if (obj == nullptr)return nullptr;

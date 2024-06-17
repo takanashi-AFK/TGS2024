@@ -20,16 +20,16 @@ protected:
 	UIType type_;	// UI‚ÌŽí—Þ
 public:
 	UIObject(string _name,UIType _type,GameObject* parent);
-
+   
 	virtual void Initialize() override{}
 	virtual void Update() override{}
 	virtual void Draw() override{}
 	virtual void Release() override{}
-	
+
 	virtual void Save(json& saveObj) {};
 	virtual void Load(json& loadObj) {};
 	virtual void DrawData() {};
-
+	  
 	void ChildSave(json& _saveObj);
 	void ChildLoad(json& _loadObj);
 	void ChildDrawData();

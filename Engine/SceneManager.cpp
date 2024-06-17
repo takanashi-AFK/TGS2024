@@ -8,7 +8,9 @@
 // 各シーン のインクルード
 #include "../Game/Scenes/Scene_Test.h"
 #include "../Game/Scenes/Scene_Splash.h"
-
+#include"../Game/Scenes/Scene_Title.h"
+#include"../Game/Scenes/Scene_Play.h"
+#include"../Game/Scenes/Scene_End.h"
 //コンストラクタ
 SceneManager::SceneManager(GameObject * parent)
 	: GameObject(parent, "SceneManager"),currentSceneID_(),nextSceneID_(),tmpID_()
@@ -22,7 +24,7 @@ void SceneManager::Initialize()
 #ifdef _DEBUG
 	currentSceneID_ = SCENE_ID_TEST;
 	nextSceneID_ = currentSceneID_;
-	Instantiate<Scene_Test>(this);
+	Instantiate<Scene_Title>(this);
 #else
 	currentSceneID_ = SCENE_ID_SPLASH;
 	nextSceneID_ = currentSceneID_;
@@ -53,6 +55,9 @@ void SceneManager::Update()
 		{
 		case SCENE_ID_TEST: Instantiate<Scene_Test>(this); break;
 		case SCENE_ID_SPLASH: Instantiate<Scene_Splash>(this); break;
+		case SCENE_ID_TITLE:Instantiate<Scene_Title>(this); break;
+		case SCENE_ID_PLAY:Instantiate<Scene_Play>(this); break;
+		case SCENE_ID_END:Instantiate<Scene_End>(this); break;
 		}
 		Audio::Initialize();
 		currentSceneID_ = nextSceneID_;

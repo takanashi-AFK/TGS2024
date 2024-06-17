@@ -29,7 +29,7 @@ void Scene_Splash::Initialize()
 void Scene_Splash::Update()
 {
 	// n秒経過したらシーンを移動
-	if (count_ >= LIMIT_TIME * FPS)((SceneManager*)FindObject("SceneManager"))->ChangeScene(SCENE_ID_TEST, TID_BLACKOUT);
+	if (count_ >= LIMIT_TIME * FPS)((SceneManager*)FindObject("SceneManager"))->ChangeScene(SCENE_ID_TITLE, TID_BLACKOUT);
 	
 	// カウントアップ
 	count_++;

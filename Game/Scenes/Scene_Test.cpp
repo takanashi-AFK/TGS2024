@@ -40,6 +40,7 @@ void Scene_Test::Update()
 
 void Scene_Test::Draw()
 {
+
 }
 
 void Scene_Test::Release()

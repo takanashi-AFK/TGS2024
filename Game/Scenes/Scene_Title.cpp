@@ -11,18 +11,10 @@ Scene_Title::Scene_Title(GameObject* parent)
 
 void Scene_Title::Initialize()
 {
-	panel_ = Instantiate<UIPanel>(this);
-	button_ = Instantiate<UIButton>(panel_);
-	panel_->AddChild(button_);
 }
 
 void Scene_Title::Update()
 {
-	//ボタンが押されたらプレイシーンに移行
-	if (button_->ClickButton()) {
-		SceneManager* pChangePlay = (SceneManager*)FindObject("SceneManager");
-		pChangePlay->ChangeScene(SCENE_ID_PLAY);
-	}
 }
 
 void Scene_Title::Draw()

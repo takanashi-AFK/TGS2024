@@ -174,7 +174,4 @@ void UIButton::ConvertToImageCoordinates(XMFLOAT2& _position)
     // マウスの座標を画像の座標に変換
     _position.x = (float)(_position.x * 2.0f) / (float)scWidth - 1.0f;
     _position.y = 1.0f - (float)(_position.y * 2.0f) / (float)scHeight;
-
-    ImGui::Text("mousePos_ x:%f y:%f", _position.x, _position.y);
-    ImGui::Text("screenWidth_:%d screenHeight_:%d", scWidth, scHeight);
 }

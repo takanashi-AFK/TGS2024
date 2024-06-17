@@ -4,8 +4,9 @@
 #include"../../Game/Objects/UI/UIButton.h"
 #include"../../Engine/ResourceManager/Image.h"
 #include"../../Engine/SceneManager.h"
+#include "../../Engine/DirectX/Input.h"
 Scene_Title::Scene_Title(GameObject* parent)
-	: GameObject(parent, "Scene_Title"),panel_(nullptr),button_(nullptr)
+	: GameObject(parent, "Scene_Title")
 {
 }
 
@@ -15,6 +16,11 @@ void Scene_Title::Initialize()
 
 void Scene_Title::Update()
 {
+	// ƒV[ƒ“ˆÚs
+	if (Input::IsKeyDown(DIK_SPACE) ){
+		SceneManager* pChangeScene = (SceneManager*)FindObject("SceneManager");
+		pChangeScene->ChangeScene(SCENE_ID_PLAY, TID_BLACKOUT);
+	}
 }
 
 void Scene_Title::Draw()

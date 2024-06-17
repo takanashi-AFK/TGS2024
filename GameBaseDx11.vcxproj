@@ -206,7 +206,6 @@
   <ItemGroup>
     <ClInclude Include="Game\Objects\Stage\Components\MoveComponents\Component_Fall.h" />
     <ClInclude Include="Game\Objects\Stage\Components\MoveComponents\Component_Rise.h" />
-    <ClInclude Include="Engine\DirectX\EasingFunction.h" />
     <ClInclude Include="Game\Objects\Stage\Components\BehaviorComponents\Component_PlayerBehavior.h" />
     <ClInclude Include="Game\Objects\Stage\Components\MoveComponents\Component_WASDInputMove.h" />
     <ClInclude Include="Game\Objects\Stage\Components\BehaviorComponents\Component_CactanBehavior.h" />

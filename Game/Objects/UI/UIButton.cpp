@@ -134,29 +134,29 @@ bool UIButton::IsMouseOver(XMFLOAT2 _mousePosition)
     // 画像が読み込まれていない場合は処理を行わない
     if (imageHandle_ < 0)return false;
 
-    int scWidth = Direct3D::screenWidth_;
-    int scHeight = Direct3D::screenHeight_;
-
-#ifdef _DEBUG
-    scWidth = scWidth * 0.7;
-    scHeight = scHeight * 0.7;
-#endif // _DEBUG
-
 	// マウスカーソルの座標を取得
-	XMFLOAT2 imageSize = Image::GetSize(imageHandle_);
-    imageSize.x = imageSize.x / Direct3D::screenWidth_;
-    imageSize.y = imageSize.y / Direct3D::screenHeight_;
+    XMFLOAT2 imageSize = Image::GetSize(imageHandle_); {
+        // 画像のサイズを画面サイズに合わせる
+        imageSize.x = imageSize.x / Direct3D::screenWidth_;
+        imageSize.y = imageSize.y / Direct3D::screenHeight_;
+    }
 
+    // 画像の半分のサイズを取得
+    float imageHelfWidth = imageSize.x /2.f;
+    float imageHelfHeight = imageSize.y /2.f;
+
+    // 画像の中心座標を取得
     XMFLOAT2 center = { transform_.position_.x,transform_.position_.y };
 
-    float scaleX = transform_.scale_.x;
-    float scaleY = transform_.scale_.y;
+    // 画像の拡大率を取得
+    XMFLOAT2 scale = { transform_.scale_.x,transform_.scale_.y };
 
-    float top = center.y - (imageSize.y * scaleY);
-    float bottom = center.y + (imageSize.y * scaleY);
-    float left = center.x - (imageSize.x * scaleX);
-    float right = center.x + (imageSize.x * scaleX);
-
+    // 判定用の範囲の値を取得
+    float top = center.y - (imageHelfHeight * 2.f * scale.y);       // 画像の中心から上に画像の高さの半分の距離
+    float bottom = center.y + (imageHelfHeight * 2.f * scale.y);    // 画像の中心から下に画像の高さの半分の距離
+    float left = center.x - (imageHelfWidth * 2.f * scale.x);       // 画像の中心から左に画像の幅の半分の距離
+    float right = center.x + (imageHelfWidth * 2.f * scale.x);      // 画像の中心から右に画像の幅の半分の距離
+    
     // 判定範囲内にマウスカーソルが入っているかどうかを返す
     return (_mousePosition.x >= left && _mousePosition.x <= right && _mousePosition.y >= top && _mousePosition.y <= bottom);
 }

@@ -1,14 +1,14 @@
 #include "Scene_Play.h"
 
+// インクルード
 #include"../Objects/Stage/SkySphere.h"
 #include"../Objects/Stage/Stage.h"
 #include "../Objects/UI/UIPanel.h"
-#include"../Otheres/GameEditor.h"
-#include"../../Engine/ImGui/imgui.h"
 #include"../Objects/Stage/Components/HealthManagerComponents/Component_HealthManager.h"
 #include"../Objects/Stage/Components/BehaviorComponents/Component_PlayerBehavior.h"
 #include"../../Engine/SceneManager.h"
 #include "../Objects/UI/UIButton.h"
+
 Scene_Play::Scene_Play(GameObject* parent)
 {
 }
@@ -32,7 +32,7 @@ void Scene_Play::Initialize()
 				Component_PlayerBehavior* playerBeha = dynamic_cast<Component_PlayerBehavior*>(pList->FindComponent("PlayerBehavior"));
 				if (playerBeha != nullptr) {
 					//playerBehaから子コンポーネントを取得する
-					health_ = dynamic_cast<Component_HealthManager*>(playerBeha->GetChildComponent("HealthManager"));
+					playerHealth_ = dynamic_cast<Component_HealthManager*>(playerBeha->GetChildComponent("HealthManager"));
 				}
 			}
 		}
@@ -50,7 +50,7 @@ void Scene_Play::Initialize()
 void Scene_Play::Update()
 {
 	//HPが0になったらエンドシーンに移行
-	if (health_->GetHP() == 0) {
+	if (playerHealth_->GetHP() == 0) {
 		SceneManager* pChangeScene = (SceneManager*)FindObject("SceneManager");
 		pChangeScene->ChangeScene(SCENE_ID_END, TID_BLACKOUT);
 	}

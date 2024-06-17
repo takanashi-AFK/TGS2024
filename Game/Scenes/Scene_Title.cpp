@@ -1,10 +1,9 @@
 #include "Scene_Title.h"
 
-#include"../../Game/Objects/UI/UIPanel.h"
-#include"../../Game/Objects/UI/UIButton.h"
-#include"../../Engine/ResourceManager/Image.h"
+// インクルード
 #include"../../Engine/SceneManager.h"
 #include "../../Engine/DirectX/Input.h"
+
 Scene_Title::Scene_Title(GameObject* parent)
 	: GameObject(parent, "Scene_Title")
 {

@@ -18,6 +18,7 @@ class UIObject : public GameObject
 protected:
 	bool isEnable_;	// —LŒø‚©‚Ç‚¤‚©
 	UIType type_;	// UI‚ÌŽí—Þ
+
 public:
 	UIObject(string _name,UIType _type,GameObject* parent);
    

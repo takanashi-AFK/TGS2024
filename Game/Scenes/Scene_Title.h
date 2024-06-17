@@ -2,14 +2,9 @@
 
 #include"../../Engine/GameObject/GameObject.h"
 
-class UIButton;
-class UIPanel;
-
 class Scene_Title:public GameObject
 {
-private:
 public:
-
 	//コンストラクタ
 	Scene_Title(GameObject* parent);
 

@@ -8,7 +8,6 @@ using namespace DirectX;
 
 class Component_Rise : public Component
 {
-
 private:
 	bool isActive_;
 	bool isInfinity_;

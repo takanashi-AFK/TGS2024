@@ -1,18 +1,9 @@
 #pragma once
 #include"../../Engine/GameObject/GameObject.h"
 
-class UIButton;
-class UIPanel;
-
 
 class Scene_End :public GameObject
 {
-private:
-	//ボタンクラスのインスタンス
-	UIButton* button_;
-	//UIパネルクラスのインスタンス
-	UIPanel* panel_;
-
 public:
 	//コンストラクタ
 	Scene_End(GameObject* parent_);

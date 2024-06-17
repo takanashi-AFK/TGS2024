@@ -134,10 +134,18 @@ bool UIButton::IsMouseOver(XMFLOAT2 _mousePosition)
     // 画像が読み込まれていない場合は処理を行わない
     if (imageHandle_ < 0)return false;
 
+    int scWidth = Direct3D::screenWidth_;
+    int scHeight = Direct3D::screenHeight_;
+
+#ifdef _DEBUG
+    scWidth = scWidth * 0.7;
+    scHeight = scHeight * 0.7;
+#endif // _DEBUG
+
 	// マウスカーソルの座標を取得
 	XMFLOAT2 imagesize = Image::GetSize(imageHandle_);
-    float imageHalfWidth = imagesize.x;
-    float imageHalfHeight = imagesize.y;
+    float imageHalfWidth = (imagesize.x / 2) / scWidth;
+    float imageHalfHeight = (imagesize.y /2) / scHeight;
 
     XMFLOAT2 center = { transform_.position_.x,transform_.position_.y };
 

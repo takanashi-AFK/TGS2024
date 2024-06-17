@@ -68,6 +68,9 @@
     <Filter Include="03Game\Objects\Stage\Components\BehaviorComponents">
       <UniqueIdentifier>{b2d24188-4d4a-4098-a2d5-87aeda1fadfa}</UniqueIdentifier>
     </Filter>
+    <Filter Include="03Game\Objects\UIObjects">
+      <UniqueIdentifier>{385dbb44-f08d-4e4f-907e-7a4dcc680484}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine\Collider\BoxCollider.cpp">
@@ -187,9 +190,6 @@
     <ClCompile Include="Engine\ResourceManager\Transition.cpp">
       <Filter>01Engine\ResourceManager</Filter>
     </ClCompile>
-    <ClCompile Include="Game\Otheres\StageEditor.cpp">
-      <Filter>03Game\Objects\Otheres</Filter>
-    </ClCompile>
     <ClCompile Include="Game\Scenes\Scene_Splash.cpp">
       <Filter>03Game\Scenes</Filter>
     </ClCompile>
@@ -238,11 +238,36 @@
     <ClCompile Include="Game\Objects\Stage\Components\BehaviorComponents\Component_PlayerBehavior.cpp">
       <Filter>03Game\Objects\Stage\Components\BehaviorComponents</Filter>
     </ClCompile>
-    <ClCompile Include="Game\Otheres\UIObject.cpp" />
-    <ClCompile Include="Game\Objects\UI\UIButton.cpp" />
-    <ClCompile Include="Game\Objects\UI\UIPanel.cpp" />
-    <ClCompile Include="Game\Objects\Stage\Components\MoveComponents\Component_OnlyFall.cpp" />
-    <ClCompile Include="Game\Objects\Stage\Components\MoveComponents\Component_OnlyRise.cpp" />
+    <ClCompile Include="Engine\Global.cpp">
+      <Filter>01Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Scenes\Scene_End.cpp">
+      <Filter>03Game\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Scenes\Scene_Play.cpp">
+      <Filter>03Game\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Scenes\Scene_Title.cpp">
+      <Filter>03Game\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Otheres\GameEditor.cpp">
+      <Filter>03Game\Objects\Otheres</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Objects\Stage\Components\MoveComponents\Component_HelingoFall.cpp">
+      <Filter>03Game\Objects\Stage\Components\MoveComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Objects\Stage\Components\MoveComponents\Component_Rise.cpp">
+      <Filter>03Game\Objects\Stage\Components\MoveComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Objects\UI\UIButton.cpp">
+      <Filter>03Game\Objects\UIObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Objects\UI\UIObject.cpp">
+      <Filter>03Game\Objects\UIObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Objects\UI\UIPanel.cpp">
+      <Filter>03Game\Objects\UIObjects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Collider\BoxCollider.h">
@@ -374,9 +399,6 @@
     <ClInclude Include="Engine\ResourceManager\Transition.h">
       <Filter>01Engine\ResourceManager</Filter>
     </ClInclude>
-    <ClInclude Include="Game\Otheres\StageEditor.h">
-      <Filter>03Game\Objects\Otheres</Filter>
-    </ClInclude>
     <ClInclude Include="Game\Scenes\Scene_Splash.h">
       <Filter>03Game\Scenes</Filter>
     </ClInclude>
@@ -422,12 +444,33 @@
     <ClInclude Include="Game\Objects\Stage\Components\BehaviorComponents\Component_PlayerBehavior.h">
       <Filter>03Game\Objects\Stage\Components\BehaviorComponents</Filter>
     </ClInclude>
-    <ClInclude Include="Game\Otheres\UIObject.h" />
-    <ClInclude Include="Engine\DirectX\EasingFunction.h" />
-    <ClInclude Include="Game\Objects\UI\UIButton.h" />
-    <ClInclude Include="Game\Objects\UI\UIPanel.h" />
-    <ClInclude Include="Game\Objects\Stage\Components\MoveComponents\Component_OnlyFall.h" />
-    <ClInclude Include="Game\Objects\Stage\Components\MoveComponents\Component_OnlyRise.h" />
+    <ClInclude Include="Game\Scenes\Scene_Title.h">
+      <Filter>03Game\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Scenes\Scene_End.h">
+      <Filter>03Game\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Scenes\Scene_Play.h">
+      <Filter>03Game\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Otheres\GameEditor.h">
+      <Filter>03Game\Objects\Otheres</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Objects\Stage\Components\MoveComponents\Component_HelingoFall.h">
+      <Filter>03Game\Objects\Stage\Components\MoveComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Objects\Stage\Components\MoveComponents\Component_Rise.h">
+      <Filter>03Game\Objects\Stage\Components\MoveComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Objects\UI\UIPanel.h">
+      <Filter>03Game\Objects\UIObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Objects\UI\UIButton.h">
+      <Filter>03Game\Objects\UIObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Objects\UI\UIObject.h">
+      <Filter>03Game\Objects\UIObjects</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Assets\Shader\Simple2D.hlsl">

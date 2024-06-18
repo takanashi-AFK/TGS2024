@@ -15,6 +15,7 @@ enum EditType
 	NONE,
 	STAGE,
 	UIPANEL,
+	CAMERA
 };
 
 // ステージエディターを管理するクラス
@@ -30,6 +31,9 @@ private:
 	EditType editType_;				// 編集対象の種類
 
 	bool isShowCreateUIObjectWindow_;	// UIオブジェクト作成ウィンドウを表示するか
+
+	XMFLOAT3 cameraPosition_;			// カメラの位置
+	XMFLOAT3 cameraTarget_;				// カメラの回転
 public:
 	GameEditor(GameObject* _parent);
 	void Initialize() override;
@@ -55,6 +59,8 @@ private:
 	void DrawDatails();
 	void DrawStageObjectDatails();
 	void DrawUIObjectDatails();
+
+	void DrawDatalsCamera();
 
 	void UIObjectClreateWindow();
 };

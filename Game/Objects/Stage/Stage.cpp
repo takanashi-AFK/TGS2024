@@ -16,16 +16,6 @@ void Stage::Initialize()
 
 void Stage::Update()
 {
-	static XMFLOAT3 camPos = { -3.4f,20.9f,-5.5f };
-	static XMFLOAT3 camTgt = { -14.6f,-3.2f,27.1f };
-#ifdef _DEBUG
-	ImGui::DragFloat3("Camera Position", &camPos.x, 0.1f);
-	ImGui::DragFloat3("Camera Target", &camTgt.x, 0.1f);
-#endif // _DEBUG
-
-	// ƒJƒƒ‰‚ÌˆÊ’u‚ğİ’è
-	Camera::SetPosition(camPos);
-	Camera::SetTarget(camTgt);
 }
 
 void Stage::Draw()

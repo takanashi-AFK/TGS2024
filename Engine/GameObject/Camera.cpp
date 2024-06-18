@@ -34,9 +34,12 @@ void Camera::Update()
 
 //Å“_‚ğİ’è
 void Camera::SetTarget(XMFLOAT3 target) { _target = target; }
+void Camera::SetTarget(float x, float y, float z) { Camera::SetTarget(XMFLOAT3(x, y, z)); }
 
 //ˆÊ’u‚ğİ’è
 void Camera::SetPosition(XMFLOAT3 position) { _position = position; }
+void Camera::SetPosition(float x, float y, float z) { Camera::SetPosition(XMFLOAT3(x, y, z)); }
+
 
 //Å“_‚ğæ“¾
 XMFLOAT3 Camera::GetTarget() { return _target; }

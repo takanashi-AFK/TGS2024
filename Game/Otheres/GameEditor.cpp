@@ -6,8 +6,15 @@
 #include "../Objects/UI/UIPanel.h"
 #include "../Objects/UI/UIObject.h"
 #include "../../Engine/Global.h"
+#include "../../Engine/DirectX/Texture.h"
+#include "../../Engine/GameObject/Camera.h"
 
 using namespace FileManager;
+
+namespace {
+	Texture* pTexture_camera = nullptr;
+}
+
 
 GameEditor::GameEditor(GameObject* _parent)
 	:GameObject(_parent, "StageEditor"), editStage_(nullptr), selectEditStageObjectIndex_(-1), editUIPanel_(nullptr), selectEditUIObjectIndex_(-1), editType_(NONE)
@@ -16,6 +23,13 @@ GameEditor::GameEditor(GameObject* _parent)
 
 void GameEditor::Initialize()
 {
+	// カメラ画像のテクスチャを読み込む
+	pTexture_camera = new Texture();
+	pTexture_camera->Load("Images/GUI_Camera.png");
+
+	// カメラの位置を取得
+	cameraPosition_ = Camera::GetPosition();
+	cameraTarget_ = Camera::GetTarget();
 }
 
 void GameEditor::Update()
@@ -65,6 +79,13 @@ void GameEditor::DrawWorldOutLiner()
 					editType_ = UIPANEL;
 					ImGui::EndTabItem();
 				}
+
+			// カメラのタブを表示
+			if (ImGui::BeginTabItem("Camera")) {
+				ImGui::Image(pTexture_camera->GetSRV(), ImVec2(16*23, 9*23));
+				editType_ = CAMERA;
+				ImGui::EndTabItem();
+			}
 		}
 		ImGui::EndTabBar();
 	}
@@ -139,6 +160,7 @@ void GameEditor::DrawDatails()
 		{
 		case STAGE:DrawStageObjectDatails(); break;
 		case UIPANEL:DrawUIObjectDatails();break;
+		case CAMERA:DrawDatalsCamera(); break;
 		default:ImGui::Text("No information to display");break;
 		}
 	}
@@ -165,6 +187,23 @@ void GameEditor::DrawUIObjectDatails()
 		editUIPanel_->GetUIObjects()[selectEditUIObjectIndex_]->ChildDrawData();
 	}
 	else ImGui::Text("No object selected");
+}
+
+void GameEditor::DrawDatalsCamera()
+{
+	ImGui::Text("Camera menu");
+
+	// カメラの位置を設定
+	ImGui::DragFloat3("Camera position", &cameraPosition_.x);
+
+	// カメラの焦点を設定
+	ImGui::DragFloat3("Camera target", &cameraTarget_.x);
+
+	// カメラの位置を設定
+	Camera::SetPosition(cameraPosition_);
+
+	// カメラの焦点を設定
+	Camera::SetTarget(cameraTarget_);
 }
 
 void GameEditor::UIObjectClreateWindow()

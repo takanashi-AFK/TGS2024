@@ -21,9 +21,9 @@ void Scene_Test::Initialize()
 
 	// ステージを作成
 	Stage* pStage = Instantiate<Stage>(this); {
-		json stageData;
+		/*json stageData;
 		JsonReader::Load("Datas/StageLayouts/DebugDefaultStage.json", stageData);
-		pStage->Load(stageData);
+		pStage->Load(stageData);*/
 	}
 
 	// UIパネルの生成
@@ -33,12 +33,14 @@ void Scene_Test::Initialize()
 		uiPanel->Load(uiData);*/
 	}
 	
-	// カメラ情報の読み込み
+	// デフォルトカメラ情報の読み込み
 	json camData;
 	if (JsonReader::Load("Datas/CameraLayouts/camera.json", camData)) {
 		Camera::SetPosition(JFLOAT3(camData["position"]));
 		Camera::SetTarget(JFLOAT3(camData["target"]));
 	}
+
+	// TPSカメラの生成
 	TPSCamera* tpsCamera = Instantiate<TPSCamera>(this);
 
 #ifdef _DEBUG

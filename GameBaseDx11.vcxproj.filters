@@ -71,6 +71,9 @@
     <Filter Include="03Game\Objects\UIObjects">
       <UniqueIdentifier>{385dbb44-f08d-4e4f-907e-7a4dcc680484}</UniqueIdentifier>
     </Filter>
+    <Filter Include="03Game\Objects\Camera">
+      <UniqueIdentifier>{f5344fd4-3bdb-4367-8a5e-5b76a7df6a6c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine\Collider\BoxCollider.cpp">
@@ -266,6 +269,12 @@
       <Filter>03Game\Objects\UIObjects</Filter>
     </ClCompile>
     <ClCompile Include="Game\Objects\UI\UIPanel.cpp">
+      <Filter>03Game\Objects\UIObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Objects\Camera\TPSCamera.cpp">
+      <Filter>03Game\Objects\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Objects\UI\UIImage.cpp">
       <Filter>03Game\Objects\UIObjects</Filter>
     </ClCompile>
   </ItemGroup>
@@ -469,6 +478,12 @@
       <Filter>03Game\Objects\UIObjects</Filter>
     </ClInclude>
     <ClInclude Include="Game\Objects\UI\UIObject.h">
+      <Filter>03Game\Objects\UIObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Objects\Camera\TPSCamera.h">
+      <Filter>03Game\Objects\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Objects\UI\UIImage.h">
       <Filter>03Game\Objects\UIObjects</Filter>
     </ClInclude>
   </ItemGroup>

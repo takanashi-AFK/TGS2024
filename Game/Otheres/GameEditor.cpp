@@ -234,6 +234,8 @@ void GameEditor::DrawDatalsCamera()
 
 		// 設定用のウィンドウを表示
 		tpsCamera_->DrawData();
+
+		break;
 	}
 }
 

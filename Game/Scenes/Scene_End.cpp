@@ -8,7 +8,7 @@ Scene_End::Scene_End(GameObject* parent_)
 void Scene_End::Initialize()
 {
 	//// UIƒpƒlƒ‹‚Ì¶¬
-	UIPanel* pUIPanel = Instantiate<UIPanel>(this); {
+	UIPanel* pUIPanel = Instantiate<UIPanel>(this);{
 		json uiData;
 		if (JsonReader::Load("Datas/UILayouts/EndScene.json", uiData))pUIPanel->Load(uiData);
 	}

@@ -18,6 +18,16 @@ void UIButton::Initialize()
 
 void UIButton::Update()
 {
+    // マウスの座標を取得
+    XMFLOAT2 mousePos = { Input::GetMousePosition().x,Input::GetMousePosition().y };
+
+    // マウスの座標を画像の座標に変換
+    ConvertToImageCoordinates(mousePos);
+
+	if (IsMouseOver(mousePos))
+        Image::SetAlpha(imageHandle_, 192);
+	else 
+        Image::SetAlpha(imageHandle_, 256);
 }
 
 void UIButton::Draw()

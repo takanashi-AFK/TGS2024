@@ -39,7 +39,6 @@ void Scene_Test::Initialize()
 		Camera::SetTarget(JFLOAT3(camData["target"]));
 	}
 
-
 #ifdef _DEBUG
 	// ゲームエディターの生成
 	GameEditor* gameEditor = Instantiate<GameEditor>(this);
@@ -54,7 +53,6 @@ void Scene_Test::Update()
 
 void Scene_Test::Draw()
 {
-
 }
 
 void Scene_Test::Release()

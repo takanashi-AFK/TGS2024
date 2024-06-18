@@ -8,6 +8,7 @@
 #include"../Objects/Stage/Components/BehaviorComponents/Component_PlayerBehavior.h"
 #include"../../Engine/SceneManager.h"
 #include "../Objects/UI/UIButton.h"
+#include "../Objects/Camera/TPSCamera.h"
 
 Scene_Play::Scene_Play(GameObject* parent)
 {
@@ -38,6 +39,10 @@ void Scene_Play::Initialize()
 		}
 	}
 
+	TPSCamera* tpsCamera = Instantiate<TPSCamera>(this); {
+		tpsCamera->SetActive(true);
+		tpsCamera->SetTarget(FindObject("Char_Player"));
+	}
 }
 
 void Scene_Play::Update()

@@ -39,7 +39,6 @@ void Scene_Test::Initialize()
 		Camera::SetPosition(JFLOAT3(camData["position"]));
 		Camera::SetTarget(JFLOAT3(camData["target"]));
 	}
-
 	TPSCamera* tpsCamera = Instantiate<TPSCamera>(this);
 
 #ifdef _DEBUG

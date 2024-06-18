@@ -74,6 +74,12 @@
     <Filter Include="03Game\Objects\Camera">
       <UniqueIdentifier>{f5344fd4-3bdb-4367-8a5e-5b76a7df6a6c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="03Game\Scenes\ReleaseScenes">
+      <UniqueIdentifier>{e15cee35-4008-47be-aace-c32aa7c94d63}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03Game\Scenes\DebugScenes">
+      <UniqueIdentifier>{1c6dc499-8b4a-49c0-bc06-4dc6d7caecc4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine\Collider\BoxCollider.cpp">
@@ -193,12 +199,6 @@
     <ClCompile Include="Engine\ResourceManager\Transition.cpp">
       <Filter>01Engine\ResourceManager</Filter>
     </ClCompile>
-    <ClCompile Include="Game\Scenes\Scene_Splash.cpp">
-      <Filter>03Game\Scenes</Filter>
-    </ClCompile>
-    <ClCompile Include="Game\Scenes\Scene_Test.cpp">
-      <Filter>03Game\Scenes</Filter>
-    </ClCompile>
     <ClCompile Include="Game\Objects\Stage\Components\HealthManagerComponents\Component_HealthManager.cpp">
       <Filter>03Game\Objects\Stage\Components\HealthManagerComponents</Filter>
     </ClCompile>
@@ -244,15 +244,6 @@
     <ClCompile Include="Engine\Global.cpp">
       <Filter>01Engine</Filter>
     </ClCompile>
-    <ClCompile Include="Game\Scenes\Scene_End.cpp">
-      <Filter>03Game\Scenes</Filter>
-    </ClCompile>
-    <ClCompile Include="Game\Scenes\Scene_Play.cpp">
-      <Filter>03Game\Scenes</Filter>
-    </ClCompile>
-    <ClCompile Include="Game\Scenes\Scene_Title.cpp">
-      <Filter>03Game\Scenes</Filter>
-    </ClCompile>
     <ClCompile Include="Game\Otheres\GameEditor.cpp">
       <Filter>03Game\Objects\Otheres</Filter>
     </ClCompile>
@@ -276,6 +267,21 @@
     </ClCompile>
     <ClCompile Include="Game\Objects\UI\UIImage.cpp">
       <Filter>03Game\Objects\UIObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Scenes\Scene_End.cpp">
+      <Filter>03Game\Scenes\ReleaseScenes</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Scenes\Scene_Play.cpp">
+      <Filter>03Game\Scenes\ReleaseScenes</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Scenes\Scene_Splash.cpp">
+      <Filter>03Game\Scenes\ReleaseScenes</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Scenes\Scene_Title.cpp">
+      <Filter>03Game\Scenes\ReleaseScenes</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Scenes\Scene_Test.cpp">
+      <Filter>03Game\Scenes\DebugScenes</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -408,12 +414,6 @@
     <ClInclude Include="Engine\ResourceManager\Transition.h">
       <Filter>01Engine\ResourceManager</Filter>
     </ClInclude>
-    <ClInclude Include="Game\Scenes\Scene_Splash.h">
-      <Filter>03Game\Scenes</Filter>
-    </ClInclude>
-    <ClInclude Include="Game\Scenes\Scene_Test.h">
-      <Filter>03Game\Scenes</Filter>
-    </ClInclude>
     <ClInclude Include="Game\Objects\Stage\Components\HealthManagerComponents\Component_HealthManager.h">
       <Filter>03Game\Objects\Stage\Components\HealthManagerComponents</Filter>
     </ClInclude>
@@ -453,15 +453,6 @@
     <ClInclude Include="Game\Objects\Stage\Components\BehaviorComponents\Component_PlayerBehavior.h">
       <Filter>03Game\Objects\Stage\Components\BehaviorComponents</Filter>
     </ClInclude>
-    <ClInclude Include="Game\Scenes\Scene_Title.h">
-      <Filter>03Game\Scenes</Filter>
-    </ClInclude>
-    <ClInclude Include="Game\Scenes\Scene_End.h">
-      <Filter>03Game\Scenes</Filter>
-    </ClInclude>
-    <ClInclude Include="Game\Scenes\Scene_Play.h">
-      <Filter>03Game\Scenes</Filter>
-    </ClInclude>
     <ClInclude Include="Game\Otheres\GameEditor.h">
       <Filter>03Game\Objects\Otheres</Filter>
     </ClInclude>
@@ -485,6 +476,21 @@
     </ClInclude>
     <ClInclude Include="Game\Objects\UI\UIImage.h">
       <Filter>03Game\Objects\UIObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Scenes\Scene_End.h">
+      <Filter>03Game\Scenes\ReleaseScenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Scenes\Scene_Play.h">
+      <Filter>03Game\Scenes\ReleaseScenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Scenes\Scene_Splash.h">
+      <Filter>03Game\Scenes\ReleaseScenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Scenes\Scene_Title.h">
+      <Filter>03Game\Scenes\ReleaseScenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Scenes\Scene_Test.h">
+      <Filter>03Game\Scenes\DebugScenes</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

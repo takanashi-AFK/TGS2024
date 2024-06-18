@@ -21,20 +21,20 @@ void Scene_Test::Initialize()
 	// ステージを作成
 	Stage* pStage = Instantiate<Stage>(this); {
 		json stageData;
-		JsonReader::Load("Datas/tkanaais.json", stageData);
+		JsonReader::Load("Datas/StageLayouts/DebugDefaultStage.json", stageData);
 		pStage->Load(stageData);
 	}
 
 	// UIパネルの生成
 	UIPanel* uiPanel = Instantiate<UIPanel>(this); {
-		json uiData;
-		JsonReader::Load("Datas/test_UIsave.json", uiData);
-		uiPanel->Load(uiData);
+		/*json uiData;
+		JsonReader::Load("Datas/StageLayouts/DebugDefaultStage.json", uiData);
+		uiPanel->Load(uiData);*/
 	}
 	
-	// カメラの設定
+	// カメラ情報の読み込み
 	json camData;
-	if (JsonReader::Load("Datas/camera.json", camData)) {
+	if (JsonReader::Load("Datas/CameraLayouts/camera.json", camData)) {
 		Camera::SetPosition(JFLOAT3(camData["position"]));
 		Camera::SetTarget(JFLOAT3(camData["target"]));
 	}
@@ -62,5 +62,5 @@ void Scene_Test::Release()
 	json camData;
 	camData["position"] = { REFERENCE_XMFLOAT3(Camera::GetPosition()) };
 	camData["target"] = { REFERENCE_XMFLOAT3(Camera::GetTarget()) };
-	JsonReader::Save("Datas/camera.json", camData);
+	JsonReader::Save("Datas/CameraLayouts/camera.json", camData);
 }

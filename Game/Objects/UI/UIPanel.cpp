@@ -78,3 +78,16 @@ void UIPanel::DeleteAllUIObject()
 	for (auto obj : objects_)obj->KillMe();
 	objects_.clear();
 }
+
+UIObject* UIPanel::GetUIObject(string _name)
+{
+	UIObject* result = nullptr;
+
+	for (auto obj : objects_) {
+		if (obj->GetObjectName() == _name) {
+			result = obj;
+			break;
+		}
+	}
+	return result;
+}

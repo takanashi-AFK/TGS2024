@@ -3,6 +3,7 @@
 #include "UIButton.h"
 #include "../../../Engine/Global.h"
 #include "../../../Engine/ImGui/imgui.h"
+#include "UIImage.h"
 #include "UIPanel.h"
 
 UIObject::UIObject(string _name, UIType _type, GameObject* parent)
@@ -88,13 +89,12 @@ UIObject* CreateUIObject(string _name, UIType _type, GameObject* _parent)
 	// インスタンスを生成する
 	UIObject* obj = nullptr;
 	switch (_type)
-{
-	case UI_BUTTON:obj = new UIButton(_name, _parent); break;
-	case UI_IMAGE:break;
-	case UI_TEXT:break;
-	default:obj = new UIObject(_name, _type, _parent);break;
-}
-
+	{
+		case UI_BUTTON:obj = new UIButton(_name, _parent); break;
+		case UI_IMAGE:obj = new UIImage(_name, _parent); break;
+		case UI_TEXT:break;
+		default:obj = new UIObject(_name, _type, _parent);break;
+	}
 	// インスタンスが生成できなかった場合はnullptrを返す
 	if (obj == nullptr)return nullptr;
 

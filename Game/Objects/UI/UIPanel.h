@@ -27,6 +27,7 @@ public:
 	void DeleteUIObject(UIObject* _object);
 	void DeleteAllUIObject();
 
+	UIObject* GetUIObject(string _name);
 	vector<UIObject*> GetUIObjects() { return objects_; };
 };
 

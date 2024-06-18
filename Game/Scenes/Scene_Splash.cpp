@@ -4,6 +4,7 @@
 #include "../../Engine/Global.h"
 #include "../../Engine/ResourceManager/Image.h"
 #include "../../Engine/SceneManager.h"
+#include "../Objects/UI/UIPanel.h"
 
 // 定数
 namespace {
@@ -12,18 +13,17 @@ namespace {
 }
 
 Scene_Splash::Scene_Splash(GameObject* _parent)
-	:GameObject(_parent,"Scene_Splash"),imageHandle_(-1),count_()
+	:GameObject(_parent,"Scene_Splash"),count_()
 {
 }
 
 void Scene_Splash::Initialize()
 {
-	// 画像の読込
-	imageHandle_ = Image::Load("Images/splash_Image_dungeon_Path.png");
-	assert(imageHandle_ >= 0);
-
-	// 画像サイズを指定
-	SetScale2D(IMAGE_REDUCTION_RATE);
+	//// UIパネルの生成
+	UIPanel* pUIPanel = Instantiate<UIPanel>(this); {
+		json uiData;
+		if (JsonReader::Load("Datas/UILayouts/SplashScene.json", uiData))pUIPanel->Load(uiData);
+	}
 }
 
 void Scene_Splash::Update()
@@ -37,9 +37,6 @@ void Scene_Splash::Update()
 
 void Scene_Splash::Draw()
 {
-	// 画像の描画
-	Image::SetTransform(imageHandle_,transform_);
-	Image::Draw(imageHandle_);
 }
 
 void Scene_Splash::Release()

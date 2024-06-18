@@ -40,8 +40,10 @@ void Scene_Play::Initialize()
 	}
 
 	TPSCamera* tpsCamera = Instantiate<TPSCamera>(this); {
-		tpsCamera->SetActive(true);
-		tpsCamera->SetTarget(FindObject("Char_Player"));
+		json camData;
+		if (JsonReader::Load("Datas/CameraLayouts/TPSCamera.json", camData)) {
+			tpsCamera->Load(camData);
+		}
 	}
 }
 
@@ -52,7 +54,6 @@ void Scene_Play::Update()
 		SceneManager* pChangeScene = (SceneManager*)FindObject("SceneManager");
 		pChangeScene->ChangeScene(SCENE_ID_END, TID_BLACKOUT);
 	}
-
 }
 
 void Scene_Play::Draw()

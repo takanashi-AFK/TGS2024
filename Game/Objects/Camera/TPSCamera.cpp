@@ -1,6 +1,9 @@
 ﻿#include "TPSCamera.h"
 #include "../../../Engine/DirectX/Input.h"
 #include "../../../Engine/GameObject/Camera.h"
+#include "../Stage/Stage.h"
+#include "../Stage/StageObject.h"
+#include "../../../Engine/ImGui/imgui.h"
 
 
 namespace {
@@ -11,7 +14,7 @@ namespace {
 
 
 TPSCamera::TPSCamera(GameObject* parent)
-	:GameObject(parent, "TPSCamera"), angle_({ 0,0 }), sensitivity_(DEF_SENSITIVITY), pTarget_(nullptr)
+	:GameObject(parent, "TPSCamera"), angle_({ 0,0 }), sensitivity_(DEF_SENSITIVITY), pTarget_(nullptr), isActive_(true), targetHeight_(4.f), targetDistance_(7.f)
 {
 }
 
@@ -22,7 +25,9 @@ void TPSCamera::Initialize()
 void TPSCamera::Update()
 {
 	if (isActive_ == false)return;
-    if (pTarget_ == nullptr)return;
+
+    if (pTarget_ == nullptr) pTarget_ = FindObject(targetName_);
+    if (pTarget_ == nullptr) return;
 
     // カメラの焦点・位置を格納する変数を用意
     XMFLOAT3 camTarget{};
@@ -30,7 +35,7 @@ void TPSCamera::Update()
 
     // 回転の中心を設定１⃣
     XMFLOAT3 center = pTarget_->GetPosition();
-    center.y += 4.f;
+    center.y += targetHeight_;
 
     // 回転のための情報を取得
     {
@@ -58,7 +63,7 @@ void TPSCamera::Update()
         center_To_camTarget = XMVector3Transform(center_To_camTarget, rotateY);
 
         // 長さを加える
-        float center_To_camTargetDistance = 7.f;
+        float center_To_camTargetDistance = targetDistance_;
         center_To_camTarget *= center_To_camTargetDistance;
 
         // 原点からの位置を求めて、カメラの焦点を設定
@@ -112,4 +117,59 @@ void TPSCamera::Draw()
 
 void TPSCamera::Release()
 {
+}
+
+void TPSCamera::DrawData()
+{
+	// カメラの有効無効 //////////////////////////////////////////////
+	ImGui::Checkbox("isActive", &isActive_);
+
+
+	// カメラの感度 //////////////////////////////////////////////
+	ImGui::DragFloat("sensitivity", &sensitivity_, 0.1f,SENSITIVITY_MIN, SENSITIVITY_MAX);
+
+
+	// カメラの高さ //////////////////////////////////////////////
+	ImGui::DragFloat("targetHeight", &targetHeight_,0.1f);
+
+
+	// カメラの距離 //////////////////////////////////////////////
+	ImGui::DragFloat("targetDistance", &targetDistance_, 0.1f);
+
+
+	// 対象の選択 //////////////////////////////////////////////
+    std::vector<string> objNames;
+    objNames.push_back("null");
+
+    for (auto obj : (((Stage*)FindObject("Stage"))->GetStageObjects()))objNames.push_back(obj->GetObjectName());
+
+    static int select = 0;
+    if (ImGui::BeginCombo("target_", objNames[select].c_str())) {
+        for (int i = 0; i < objNames.size(); i++) {
+            bool is_selected = (select == i);
+            if (ImGui::Selectable(objNames[i].c_str(), is_selected))select = i;
+            if (is_selected)ImGui::SetItemDefaultFocus();
+        }
+        ImGui::EndCombo();
+    }
+
+    targetName_ = objNames[select];
+}
+
+void TPSCamera::Save(json& saveObj)
+{
+	saveObj["isActive_"] = isActive_;
+	saveObj["sensitivity_"] = sensitivity_;
+	saveObj["targetHeight_"] = targetHeight_;
+	saveObj["targetDistance_"] = targetDistance_;
+	saveObj["targetName_"] = targetName_;
+}
+
+void TPSCamera::Load(json& loadObj)
+{
+	if(loadObj.contains("isActive_"))isActive_ = loadObj["isActive_"];
+	if (loadObj.contains("sensitivity_"))sensitivity_ = loadObj["sensitivity_"];
+	if (loadObj.contains("targetHeight_"))targetHeight_ = loadObj["targetHeight_"];
+	if (loadObj.contains("targetDistance_"))targetDistance_ = loadObj["targetDistance_"];
+	if (loadObj.contains("targetName_"))targetName_ = loadObj["targetName_"];
 }

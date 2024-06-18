@@ -215,26 +215,25 @@ void GameEditor::DrawDatalsCamera()
 		break;
 
 	case TPS:
+		// 保存ボタン
+		if (ImGui::Button("save")) {
+			json saveObj;
+			tpsCamera_->Save(saveObj);
+			JsonReader::Save("Datas/CameraLayouts/TPSCamera.json", saveObj);
+		}
+		ImGui::SameLine();
 
-		tpsCamera_->SetActive(true);
-		//対象の選択
-		vector<string> objNames;
-		objNames.push_back("null");
-
-		for (auto obj : (((Stage*)FindObject("Stage"))->GetStageObjects()))objNames.push_back(obj->GetObjectName());
-
-		static int select = 0;
-		if (ImGui::BeginCombo("target_", objNames[select].c_str())) {
-			for (int i = 0; i < objNames.size(); i++) {
-				bool is_selected = (select == i);
-				if (ImGui::Selectable(objNames[i].c_str(), is_selected))select = i;
-				if (is_selected)ImGui::SetItemDefaultFocus();
-			}
-			ImGui::EndCombo();
+		// 読み込みボタン
+		if (ImGui::Button("load")) {
+			json loadObj;
+			JsonReader::Load("Datas/CameraLayouts/TPSCamera.json", loadObj);
+			tpsCamera_->Load(loadObj);
 		}
 
-		GameObject* target = FindObject(objNames[select]);
-		if (target != nullptr)tpsCamera_->SetTarget(target);
+		ImGui::Separator();
+
+		// 設定用のウィンドウを表示
+		tpsCamera_->DrawData();
 	}
 }
 

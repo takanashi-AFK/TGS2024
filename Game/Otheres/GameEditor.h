@@ -10,12 +10,20 @@ class StageObject;
 class UIPanel;
 class UIObject;
 
+class TPSCamera;
+
 enum EditType
 {
 	NONE,
 	STAGE,
 	UIPANEL,
 	CAMERA
+};
+
+enum CameraType
+{
+	DEFAULT,
+	TPS,
 };
 
 // ステージエディターを管理するクラス
@@ -31,6 +39,10 @@ private:
 	EditType editType_;				// 編集対象の種類
 
 	bool isShowCreateUIObjectWindow_;	// UIオブジェクト作成ウィンドウを表示するか
+
+	CameraType cameraType_;			// カメラの種類
+
+	TPSCamera* tpsCamera_;			// TPSカメラ
 
 	XMFLOAT3 cameraPosition_;			// カメラの位置
 	XMFLOAT3 cameraTarget_;				// カメラの回転
@@ -51,6 +63,7 @@ public:
 	void SaveUIPanel();
 	void LoadUIPanel();
 
+	void SetTPSCamera(TPSCamera* _tpsCamera) { tpsCamera_ = _tpsCamera; }
 private:
 	void DrawWorldOutLiner();
 	void DrawStageOutLiner();

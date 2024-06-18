@@ -22,7 +22,7 @@ void Scene_Play::Initialize()
 	Stage* pStage = Instantiate<Stage>(this); {
 		// ステージを読み込み
 		json stageData;
-		JsonReader::Load("Datas/stage_Test00_sugawara.json", stageData);
+		JsonReader::Load("Datas/StageLayouts/stage_Test00_sugawara.json", stageData);
 		pStage->Load(stageData);
 
 		//範囲for分でオブジェクトリストの取得
@@ -37,14 +37,7 @@ void Scene_Play::Initialize()
 			}
 		}
 	}
-	
-	// UIパネルを生成
-	UIPanel* pUIPanel = Instantiate<UIPanel>(this); {
-		// パネルを読み込み
-		json panelData;
-		JsonReader::Load("Datas/test_UIsave.json", panelData);
-		pUIPanel->Load(panelData);
-	}
+
 }
 
 void Scene_Play::Update()
@@ -55,13 +48,6 @@ void Scene_Play::Update()
 		pChangeScene->ChangeScene(SCENE_ID_END, TID_BLACKOUT);
 	}
 
-	UIButton* pUIPanel = dynamic_cast<UIButton*>(FindObject("button"));
-	if (pUIPanel != nullptr) {
-		if (pUIPanel->OnClick()) {
-			SceneManager* pChangeScene = (SceneManager*)FindObject("SceneManager");
-			pChangeScene->ChangeScene(SCENE_ID_SPLASH, TID_BLACKOUT);
-		}
-	}
 }
 
 void Scene_Play::Draw()

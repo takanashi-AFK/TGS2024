@@ -8,6 +8,7 @@
 #include "../../Engine/Global.h"
 #include "../../Engine/DirectX/Texture.h"
 #include "../../Engine/GameObject/Camera.h"
+#include "../Objects/Camera/TPSCamera.h"
 
 using namespace FileManager;
 
@@ -83,6 +84,13 @@ void GameEditor::DrawWorldOutLiner()
 			// カメラのタブを表示
 			if (ImGui::BeginTabItem("Camera")) {
 				ImGui::Image(pTexture_camera->GetSRV(), ImVec2(16*23, 9*23));
+
+				ImGui::Dummy(ImVec2(0, 10));
+				// ラジオボタン
+				ImGui::Text("Camera type");
+				if (ImGui::RadioButton("default camera", cameraType_ == DEFAULT))cameraType_ = DEFAULT;
+				if (ImGui::RadioButton("tps camera", cameraType_ == TPS))cameraType_ = TPS;
+
 				editType_ = CAMERA;
 				ImGui::EndTabItem();
 			}
@@ -192,18 +200,42 @@ void GameEditor::DrawUIObjectDatails()
 void GameEditor::DrawDatalsCamera()
 {
 	ImGui::Text("Camera menu");
+	switch (cameraType_)
+	{
+	case DEFAULT:
+		tpsCamera_->SetActive(false);
+		// カメラの位置を設定
+		ImGui::DragFloat3("Camera position", &cameraPosition_.x);
+		// カメラの焦点を設定
+		ImGui::DragFloat3("Camera target", &cameraTarget_.x);
+		// カメラの位置を設定
+		Camera::SetPosition(cameraPosition_);
+		// カメラの焦点を設定
+		Camera::SetTarget(cameraTarget_);
+		break;
 
-	// カメラの位置を設定
-	ImGui::DragFloat3("Camera position", &cameraPosition_.x);
+	case TPS:
 
-	// カメラの焦点を設定
-	ImGui::DragFloat3("Camera target", &cameraTarget_.x);
+		tpsCamera_->SetActive(true);
+		//対象の選択
+		vector<string> objNames;
+		objNames.push_back("null");
 
-	// カメラの位置を設定
-	Camera::SetPosition(cameraPosition_);
+		for (auto obj : (((Stage*)FindObject("Stage"))->GetStageObjects()))objNames.push_back(obj->GetObjectName());
 
-	// カメラの焦点を設定
-	Camera::SetTarget(cameraTarget_);
+		static int select = 0;
+		if (ImGui::BeginCombo("target_", objNames[select].c_str())) {
+			for (int i = 0; i < objNames.size(); i++) {
+				bool is_selected = (select == i);
+				if (ImGui::Selectable(objNames[i].c_str(), is_selected))select = i;
+				if (is_selected)ImGui::SetItemDefaultFocus();
+			}
+			ImGui::EndCombo();
+		}
+
+		GameObject* target = FindObject(objNames[select]);
+		if (target != nullptr)tpsCamera_->SetTarget(target);
+	}
 }
 
 void GameEditor::UIObjectClreateWindow()

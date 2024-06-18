@@ -7,6 +7,7 @@
 #include "../Otheres/GameEditor.h"
 #include "../../Engine/GameObject/Camera.h"
 #include "../../Engine/Global.h"
+#include "../Objects/Camera/TPSCamera.h"
 
 Scene_Test::Scene_Test(GameObject * parent)
 	: GameObject(parent, "Scene_Test")
@@ -39,11 +40,14 @@ void Scene_Test::Initialize()
 		Camera::SetTarget(JFLOAT3(camData["target"]));
 	}
 
+	TPSCamera* tpsCamera = Instantiate<TPSCamera>(this);
+
 #ifdef _DEBUG
 	// ゲームエディターの生成
 	GameEditor* gameEditor = Instantiate<GameEditor>(this);
 	gameEditor->SetEditStage(pStage);
 	gameEditor->SetEditUIPanel(uiPanel);
+	gameEditor->SetTPSCamera(tpsCamera);
 #endif // _DEBUG
 }
 

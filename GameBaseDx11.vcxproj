@@ -203,6 +203,7 @@
     <ClCompile Include="Game\Objects\UI\UIButton.cpp" />
     <ClCompile Include="Game\Scenes\Scene_Title.cpp" />
     <ClCompile Include="Game\Objects\UI\UIImage.cpp" />
+    <ClCompile Include="Game\Objects\Camera\TPSCamera.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game\Objects\Stage\Components\MoveComponents\Component_Fall.h" />
@@ -273,6 +274,7 @@
     <ClInclude Include="Game\Scenes\Scene_Play.h" />
     <ClInclude Include="Game\Scenes\Scene_Title.h" />
     <ClInclude Include="Game\Objects\UI\UIImage.h" />
+    <ClInclude Include="Game\Objects\Camera\TPSCamera.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Assets\Shader\BillBoard.hlsl">

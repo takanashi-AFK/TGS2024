@@ -43,6 +43,7 @@ protected:
     StageObject* holder_;                   // コンポ―ネント保有者のポインタ
     vector<Component*> childComponents_;    // 子コンポーネント群
     Component* parent_;                     // 親コンポーネント
+    bool isActive_;                         // アクティブ状態かどうか
 
 public:
     /// <summary>

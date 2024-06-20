@@ -21,7 +21,6 @@ private:
 	float riseSpeed_;					// 上昇速度
 	float fallDistance_;				// 降下する距離
 	float startHeight_;					// 開始の高さ
-	bool isActive_;						// 実行されたかどうか
 
 	float riseWaitTime_;				// 上昇までの待機時間
 	float fallWaitTime_;				// 降下までの待機時間

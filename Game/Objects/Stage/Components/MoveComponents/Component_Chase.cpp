@@ -3,12 +3,8 @@
 #include "../../StageObject.h"
 #include "Component_Chase.h"
 
-namespace {
-	const float LIMIT_DISTANCE = 0.5f; // この距離以下になったら追従をやめる
-}
-
 Component_Chase::Component_Chase(string _name, StageObject* _holder, Component* _parent)
-	:Component(_holder,_name,Chase,_parent), speed_(0.0f),target_(nullptr)
+	:Component(_holder,_name,Chase,_parent), speed_(0.0f),target_(nullptr),limitDistance_(0.5f)
 {
 }
 
@@ -35,7 +31,7 @@ void Component_Chase::Update()
 	// 距離を計算
 	float distance = CalcDistance(holderPos, targetPos);
 
-	if (distance > LIMIT_DISTANCE) {
+	if (distance > GetLimitDistance()) {
 		
 		//向きをを適応
 		holder_->SetRotateY(rotateAngle);
@@ -57,6 +53,7 @@ void Component_Chase::Save(json& _saveobj)
 {
 	_saveobj["speed_"] = speed_;
 	_saveobj["isActive_"] = isActive_;
+	_saveobj["limitDistance_"] = limitDistance_;
 	if(target_ != nullptr)_saveobj["target_"] = target_->GetObjectName();
 }
 
@@ -65,6 +62,7 @@ void Component_Chase::Load(json& _loadObj)
 	if(_loadObj.contains("speed_"))speed_ = _loadObj["speed_"];
 	if(_loadObj.contains("isActive_"))isActive_ = _loadObj["isActive_"];
 	if (_loadObj.contains("target_"))targetName_ = _loadObj["target_"];
+	if(_loadObj.contains("limitDistance_"))limitDistance_ = _loadObj["limitDistance_"];
 }
 
 void Component_Chase::DrawData()
@@ -75,6 +73,9 @@ void Component_Chase::DrawData()
 	
 	// 速度の設定
 	ImGui::DragFloat("speed", &speed_, 0.01f, 0.0f, 10.0f);
+
+	// 追跡をやめる距離の設定
+	ImGui::DragFloat("limitDistance", &limitDistance_, 0.01f, 0.0f, 10.0f);
 
 	// ターゲットの選択
 	{

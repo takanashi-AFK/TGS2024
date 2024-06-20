@@ -22,6 +22,20 @@ void Bullet::Initialize()
 	assert(modelHandle_ >= 0);
 
 	SetScale(0.2f);
+
+
+	// effekseer:エフェクトの読み込み
+	EFFEKSEERLIB::gEfk->AddEffect("sumpleEffect01", "Effect/sumpleEffect01.efx");
+	
+	// effekseer:ワールド行列の設定
+	EFFEKSEERLIB::EFKTransform etransform;
+	XMStoreFloat4x4(&(etransform.matrix), this->GetParent()->GetWorldMatrix());
+	etransform.isLoop = true;
+	etransform.maxFrame = 130;
+	etransform.speed = 20;
+
+	// effekseer:エフェクトの再生
+	mt = EFFEKSEERLIB::gEfk->Play("sumpleEffect01", etransform);
 }
 
 void Bullet::Update()
@@ -32,8 +46,11 @@ void Bullet::Update()
 	// 移動
 	Move(direction_,speed_);
 
+	// effekseer:毎フレームワールド行列の設定
+	XMStoreFloat4x4(&(mt->matrix), this->GetParent()->GetWorldMatrix());
+
 	// 自動削除
-	AutoDelete(2.f);
+	AutoDelete(5.f);
 }
 
 void Bullet::Draw()

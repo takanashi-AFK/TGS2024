@@ -2,6 +2,7 @@
 
 // インクルード
 #include "StageObject.h"
+#include "../../../EffekseeLib/EffekseerVFX.h"
 
 /// <summary>
 /// 発射する弾を管理するクラス
@@ -57,6 +58,8 @@ public:
 	/// 実行
 	/// </summary>
 	void Execute() { isActive_ = true; }
+
+	std::shared_ptr<EFFEKSEERLIB::EFKTransform> mt;
 
 private:
 	/// <summary>

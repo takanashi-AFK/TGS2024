@@ -1,20 +1,25 @@
-﻿#include "TPSCamera.h"
-#include "../../../Engine/DirectX/Input.h"
+﻿#include "../../../Engine/DirectX/Input.h"
 #include "../../../Engine/GameObject/Camera.h"
+#include "../../../Engine/ImGui/imgui.h"
 #include "../Stage/Stage.h"
 #include "../Stage/StageObject.h"
-#include "../../../Engine/ImGui/imgui.h"
+#include "TPSCamera.h"
 
 
 namespace {
     const float DEF_SENSITIVITY = 0.3f;
+    const float DEF_TARGET_HEIGHT = 4.f;
+    const float DEF_TARGET_DISTANCE = 7.f;
+    const float DEF_CENTER_SHIFT_AMOUNT = 0.5f;
     const float SENSITIVITY_MAX = 1;
     const float SENSITIVITY_MIN = 0;
+    const float ROTATE_UPPER_LIMIT = -80.f;
+    const float ROTATE_LOWER_LIMIT = 80.f;
 }
 
-
 TPSCamera::TPSCamera(GameObject* parent)
-	:GameObject(parent, "TPSCamera"), angle_({ 0,0 }), sensitivity_(DEF_SENSITIVITY), pTarget_(nullptr), isActive_(true), targetHeight_(4.f), targetDistance_(7.f)
+	:GameObject(parent, "TPSCamera")
+    , angle_({ 0,0 }), sensitivity_(DEF_SENSITIVITY), pTarget_(nullptr), isActive_(true), targetHeight_(DEF_TARGET_HEIGHT), targetDistance_(DEF_TARGET_DISTANCE), centerShiftAmount_(DEF_CENTER_SHIFT_AMOUNT)
 {
 }
 
@@ -47,9 +52,9 @@ void TPSCamera::Update()
         angle_.y += mouseMove.x * sensitivity_;
         // ｘ軸回転の上限・下限を設定し回転を制限
         {
-            const float upperlimit = -80.f;
+            float upperlimit = ROTATE_UPPER_LIMIT;
             if (angle_.x < upperlimit)angle_.x -= mouseMove.y * sensitivity_;
-            const float lowerlimit = 80.f;
+            float lowerlimit = ROTATE_LOWER_LIMIT;
             if (angle_.x > lowerlimit)angle_.x -= mouseMove.y * sensitivity_;
         }
     }
@@ -85,7 +90,7 @@ void TPSCamera::Update()
     // ｘ軸の回転を行う
     {
         // 中心を移動
-        XMVECTOR newCenter = (XMLoadFloat3(&camPosition) + XMLoadFloat3(&camTarget)) * 0.5f;
+        XMVECTOR newCenter = (XMLoadFloat3(&camPosition) + XMLoadFloat3(&camTarget)) * centerShiftAmount_;
         XMFLOAT3 prevCenter = center;
         XMStoreFloat3(&center, newCenter);
 
@@ -136,6 +141,10 @@ void TPSCamera::DrawData()
 	// カメラの距離 //////////////////////////////////////////////
 	ImGui::DragFloat("targetDistance", &targetDistance_, 0.1f);
 
+    
+    // カメラの中心移動量 //////////////////////////////////////////////
+    ImGui::DragFloat("centerShiftAmount", &centerShiftAmount_, 0.01f);
+
 
 	// 対象の選択 //////////////////////////////////////////////
     std::vector<string> objNames;
@@ -162,14 +171,16 @@ void TPSCamera::Save(json& saveObj)
 	saveObj["sensitivity_"] = sensitivity_;
 	saveObj["targetHeight_"] = targetHeight_;
 	saveObj["targetDistance_"] = targetDistance_;
+    saveObj["centerShiftAmount_"] = centerShiftAmount_;
 	saveObj["targetName_"] = targetName_;
 }
 
 void TPSCamera::Load(json& loadObj)
 {
-	if(loadObj.contains("isActive_"))isActive_ = loadObj["isActive_"];
+	if (loadObj.contains("isActive_"))isActive_ = loadObj["isActive_"];
 	if (loadObj.contains("sensitivity_"))sensitivity_ = loadObj["sensitivity_"];
 	if (loadObj.contains("targetHeight_"))targetHeight_ = loadObj["targetHeight_"];
 	if (loadObj.contains("targetDistance_"))targetDistance_ = loadObj["targetDistance_"];
+    if (loadObj.contains("centerShiftAmount_"))centerShiftAmount_ = loadObj["centerShiftAmount_"];
 	if (loadObj.contains("targetName_"))targetName_ = loadObj["targetName_"];
 }

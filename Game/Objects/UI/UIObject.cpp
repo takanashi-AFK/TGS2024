@@ -1,10 +1,12 @@
 #include "UIObject.h"
 
-#include "UIButton.h"
 #include "../../../Engine/Global.h"
 #include "../../../Engine/ImGui/imgui.h"
-#include "UIImage.h"
+
 #include "UIPanel.h"
+#include "UIButton.h"
+#include "UIImage.h"
+#include "UIText.h"
 
 UIObject::UIObject(string _name, UIType _type, GameObject* parent)
 	: GameObject(parent, _name), isEnable_(true), type_(_type)
@@ -68,7 +70,7 @@ void UIObject::ChildDrawData()
 		if (ImGui::InputTextWithHint("##Input", "Input New name...", buffer, IM_ARRAYSIZE(buffer)))
 			this->objectName_ = buffer;
 		ImGui::TreePop();
-}
+	}
 
 	// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
 	// 自身の変形情報を描画
@@ -92,7 +94,7 @@ UIObject* CreateUIObject(string _name, UIType _type, GameObject* _parent)
 	{
 		case UI_BUTTON:obj = new UIButton(_name, _parent); break;
 		case UI_IMAGE:obj = new UIImage(_name, _parent); break;
-		case UI_TEXT:break;
+		case UI_TEXT: obj = new UIText(_name, _parent); break;
 		default:obj = new UIObject(_name, _type, _parent);break;
 	}
 	// インスタンスが生成できなかった場合はnullptrを返す

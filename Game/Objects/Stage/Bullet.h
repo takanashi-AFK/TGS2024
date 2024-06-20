@@ -2,7 +2,7 @@
 
 // インクルード
 #include "StageObject.h"
-
+#include "../../../Engine/EffekseerVFX.h"
 /// <summary>
 /// 発射する弾を管理するクラス
 /// </summary>
@@ -71,5 +71,9 @@ private:
 	/// </summary>
 	/// <param name="_sec">消えるまでの時間（秒）</param>
 	void AutoDelete(float _sec);
+
+	std::shared_ptr<EFFEKSEERLIB::EFKTransform>mt;
 };
+
+
 

@@ -17,6 +17,7 @@
 #include "ResourceManager/Audio.h"
 #include "ResourceManager/VFX.h"
 #include "ResourceManager/Transition.h"
+#include "EffekseerVFX.h"
 
 #include "ImGui/imgui.h"
 #include "ImGui/imgui.h"
@@ -82,6 +83,9 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	//トランジションの初期化
 	Transition::Initialize();
 
+	EFFEKSEERLIB::gEfk = new EFFEKSEERLIB::EffekseerManager;
+	EFFEKSEERLIB::gEfk->Initialize(Direct3D::pDevice_,Direct3D::pContext_);
+
 	//ルートオブジェクト準備
 	//すべてのゲームオブジェクトの親となるオブジェクト
 	RootObject* pRootObject = new RootObject;
@@ -110,6 +114,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 			static DWORD lastUpdateTime = timeGetTime();	//最後に画面を更新した時間
 			DWORD nowTime = timeGetTime();					//現在の時間
 
+
 			//キャプションに現在のFPSを表示する
 			if (isDrawFps)
 			{
@@ -125,9 +130,9 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 				}
 			}
 
-
+			float deltaT = (nowTime - lastUpdateTime);
 			//指定した時間（FPSを60に設定した場合は60分の1秒）経過していたら更新処理
-			if ((nowTime - lastUpdateTime) * fpsLimit > 1000.0f)
+			if (deltaT * fpsLimit > 1000.0f)
 			{
 				//時間計測関連
 				lastUpdateTime = nowTime;	//現在の時間（最後に画面を更新した時間）を覚えておく
@@ -158,8 +163,10 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 				//カメラを更新
 				Camera::Update();
 
+				EFFEKSEERLIB::gEfk->Update(deltaT / 1000.f);
+
 				//エフェクトの更新
-				VFX::Update();
+				// VFX::Update();
 
 				//トランジションの更新
 				Transition::Update();
@@ -171,8 +178,9 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 				//ルートオブジェクトのDrawを呼んだあと、自動的に子、孫のUpdateが呼ばれる
 				pRootObject->DrawSub();
 
+				EFFEKSEERLIB::gEfk->Draw();
 				//エフェクトの描画
-				VFX::Draw();
+				// VFX::Draw();
 
 				//トランジションの描画
 				Transition::Draw();
@@ -201,7 +209,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 	//いろいろ解放
 	Transition::Release();
-	VFX::Release();
+	// VFX::Release();
 	Audio::AllRelease();
 	Model::AllRelease();
 	Image::AllRelease();

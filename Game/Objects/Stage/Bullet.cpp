@@ -22,6 +22,16 @@ void Bullet::Initialize()
 	assert(modelHandle_ >= 0);
 
 	SetScale(0.2f);
+
+	EFFEKSEERLIB::gEfk->AddEffect("sword", "effekseer/sword.efk");
+
+	EFFEKSEERLIB::EFKTransform t;
+	DirectX::XMStoreFloat4x4(&(t.matrix), transform_.GetWorldMatrix());
+	t.isLoop = false;
+	t.maxFrame = 60;
+	t.speed = 1.0f;
+	mt = EFFEKSEERLIB::gEfk->Play("sword", t);
+
 }
 
 void Bullet::Update()
@@ -34,6 +44,8 @@ void Bullet::Update()
 
 	// Ž©“®íœ
 	AutoDelete(2.f);
+
+	DirectX::XMStoreFloat4x4(&(mt->matrix), this->GetWorldMatrix());
 }
 
 void Bullet::Draw()

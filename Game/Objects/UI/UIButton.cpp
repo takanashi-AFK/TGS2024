@@ -14,6 +14,8 @@ UIButton::UIButton(string _name, GameObject* parent)
 
 void UIButton::Initialize()
 {
+    LockRotate();
+
 }
 
 void UIButton::Update()

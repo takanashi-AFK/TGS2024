@@ -9,7 +9,7 @@
 #include "UIText.h"
 
 UIObject::UIObject(string _name, UIType _type, GameObject* parent)
-	: GameObject(parent, _name), isEnable_(true), type_(_type)
+	: GameObject(parent, _name), isEnable_(true), type_(_type), isPositionLocked_(false), isRotateLocked_(false), isScaleLocked_(false)
 {
 }
 
@@ -76,9 +76,9 @@ void UIObject::ChildDrawData()
 	// ©g‚Ì•ÏŒ`î•ñ‚ğ•`‰æ
 	// 
 	if (ImGui::TreeNode("transform_")) {
-		ImGui::DragFloat3("position_", &transform_.position_.x, 0.1f);
-		ImGui::DragFloat3("rotate_", &transform_.rotate_.x, 1.f, -360.f, 360.f);
-		ImGui::DragFloat3("scale_", &transform_.scale_.x, 0.1f, 0.f, LONG_MAX);
+		if(isPositionLocked_ == false)ImGui::DragFloat3("position_", &transform_.position_.x, 0.1f);
+		if(isRotateLocked_ == false)ImGui::DragFloat3("rotate_", &transform_.rotate_.x, 1.f, -360.f, 360.f);
+		if(isScaleLocked_ == false)ImGui::DragFloat3("scale_", &transform_.scale_.x, 0.1f, 0.f, LONG_MAX);
 		ImGui::TreePop();
 }
 

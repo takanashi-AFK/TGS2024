@@ -2,7 +2,7 @@
 #include "../DirectX/Direct3D.h"
 #include "Text.h"
 
-Text::Text() : hPict_(-1), width_(16), height_(32), fileName_("char.png"), rowLength_(16), scale(1.0f)
+Text::Text() : hPict_(-1), width_(16), height_(32), fileName_("Fonts/char.png"), rowLength_(16), scale(1.0f)
 {
 }
 

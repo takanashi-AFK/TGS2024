@@ -23,14 +23,18 @@ void Bullet::Initialize()
 
 	SetScale(0.2f);
 
-	EFFEKSEERLIB::gEfk->AddEffect("sword", "effekseer/sword.efk");
+	// effekseer: :Effect‚Ì“Ç‚İ‚İ
+	EFFEKSEERLIB::gEfk->AddEffect("sword", "Effects/A_Salamander4.efk");/*ššš*/
 
-	EFFEKSEERLIB::EFKTransform t;
-	DirectX::XMStoreFloat4x4(&(t.matrix), transform_.GetWorldMatrix());
-	t.isLoop = false;
-	t.maxFrame = 60;
-	t.speed = 1.0f;
-	mt = EFFEKSEERLIB::gEfk->Play("sword", t);
+	// effekseer: :Effect‚ÌÄ¶î•ñ‚Ìİ’è
+	EFFEKSEERLIB::EFKTransform t;/*ššš*/
+	DirectX::XMStoreFloat4x4(&(t.matrix), transform_.GetWorldMatrix());/*ššš*/
+	t.isLoop = false;/*ššš*/
+	t.maxFrame = 60;/*ššš*/
+	t.speed = 1.0f;/*ššš*/
+
+	// effekseer: :Effect‚ÌÄ¶
+	mt = EFFEKSEERLIB::gEfk->Play("sword", t);/*ššš*/
 
 }
 
@@ -45,7 +49,8 @@ void Bullet::Update()
 	// ©“®íœ
 	AutoDelete(2.f);
 
-	DirectX::XMStoreFloat4x4(&(mt->matrix), this->GetWorldMatrix());
+	// effekseer: :Effect‚ÌÄ¶î•ñ‚ÌXV
+	DirectX::XMStoreFloat4x4(&(mt->matrix), this->GetWorldMatrix());/*ššš*/
 }
 
 void Bullet::Draw()

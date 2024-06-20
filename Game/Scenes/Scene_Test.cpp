@@ -21,9 +21,9 @@ void Scene_Test::Initialize()
 
 	// ステージを作成
 	Stage* pStage = Instantiate<Stage>(this); {
-		/*json stageData;
-		JsonReader::Load("Datas/StageLayouts/DebugDefaultStage.json", stageData);
-		pStage->Load(stageData);*/
+		json stageData;
+		JsonReader::Load("Datas/efectTest.json", stageData);
+		pStage->Load(stageData);
 	}
 
 	// UIパネルの生成

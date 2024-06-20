@@ -2,7 +2,11 @@
 
 // インクルード
 #include "StageObject.h"
-#include "../../../Engine/EffekseerVFX.h"
+
+// effekseer: インクルード
+#include "../../../EffekseeLib/EffekseerVFX.h"/*★★★*/
+
+
 /// <summary>
 /// 発射する弾を管理するクラス
 /// </summary>
@@ -13,6 +17,9 @@ private:
 	int frame_;				// 経過フレーム	
 	float speed_;			// 移動速度
 	XMVECTOR direction_;	// 移動方向
+
+	// effekseer: 変形行列
+	std::shared_ptr<EFFEKSEERLIB::EFKTransform> mt;/*★★★*/
 
 public:
 	/// <summary>
@@ -71,8 +78,6 @@ private:
 	/// </summary>
 	/// <param name="_sec">消えるまでの時間（秒）</param>
 	void AutoDelete(float _sec);
-
-	std::shared_ptr<EFFEKSEERLIB::EFKTransform>mt;
 };
 
 

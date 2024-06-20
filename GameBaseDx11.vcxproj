@@ -71,13 +71,13 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>C:\Program Files\Autodesk\FBX\FBX SDK\2020.3.7\include;$(ProjectDir)\EffekseeLib\EffekseeLib\install_msvc2022_x64\include\Effekseer;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\Program Files\Autodesk\FBX\FBX SDK\2020.3.7\lib\x64\debug;$(ProjectDir)\EffekseeLib\EffekseeLib\install_msvc2022_x64\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\Program Files\Autodesk\FBX\FBX SDK\2020.3.7\include;$(ProjectDir)\EffekseeLib\EffekseeLib\install_msvc2022_x64\include\Effekseer</IncludePath>
+    <LibraryPath>C:\Program Files\Autodesk\FBX\FBX SDK\2020.3.7\lib\x64\debug;$(ProjectDir)\EffekseeLib\EffekseeLib\install_msvc2022_x64\lib</LibraryPath>
     <ExternalIncludePath>C:\Program Files\Autodesk\FBX\FBX SDK\2020.3.7\include;$(ExternalIncludePath)</ExternalIncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <IncludePath>C:\Program Files\Autodesk\FBX\FBX SDK\2020.3.7\include;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\Program Files\Autodesk\FBX\FBX SDK\2020.3.7\lib\x64\release;$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\Program Files\Autodesk\FBX\FBX SDK\2020.3.7\include;$(ProjectDir)\EffekseeLib\EffekseeLib\install_msvc2022_x64\include\Effekseer</IncludePath>
+    <LibraryPath>C:\Program Files\Autodesk\FBX\FBX SDK\2020.3.7\lib\x64\release;$(ProjectDir)\EffekseeLib\EffekseeLib\install_msvc2022_x64\lib;$(LibraryPath)</LibraryPath>
     <ExternalIncludePath>C:\Program Files\Autodesk\FBX\FBX SDK\2020.3.7\include;$(ExternalIncludePath)</ExternalIncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -131,6 +131,7 @@
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -138,7 +139,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Engine\EffekseerVFX.cpp" />
+    <ClCompile Include="EffekseeLib\EffekseerVFX.cpp" />
     <ClCompile Include="Game\Objects\Stage\Components\MoveComponents\Component_Fall.cpp" />
     <ClCompile Include="Game\Objects\Stage\Components\MoveComponents\Component_Rise.cpp" />
     <ClCompile Include="Game\Objects\Stage\Components\BehaviorComponents\Component_PlayerBehavior.cpp" />
@@ -208,7 +209,7 @@
     <ClCompile Include="Game\Objects\Camera\TPSCamera.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Engine\EffekseerVFX.h" />
+    <ClInclude Include="EffekseeLib\EffekseerVFX.h" />
     <ClInclude Include="Game\Objects\Stage\Components\MoveComponents\Component_Fall.h" />
     <ClInclude Include="Game\Objects\Stage\Components\MoveComponents\Component_Rise.h" />
     <ClInclude Include="Game\Objects\Stage\Components\BehaviorComponents\Component_PlayerBehavior.h" />

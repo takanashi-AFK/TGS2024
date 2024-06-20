@@ -17,8 +17,13 @@
 #include "ResourceManager/Audio.h"
 #include "ResourceManager/VFX.h"
 #include "ResourceManager/Transition.h"
-#include "EffekseerVFX.h"
 
+// effekseerのヘッダーをインクルード
+
+#include "../EffekseeLib/EffekseerVFX.h"/*★★★*/
+
+
+// ImGuiのヘッダーをインクルード
 #include "ImGui/imgui.h"
 #include "ImGui/imgui.h"
 #include "ImGui/imgui_impl_dx11.h"
@@ -83,8 +88,10 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	//トランジションの初期化
 	Transition::Initialize();
 
-	EFFEKSEERLIB::gEfk = new EFFEKSEERLIB::EffekseerManager;
-	EFFEKSEERLIB::gEfk->Initialize(Direct3D::pDevice_,Direct3D::pContext_);
+	// effekseerの初期化
+	EFFEKSEERLIB::gEfk = new EFFEKSEERLIB::EffekseerManager;/*★★★*/
+	EFFEKSEERLIB::gEfk->Initialize(Direct3D::pDevice_,Direct3D::pContext_);/*★★★*/
+
 
 	//ルートオブジェクト準備
 	//すべてのゲームオブジェクトの親となるオブジェクト
@@ -130,9 +137,11 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 				}
 			}
 
-			float deltaT = (nowTime - lastUpdateTime);
+			// 前回のフレームからの経過時間を計算
+			float deltaTime = (nowTime - lastUpdateTime);/*★★★*/
+
 			//指定した時間（FPSを60に設定した場合は60分の1秒）経過していたら更新処理
-			if (deltaT * fpsLimit > 1000.0f)
+			if (deltaTime * fpsLimit > 1000.0f)
 			{
 				//時間計測関連
 				lastUpdateTime = nowTime;	//現在の時間（最後に画面を更新した時間）を覚えておく
@@ -163,9 +172,10 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 				//カメラを更新
 				Camera::Update();
 
-				EFFEKSEERLIB::gEfk->Update(deltaT / 1000.f);
+				// effekseerの更新
+				EFFEKSEERLIB::gEfk->Update(deltaTime / 1000.f);/*★★★*/
 
-				//エフェクトの更新
+				// 遠藤先生作成エフェクトの更新
 				// VFX::Update();
 
 				//トランジションの更新
@@ -178,8 +188,10 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 				//ルートオブジェクトのDrawを呼んだあと、自動的に子、孫のUpdateが呼ばれる
 				pRootObject->DrawSub();
 
-				EFFEKSEERLIB::gEfk->Draw();
-				//エフェクトの描画
+				// effekseerの描画
+				EFFEKSEERLIB::gEfk->Draw();/*★★★*/
+				
+				// 遠藤先生作成エフェクトの描画
 				// VFX::Draw();
 
 				//トランジションの描画
@@ -209,7 +221,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 	//いろいろ解放
 	Transition::Release();
-	// VFX::Release();
+	VFX::Release();
 	Audio::AllRelease();
 	Model::AllRelease();
 	Image::AllRelease();

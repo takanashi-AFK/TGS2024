@@ -25,7 +25,6 @@ namespace fs = std::filesystem;
 #endif
 
 
-
 namespace EFFEKSEERLIB {
     class EffekseerManager;//‘O•ûéŒ¾
 

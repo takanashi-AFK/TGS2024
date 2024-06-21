@@ -23,6 +23,8 @@
 #include "MoveComponents/Component_WASDInputMove.h"
 #include "MoveComponents/Component_Fall.h"
 #include "MoveComponents/Component_Rise.h"
+#include "BehaviorComponents/Component_BossBehavior.h"
+#include "MoveComponents/Component_TackleMove.h"
 
 Component::Component(StageObject* _holder, string _name,ComponentType _type)
     :holder_(_holder), name_(_name),type_(_type),childComponents_(),parent_(nullptr)
@@ -203,7 +205,8 @@ Component* CreateComponent(string _name,ComponentType _type, StageObject* _holde
 	case WASDInputMove:comp = new Component_WASDInputMove(_name, _holder, _parent); break;
 	case Fall:comp = new Component_Fall(_name, _holder, _parent); break;
 	case Rise:comp = new Component_Rise(_name, _holder, _parent); break;
-
+	case BossBehavior:comp = new Component_BossBehavior(_name, _holder, _parent); break;
+	case TackleMove:comp = new Component_TackleMove(_name, _holder, _parent); break;
 	default:/* その他コンポーネントを追加する時は上記のように追加*/ break;
 	}
 	return comp;
@@ -236,6 +239,7 @@ string ComponentTypeToString(ComponentType _type)
 	case WASDInputMove: return "WASDInputMoveComponent";
 	case Fall: return "FallComponent";
 	case Rise: return "RiseComponent";
+	case BossBehavior: return "BossBehaviorComponent";
 		// コンポーネント追加時に識別番号を追加
 	}
 	return "None";

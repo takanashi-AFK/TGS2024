@@ -17,6 +17,8 @@ private:
 	float shotrange_;
 	float tacklerange_;
 
+	float shotRate_;
+	float rotateSpeed_;
 	float nextStateTime_;
 
 	bool isActive_;

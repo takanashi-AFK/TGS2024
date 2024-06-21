@@ -20,7 +20,7 @@ namespace
 
 Component_BossBehavior::Component_BossBehavior(string _name, StageObject* _holder, Component* _parent)
     : Component(_holder, _name, BossBehavior, _parent), nowState_(WAIT), prevState_(WAIT), isActive_(false),
-    target_(nullptr), shotrange_{}, tacklerange_{}, nextStateTime_{}
+    target_(nullptr), shotrange_{}, tacklerange_{}, nextStateTime_{},shotRate_(SHOT_RATE),rotateSpeed_(SHOT_ANGLE)
 {
 }
 
@@ -74,6 +74,8 @@ void Component_BossBehavior::Save(json& _saveObj)
     _saveObj["shotrange_"] = shotrange_;
     _saveObj["tacklerange_"] = tacklerange_;
     _saveObj["nextStateTime_"] = nextStateTime_;
+    _saveObj["shotRate_"] = shotRate_;
+    _saveObj["rotateSpeed_"] = rotateSpeed_;
 }
 
 void Component_BossBehavior::Load(json& _loadObj)
@@ -82,6 +84,8 @@ void Component_BossBehavior::Load(json& _loadObj)
     if (_loadObj.contains("shotrange_")) shotrange_ = _loadObj["shotrange_"];
     if (_loadObj.contains("tacklerange_")) tacklerange_ = _loadObj["tacklerange_"];
     if (_loadObj.contains("nextStateTime_")) nextStateTime_ = _loadObj["nextStateTime_"];
+    if (_loadObj.contains("shotRate_")) shotRate_ = _loadObj["shotRate_"];
+    if (_loadObj.contains("rotateSpeed_")) rotateSpeed_ = _loadObj["rotateSpeed_"];
 }
 
 void Component_BossBehavior::DrawData()
@@ -89,6 +93,8 @@ void Component_BossBehavior::DrawData()
     ImGui::DragFloat("shotrange_", &shotrange_);
     ImGui::DragFloat("tacklerange_", &tacklerange_);
     ImGui::DragFloat("nextStateTime_", &nextStateTime_);
+    ImGui::DragFloat("shotRate_", &shotRate_);
+    ImGui::DragFloat("rotateSpeed_", &rotateSpeed_);
 #ifdef _DEBUG
     auto timer = dynamic_cast<Component_Timer*>(GetChildComponent("Timer"));
     if (timer == nullptr) return;
@@ -135,10 +141,10 @@ void Component_BossBehavior::Shot()
     timer->Start();
 
     static float angle = 0;
-    angle += SHOT_ANGLE;
+    angle += rotateSpeed_;
     holder_->SetRotateY(angle);
 
-    if (timer->IsIntervalTime(SHOT_RATE)) {
+    if (timer->IsIntervalTime(shotRate_)) {
         // Œ‚‚¿•ú‚Â•ûŒü‚ðÝ’è
         XMFLOAT3 holderRotate = holder_->GetRotate();
 
@@ -148,6 +154,10 @@ void Component_BossBehavior::Shot()
 
         shoot->SetShootingDirection(myDirection);
         // Œ‚‚Â
+        shoot->Execute();
+
+        
+        shoot->SetShootingDirection(-myDirection);
         shoot->Execute();
     }
 

@@ -116,7 +116,7 @@ void Component_Timer::End()
 bool Component_Timer::IsIntervalTime(float _time)
 {
 	//¡‚ÌŠÔ‚ªw’è‚³‚ê‚½•b‚Ì”{”‚Ìtrue‚ğ•Ô‚·
-	return static_cast<int>(nowTime_) % (static_cast<int>(_time) * FPS) == 0;
+	return static_cast<int>(nowTime_) % (static_cast<int>(_time * FPS)) == 0;
 }
 
 bool Component_Timer::GetIsCountNow()

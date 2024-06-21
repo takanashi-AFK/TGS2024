@@ -155,10 +155,6 @@ void Component_BossBehavior::Shot()
         shoot->SetShootingDirection(myDirection);
         // Œ‚‚Â
         shoot->Execute();
-
-        
-        shoot->SetShootingDirection(-myDirection);
-        shoot->Execute();
     }
 
     if (timer->GetIsEnd()) {

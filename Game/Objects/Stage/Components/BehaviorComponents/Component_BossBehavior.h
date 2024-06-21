@@ -3,6 +3,9 @@
 //インクルード
 #include "../Component.h"
 
+// effekseer: インクルード
+#include "../../../../../EffekseeLib/EffekseerVFX.h"
+
 class Component_BossBehavior : public Component
 {
 private:
@@ -22,6 +25,10 @@ private:
 	float nextStateTime_;
 
 	bool isActive_;
+
+	// effekseer: 変形行列
+	std::shared_ptr<EFFEKSEERLIB::EFKTransform> mt;/*★★★*/
+
 
 	void RandomTransition(); // ランダム遷移のためのメソッド
 public:

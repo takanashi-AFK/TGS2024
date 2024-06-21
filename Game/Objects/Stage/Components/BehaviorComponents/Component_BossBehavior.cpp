@@ -16,6 +16,7 @@ namespace
     const float SHOT_RATE = 0.2f;
     const float SHOT_ANGLE = 25;
     const int SHOT_TIME = 3;
+    EFFEKSEERLIB::EFKTransform t;/*ššš*/
 }
 
 Component_BossBehavior::Component_BossBehavior(string _name, StageObject* _holder, Component* _parent)
@@ -31,6 +32,11 @@ void Component_BossBehavior::Initialize()
     if (!FindChildComponent("ShootAttack")) AddChildComponent(CreateComponent("ShootAttack", ShootAttack, holder_, this));
     if (!FindChildComponent("Timer")) AddChildComponent(CreateComponent("Timer", Timer, holder_, this));
     if (!FindChildComponent("TackleMove")) AddChildComponent(CreateComponent("TackleMove", TackleMove, holder_, this));
+
+    // effekseer: :Effect‚Ì“Ç‚İ‚İ
+    EFFEKSEERLIB::gEfk->AddEffect("sword", "Effects/Salamander12.efk");/*ššš*/
+
+    
 }
 
 void Component_BossBehavior::Update()
@@ -231,6 +237,18 @@ void Component_BossBehavior::RandomTransition()
         break;
     case 1:
         nowState_ = TACKLE;
+
+        // effekseer: :Effect‚ÌÄ¶î•ñ‚Ìİ’è
+        
+        DirectX::XMStoreFloat4x4(&(t.matrix), holder_->GetWorldMatrix());/*ššš*/
+        t.isLoop = false;/*ššš*/
+        t.maxFrame = 60;/*ššš*/
+        t.speed = 1.0f;/*ššš*/
+
+
+        // effekseer: :Effect‚ÌÄ¶
+        mt = EFFEKSEERLIB::gEfk->Play("sword", t);/*ššš*/
+
         break;
     case 2:
         nowState_ = SHOCK;

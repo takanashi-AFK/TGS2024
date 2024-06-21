@@ -24,7 +24,7 @@ void Bullet::Initialize()
 	SetScale(0.2f);
 
 	// effekseer: :Effect‚Ì“Ç‚İ‚İ
-	EFFEKSEERLIB::gEfk->AddEffect("sword", "Effects/A_Salamander4.efk");/*ššš*/
+	EFFEKSEERLIB::gEfk->AddEffect("A_Salamander4", "Effects/A_Salamander4.efk");/*ššš*/
 
 	// effekseer: :Effect‚ÌÄ¶î•ñ‚Ìİ’è
 	EFFEKSEERLIB::EFKTransform t;/*ššš*/
@@ -34,7 +34,7 @@ void Bullet::Initialize()
 	t.speed = 1.0f;/*ššš*/
 
 	// effekseer: :Effect‚ÌÄ¶
-	mt = EFFEKSEERLIB::gEfk->Play("sword", t);/*ššš*/
+	mt = EFFEKSEERLIB::gEfk->Play("A_Salamander4", t);/*ššš*/
 
 }
 

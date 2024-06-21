@@ -39,13 +39,13 @@ void Component_HelingoBehavior::Update()
 	auto detector = dynamic_cast<Component_CircleRangeDetector*>(GetChildComponent("CircleRangeDetector"));
 	if (detector == nullptr) return;
 
-	auto fall = dynamic_cast<Component_HelingoFall*>(GetChildComponent("Fall"));
-	if (fall == nullptr) return;
+	auto helingoFall = dynamic_cast<Component_HelingoFall*>(GetChildComponent("Fall"));
+	if (helingoFall == nullptr) return;
 
 	// ŒŸ’m”ÍˆÍ‚ÌÝ’è
 	detector->SetRadius(discoveryrange_);
 
-	if (!fall->IsActived()&&detector->IsContains()) {
+	if (!helingoFall->IsActived()&&detector->IsContains()) {
 		auto chase = dynamic_cast<Component_Chase*>(GetChildComponent("Chase"));
 		if (chase == nullptr) return;
 
@@ -60,7 +60,7 @@ void Component_HelingoBehavior::Update()
 		if (detector->IsContains()) {
 			// ’ÇÕ‚ð’âŽ~
 			chase->Stop();
-			fall->Execute();
+			helingoFall->Execute();
 			oneHit_ = false;
 		}
 		else {

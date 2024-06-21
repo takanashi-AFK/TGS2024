@@ -195,6 +195,10 @@ void Component_HelingoFall::Wait()
 		timer->SetTime(fallWaitTime_);
 		timer->Start();
 
+		auto fall = dynamic_cast<Component_Fall*>(GetChildComponent("Fall"));
+		if (fall == nullptr) return;
+
+		fall->SetIsEnd(false);
 		// タイマーが終了したら、降下状態に遷移
 		if (timer->GetIsEnd())SetState(FALL);
 	}

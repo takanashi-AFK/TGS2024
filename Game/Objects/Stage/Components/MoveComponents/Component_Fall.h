@@ -56,6 +56,9 @@ public:
 	/// </summary>
 	void DrawData() override;
 
+	void SetIsEnd(bool _isEnd) { isEnd_ = _isEnd; }
+
+	bool GetIsEnd() { return isEnd_; }
 
 	void Execute() { isActive_ = true; }
 

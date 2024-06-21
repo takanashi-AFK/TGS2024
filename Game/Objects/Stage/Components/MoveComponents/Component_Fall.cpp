@@ -24,16 +24,18 @@ void Component_Fall::Update()
 
 			// ~‰º‘¬“x•ª‚¾‚¯‚‚³‚ð‰º‚°‚é
 			height_ -= fallSpeed_;
-			isEnd_ = false;
 		}
 		// ‚‚³‚ªˆê’è‚Ì‚‚³‚É’B‚µ‚½‚ç...
 		else {
 			// –Ú•W‚Ì‚‚³‚ÉÝ’è
 			height_ = targetHeight_;
+			isEnd_ = true;
 			Stop();
 		}
 		holder_->SetPosition(holder_->GetPosition().x,height_,holder_->GetPosition().z);
 	}
+	ImGui::Text(isEnd_ ? "isEnd_ = true" : "isEnd_ = false");
+
 }
 
 void Component_Fall::Release()

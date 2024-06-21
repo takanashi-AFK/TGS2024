@@ -26,6 +26,7 @@
 #include "BehaviorComponents/Component_BossBehavior.h"
 #include "MoveComponents/Component_TackleMove.h"
 #include "AttackComponents/Component_ShockWave.h"
+#include "MoveComponents/Component_BossFall.h"
 
 Component::Component(StageObject* _holder, string _name,ComponentType _type)
     :holder_(_holder), name_(_name),type_(_type),childComponents_(),parent_(nullptr)
@@ -209,6 +210,8 @@ Component* CreateComponent(string _name,ComponentType _type, StageObject* _holde
 	case BossBehavior:comp = new Component_BossBehavior(_name, _holder, _parent); break;
 	case TackleMove:comp = new Component_TackleMove(_name, _holder, _parent); break;
 	case ShockWave:comp = new Component_ShockWave(_name, _holder, _parent); break;
+	case BossFall:comp = new Component_BossFall(_name, _holder, _parent); break;
+
 	default:/* その他コンポーネントを追加する時は上記のように追加*/ break;
 	}
 	return comp;
@@ -243,6 +246,7 @@ string ComponentTypeToString(ComponentType _type)
 	case Rise: return "RiseComponent";
 	case BossBehavior: return "BossBehaviorComponent";
 	case ShockWave: return "ShockWaveComponent";
+	case BossFall: return "BossFallComponent";
 		// コンポーネント追加時に識別番号を追加
 	}
 	return "None";

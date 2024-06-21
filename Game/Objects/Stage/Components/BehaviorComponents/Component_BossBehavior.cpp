@@ -1,14 +1,18 @@
 #include "Component_BossBehavior.h"
 
 // インクルード
+#include "../../../../../Engine/Global.h"
+#include "../../../../../Engine/ImGui/imgui.h"
+#include "../../Stage.h"
 #include "../../StageObject.h"
-#include "../TimerComponent/Component_Timer.h"
 #include "../AttackComponents/Component_ShootAttack.h"
 #include "../DetectorComponents/Component_CircleRangeDetector.h"
 #include "../MoveComponents/Component_TackleMove.h"
-#include "../../../../../Engine/ImGui/imgui.h"
-#include "../../Stage.h"
-#include "../../../../../Engine/Global.h"
+#include "../MoveComponents/Component_Fall.h"
+#include "../MoveComponents/Component_Rise.h"
+#include "../TimerComponent/Component_Timer.h"
+#include "../AttackComponents/Component_ShockWave.h"
+#include "../MoveComponents/Component_BossFall.h"
 #include <random>
 
 namespace
@@ -20,7 +24,7 @@ namespace
 
 Component_BossBehavior::Component_BossBehavior(string _name, StageObject* _holder, Component* _parent)
     : Component(_holder, _name, BossBehavior, _parent), nowState_(WAIT), prevState_(WAIT), isActive_(false),
-    target_(nullptr), shotrange_{}, tacklerange_{}, nextStateTime_{}
+   shotrange_{}, tacklerange_{}, nextStateTime_{}
 {
 }
 
@@ -31,6 +35,8 @@ void Component_BossBehavior::Initialize()
     if (!FindChildComponent("ShootAttack")) AddChildComponent(CreateComponent("ShootAttack", ShootAttack, holder_, this));
     if (!FindChildComponent("Timer")) AddChildComponent(CreateComponent("Timer", Timer, holder_, this));
     if (!FindChildComponent("TackleMove")) AddChildComponent(CreateComponent("TackleMove", TackleMove, holder_, this));
+	if (!FindChildComponent("ShockWave")) AddChildComponent(CreateComponent("ShockWave", ShockWave, holder_, this));
+	if (!FindChildComponent("BossFall")) AddChildComponent(CreateComponent("BossFall", BossFall, holder_, this));
 }
 
 void Component_BossBehavior::Update()
@@ -89,6 +95,21 @@ void Component_BossBehavior::DrawData()
     ImGui::DragFloat("shotrange_", &shotrange_);
     ImGui::DragFloat("tacklerange_", &tacklerange_);
     ImGui::DragFloat("nextStateTime_", &nextStateTime_);
+
+    if(nowState_ == SHOT)
+		ImGui::Text("SHOT");
+	else if (nowState_ == TACKLE)
+		ImGui::Text("TACKLE");
+	else if (nowState_ == SHOCK)
+		ImGui::Text("SHOCK");
+	else if (nowState_ == WAIT)
+		ImGui::Text("WAIT");
+
+    auto bossFall = dynamic_cast<Component_BossFall*>(GetChildComponent("BossFall"));
+    if (bossFall == nullptr) return;
+
+    ImGui::Text(bossFall->GetIsEnd() ? "true" : "false");
+    
 #ifdef _DEBUG
     auto timer = dynamic_cast<Component_Timer*>(GetChildComponent("Timer"));
     if (timer == nullptr) return;
@@ -134,25 +155,29 @@ void Component_BossBehavior::Shot()
     timer->SetTime(SHOT_TIME);
     timer->Start();
 
+    // Y軸回転
     static float angle = 0;
     angle += SHOT_ANGLE;
     holder_->SetRotateY(angle);
 
     if (timer->IsIntervalTime(SHOT_RATE)) {
-        // 撃ち放つ方向を設定
+		// 保有者の回転角度を取得
         XMFLOAT3 holderRotate = holder_->GetRotate();
 
+        // 基本となるベクトルを用意
         XMVECTOR myDirection = { 0,0,1,0 };
 
+		// 回転した方向を基にベクトルを回転
         myDirection = XMVector3TransformCoord(myDirection, XMMatrixRotationY(XMConvertToRadians(holderRotate.y)));
 
+        // 撃ち放つ方向を設定
         shoot->SetShootingDirection(myDirection);
         // 撃つ
         shoot->Execute();
     }
 
     if (timer->GetIsEnd()) {
-        // 状態をWAITに変更し、タイマーを開始
+        // 状態をWAITに変更
         nowState_ = WAIT;
         timer->Reset();
     }
@@ -185,29 +210,47 @@ void Component_BossBehavior::Tackle()
     // 突進を実行
     tackleMove->Execute();
 
-    // 状態をWAITに変更し、タイマーを開始
+    // 状態をWAITに変更
     nowState_ = WAIT;
 }
 
 void Component_BossBehavior::Shock()
 {
-    // ショック状態の処理を実装
-    // ...
+    auto bossFall = dynamic_cast<Component_BossFall*>(GetChildComponent("BossFall"));
+    if (bossFall == nullptr) return;
+    auto shock = dynamic_cast<Component_ShockWave*>(GetChildComponent("ShockWave"));
+    if (shock == nullptr) return;
 
-    // 状態をWAITに変更し、タイマーを開始
-    nowState_ = WAIT;
+    bossFall->Execute();
+
+    if (bossFall->GetIsEnd()) {
+        shock->Execute();
+        nowState_ = WAIT;
+    }
+
+   
 }
 
 void Component_BossBehavior::Wait()
 {
     auto timer = dynamic_cast<Component_Timer*>(GetChildComponent("Timer"));
     if (timer == nullptr) return;
+
+    auto bossFall = dynamic_cast<Component_BossFall*>(GetChildComponent("BossFall"));
+    if (bossFall == nullptr) return;
+
+
     timer->SetTime(nextStateTime_);
     timer->Start();
+
+    if(bossFall->GetIsEnd())
+		bossFall->SetIsEnd(false);
+
     if (timer->GetIsEnd()) {
         RandomTransition();
         timer->Reset();
     }
+
 }
 
 void Component_BossBehavior::RandomTransition()

@@ -21,6 +21,8 @@ void Component_ShockWave::Update()
 	if (target_ == nullptr) target_ = (StageObject*)holder_->FindObject(targetName_);
 	if (target_ == nullptr) return;
 
+	if (!isActive_ == false)return;
+
 	auto detector = dynamic_cast<Component_CircleRangeDetector*>(GetChildComponent("CircleRangeDetector"));
 	if (detector == nullptr) return;
 

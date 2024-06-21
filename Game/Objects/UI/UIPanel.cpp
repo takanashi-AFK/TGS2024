@@ -2,6 +2,7 @@
 
 // インクルード
 #include "UIObject.h"
+#include "../../../Engine/ResourceManager/Image.h"
 
 UIPanel::UIPanel(GameObject* parent)
 	: GameObject(parent, "UIPanel"), objects_()

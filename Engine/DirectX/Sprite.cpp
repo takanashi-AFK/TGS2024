@@ -105,6 +105,8 @@ void Sprite::Draw(Transform& transform, RECT rect, float alpha)
 {
 	//‚¢‚ë‚¢‚ëÝ’è
 	Direct3D::SetShader(Direct3D::SHADER_2D);
+	Direct3D::SetBlendMode(Direct3D::BLEND_DEFAULT);
+
 	UINT stride = sizeof(VERTEX);
 	UINT offset = 0;
 	Direct3D::pContext_->IASetVertexBuffers(0, 1, &pVertexBuffer_, &stride, &offset);

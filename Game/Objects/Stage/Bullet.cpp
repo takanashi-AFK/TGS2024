@@ -22,6 +22,20 @@ void Bullet::Initialize()
 	assert(modelHandle_ >= 0);
 
 	SetScale(0.2f);
+
+	// effekseer: :Effect‚Ì“Ç‚İ‚İ
+	EFFEKSEERLIB::gEfk->AddEffect("sword", "Effects/A_Salamander4.efk");/*ššš*/
+
+	// effekseer: :Effect‚ÌÄ¶î•ñ‚Ìİ’è
+	EFFEKSEERLIB::EFKTransform t;/*ššš*/
+	DirectX::XMStoreFloat4x4(&(t.matrix), transform_.GetWorldMatrix());/*ššš*/
+	t.isLoop = false;/*ššš*/
+	t.maxFrame = 60;/*ššš*/
+	t.speed = 1.0f;/*ššš*/
+
+	// effekseer: :Effect‚ÌÄ¶
+	mt = EFFEKSEERLIB::gEfk->Play("sword", t);/*ššš*/
+
 }
 
 void Bullet::Update()
@@ -34,6 +48,9 @@ void Bullet::Update()
 
 	// ©“®íœ
 	AutoDelete(2.f);
+
+	// effekseer: :Effect‚ÌÄ¶î•ñ‚ÌXV
+	DirectX::XMStoreFloat4x4(&(mt->matrix), this->GetWorldMatrix());/*ššš*/
 }
 
 void Bullet::Draw()

@@ -11,7 +11,6 @@ Sprite::Sprite():
 //デストラクタ
 Sprite::~Sprite()
 {
-
 	SAFE_RELEASE(pVertexBuffer_);
 	SAFE_RELEASE(pIndexBuffer_);
 }
@@ -99,8 +98,6 @@ void Sprite::InitIndex()
 	Direct3D::pDevice_->CreateBuffer(&bd, &InitData, &pIndexBuffer_);
 }
 
-
-
 void Sprite::Draw(Transform& transform, RECT rect, float alpha)
 {
 	//いろいろ設定
@@ -114,7 +111,6 @@ void Sprite::Draw(Transform& transform, RECT rect, float alpha)
 	Direct3D::pContext_->PSSetConstantBuffers(0, 1, &pConstantBuffer_);
 	Direct3D::SetDepthBafferWriteEnable(false);
 
-
 	// インデックスバッファーをセット
 	stride = sizeof(int);
 	offset = 0;
@@ -123,7 +119,6 @@ void Sprite::Draw(Transform& transform, RECT rect, float alpha)
 	// パラメータの受け渡し
 	D3D11_MAPPED_SUBRESOURCE pdata;
 	CONSTANT_BUFFER cb;
-
 
 	//表示するサイズに合わせる
 	XMMATRIX cut = XMMatrixScaling((float)rect.right, (float)rect.bottom ,1);
@@ -143,7 +138,6 @@ void Sprite::Draw(Transform& transform, RECT rect, float alpha)
 	XMMATRIX mTexel = mTexScale * mTexTrans;
 	cb.uvTrans = XMMatrixTranspose(mTexel);
 	
-
 	// テクスチャ合成色情報を渡す
 	cb.color = XMFLOAT4(1, 1, 1, alpha);
 
@@ -165,5 +159,4 @@ void Sprite::Draw(Transform& transform, RECT rect, float alpha)
 	Direct3D::SetShader(Direct3D::SHADER_3D);
 
 	Direct3D::SetDepthBafferWriteEnable(true);
-
 }

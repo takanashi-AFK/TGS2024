@@ -211,6 +211,7 @@
     <ClCompile Include="Game\Objects\Camera\TPSCamera.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="EffekseeLib\EffekseerVFX.h" />
     <ClInclude Include="Game\Objects\Stage\Components\BehaviorComponents\Component_BossBehavior.h" />
     <ClInclude Include="Game\Objects\Stage\Components\MoveComponents\Component_Fall.h" />
     <ClInclude Include="Game\Objects\Stage\Components\MoveComponents\Component_Rise.h" />

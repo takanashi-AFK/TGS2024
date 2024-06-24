@@ -7,8 +7,7 @@
 #include "../../../../../Engine/Global.h"
 
 Component_ShootAttack::Component_ShootAttack(string _name, StageObject* _holder, Component* _parent):
-	Component_Attack(_holder, _name, ShootAttack,_parent),
-	shootingSpeed_()
+	Component_Attack(_holder, _name, ShootAttack,_parent),shootingSpeed_(),shootingDirection_()
 {
 }
 

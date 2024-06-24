@@ -1,10 +1,6 @@
 #include "../../../../../Engine/ImGui/imgui.h"
+#include "../../../../../Engine/Global.h"
 #include "Component_Timer.h"
-
-namespace
-{
-	const int FPS = 60;
-}
 
 Component_Timer::Component_Timer(string _name, StageObject* _holder, Component* _parent)
 	:Component(_holder, _name, Timer,_parent)
@@ -116,7 +112,7 @@ void Component_Timer::End()
 bool Component_Timer::IsIntervalTime(float _time)
 {
 	//¡‚ÌŠÔ‚ªw’è‚³‚ê‚½•b‚Ì”{”‚Ìtrue‚ğ•Ô‚·
-	return static_cast<int>(nowTime_) % (static_cast<int>(_time * FPS)) == 0;
+	return static_cast<int>(nowTime_) % (static_cast<int>(_time) * static_cast<int>(FPS)) == 0;
 }
 
 bool Component_Timer::GetIsCountNow()

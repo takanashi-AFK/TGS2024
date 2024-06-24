@@ -10,7 +10,6 @@ class Component_Fall : public Component
 {
 
 private:
-	bool isActive_;
 	bool isEnd_;
 	bool isInfinity_;
 	float startHeight_;

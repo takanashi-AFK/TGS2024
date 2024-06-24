@@ -3,7 +3,7 @@
 #include "../../Components/TimerComponent/Component_Timer.h"
 #include "../../../../../Engine/ImGui/imgui.h"
 Component_Fall::Component_Fall(string _name, StageObject* _holder, Component* _parent)
-	: Component(_holder, _name, Fall, _parent), isActive_(false), fallSpeed_(0.1f), height_(0.0f), startHeight_(0.0f)
+	: Component(_holder, _name, Fall, _parent), fallSpeed_(0.1f), height_(0.0f), startHeight_(0.0f)
 	, targetHeight_(0.0f), isEnd_(false), isInfinity_(false)
 {
 }

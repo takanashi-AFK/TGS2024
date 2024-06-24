@@ -27,12 +27,12 @@
 #include "MoveComponents/Component_TackleMove.h"
 
 Component::Component(StageObject* _holder, string _name,ComponentType _type)
-    :holder_(_holder), name_(_name),type_(_type),childComponents_(),parent_(nullptr)
+    :holder_(_holder), name_(_name),type_(_type),childComponents_(),parent_(nullptr),isActive_(false)
 {
 }
 
 Component::Component(StageObject* _holder, string _name, ComponentType _type, Component* _parent)
-	: holder_(_holder), name_(_name), type_(_type), childComponents_(),parent_(_parent)
+	: holder_(_holder), name_(_name), type_(_type), childComponents_(),parent_(_parent), isActive_(false)
 {
 }
 

@@ -53,8 +53,16 @@ public:
 	/// </summary>
 	void DrawData()override;
 
-
+	/// <summary>
+	/// ’e‘¬‚ğİ’è
+	/// </summary>
+	/// <param name="_speed">’e‘¬</param>
 	void SetShootingSpeed(float _speed) { shootingSpeed_ = _speed; }
+
+	/// <summary>
+	/// ’e‚Ì•ûŒü‚ğİ’è
+	/// </summary>
+	/// <param name="_direction">’e‚Ì•ûŒü</param>
 	void SetShootingDirection(XMVECTOR _direction) { shootingDirection_ = _direction; }
 
 };

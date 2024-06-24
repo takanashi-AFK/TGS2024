@@ -47,6 +47,7 @@ void Component_Chase::Update()
 	{
 		rotateAngle = 0;
 	}
+
 }
 
 void Component_Chase::Release()

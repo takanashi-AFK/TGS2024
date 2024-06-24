@@ -63,6 +63,8 @@ void Component_TackleMove::Save(json& _saveObj)
 	_saveObj["distance_"] = distance_;
 
 	_saveObj["speed_"] = speed_;
+
+	_saveObj["easingType_"] = easingType_;
 }
 
 void Component_TackleMove::Load(json& _loadObj)
@@ -72,6 +74,8 @@ void Component_TackleMove::Load(json& _loadObj)
 	if (_loadObj.contains("distance_"))distance_ = _loadObj["distance_"];
 
 	if (_loadObj.contains("speed_"))speed_ = _loadObj["speed_"];
+
+	if (_loadObj.contains("easingType_"))easingType_ = _loadObj["easingType_"];
 }
 
 void Component_TackleMove::DrawData()

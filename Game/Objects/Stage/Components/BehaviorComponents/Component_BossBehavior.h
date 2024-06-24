@@ -19,6 +19,7 @@ private:
 
 	float shotrange_;
 	float tacklerange_;
+	float angle_;
 
 	float shotRate_;
 	float rotateSpeed_;

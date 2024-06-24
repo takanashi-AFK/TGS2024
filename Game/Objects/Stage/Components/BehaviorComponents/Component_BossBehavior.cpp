@@ -14,14 +14,14 @@
 namespace
 {
     const float SHOT_RATE = 0.2f;
-    const float SHOT_ANGLE = 25;
+    const float SHOT_ANGLE = 15;
     const int SHOT_TIME = 3;
     EFFEKSEERLIB::EFKTransform t;/*★★★*/
 }
 
 Component_BossBehavior::Component_BossBehavior(string _name, StageObject* _holder, Component* _parent)
     : Component(_holder, _name, BossBehavior, _parent), nowState_(WAIT), prevState_(WAIT), isActive_(false),
-    target_(nullptr), shotrange_{}, tacklerange_{}, nextStateTime_{},shotRate_(SHOT_RATE),rotateSpeed_(SHOT_ANGLE)
+     shotrange_{}, tacklerange_{}, nextStateTime_{},shotRate_(SHOT_RATE),rotateSpeed_(SHOT_ANGLE),target_(nullptr), angle_{}
 {
 }
 
@@ -146,9 +146,9 @@ void Component_BossBehavior::Shot()
     timer->SetTime(SHOT_TIME);
     timer->Start();
 
-    static float angle = 0;
-    angle += rotateSpeed_;
-    holder_->SetRotateY(angle);
+   
+    angle_ += rotateSpeed_;
+    holder_->SetRotateY(angle_);
 
     if (timer->IsIntervalTime(shotRate_)) {
         // 撃ち放つ方向を設定
@@ -167,6 +167,7 @@ void Component_BossBehavior::Shot()
         // 状態をWAITに変更し、タイマーを開始
         nowState_ = WAIT;
         timer->Reset();
+        angle_ = 0;
     }
 }
 

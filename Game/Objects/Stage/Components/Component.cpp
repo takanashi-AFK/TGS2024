@@ -25,6 +25,7 @@
 #include "MoveComponents/Component_Rise.h"
 #include "BehaviorComponents/Component_BossBehavior.h"
 #include "MoveComponents/Component_TackleMove.h"
+#include "AttackComponents/Component_MeleeAttack.h"
 
 Component::Component(StageObject* _holder, string _name,ComponentType _type)
     :holder_(_holder), name_(_name),type_(_type),childComponents_(),parent_(nullptr)
@@ -207,6 +208,7 @@ Component* CreateComponent(string _name,ComponentType _type, StageObject* _holde
 	case Rise:comp = new Component_Rise(_name, _holder, _parent); break;
 	case BossBehavior:comp = new Component_BossBehavior(_name, _holder, _parent); break;
 	case TackleMove:comp = new Component_TackleMove(_name, _holder, _parent); break;
+	case MeleeAttack:comp = new Component_MeleeAttack(_name, _holder, _parent); break;
 	default:/* その他コンポーネントを追加する時は上記のように追加*/ break;
 	}
 	return comp;
@@ -221,26 +223,27 @@ string ComponentTypeToString(ComponentType _type)
 {
 	switch (_type)
 	{
-	case Rotation: return "RotationComponent";
-	case RotationY: return "RotationYComponent";
-	case RotationX: return "RotationXComponent";
-	case RotationZ: return "RotationZComponent";
-	case MoveX: return "MoveXComponent";
-	case HelingoFall: return "HelingoFallComponent";
+	case BossBehavior: return "BossBehaviorComponent";
+	case CactanBihavior: return "CactanBihaviorComponent";
 	case Chase: return "ChaseComponent";
 	case CircleRangeDetector: return "CircleRangeDetectorComponent";
-	case FanRangeDetector: return "FanRangeDetectorComponent";
-	case HelingoBehavior: return "HelingoBehaviorComponent";
-	case CactanBihavior: return "CactanBihaviorComponent";
-	case PlayerBehavior: return "PlayerBehaviorComponent";
-	case Timer: return "TimerComponent";
-	case HealthManager: return "HealthManagerComponent";
-	case ShootAttack: return "ShootAttackComponent";
-	case WASDInputMove: return "WASDInputMoveComponent";
 	case Fall: return "FallComponent";
+	case FanRangeDetector: return "FanRangeDetectorComponent";
+	case HealthManager: return "HealthManagerComponent";
+	case HelingoBehavior: return "HelingoBehaviorComponent";
+	case HelingoFall: return "HelingoFallComponent";
+	case MeleeAttack: return "MeleeAttackComponent";
+	case MoveX: return "MoveXComponent";
+	case PlayerBehavior: return "PlayerBehaviorComponent";
 	case Rise: return "RiseComponent";
-	case BossBehavior: return "BossBehaviorComponent";
-		// コンポーネント追加時に識別番号を追加
-	}
-	return "None";
+	case Rotation: return "RotationComponent";
+	case RotationX: return "RotationXComponent";
+	case RotationY: return "RotationYComponent";
+	case RotationZ: return "RotationZComponent";
+	case ShootAttack: return "ShootAttackComponent";
+	case TackleMove: return "TackleMoveComponent";
+	case Timer: return "TimerComponent";
+	case WASDInputMove: return "WASDInputMoveComponent";
+	default: return "None";
+	}	
 }

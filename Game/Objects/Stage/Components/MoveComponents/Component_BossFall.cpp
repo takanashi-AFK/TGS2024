@@ -65,7 +65,6 @@ void Component_BossFall::Wait()
 	}
 
 	else if (prevState_ == RISE) {
-
 		// タイマーを開始
 		timer->SetTime(2.f);
 		timer->Start();

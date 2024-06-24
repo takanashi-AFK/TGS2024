@@ -7,7 +7,6 @@ class Component_WASDInputMove : public Component
 {
 private:
 	bool isActive_;
-
 public:
 	Component_WASDInputMove(string _name, StageObject* _holder, Component* _parent);
 	void Initialize() override;

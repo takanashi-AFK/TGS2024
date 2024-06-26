@@ -5,6 +5,11 @@
 #include "../../../../../Engine/ImGui/imgui.h"
 #include "../TimerComponent/Component_Timer.h"
 #include "../HealthManagerComponents/Component_HealthManager.h"
+
+namespace {
+	EFFEKSEERLIB::EFKTransform t;/*★★★*/
+}
+
 Component_MeleeAttack::Component_MeleeAttack(string _name, StageObject* _holder, Component* _parent)
 	:Component_Attack(_holder, _name, MeleeAttack, _parent)
 {
@@ -17,6 +22,10 @@ void Component_MeleeAttack::Initialize()
 	
 	//コライダーの追加
 	holder_->AddCollider(new BoxCollider(XMFLOAT3(0, 0, 0), XMFLOAT3(1, 1, 1)));
+
+	// effekseer: :Effectの読み込み
+	EFFEKSEERLIB::gEfk->AddEffect("attack", "Effects/Attack6.efk");/*★★★*/
+
 }
 
 void Component_MeleeAttack::Update()
@@ -69,8 +78,20 @@ void Component_MeleeAttack::OnCollision(GameObject* _target)
 	StageObject* target = dynamic_cast<StageObject*>(_target);
 	if (target == nullptr) return;
 
+	DirectX::XMStoreFloat4x4(&(t.matrix), holder_->GetWorldMatrix());/*★★★*/
+	t.isLoop = false;/*★★★*/
+	t.maxFrame = 60;/*★★★*/
+	t.speed = 1.0f;/*★★★*/
+
+
+	// effekseer: :Effectの再生
+	mt = EFFEKSEERLIB::gEfk->Play("attack", t);/*★★★*/
+
 	// ダメージ処理
 	for (auto hm : target->FindComponent(HealthManager)) {
 		((Component_HealthManager*)hm)->TakeDamage(power_);
 	}
+
+	// 終了処理
+	isActive_ = false;
 }

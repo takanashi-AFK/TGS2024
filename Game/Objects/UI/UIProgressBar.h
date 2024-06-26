@@ -11,6 +11,11 @@ private:
     std::vector<int> imageNumbers;
     int gaugeColorRed, gaugeColorGreen, gaugeColorBlue;
     float gaugeMaxValue, gaugeCurrentValue;
+    void SetImage(string _imageFilePath);
+
+    string imageFilePath_;
+    int imageHandle_;
+
 public:
 	UIProgressBar(string _name, GameObject* parent);
 	void Initialize() override;
@@ -37,7 +42,7 @@ public:
     float GetGaugeMaxValue() const { return gaugeMaxValue; }
     float GetGaugeCurrentValue() const { return gaugeCurrentValue; }
 
-
+    
 
 };
 

@@ -37,6 +37,8 @@ enum ComponentType {
     Max
 };
 
+
+
 // コンポ―ネント基底クラス
 class Component
 {
@@ -167,6 +169,8 @@ public:
     /// コンポーネント名を取得
     /// </returns>
     string GetName() { return name_; }
+
+
 
 };
 

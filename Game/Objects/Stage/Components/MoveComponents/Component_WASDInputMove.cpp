@@ -40,7 +40,6 @@ void Component_WASDInputMove::Update()
     XMVECTOR move = dir_ * speed;
 
     // ˆÚ“®ƒxƒNƒgƒ‹‚ðXMFLOAT3‚É•ÏŠ·
-    XMFLOAT3 moveVector;
 	XMFLOAT3 pos = holder_->GetPosition();
     XMStoreFloat3(&pos,XMLoadFloat3(&pos)+move);
 

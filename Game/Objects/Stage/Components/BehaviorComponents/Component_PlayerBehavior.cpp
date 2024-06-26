@@ -9,6 +9,9 @@
 #include "../AttackComponents/Component_ShootAttack.h"
 #include "../HealthManagerComponents/Component_HealthManager.h"
 #include "../MoveComponents/Component_WASDInputMove.h"
+#include "../../../../../Engine/DirectX/Direct3D.h"
+#include "../../Stage.h"
+#include "../../../../../Engine/GameObject/Camera.h"
 
 Component_PlayerBehavior::Component_PlayerBehavior(string _name, StageObject* _holder, Component* _parent)
 	: Component(_holder, _name, PlayerBehavior,_parent)
@@ -55,19 +58,29 @@ void Component_PlayerBehavior::Update()
 
 	prevFrontVec_ = frontVec_;
 
-	//auto shoot = dynamic_cast<Component_ShootAttack*>(GetChildComponent("ShootAttack"));
-	//if (shoot == nullptr)return;
-	//if (Input::IsMouseButtonDown(1)&&Input::IsMouseButtonDown(0))
-	//{
+	auto shoot = dynamic_cast<Component_ShootAttack*>(GetChildComponent("ShootAttack"));
+	if (shoot == nullptr)return;
 
-	//	if (true/*二次元座標化した枠内に敵がいたら*/) shoot->SetShootingDirection(frontVec_);// targetを取得、方向指定	
-	//	else shoot->SetShootingDirection(frontVec_);
-	//		
-	//	
-	//	shoot->SetShootingSpeed(2.f);
+	if (target_ == nullptr) target_ = (StageObject*)holder_->FindObject(targetName_);
 
-	//	shoot->Execute();
-	//}
+	// 枠内にいるENEMY属性を持ったStageObjectをターゲットにする
+	if (Input::IsMouseButton(1) && Input::IsMouseButtonDown(0))
+	{
+
+		if (IsEnemyInRect(target_)) {
+			XMFLOAT3 targetPos = target_->GetPosition();
+			XMFLOAT3 holderPos = holder_->GetPosition();
+			XMVECTOR targetVector = XMLoadFloat3(&targetPos);
+			XMVECTOR holderVector = XMLoadFloat3(&holderPos);
+			XMVECTOR dir = XMVector3Normalize(targetVector - holderVector);
+
+			shoot->SetShootingDirection(dir);// targetを取得、方向指定	
+		}
+		else shoot->SetShootingDirection(Camera::GetSightLine());
+			
+		shoot->SetShootingSpeed(2.f);
+		shoot->Execute();
+	}
 
 }
 
@@ -78,9 +91,63 @@ void Component_PlayerBehavior::Release()
 void Component_PlayerBehavior::DrawData()
 {
 	 ImGui::Text("%f,%f,%f,%f", frontVec_.m128_f32);
-	
+
+	 //対象の選択
+	 vector<string> objNames;
+	 objNames.push_back("null");
+
+	 for (auto obj : ((Stage*)holder_->GetParent())->GetStageObjects())objNames.push_back(obj->GetObjectName());
+
+	 static int select = 0;
+	 if (ImGui::BeginCombo("target_", objNames[select].c_str())) {
+		 for (int i = 0; i < objNames.size(); i++) {
+			 bool is_selected = (select == i);
+			 if (ImGui::Selectable(objNames[i].c_str(), is_selected))select = i;
+			 if (is_selected)ImGui::SetItemDefaultFocus();
+		 }
+		 ImGui::EndCombo();
+	 }
+
+	 if (select == 0)target_ = nullptr;
+	 else target_ = (StageObject*)holder_->FindObject(objNames[select]);
 }
 
 void Component_PlayerBehavior::OnCollision(GameObject* _target)
 {
+}
+
+bool Component_PlayerBehavior::IsEnemyInRect(StageObject* _target)
+{
+
+	if (_target == nullptr) return false;
+	XMFLOAT3 pos = ConvertTo2DPos(_target);
+
+	float left = -0.8f;    // 左の境界
+	float right = 0.8f;    // 右の境界
+	float top = 0.8f;      // 上の境界
+	float bottom = -0.8f;  // 下の境界
+	if (_target->GetAttribute() == ENEMY && pos.x <= left && pos.x >= right && pos.y <= bottom && pos.y >= top)
+		return true;
+	
+	return false;
+
+}
+
+XMFLOAT3 Component_PlayerBehavior::ConvertTo2DPos(StageObject* _target)
+{
+	int scWidth = Direct3D::screenWidth_;
+	int scHeight = Direct3D::screenHeight_;
+
+#ifdef _DEBUG
+	scWidth = scWidth * 0.7;
+	scHeight = scHeight * 0.7;
+#endif // _DEBUG
+
+	XMFLOAT3 targetPos = _target->GetPosition();
+
+	targetPos.x = (float)(targetPos.x * 2.0f) / (float)scWidth - 1.0f;
+	targetPos.y = 1.0f - (float)(targetPos.y * 2.0f) / (float)scHeight;
+	targetPos.z = 0.0f;
+
+	return targetPos;
 }

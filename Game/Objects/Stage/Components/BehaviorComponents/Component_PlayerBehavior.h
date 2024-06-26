@@ -6,6 +6,7 @@ class Component_PlayerBehavior : public Component
 {
 private:
 	DirectX::XMVECTOR frontVec_;
+	DirectX::XMVECTOR prevFrontVec_;
 public:
 	Component_PlayerBehavior(string _name,StageObject* _holder,Component* _parent);
 

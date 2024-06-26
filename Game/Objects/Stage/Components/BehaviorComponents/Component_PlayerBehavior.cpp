@@ -51,16 +51,24 @@ void Component_PlayerBehavior::Update()
 
 	// 新しい位置を XMFLOAT3 に格納
 	XMStoreFloat3(&pos, newPosVector);
-
 	
 	auto melee = dynamic_cast<Component_MeleeAttack*>(GetChildComponent("MeleeAttack"));
 	if (melee == nullptr)return;
-	melee->SetForward(XMVector3Normalize(move->GetMoveDirction()));// プレイヤーの座標を取得、frontvec*2を掛けて座標を設定
+
+	frontVec_ = move->GetMoveDirction();
+
+	if (XMVector3Equal(frontVec_, XMVectorZero())) {
+		frontVec_ = prevFrontVec_;
+	}
+
+	melee->SetForward(frontVec_);// プレイヤーの座標を取得、frontvec*2を掛けて座標を設定
 	melee->Execute();
 
 
 	// HPゲージの表示
 	ImGui::ProgressBar(progress, ImVec2(0.0f, 0.0f), "Player HP");
+
+	prevFrontVec_ = frontVec_;
 }
 
 void Component_PlayerBehavior::Release()

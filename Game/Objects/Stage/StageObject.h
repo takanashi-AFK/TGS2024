@@ -82,6 +82,11 @@ public:
 	Component* FindComponent(string _name);
 
 	/// <summary>
+	/// コンポーネントをリストから探す
+	/// </summary>
+	vector<Component*> FindComponent(ComponentType _type);
+
+	/// <summary>
 	/// コンポーネントをリストから削除
 	/// </summary>
 	/// <param name="_comp">削除するコンポーネント</param>

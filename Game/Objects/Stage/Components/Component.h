@@ -154,6 +154,11 @@ public:
     Component* GetChildComponent(string _name);
     
     /// <returns>
+    /// 子コンポーネントを取得
+    /// </returns>
+    vector<Component*> GetChildComponent(ComponentType _type);
+
+    /// <returns>
     /// コンポーネントタイプを取得
     /// </returns>
     ComponentType GetType() const { return type_; }

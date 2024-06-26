@@ -25,5 +25,4 @@ public:
 	void Stop() { isActive_ = false; }
 	void SetPower(int _power) { power_ = _power; }
 	int GetPower() { return power_; }
-
 };

@@ -4,6 +4,7 @@
 #include "../../Knuckle.h"
 #include "../../../../../Engine/ImGui/imgui.h"
 #include "../TimerComponent/Component_Timer.h"
+#include "../HealthManagerComponents/Component_HealthManager.h"
 Component_MeleeAttack::Component_MeleeAttack(string _name, StageObject* _holder, Component* _parent)
 	:Component_Attack(_holder, _name, MeleeAttack, _parent)
 {
@@ -43,6 +44,7 @@ void Component_MeleeAttack::Release()
 void Component_MeleeAttack::DrawData()
 {
 	ImGui::Text("MeleeAttack");
+	ImGui::DragInt("shotrange_", &power_);
 	if (ImGui::Button("Execute"))Execute();
 }
 
@@ -55,5 +57,20 @@ void Component_MeleeAttack::AutoDelete(float _time)
 	if (timer->GetIsEnd()) {
 		holder_->ClearCollider();
 		timer->Reset();
+	}
+}
+
+void Component_MeleeAttack::OnCollision(GameObject* _target)
+{
+	// 有効でない場合は処理を行わない
+	if (isActive_ == false)return;
+
+	// ターゲットがStageObjectでない場合は処理を行わない
+	StageObject* target = dynamic_cast<StageObject*>(_target);
+	if (target == nullptr) return;
+
+	// ダメージ処理
+	for (auto hm : target->FindComponent(HealthManager)) {
+		((Component_HealthManager*)hm)->TakeDamage(power_);
 	}
 }

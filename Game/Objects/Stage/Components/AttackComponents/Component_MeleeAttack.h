@@ -15,6 +15,8 @@ public:
 
 	void AutoDelete(float _time);
 
+	void OnCollision(GameObject* _target) override;
+	
 	// ³–Ê•ûŒü‚Ìİ’è
 	void SetForward(XMVECTOR _forward) { forward_ = _forward; }
 };

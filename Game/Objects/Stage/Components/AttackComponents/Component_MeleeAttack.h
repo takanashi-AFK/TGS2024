@@ -5,8 +5,7 @@
 class Component_MeleeAttack : public Component_Attack
 {
 private:
-	BoxCollider* collider_;
-	XMFLOAT3 colliderPos_;
+	XMVECTOR forward_; //‘O•ûŒü
 public:
 	Component_MeleeAttack(string _name, StageObject* _holder, Component* _parent);
 	void Initialize() override;
@@ -15,6 +14,8 @@ public:
 	void DrawData() override;
 
 	void AutoDelete(float _time);
-	void SetColliderPosition(XMFLOAT3 _pos) { colliderPos_ = _pos; }
+
+	// ³–Ê•ûŒü‚Ìİ’è
+	void SetForward(XMVECTOR _forward) { forward_ = _forward; }
 };
 

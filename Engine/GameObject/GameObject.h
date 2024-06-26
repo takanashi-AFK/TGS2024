@@ -108,7 +108,11 @@ public:
 	//子オブジェクトを全て削除
 	void KillAllChildren();
 
+	// コライダーを取得
+	std::list<Collider*> GetColliderList();
 
+	// コライダーを取得
+	Collider* GetCollider(int index);
 
 	//コライダー（衝突判定）を追加する
 	void AddCollider(Collider * collider);

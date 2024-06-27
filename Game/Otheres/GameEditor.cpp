@@ -9,6 +9,15 @@
 #include "../../Engine/DirectX/Texture.h"
 #include "../../Engine/GameObject/Camera.h"
 #include "../Objects/Camera/TPSCamera.h"
+#include <algorithm> 
+
+#ifdef min
+#undef min
+#endif
+
+#ifdef max
+#undef max
+#endif
 
 using namespace FileManager;
 
@@ -117,14 +126,58 @@ void GameEditor::DrawStageOutLiner()
 
 	ImGui::Separator();
 
+
+
 	ImGui::BeginChild("ObjectList"); {
-		// リストを表示
-		for (int i = 0; i < editStage_->GetStageObjects().size(); ++i)
-			if (ImGui::Selectable(editStage_->GetStageObjects()[i]->GetObjectName().c_str(), selectEditStageObjectIndex_ == i)) {
+		auto& stageObjects = editStage_->GetStageObjects();
+		for (int i = 0; i < stageObjects.size(); ++i) {
+			if (ImGui::Selectable(stageObjects[i]->GetObjectName().c_str(), selectEditStageObjectIndex_ == i)) {
 				selectEditStageObjectIndex_ = i;
 			}
+
+			// ドラッグを開始
+			if (ImGui::BeginDragDropSource(ImGuiDragDropFlags_None)) {
+				ImGui::SetDragDropPayload("DND_DEMO_CELL", &i, sizeof(int));  // int型のインデックスをペイロードとして設定
+				ImGui::Text("Moving %s", stageObjects[i]->GetObjectName().c_str());
+				ImGui::EndDragDropSource();
+			}
+
+			// ドラッグを受け入れる
+			if (ImGui::BeginDragDropTarget()) {
+				if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("DND_DEMO_CELL")) {
+					int payloadIndex = *(const int*)payload->Data;
+					if (payloadIndex != i) {
+						// オブジェクトの順番を入れ替える
+						auto temp = stageObjects[payloadIndex];
+						if (payloadIndex < i) {
+							// 上から下にドラッグ
+							for (int j = payloadIndex; j < i; ++j) {
+								stageObjects[j] = stageObjects[j + 1];
+							}
+						}
+						else {
+							// 下から上にドラッグ
+							for (int j = payloadIndex; j > i; --j) {
+								stageObjects[j] = stageObjects[j - 1];
+							}
+						}
+						stageObjects[i] = temp;
+						// 選択インデックスの更新
+						if (selectEditStageObjectIndex_ == payloadIndex) {
+							selectEditStageObjectIndex_ = i;
+						}
+						else if (selectEditStageObjectIndex_ >= std::min (i, payloadIndex) && selectEditStageObjectIndex_ <= std::max(i, payloadIndex)) {
+							selectEditStageObjectIndex_ += (payloadIndex < i) ? -1 : 1;
+						}
+					}
+				}
+				ImGui::EndDragDropTarget();
+			}
+		}
 	}
 	ImGui::EndChild();
+
+	
 }
 
 void GameEditor::DrawUIPanelOutLiner()
@@ -146,10 +199,52 @@ void GameEditor::DrawUIPanelOutLiner()
 
 	ImGui::BeginChild("ObjectList"); {
 		// リストを表示
-		for (int i = 0; i < editUIPanel_->GetUIObjects().size(); ++i)
-			if (ImGui::Selectable(editUIPanel_->GetUIObjects()[i]->GetObjectName().c_str(), selectEditUIObjectIndex_ == i)) {
+
+		auto&& UIObjects = editUIPanel_->GetUIObjects();
+		for (int i = 0; i < UIObjects.size(); ++i) {
+			if (ImGui::Selectable(UIObjects[i]->GetObjectName().c_str(), selectEditUIObjectIndex_ == i)) {
 				selectEditUIObjectIndex_ = i;
 			}
+
+			// ドラッグを開始
+			if (ImGui::BeginDragDropSource(ImGuiDragDropFlags_None)) {
+				ImGui::SetDragDropPayload("DND_DEMO_CELL", &i, sizeof(int));  // int型のインデックスをペイロードとして設定
+				ImGui::Text("Moving %s", UIObjects[i]->GetObjectName().c_str());
+				ImGui::EndDragDropSource();
+			}
+
+			// ドラッグを受け入れる
+			if (ImGui::BeginDragDropTarget()) {
+				if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("DND_DEMO_CELL")) {
+					int payloadIndex = *(const int*)payload->Data;
+					if (payloadIndex != i) {
+						// オブジェクトの順番を入れ替える
+						auto temp = UIObjects[payloadIndex];
+						if (payloadIndex < i) {
+							// 上から下にドラッグ
+							for (int j = payloadIndex; j < i; ++j) {
+								UIObjects[j] = UIObjects[j + 1];
+							}
+						}
+						else {
+							// 下から上にドラッグ
+							for (int j = payloadIndex; j > i; --j) {
+								UIObjects[j] = UIObjects[j - 1];
+							}
+						}
+						UIObjects[i] = temp;
+						// 選択インデックスの更新
+						if (selectEditUIObjectIndex_ == payloadIndex) {
+							selectEditUIObjectIndex_ = i;
+						}
+						else if (selectEditUIObjectIndex_ >= std::min(i, payloadIndex) && selectEditUIObjectIndex_ <= std::max(i, payloadIndex)) {
+							selectEditUIObjectIndex_ += (payloadIndex < i) ? -1 : 1;
+						}
+					}
+				}
+				ImGui::EndDragDropTarget();
+			}
+		}
 	}
 	ImGui::EndChild();
 }

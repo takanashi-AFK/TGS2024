@@ -4,34 +4,44 @@
 #include "../../../Engine/ResourceManager/Image.h"
 
 UIProgressBar::UIProgressBar(string _name, GameObject* parent)
-    : UIObject(_name, UIType::UI_PROGRESSBAR, parent)
+    : UIObject(_name, UIType::UI_PROGRESSBAR, parent),
+    gaugeMaxValue_(100.0f),  // 初期値を設定
+    gaugeCurrentValue_(0.0f),  // 初期値を設定
+    gaugeAnimValue_(10.0f)  // 初期値を設定
 {
 }
 
 void UIProgressBar::Initialize()
 {
-     pictGaugeHandle_= Image::Load("Images/HPBar.png");
-        assert(pictGaugeHandle_ >= 0);
+    pictGaugeHandle_ = Image::Load("Images/Bar_Gauge.png");
+    assert(pictGaugeHandle_ >= 0);
+    pictFrameHandle_ = Image::Load("Images/Bar_Frame.png");
+    assert(pictFrameHandle_ >= 0);
 }
 
 void UIProgressBar::Update()
 {
+   
 }
 
 void UIProgressBar::Draw()
 {
     // 画像が読み込まれていない場合は処理を行わない
-    if (imageHandle_ < 0)return;
+    if (imageHandle_ < 0) return;
 
-    Transform transGauge = transform_;
-    transGauge.scale_.x = (float)gaugeAnimValue_/ (float)gaugeMaxValue_;
+    // ゲージのスケールを計算
+    transGauge_ = transform_;
+    transGauge_.scale_.x = static_cast<float>(gaugeAnimValue_) / static_cast<float>(gaugeMaxValue_);
 
-    Image::SetTransform(pictGaugeHandle_, transGauge);
+    // ゲージの画像を描画
+    Image::SetTransform(pictGaugeHandle_, transGauge_);
     Image::Draw(pictGaugeHandle_);
-
+    
+    Image::SetTransform(pictFrameHandle_, transform_);
+    Image::Draw(pictFrameHandle_);
+    // プログレスバーの背景画像を描画
     Image::SetTransform(imageHandle_, transform_);
     Image::Draw(imageHandle_);
-
 }
 
 void UIProgressBar::Release()
@@ -49,13 +59,12 @@ void UIProgressBar::Load(json& loadObj) {
         imageFilePath_ = loadObj["imageFilePath_"].get<string>();
         SetImage(imageFilePath_);
     }
-    gaugeMaxValue_ = loadObj["gaugeMaxValue"].get<float>();
-    gaugeCurrentValue_ = loadObj["gaugeCurrentValue"].get<float>();
+    gaugeMaxValue_ = loadObj["gaugeMaxValue_"].get<float>();
+    gaugeCurrentValue_ = loadObj["gaugeCurrentValue_"].get<float>();
 }
 
 void UIProgressBar::DrawData() {
     if (ImGui::TreeNode("imageFilePath_")) {
-
         ImGui::Text("imageFilePath_:%s", imageFilePath_.c_str());
         ImGui::SameLine();
 
@@ -111,7 +120,6 @@ void UIProgressBar::DrawData() {
 
     // ゲージの現在値をプログレスバーとして表示
     ImGui::ProgressBar(gaugeCurrentValue_ / gaugeMaxValue_, ImVec2(0.0f, 0.0f));
-
 }
 
 void UIProgressBar::SetImage(string _imageFilePath)
@@ -130,5 +138,6 @@ void UIProgressBar::SetGaugeCurrentValue(float currentValue) {
 
 void UIProgressBar::SetGaugeAnimValue()
 {
-    gaugeAnimValue_ = (gaugeAnimValue_ * 9 + gaugeCurrentValue_) / 10;
+    // アニメーション値を現在値に近づける
+    gaugeAnimValue_ = (gaugeAnimValue_ * 9 + gaugeCurrentValue_) / 10.0f;
 }

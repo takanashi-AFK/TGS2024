@@ -15,7 +15,8 @@ private:
     string imageFilePath_;
     int imageHandle_;
     int pictGaugeHandle_;
-
+    int pictFrameHandle_;
+    Transform transGauge_;
 public:
 	UIProgressBar(string _name, GameObject* parent);
 	void Initialize() override;

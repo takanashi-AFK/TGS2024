@@ -38,6 +38,10 @@ public:
 
 	// Getter
 	int GetLayerNumber() { return layerNumber_; }
+
+	//layerNumber_の値をソートするための関数
+	static void SortLayerNumber(vector<UIObject*>& _objects);
+
 };
 
 UIObject* CreateUIObject(string _name, UIType _type, GameObject* _parent, int _layerNum);

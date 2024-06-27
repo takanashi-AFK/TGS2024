@@ -18,9 +18,10 @@ class UIObject : public GameObject
 protected:
 	bool isEnable_;	// —LŒø‚©‚Ç‚¤‚©
 	UIType type_;	// UI‚Ìí—Ş
+	int layerNumber_; // ƒŒƒCƒ„[”Ô†
 
 public:
-	UIObject(string _name,UIType _type,GameObject* parent);
+	UIObject(string _name,UIType _type,GameObject* parent, int _layerNum);
    
 	virtual void Initialize() override{}
 	virtual void Update() override{}

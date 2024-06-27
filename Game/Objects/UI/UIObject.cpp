@@ -6,8 +6,8 @@
 #include "UIImage.h"
 #include "UIPanel.h"
 
-UIObject::UIObject(string _name, UIType _type, GameObject* parent)
-	: GameObject(parent, _name), isEnable_(true), type_(_type)
+UIObject::UIObject(string _name, UIType _type, GameObject* parent, int _layerNum)
+	: GameObject(parent, _name), isEnable_(true), type_(_type), layerNumber_(_layerNum)
 {
 }
 
@@ -93,7 +93,7 @@ UIObject* CreateUIObject(string _name, UIType _type, GameObject* _parent)
 		case UI_BUTTON:obj = new UIButton(_name, _parent); break;
 		case UI_IMAGE:obj = new UIImage(_name, _parent); break;
 		case UI_TEXT:break;
-		default:obj = new UIObject(_name, _type, _parent);break;
+		default:obj = new UIObject(_name, _type, _parent,_);break;
 	}
 	// インスタンスが生成できなかった場合はnullptrを返す
 	if (obj == nullptr)return nullptr;

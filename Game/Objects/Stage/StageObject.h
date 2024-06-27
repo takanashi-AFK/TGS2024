@@ -21,7 +21,7 @@ protected:
 	vector<Component*> myComponents_;   // 自身が保有するコンポーネント群
 	string modelFilePath_;              // モデルのファイルパス
 	int modelHandle_;                   // モデル番号
-	AttributeType attribute_;               // 属性
+	AttributeType attribute_;           // 属性
 
 public:
 	/// <summary>

@@ -7,7 +7,6 @@ class Component_PlayerBehavior : public Component
 {
 private:
 	DirectX::XMVECTOR frontVec_;
-	DirectX::XMVECTOR prevFrontVec_;
 	StageObject* target_;	// ターゲット
 	string targetName_;
 
@@ -21,8 +20,8 @@ public:
 	
 	void OnCollision(GameObject* _target) override;	
 
-	bool IsEnemyInRect(StageObject* _target);
+	//bool IsEnemyInRect(StageObject* _target);
 
-	XMFLOAT3 ConvertTo2DPos(StageObject* _target);
+	//XMFLOAT3 ConvertTo2DPos(StageObject* _target);
 };
 

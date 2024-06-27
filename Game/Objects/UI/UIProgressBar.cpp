@@ -15,17 +15,27 @@ void UIProgressBar::Initialize()
 {
     pictGaugeHandle_ = Image::Load("Images/Bar_Gauge.png");
     assert(pictGaugeHandle_ >= 0);
+
     pictFrameHandle_ = Image::Load("Images/Bar_Frame.png");
     assert(pictFrameHandle_ >= 0);
 }
 
 void UIProgressBar::Update()
 {
-   
+
 }
 
 void UIProgressBar::Draw()
 {
+
+    //Transform t;
+    //Image::SetTransform(pictGaugeHandle_, t);
+    //Image::Draw(pictGaugeHandle_);
+
+    //Image::SetTransform(pictFrameHandle_, transform_);
+    //Image::Draw(pictFrameHandle_);
+
+
     // ‰æ‘œ‚ª“Ç‚İ‚Ü‚ê‚Ä‚¢‚È‚¢ê‡‚Íˆ—‚ğs‚í‚È‚¢
     if (imageHandle_ < 0) return;
 
@@ -34,14 +44,15 @@ void UIProgressBar::Draw()
     transGauge_.scale_.x = static_cast<float>(gaugeAnimValue_) / static_cast<float>(gaugeMaxValue_);
 
     // ƒQ[ƒW‚Ì‰æ‘œ‚ğ•`‰æ
-    Image::SetTransform(pictGaugeHandle_, transGauge_);
+    Image::SetTransform(pictGaugeHandle_, transform_);
     Image::Draw(pictGaugeHandle_);
     
-    Image::SetTransform(pictFrameHandle_, transform_);
+    Transform t;
+    Image::SetTransform(pictFrameHandle_, t);
     Image::Draw(pictFrameHandle_);
     // ƒvƒƒOƒŒƒXƒo[‚Ì”wŒi‰æ‘œ‚ğ•`‰æ
-    Image::SetTransform(imageHandle_, transform_);
-    Image::Draw(imageHandle_);
+    /*Image::SetTransform(imageHandle_, transform_);
+    Image::Draw(imageHandle_);*/
 }
 
 void UIProgressBar::Release()

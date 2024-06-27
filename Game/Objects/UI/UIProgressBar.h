@@ -9,12 +9,12 @@ class UIProgressBar : public UIObject
 private:
     std::string frameImageFileName;
     std::vector<int> imageNumbers;
-    int gaugeColorRed, gaugeColorGreen, gaugeColorBlue;
-    float gaugeMaxValue, gaugeCurrentValue;
+    float gaugeMaxValue_, gaugeCurrentValue_, gaugeAnimValue_;
     void SetImage(string _imageFilePath);
 
     string imageFilePath_;
     int imageHandle_;
+    int pictGaugeHandle_;
 
 public:
 	UIProgressBar(string _name, GameObject* parent);
@@ -27,22 +27,16 @@ public:
 	void Load(json& loadObj) override;
 	void DrawData() override;
 
-    // セッター
-    void SetFrameImageFileName(const std::string& fileName);
-    void SetGaugeColor(int r, int g, int b);
     void SetGaugeMaxValue(float maxValue);
     void SetGaugeCurrentValue(float currentValue);
+    void SetGaugeAnimValue();
 
     // ゲッター
     const std::string& GetFrameImageFileName() const { return frameImageFileName; }
     const std::vector<int>& GetImageNumbers() const { return imageNumbers; }
-    int GetGaugeRed() const { return gaugeColorRed; }
-    int GetGaugeGreen() const { return gaugeColorGreen; }
-    int GetGaugeBlue() const { return gaugeColorBlue; }
-    float GetGaugeMaxValue() const { return gaugeMaxValue; }
-    float GetGaugeCurrentValue() const { return gaugeCurrentValue; }
-
-    
+    float GetGaugeMaxValue() { return gaugeMaxValue_; }
+    float GetGaugeCurrentValue() { return gaugeCurrentValue_; }
+    float GetGaugeAnimValue() { return gaugeAnimValue_; }
 
 };
 

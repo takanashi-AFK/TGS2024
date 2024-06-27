@@ -4,12 +4,14 @@
 #include "../../../Engine/ResourceManager/Image.h"
 
 UIProgressBar::UIProgressBar(string _name, GameObject* parent)
-	: UIObject(_name, UIType::UI_PROGRESSBAR, parent)
+    : UIObject(_name, UIType::UI_PROGRESSBAR, parent)
 {
 }
 
 void UIProgressBar::Initialize()
 {
+     pictGaugeHandle_= Image::Load("Images/HPBar.png");
+        assert(pictGaugeHandle_ >= 0);
 }
 
 void UIProgressBar::Update()
@@ -21,9 +23,15 @@ void UIProgressBar::Draw()
     // 画像が読み込まれていない場合は処理を行わない
     if (imageHandle_ < 0)return;
 
+    Transform transGauge = transform_;
+    transGauge.scale_.x = (float)gaugeAnimValue_/ (float)gaugeMaxValue_;
+
+    Image::SetTransform(pictGaugeHandle_, transGauge);
+    Image::Draw(pictGaugeHandle_);
+
     Image::SetTransform(imageHandle_, transform_);
     Image::Draw(imageHandle_);
-   
+
 }
 
 void UIProgressBar::Release()
@@ -32,11 +40,8 @@ void UIProgressBar::Release()
 
 void UIProgressBar::Save(json& saveObj) {
     saveObj["imageFilePath_"] = imageFilePath_;
-    saveObj["gaugeColorRed"] = gaugeColorRed;
-    saveObj["gaugeColorGreen"] = gaugeColorGreen;
-    saveObj["gaugeColorBlue"] = gaugeColorBlue;
-    saveObj["gaugeMaxValue"] = gaugeMaxValue;
-    saveObj["gaugeCurrentValue"] = gaugeCurrentValue;
+    saveObj["gaugeMaxValue_"] = gaugeMaxValue_;
+    saveObj["gaugeCurrentValue_"] = gaugeCurrentValue_;
 }
 
 void UIProgressBar::Load(json& loadObj) {
@@ -44,11 +49,8 @@ void UIProgressBar::Load(json& loadObj) {
         imageFilePath_ = loadObj["imageFilePath_"].get<string>();
         SetImage(imageFilePath_);
     }
-    gaugeColorRed = loadObj["gaugeColorRed"].get<int>();
-    gaugeColorGreen = loadObj["gaugeColorGreen"].get<int>();
-    gaugeColorBlue = loadObj["gaugeColorBlue"].get<int>();
-    gaugeMaxValue = loadObj["gaugeMaxValue"].get<float>();
-    gaugeCurrentValue = loadObj["gaugeCurrentValue"].get<float>();
+    gaugeMaxValue_ = loadObj["gaugeMaxValue"].get<float>();
+    gaugeCurrentValue_ = loadObj["gaugeCurrentValue"].get<float>();
 }
 
 void UIProgressBar::DrawData() {
@@ -103,20 +105,12 @@ void UIProgressBar::DrawData() {
         ImGui::TreePop();
     }
 
-    // ゲージの色を選択できるようにする
-    float color[3] = { gaugeColorRed / 255.0f, gaugeColorGreen / 255.0f, gaugeColorBlue / 255.0f };
-    if (ImGui::ColorEdit3("Gauge Color", color)) {
-        gaugeColorRed = static_cast<int>(color[0] * 255);
-        gaugeColorGreen = static_cast<int>(color[1] * 255);
-        gaugeColorBlue = static_cast<int>(color[2] * 255);
-    }
-
     // ゲージの現在値と最大値を設定できるようにする
-    ImGui::SliderFloat("Current Value", &gaugeCurrentValue, 0.0f, gaugeMaxValue);
-    ImGui::SliderFloat("Max Value", &gaugeMaxValue, 0.0f, 1000.0f);  // 最大値の上限は適宜変更
+    ImGui::SliderFloat("Current Value", &gaugeCurrentValue_, 0.0f, gaugeMaxValue_);
+    ImGui::SliderFloat("Max Value", &gaugeMaxValue_, 0.0f, 200.0f);  // 最大値の上限は適宜変更
 
     // ゲージの現在値をプログレスバーとして表示
-    ImGui::ProgressBar(gaugeCurrentValue / gaugeMaxValue, ImVec2(0.0f, 0.0f));
+    ImGui::ProgressBar(gaugeCurrentValue_ / gaugeMaxValue_, ImVec2(0.0f, 0.0f));
 
 }
 
@@ -127,9 +121,14 @@ void UIProgressBar::SetImage(string _imageFilePath)
 }
 
 void UIProgressBar::SetGaugeMaxValue(float maxValue) {
-    gaugeMaxValue = maxValue;
+    gaugeMaxValue_ = maxValue;
 }
 
 void UIProgressBar::SetGaugeCurrentValue(float currentValue) {
-    gaugeCurrentValue = currentValue;
+    gaugeCurrentValue_ = currentValue;
+}
+
+void UIProgressBar::SetGaugeAnimValue()
+{
+    gaugeAnimValue_ = (gaugeAnimValue_ * 9 + gaugeCurrentValue_) / 10;
 }

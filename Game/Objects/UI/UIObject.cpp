@@ -98,8 +98,8 @@ UIObject* CreateUIObject(string _name, UIType _type, GameObject* _parent, int _l
 	UIObject* obj = nullptr;
 	switch (_type)
 	{
-		case UI_BUTTON:obj = new UIButton(_name, _parent); break;
-		case UI_IMAGE:obj = new UIImage(_name, _parent); break;
+		case UI_BUTTON:obj = new UIButton(_name, _parent,_layerNum); break;
+		case UI_IMAGE:obj = new UIImage(_name, _parent,_layerNum); break;
 		case UI_TEXT:break;
 		default:obj = new UIObject(_name, _type, _parent,_layerNum);break;
 	}

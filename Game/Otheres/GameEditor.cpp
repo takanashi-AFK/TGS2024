@@ -273,7 +273,7 @@ void GameEditor::UIObjectClreateWindow()
 			// 生成ボタン
 			if (ImGui::Button("Create")) {
 				// UIオブジェクトを作成・追加
-				UIObject* obj = CreateUIObject(nameBuffer, uitype, editUIPanel_);
+				UIObject* obj = CreateUIObject(nameBuffer, uitype, editUIPanel_,0);
 				if (obj != nullptr) {
 					editUIPanel_->AddUIObject(obj);
 					isShowCreateUIObjectWindow_ = false;

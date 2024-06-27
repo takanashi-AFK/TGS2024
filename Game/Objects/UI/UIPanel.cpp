@@ -38,7 +38,7 @@ void UIPanel::Load(json& _loadObj)
 	for (auto it = _loadObj.begin(); it != _loadObj.end(); ++it) {
 
 		// オブジェクトのインスタンスを生成
-		UIObject* obj = CreateUIObject(it.key(), it.value()["type_"], this);
+		UIObject* obj = CreateUIObject(it.key(), it.value()["type_"], this,0);
 
 		// オブジェクト情報を読込
 		obj->ChildLoad(it.value());

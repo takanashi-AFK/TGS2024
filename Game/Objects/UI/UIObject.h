@@ -35,7 +35,10 @@ public:
 	void ChildSave(json& _saveObj);
 	void ChildLoad(json& _loadObj);
 	void ChildDrawData();
+
+	// Getter
+	int GetLayerNumber() { return layerNumber_; }
 };
 
-UIObject* CreateUIObject(string _name, UIType _type, GameObject* _parent);
+UIObject* CreateUIObject(string _name, UIType _type, GameObject* _parent, int _layerNum);
 string GetUITypeString(UIType _type);

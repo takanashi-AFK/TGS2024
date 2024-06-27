@@ -84,7 +84,7 @@ void UIObject::ChildDrawData()
 	this->DrawData();
 }
 
-UIObject* CreateUIObject(string _name, UIType _type, GameObject* _parent)
+UIObject* CreateUIObject(string _name, UIType _type, GameObject* _parent, int _layerNum)
 {
 	// インスタンスを生成する
 	UIObject* obj = nullptr;
@@ -93,7 +93,7 @@ UIObject* CreateUIObject(string _name, UIType _type, GameObject* _parent)
 		case UI_BUTTON:obj = new UIButton(_name, _parent); break;
 		case UI_IMAGE:obj = new UIImage(_name, _parent); break;
 		case UI_TEXT:break;
-		default:obj = new UIObject(_name, _type, _parent,_);break;
+		default:obj = new UIObject(_name, _type, _parent,_layerNum);break;
 	}
 	// インスタンスが生成できなかった場合はnullptrを返す
 	if (obj == nullptr)return nullptr;

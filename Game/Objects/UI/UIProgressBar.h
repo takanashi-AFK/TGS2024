@@ -9,7 +9,7 @@ class UIProgressBar : public UIObject
 private:
     std::string frameImageFileName;
     std::vector<int> imageNumbers;
-    float gaugeMaxValue_, gaugeCurrentValue_, gaugeAnimValue_;
+    float gaugeMaxValue_, gaugeNowValue_, gaugeAnimValue_;
     void SetImage(string _imageFilePath);
 
     string imageFilePath_;
@@ -17,6 +17,7 @@ private:
     int pictGaugeHandle_;
     int pictFrameHandle_;
     Transform transGauge_;
+    Transform transFrame_;
 public:
 	UIProgressBar(string _name, GameObject* parent);
 	void Initialize() override;
@@ -36,7 +37,7 @@ public:
     const std::string& GetFrameImageFileName() const { return frameImageFileName; }
     const std::vector<int>& GetImageNumbers() const { return imageNumbers; }
     float GetGaugeMaxValue() { return gaugeMaxValue_; }
-    float GetGaugeCurrentValue() { return gaugeCurrentValue_; }
+    float GetGaugeCurrentValue() { return gaugeNowValue_; }
     float GetGaugeAnimValue() { return gaugeAnimValue_; }
 
 };

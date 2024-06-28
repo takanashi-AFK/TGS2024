@@ -35,8 +35,7 @@ void UIProgressBar::Draw()
     //Image::SetTransform(pictFrameHandle_, transform_);
     //Image::Draw(pictFrameHandle_);
 
-    // スカイスフィア用のシェーダーを設定
-    Direct3D::SetShader(Direct3D::SHADER_BAR);
+
     // 画像が読み込まれていない場合は処理を行わない
     if (imageHandle_ < 0) return;
 
@@ -47,8 +46,6 @@ void UIProgressBar::Draw()
     // ゲージの画像を描画
     Image::SetTransform(pictGaugeHandle_, transGauge_);
     Image::Draw(pictGaugeHandle_);
-
-    Direct3D::SetShader(Direct3D::SHADER_3D);
 
     transFrame_ = transform_;
 

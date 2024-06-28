@@ -520,8 +520,5 @@
     <FxCompile Include="Assets\Shader\Shadow.hlsl">
       <Filter>02Shader</Filter>
     </FxCompile>
-    <FxCompile Include="ProgressBar.hlsl">
-      <Filter>02Shader</Filter>
-    </FxCompile>
   </ItemGroup>
 </Project>

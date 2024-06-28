@@ -18,7 +18,7 @@ namespace {
 
 
 GameEditor::GameEditor(GameObject* _parent)
-	:GameObject(_parent, "StageEditor"), editStage_(nullptr), selectEditStageObjectIndex_(-1), editUIPanel_(nullptr), selectEditUIObjectIndex_(-1), editType_(NONE)
+	:GameObject(_parent, "StageEditor"), editStage_(nullptr), selectEditStageObjectIndex_(-1), editUIPanel_(nullptr), selectEditUIObjectIndex_(-1), editType_(NONE),layerNumberCount_(0)
 {
 }
 
@@ -273,7 +273,7 @@ void GameEditor::UIObjectClreateWindow()
 			// 生成ボタン
 			if (ImGui::Button("Create")) {
 				// UIオブジェクトを作成・追加
-				UIObject* obj = CreateUIObject(nameBuffer, uitype, editUIPanel_,0);
+				UIObject* obj = CreateUIObject(nameBuffer, uitype, editUIPanel_,layerNumberCount_++);
 				if (obj != nullptr) {
 					editUIPanel_->AddUIObject(obj);
 					isShowCreateUIObjectWindow_ = false;

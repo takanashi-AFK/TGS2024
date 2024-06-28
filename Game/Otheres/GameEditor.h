@@ -39,6 +39,7 @@ private:
 	EditType editType_;				// 編集対象の種類
 
 	bool isShowCreateUIObjectWindow_;	// UIオブジェクト作成ウィンドウを表示するか
+	int layerNumberCount_;			// レイヤー番号のカウント
 
 	CameraType cameraType_;			// カメラの種類
 

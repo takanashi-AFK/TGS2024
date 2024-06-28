@@ -10,6 +10,7 @@ private:
     std::string frameImageFileName;
     std::vector<int> imageNumbers;
     float gaugeMaxValue_, gaugeNowValue_, gaugeAnimValue_;
+
     void SetImage(string _imageFilePath);
 
     string imageFilePath_;

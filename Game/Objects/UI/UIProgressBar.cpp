@@ -2,6 +2,7 @@
 #include "../../../Engine/ImGui/imgui.h"
 #include "../../../Engine/Global.h"
 #include "../../../Engine/ResourceManager/Image.h"
+#include "../../../Engine/DirectX/Direct3D.h"
 
 UIProgressBar::UIProgressBar(string _name, GameObject* parent)
     : UIObject(_name, UIType::UI_PROGRESSBAR, parent),
@@ -27,18 +28,11 @@ void UIProgressBar::Update()
 
 void UIProgressBar::Draw()
 {
-
-    //Transform t;
-    //Image::SetTransform(pictGaugeHandle_, t);
-    //Image::Draw(pictGaugeHandle_);
-
-    //Image::SetTransform(pictFrameHandle_, transform_);
-    //Image::Draw(pictFrameHandle_);
-
-
+    // 用のシェーダーを設定
+    Direct3D::SetShader(Direct3D::SHADER_BAR);
     // 画像が読み込まれていない場合は処理を行わない
     if (imageHandle_ < 0) return;
-
+   
     // ゲージのスケールを計算
     transGauge_ = transform_;
     transGauge_.scale_.x = (gaugeNowValue_ / gaugeMaxValue_) * transFrame_.scale_.x;
@@ -47,11 +41,14 @@ void UIProgressBar::Draw()
     Image::SetTransform(pictGaugeHandle_, transGauge_);
     Image::Draw(pictGaugeHandle_);
 
+   
+
     transFrame_ = transform_;
 
     Image::SetTransform(pictFrameHandle_, transFrame_);
     Image::Draw(pictFrameHandle_);
     
+    Direct3D::SetShader(Direct3D::SHADER_3D);
 }
 
 void UIProgressBar::Release()
@@ -131,7 +128,6 @@ void UIProgressBar::DrawData() {
     // ゲージの現在値をプログレスバーとして表示
     ImGui::ProgressBar(gaugeNowValue_ / gaugeMaxValue_, ImVec2(0.0f, 0.0f));
 
-    
 }
 
 void UIProgressBar::SetImage(string _imageFilePath)

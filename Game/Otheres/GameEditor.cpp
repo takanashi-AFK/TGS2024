@@ -18,7 +18,7 @@ namespace {
 
 
 GameEditor::GameEditor(GameObject* _parent)
-	:GameObject(_parent, "StageEditor"), editStage_(nullptr), selectEditStageObjectIndex_(-1), editUIPanel_(nullptr), selectEditUIObjectIndex_(-1), editType_(NONE),layerNumberCount_(0)
+	:GameObject(_parent, "StageEditor"), editStage_(nullptr), selectEditStageObjectIndex_(-1), editUIPanel_(nullptr), selectEditUIObjectIndex_(-1), editType_(NONE),layerNumberCount_(1)
 {
 }
 
@@ -270,13 +270,22 @@ void GameEditor::UIObjectClreateWindow()
 				ImGui::EndCombo();
 			}
 
+			// レイヤー番号を入力
+			ImGui::InputInt("LayerNumber", &layerNumberCount_);
+			//layerNumbertが0以下場合は1にする
+			if (layerNumberCount_ <= 0)layerNumberCount_ = 1;
+
+
+
 			// 生成ボタン
 			if (ImGui::Button("Create")) {
 				// UIオブジェクトを作成・追加
-				UIObject* obj = CreateUIObject(nameBuffer, uitype, editUIPanel_,layerNumberCount_++);
+				UIObject* obj = CreateUIObject(nameBuffer, uitype, editUIPanel_,layerNumberCount_);
 				if (obj != nullptr) {
 					editUIPanel_->AddUIObject(obj);
 					isShowCreateUIObjectWindow_ = false;
+					//レイヤー番号の更新
+					layerNumberCount_++;
 				}
 			}
 		}

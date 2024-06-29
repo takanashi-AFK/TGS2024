@@ -8,7 +8,7 @@
 using namespace FileManager;
 
 UIButton::UIButton(string _name, GameObject* parent , int _layerNum)
-	: UIObject(_name, UIType::UI_BUTTON, parent, _layerNum)
+	: UIObject(_name, UIType::UI_BUTTON, parent, _layerNum), imageHandle_(-1), imageFilePath_()
 {
 }
 
@@ -18,6 +18,8 @@ void UIButton::Initialize()
 
 void UIButton::Update()
 {
+    if (imageHandle_ < 0)return;
+
     // マウスの座標を取得
     XMFLOAT2 mousePos = { Input::GetMousePosition().x,Input::GetMousePosition().y };
 

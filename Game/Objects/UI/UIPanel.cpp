@@ -37,8 +37,11 @@ void UIPanel::Load(json& _loadObj)
 
 	for (auto it = _loadObj.begin(); it != _loadObj.end(); ++it) {
 
+		// レイヤー番号を読み取る
+		int layerNumber = it.value().value("layerNumber", 0);  // デフォルト値0
+
 		// オブジェクトのインスタンスを生成
-		UIObject* obj = CreateUIObject(it.key(), it.value()["type_"], this,0);
+		UIObject* obj = CreateUIObject(it.key(), it.value()["type_"], this,layerNumber);
 
 		// オブジェクト情報を読込
 		obj->ChildLoad(it.value());

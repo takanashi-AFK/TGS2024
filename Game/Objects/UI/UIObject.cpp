@@ -19,6 +19,9 @@ void UIObject::ChildSave(json& _saveObj)
 	// オブジェクト名を保存
 	_saveObj["objectName_"] = objectName_;
 
+	// レイヤー番号を保存
+	_saveObj["layerNumber_"] = layerNumber_;
+
 	// 自身の変形行列情報を保存
 	_saveObj["position_"] = { REFERENCE_XMFLOAT3(transform_.position_) };
 	_saveObj["rotate_"] = { REFERENCE_XMFLOAT3(transform_.rotate_) };
@@ -35,6 +38,9 @@ void UIObject::ChildLoad(json& _loadObj)
 
 	// オブジェクト名を読込
 	if (_loadObj.contains("objectName_"))objectName_ = _loadObj["objectName_"];
+
+	// レイヤー番号を読込
+	if (_loadObj.contains("layerNumber_"))layerNumber_ = _loadObj["layerNumber_"].get<int>();
 
 	// 変形行列情報を読込
 	if (_loadObj.contains("position_"))transform_.position_ = { _loadObj["position_"][0].get<float>(),_loadObj["position_"][1].get<float>(), _loadObj["position_"][2].get<float>() };
@@ -68,7 +74,7 @@ void UIObject::ChildDrawData()
 		if (ImGui::InputTextWithHint("##Input", "Input New name...", buffer, IM_ARRAYSIZE(buffer)))
 			this->objectName_ = buffer;
 		ImGui::TreePop();
-}
+	}
 
 	// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
 	// 自身の変形情報を描画
@@ -78,8 +84,21 @@ void UIObject::ChildDrawData()
 		ImGui::DragFloat3("rotate_", &transform_.rotate_.x, 1.f, -360.f, 360.f);
 		ImGui::DragFloat3("scale_", &transform_.scale_.x, 0.1f, 0.f, LONG_MAX);
 		ImGui::TreePop();
-}
+	}
 
+
+	// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
+	// レイヤー番号を描画
+	// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
+	if (ImGui::TreeNode("LayerNumber"))
+	{
+		ImGui::Text("Image Layer Number: %d", GetLayerNumber());
+		ImGui::InputInt("Layer Number", &layerNumber_);
+		//layerNumbertが0以下場合は1にする
+		if (layerNumber_ <= 0)layerNumber_ = 1;
+
+		ImGui::TreePop();
+	}
 	// 固有情報を描画
 	this->DrawData();
 }

@@ -39,6 +39,9 @@ public:
 	// Getter
 	int GetLayerNumber() { return layerNumber_; }
 
+	// Setter
+	void SetLayerNumber(int _layerNum) { layerNumber_ = _layerNum; }
+
 	//layerNumber_の値をソートするための関数
 	static void SortLayerNumber(vector<UIObject*>& _objects);
 

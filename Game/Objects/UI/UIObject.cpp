@@ -103,13 +103,18 @@ void UIObject::ChildDrawData()
 	this->DrawData();
 }
 
-void UIObject::SortLayerNumber(vector<UIObject*>& _objects)
+bool UIObject::CompareLayerNumber(UIObject* _object1, UIObject* _object2)
 {
-	//レイヤー番号でソート
-	std::sort(_objects.begin(), _objects.end(), [](UIObject* _obj1, UIObject* _obj2) {
-		return _obj1->GetLayerNumber() < _obj2->GetLayerNumber();
-	});
+	return _object1->GetLayerNumber() < _object2->GetLayerNumber();
 }
+
+//void UIObject::SortLayerNumber(vector<UIObject*>& _objects)
+//{
+//	//レイヤー番号でソート
+//	std::sort(_objects.begin(), _objects.end(), [](UIObject* _obj1, UIObject* _obj2) {
+//		return _obj1->GetLayerNumber() < _obj2->GetLayerNumber();
+//	});
+//}
 
 UIObject* CreateUIObject(string _name, UIType _type, GameObject* _parent, int _layerNum)
 {

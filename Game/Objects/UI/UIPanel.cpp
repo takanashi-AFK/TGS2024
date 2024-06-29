@@ -18,6 +18,13 @@ void UIPanel::Update()
 
 void UIPanel::Draw()
 {
+	// レイヤー番号でオブジェクトをソート
+	SortUIObject();
+
+	// 各オブジェクトのデータ描画処理
+	for (auto obj : objects_) {
+		obj->DrawData();
+	}
 }
 
 void UIPanel::Release()
@@ -80,6 +87,12 @@ void UIPanel::DeleteAllUIObject()
 	// 全てのオブジェクトを削除
 	for (auto obj : objects_)obj->KillMe();
 	objects_.clear();
+}
+
+void UIPanel::SortUIObject()
+{
+	// レイヤー番号でソート
+	std::sort(objects_.begin(), objects_.end(), UIObject::CompareLayerNumber);
 }
 
 UIObject* UIPanel::GetUIObject(string _name)

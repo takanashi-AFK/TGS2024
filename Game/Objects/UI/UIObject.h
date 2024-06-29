@@ -42,8 +42,11 @@ public:
 	// Setter
 	void SetLayerNumber(int _layerNum) { layerNumber_ = _layerNum; }
 
-	//layerNumber_の値をソートするための関数
-	static void SortLayerNumber(vector<UIObject*>& _objects);
+	//オブジェクトをレイヤー番号で比較するための関数
+	static bool CompareLayerNumber(UIObject* _object1, UIObject* _object2);
+
+	////layerNumber_の値をソートするための関数
+	//static void SortLayerNumber(vector<UIObject*>& _objects);
 
 };
 

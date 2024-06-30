@@ -9,6 +9,7 @@
 namespace {
 	static bool isShowAddComponentWindow_ = false; // コンポーネント追加ウィンドウの表示フラグ
 	static bool isShowSetComponentNameWindow_ = false; // コンポーネント追加ウィンドウの表示フラグ
+	const float MODEL_SCALE = 1.f; // モデルのスケール
 	static ComponentType selectComponentType_; // 選択されたコンポーネントタイプ
 
 	void DrawAddComponentWindow(StageObject* _holder)
@@ -55,7 +56,7 @@ namespace {
 
 
 StageObject::StageObject(string _name, string _modelFilePath, GameObject* _parent)
-	:GameObject(_parent,_name),modelFilePath_(_modelFilePath),modelHandle_(-1),myComponents_()
+	:GameObject(_parent, _name), modelFilePath_(_modelFilePath), modelHandle_(-1), myComponents_(), fallSpeed_(1), isOnGround_(false)
 {
 }
 
@@ -121,6 +122,34 @@ bool StageObject::DeleteAllComponent()
 	myComponents_.clear();return true;
 }
 
+void StageObject::OnGround(float _fallSpeed)
+{
+	if (isOnGround_ == false)return;
+
+	Stage* pStage = (Stage*)FindObject("Stage");
+	if (pStage == nullptr)return;
+	auto stageObj = pStage->GetStageObjects();
+
+	for (auto obj : stageObj) {
+		if (obj->GetObjectName() == this->objectName_)
+			continue;
+
+		int hGroundModel = obj->modelHandle_;
+		if (hGroundModel < 0)continue;
+
+		RayCastData data;
+		data.start = transform_.position_;   //レイの発射位置
+		data.dir = XMFLOAT3(0, -1, 0);       //レイの方向
+		Model::RayCast(hGroundModel, &data); //レイを発射
+
+		//レイが当たったら
+		if (data.hit) {
+			//その分位置を下げる
+			transform_.position_.y -= (data.dist- (MODEL_SCALE/2)) * _fallSpeed;
+		}
+	}
+}
+
 void StageObject::Initialize()
 {
 	// モデルの読み込み
@@ -135,6 +164,7 @@ void StageObject::Update()
 {
 	// 保有するコンポーネントの更新処理
 	for (auto comp : myComponents_)comp->ChildUpdate();
+	OnGround(fallSpeed_);
 }
 
 void StageObject::Draw()
@@ -216,6 +246,14 @@ void StageObject::DrawData()
 	ImGui::Separator();
 
 	// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
+	// 接地処理
+	// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
+	if (ImGui::TreeNode("OnGround")) {
+		ImGui::Checkbox("isOnGround", &isOnGround_);
+		ImGui::DragFloat("fallSpeed", &fallSpeed_, 0.1f, 0.f, 1.f);
+		ImGui::TreePop();
+	}
+	// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
 	// オブジェクトの名前を変更
 	// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
 	if (ImGui::TreeNode("name")) {
@@ -250,9 +288,12 @@ void StageObject::DrawData()
 		ImGui::TreePop();
 	}
 
+
+
 	// コンポーネント追加ウィンドウを描画
 	if (isShowAddComponentWindow_)DrawAddComponentWindow(this);
 	if (isShowSetComponentNameWindow_)DrawSetComponentNameWindow(this);
+
 
 }
 

@@ -18,13 +18,17 @@ void UIPanel::Update()
 
 void UIPanel::Draw()
 {
-	// レイヤー番号でオブジェクトをソート
+	//レイヤー番号でオブジェクトをソート
 	SortUIObject();
 
-	// 各オブジェクトのデータ描画処理
-	for (auto obj : objects_) {
+	// 各オブジェクトの描画処理
+	for (auto obj : objects_)
+	{
+		obj->SortChildren();
 		obj->DrawData();
+
 	}
+
 }
 
 void UIPanel::Release()
@@ -61,7 +65,10 @@ void UIPanel::Load(json& _loadObj)
 void UIPanel::DrawData()
 {
 	// 各オブジェクトの描画処理
-	for (auto obj : objects_)obj->DrawData();
+	for (auto obj : objects_)
+	{
+		obj->DrawData();
+	}
 }
 
 void UIPanel::AddUIObject(UIObject* _object)

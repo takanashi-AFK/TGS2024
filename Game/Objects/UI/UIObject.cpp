@@ -11,6 +11,17 @@ UIObject::UIObject(string _name, UIType _type, GameObject* parent, int _layerNum
 {
 }
 
+void UIObject::Draw()
+{
+	//自身の描画処理
+	DrawData();
+
+	// 子オブジェクトを描画
+	for (auto child : children_) {
+		child->Draw();
+	}
+}
+
 void UIObject::ChildSave(json& _saveObj)
 {
 	// タイプを保存
@@ -108,13 +119,14 @@ bool UIObject::CompareLayerNumber(UIObject* _object1, UIObject* _object2)
 	return _object1->GetLayerNumber() < _object2->GetLayerNumber();
 }
 
-//void UIObject::SortLayerNumber(vector<UIObject*>& _objects)
-//{
-//	//レイヤー番号でソート
-//	std::sort(_objects.begin(), _objects.end(), [](UIObject* _obj1, UIObject* _obj2) {
-//		return _obj1->GetLayerNumber() < _obj2->GetLayerNumber();
-//	});
-//}
+void UIObject::SortChildren()
+{
+	std::sort(children_.begin(), children_.end(), UIObject::CompareLayerNumber);
+	for (auto child : children_) {
+		child->SortChildren();  // 再帰的に子オブジェクトもソート
+	}
+
+}
 
 UIObject* CreateUIObject(string _name, UIType _type, GameObject* _parent, int _layerNum)
 {

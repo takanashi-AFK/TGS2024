@@ -20,12 +20,14 @@ protected:
 	UIType type_;	// UIの種類
 	int layerNumber_; // レイヤー番号
 
+	std::vector<UIObject*> children_;  // 子オブジェクトのリスト
+
 public:
 	UIObject(string _name,UIType _type,GameObject* parent, int _layerNum);
    
 	virtual void Initialize() override{}
 	virtual void Update() override{}
-	virtual void Draw() override{}
+	virtual void Draw() override;
 	virtual void Release() override{}
 
 	virtual void Save(json& saveObj) {};
@@ -39,14 +41,12 @@ public:
 	// Getter
 	int GetLayerNumber() { return layerNumber_; }
 
-	// Setter
-	void SetLayerNumber(int _layerNum) { layerNumber_ = _layerNum; }
-
 	//オブジェクトをレイヤー番号で比較するための関数
 	static bool CompareLayerNumber(UIObject* _object1, UIObject* _object2);
 
-	////layerNumber_の値をソートするための関数
-	//static void SortLayerNumber(vector<UIObject*>& _objects);
+	//子オブジェクトをソートするための関数
+	void SortChildren();
+
 
 };
 

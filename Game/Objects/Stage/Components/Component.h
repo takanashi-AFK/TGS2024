@@ -32,9 +32,12 @@ enum ComponentType {
 	Rise,
     TackleMove,
     BossBehavior,
+	MeleeAttack,
     // コンポーネント追加時に識別番号を追加
     Max
 };
+
+
 
 // コンポ―ネント基底クラス
 class Component
@@ -154,6 +157,11 @@ public:
     Component* GetChildComponent(string _name);
     
     /// <returns>
+    /// 子コンポーネントを取得
+    /// </returns>
+    vector<Component*> GetChildComponent(ComponentType _type);
+
+    /// <returns>
     /// コンポーネントタイプを取得
     /// </returns>
     ComponentType GetType() const { return type_; }
@@ -162,6 +170,8 @@ public:
     /// コンポーネント名を取得
     /// </returns>
     string GetName() { return name_; }
+
+
 
 };
 

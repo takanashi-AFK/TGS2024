@@ -89,6 +89,20 @@ Component* StageObject::FindComponent(string _name)
 	return result;
 }
 
+vector<Component*> StageObject::FindComponent(ComponentType _type)
+{
+	vector<Component*> result;
+
+	for (auto comp : myComponents_) {
+		if (comp->GetType() == _type)result.push_back(comp);
+
+		// 子コンポーネントを再帰的に検索
+		auto childComps = comp->GetChildComponent(_type);
+		result.insert(result.end(), childComps.begin(), childComps.end());
+	}
+	return result;
+}
+
 bool StageObject::DeleteComponent(Component* _comp)
 {
 	// イテレータに、"myComponents_"内で探したいデータを登録

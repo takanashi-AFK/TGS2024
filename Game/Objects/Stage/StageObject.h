@@ -8,6 +8,10 @@
 // using宣言
 using std::vector;
 
+enum AttributeType {
+	ENEMY,
+	ATMAX
+};
 /// <summary>
 /// ステージに登場するオブジェクトのクラス
 /// </summary>
@@ -17,7 +21,8 @@ protected:
 	vector<Component*> myComponents_;   // 自身が保有するコンポーネント群
 	string modelFilePath_;              // モデルのファイルパス
 	int modelHandle_;                   // モデル番号
-   
+	AttributeType attribute_;           // 属性
+
 public:
 	/// <summary>
 	/// コンストラクタ
@@ -82,6 +87,11 @@ public:
 	Component* FindComponent(string _name);
 
 	/// <summary>
+	/// コンポーネントをリストから探す
+	/// </summary>
+	vector<Component*> FindComponent(ComponentType _type);
+
+	/// <summary>
 	/// コンポーネントをリストから削除
 	/// </summary>
 	/// <param name="_comp">削除するコンポーネント</param>
@@ -93,6 +103,20 @@ public:
 	/// </summary>
 	/// <returns>削除できたかどうか</returns>
 	bool DeleteAllComponent();
+
+	/// <summary>
+	/// 属性のセット
+	/// </summary>
+	/// <param name="_type">AttributeType</param>
+	void SetAttribute(AttributeType _type) { attribute_ = _type; }
+
+	/// <summary>
+	/// 属性のゲッター
+	/// </summary>
+	/// <returns></returns>
+	AttributeType GetAttribute() { return attribute_; }
+
+
 };
 
 /// <summary>

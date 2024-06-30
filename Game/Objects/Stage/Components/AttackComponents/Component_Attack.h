@@ -41,5 +41,4 @@ public:
 	/// </summary>
 	/// <returns></returns>
 	int GetPower() { return power_; }
-
 };

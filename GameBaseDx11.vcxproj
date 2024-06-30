@@ -139,6 +139,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Game\Objects\Stage\Components\AttackComponents\Component_MeleeAttack.cpp" />
     <ClCompile Include="Game\Objects\Stage\Components\BehaviorComponents\Component_BossBehavior.cpp" />
     <ClCompile Include="EffekseeLib\EffekseerVFX.cpp" />
     <ClCompile Include="Game\Objects\Stage\Components\MoveComponents\Component_Fall.cpp" />
@@ -209,8 +210,10 @@
     <ClCompile Include="Game\Scenes\Scene_Title.cpp" />
     <ClCompile Include="Game\Objects\UI\UIImage.cpp" />
     <ClCompile Include="Game\Objects\Camera\TPSCamera.cpp" />
+    <ClCompile Include="Game\Objects\Stage\Knuckle.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Game\Objects\Stage\Components\AttackComponents\Component_MeleeAttack.h" />
     <ClInclude Include="EffekseeLib\EffekseerVFX.h" />
     <ClInclude Include="Game\Objects\Stage\Components\BehaviorComponents\Component_BossBehavior.h" />
     <ClInclude Include="Game\Objects\Stage\Components\MoveComponents\Component_Fall.h" />
@@ -283,6 +286,7 @@
     <ClInclude Include="Game\Scenes\Scene_Title.h" />
     <ClInclude Include="Game\Objects\UI\UIImage.h" />
     <ClInclude Include="Game\Objects\Camera\TPSCamera.h" />
+    <ClInclude Include="Game\Objects\Stage\Knuckle.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Assets\Shader\BillBoard.hlsl">

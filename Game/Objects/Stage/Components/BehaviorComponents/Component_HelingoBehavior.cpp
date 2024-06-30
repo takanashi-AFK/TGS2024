@@ -23,6 +23,8 @@ void Component_HelingoBehavior::Initialize()
 	// コライダーの追加
 	holder_->AddCollider(new BoxCollider(XMFLOAT3(0, 0, 0), XMFLOAT3(1, 1, 1)));
 
+
+
 	// 子コンポーネントの追加
 	if (FindChildComponent("CircleRangeDetector") == false)AddChildComponent(CreateComponent("CircleRangeDetector", CircleRangeDetector, holder_, this));
 	if (FindChildComponent("Timer") == false)AddChildComponent(CreateComponent("Timer", Timer, holder_, this));
@@ -33,7 +35,6 @@ void Component_HelingoBehavior::Initialize()
 
 void Component_HelingoBehavior::Update()
 {
-	if (target_ == nullptr) target_ = (StageObject*)holder_->FindObject(targetName_);
 	if (target_ == nullptr) return;
 
 	auto detector = dynamic_cast<Component_CircleRangeDetector*>(GetChildComponent("CircleRangeDetector"));

@@ -15,6 +15,9 @@ Component_CactanBehavior::Component_CactanBehavior(string _name, StageObject* _h
 
 void Component_CactanBehavior::Initialize()
 {
+	holder_->SetAttribute(ENEMY);
+	holder_->AddCollider(new BoxCollider(XMFLOAT3(0, 0, 0), XMFLOAT3(1, 1, 1)));
+
 	// 必要なコンポーネントを追加
 	if (FindChildComponent("CircleRangeDetector") == false)AddChildComponent(CreateComponent("CircleRangeDetector",CircleRangeDetector,holder_,this));
 	if (FindChildComponent("ShootAttack") == false)AddChildComponent(CreateComponent("ShootAttack", ShootAttack, holder_, this));

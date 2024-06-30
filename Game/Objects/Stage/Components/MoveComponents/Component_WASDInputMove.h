@@ -5,6 +5,9 @@ using namespace DirectX;
 
 class Component_WASDInputMove : public Component
 {
+private:
+	bool isActive_;
+	XMVECTOR dir_;
 public:
 	Component_WASDInputMove(string _name, StageObject* _holder, Component* _parent);
 	void Initialize() override;
@@ -14,6 +17,7 @@ public:
 	
 	void Execute(){isActive_ = true;}
 	void Stop(){isActive_ = false;}
+	XMVECTOR GetMoveDirction() { return dir_; }
 
 private:
 	void Move(XMVECTOR _dir, float _speed);

@@ -192,6 +192,24 @@ void GameObject::KillAllChildren(void)
 	childList_.clear();
 }
 
+std::list<Collider*> GameObject::GetColliderList()
+{
+	return std::list<Collider*>();
+}
+
+Collider* GameObject::GetCollider(int index)
+{
+	// 要素番号がリストの範囲内かどうかをチェック
+	if (index < 0 || index >= colliderList_.size()) return nullptr;
+
+	// イテレータを使って指定した要素番号まで進む
+	auto it = colliderList_.begin();
+	std::advance(it, index);
+
+	// 指定した要素番号の要素を返す
+	return *it;
+}
+
 //オブジェクト削除（再帰）
 void GameObject::KillObjectSub(GameObject * obj)
 {

@@ -57,6 +57,18 @@ void Component_WASDInputMove::DrawData()
 	ImGui::SliderFloat("Speed", &speed, 0.01f, 1.0f);
 }
 
+void Component_WASDInputMove::Save(json& _saveObj)
+{
+	_saveObj["isActive_"] = isActive_;
+	_saveObj["speed_"] = speed;
+}
+
+void Component_WASDInputMove::Load(json& _loadObj)
+{
+	if(_loadObj.contains("isActive_"))isActive_ = _loadObj["isActive_"];
+    if(_loadObj.contains("speed_"))speed = _loadObj["speed_"];
+}
+
 void Component_WASDInputMove::Move(XMVECTOR _dir, float _speed)
 {
 	XMFLOAT3 pos = holder_->GetPosition();

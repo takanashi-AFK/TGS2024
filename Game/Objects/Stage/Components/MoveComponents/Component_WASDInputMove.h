@@ -14,7 +14,8 @@ public:
 	void Update() override;
 	void Release() override;
 	void DrawData() override;
-	
+	void Save(json& _saveObj) override;
+	void Load(json& _loadObj) override;
 	void Execute(){isActive_ = true;}
 	void Stop(){isActive_ = false;}
 	XMVECTOR GetMoveDirction() { return dir_; }

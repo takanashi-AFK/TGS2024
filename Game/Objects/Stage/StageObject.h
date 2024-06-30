@@ -22,6 +22,8 @@ protected:
 	string modelFilePath_;              // モデルのファイルパス
 	int modelHandle_;                   // モデル番号
 	AttributeType attribute_;           // 属性
+	bool isOnGround_;                   // 地面に設置するかどうか
+	float fallSpeed_;                   // 落下速度
 
 public:
 	/// <summary>
@@ -115,6 +117,9 @@ public:
 	/// </summary>
 	/// <returns></returns>
 	AttributeType GetAttribute() { return attribute_; }
+
+
+	void OnGround(float _fallSpeed);
 
 
 };

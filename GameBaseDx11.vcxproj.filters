@@ -288,6 +288,9 @@
     <ClCompile Include="Game\Objects\Stage\Components\MoveComponents\Component_TackleMove.cpp" />
     <ClCompile Include="Game\Objects\Stage\Components\AttackComponents\Component_MeleeAttack.cpp" />
     <ClCompile Include="Game\Objects\Stage\Knuckle.cpp" />
+    <ClCompile Include="Game\Scenes\Scene_StageSelect.cpp">
+      <Filter>03Game\Scenes\ReleaseScenes</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Collider\BoxCollider.h">
@@ -502,6 +505,9 @@
     <ClInclude Include="Game\Objects\Stage\Components\MoveComponents\Component_TackleMove.h" />
     <ClInclude Include="Game\Objects\Stage\Components\AttackComponents\Component_MeleeAttack.h" />
     <ClInclude Include="Game\Objects\Stage\Knuckle.h" />
+    <ClInclude Include="Game\Scenes\Scene_StageSelect.h">
+      <Filter>03Game\Scenes\ReleaseScenes</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Assets\Shader\Simple2D.hlsl">

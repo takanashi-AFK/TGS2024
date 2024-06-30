@@ -6,8 +6,6 @@ class Component_MeleeAttack : public Component_Attack
 {
 private:
 	XMVECTOR forward_; //‘O•ûŒü
-	XMVECTOR prevFrontVec_;
-
 public:
 	Component_MeleeAttack(string _name, StageObject* _holder, Component* _parent);
 	void Initialize() override;
@@ -15,7 +13,7 @@ public:
 	void Release() override;
 	void DrawData() override;
 
-	bool AutoDelete(float _time);
+	void AutoDelete(float _time);
 
 	void OnCollision(GameObject* _target) override;
 	

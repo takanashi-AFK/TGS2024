@@ -101,10 +101,10 @@ void Sprite::InitIndex()
 
 
 
-void Sprite::Draw(Transform& transform, RECT rect, float alpha)
+void Sprite::Draw(Transform& transform, RECT rect, float alpha, Direct3D::SHADER_TYPE _shader)
 {
 	//‚¢‚ë‚¢‚ëÝ’è
-	Direct3D::SetShader(Direct3D::SHADER_2D);
+	Direct3D::SetShader(_shader);
 	UINT stride = sizeof(VERTEX);
 	UINT offset = 0;
 	Direct3D::pContext_->IASetVertexBuffers(0, 1, &pVertexBuffer_, &stride, &offset);
@@ -164,4 +164,9 @@ void Sprite::Draw(Transform& transform, RECT rect, float alpha)
 
 	Direct3D::SetDepthBafferWriteEnable(true);
 
+}
+
+void Sprite::Draw(Transform& transform, RECT rect, float alpha)
+{
+	Draw(transform, rect, alpha, Direct3D::SHADER_2D);
 }

@@ -36,7 +36,7 @@ void UIProgressBar::Draw()
     // ゲージのスケールを計算
     transGauge_ = transform_;
     transGauge_.scale_.x = (gaugeNowValue_ / gaugeMaxValue_) * transFrame_.scale_.x;
-
+    
     // ゲージの画像を描画
     Image::SetTransform(pictGaugeHandle_, transGauge_);
     Image::Draw(pictGaugeHandle_);

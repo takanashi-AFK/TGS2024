@@ -27,7 +27,7 @@ public:
    
 	virtual void Initialize() override{}
 	virtual void Update() override{}
-	virtual void Draw() override;
+	virtual void Draw() override {};
 	virtual void Release() override{}
 
 	virtual void Save(json& saveObj) {};

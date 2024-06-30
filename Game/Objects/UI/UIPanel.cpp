@@ -24,7 +24,7 @@ void UIPanel::Draw()
 	// 各オブジェクトの描画処理
 	for (auto obj : objects_)
 	{
-		obj->SortChildren();
+		//obj->SortChildren();
 		obj->DrawData();
 
 	}

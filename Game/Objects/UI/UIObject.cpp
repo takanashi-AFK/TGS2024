@@ -11,17 +11,6 @@ UIObject::UIObject(string _name, UIType _type, GameObject* parent, int _layerNum
 {
 }
 
-void UIObject::Draw()
-{
-	//自身の描画処理
-	DrawData();
-
-	// 子オブジェクトを描画
-	for (auto child : children_) {
-		child->Draw();
-	}
-}
-
 void UIObject::ChildSave(json& _saveObj)
 {
 	// タイプを保存

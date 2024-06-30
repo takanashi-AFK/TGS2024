@@ -1,13 +1,15 @@
-#include "UIObject.h"
-
 #include "UIButton.h"
 #include "../../../Engine/Global.h"
 #include "../../../Engine/ImGui/imgui.h"
 #include "UIImage.h"
 #include "UIPanel.h"
 
-UIObject::UIObject(string _name, UIType _type, GameObject* parent, int _layerNum)
-	: GameObject(parent, _name), isEnable_(true), type_(_type), layerNumber_(_layerNum)
+UIObject::UIObject(string _name, UIType _type, UIObject* parent, int _layerNum)
+	:objectName_(_name), type_(_type), pParent_(parent), layerNumber_(_layerNum), isEnable_(true)
+{
+}
+
+UIObject::~UIObject()
 {
 }
 
@@ -103,6 +105,70 @@ void UIObject::ChildDrawData()
 	this->DrawData();
 }
 
+void UIObject::KillMe()
+{
+	state_.dead = 1;
+}
+
+UIObject* UIObject::FindChildObject(const std::string& name)
+{
+	//子供がいないなら終わり
+	if (childList_.empty())
+		return nullptr;
+
+	//イテレータ
+	auto it = childList_.begin();	//先頭
+	auto end = childList_.end();	//末尾
+
+	//子オブジェクトを1個ずつ探す
+	while (it != end)
+	{
+		//同じ名前のオブジェクトを見つけたらそれを返す
+		if((*it)->GetObjectName() == name)
+			return *it;
+
+		//その子供（孫）以降にいないか探す
+		UIObject* obj = (*it)->FindChildObject(name);
+		if (obj != nullptr) {
+			return obj;
+		}
+
+		//次の子へ
+		it++;
+	}
+
+	//見つからなかった
+	return nullptr;
+}
+
+const std::string& UIObject::GetObjectName(void) const
+{
+	return objectName_;
+}
+
+UIObject* UIObject::GetRootJob()
+{
+	if (GetParent() == nullptr)
+	{
+		return this;
+	}
+	else return GetParent()->GetRootJob();
+}
+
+UIObject* UIObject::GetParent(void)
+{
+	return pParent_;
+}
+
+void UIObject::PushBackChild(UIObject* obj)
+{
+	assert(obj != nullptr);
+
+	obj->pParent_ = this;
+	childList_.push_back(obj);
+
+}
+
 bool UIObject::CompareLayerNumber(UIObject* _object1, UIObject* _object2)
 {
 	return _object1->GetLayerNumber() < _object2->GetLayerNumber();
@@ -110,14 +176,14 @@ bool UIObject::CompareLayerNumber(UIObject* _object1, UIObject* _object2)
 
 void UIObject::SortChildren()
 {
-	std::sort(children_.begin(), children_.end(), UIObject::CompareLayerNumber);
-	for (auto child : children_) {
+	std::sort(childList_.begin(), childList_.end(), UIObject::CompareLayerNumber);
+	for (auto child : childList_) {
 		child->SortChildren();  // 再帰的に子オブジェクトもソート
 	}
 
 }
 
-UIObject* CreateUIObject(string _name, UIType _type, GameObject* _parent, int _layerNum)
+UIObject* CreateUIObject(string _name, UIType _type,UIObject* _parent, int _layerNum)
 {
 	// インスタンスを生成する
 	UIObject* obj = nullptr;
@@ -126,7 +192,8 @@ UIObject* CreateUIObject(string _name, UIType _type, GameObject* _parent, int _l
 		case UI_BUTTON:obj = new UIButton(_name, _parent,_layerNum); break;
 		case UI_IMAGE:obj = new UIImage(_name, _parent,_layerNum); break;
 		case UI_TEXT:break;
-		default:obj = new UIObject(_name, _type, _parent,_layerNum);break;
+        default:obj = nullptr; break;
+		//default:obj = new UIObject(_name, _type, _parent, _layerNum); break;
 	}
 	// インスタンスが生成できなかった場合はnullptrを返す
 	if (obj == nullptr)return nullptr;
@@ -150,4 +217,43 @@ string GetUITypeString(UIType _type)
 	case UI_TEXT:return "TEXT";
 	default:return "UNKNOWN";
 	}
+}
+
+void UIObject::UpdateSub()
+{
+	Update();
+	Transform();
+
+	for (auto it = childList_.begin(); it != childList_.end(); it++)
+	{
+		(*it)->UpdateSub();
+	}
+}
+
+void UIObject::DrawSub()
+{
+	Draw();
+
+	for (auto it = childList_.begin(); it != childList_.end(); it++)
+	{
+		(*it)->DrawSub();
+	}
+
+}
+
+void UIObject::ReleaseSub()
+{
+	for (auto it = childList_.begin(); it != childList_.end();)
+	{
+		(*it)->ReleaseSub();
+		SAFE_DELETE(*it);
+		it = childList_.erase(it);
+	}
+
+	Release();
+}
+
+bool UIObject::IsDead()
+{
+	return (state_.dead != 0);
 }

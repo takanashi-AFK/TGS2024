@@ -7,7 +7,7 @@ private:
 	string imageFilePath_;
 	int imageHandle_;
 public:
-	UIImage(string _name, GameObject* parent, int _layerNum);
+	UIImage(string _name, UIObject* parent, int _layerNum);
 	void Initialize() override;
 	void Update() override;
 	void Draw() override;

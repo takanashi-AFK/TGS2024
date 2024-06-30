@@ -7,13 +7,13 @@ class UIObject;
 
 using std::vector;
 
-class UIPanel : public GameObject
+class UIPanel : public UIObject
 {
 private:
 	vector<UIObject*> objects_;
 
 public:
-	UIPanel(GameObject* parent);
+	UIPanel(std::string name, UIObject* parent, int layerNum);
 	void Initialize() override;
 	void Update() override;
 	void Draw() override;

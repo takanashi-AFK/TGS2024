@@ -209,7 +209,6 @@
     <ClCompile Include="Game\Scenes\Scene_Title.cpp" />
     <ClCompile Include="Game\Objects\UI\UIImage.cpp" />
     <ClCompile Include="Game\Objects\Camera\TPSCamera.cpp" />
-    <ClCompile Include="Game\Objects\UI\UILayerNumber.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="EffekseeLib\EffekseerVFX.h" />
@@ -284,7 +283,6 @@
     <ClInclude Include="Game\Scenes\Scene_Title.h" />
     <ClInclude Include="Game\Objects\UI\UIImage.h" />
     <ClInclude Include="Game\Objects\Camera\TPSCamera.h" />
-    <ClInclude Include="Game\Objects\UI\UILayerNumber.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Assets\Shader\BillBoard.hlsl">

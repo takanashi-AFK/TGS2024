@@ -3,8 +3,8 @@
 // インクルード
 #include "UIObject.h"
 
-UIPanel::UIPanel(GameObject* parent)
-	: GameObject(parent, "UIPanel"), objects_()
+UIPanel::UIPanel(std::string name, UIObject* parent, int layerNum)
+	: UIObject(name, UI_NONE, parent, layerNum), objects_()
 {
 }
 

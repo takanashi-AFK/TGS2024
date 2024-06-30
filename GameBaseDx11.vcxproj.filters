@@ -286,7 +286,6 @@
     <ClCompile Include="EffekseeLib\EffekseerVFX.cpp" />
     <ClCompile Include="Game\Objects\Stage\Components\BehaviorComponents\Component_BossBehavior.cpp" />
     <ClCompile Include="Game\Objects\Stage\Components\MoveComponents\Component_TackleMove.cpp" />
-    <ClCompile Include="Game\Objects\UI\UILayerNumber.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Collider\BoxCollider.h">
@@ -499,7 +498,6 @@
     <ClInclude Include="EffekseeLib\EffekseerVFX.h" />
     <ClInclude Include="Game\Objects\Stage\Components\BehaviorComponents\Component_BossBehavior.h" />
     <ClInclude Include="Game\Objects\Stage\Components\MoveComponents\Component_TackleMove.h" />
-    <ClInclude Include="Game\Objects\UI\UILayerNumber.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Assets\Shader\Simple2D.hlsl">

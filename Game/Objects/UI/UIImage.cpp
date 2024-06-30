@@ -3,7 +3,7 @@
 #include "../../../Engine/Global.h"
 #include "../../../Engine/ImGui/imgui.h"
 
-UIImage::UIImage(string _name, GameObject* parent, int _layerNum)
+UIImage::UIImage(string _name, UIObject* parent, int _layerNum)
 	:UIObject(_name, UI_IMAGE, parent,_layerNum), imageHandle_(-1), imageFilePath_("")
 {
 }

@@ -21,7 +21,7 @@ namespace
 
 Component_BossBehavior::Component_BossBehavior(string _name, StageObject* _holder, Component* _parent)
     : Component(_holder, _name, BossBehavior, _parent), nowState_(WAIT), prevState_(WAIT), isActive_(false),
-     shotrange_{}, tacklerange_{}, nextStateTime_{},shotRate_(SHOT_RATE),rotateSpeed_(SHOT_ANGLE),target_(nullptr), angle_{}
+    shotrange_{}, tacklerange_{}, nextStateTime_{}, shotRate_(SHOT_RATE), rotateSpeed_(SHOT_ANGLE), target_(nullptr), angle_{}
 {
 }
 
@@ -36,7 +36,7 @@ void Component_BossBehavior::Initialize()
     // effekseer: :Effect‚Ì“Ç‚İ‚İ
     EFFEKSEERLIB::gEfk->AddEffect("sword", "Effects/Salamander12.efk");/*ššš*/
 
-    
+
 }
 
 void Component_BossBehavior::Update()
@@ -146,7 +146,7 @@ void Component_BossBehavior::Shot()
     timer->SetTime(SHOT_TIME);
     timer->Start();
 
-   
+
     angle_ += rotateSpeed_;
     holder_->SetRotateY(angle_);
 
@@ -227,7 +227,7 @@ void Component_BossBehavior::RandomTransition()
 {
     std::random_device rd;
     std::mt19937 gen(rd());
-    std::uniform_int_distribution<> dist(0, 2); // 0‚©‚ç2‚Ì”ÍˆÍ‚Å—”‚ğ¶¬
+    std::uniform_int_distribution<> dist(0, 1); // 0‚©‚ç2‚Ì”ÍˆÍ‚Å—”‚ğ¶¬
 
     int nextState = dist(gen);
 
@@ -240,7 +240,7 @@ void Component_BossBehavior::RandomTransition()
         nowState_ = TACKLE;
 
         // effekseer: :Effect‚ÌÄ¶î•ñ‚Ìİ’è
-        
+
         DirectX::XMStoreFloat4x4(&(t.matrix), holder_->GetWorldMatrix());/*ššš*/
         t.isLoop = false;/*ššš*/
         t.maxFrame = 60;/*ššš*/

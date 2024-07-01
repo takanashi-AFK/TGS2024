@@ -1,9 +1,8 @@
 #pragma once
-#include "../../../Engine/GameObject/GameObject.h"
 #include "../../../Engine/Json/JsonReader.h"
 #include <vector>
+#include "UIObject.h"
 
-class UIObject;
 
 using std::vector;
 

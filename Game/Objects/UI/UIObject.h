@@ -114,3 +114,18 @@ public:
 
 UIObject* CreateUIObject(string _name, UIType _type, UIObject* _parent, int _layerNum);
 string GetUITypeString(UIType _type);
+
+
+//オブジェクトを作成するテンプレート
+template <class T>
+T* Instantiate(UIObject* pParent)
+{
+	T* pNewObject = new T(pParent);
+	if (pParent != nullptr)
+	{
+		pParent->PushBackChild(pNewObject);
+	}
+	pNewObject->Initialize();
+	return pNewObject;
+}
+

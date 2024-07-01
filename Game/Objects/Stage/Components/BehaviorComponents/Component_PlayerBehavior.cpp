@@ -13,6 +13,7 @@
 #include "../../Stage.h"
 #include "../../../../../Engine/GameObject/Camera.h"
 #include "../TimerComponent/Component_Timer.h"
+#include "../MoveComponents/Component_TackleMove.h"
 
 Component_PlayerBehavior::Component_PlayerBehavior(string _name, StageObject* _holder, Component* _parent)
 	: Component(_holder, _name, PlayerBehavior,_parent)
@@ -30,6 +31,7 @@ void Component_PlayerBehavior::Initialize()
 	if (FindChildComponent("MeleeAttack") == false)AddChildComponent(CreateComponent("MeleeAttack", MeleeAttack, holder_, this));
 	if (FindChildComponent("ShootAttack") == false)AddChildComponent(CreateComponent("ShootAttack", ShootAttack, holder_, this));
 	if (FindChildComponent("Timer") == false)AddChildComponent(CreateComponent("Timer", Timer, holder_, this));
+	if (FindChildComponent("TackleMove") == false) AddChildComponent(CreateComponent("TackleMove", TackleMove, holder_, this));
 }
 
 void Component_PlayerBehavior::Update()
@@ -83,6 +85,17 @@ void Component_PlayerBehavior::Update()
 	else if(Input::IsMouseButtonDown(0))
 	{
 		melee->Execute();
+	}
+
+	if (Input::IsKeyDown(DIK_LSHIFT))
+	{
+		auto tackleMove = dynamic_cast<Component_TackleMove*>(GetChildComponent("TackleMove"));
+		if (tackleMove == nullptr) return;
+		XMVECTOR moveVec = move->GetMoveDirction();
+		if (XMVector3Equal(moveVec, XMVectorZero()))return;
+		XMVectorSetY(moveVec, 0);
+		tackleMove->SetDirection(moveVec);
+		tackleMove->Execute();
 	}
 }
 

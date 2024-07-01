@@ -26,6 +26,7 @@
 #include "BehaviorComponents/Component_BossBehavior.h"
 #include "MoveComponents/Component_TackleMove.h"
 #include "AttackComponents/Component_MeleeAttack.h"
+#include "MoveComponents/Component_Dash.h"
 
 Component::Component(StageObject* _holder, string _name,ComponentType _type)
     :holder_(_holder), name_(_name),type_(_type),childComponents_(),parent_(nullptr),isActive_(false)
@@ -224,6 +225,7 @@ Component* CreateComponent(string _name,ComponentType _type, StageObject* _holde
 	case BossBehavior:comp = new Component_BossBehavior(_name, _holder, _parent); break;
 	case TackleMove:comp = new Component_TackleMove(_name, _holder, _parent); break;
 	case MeleeAttack:comp = new Component_MeleeAttack(_name, _holder, _parent); break;
+	case Dash:comp = new Component_Dash(_name, _holder, _parent); break;
 	default:/* その他コンポーネントを追加する時は上記のように追加*/ break;
 	}
 	return comp;
@@ -259,6 +261,7 @@ string ComponentTypeToString(ComponentType _type)
 	case TackleMove: return "TackleMoveComponent";
 	case Timer: return "TimerComponent";
 	case WASDInputMove: return "WASDInputMoveComponent";
+	case Dash:return "DashComponent";
 	default: return "None";
 	}	
 }

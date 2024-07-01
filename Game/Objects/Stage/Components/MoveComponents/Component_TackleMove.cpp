@@ -33,7 +33,7 @@ void Component_TackleMove::Update()
 	XMFLOAT3 holderPosition = startPosition_;
 
 	// 移動ベクトルを作成
-	XMVECTOR move = XMLoadFloat3(&startPosition_) + XMVector3Normalize(direction_) * (distance_ * Direct3D::EaseFunc[easingType_](rate_) + speed_);
+	XMVECTOR move = XMLoadFloat3(&startPosition_) + XMVector3Normalize(direction_) * (distance_ * Direct3D::EaseFunc[easingType_](rate_) * speed_);
 
 	// 保有者の位置を移動
 	XMStoreFloat3(&holderPosition, move);

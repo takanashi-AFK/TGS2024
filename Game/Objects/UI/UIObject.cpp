@@ -183,6 +183,7 @@ void UIObject::SortChildren()
 
 }
 
+
 UIObject* CreateUIObject(string _name, UIType _type,UIObject* _parent, int _layerNum)
 {
 	// インスタンスを生成する

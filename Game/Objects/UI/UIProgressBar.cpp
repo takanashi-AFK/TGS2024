@@ -9,7 +9,7 @@ UIProgressBar::UIProgressBar(string _name, GameObject* parent)
     gaugeMaxValue_(100.0f),  // 初期値を設定
     gaugeNowValue_(50.0f),  // 初期値を設定
     gaugeAnimValue_(0.0f),  // 初期値を設定
-    color_(1.0f, 1.0f, 1.0f, 1.0f) // 初期化: 白色
+    color_(1.0f, 1.0f, 1.0f) // 初期化: 白色
 {
 }
 
@@ -36,7 +36,7 @@ void UIProgressBar::Draw()
 
     // ゲージの画像を描画
     Image::SetTransform(pictGaugeHandle_, transGauge_);
-    Image::Draw(pictGaugeHandle_,Direct3D::SHADER_BAR);
+    Image::Draw(pictGaugeHandle_,Direct3D::SHADER_BAR,color_);
     
     transFrame_ = transform_;
 
@@ -53,6 +53,7 @@ void UIProgressBar::Save(json& saveObj)
     saveObj["imageFilePath_"] = imageFilePath_;
     saveObj["gaugeMaxValue_"] = gaugeMaxValue_;
     saveObj["gaugeNowValue_"] = gaugeNowValue_;
+    saveObj["color_"] = { REFERENCE_XMFLOAT3(color_) };
 }
 
 void UIProgressBar::Load(json& loadObj)
@@ -63,6 +64,7 @@ void UIProgressBar::Load(json& loadObj)
     }
     gaugeMaxValue_ = loadObj["gaugeMaxValue_"].get<float>();
     gaugeNowValue_ = loadObj["gaugeNowValue_"].get<float>();
+    color_ = { loadObj["color_"][0].get<float>(),loadObj["color_"][1].get<float>(), loadObj["color_"][2].get<float>() };
 }
 
 void UIProgressBar::DrawData()
@@ -105,9 +107,10 @@ void UIProgressBar::DrawData()
         }
         ImGui::TreePop();
     }
-
     // カラー・ピッカー
-    ImGui::ColorEdit4("Color", (float*)&color_);
+    ImVec4 temp = {color_.x,color_.y,color_.z,0};
+    ImGui::ColorEdit4("Color", (float*)&temp);
+    color_ = { temp.x,temp.y,temp.z };
 
     // ゲージの制御
     ImGui::SliderFloat("Current Value", &gaugeNowValue_, 0.0f, gaugeMaxValue_);

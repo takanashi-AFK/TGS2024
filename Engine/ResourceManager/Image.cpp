@@ -79,12 +79,17 @@ namespace Image
 
 	void Draw(int handle, Direct3D::SHADER_TYPE _type)
 	{
+		Draw(handle, _type, XMFLOAT3(1, 1, 1));
+	}
+
+	void Draw(int handle, Direct3D::SHADER_TYPE _type, XMFLOAT3 _color)
+	{
 		if (handle < 0 || handle >= _datas.size() || _datas[handle] == nullptr)
 		{
 			return;
 		}
 		_datas[handle]->transform.Calclation();
-		_datas[handle]->pSprite->Draw(_datas[handle]->transform, _datas[handle]->rect, _datas[handle]->alpha,_type);
+		_datas[handle]->pSprite->Draw(_datas[handle]->transform, _datas[handle]->rect, _datas[handle]->alpha, _type,_color);
 	}
 
 

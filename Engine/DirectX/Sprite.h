@@ -73,8 +73,10 @@ public:
 	//引数：matrix	変換行列（ワールド行列）
 	//引数：rect	画像の切り抜き範囲
 	//引数：alpha	アルファ値（不透明度）
-	void Draw(Transform& transform, RECT rect, float alpha, Direct3D::SHADER_TYPE _shader);
+
 	void Draw(Transform& transform, RECT rect, float alpha);
+	void Draw(Transform& transform, RECT rect, float alpha, Direct3D::SHADER_TYPE _shader);
+	void Draw(Transform& transform, RECT rect, float alpha, Direct3D::SHADER_TYPE _shader,XMFLOAT3 _color);
 	
 	//画像サイズの取得
 	//戻値：画像サイズ

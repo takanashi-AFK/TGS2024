@@ -9,7 +9,7 @@ class UIProgressBar : public UIObject
 {
 private:
 	float gaugeMaxValue_, gaugeNowValue_, gaugeAnimValue_;
-	ImVec4 color_;  // F‚ğŠi”[‚·‚éƒƒ“ƒo•Ï”
+	XMFLOAT3 color_;  // F‚ğŠi”[‚·‚éƒƒ“ƒo•Ï”
 	string imageFilePath_;
 	int imageHandle_;
 	int pictGaugeHandle_;
@@ -33,8 +33,8 @@ public:
 	void SetGaugeCurrentValue(float currentValue);
 	void SetGaugeAnimValue();
 
-	const ImVec4& GetColor() const { return color_; }
-	void SetColor(const ImVec4& color) { color_ = color; }
+	/*const ImVec4& GetColor() const { return color_; }
+	void SetColor(const ImVec4& color) { color_ = color; }*/
 	
 	float GetGaugeMaxValue() { return gaugeMaxValue_; }
 	float GetGaugeCurrentValue() { return gaugeNowValue_; }

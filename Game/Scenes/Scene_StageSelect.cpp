@@ -12,7 +12,10 @@ Scene_StageSelect::Scene_StageSelect(GameObject* parent)
 
 void Scene_StageSelect::Initialize()
 {
-	uipanel = Instantiate<UIPanel>(this); 
+	uipanel = Instantiate<UIPanel>(this); {
+		json uiData;
+		if (JsonReader::Load("Datas/UILayouts/StageSelect.json", uiData))uipanel->Load(uiData);
+	}
 }
 
 void Scene_StageSelect::Update()

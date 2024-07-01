@@ -17,7 +17,7 @@ void Scene_StageSelect::Initialize()
 
 void Scene_StageSelect::Update()
 {
-	UIButton* nextuibutton = (UIButton*)uipanel->GetUIObject("");
+	UIButton* nextuibutton = (UIButton*)uipanel->GetUIObject("nextButton");
 	
 	//ボタンが押されたら次の画像に移行。
 	if (nextuibutton->OnClick()) {

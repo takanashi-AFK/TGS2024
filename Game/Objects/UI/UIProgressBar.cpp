@@ -29,7 +29,7 @@ void UIProgressBar::Update()
 void UIProgressBar::Draw()
 {
     // 用のシェーダーを設定
-    Direct3D::SetShader(Direct3D::SHADER_BAR);
+    Direct3D::SetShader(Direct3D::SHADER_2D);
     // 画像が読み込まれていない場合は処理を行わない
     if (imageHandle_ < 0) return;
    
@@ -41,14 +41,14 @@ void UIProgressBar::Draw()
     Image::SetTransform(pictGaugeHandle_, transGauge_);
     Image::Draw(pictGaugeHandle_);
 
-   
+    Direct3D::SetShader(Direct3D::SHADER_3D);
 
     transFrame_ = transform_;
 
     Image::SetTransform(pictFrameHandle_, transFrame_);
     Image::Draw(pictFrameHandle_);
     
-    Direct3D::SetShader(Direct3D::SHADER_3D);
+    
 }
 
 void UIProgressBar::Release()

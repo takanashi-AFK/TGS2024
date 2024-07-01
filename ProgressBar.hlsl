@@ -41,5 +41,5 @@ VS_OUTPUT VS(float4 pos : POSITION, float4 uv : TEXCOORD)
 float4 PS(VS_OUTPUT input) : SV_Target
 {
     
-    return float4(1,0,0,0);
+    return float4(1,0,0,1);
 }

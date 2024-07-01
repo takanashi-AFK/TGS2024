@@ -26,20 +26,24 @@ void Scene_Test::Initialize()
 		pStage->Load(stageData);
 	}
 
-	// UIパネルの生成
-	UIPanel* uiPanel = Instantiate<UIPanel>(this); {
-		/*json uiData;
-		JsonReader::Load("Datas/StageLayouts/DebugDefaultStage.json", uiData);
-		uiPanel->Load(uiData);*/
-	}
-	
-	// デフォルトカメラ情報の読み込み
-	json camData;
-	if (JsonReader::Load("Datas/CameraLayouts/camera.json", camData)) {
-		Camera::SetPosition(JFLOAT3(camData["position"]));
-		Camera::SetTarget(JFLOAT3(camData["target"]));
-	}
+//	//// UIパネルの生成
+//	//UIPanel* uiPanel = Instantiate<UIPanel>(this); {
+//	//	/*json uiData;
+//	//	JsonReader::Load("Datas/StageLayouts/DebugDefaultStage.json", uiData);
+//	//	uiPanel->Load(uiData);*/
+//	//}
 
+
+// デフォルトカメラ情報の読み込み
+json camData;
+if (JsonReader::Load("Datas/CameraLayouts/camera.json", camData)) {
+    Camera::SetPosition(JFLOAT3(camData["position"]));
+    Camera::SetTarget(JFLOAT3(camData["target"]));
+}
+
+// UIPanelの作成
+UIPanel* pUIPanel_ = (UIPanel*)CreateUIObject(objectName_, UI_NONE, nullptr, 0);
+	
 	// TPSカメラの生成
 	TPSCamera* tpsCamera = Instantiate<TPSCamera>(this);
 
@@ -47,7 +51,7 @@ void Scene_Test::Initialize()
 	// ゲームエディターの生成
 	GameEditor* gameEditor = Instantiate<GameEditor>(this);
 	gameEditor->SetEditStage(pStage);
-	gameEditor->SetEditUIPanel(uiPanel);
+	gameEditor->SetEditUIPanel(pUIPanel_);
 	gameEditor->SetTPSCamera(tpsCamera);
 #endif // _DEBUG
 }

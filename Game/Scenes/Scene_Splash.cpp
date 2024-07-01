@@ -19,20 +19,20 @@ Scene_Splash::Scene_Splash(GameObject* _parent)
 
 void Scene_Splash::Initialize()
 {
-	//// UIパネルの生成
-	UIPanel* pUIPanel = Instantiate<UIPanel>(this); {
-		json uiData;
-		if (JsonReader::Load("Datas/UILayouts/SplashScene.json", uiData))pUIPanel->Load(uiData);
-	}
+	////// UIパネルの生成
+	//UIPanel* pUIPanel = Instantiate<UIPanel>(this); {
+	//	json uiData;
+	//	if (JsonReader::Load("Datas/UILayouts/SplashScene.json", uiData))pUIPanel->Load(uiData);
+	//}
 }
 
 void Scene_Splash::Update()
 {
-	// n秒経過したらシーンを移動
-	if (count_ >= LIMIT_TIME * FPS)((SceneManager*)FindObject("SceneManager"))->ChangeScene(SCENE_ID_TITLE, TID_BLACKOUT);
-	
-	// カウントアップ
-	count_++;
+	//// n秒経過したらシーンを移動
+	//if (count_ >= LIMIT_TIME * FPS)((SceneManager*)FindObject("SceneManager"))->ChangeScene(SCENE_ID_TITLE, TID_BLACKOUT);
+	//
+	//// カウントアップ
+	//count_++;
 }
 
 void Scene_Splash::Draw()

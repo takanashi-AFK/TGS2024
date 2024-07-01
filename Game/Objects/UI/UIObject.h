@@ -27,8 +27,8 @@ protected:
 	std::vector<UIObject*> childList_;  // 子オブジェクトのリスト
 
 
-	
-	
+
+
 
 	// 親オブジェクト
 	UIObject* pParent_;
@@ -46,16 +46,16 @@ protected:
 public:
 
 	//コンストラクタ
-	UIObject(string _name,UIType _type,UIObject* parent, int _layerNum);
-   
+	UIObject(string _name, UIType _type, UIObject* parent, int _layerNum);
+
 	//デストラクタ
 	virtual ~UIObject();
 
 	//各オブジェクトで必ず作る関数
-	virtual void Initialize(void) = 0;
-	virtual void Update(void) = 0;
-	virtual void Draw() = 0;
-	virtual void Release(void) = 0;
+	virtual void Initialize() {};
+	virtual void Update() {};
+	virtual void Draw() {};
+	virtual void Release() {};
 
 	//自分の該当関数を読んだ後、子供の関数も呼ぶ
 	void UpdateSub();
@@ -113,18 +113,3 @@ public:
 
 UIObject* CreateUIObject(string _name, UIType _type, UIObject* _parent, int _layerNum);
 string GetUITypeString(UIType _type);
-
-
-//オブジェクトを作成するテンプレート
-template <class T>
-T* Instantiate(UIObject* pParent)
-{
-	T* pNewObject = new T(pParent);
-	if (pParent != nullptr)
-	{
-		pParent->PushBackChild(pNewObject);
-	}
-	pNewObject->Initialize();
-	return pNewObject;
-}
-

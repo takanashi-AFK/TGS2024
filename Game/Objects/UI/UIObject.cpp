@@ -7,6 +7,7 @@
 #include "UIButton.h"
 #include "UIImage.h"
 #include "UIText.h"
+#include "UIProgressBar.h"
 
 UIObject::UIObject(string _name, UIType _type, GameObject* parent)
 	: GameObject(parent, _name), isEnable_(true), type_(_type), isPositionLocked_(false), isRotateLocked_(false), isScaleLocked_(false)
@@ -95,6 +96,7 @@ UIObject* CreateUIObject(string _name, UIType _type, GameObject* _parent)
 		case UI_BUTTON:obj = new UIButton(_name, _parent); break;
 		case UI_IMAGE:obj = new UIImage(_name, _parent); break;
 		case UI_TEXT: obj = new UIText(_name, _parent); break;
+		case UI_PROGRESSBAR: obj = new UIProgressBar(_name, _parent); break;
 		default:obj = new UIObject(_name, _type, _parent);break;
 	}
 	// インスタンスが生成できなかった場合はnullptrを返す
@@ -117,6 +119,7 @@ string GetUITypeString(UIType _type)
 	case UI_BUTTON:return "BUTTON";
 	case UI_IMAGE:return "IMAGE";
 	case UI_TEXT:return "TEXT";
+	case UI_PROGRESSBAR:return "PROGRESSBAR";
 	default:return "UNKNOWN";
 	}
 }

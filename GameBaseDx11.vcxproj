@@ -186,6 +186,7 @@
     <ClCompile Include="Game\Objects\Stage\Components\MoveComponents\Component_HelingoFall.cpp" />
     <ClCompile Include="Game\Objects\Stage\Components\RotationComponents\Component_RotationY.cpp" />
     <ClCompile Include="Game\Objects\Stage\StageObject.cpp" />
+    <ClCompile Include="Game\Objects\UI\UIProgressBar.cpp" />
     <ClCompile Include="Game\Scenes\Scene_End.cpp" />
     <ClCompile Include="Game\Scenes\Scene_Play.cpp" />
     <ClCompile Include="Game\Scenes\Scene_Test.cpp" />
@@ -259,6 +260,7 @@
     <ClInclude Include="Game\Objects\Stage\Components\RotationComponents\Component_RotationY.h" />
     <ClInclude Include="Game\Objects\Stage\Components\TimerComponent\Component_Timer.h" />
     <ClInclude Include="Game\Objects\Stage\StageObject.h" />
+    <ClInclude Include="Game\Objects\UI\UIProgressBar.h" />
     <ClInclude Include="Game\Scenes\Scene_Test.h" />
     <ClInclude Include="Game\Objects\Stage\Stage.h" />
     <ClInclude Include="Game\Objects\Stage\Components\RotationComponents\Component_Rotation.h" />

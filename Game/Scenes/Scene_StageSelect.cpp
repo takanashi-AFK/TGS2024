@@ -22,14 +22,14 @@ void Scene_StageSelect::Update()
 {
 	
 	//2つのステージの画像を表示。
-	UIButton* stageselectButton1 = (UIButton*)uipanel->GetUIObject("stageselectButton1");
+	UIButton* stageselectButton1 = (UIButton*)uipanel->GetUIObject("StageSelectButton1");
 	if (stageselectButton1 == nullptr)return;
 	if (stageselectButton1->OnClick()) {
 		SceneManager* pChangeScene = (SceneManager*)FindObject("SceneManager");
 		pChangeScene->ChangeScene(SCENE_ID_PLAY, TID_BLACKOUT);
 	}
 
-	UIButton*stageselectButton2 =(UIButton*)uipanel->GetUIObject("stageselectButton2");
+	UIButton*stageselectButton2 =(UIButton*)uipanel->GetUIObject("StageSelectButton2");
 	if (stageselectButton2 == nullptr)return;
 	if (stageselectButton2->OnClick()) {
 			SceneManager* pChangeScene = (SceneManager*)FindObject("SceneManager");

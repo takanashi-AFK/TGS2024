@@ -16,15 +16,15 @@ Scene_Test::Scene_Test(GameObject * parent)
 
 void Scene_Test::Initialize()
 {
-	// スカイスフィアの生成
-	SkySphere* skySphere = Instantiate<SkySphere>(this);
+	//// スカイスフィアの生成
+	//SkySphere* skySphere = Instantiate<SkySphere>(this);
 
-	// ステージを作成
-	Stage* pStage = Instantiate<Stage>(this); {
-		/*json stageData;
-		JsonReader::Load("Datas/StageLayouts/DebugDefaultStage.json", stageData);
-		pStage->Load(stageData);*/
-	}
+	//// ステージを作成
+	//Stage* pStage = Instantiate<Stage>(this); {
+	//	/*json stageData;
+	//	JsonReader::Load("Datas/StageLayouts/DebugDefaultStage.json", stageData);
+	//	pStage->Load(stageData);*/
+	//}
 
 	// UIパネルの生成
 	UIPanel* uiPanel = Instantiate<UIPanel>(this); {
@@ -41,14 +41,14 @@ void Scene_Test::Initialize()
 	}
 
 	// TPSカメラの生成
-	TPSCamera* tpsCamera = Instantiate<TPSCamera>(this);
+	//TPSCamera* tpsCamera = Instantiate<TPSCamera>(this);
 
 #ifdef _DEBUG
 	// ゲームエディターの生成
 	GameEditor* gameEditor = Instantiate<GameEditor>(this);
-	gameEditor->SetEditStage(pStage);
+	//gameEditor->SetEditStage(pStage);
 	gameEditor->SetEditUIPanel(uiPanel);
-	gameEditor->SetTPSCamera(tpsCamera);
+	//gameEditor->SetTPSCamera(tpsCamera);
 #endif // _DEBUG
 }
 

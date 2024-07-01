@@ -98,10 +98,10 @@ void Sprite::InitIndex()
 	Direct3D::pDevice_->CreateBuffer(&bd, &InitData, &pIndexBuffer_);
 }
 
-void Sprite::Draw(Transform& transform, RECT rect, float alpha)
+void Sprite::Draw(Transform& transform, RECT rect, float alpha, Direct3D::SHADER_TYPE _shader)
 {
 	//Ç¢ÇÎÇ¢ÇÎê›íË
-	Direct3D::SetShader(Direct3D::SHADER_2D);
+	Direct3D::SetShader(_shader);
 	Direct3D::SetBlendMode(Direct3D::BLEND_DEFAULT);
 
 	UINT stride = sizeof(VERTEX);
@@ -159,4 +159,9 @@ void Sprite::Draw(Transform& transform, RECT rect, float alpha)
 	Direct3D::SetShader(Direct3D::SHADER_3D);
 
 	Direct3D::SetDepthBafferWriteEnable(true);
+}
+
+void Sprite::Draw(Transform& transform, RECT rect, float alpha)
+{
+	Draw(transform, rect, alpha, Direct3D::SHADER_2D);
 }

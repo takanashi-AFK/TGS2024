@@ -1,7 +1,7 @@
 //───────────────────────────────────────
  // テクスチャ＆サンプラーデータのグローバル変数定義
 //───────────────────────────────────────
-Texture2D g_texture : register(t0);	// テクスチャー
+Texture2D g_texture : register(t0); // テクスチャー
 SamplerState g_sampler : register(s0); // テクスチャーサンプラー
 
 //───────────────────────────────────────
@@ -10,9 +10,9 @@ SamplerState g_sampler : register(s0); // テクスチャーサンプラー
 //───────────────────────────────────────
 cbuffer global
 {
-	matrix g_matWorld;		// 頂点座標変換行列
-	matrix g_matTexture;	// テクスチャ座標変換行列
-	float4 g_vecColor;		// テクスチャ合成色
+    matrix g_matWorld; // 頂点座標変換行列
+    matrix g_matTexture; // テクスチャ座標変換行列
+    float4 g_vecColor; // テクスチャ合成色
 };
 
 //───────────────────────────────────────
@@ -20,8 +20,8 @@ cbuffer global
 //───────────────────────────────────────
 struct VS_OUTPUT
 {
-	float4 pos	: SV_POSITION;	// 位置
-	float2 uv	: TEXCOORD;		// UV座標
+    float4 pos : SV_POSITION; // 位置
+    float2 uv : TEXCOORD; // UV座標
 };
 
 //───────────────────────────────────────
@@ -29,10 +29,10 @@ struct VS_OUTPUT
 //───────────────────────────────────────
 VS_OUTPUT VS(float4 pos : POSITION, float4 uv : TEXCOORD)
 {
-	VS_OUTPUT output;
-	output.pos = mul(pos, g_matWorld);
-	output.uv = mul(uv, g_matTexture);
-	return output;
+    VS_OUTPUT output;
+    output.pos = mul(pos, g_matWorld);
+    output.uv = mul(uv, g_matTexture);
+    return output;
 }
 
 //───────────────────────────────────────
@@ -40,6 +40,6 @@ VS_OUTPUT VS(float4 pos : POSITION, float4 uv : TEXCOORD)
 //───────────────────────────────────────
 float4 PS(VS_OUTPUT input) : SV_Target
 {
-    return g_vecColor * g_texture.Sample(g_sampler, input.uv);
+    return g_vecColor * g_texture.Sample(g_sampler, input.uv); //g_vecColor * g_texture.Sample(g_sampler, input.uv);
 
 }

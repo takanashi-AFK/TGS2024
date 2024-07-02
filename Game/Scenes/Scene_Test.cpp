@@ -26,12 +26,8 @@ void Scene_Test::Initialize()
 		pStage->Load(stageData);
 	}
 
-//	//// UIパネルの生成
-//	//UIPanel* uiPanel = Instantiate<UIPanel>(this); {
-//	//	/*json uiData;
-//	//	JsonReader::Load("Datas/StageLayouts/DebugDefaultStage.json", uiData);
-//	//	uiPanel->Load(uiData);*/
-//	//}
+	// UIPanelの作成
+	UIPanel* pUIPanel_ = (UIPanel*)CreateUIObject(objectName_, UI_PANEL, nullptr, 0);
 
 
 // デフォルトカメラ情報の読み込み
@@ -41,10 +37,7 @@ if (JsonReader::Load("Datas/CameraLayouts/camera.json", camData)) {
     Camera::SetTarget(JFLOAT3(camData["target"]));
 }
 
-// UIPanelの作成
-UIPanel* pUIPanel_ = (UIPanel*)CreateUIObject(objectName_, UI_NONE, nullptr, 0);
 
-	
 	// TPSカメラの生成
 	TPSCamera* tpsCamera = Instantiate<TPSCamera>(this);
 

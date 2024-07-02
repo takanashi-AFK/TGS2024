@@ -43,6 +43,7 @@ if (JsonReader::Load("Datas/CameraLayouts/camera.json", camData)) {
 
 // UIPanel‚Ìì¬
 UIPanel* pUIPanel_ = (UIPanel*)CreateUIObject(objectName_, UI_NONE, nullptr, 0);
+
 	
 	// TPSƒJƒƒ‰‚Ì¶¬
 	TPSCamera* tpsCamera = Instantiate<TPSCamera>(this);

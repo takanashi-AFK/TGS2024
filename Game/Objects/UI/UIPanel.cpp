@@ -1,7 +1,7 @@
 #include "UIPanel.h"
 
 UIPanel::UIPanel(std::string name, UIObject* parent, int layerNum)
-	: UIObject(name, UI_NONE, parent, layerNum), objects_()
+	: UIObject(name, UI_PANEL, parent, layerNum), objects_()
 {
 }
 

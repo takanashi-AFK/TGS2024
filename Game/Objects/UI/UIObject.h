@@ -26,13 +26,7 @@ protected:
 	UIType type_;	// UIの種類
 	int layerNumber_; // レイヤー番号
 	std::vector<UIObject*> childList_;  // 子オブジェクトのリスト
-
-
-
-
-
-	// 親オブジェクト
-	UIObject* pParent_;
+	UIObject* pParent_;// 親オブジェクト
 
 	//フラグ
 	struct UI_STATE
@@ -47,6 +41,8 @@ protected:
 public:
 
 	//コンストラクタ
+	UIObject();
+	UIObject(UIObject* parent);
 	UIObject(string _name, UIType _type, UIObject* parent, int _layerNum);
 
 	//デストラクタ
@@ -74,14 +70,12 @@ public:
 	void ChildLoad(json& _loadObj);
 	void ChildDrawData();
 
-	void KillMe();			// 自分を削除する
+	void KillMe();	// 自分を削除する
 
 	//名前でオブジェクトを検索（対象は自分の子供以下）
 	//引数：name	検索する名前
 	//戻値：見つけたオブジェクトのアドレス（見つからなければnullptr）
 	UIObject* FindChildObject(const std::string& name);
-
-
 	UIObject* FindObject(const std::string& name){ return GetRootJob()->FindChildObject(name); }
 
 
@@ -109,6 +103,10 @@ public:
 
 	//子オブジェクトをソートするための関数
 	void SortChildren();
+
+	void AddUIObject(UIObject* _object);
+	void DeleteUIObject(UIObject* _object);
+	void DeleteAllUIObject();
 
 };
 

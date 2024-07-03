@@ -4,9 +4,27 @@
 #include "UIImage.h"
 #include "UIPanel.h"
 
+UIObject::UIObject():
+	UIObject("",UI_NONE,nullptr,0)
+{
+
+}
+
+UIObject::UIObject(UIObject* parent):
+	UIObject("",UI_NONE,parent,0)
+{
+}
+
 UIObject::UIObject(string _name, UIType _type, UIObject* parent, int _layerNum)
 	:objectName_(_name), type_(_type), pParent_(parent), layerNumber_(_layerNum), isEnable_(true)
 {
+
+	childList_.clear();
+	state_ = { 0, 1, 1, 0 };
+
+	if (parent)
+		transform_.pParent_ = &parent->transform_;
+
 }
 
 UIObject::~UIObject()
@@ -177,10 +195,31 @@ bool UIObject::CompareLayerNumber(UIObject* _object1, UIObject* _object2)
 void UIObject::SortChildren()
 {
 	std::sort(childList_.begin(), childList_.end(), UIObject::CompareLayerNumber);
-	for (auto child : childList_) {
-		child->SortChildren();  // 再帰的に子オブジェクトもソート
-	}
+}
 
+void UIObject::AddUIObject(UIObject* _object)
+{
+	// リストに追加
+	if (_object != nullptr)childList_.push_back(_object);
+}
+
+void UIObject::DeleteUIObject(UIObject* _object)
+{
+	// オブジェクトを削除する
+	_object->KillMe();
+
+	// オブジェクトのイテレータを取得する
+	auto it = std::find(childList_.begin(), childList_.end(), _object);
+
+	// イテレータが見つかった場合、ベクターから削除する
+	if (it != childList_.end()) childList_.erase(it);
+}
+
+void UIObject::DeleteAllUIObject()
+{
+	// 全てのオブジェクトを削除
+	for (auto obj : childList_)obj->KillMe();
+	childList_.clear();
 }
 
 
@@ -193,7 +232,7 @@ UIObject* CreateUIObject(string _name, UIType _type,UIObject* _parent, int _laye
 		case UI_BUTTON:obj = new UIButton(_name, _parent,_layerNum); break;
 		case UI_IMAGE:obj = new UIImage(_name, _parent,_layerNum); break;
 		case UI_TEXT:break;
-		case UI_PANEL:obj = new UIPanel(_name, _parent, _layerNum); break;
+		case UI_PANEL:obj = new UIPanel(); break;
         default:obj = nullptr; break;
 		//default:obj = new UIObject(_name, _type, _parent, _layerNum); break;
 	}
@@ -223,7 +262,7 @@ string GetUITypeString(UIType _type)
 
 void UIObject::UpdateSub()
 {
-	Update();
+	//Update();
 	Transform();
 
 	for (auto it = childList_.begin(); it != childList_.end(); it++)
@@ -234,7 +273,7 @@ void UIObject::UpdateSub()
 
 void UIObject::DrawSub()
 {
-	Draw();
+	//Draw();
 
 	for (auto it = childList_.begin(); it != childList_.end(); it++)
 	{
@@ -245,14 +284,14 @@ void UIObject::DrawSub()
 
 void UIObject::ReleaseSub()
 {
+	//Release();
+
 	for (auto it = childList_.begin(); it != childList_.end();)
 	{
 		(*it)->ReleaseSub();
 		SAFE_DELETE(*it);
 		it = childList_.erase(it);
 	}
-
-	Release();
 }
 
 bool UIObject::IsDead()

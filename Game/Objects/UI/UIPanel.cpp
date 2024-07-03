@@ -3,52 +3,57 @@
 #include "UIImage.h"
 #include "../../Otheres/GameEditor.h"
 
-UIPanel::UIPanel(std::string name, UIObject* parent, int layerNum)
-	: UIObject(name, UI_PANEL, parent, layerNum), objects_()
+UIPanel* pUIPanel_ = new UIPanel;
+
+UIPanel::UIPanel()
+	: UIObject("UIPanel",UI_PANEL,nullptr,0)
 {
 }
 
 void UIPanel::Initialize()
 {
-	//UIPanel* pUIButton = (UIPanel*)CreateUIObject(objectName_, UI_BUTTON, nullptr, 0);
-	//UIPanel* pUIImage = (UIPanel*)CreateUIObject(objectName_, UI_IMAGE, nullptr, 0);
+	//pUIButton_ = (UIButton*)CreateUIObject("UIButton", UI_BUTTON, this, 0);
+	//pUIImage_ = (UIImage*)CreateUIObject("UIImage", UI_IMAGE, this, 0);
 
-	////if (pUIButton != nullptr) AddUIObject(pUIButton);
-	////if (pUIImage != nullptr) AddUIObject(pUIImage);
-	////PushBackChild(pUIButton);
-	////PushBackChild(pUIImage);
-	//GameEditor* pGameEditor = new GameEditor(nullptr);
-	//pGameEditor->SetEditUIPanel(this);
-
+	//AddUIObject(pUIButton_);
+	//AddUIObject(pUIImage_);
 }
 
 void UIPanel::Update()
 {
+	UpdateSub();
 }
 
 void UIPanel::Draw()
 {
-	//レイヤー番号でオブジェクトをソート
-	SortUIObject();
 
-	// 各オブジェクトの描画処理
-	for (auto obj : objects_)
-	{
-		//obj->SortChildren();
-		obj->DrawData();
+	////pGameEditor->SetEditUIPanel(this);
 
-	}
+	////レイヤー番号でオブジェクトをソート
+	//SortUIObject();
+
+	//// 各オブジェクトの描画処理
+	//for (auto obj : objects_)
+	//{
+	//	//obj->SortChildren();
+	//	obj->DrawData();
+
+	//}
+
+	SortChildren();
+	DrawData();
 
 }
 
 void UIPanel::Release()
 {
+	ReleaseSub();
 }
 
 void UIPanel::Save(json& _saveObj)
 {
 	// 各オブジェクトの保存処理
-	for (auto obj : objects_)obj->ChildSave(_saveObj[obj->GetObjectName()]);
+	for (auto obj : childList_)obj->ChildSave(_saveObj[obj->GetObjectName()]);
 }
 
 void UIPanel::Load(json& _loadObj)
@@ -75,52 +80,52 @@ void UIPanel::Load(json& _loadObj)
 void UIPanel::DrawData()
 {
 	// 各オブジェクトの描画処理
-	for (auto obj : objects_)
+	for (auto obj : childList_)
 	{
 		obj->DrawData();
 	}
 }
 
-void UIPanel::AddUIObject(UIObject* _object)
-{
-	// リストに追加
-	if (_object != nullptr)objects_.push_back(_object);
-}
-
-void UIPanel::DeleteUIObject(UIObject* _object)
-{
-	// オブジェクトを削除する
-	_object->KillMe();
-
-	// オブジェクトのイテレータを取得する
-	auto it = std::find(objects_.begin(), objects_.end(), _object);
-
-	// イテレータが見つかった場合、ベクターから削除する
-	if (it != objects_.end()) objects_.erase(it);
-}
-
-void UIPanel::DeleteAllUIObject()
-{
-	// 全てのオブジェクトを削除
-	for (auto obj : objects_)obj->KillMe();
-	objects_.clear();
-}
-
-void UIPanel::SortUIObject()
-{
-	// レイヤー番号でソート
-	std::sort(objects_.begin(), objects_.end(), UIObject::CompareLayerNumber);
-}
-
-UIObject* UIPanel::GetUIObject(string _name)
-{
-	UIObject* result = nullptr;
-
-	for (auto obj : objects_) {
-		if (obj->GetObjectName() == _name) {
-			result = obj;
-			break;
-		}
-	}
-	return result;
-}
+//void UIPanel::AddUIObject(UIObject* _object)
+//{
+//	// リストに追加
+//	if (_object != nullptr)objects_.push_back(_object);
+//}
+//
+//void UIPanel::DeleteUIObject(UIObject* _object)
+//{
+//	// オブジェクトを削除する
+//	_object->KillMe();
+//
+//	// オブジェクトのイテレータを取得する
+//	auto it = std::find(objects_.begin(), objects_.end(), _object);
+//
+//	// イテレータが見つかった場合、ベクターから削除する
+//	if (it != objects_.end()) objects_.erase(it);
+//}
+//
+//void UIPanel::DeleteAllUIObject()
+//{
+//	// 全てのオブジェクトを削除
+//	for (auto obj : objects_)obj->KillMe();
+//	objects_.clear();
+//}
+//
+//void UIPanel::SortUIObject()
+//{
+//	// レイヤー番号でソート
+//	std::sort(objects_.begin(), objects_.end(), UIObject::CompareLayerNumber);
+//}
+//
+//UIObject* UIPanel::GetUIObject(string _name)
+//{
+//	UIObject* result = nullptr;
+//
+//	for (auto obj : objects_) {
+//		if (obj->GetObjectName() == _name) {
+//			result = obj;
+//			break;
+//		}
+//	}
+//	return result;
+//}

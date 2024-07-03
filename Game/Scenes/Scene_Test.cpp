@@ -9,6 +9,7 @@
 #include "../../Engine/Global.h"
 #include "../Objects/Camera/TPSCamera.h"
 
+
 Scene_Test::Scene_Test(GameObject * parent)
 	: GameObject(parent, "Scene_Test")
 {
@@ -26,12 +27,6 @@ void Scene_Test::Initialize()
 		pStage->Load(stageData);
 	}
 
-	// UIPanelの作成
-	//UIPanel* pUIPanel_ = (UIPanel*)CreateUIObject(objectName_, UI_PANEL, nullptr, 0);
-
-
-	UIPanel* pUIPanel_ = new UIPanel("UIPanel",nullptr,0);
-
 // デフォルトカメラ情報の読み込み
 json camData;
 if (JsonReader::Load("Datas/CameraLayouts/camera.json", camData)) {
@@ -45,14 +40,7 @@ if (JsonReader::Load("Datas/CameraLayouts/camera.json", camData)) {
 
 #ifdef _DEBUG
 	// ゲームエディターの生成
-	//GameEditor* gameEditor = Instantiate<GameEditor>(this);
-
-	GameEditor* gameEditor = new GameEditor(nullptr);
-
-	//pUIPanel_->PushBackChild((UIPanel*)gameEditor);
-	
-	//PushBackChildする
-	PushBackChild(gameEditor);
+	GameEditor* gameEditor = Instantiate<GameEditor>(this);
 
 
 	gameEditor->SetEditStage(pStage);

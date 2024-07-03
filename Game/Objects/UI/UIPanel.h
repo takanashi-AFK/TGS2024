@@ -3,16 +3,23 @@
 #include <vector>
 #include "UIObject.h"
 
+class UIButton;
+class UIImage;
+class UIPanel;
 
+extern UIPanel* pUIPanel_;
 using std::vector;
+
 
 class UIPanel : public UIObject
 {
 private:
-	vector<UIObject*> objects_;
+
+	UIButton* pUIButton_;
+	UIImage* pUIImage_;
 
 public:
-	UIPanel(std::string name, UIObject* parent, int layerNum);
+	UIPanel();
 	void Initialize() override;
 	void Update() override;
 	void Draw() override;
@@ -22,14 +29,14 @@ public:
 	void Load(json& _loadObj);
 	void DrawData();
 
-	void AddUIObject(UIObject* _object);
-	void DeleteUIObject(UIObject* _object);
-	void DeleteAllUIObject();
+	//void AddUIObject(UIObject* _object);
+	//void DeleteUIObject(UIObject* _object);
+	//void DeleteAllUIObject();
 
 	//レイヤー番号順にソート
-	void SortUIObject();
+	//void SortUIObject();
 
-	UIObject* GetUIObject(string _name);
-	vector<UIObject*> GetUIObjects() { return objects_; };
+	///UIObject* GetUIObject(string _name);
+	vector<UIObject*> GetUIObjects() { return childList_; };
 };
 

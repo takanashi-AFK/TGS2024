@@ -36,7 +36,6 @@
 //定数宣言
 const char* WIN_CLASS_NAME = "SampleGame";	//ウィンドウクラス名
 
-
 //プロトタイプ宣言
 HWND InitApp(HINSTANCE hInstance, int screenWidth, int screenHeight, int nCmdShow);
 LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
@@ -100,16 +99,9 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	RootObject* pRootObject = new RootObject;
 	pRootObject->Initialize();
 
-	//UIPanelの初期化
-	//UIPanel* pUIPanel = (UIPanel*)CreateUIObject("UIPanel", UI_PANEL, nullptr, 0);
-	
+	pUIPanel_->Initialize();
 
 
-
-
-	////GameEditorの初期化
-	//GameEditor* pUIEditor = new GameEditor(nullptr);
-	//pUIEditor->SetEditUIPanel(pUIPanel);
 
 	//メッセージループ（何か起きるのを待つ）
 	MSG msg;
@@ -181,7 +173,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 				//ルートオブジェクトのUpdateを呼んだあと、自動的に子、孫のUpdateが呼ばれる
 				pRootObject->UpdateSub();
 
-				pUIPanel->UpdateSub();
+				pUIPanel_->UpdateSub();
 
 
 				//カメラを更新
@@ -203,7 +195,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 				//ルートオブジェクトのDrawを呼んだあと、自動的に子、孫のUpdateが呼ばれる
 				pRootObject->DrawSub();
 
-				pUIPanel->DrawSub();
+				pUIPanel_->DrawSub();
 
 
 				// effekseerの描画
@@ -244,7 +236,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	Model::AllRelease();
 	Image::AllRelease();
 	pRootObject->ReleaseSub();
-	pUIPanel->ReleaseSub();
+	//pUIPanel->ReleaseSub();
 	SAFE_DELETE(pRootObject);
 	Direct3D::Release();
 

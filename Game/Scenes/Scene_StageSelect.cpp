@@ -16,31 +16,34 @@ void Scene_StageSelect::Initialize()
 		json uiData;
 		if (JsonReader::Load("Datas/UILayouts/StageSelect.json", uiData))uipanel->Load(uiData);
 	}
+
+	StageIndex = 0;
+
+	stageImages.push_back(dynamic_cast<UIButton*>(uipanel->GetUIObject("StageSelectButton1")));
+	stageImages.push_back(dynamic_cast<UIButton*>(uipanel->GetUIObject("StageSelectButton2")));
+
 }
 
 void Scene_StageSelect::Update()
 {
 	//Buttonが押されたら次の画像に移行
-	UIButton* nextButton = (UIButton*)uipanel->GetUIObject("");
-	if (nextButton == nullptr)return;
-	if (nextButton->OnClick()) {
-
+	UIButton* nextButton = dynamic_cast<UIButton*>(uipanel->GetUIObject("nextButton"));
+	if (nextButton != nullptr &&nextButton->OnClick()) {
+		StageIndex = (StageIndex + 1) % stageImages.size();
 	}
 	
-	//2つのステージの画像を表示。
-	UIButton* stageselectButton1 = (UIButton*)uipanel->GetUIObject("StageSelectButton1");
-	if (stageselectButton1 == nullptr)return;
-	if (stageselectButton1->OnClick()) {
+	//Buttonが押されたら次の画像に移行
+	UIButton* backButton = dynamic_cast<UIButton*>(uipanel->GetUIObject("backButton"));
+	if (backButton != nullptr && backButton->OnClick()) {
+		StageIndex = (StageIndex - 1+stageImages.size()) % stageImages.size();
+	}
+
+	UIButton* stageSelectButton = stageImages[StageIndex];
+	if (stageSelectButton != nullptr && stageSelectButton->OnClick())
+	{
 		SceneManager* pChangeScene = (SceneManager*)FindObject("SceneManager");
 		pChangeScene->ChangeScene(SCENE_ID_PLAY, TID_BLACKOUT);
 	}
-
-	//UIButton*stageselectButton2 =(UIButton*)uipanel->GetUIObject("StageSelectButton2");
-	//if (stageselectButton2 == nullptr)return;
-	//if (stageselectButton2->OnClick()) {
-	//		SceneManager* pChangeScene = (SceneManager*)FindObject("SceneManager");
-	//		pChangeScene->ChangeScene(SCENE_ID_PLAY, TID_BLACKOUT);
-	//}
 }
 
 void Scene_StageSelect::Draw()

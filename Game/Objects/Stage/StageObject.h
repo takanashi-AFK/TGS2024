@@ -25,6 +25,7 @@ protected:
 	bool isOnGround_;                   // 地面に設置するかどうか
 	float fallSpeed_;                   // 落下速度
 
+	bool isShadeVisible_;               // 陰の表示
 public:
 	/// <summary>
 	/// コンストラクタ

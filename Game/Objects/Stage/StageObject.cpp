@@ -57,6 +57,7 @@ namespace {
 
 StageObject::StageObject(string _name, string _modelFilePath, GameObject* _parent)
 	:GameObject(_parent, _name), modelFilePath_(_modelFilePath), modelHandle_(-1), myComponents_(), fallSpeed_(1), isOnGround_(false)
+	, isShadeVisible_(true)
 {
 }
 
@@ -169,9 +170,13 @@ void StageObject::Update()
 
 void StageObject::Draw()
 {
+	if (isShadeVisible_ == false)Direct3D::SetShader(Direct3D::SHADER_SKY);
+
 	// モデルの描画
 	Model::SetTransform(modelHandle_, transform_);
 	Model::Draw(modelHandle_);
+
+	if (isShadeVisible_ == true)Direct3D::SetShader(Direct3D::SHADER_3D);
 }
 
 void StageObject::Release()
@@ -253,6 +258,15 @@ void StageObject::DrawData()
 		ImGui::DragFloat("fallSpeed", &fallSpeed_, 0.1f, 0.f, 1.f);
 		ImGui::TreePop();
 	}
+
+	// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
+	// シェードの表示
+	// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
+	if (ImGui::TreeNode("shade")) {
+		ImGui::Checkbox("isShadeVisible", &isShadeVisible_);
+		ImGui::TreePop();
+	}
+
 	// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
 	// オブジェクトの名前を変更
 	// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝

@@ -152,10 +152,10 @@ void StageObject::OnGround(float _fallSpeed)
 
 void StageObject::CollisionWall()
 {
-	if(isCollisionWall_ == false)return;
+	if (!isCollisionWall_) return;
 
-	Stage* pStage = (Stage*)FindObject("Stage");
-	if (pStage == nullptr)return;
+	Stage* pStage = static_cast<Stage*>(FindObject("Stage"));
+	if (pStage == nullptr) return;
 	auto stageObj = pStage->GetStageObjects();
 
 	for (auto obj : stageObj) {
@@ -163,39 +163,29 @@ void StageObject::CollisionWall()
 			continue;
 
 		int hGroundModel = obj->modelHandle_;
-		if (hGroundModel < 0)continue;
+		if (hGroundModel < 0) continue;
 
-		RayCastData data;
-		data.start = transform_.position_;   //レイの発射位置
-		data.dir = XMFLOAT3(1, 0, 0);       //レイの方向
-		Model::RayCast(hGroundModel, &data); //レイを発射
+		std::vector<XMFLOAT3> directions = {
+			XMFLOAT3(1, 0, 0),  // right
+			XMFLOAT3(-1, 0, 0), // left
+			XMFLOAT3(0, 0, 1),  // forward
+			XMFLOAT3(0, 0, -1)  // backward
+		};
 
-		//レイが当たったら
-		if (data.hit && data.dist<=0) {
-			//その分位置を下げる
-			transform_.position_.x -= (data.dist - (MODEL_SCALE / 2));
-			return;
-		}
+		for (const auto& dir : directions) {
+			RayCastData data;
+			data.start = transform_.position_; // レイの発射位置
+			data.dir = dir; // レイの方向
+			Model::RayCast(hGroundModel, &data); // レイを発射
 
-		data.dir = XMFLOAT3(-1, 0, 0);       //レイの方向
-		Model::RayCast(hGroundModel, &data); //レイを発射
-		if(data.hit && data.dist<=0){
-			transform_.position_.x += (data.dist - (MODEL_SCALE / 2));
-			return;
-		}
-
-		data.dir = XMFLOAT3(0, 0, 1);       //レイの方向
-		Model::RayCast(hGroundModel, &data); //レイを発射
-		if (data.hit && data.dist <= 0) {
-			transform_.position_.z -= (data.dist - (MODEL_SCALE / 2));
-			return;
-		}
-
-		data.dir = XMFLOAT3(0, 0, -1);       //レイの方向
-		Model::RayCast(hGroundModel, &data); //レイを発射
-		if (data.hit && data.dist <= 0) {
-			transform_.position_.z += (data.dist - (MODEL_SCALE / 2));
-			return;
+			if (data.dist < 0.6f && data.dist > 0.0f) {
+				if (dir.x != 0) {
+					transform_.position_.x -= dir.x * (0.6f - data.dist);
+				}
+				else if (dir.z != 0) {
+					transform_.position_.z -= dir.z * (0.6f - data.dist);
+				}
+			}
 		}
 	}
 }

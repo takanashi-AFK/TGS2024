@@ -11,7 +11,7 @@
 #include "BehaviorComponents/Component_HelingoBehavior.h"
 #include "BehaviorComponents/Component_CactanBehavior.h"
 #include "BehaviorComponents/Component_PlayerBehavior.h"
-#include "GaugeComponents/Component_HPGauge.h"
+#include "GaugeComponents/Component_HealthGauge.h"
 #include "MoveComponents/Component_Chase.h"
 #include "MoveComponents/Component_HelingoFall.h"
 #include "MoveComponents/Component_MoveX.h"

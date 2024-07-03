@@ -150,6 +150,56 @@ void StageObject::OnGround(float _fallSpeed)
 	}
 }
 
+void StageObject::CollisionWall()
+{
+	if(isCollisionWall_ == false)return;
+
+	Stage* pStage = (Stage*)FindObject("Stage");
+	if (pStage == nullptr)return;
+	auto stageObj = pStage->GetStageObjects();
+
+	for (auto obj : stageObj) {
+		if (obj->GetObjectName() == this->objectName_)
+			continue;
+
+		int hGroundModel = obj->modelHandle_;
+		if (hGroundModel < 0)continue;
+
+		RayCastData data;
+		data.start = transform_.position_;   //レイの発射位置
+		data.dir = XMFLOAT3(1, 0, 0);       //レイの方向
+		Model::RayCast(hGroundModel, &data); //レイを発射
+
+		//レイが当たったら
+		if (data.hit && data.dist<=0) {
+			//その分位置を下げる
+			transform_.position_.x -= (data.dist - (MODEL_SCALE / 2));
+			return;
+		}
+
+		data.dir = XMFLOAT3(-1, 0, 0);       //レイの方向
+		Model::RayCast(hGroundModel, &data); //レイを発射
+		if(data.hit && data.dist<=0){
+			transform_.position_.x += (data.dist - (MODEL_SCALE / 2));
+			return;
+		}
+
+		data.dir = XMFLOAT3(0, 0, 1);       //レイの方向
+		Model::RayCast(hGroundModel, &data); //レイを発射
+		if (data.hit && data.dist <= 0) {
+			transform_.position_.z -= (data.dist - (MODEL_SCALE / 2));
+			return;
+		}
+
+		data.dir = XMFLOAT3(0, 0, -1);       //レイの方向
+		Model::RayCast(hGroundModel, &data); //レイを発射
+		if (data.hit && data.dist <= 0) {
+			transform_.position_.z += (data.dist - (MODEL_SCALE / 2));
+			return;
+		}
+	}
+}
+
 void StageObject::Initialize()
 {
 	// モデルの読み込み
@@ -165,6 +215,7 @@ void StageObject::Update()
 	// 保有するコンポーネントの更新処理
 	for (auto comp : myComponents_)comp->ChildUpdate();
 	OnGround(fallSpeed_);
+	CollisionWall();
 }
 
 void StageObject::Draw()
@@ -251,6 +302,8 @@ void StageObject::DrawData()
 	if (ImGui::TreeNode("OnGround")) {
 		ImGui::Checkbox("isOnGround", &isOnGround_);
 		ImGui::DragFloat("fallSpeed", &fallSpeed_, 0.1f, 0.f, 1.f);
+
+		ImGui::Checkbox("isCollisionWall", &isCollisionWall_);
 		ImGui::TreePop();
 	}
 	// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝

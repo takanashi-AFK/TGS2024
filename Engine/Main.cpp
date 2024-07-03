@@ -11,6 +11,7 @@
 #include "global.h"
 #include "GameObject/RootObject.h"
 #include "../Game/Objects/UI/UIPanel.h"
+#include "../Game/Otheres/GameEditor.h"
 #include "ResourceManager/Model.h"
 #include "ResourceManager/Image.h"
 #include "GameObject/Camera.h"
@@ -100,10 +101,12 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	pRootObject->Initialize();
 
 	//UIPanelの初期化
-	UIPanel* pUIPanel = new UIPanel("UIPanel",nullptr,0);
-	pUIPanel->Initialize();
+	UIPanel* pUIPanel = (UIPanel*)CreateUIObject("UIPanel", UI_PANEL, nullptr, 0);
 
 
+	////GameEditorの初期化
+	//GameEditor* pUIEditor = new GameEditor(nullptr);
+	//pUIEditor->SetEditUIPanel(pUIPanel);
 
 	//メッセージループ（何か起きるのを待つ）
 	MSG msg;

@@ -27,8 +27,10 @@ void Scene_Test::Initialize()
 	}
 
 	// UIPanelの作成
-	UIPanel* pUIPanel_ = (UIPanel*)CreateUIObject(objectName_, UI_PANEL, nullptr, 0);
+	//UIPanel* pUIPanel_ = (UIPanel*)CreateUIObject(objectName_, UI_PANEL, nullptr, 0);
 
+
+	UIPanel* pUIPanel_ = new UIPanel("UIPanel",nullptr,0);
 
 // デフォルトカメラ情報の読み込み
 json camData;
@@ -47,9 +49,21 @@ if (JsonReader::Load("Datas/CameraLayouts/camera.json", camData)) {
 
 	GameEditor* gameEditor = new GameEditor(nullptr);
 
-	//gameEditor->SetEditStage(pStage);
+	//pUIPanel_->PushBackChild((UIPanel*)gameEditor);
+	
+	//PushBackChildする
+	PushBackChild(gameEditor);
+
+
+	gameEditor->SetEditStage(pStage);
+
+
 	gameEditor->SetEditUIPanel(pUIPanel_);
-	//gameEditor->SetTPSCamera(tpsCamera);
+
+
+	gameEditor->SetTPSCamera(tpsCamera);
+
+
 #endif // _DEBUG
 }
 

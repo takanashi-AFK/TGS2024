@@ -114,3 +114,4 @@ public:
 
 UIObject* CreateUIObject(string _name, UIType _type, UIObject* _parent, int _layerNum);
 string GetUITypeString(UIType _type);
+

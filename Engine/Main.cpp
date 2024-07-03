@@ -101,7 +101,10 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	pRootObject->Initialize();
 
 	//UIPanel‚Ì‰Šú‰»
-	UIPanel* pUIPanel = (UIPanel*)CreateUIObject("UIPanel", UI_PANEL, nullptr, 0);
+	//UIPanel* pUIPanel = (UIPanel*)CreateUIObject("UIPanel", UI_PANEL, nullptr, 0);
+	
+
+
 
 
 	////GameEditor‚Ì‰Šú‰»

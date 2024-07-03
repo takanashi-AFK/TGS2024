@@ -10,15 +10,15 @@ UIPanel::UIPanel(std::string name, UIObject* parent, int layerNum)
 
 void UIPanel::Initialize()
 {
-	UIPanel* pUIButton = (UIPanel*)CreateUIObject(objectName_, UI_BUTTON, nullptr, 0);
-	UIPanel* pUIImage = (UIPanel*)CreateUIObject(objectName_, UI_IMAGE, nullptr, 0);
+	//UIPanel* pUIButton = (UIPanel*)CreateUIObject(objectName_, UI_BUTTON, nullptr, 0);
+	//UIPanel* pUIImage = (UIPanel*)CreateUIObject(objectName_, UI_IMAGE, nullptr, 0);
 
-	//if (pUIButton != nullptr) AddUIObject(pUIButton);
-	//if (pUIImage != nullptr) AddUIObject(pUIImage);
-	PushBackChild(pUIButton);
-	PushBackChild(pUIImage);
-	GameEditor* pGameEditor = new GameEditor(nullptr);
-	pGameEditor->SetEditUIPanel(this);
+	////if (pUIButton != nullptr) AddUIObject(pUIButton);
+	////if (pUIImage != nullptr) AddUIObject(pUIImage);
+	////PushBackChild(pUIButton);
+	////PushBackChild(pUIImage);
+	//GameEditor* pGameEditor = new GameEditor(nullptr);
+	//pGameEditor->SetEditUIPanel(this);
 
 }
 

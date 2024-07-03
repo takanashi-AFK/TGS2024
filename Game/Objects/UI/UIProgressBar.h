@@ -11,7 +11,7 @@
 class UIProgressBar : public UIObject
 {
 private:
-    float gaugeMaxValue_, gaugeNowValue_, gaugeAnimValue_;
+    float gaugeMaxValue_, gaugeNowValue_;
     XMFLOAT3 color_;  // 色を格納するメンバ変数
     std::string imageFilePath_;
     int imageHandle_;
@@ -19,7 +19,9 @@ private:
     int pictFrameHandle_;
     Transform transGauge_;
     Transform transFrame_;
-    Component_HealthGauge* healthGaugeComponent_; // HealthGaugeのポインタを追加
+    Component_HealthGauge* healthGauge_; // HealthGaugeのポインタを追加
+    StageObject* target_;
+
 
 public:
     UIProgressBar(std::string _name, GameObject* parent);
@@ -36,10 +38,10 @@ public:
 
     void SetGaugeMaxValue(float _maxValue);
     void SetGaugeCurrentValue(float _nowValue);
-    void SetGaugeAnimValue();
+   
+    void SetGauge(Component_HealthGauge* _gauge) { healthGauge_ = _gauge; }
 
     float GetGaugeMaxValue() { return gaugeMaxValue_; }
     float GetGaugeCurrentValue() { return gaugeNowValue_; }
-    float GetGaugeAnimValue() { return gaugeAnimValue_; }
     
 };

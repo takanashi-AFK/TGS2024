@@ -11,7 +11,6 @@ class UIPanel : public GameObject
 {
 private:
 	vector<UIObject*> objects_;
-
 public:
 	UIPanel(GameObject* parent);
 	void Initialize() override;

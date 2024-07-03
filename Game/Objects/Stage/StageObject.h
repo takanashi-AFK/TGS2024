@@ -81,6 +81,7 @@ public:
 	/// </summary>
 	Component* FindComponent(string _name);
 
+
 	/// <summary>
 	/// コンポーネントをリストから削除
 	/// </summary>

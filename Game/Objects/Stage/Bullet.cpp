@@ -4,7 +4,7 @@
 #include "../../../Engine/Global.h"
 #include "../../../Engine/ImGui/imgui.h"
 #include "../../../Engine/ResourceManager/Model.h"
-#include "Components/HealthManagerComponents/Component_HealthManager.h"
+#include "Components/GaugeComponents/Component_HealthGauge.h"
 #include "Stage.h"
 
 Bullet::Bullet(GameObject* _parent) 
@@ -53,10 +53,10 @@ void Bullet::OnCollision(GameObject* _target)
 		if (hm == nullptr)return;
 
 		// プレイヤーのHPを減らす
-		((Component_HealthManager*)hm)->TakeDamage(20);
+		((Component_HealthGauge*)hm)->TakeDamage(20);
 
 		// プレイヤーのHPが0以下の場合
-		if (((Component_HealthManager*)hm)->GetHP() <= 0) {
+		if (((Component_HealthGauge*)hm)->GetHP() <= 0) {
 
 			// プレイヤーを消す
 			((Stage*)FindObject("Stage"))->DeleteStageObject((StageObject*)_target);

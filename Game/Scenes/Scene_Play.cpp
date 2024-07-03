@@ -4,7 +4,7 @@
 #include"../Objects/Stage/SkySphere.h"
 #include"../Objects/Stage/Stage.h"
 #include "../Objects/UI/UIPanel.h"
-#include"../Objects/Stage/Components/HealthManagerComponents/Component_HealthManager.h"
+#include"../Objects/Stage/Components/GaugeComponents/Component_HealthGauge.h"
 #include"../Objects/Stage/Components/BehaviorComponents/Component_PlayerBehavior.h"
 #include"../../Engine/SceneManager.h"
 #include "../Objects/UI/UIButton.h"
@@ -33,7 +33,7 @@ void Scene_Play::Initialize()
 				Component_PlayerBehavior* playerBeha = dynamic_cast<Component_PlayerBehavior*>(pList->FindComponent("PlayerBehavior"));
 				if (playerBeha != nullptr) {
 					//playerBehaから子コンポーネントを取得する
-					playerHealth_ = dynamic_cast<Component_HealthManager*>(playerBeha->GetChildComponent("HealthManager"));
+					playerHealth_ = dynamic_cast<Component_HealthGauge*>(playerBeha->GetChildComponent("HealthManager"));
 				}
 			}
 		}

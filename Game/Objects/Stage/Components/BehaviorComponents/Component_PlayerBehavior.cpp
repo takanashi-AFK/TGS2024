@@ -3,7 +3,7 @@
 // インクルード
 #include "../../../../../Engine/Collider/BoxCollider.h"
 #include "../../StageObject.h"
-#include "../HealthManagerComponents/Component_HealthManager.h"
+#include "../../../../../Game/Objects/Stage/Components/GaugeComponents/Component_HealthGauge.h"
 #include "../../../../../Engine/ImGui/imgui.h"
 
 Component_PlayerBehavior::Component_PlayerBehavior(string _name, StageObject* _holder, Component* _parent)
@@ -18,12 +18,12 @@ void Component_PlayerBehavior::Initialize()
 
 	// 子コンポーネントの追加
 	if (FindChildComponent("InputMove") == false)AddChildComponent(CreateComponent("InputMove", WASDInputMove, holder_, this));
-	if (FindChildComponent("HealthManager") == false)AddChildComponent(CreateComponent("HealthManager", HealthManager, holder_, this));
+	if (FindChildComponent("HealthGauge") == false)AddChildComponent(CreateComponent("HealthGauge", HealthGauge, holder_, this));
 }
 
 void Component_PlayerBehavior::Update()
 {
-	auto hm = dynamic_cast<Component_HealthManager*>(GetChildComponent("HealthManager"));
+	auto hm = dynamic_cast<Component_HealthGauge*>(GetChildComponent("HealthGauge"));
 
 	// 進捗を0.0〜1.0の範囲で計算
 	float progress = hm->GetHP() / hm->GetMax();

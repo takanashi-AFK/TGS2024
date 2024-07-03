@@ -3,6 +3,7 @@
 #include "UIObject.h"
 #include "../../../Engine/Json/JsonReader.h"
 #include "../../../Engine/ImGui/imgui.h"
+#include "../../../Game/Objects/Stage/Components/GaugeComponents/Component_HealthGauge.h"
 #include <string>
 #include <vector>
 
@@ -18,7 +19,7 @@ private:
     int pictFrameHandle_;
     Transform transGauge_;
     Transform transFrame_;
-
+    Component_HealthGauge* healthGaugeComponent_; // HealthGauge‚Ìƒ|ƒCƒ“ƒ^‚ð’Ç‰Á
 
 public:
     UIProgressBar(std::string _name, GameObject* parent);
@@ -33,11 +34,12 @@ public:
 
     void SetImage(std::string _imageFilePath);
 
-    void SetGaugeMaxValue(float maxValue);
-    void SetGaugeCurrentValue(float currentValue);
+    void SetGaugeMaxValue(float _maxValue);
+    void SetGaugeCurrentValue(float _nowValue);
     void SetGaugeAnimValue();
 
     float GetGaugeMaxValue() { return gaugeMaxValue_; }
     float GetGaugeCurrentValue() { return gaugeNowValue_; }
     float GetGaugeAnimValue() { return gaugeAnimValue_; }
+    
 };

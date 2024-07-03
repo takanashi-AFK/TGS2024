@@ -11,7 +11,7 @@
 #include "BehaviorComponents/Component_HelingoBehavior.h"
 #include "BehaviorComponents/Component_CactanBehavior.h"
 #include "BehaviorComponents/Component_PlayerBehavior.h"
-#include "HealthManagerComponents/Component_HealthManager.h"
+#include "GaugeComponents/Component_HPGauge.h"
 #include "MoveComponents/Component_Chase.h"
 #include "MoveComponents/Component_HelingoFall.h"
 #include "MoveComponents/Component_MoveX.h"
@@ -198,7 +198,7 @@ Component* CreateComponent(string _name,ComponentType _type, StageObject* _holde
 	case CactanBihavior:comp = new Component_CactanBehavior(_name, _holder, _parent); break;
 	case PlayerBehavior:comp = new Component_PlayerBehavior(_name, _holder, _parent); break;
 	case Timer:comp = new Component_Timer(_name,_holder, _parent); break;
-	case HealthManager:comp = new Component_HealthManager(_name,_holder, _parent); break;
+	case HealthGauge:comp = new Component_HealthGauge(_name,_holder, _parent); break;
 	case ShootAttack:comp = new Component_ShootAttack(_name,_holder, _parent); break;
 	case WASDInputMove:comp = new Component_WASDInputMove(_name, _holder, _parent); break;
 	case Fall:comp = new Component_Fall(_name, _holder, _parent); break;
@@ -231,7 +231,7 @@ string ComponentTypeToString(ComponentType _type)
 	case CactanBihavior: return "CactanBihaviorComponent";
 	case PlayerBehavior: return "PlayerBehaviorComponent";
 	case Timer: return "TimerComponent";
-	case HealthManager: return "HealthManagerComponent";
+	case HealthGauge: return "HealthGaugeComponent";
 	case ShootAttack: return "ShootAttackComponent";
 	case WASDInputMove: return "WASDInputMoveComponent";
 	case Fall: return "FallComponent";

@@ -5,7 +5,7 @@
 #include "../../Stage.h"
 #include "../../StageObject.h"
 #include "../DetectorComponents/Component_CircleRangeDetector.h"
-#include "../HealthManagerComponents/Component_HealthManager.h"
+#include "../GaugeComponents/Component_HealthGauge.h"
 #include "../MoveComponents/Component_Chase.h"
 #include "../MoveComponents/Component_HelingoFall.h"
 #include "../MoveComponents/Component_Fall.h"
@@ -85,7 +85,7 @@ void Component_HelingoBehavior::OnCollision(GameObject* _target)
 	if (_target->GetObjectName() == "Char_Player") {
 
 		// プレイヤーのHPマネージャーコンポーネントを取得
-        Component* hm = ((StageObject*)_target)->FindComponent("HealthManager");
+        Component* hm = ((StageObject*)_target)->FindComponent("HealthGauge");
 		if (hm == nullptr)return;
 
 		// プレイヤーのHPを減らす
@@ -96,11 +96,11 @@ void Component_HelingoBehavior::OnCollision(GameObject* _target)
 		if (fall == nullptr)return;
 
 		if (fall->IsActive() && oneHit_ == false) {
-			((Component_HealthManager*)hm)->TakeDamage(5);
+			((Component_HealthGauge*)hm)->TakeDamage(5);
 			oneHit_ = true;
 		}
 		// プレイヤーのHPが0以下の場合
-		if (((Component_HealthManager*)hm)->GetHP() <= 0) {
+		if (((Component_HealthGauge*)hm)->GetHP() <= 0) {
 
 			// プレイヤーを消す
 			((Stage*)holder_->FindObject("Stage"))->DeleteStageObject((StageObject*)_target);

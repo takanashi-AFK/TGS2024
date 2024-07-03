@@ -2,7 +2,6 @@
 #include "../../../Engine/ImGui/imgui.h"
 #include "../../../Engine/Global.h"
 #include "../../../Engine/ResourceManager/Image.h"
-#include"../../../Game/Objects/Stage/Components/BehaviorComponents/Component_PlayerBehavior.h"
 #include "../../../Engine/DirectX/Direct3D.h"
 
 UIProgressBar::UIProgressBar(string _name, GameObject* parent)
@@ -21,21 +20,27 @@ void UIProgressBar::Initialize()
     pictFrameHandle_ = Image::Load("Images/Bar_Frame.png");
     assert(pictFrameHandle_ >= 0);
 
-   
 }
 
 void UIProgressBar::Update()
 {
+
+    if (healthGaugeComponent_ != nullptr) {
+        gaugeMaxValue_ = healthGaugeComponent_->GetMax();
+        gaugeNowValue_ = healthGaugeComponent_->GetHP();
+    }
+
+    // 設定された値から変形行列`transform_`の値を計算
+    // ゲージのスケールを計算
+    transGauge_ = transform_;
+    transGauge_.scale_.x = (gaugeNowValue_ / gaugeMaxValue_) * transFrame_.scale_.x;
+
 }
 
 void UIProgressBar::Draw()
 {
     if (imageHandle_ < 0) return;
     
-    // ゲージのスケールを計算
-    transGauge_ = transform_;
-    transGauge_.scale_.x = (gaugeNowValue_ / gaugeMaxValue_) * transFrame_.scale_.x;
-
     // ゲージの画像を描画
     Image::SetTransform(pictGaugeHandle_, transGauge_);
     Image::Draw(pictGaugeHandle_,Direct3D::SHADER_BAR,color_);
@@ -115,8 +120,8 @@ void UIProgressBar::DrawData()
     color_ = { temp.x,temp.y,temp.z };
 
     // ゲージの制御
-    ImGui::SliderFloat("Current Value", &gaugeNowValue_, 0.0f, gaugeMaxValue_);
-    ImGui::SliderFloat("Max Value", &gaugeMaxValue_, 0.0f, 200.0f);
+    ImGui::DragFloat("Current Value", &gaugeNowValue_, 1.f, gaugeMaxValue_);
+    ImGui::DragFloat("Max Value", &gaugeMaxValue_, 1.f);
     ImGui::ProgressBar(gaugeNowValue_ / gaugeMaxValue_, ImVec2(0.0f, 0.0f));
 
 }
@@ -128,13 +133,13 @@ void UIProgressBar::SetImage(string _imageFilePath)
     pictFrameHandle_ = Image::Load(_imageFilePath);
 }
 
-void UIProgressBar::SetGaugeMaxValue(float maxValue)
+void UIProgressBar::SetGaugeMaxValue(float _maxValue)
 {
-    gaugeMaxValue_ = maxValue;
+    gaugeMaxValue_ = _maxValue;
 }
 
-void UIProgressBar::SetGaugeCurrentValue(float currentValue) {
-    gaugeNowValue_ = currentValue;
+void UIProgressBar::SetGaugeCurrentValue(float _nowValue) {
+    gaugeNowValue_ = _nowValue;
 }
 
 void UIProgressBar::SetGaugeAnimValue()
@@ -142,4 +147,5 @@ void UIProgressBar::SetGaugeAnimValue()
     // アニメーション値を現在値に近づける
     gaugeAnimValue_ = (gaugeAnimValue_ * 9 + gaugeNowValue_) / 10.0f;
 }
+
 

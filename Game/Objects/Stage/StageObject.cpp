@@ -296,9 +296,10 @@ void StageObject::DrawData()
 	// 
 	if (ImGui::TreeNode("OnGround")) {
 		ImGui::Checkbox("isOnGround", &isOnGround_);
+		ImGui::SameLine();
+		ImGui::Checkbox("isCollisionWall", &isCollisionWall_);
 		ImGui::DragFloat("fallSpeed", &fallSpeed_, 0.1f, 0.f, 1.f);
 
-		ImGui::Checkbox("isCollisionWall", &isCollisionWall_);
 		ImGui::TreePop();
 	}
 

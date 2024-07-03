@@ -35,7 +35,7 @@ void Scene_StageSelect::Update()
 		transform_.position_.x = stageImages[StageIndex]->GetPosition().x;
 	}
 	
-	//Button‚ª‰Ÿ‚³‚ê‚½‚çŸ‚Ì‰æ‘œ‚ÉˆÚs
+	//Button‚ª‰Ÿ‚³‚ê‚½‚çˆêŒÂ‘O‚Ì‰æ‘œ‚É–ß‚é
 	UIButton* backButton = dynamic_cast<UIButton*>(uipanel->GetUIObject("backButton"));
 	if (backButton == nullptr)return;
 	if (backButton->OnClick()) {

@@ -23,6 +23,7 @@ protected:
 	int modelHandle_;                   // モデル番号
 	AttributeType attribute_;           // 属性
 	bool isOnGround_;                   // 地面に設置するかどうか
+	bool isCollisionWall_;              // 壁に当たったかどうか
 	float fallSpeed_;                   // 落下速度
 
 	bool isShadeVisible_;               // 陰の表示
@@ -122,6 +123,7 @@ public:
 
 	void OnGround(float _fallSpeed);
 
+	void CollisionWall();
 
 };
 

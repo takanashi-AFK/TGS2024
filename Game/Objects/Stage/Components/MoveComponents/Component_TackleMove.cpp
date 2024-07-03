@@ -33,7 +33,7 @@ void Component_TackleMove::Update()
 	XMFLOAT3 holderPosition = startPosition_;
 
 	// 移動ベクトルを作成
-	XMVECTOR move = XMLoadFloat3(&startPosition_) + XMVector3Normalize(direction_) * (distance_ * Direct3D::EaseFunc[easingType_](rate_) + speed_);
+	XMVECTOR move = XMLoadFloat3(&startPosition_) + XMVector3Normalize(direction_) * ((distance_) * Direct3D::EaseFunc[easingType_](rate_) );
 
 	// 保有者の位置を移動
 	XMStoreFloat3(&holderPosition, move);
@@ -42,7 +42,7 @@ void Component_TackleMove::Update()
 	holder_->SetPosition(holderPosition);
 
 	// 割合を進める
-	rate_ += 0.01f;
+	rate_ += speed_;
 
 	if (rate_ >= 1) {
 		// 移動終了
@@ -90,7 +90,7 @@ void Component_TackleMove::DrawData()
 	ImGui::DragFloat("distance_", &distance_);
 
 	// 移動速度を設定
-	ImGui::DragFloat("speed_", &speed_);
+	ImGui::DragFloat("speed_", &speed_,0.001,0,1);
 
 	// イージングの種類を設定
 	if (ImGui::BeginCombo("EaseFunc", easingType_.c_str())) {

@@ -49,6 +49,8 @@ void Scene_StageSelect::Update()
 		SceneManager* pChangeScene = (SceneManager*)FindObject("SceneManager");
 		pChangeScene->ChangeScene(SCENE_ID_PLAY, TID_BLACKOUT);
 	}
+
+
 }
 
 void Scene_StageSelect::Draw()

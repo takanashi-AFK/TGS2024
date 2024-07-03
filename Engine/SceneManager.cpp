@@ -23,9 +23,9 @@ void SceneManager::Initialize()
 {
 	//ç≈èâÇÃÉVÅ[ÉìÇèÄîı
 #ifdef _DEBUG
-	currentSceneID_ = SCENE_ID_TEST;
+	currentSceneID_ = SCENE_ID_STAGESELECT;
 	nextSceneID_ = currentSceneID_;
-	Instantiate<Scene_Test>(this);
+	Instantiate<Scene_StageSelect>(this);
 #else
 	currentSceneID_ = SCENE_ID_SPLASH;
 	nextSceneID_ = currentSceneID_;
@@ -58,7 +58,7 @@ void SceneManager::Update()
 		case SCENE_ID_SPLASH: Instantiate<Scene_Splash>(this); break;
 		case SCENE_ID_TITLE:Instantiate<Scene_Title>(this); break;
 		case SCENE_ID_PLAY:Instantiate<Scene_Play>(this); break;
-		case SCENE_ID_StageSelect:Instantiate<Scene_StageSelect>(this); break;
+		case SCENE_ID_STAGESELECT:Instantiate<Scene_StageSelect>(this); break;
 		case SCENE_ID_END:Instantiate<Scene_End>(this); break;
 		}
 		Audio::Initialize();

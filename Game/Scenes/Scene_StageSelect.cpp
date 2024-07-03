@@ -6,7 +6,7 @@
 #include "../Objects/UI/UIPanel.h"
 #include "../Objects/UI/UIButton.h"
 Scene_StageSelect::Scene_StageSelect(GameObject* parent)
-: GameObject(parent, "Scene_StageSelect")
+: GameObject(parent, "Scene_StageSelect"), isSelectButtonMoving_(false),moveselectButton(0.0f)
 {
 }
 
@@ -23,32 +23,46 @@ void Scene_StageSelect::Initialize()
 	stageImages.push_back(dynamic_cast<UIButton*>(uipanel->GetUIObject("StageSelectButton1")));
 	stageImages.push_back(dynamic_cast<UIButton*>(uipanel->GetUIObject("StageSelectButton2")));
 
+	
 }
 
 void Scene_StageSelect::Update()
 {
+	UIButton* stageSelectButton = stageImages[StageIndex];
+	if (stageSelectButton == nullptr)return;
+	if (stageSelectButton->OnClick()) {
+		SceneManager* pChangeScene = (SceneManager*)FindObject("SceneManager");
+		pChangeScene->ChangeScene(SCENE_ID_PLAY, TID_BLACKOUT);
+	}
+
 	//Button‚ª‰Ÿ‚³‚ê‚½‚çŸ‚Ì‰æ‘œ‚ÉˆÚs
 	UIButton* nextButton = dynamic_cast<UIButton*>(uipanel->GetUIObject("nextButton"));
 	if (nextButton == nullptr)return;
 	if (nextButton->OnClick()) {
-		StageIndex = StageIndex + 1;
-		transform_.position_.x = stageImages[StageIndex]->GetPosition().x;
+		isSelectButtonMoving_ = true;
+		
 	}
 	
 	//Button‚ª‰Ÿ‚³‚ê‚½‚çˆêŒÂ‘O‚Ì‰æ‘œ‚É–ß‚é
 	UIButton* backButton = dynamic_cast<UIButton*>(uipanel->GetUIObject("backButton"));
 	if (backButton == nullptr)return;
 	if (backButton->OnClick()) {
-		StageIndex = StageIndex - 1 + stageImages.size();
-		transform_.position_.x = stageImages[StageIndex]->GetPosition().x;
+		isSelectButtonMoving_ = true;
+		
+	}
+	//true‚É‚È‚Á‚Ä‚¢‚éŠÔx•ûŒü‚ÉˆÚ“®‚µButton‚ğ
+	if (isSelectButtonMoving_ == true) {
+	    //stageSelectButton‚ÌxÀ•W‚¾‚¯æ“¾
+		float selectButtonPos = stageSelectButton->GetPosition().x;
+
+		selectButtonPos += moveselectButton;
+		
+		
+		
 	}
 
-	UIButton* stageSelectButton = stageImages[StageIndex];
-	if (stageSelectButton == nullptr)return;
-	if (stageSelectButton->OnClick()){
-		SceneManager* pChangeScene = (SceneManager*)FindObject("SceneManager");
-		pChangeScene->ChangeScene(SCENE_ID_PLAY, TID_BLACKOUT);
-	}
+	
+
 
 
 }

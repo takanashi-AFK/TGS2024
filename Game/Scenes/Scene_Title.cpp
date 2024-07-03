@@ -27,7 +27,7 @@ void Scene_Title::Update()
 	if (button == nullptr)return;
 	if (button->OnClick()) {
 		SceneManager* pChangeScene = (SceneManager*)FindObject("SceneManager");
-		pChangeScene->ChangeScene(SCENE_ID_StageSelect, TID_BLACKOUT);
+		pChangeScene->ChangeScene(SCENE_ID_STAGESELECT, TID_BLACKOUT);
 	}
 }
 

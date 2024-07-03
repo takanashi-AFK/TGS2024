@@ -20,7 +20,7 @@ private:
     Transform transGauge_;
     Transform transFrame_;
     Component_HealthGauge* healthGauge_; // HealthGauge‚Ìƒ|ƒCƒ“ƒ^‚ð’Ç‰Á
-    StageObject* target_;
+    
 
 
 public:

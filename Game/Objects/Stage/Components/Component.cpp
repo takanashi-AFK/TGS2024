@@ -178,6 +178,21 @@ Component* Component::GetChildComponent(string _name)
     return nullptr;
 }
 
+vector<Component*> Component::GetChildComponent(ComponentType _type)
+{
+	vector<Component*> result;
+
+	// リスト内のコンポーネントを探す
+	for (auto comp : childComponents_)
+	{
+		if (comp->type_ == _type)
+		{
+			result.push_back(comp);
+		}
+	}
+	return result;
+}
+
 Component* CreateComponent(string _name,ComponentType _type, StageObject* _holder, Component* _parent)
 {
 	Component* comp = nullptr;

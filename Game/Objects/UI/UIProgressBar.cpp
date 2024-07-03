@@ -5,6 +5,7 @@
 #include "../../../Engine/DirectX/Direct3D.h"
 #include "../Stage/Stage.h"
 #include "../../../Game/Objects/Stage/StageObject.h"
+#include "../../../Game/Objects/Stage/Components/Component.h"
 
 
 UIProgressBar::UIProgressBar(string _name, GameObject* parent)
@@ -123,46 +124,38 @@ void UIProgressBar::DrawData()
 
  
    
-    //// Stage内に存在するGaugeコンポーネント継承したコンポーネントを全て取得
-    //vector<string> objNames;
-    //objNames.push_back("null");
-    //auto stage = (Stage*)FindObject("Stage");
-    //if (stage) {
-    //    for (auto obj : stage->GetStageObjects()) {
-    //        for (auto component : obj->FindComponent()) {
-    //            if (dynamic_cast<Component_Gauge*>(component)) {
-    //                objNames.push_back(obj->GetObjectName());
-    //                break; // 1オブジェクトに1つのGaugeコンポーネントのみ
-    //            }
-    //        }
-    //    }
-    //}
+    // Stage内に存在するGaugeコンポーネント継承したコンポーネントを全て取得
+    vector<string> objNames;
+    objNames.push_back("null");
+    auto stage = (Stage*)FindObject("Stage");
+    if (stage) {
+        for (auto obj : stage->GetStageObjects()) {
+            for (auto component : obj->FindComponent(HealthGauge)) {
+                    //ステージ内のすべてのオブジェクトの名前を取得
+                    objNames.push_back(obj->GetObjectName());
+                    break; // 1オブジェクトに1つのGaugeコンポーネントのみ
+            }
+        }
+    }
 
-    //static int select = 0;
-    //if (ImGui::BeginCombo("Target Gauge", objNames[select].c_str())) {
-    //    for (int i = 0; i < objNames.size(); i++) {
-    //        bool is_selected = (select == i);
-    //        if (ImGui::Selectable(objNames[i].c_str(), is_selected)) select = i;
-    //        if (is_selected) ImGui::SetItemDefaultFocus();
-    //    }
-    //    ImGui::EndCombo();
-    //}
+    static int select = 0;
+    if (ImGui::BeginCombo("Target Gauge", objNames[select].c_str())) {
+        for (int i = 0; i < objNames.size(); i++) {
+            bool is_selected = (select == i);
+            if (ImGui::Selectable(objNames[i].c_str(), is_selected)) select = i;
+            if (is_selected) ImGui::SetItemDefaultFocus();
+        }
+        ImGui::EndCombo();
+    }
 
-    //if (select == 0) {
-    //    healthGauge_ = nullptr;
-    //}
-    //else {
-    //    auto selectedObj = stage->FindObject(objNames[select]);
-    //    if (selectedObj) {
-    //        for (auto component : selectedObj->GetComponents()) {
-    //            if (auto gauge = dynamic_cast<Component_Gauge*>(component)) {
-    //                healthGauge_ = gauge;
-    //                break;
-    //            }
-    //        }
-    //    }
-    //}
-    
+    if (select == 0)healthGauge_ = nullptr;
+    else {
+        healthGauge_ = (Component_HealthGauge*)FindObject(objNames[select]);
+        auto gauge = (Component*)FindObject("Component");
+        gauge->GetChildComponent(HealthGauge);
+        
+    }
+   
     // ゲージの制御
     ImGui::DragFloat("Current Value", &gaugeNowValue_, 1.f, gaugeMaxValue_);
     ImGui::DragFloat("Max Value", &gaugeMaxValue_, 1.f);

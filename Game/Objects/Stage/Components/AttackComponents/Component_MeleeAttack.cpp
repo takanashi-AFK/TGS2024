@@ -17,6 +17,7 @@ void Component_MeleeAttack::Initialize()
 	
 	//コライダーの追加
 	holder_->AddCollider(new BoxCollider(XMFLOAT3(0, 0, 0), XMFLOAT3(1, 1, 1)));
+	power_ = 20;
 }
 
 void Component_MeleeAttack::Update()
@@ -57,7 +58,7 @@ void Component_MeleeAttack::Release()
 void Component_MeleeAttack::DrawData()
 {
 	ImGui::Text("MeleeAttack");
-	ImGui::DragInt("shotrange_", &power_);
+	ImGui::DragInt("power_", &power_);
 	if (ImGui::Button("Execute"))Execute();
 }
 
@@ -86,5 +87,7 @@ void Component_MeleeAttack::OnCollision(GameObject* _target)
 	// ダメージ処理
 	for (auto hm : target->FindComponent(HealthManager)) {
 		((Component_HealthManager*)hm)->TakeDamage(power_);
+		if (((Component_HealthManager*)hm)->GetHP() == 0.f)
+		_target->KillMe();
 	}
 }

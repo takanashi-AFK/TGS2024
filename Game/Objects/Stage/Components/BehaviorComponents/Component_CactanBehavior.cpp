@@ -7,6 +7,7 @@
 #include "../../../../../Engine/ImGui/imgui.h"
 #include "../../Stage.h"
 #include "../../../../../Engine/Global.h"
+#include "../HealthManagerComponents/Component_HealthManager.h"
 
 Component_CactanBehavior::Component_CactanBehavior(string _name, StageObject* _holder, Component* _parent)
 	:Component(_holder, _name, CactanBihavior, _parent)
@@ -22,6 +23,8 @@ void Component_CactanBehavior::Initialize()
 	if (FindChildComponent("CircleRangeDetector") == false)AddChildComponent(CreateComponent("CircleRangeDetector",CircleRangeDetector,holder_,this));
 	if (FindChildComponent("ShootAttack") == false)AddChildComponent(CreateComponent("ShootAttack", ShootAttack, holder_, this));
 	if (FindChildComponent("Timer") == false)AddChildComponent(CreateComponent("Timer", Timer, holder_, this));
+	if (FindChildComponent("HealthManager") == false)AddChildComponent(CreateComponent("HealthManager", HealthManager, holder_, this));
+
 }
 
 void Component_CactanBehavior::Update()

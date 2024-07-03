@@ -15,26 +15,27 @@ Bullet::Bullet(GameObject* _parent)
 void Bullet::Initialize()
 {
 	// コライダーを追加
-	AddCollider(new SphereCollider(XMFLOAT3(0, 0, 0), 0.3f));
+	AddCollider(new SphereCollider(XMFLOAT3(0, 0, 0), 0.5f));
 
 	// モデルの読み込み
 	modelHandle_ = Model::Load(modelFilePath_);
 	assert(modelHandle_ >= 0);
 
-	SetScale(0.2f);
+	//SetScale(0.2f);
 
 	// effekseer: :Effectの読み込み
-	EFFEKSEERLIB::gEfk->AddEffect("A_Salamander4", "Effects/A_Salamander4.efk");/*★★★*/
+	EFFEKSEERLIB::gEfk->AddEffect("Sylph10", "Effects/Sylph10.efk");/*★★★*/
 
 	// effekseer: :Effectの再生情報の設定
 	EFFEKSEERLIB::EFKTransform t;/*★★★*/
 	DirectX::XMStoreFloat4x4(&(t.matrix), transform_.GetWorldMatrix());/*★★★*/
 	t.isLoop = false;/*★★★*/
-	t.maxFrame = 60;/*★★★*/
-	t.speed = 1.0f;/*★★★*/
+	t.maxFrame = 180;/*★★★*/
+	t.speed = 0.1;/*★★★*/
+
 
 	// effekseer: :Effectの再生
-	mt = EFFEKSEERLIB::gEfk->Play("A_Salamander4", t);/*★★★*/
+	mt = EFFEKSEERLIB::gEfk->Play("Sylph10", t);/*★★★*/
 
 }
 
@@ -47,6 +48,7 @@ void Bullet::Update()
 	Move(direction_,speed_);
 
 	// 自動削除
+	//if (EFFEKSEERLIB::gEfk->IsEffectPlaying("Sylph10") == false)KillMe();
 	AutoDelete(2.f);
 
 	// effekseer: :Effectの再生情報の更新
@@ -56,8 +58,8 @@ void Bullet::Update()
 void Bullet::Draw()
 {
 	// モデルの描画
-	Model::SetTransform(modelHandle_, transform_);
-	Model::Draw(modelHandle_);
+	//Model::SetTransform(modelHandle_, transform_);
+	//Model::Draw(modelHandle_);
 }
 
 void Bullet::OnCollision(GameObject* _target)

@@ -12,9 +12,10 @@ Scene_StageSelect::Scene_StageSelect(GameObject* parent)
 
 void Scene_StageSelect::Initialize()
 {
-	uipanel = Instantiate<UIPanel>(this); {
-		json uiData;
-		if (JsonReader::Load("Datas/UILayouts/StageSelect.json", uiData))uipanel->Load(uiData);
+	uipanel = Instantiate<UIPanel>(this); 
+	json uiData;
+	if (JsonReader::Load("Datas/UILayouts/StageSelect.json", uiData)){
+			uipanel->Load(uiData);
 	}
 
 	StageIndex = 0;
@@ -29,13 +30,15 @@ void Scene_StageSelect::Update()
 	//Button‚ª‰Ÿ‚³‚ê‚½‚çŸ‚Ì‰æ‘œ‚ÉˆÚs
 	UIButton* nextButton = dynamic_cast<UIButton*>(uipanel->GetUIObject("nextButton"));
 	if (nextButton != nullptr &&nextButton->OnClick()) {
-		transform_.position_.x =(int)stageImages[StageIndex + 1];
+		StageIndex = (StageIndex + 1) % stageImages.size();
+		transform_.position_.x = stageImages[StageIndex]->GetPosition().x;
 	}
 	
 	//Button‚ª‰Ÿ‚³‚ê‚½‚çŸ‚Ì‰æ‘œ‚ÉˆÚs
 	UIButton* backButton = dynamic_cast<UIButton*>(uipanel->GetUIObject("backButton"));
 	if (backButton != nullptr && backButton->OnClick()) {
-		transform_.position_.x = (int)stageImages[StageIndex - 1] + stageImages.size() % stageImages.size();
+		StageIndex = (StageIndex - 1 + stageImages.size()) % stageImages.size();
+		transform_.position_.x = stageImages[StageIndex]->GetPosition().x;
 	}
 
 	UIButton* stageSelectButton = stageImages[StageIndex];

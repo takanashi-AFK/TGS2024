@@ -29,14 +29,13 @@ void Scene_StageSelect::Update()
 	//Button‚ª‰Ÿ‚³‚ê‚½‚çŸ‚Ì‰æ‘œ‚ÉˆÚs
 	UIButton* nextButton = dynamic_cast<UIButton*>(uipanel->GetUIObject("nextButton"));
 	if (nextButton != nullptr &&nextButton->OnClick()) {
-		StageIndex = (StageIndex + 1) % stageImages.size();
-
+		transform_.position_.x =(int)stageImages[StageIndex + 1];
 	}
 	
 	//Button‚ª‰Ÿ‚³‚ê‚½‚çŸ‚Ì‰æ‘œ‚ÉˆÚs
 	UIButton* backButton = dynamic_cast<UIButton*>(uipanel->GetUIObject("backButton"));
 	if (backButton != nullptr && backButton->OnClick()) {
-		StageIndex = (StageIndex - 1+stageImages.size()) % stageImages.size();
+		transform_.position_.x = (int)stageImages[StageIndex - 1] + stageImages.size() % stageImages.size();
 	}
 
 	UIButton* stageSelectButton = stageImages[StageIndex];

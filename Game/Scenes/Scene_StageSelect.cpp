@@ -20,6 +20,12 @@ void Scene_StageSelect::Initialize()
 
 void Scene_StageSelect::Update()
 {
+	//Buttonが押されたら次の画像に移行
+	UIButton* nextButton = (UIButton*)uipanel->GetUIObject("");
+	if (nextButton == nullptr)return;
+	if (nextButton->OnClick()) {
+
+	}
 	
 	//2つのステージの画像を表示。
 	UIButton* stageselectButton1 = (UIButton*)uipanel->GetUIObject("StageSelectButton1");
@@ -29,12 +35,12 @@ void Scene_StageSelect::Update()
 		pChangeScene->ChangeScene(SCENE_ID_PLAY, TID_BLACKOUT);
 	}
 
-	UIButton*stageselectButton2 =(UIButton*)uipanel->GetUIObject("StageSelectButton2");
-	if (stageselectButton2 == nullptr)return;
-	if (stageselectButton2->OnClick()) {
-			SceneManager* pChangeScene = (SceneManager*)FindObject("SceneManager");
-			pChangeScene->ChangeScene(SCENE_ID_PLAY, TID_BLACKOUT);
-	}
+	//UIButton*stageselectButton2 =(UIButton*)uipanel->GetUIObject("StageSelectButton2");
+	//if (stageselectButton2 == nullptr)return;
+	//if (stageselectButton2->OnClick()) {
+	//		SceneManager* pChangeScene = (SceneManager*)FindObject("SceneManager");
+	//		pChangeScene->ChangeScene(SCENE_ID_PLAY, TID_BLACKOUT);
+	//}
 }
 
 void Scene_StageSelect::Draw()

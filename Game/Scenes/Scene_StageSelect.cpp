@@ -29,21 +29,23 @@ void Scene_StageSelect::Update()
 {
 	//Button‚ª‰Ÿ‚³‚ê‚½‚çŸ‚Ì‰æ‘œ‚ÉˆÚs
 	UIButton* nextButton = dynamic_cast<UIButton*>(uipanel->GetUIObject("nextButton"));
-	if (nextButton != nullptr &&nextButton->OnClick()) {
-		StageIndex = (StageIndex + 1) % stageImages.size();
+	if (nextButton == nullptr)return;
+	if (nextButton->OnClick()) {
+		StageIndex = StageIndex + 1;
 		transform_.position_.x = stageImages[StageIndex]->GetPosition().x;
 	}
 	
 	//Button‚ª‰Ÿ‚³‚ê‚½‚çŸ‚Ì‰æ‘œ‚ÉˆÚs
 	UIButton* backButton = dynamic_cast<UIButton*>(uipanel->GetUIObject("backButton"));
-	if (backButton != nullptr && backButton->OnClick()) {
-		StageIndex = (StageIndex - 1 + stageImages.size()) % stageImages.size();
+	if (backButton == nullptr)return;
+	if (backButton->OnClick()) {
+		StageIndex = StageIndex - 1 + stageImages.size();
 		transform_.position_.x = stageImages[StageIndex]->GetPosition().x;
 	}
 
 	UIButton* stageSelectButton = stageImages[StageIndex];
-	if (stageSelectButton != nullptr && stageSelectButton->OnClick())
-	{
+	if (stageSelectButton == nullptr)return;
+	if (stageSelectButton->OnClick()){
 		SceneManager* pChangeScene = (SceneManager*)FindObject("SceneManager");
 		pChangeScene->ChangeScene(SCENE_ID_PLAY, TID_BLACKOUT);
 	}

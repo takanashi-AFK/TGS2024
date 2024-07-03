@@ -9,8 +9,7 @@ UIProgressBar::UIProgressBar(string _name, GameObject* parent)
 	:UIObject(_name, UIType::UI_PROGRESSBAR, parent),
     gaugeMaxValue_(100.0f),  // 初期値を設定
     gaugeNowValue_(50.0f),  // 初期値を設定
-    gaugeAnimValue_(0.0f),  // 初期値を設定
-    healthManager_(nullptr)
+    gaugeAnimValue_(0.0f)  // 初期値を設定
 {
 }
 
@@ -22,21 +21,11 @@ void UIProgressBar::Initialize()
     pictFrameHandle_ = Image::Load("Images/Bar_Frame.png");
     assert(pictFrameHandle_ >= 0);
 
-    //Component_PlayerBehavior* playerBeha = dynamic_cast<Component_PlayerBehavior*>(pList->FindComponent("PlayerBehavior"));
-    //if (playerBeha != nullptr) {
-    //    //playerBehaから子コンポーネントを取得する
-    //    healthManager_ = dynamic_cast<Component_HealthManager*>(playerBeha->GetChildComponent("HealthManager"));
-    //}
+   
 }
 
 void UIProgressBar::Update()
 {
-    if (healthManager_) {
-        SetNowBar(healthManager_->GetHP(), healthManager_->GetMax());
-    }
-    else {
-        SetNowBar(gaugeNowValue_, gaugeMaxValue_);
-    }
 }
 
 void UIProgressBar::Draw()
@@ -154,15 +143,3 @@ void UIProgressBar::SetGaugeAnimValue()
     gaugeAnimValue_ = (gaugeAnimValue_ * 9 + gaugeNowValue_) / 10.0f;
 }
 
-void UIProgressBar::SetHealthManager(Component_HealthManager* healthManager)
-{
-    
-        healthManager_ = healthManager;
-     
-}
-
-void UIProgressBar::SetNowBar(float now, float max)
-{
-    gaugeNowValue_ = now;
-    gaugeMaxValue_ = max;
-}

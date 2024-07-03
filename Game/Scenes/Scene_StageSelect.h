@@ -3,12 +3,12 @@
 
 class  UIPanel;
 class UIButton;
-
+#include <vector>
 class Scene_StageSelect: public GameObject
 {
 private:
 	UIPanel* uipanel;
-	vector<UIButton*>stageImages;
+	std::vector<UIButton*>stageImages;
 	int StageIndex;
 public:
 	Scene_StageSelect(GameObject* parent);

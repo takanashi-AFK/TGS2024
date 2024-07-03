@@ -30,6 +30,7 @@ void Scene_StageSelect::Update()
 	UIButton* nextButton = dynamic_cast<UIButton*>(uipanel->GetUIObject("nextButton"));
 	if (nextButton != nullptr &&nextButton->OnClick()) {
 		StageIndex = (StageIndex + 1) % stageImages.size();
+
 	}
 	
 	//Button‚ª‰Ÿ‚³‚ê‚½‚çŸ‚Ì‰æ‘œ‚ÉˆÚs

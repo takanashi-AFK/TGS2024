@@ -243,6 +243,14 @@ void StageObject::Save(json& _saveObj)
 	// 自身のモデルのファイルパスを保存
 	_saveObj["modelFilePath_"] = modelFilePath_;
 
+	// 陰影の表示フラグを保存
+	_saveObj["isShadeVisible_"] = isShadeVisible_;
+
+	// 接地処理の情報を保存
+	_saveObj["isOnGround_"] = isOnGround_;
+	_saveObj["isCollisionWall_"] = isCollisionWall_;
+	_saveObj["fallSpeed_"] = fallSpeed_;
+
 	// コンポーネント情報を保存
 	for (auto comp : myComponents_)comp->ChildSave(_saveObj["myComponents_"][comp->GetName()]);
 }
@@ -259,6 +267,14 @@ void StageObject::Load(json& _loadObj)
 
 	// モデルのファイルパスを読込
 	modelFilePath_ = _loadObj["modelFilePath_"];
+
+	// 陰影の表示フラグを読込
+	if(_loadObj.contains("isShadeVisible_"))isShadeVisible_ = _loadObj["isShadeVisible_"];
+
+	// 接地処理の情報を読込
+	if (_loadObj.contains("isOnGround_"))isOnGround_ = _loadObj["isOnGround_"];
+	if (_loadObj.contains("isCollisionWall_"))isCollisionWall_ = _loadObj["isCollisionWall_"];
+	if (_loadObj.contains("fallSpeed_"))fallSpeed_ = _loadObj["fallSpeed_"];
 
 	// コンポーネントインスタンスを生成
 	for (auto& obj : _loadObj["myComponents_"]) {

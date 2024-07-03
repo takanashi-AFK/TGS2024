@@ -9,6 +9,7 @@
 #include"../../Engine/SceneManager.h"
 #include "../Objects/UI/UIButton.h"
 #include "../Objects/Camera/TPSCamera.h"
+#include "../../Engine/ImGui/imgui.h"
 
 Scene_Play::Scene_Play(GameObject* parent)
 {
@@ -23,20 +24,20 @@ void Scene_Play::Initialize()
 	Stage* pStage = Instantiate<Stage>(this); {
 		// ステージを読み込み
 		json stageData;
-		JsonReader::Load("Datas/StageLayouts/stage_Test00_sugawara.json", stageData);
+		JsonReader::Load("Datas/StageLayouts/stage_beta_00.json", stageData);
 		pStage->Load(stageData);
 
-		//範囲for分でオブジェクトリストの取得
-		for (auto pList : pStage->GetStageObjects()) {
-			//リスト内でとうろくされているPlayerBehaviorがあったらコンポーネントをキャストして代入
-			if (pList->FindComponent("PlayerBehavior")) {
-				Component_PlayerBehavior* playerBeha = dynamic_cast<Component_PlayerBehavior*>(pList->FindComponent("PlayerBehavior"));
-				if (playerBeha != nullptr) {
-					//playerBehaから子コンポーネントを取得する
-					playerHealth_ = dynamic_cast<Component_HealthManager*>(playerBeha->GetChildComponent("HealthManager"));
-				}
-			}
-		}
+		////範囲for分でオブジェクトリストの取得
+		//for (auto pList : pStage->GetStageObjects()) {
+		//	//リスト内でとうろくされているPlayerBehaviorがあったらコンポーネントをキャストして代入
+		//	if (pList->FindComponent("PlayerBehavior")) {
+		//		Component_PlayerBehavior* playerBeha = dynamic_cast<Component_PlayerBehavior*>(pList->FindComponent("PlayerBehavior"));
+		//		if (playerBeha != nullptr) {
+		//			//playerBehaから子コンポーネントを取得する
+		//			playerHealth_ = dynamic_cast<Component_HealthManager*>(playerBeha->GetChildComponent("HealthManager"));
+		//		}
+		//	}
+		//}
 	}
 
 	TPSCamera* tpsCamera = Instantiate<TPSCamera>(this); {
@@ -49,11 +50,17 @@ void Scene_Play::Initialize()
 
 void Scene_Play::Update()
 {
-	//HPが0になったらエンドシーンに移行
-	if (playerHealth_->GetHP() == 0) {
+
+	if(ImGui::Button("END")) {
 		SceneManager* pChangeScene = (SceneManager*)FindObject("SceneManager");
 		pChangeScene->ChangeScene(SCENE_ID_END, TID_BLACKOUT);
 	}
+
+	//HPが0になったらエンドシーンに移行
+	/*if (playerHealth_->GetHP() == 0) {
+		SceneManager* pChangeScene = (SceneManager*)FindObject("SceneManager");
+		pChangeScene->ChangeScene(SCENE_ID_END, TID_BLACKOUT);
+	}*/
 }
 
 void Scene_Play::Draw()

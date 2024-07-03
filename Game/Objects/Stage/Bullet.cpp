@@ -31,7 +31,7 @@ void Bullet::Initialize()
 	DirectX::XMStoreFloat4x4(&(t.matrix), transform_.GetWorldMatrix());/*★★★*/
 	t.isLoop = false;/*★★★*/
 	t.maxFrame = 180;/*★★★*/
-	t.speed = 0.1;/*★★★*/
+	t.speed = 1.f;/*★★★*/
 
 
 	// effekseer: :Effectの再生
@@ -65,7 +65,7 @@ void Bullet::Draw()
 void Bullet::OnCollision(GameObject* _target)
 {
 	// プレイヤーと衝突した場合
-	if (_target->GetObjectName() == "Char_Player") {
+	if (_target->GetObjectName() == "char_player00") {
 
 		// プレイヤーのHPマネージャーコンポーネントを取得
 		Component* hm = ((StageObject*)_target)->FindComponent("HealthManager");

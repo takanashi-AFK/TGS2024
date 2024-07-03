@@ -82,5 +82,5 @@ float4 PS(VS_OUT inData) : SV_Target
 	}
 	
 	//ÅI“I‚ÈF
-    return diffuse * float4(0.2f,0.2f,0.2f,1.f);
+    return diffuse;
 }

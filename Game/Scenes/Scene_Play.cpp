@@ -23,7 +23,7 @@ void Scene_Play::Initialize()
 	Stage* pStage = Instantiate<Stage>(this); {
 		// ステージを読み込み
 		json stageData;
-		JsonReader::Load("Datas/StageLayouts/stage_Test00_sugawara.json", stageData);
+		JsonReader::Load("Datas/StageLayout/stage_beta_00.json", stageData);
 		pStage->Load(stageData);
 
 		//範囲for分でオブジェクトリストの取得

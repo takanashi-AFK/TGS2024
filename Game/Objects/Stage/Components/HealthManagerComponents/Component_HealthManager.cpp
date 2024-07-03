@@ -4,7 +4,7 @@
 #include "../../../../../Engine/ImGui/imgui.h"
 
 Component_HealthManager::Component_HealthManager(string _name, StageObject* _holder, Component* _parent)
-	:Component(_holder, _name, HealthManager,_parent),max_(0),hp_(0) 
+	:Component(_holder, _name, HealthManager,_parent),max_(100),hp_(0) 
 {
 
 }

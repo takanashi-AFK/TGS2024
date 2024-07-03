@@ -1,12 +1,13 @@
 #include "Component_CactanBehavior.h"
 
-#include "../../StageObject.h" 
-#include "../TimerComponent/Component_Timer.h"
-#include "../AttackComponents/Component_ShootAttack.h"
-#include "../DetectorComponents/Component_CircleRangeDetector.h"
+#include "../../../../../Engine/Global.h"
 #include "../../../../../Engine/ImGui/imgui.h"
 #include "../../Stage.h"
-#include "../../../../../Engine/Global.h"
+#include "../../StageObject.h" 
+#include "../AttackComponents/Component_ShootAttack.h"
+#include "../DetectorComponents/Component_CircleRangeDetector.h"
+#include "../HealthManagerComponents/Component_HealthManager.h"
+#include "../TimerComponent/Component_Timer.h"
 
 Component_CactanBehavior::Component_CactanBehavior(string _name, StageObject* _holder, Component* _parent)
 	:Component(_holder, _name, CactanBihavior, _parent)
@@ -22,6 +23,8 @@ void Component_CactanBehavior::Initialize()
 	if (FindChildComponent("CircleRangeDetector") == false)AddChildComponent(CreateComponent("CircleRangeDetector",CircleRangeDetector,holder_,this));
 	if (FindChildComponent("ShootAttack") == false)AddChildComponent(CreateComponent("ShootAttack", ShootAttack, holder_, this));
 	if (FindChildComponent("Timer") == false)AddChildComponent(CreateComponent("Timer", Timer, holder_, this));
+	if (FindChildComponent("HealthManager") == false)AddChildComponent(CreateComponent("HealthManager", HealthManager, holder_, this));
+
 }
 
 void Component_CactanBehavior::Update()

@@ -239,6 +239,9 @@ void StageObject::Save(json& _saveObj)
 	_saveObj["position_"] = { REFERENCE_XMFLOAT3(transform_.position_) };
 	_saveObj["rotate_"] = { REFERENCE_XMFLOAT3(transform_.rotate_) };
 	_saveObj["scale_"] = { REFERENCE_XMFLOAT3(transform_.scale_)};
+	_saveObj["fallSpeed_"] = fallSpeed_;
+	_saveObj["isOnGround_"] = isOnGround_;
+	_saveObj["isCollisionWall_"] = isCollisionWall_;
 	
 	// 自身のモデルのファイルパスを保存
 	_saveObj["modelFilePath_"] = modelFilePath_;
@@ -261,9 +264,14 @@ void StageObject::Load(json& _loadObj)
 	this->DeleteAllComponent();
 
 	// 変形行列情報を読込
-	transform_.position_ = { _loadObj["position_"][0].get<float>(),_loadObj["position_"][1].get<float>(), _loadObj["position_"][2].get<float>() };
-	transform_.rotate_ = { _loadObj["rotate_"][0].get<float>(),_loadObj["rotate_"][1].get<float>(), _loadObj["rotate_"][2].get<float>() };
-	transform_.scale_ = { _loadObj["scale_"][0].get<float>(),_loadObj["scale_"][1].get<float>(), _loadObj["scale_"][2].get<float>() };
+
+	if (_loadObj.contains("position_"))transform_.position_ = { _loadObj["position_"][0].get<float>(),_loadObj["position_"][1].get<float>(), _loadObj["position_"][2].get<float>() };
+	if (_loadObj.contains("rotate_"))transform_.rotate_ = { _loadObj["rotate_"][0].get<float>(),_loadObj["rotate_"][1].get<float>(), _loadObj["rotate_"][2].get<float>() };
+	if (_loadObj.contains("scale_"))transform_.scale_ = { _loadObj["scale_"][0].get<float>(),_loadObj["scale_"][1].get<float>(), _loadObj["scale_"][2].get<float>() };
+	if (_loadObj.contains("fallSpeed_"))fallSpeed_ = _loadObj["fallSpeed_"];
+	if (_loadObj.contains("isOnGround_"))isOnGround_ = _loadObj["isOnGround_"];
+	if (_loadObj.contains("isCollisionWall_"))isCollisionWall_ = _loadObj["isCollisionWall_"];
+
 
 	// モデルのファイルパスを読込
 	modelFilePath_ = _loadObj["modelFilePath_"];

@@ -1,4 +1,7 @@
 #include "UIPanel.h"
+#include "UIButton.h"
+#include "UIImage.h"
+#include "../../Otheres/GameEditor.h"
 
 UIPanel::UIPanel(std::string name, UIObject* parent, int layerNum)
 	: UIObject(name, UI_PANEL, parent, layerNum), objects_()
@@ -7,6 +10,8 @@ UIPanel::UIPanel(std::string name, UIObject* parent, int layerNum)
 
 void UIPanel::Initialize()
 {
+	UIPanel* pUIButton_ = (UIPanel*)CreateUIObject(objectName_, UI_BUTTON, nullptr, 0);
+	UIPanel* pUIImage_ = (UIPanel*)CreateUIObject(objectName_, UI_IMAGE, nullptr, 0);
 }
 
 void UIPanel::Update()

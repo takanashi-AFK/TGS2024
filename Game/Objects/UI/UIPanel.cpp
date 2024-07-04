@@ -91,9 +91,16 @@ void UIPanel::DeleteUIObject(UIObject* _object)
 
 	// オブジェクトのイテレータを取得する
 	auto it = std::find(childList_.begin(), childList_.end(), _object);
-
 	// イテレータが見つかった場合、ベクターから削除する
 	if (it != childList_.end()) childList_.erase(it);
+
+	////chaildList_にある子オブジェクトのReleaseを呼ぶ
+	//for (auto obj : childList_) {
+	//	obj->Release();
+	//}
+
+
+
 }
 
 void UIPanel::DeleteAllUIObject()

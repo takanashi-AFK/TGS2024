@@ -192,15 +192,6 @@ bool UIObject::CompareLayerNumber(UIObject* _object1, UIObject* _object2)
 	return _object1->GetLayerNumber() < _object2->GetLayerNumber();
 }
 
-void UIObject::SortChildren()
-{
-	//std::sort(childList_.begin(), childList_.end(), UIObject::CompareLayerNumber);
-
-	std::sort(childList_.begin(), childList_.end(), UIObject::CompareLayerNumber);
-	for (auto child : childList_) {
-		child->SortChildren();  // 再帰的に子オブジェクトもソート
-	}
-}
 
 //void UIObject::AddUIObject(UIObject* _object)
 //{

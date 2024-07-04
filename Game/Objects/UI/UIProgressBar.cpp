@@ -27,6 +27,8 @@ void UIProgressBar::Initialize()
 
 void UIProgressBar::Update()
 {
+    if (healthGauge_ == nullptr)healthGauge_ = (Component_HealthGauge*)FindObject(targetName_);
+    if (healthGauge_ == nullptr)return;
 
     if (healthGauge_ != nullptr) {
         gaugeMaxValue_ = healthGauge_->GetMax();
@@ -37,13 +39,15 @@ void UIProgressBar::Update()
     // ゲージのスケールを計算
     transGauge_ = transform_;
     transGauge_.scale_.x = (gaugeNowValue_ / gaugeMaxValue_) * transFrame_.scale_.x;
-
+    
 }
 
 void UIProgressBar::Draw()
 {
     if (imageHandle_ < 0) return;
     
+    
+
     // ゲージの画像を描画
     Image::SetTransform(pictGaugeHandle_, transGauge_);
     Image::Draw(pictGaugeHandle_,Direct3D::SHADER_BAR,color_);
@@ -60,6 +64,7 @@ void UIProgressBar::Release()
 
 void UIProgressBar::Save(json& saveObj)
 {
+    if (target_ != nullptr)saveObj["target_"] = target_->GetObjectName();
     saveObj["imageFilePath_"] = imageFilePath_;
     saveObj["gaugeMaxValue_"] = gaugeMaxValue_;
     saveObj["gaugeNowValue_"] = gaugeNowValue_;
@@ -72,6 +77,7 @@ void UIProgressBar::Load(json& loadObj)
         imageFilePath_ = loadObj["imageFilePath_"].get<string>();
         SetImage(imageFilePath_);
     }
+    if (loadObj.contains("target_"))targetName_ = loadObj["target_"];
     gaugeMaxValue_ = loadObj["gaugeMaxValue_"].get<float>();
     gaugeNowValue_ = loadObj["gaugeNowValue_"].get<float>();
     color_ = { loadObj["color_"][0].get<float>(),loadObj["color_"][1].get<float>(), loadObj["color_"][2].get<float>() };
@@ -79,10 +85,16 @@ void UIProgressBar::Load(json& loadObj)
 
 void UIProgressBar::DrawData()
 {
+    // ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
+    // プログレスバーのフレーム画像を設定
+    // ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
     if (ImGui::TreeNode("imageFilePath_")) {
+
+        // 現在のファイルパスを表示
         ImGui::Text("imageFilePath_:%s", imageFilePath_.c_str());
         ImGui::SameLine();
 
+        // ファイルパスを取得
         if (ImGui::SmallButton("...")) {
             // 現在のカレントディレクトリを覚えておく
             char defaultCurrentDir[MAX_PATH];
@@ -113,49 +125,56 @@ void UIProgressBar::DrawData()
             }
             else {
                 return;
+                ImGui::TreePop();
             }
         }
         ImGui::TreePop();
     }
-    // カラー・ピッカー
-    ImVec4 temp = {color_.x,color_.y,color_.z,0};
-    ImGui::ColorEdit4("Color", (float*)&temp);
-    color_ = { temp.x,temp.y,temp.z };
 
- 
-   
-    // Stage内に存在するGaugeコンポーネント継承したコンポーネントを全て取得
-    vector<string> objNames;
-    objNames.push_back("null");
+
+    // ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
+    // ゲージ表示色を設定
+    // ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
+    ImVec4 inputCol = { REFERENCE_XMFLOAT3(color_),0 };
+    ImGui::ColorEdit4("Color", (float*)&inputCol);
+    color_ = {REFERENCE_XMFLOAT3(inputCol)};
+
+
+    // ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
+    // 参照するゲージコンポーネントを設定
+    // ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
+
+    // ゲージコンポーネントの名前を取得（すべて）
+    vector<string> gaugeCompNames;
+
+    // コンポーネントの名前を追加していこう
+    gaugeCompNames.push_back("null");
     auto stage = (Stage*)FindObject("Stage");
     if (stage) {
         for (auto obj : stage->GetStageObjects()) {
             for (auto component : obj->FindComponent(HealthGauge)) {
-                    //ステージ内のすべてのオブジェクトの名前を取得
-                    objNames.push_back(obj->GetObjectName());
-                    break; // 1オブジェクトに1つのGaugeコンポーネントのみ
+                //ステージ内のすべてのオブジェクトの名前を取得
+                gaugeCompNames.push_back(obj->GetObjectName());
+                break;
             }
         }
     }
 
+    // 取得した名前のリストを参照してImGuiで選択できるように
     static int select = 0;
-    if (ImGui::BeginCombo("Target Gauge", objNames[select].c_str())) {
-        for (int i = 0; i < objNames.size(); i++) {
+
+    if (ImGui::BeginCombo("target_", gaugeCompNames[select].c_str())) {
+        for (int i = 0; i < gaugeCompNames.size(); i++) {
             bool is_selected = (select == i);
-            if (ImGui::Selectable(objNames[i].c_str(), is_selected)) select = i;
+            if (ImGui::Selectable(gaugeCompNames[i].c_str(), is_selected)) select = i;
             if (is_selected) ImGui::SetItemDefaultFocus();
         }
         ImGui::EndCombo();
     }
 
-    if (select == 0)healthGauge_ = nullptr;
-    else {
-        healthGauge_ = (Component_HealthGauge*)FindObject(objNames[select]);
-        auto gauge = (Component*)FindObject("Component");
-        gauge->GetChildComponent(HealthGauge);
-        
-    }
-   
+    // 選択されたindexから名前を割り出す
+    targetName_ = gaugeCompNames[select];
+
     // ゲージの制御
     ImGui::DragFloat("Current Value", &gaugeNowValue_, 1.f, gaugeMaxValue_);
     ImGui::DragFloat("Max Value", &gaugeMaxValue_, 1.f);

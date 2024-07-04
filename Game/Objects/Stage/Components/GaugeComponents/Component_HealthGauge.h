@@ -11,7 +11,6 @@ private:
 
 	float maxHp_; //体力の上限
 	float nowHp_;  //体力
-
 public:
 
 	/// <summary>
@@ -88,4 +87,6 @@ public:
 	/// 体力のリセット(最大値に戻す)
 	/// </summary>
 	void Reset();
+
+	
 };

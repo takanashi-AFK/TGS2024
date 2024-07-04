@@ -20,7 +20,8 @@ private:
     Transform transGauge_;
     Transform transFrame_;
     Component_HealthGauge* healthGauge_; // HealthGauge‚Ìƒ|ƒCƒ“ƒ^‚ð’Ç‰Á
-    
+    StageObject* target_;
+    string targetName_;
 
 
 public:
@@ -44,4 +45,6 @@ public:
     float GetGaugeMaxValue() { return gaugeMaxValue_; }
     float GetGaugeCurrentValue() { return gaugeNowValue_; }
     
+    void SetColor(XMFLOAT3 _col) { color_ = _col; }
+    void SetColor(float _r, float _g, float _b) { SetColor(XMFLOAT3(_r, _g, _b)); }
 };

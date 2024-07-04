@@ -33,19 +33,17 @@ void UIProgressBar::Update()
     if (healthGauge_ != nullptr) {
         gaugeMaxValue_ = healthGauge_->GetMax();
         gaugeNowValue_ = healthGauge_->GetHP();
+  
     }
-
     // 設定された値から変形行列`transform_`の値を計算
-    // ゲージのスケールを計算
+   // ゲージのスケールを計算
     transGauge_ = transform_;
     transGauge_.scale_.x = (gaugeNowValue_ / gaugeMaxValue_) * transFrame_.scale_.x;
-    
 }
 
 void UIProgressBar::Draw()
 {
     if (imageHandle_ < 0) return;
-    
     
 
     // ゲージの画像を描画

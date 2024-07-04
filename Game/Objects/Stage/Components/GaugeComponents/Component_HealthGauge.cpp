@@ -4,7 +4,7 @@
 #include "../../../../../Engine/ImGui/imgui.h"
 
 Component_HealthGauge::Component_HealthGauge(string _name, StageObject* _holder, Component* _parent)
-	:Component_Gauge(_holder, _name, HealthGauge,_parent)
+	:Component_Gauge(_holder, _name, HealthGauge,_parent),maxHp_(0),nowHp_(0)
 {
 
 }
@@ -35,10 +35,38 @@ void Component_HealthGauge::Load(json& _loadObj)
 
 void Component_HealthGauge::DrawData()
 {
-	ImGui::DragFloat("MaxHP", &maxHp_, 1.0f);
-	ImGui::DragFloat("HP", &nowHp_, 1.0f, 0.0f, maxHp_);
+	if (ImGui::Button("HP Heal"))
+	{
+		Heal(10.f);
+	}
+	if (ImGui::Button("Damage"))
+	{
+		TakeDamage(10.f);
+	}
 
-	if (ImGui::Button("Reset"))Reset();
+
+	static float tempHP = 0;
+	ImGui::DragFloat("HP", &tempHP, 1.0f, 0.0f, 100.0f);
+	if (ImGui::Button("DragSetHP"))
+	{
+		SetHP(tempHP);
+	}
+
+	static float tempMax = 0;
+	ImGui::DragFloat("Max", &tempMax, 1.0f, 0.0f, 100.0f);
+	if (ImGui::Button("DragSetMax"))
+	{
+		SetMax(tempMax);
+	}
+
+	if (ImGui::Button("Reset"))
+	{
+		Reset();
+	}
+
+	ImGui::Text("HP:%f", nowHp_);
+	ImGui::Text("MaxHP:%f", maxHp_);
+
 }
 
 float Component_HealthGauge::GetHP() const

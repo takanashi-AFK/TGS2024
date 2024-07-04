@@ -39,6 +39,7 @@ public:
 	void SortUIObject();
 
 	UIObject* GetUIObject(string _name);
-	vector<UIObject*> GetUIObjects() { return objects_; };
+	vector<UIObject*> GetUIObjects() { return childList_; };
+
 };
 

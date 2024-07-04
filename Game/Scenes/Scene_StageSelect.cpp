@@ -28,6 +28,8 @@ void Scene_StageSelect::Initialize()
 
 void Scene_StageSelect::Update()
 {
+	float targetPosX_ = 0.0f;
+
 	UIButton* stageSelectButton = stageImages[StageIndex];
 	if (stageSelectButton == nullptr)return;
 	if (stageSelectButton->OnClick()) {
@@ -39,7 +41,7 @@ void Scene_StageSelect::Update()
 	UIButton* nextButton = dynamic_cast<UIButton*>(uipanel->GetUIObject("NextButton"));
 	if (nextButton == nullptr)return;
 	if (nextButton->OnClick()) {
-		moveselectButton = 5.f;
+		moveselectButton = 0.01;
 		isSelectButtonMoving_ = true;
 	}
 
@@ -48,22 +50,36 @@ void Scene_StageSelect::Update()
 	if (backButton == nullptr)return;
 	if (backButton->OnClick()) {
 		isSelectButtonMoving_ = true;
-		moveselectButton = -5.f;
+		moveselectButton = -0.01;
 	}
-	//trueになっている間x方向にButtonが移動しある程度まで行ったらfalseにする
+	//trueになっている間x方向にButtonが移動しある
 	if (isSelectButtonMoving_ == true) {
 		//stageSelectButtonのx座標だけ取得
 		float selectButtonPos = stageSelectButton->GetPosition().x;
-        
+
 		//Buttonのx座標更新
-		selectButtonPos += moveselectButton;
+		selectButtonPos = Direct3D::EaseFunc[easingfunc_](moveselectButton);
 
 		// 位置更新
-		stageSelectButton->SetPosition({ selectButtonPos, stageSelectButton->GetPosition().y,stageSelectButton->GetPosition().z});
+		stageSelectButton->SetPosition({ selectButtonPos, stageSelectButton->GetPosition().y,stageSelectButton->GetPosition().z });
 
+		float maxButtonPos = 1.;
+
+
+		if (selectButtonPos >= maxButtonPos) {
+			isSelectButtonMoving_ = false;
+			moveselectButton = 0.f;
+
+		}
+		if (selectButtonPos < -1.) {
+			isSelectButtonMoving_ = false;
+			moveselectButton = 0.f;
+		}
+
+	
 	}
-
 }
+
 
 void Scene_StageSelect::Draw()
 {

@@ -12,7 +12,7 @@ private:
 	int StageIndex;
 	bool isSelectButtonMoving_;
 	float moveselectButton;//ƒ{ƒ^ƒ“‚ð“®‚©‚·‚½‚ß‚Ì‘¬“x
-	
+	std::string easingfunc_;
 public:
 	Scene_StageSelect(GameObject* parent);
 

@@ -104,9 +104,9 @@ public:
 	//子オブジェクトをソートするための関数
 	void SortChildren();
 
-	/*void AddUIObject(UIObject* _object);
-	void DeleteUIObject(UIObject* _object);
-	void DeleteAllUIObject();*/
+	//void AddUIObject(UIObject* _object);
+	//void DeleteUIObject(UIObject* _object);
+	//void DeleteAllUIObject();
 
 };
 

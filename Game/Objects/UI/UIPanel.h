@@ -27,9 +27,9 @@ public:
 	void Draw() override;
 	void Release() override;
 
-	void Save(json& _saveObj);
-	void Load(json& _loadObj);
-	void DrawData();
+	void Save(json& _saveObj)override;
+	void Load(json& _loadObj)override;
+	void DrawData()override;
 
 	void AddUIObject(UIObject* _object);
 	void DeleteUIObject(UIObject* _object);

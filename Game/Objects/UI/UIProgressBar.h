@@ -7,6 +7,12 @@
 #include <string>
 #include <vector>
 
+struct gauge {
+    StageObject* holder_;
+    Component_Gauge* this_;
+    string holderName_;
+    string thisName_;
+};
 
 class UIProgressBar : public UIObject
 {
@@ -23,7 +29,7 @@ private:
     StageObject* target_;
     string targetName_;
 
-
+    gauge referenceGauge_;
 public:
     UIProgressBar(std::string _name, GameObject* parent);
     void Initialize() override;

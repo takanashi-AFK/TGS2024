@@ -27,14 +27,29 @@ void UIProgressBar::Initialize()
 
 void UIProgressBar::Update()
 {
-    if (healthGauge_ == nullptr)healthGauge_ = (Component_HealthGauge*)FindObject(targetName_);
-    if (healthGauge_ == nullptr)return;
+    // 参照しているコンポーネントがあるかどうかを調べて取得する
+    if (referenceGauge_.this_ == nullptr) {
+        auto holderObject = (StageObject*)FindObject(referenceGauge_.holderName_);
+        if (holderObject) {
+            Component* component = holderObject->FindComponent(referenceGauge_.thisName_);
+            referenceGauge_.this_ = dynamic_cast<Component_Gauge*>(component);
+        }
+    }
 
-    if (healthGauge_ != nullptr) {
+    // 参照するコンポーネントがない場合、終了
+    if (referenceGauge_.this_ == nullptr) return;
+
+    // HealthGaugeコンポーネントとしてキャストして値を取得
+     healthGauge_ = dynamic_cast<Component_HealthGauge*>(referenceGauge_.this_);
+    if (healthGauge_) {
+          gaugeMaxValue_ = healthGauge_->GetMax();
+          gaugeNowValue_ = healthGauge_->GetHP();
+    }
+
+    /*if (healthGauge_ != nullptr) {
         gaugeMaxValue_ = healthGauge_->GetMax();
         gaugeNowValue_ = healthGauge_->GetHP();
-    }
-    
+    }*/
 }
 
 void UIProgressBar::Draw()
@@ -136,41 +151,53 @@ void UIProgressBar::DrawData()
     ImGui::ColorEdit4("Color", (float*)&inputCol);
     color_ = {REFERENCE_XMFLOAT3(inputCol)};
 
+// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
+// ゲージコンポーネント情報を取得
+// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
+    vector<gauge> gauges;
+    
+   // ステージ情報を取得
+    vector<StageObject*> objects = ((Stage*)FindObject("Stage"))->GetStageObjects();
 
-    // ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
-    // 参照するゲージコンポーネントを設定
-    // ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
+    ////ステージ内のオブジェクトを参照してすべてのゲージコンポーネントを取得
+    //for (auto obj : objects) {
+    //    //HPゲージを探して取得
+    //    for (auto healthGaugeComp : obj->FindComponent(HealthGauge))
+    //        //配列にすべてのオブジェクトとコンポーネントを入れる？
+    //        gauges.push_back({ obj,healthGaugeComp,obj->GetObjectName(),healthGaugeComp->GetName() });
+    //        //技ゲージ...
+    //}
+    //static int select = 0;
+    //    //どのゲージを参照するか
+    //if (ImGui::BeginCombo("gauge_", gauges[select]))
+   
 
-    // ゲージコンポーネントの名前を取得（すべて）
-    vector<string> gaugeCompNames;
+    //gaugeCompNames.push_back("null");
+    //auto stage = (Stage*)FindObject("Stage");
+    //if (stage) {
+    //    for (auto obj : stage->GetStageObjects()) {
+    //        for (auto component : obj->FindComponent(HealthGauge)) {
+    //            //ステージ内のすべてのオブジェクトの名前を取得
+    //            gaugeCompNames.push_back(obj->GetObjectName());
+    //            break;
+    //        }
+    //    }
+    //}
 
-    // コンポーネントの名前を追加していこう
-    gaugeCompNames.push_back("null");
-    auto stage = (Stage*)FindObject("Stage");
-    if (stage) {
-        for (auto obj : stage->GetStageObjects()) {
-            for (auto component : obj->FindComponent(HealthGauge)) {
-                //ステージ内のすべてのオブジェクトの名前を取得
-                gaugeCompNames.push_back(obj->GetObjectName());
-                break;
-            }
-        }
-    }
+    //// 取得した名前のリストを参照してImGuiで選択できるように
+    //static int select = 0;
 
-    // 取得した名前のリストを参照してImGuiで選択できるように
-    static int select = 0;
+    //if (ImGui::BeginCombo("target_", gaugeCompNames[select].c_str())) {
+    //    for (int i = 0; i < gaugeCompNames.size(); i++) {
+    //        bool is_selected = (select == i);
+    //        if (ImGui::Selectable(gaugeCompNames[i].c_str(), is_selected)) select = i;
+    //        if (is_selected) ImGui::SetItemDefaultFocus();
+    //    }
+    //    ImGui::EndCombo();
+    //}
 
-    if (ImGui::BeginCombo("target_", gaugeCompNames[select].c_str())) {
-        for (int i = 0; i < gaugeCompNames.size(); i++) {
-            bool is_selected = (select == i);
-            if (ImGui::Selectable(gaugeCompNames[i].c_str(), is_selected)) select = i;
-            if (is_selected) ImGui::SetItemDefaultFocus();
-        }
-        ImGui::EndCombo();
-    }
-
-    // 選択されたindexから名前を割り出す
-    targetName_ = gaugeCompNames[select];
+    //選択されたindexから名前を割り出す
+    //targetName_ = gaugeCompNames[select];
 
     // ゲージの制御
     ImGui::DragFloat("Current Value", &gaugeNowValue_, 1.f, gaugeMaxValue_);

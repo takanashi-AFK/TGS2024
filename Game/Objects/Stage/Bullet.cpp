@@ -62,25 +62,23 @@ void Bullet::Draw()
 
 void Bullet::OnCollision(GameObject* _target)
 {
-	// プレイヤーと衝突した場合
-	if (_target->GetObjectName() == "Char_Player") {
+	if (isActive_ == false)return;
 
-		// プレイヤーのHPマネージャーコンポーネントを取得
-		Component* hm = ((StageObject*)_target)->FindComponent("HealthManager");
-		if (hm == nullptr)return;
+	// ターゲットがStageObjectでない場合は処理を行わない
+	StageObject* target = dynamic_cast<StageObject*>(_target);
+	if (!target) return;
 
-		// プレイヤーのHPを減らす
+	// ダメージ処理
+	for (auto hm : target->FindComponent(HealthManager)) {
+
 		((Component_HealthManager*)hm)->TakeDamage(20);
+		this->KillMe();
 
-		// プレイヤーのHPが0以下の場合
-		if (((Component_HealthManager*)hm)->GetHP() <= 0) {
-
-			// プレイヤーを消す
+		if (((Component_HealthManager*)hm)->GetHP() <= 0.f) {
 			((Stage*)FindObject("Stage"))->DeleteStageObject((StageObject*)_target);
 		}
-		
-		this->KillMe();
 	}
+
 }
 
 void Bullet::Move(XMVECTOR _dir, float _speed)

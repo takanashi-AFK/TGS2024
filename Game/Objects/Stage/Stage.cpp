@@ -64,14 +64,15 @@ void Stage::AddStageObject(StageObject* _obj)
 
 void Stage::DeleteStageObject(StageObject* _obj)
 {
-	// オブジェクトを削除する
-	_obj->KillMe();
 
 	// オブジェクトのイテレータを取得する
 	auto it = std::find(objects_.begin(), objects_.end(), _obj);
 
 	// イテレータが見つかった場合、ベクターから削除する
 	if (it != objects_.end()) objects_.erase(it);
+
+	// オブジェクトを削除する
+	_obj->KillMe();
 }
 
 void Stage::DeleteAllStageObject()

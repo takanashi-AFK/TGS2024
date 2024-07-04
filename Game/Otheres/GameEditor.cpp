@@ -282,7 +282,7 @@ void GameEditor::UIObjectClreateWindow()
 				// UIオブジェクトを作成・追加
 				UIObject* obj = CreateUIObject(nameBuffer, uitype, editUIPanel_,layerNumberCount_);
 				if (obj != nullptr) {
-					editUIPanel_->AddUIObject(obj);
+					//editUIPanel_->AddUIObject(obj);
 					isShowCreateUIObjectWindow_ = false;
 					//レイヤー番号の更新
 					layerNumberCount_++;

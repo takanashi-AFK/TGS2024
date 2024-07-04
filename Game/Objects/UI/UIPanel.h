@@ -15,8 +15,6 @@ class UIPanel : public UIObject
 {
 private:
 
-	vector<UIObject*> objects_;
-
 	UIButton* pUIButton_;
 	UIImage* pUIImage_;
 
@@ -31,7 +29,7 @@ public:
 	void Load(json& _loadObj)override;
 	void DrawData()override;
 
-	void AddUIObject(UIObject* _object);
+	//void AddUIObject(UIObject* _object);
 	void DeleteUIObject(UIObject* _object);
 	void DeleteAllUIObject();
 

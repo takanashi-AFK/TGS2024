@@ -66,8 +66,6 @@ void UIPanel::Load(json& _loadObj)
 
 		// オブジェクトをリストに追加
 		//AddUIObject(obj);
-
-		childList_.push_back(obj);
 	}
 }
 
@@ -80,11 +78,11 @@ void UIPanel::DrawData()
 	}
 }
 
-void UIPanel::AddUIObject(UIObject* _object)
-{
-	// リストに追加
-	if (_object != nullptr)objects_.push_back(_object);
-}
+//void UIPanel::AddUIObject(UIObject* _object)
+//{
+//	// リストに追加
+//	if (_object != nullptr)childList_.push_back(_object);
+//}
 
 void UIPanel::DeleteUIObject(UIObject* _object)
 {
@@ -113,15 +111,15 @@ void UIPanel::SortUIObject()
 }
 
 
-UIObject* UIPanel::GetUIObject(string _name)
-{
-	UIObject* result = nullptr;
-
-	for (auto obj : objects_) {
-		if (obj->GetObjectName() == _name) {
-			result = obj;
-			break;
-		}
-	}
-	return result;
-}
+//UIObject* UIPanel::GetUIObject(string _name)
+//{
+//	UIObject* result = nullptr;
+//
+//	for (auto obj : childList_) {
+//		if (obj->GetObjectName() == _name) {
+//			result = obj;
+//			break;
+//		}
+//	}
+//	return result;
+//}

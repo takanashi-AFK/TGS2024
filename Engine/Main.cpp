@@ -236,7 +236,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	Model::AllRelease();
 	Image::AllRelease();
 	pRootObject->ReleaseSub();
-	//pUIPanel->ReleaseSub();
+	pUIPanel_->ReleaseSub();
 	SAFE_DELETE(pRootObject);
 	Direct3D::Release();
 

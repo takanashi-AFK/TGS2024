@@ -192,10 +192,15 @@ bool UIObject::CompareLayerNumber(UIObject* _object1, UIObject* _object2)
 	return _object1->GetLayerNumber() < _object2->GetLayerNumber();
 }
 
-//void UIObject::SortChildren()
-//{
-//	std::sort(childList_.begin(), childList_.end(), UIObject::CompareLayerNumber);
-//}
+void UIObject::SortChildren()
+{
+	//std::sort(childList_.begin(), childList_.end(), UIObject::CompareLayerNumber);
+
+	std::sort(childList_.begin(), childList_.end(), UIObject::CompareLayerNumber);
+	for (auto child : childList_) {
+		child->SortChildren();  // 再帰的に子オブジェクトもソート
+	}
+}
 
 //void UIObject::AddUIObject(UIObject* _object)
 //{
@@ -233,8 +238,8 @@ UIObject* CreateUIObject(string _name, UIType _type,UIObject* _parent, int _laye
 		case UI_IMAGE:obj = new UIImage(_name, _parent,_layerNum); break;
 		case UI_TEXT:break;
 		case UI_PANEL:obj = new UIPanel(); break;
-        default:obj = nullptr; break;
-		//default:obj = new UIObject(_name, _type, _parent, _layerNum); break;
+        //default:obj = nullptr; break;
+		default:obj = new UIObject(_name, _type, _parent, _layerNum); break;
 	}
 	// インスタンスが生成できなかった場合はnullptrを返す
 	if (obj == nullptr)return nullptr;
@@ -262,7 +267,7 @@ string GetUITypeString(UIType _type)
 
 void UIObject::UpdateSub()
 {
-	//Update();
+	Update();
 	Transform();
 
 	for (auto it = childList_.begin(); it != childList_.end(); it++)
@@ -273,7 +278,7 @@ void UIObject::UpdateSub()
 
 void UIObject::DrawSub()
 {
-	//Draw();
+	Draw();
 
 	for (auto it = childList_.begin(); it != childList_.end(); it++)
 	{
@@ -284,7 +289,7 @@ void UIObject::DrawSub()
 
 void UIObject::ReleaseSub()
 {
-	//Release();
+	Release();
 
 	for (auto it = childList_.begin(); it != childList_.end();)
 	{

@@ -38,7 +38,7 @@ public:
 	//レイヤー番号順にソート
 	void SortUIObject();
 
-	///UIObject* GetUIObject(string _name);
+	UIObject* GetUIObject(string _name);
 	vector<UIObject*> GetUIObjects() { return objects_; };
 };
 

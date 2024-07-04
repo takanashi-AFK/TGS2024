@@ -21,7 +21,7 @@ void UIPanel::Initialize()
 
 void UIPanel::Update()
 {
-	UpdateSub();
+	//UpdateSub();
 }
 
 void UIPanel::Draw()
@@ -120,16 +120,16 @@ void UIPanel::SortUIObject()
 	std::sort(objects_.begin(), objects_.end(), UIObject::CompareLayerNumber);
 }
 
-//
-//UIObject* UIPanel::GetUIObject(string _name)
-//{
-//	UIObject* result = nullptr;
-//
-//	for (auto obj : objects_) {
-//		if (obj->GetObjectName() == _name) {
-//			result = obj;
-//			break;
-//		}
-//	}
-//	return result;
-//}
+
+UIObject* UIPanel::GetUIObject(string _name)
+{
+	UIObject* result = nullptr;
+
+	for (auto obj : objects_) {
+		if (obj->GetObjectName() == _name) {
+			result = obj;
+			break;
+		}
+	}
+	return result;
+}

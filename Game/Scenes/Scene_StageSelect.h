@@ -11,7 +11,7 @@ private:
 	std::vector<UIButton*>stageImages;
 	int StageIndex;
 	bool isSelectButtonMoving_;
-	float moveselectButton;
+	float moveselectButton;//ƒ{ƒ^ƒ“‚ð“®‚©‚·‚½‚ß‚Ì‘¬“x
 	
 public:
 	Scene_StageSelect(GameObject* parent);

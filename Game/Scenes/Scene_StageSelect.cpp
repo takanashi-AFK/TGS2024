@@ -6,16 +6,16 @@
 #include "../Objects/UI/UIPanel.h"
 #include "../Objects/UI/UIButton.h"
 Scene_StageSelect::Scene_StageSelect(GameObject* parent)
-: GameObject(parent, "Scene_StageSelect"), isSelectButtonMoving_(false),moveselectButton(0.0f)
+	: GameObject(parent, "Scene_StageSelect"), isSelectButtonMoving_(false), moveselectButton(0.0f)
 {
 }
 
 void Scene_StageSelect::Initialize()
 {
-	uipanel = Instantiate<UIPanel>(this); 
+	uipanel = Instantiate<UIPanel>(this);
 	json uiData;
-	if (JsonReader::Load("Datas/UILayouts/StageSelect.json", uiData)){
-			uipanel->Load(uiData);
+	if (JsonReader::Load("Datas/UILayouts/StageSelect.json", uiData)) {
+		uipanel->Load(uiData);
 	}
 
 	StageIndex = 0;
@@ -39,31 +39,29 @@ void Scene_StageSelect::Update()
 	UIButton* nextButton = dynamic_cast<UIButton*>(uipanel->GetUIObject("nextButton"));
 	if (nextButton == nullptr)return;
 	if (nextButton->OnClick()) {
+		moveselectButton = 5.f;
 		isSelectButtonMoving_ = true;
-		
 	}
-	
+
 	//Buttonが押されたら一個前の画像に戻る
 	UIButton* backButton = dynamic_cast<UIButton*>(uipanel->GetUIObject("backButton"));
 	if (backButton == nullptr)return;
 	if (backButton->OnClick()) {
 		isSelectButtonMoving_ = true;
-		
+		moveselectButton = -5.f;
 	}
-	//trueになっている間x方向に移動しButtonを
+	//trueになっている間x方向にButtonが移動しある程度まで行ったらfalseにする
 	if (isSelectButtonMoving_ == true) {
-	    //stageSelectButtonのx座標だけ取得
+		//stageSelectButtonのx座標だけ取得
 		float selectButtonPos = stageSelectButton->GetPosition().x;
-
+        
+		//Buttonのx座標更新
 		selectButtonPos += moveselectButton;
-		
-		
-		
+
+		// 位置更新
+		stageSelectButton->SetPosition({ selectButtonPos, stageSelectButton->GetPosition().y,stageSelectButton->GetPosition().z});
+
 	}
-
-	
-
-
 
 }
 

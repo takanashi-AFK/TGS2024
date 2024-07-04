@@ -68,8 +68,12 @@ void Bullet::OnCollision(GameObject* _target)
 	StageObject* target = dynamic_cast<StageObject*>(_target);
 	if (!target) return;
 
+
+	auto list = target->FindComponent(HealthManager);
+
+	if (list.empty()) return;
 	// ƒ_ƒ[ƒWˆ—
-	for (auto hm : target->FindComponent(HealthManager)) {
+	for (auto hm : list) {
 
 		((Component_HealthManager*)hm)->TakeDamage(20);
 		this->KillMe();

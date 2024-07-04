@@ -11,6 +11,7 @@ private:
 
 	float maxHp_; //‘Ì—Í‚ÌãŒÀ
 	float nowHp_;  //‘Ì—Í
+	
 public:
 
 	/// <summary>

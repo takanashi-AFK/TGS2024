@@ -5,14 +5,10 @@
 class Component_MeleeAttack : public Component_Attack
 {
 private:
-	XMVECTOR forward_; //前方向
-	XMVECTOR prevFrontVec_;
-	bool isOneHit_;
-
-	// 追記※
 	XMVECTOR direction_;	// 攻撃方向
 	XMFLOAT3 colliderSize_; // コライダーの大きさ
 	bool isHit_;			// ヒットしたかどうか
+
 public:
 	/// <summary>
 	/// コンストラクタ
@@ -26,7 +22,6 @@ public:
 	/// 初期化
 	/// </summary>
 	void Initialize() override;
-
 
 	/// <summary>
 	/// 更新
@@ -44,21 +39,15 @@ public:
 	void DrawData() override;
 
 	/// <summary>
-	/// 一定時間たったらコライダーを削除
-	/// </summary>
-	/// <param name="_time">何秒後に消すか</param>
-	bool AutoDelete(float _time);
-
-	/// <summary>
 	/// 衝突判定
 	/// </summary>
 	/// <param name="_target"></param>
 	void OnCollision(GameObject* _target) override;
 	
 	/// <summary>
-	/// 正面方向の設定
+	/// 攻撃方向の設定
 	/// </summary>
-	/// <param name="_forward">正面方向ベクトル</param>
-	void SetForward(XMVECTOR _forward) { forward_ = _forward; }
+	/// <param name="_direction"></param>
+	void SetDirection(XMVECTOR _direction) { direction_ = _direction; }
 };
 

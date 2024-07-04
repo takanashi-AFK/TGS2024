@@ -74,13 +74,14 @@ void Scene_StageSelect::Update()
 	//trueになっている間x方向にButtonが移動しある
 	if (isSelectButtonMoving_) {
 		for (int i = 0; i < stageImages.size(); ++i) {
+			stageImages[i]->OnClick() == false;
 			stageSelectButton = stageImages[i];
 			//stageSelectButtonのx座標だけ取得
 			float selectButtonPos = stageSelectButton->GetPosition().x;
 
-			//MoveButtonDistance_ = 2.f;
+			MoveButtonDistance_ = 2.f;
 			//Buttonのx座標更新
-			selectButtonPos += moveselectButton;
+			selectButtonPos += MoveButtonDistance_ *Direct3D::EaseFunc[easingfunc_](moveselectButton);
 
 			// 位置更新
 			stageSelectButton->SetPosition({ selectButtonPos, stageSelectButton->GetPosition().y,stageSelectButton->GetPosition().z });

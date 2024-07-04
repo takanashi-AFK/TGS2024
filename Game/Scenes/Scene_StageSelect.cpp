@@ -36,15 +36,15 @@ void Scene_StageSelect::Update()
 	}
 
 	//Button‚ª‰Ÿ‚³‚ê‚½‚çŸ‚Ì‰æ‘œ‚ÉˆÚs
-	UIButton* nextButton = dynamic_cast<UIButton*>(uipanel->GetUIObject("nextButton"));
+	UIButton* nextButton = dynamic_cast<UIButton*>(uipanel->GetUIObject("NextButton"));
 	if (nextButton == nullptr)return;
 	if (nextButton->OnClick()) {
 		moveselectButton = 5.f;
 		isSelectButtonMoving_ = true;
 	}
 
-	//Button‚ª‰Ÿ‚³‚ê‚½‚çˆêŒÂ‘O‚Ì‰æ‘œ‚É–ß‚é
-	UIButton* backButton = dynamic_cast<UIButton*>(uipanel->GetUIObject("backButton"));
+	//Button‚ª‰Ÿ‚³‚ê‚½‚ç-•ûŒü‚ÉˆÚ“®‚µ‰æ‘œ‚ğ“ü‚ê‘Ö‚¦‚é
+	UIButton* backButton = dynamic_cast<UIButton*>(uipanel->GetUIObject("BuckButton"));
 	if (backButton == nullptr)return;
 	if (backButton->OnClick()) {
 		isSelectButtonMoving_ = true;

@@ -9,6 +9,10 @@ private:
 	XMVECTOR prevFrontVec_;
 	bool isOneHit_;
 
+	// 追記※
+	XMVECTOR direction_;	// 攻撃方向
+	XMFLOAT3 colliderSize_; // コライダーの大きさ
+	bool isHit_;			// ヒットしたかどうか
 public:
 	/// <summary>
 	/// コンストラクタ

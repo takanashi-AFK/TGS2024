@@ -1,14 +1,13 @@
 #include "Component_MeleeAttack.h"
 #include "../../StageObject.h"
 #include "../../../../../Engine/Collider/BoxCollider.h"
-#include "../../Knuckle.h"
 #include "../../../../../Engine/ImGui/imgui.h"
 #include "../TimerComponent/Component_Timer.h"
 #include "../HealthManagerComponents/Component_HealthManager.h"
 #include "../../Stage.h"
 
 Component_MeleeAttack::Component_MeleeAttack(string _name, StageObject* _holder, Component* _parent)
-	:Component_Attack(_holder, _name, MeleeAttack, _parent), isOneHit_(false)
+	:Component_Attack(_holder, _name, MeleeAttack, _parent), isHit_(false),colliderSize_(1.f,1.f,1.f)
 {
 }
 
@@ -27,12 +26,11 @@ void Component_MeleeAttack::Initialize()
 void Component_MeleeAttack::Update()
 {
 	// 有効でない場合は処理を行わない
-	if (!isActive_) return;
+	if (isActive_ == false) return;
 
 	// コライダーの更新
 	Collider* collider = dynamic_cast<BoxCollider*>(holder_->GetCollider(0));
 	if (!collider) return;
-
 	{
 		//前方向の取得
 		XMFLOAT3 front{};
@@ -63,10 +61,35 @@ void Component_MeleeAttack::Release()
 
 void Component_MeleeAttack::DrawData()
 {
-	ImGui::Text(isOneHit_ ? "true" : "false");
-
+	// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
+	// 攻撃力の設定
+	// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
 	ImGui::DragInt("power_", &power_);
+
+	// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
+	// コライダーの大きさ
+	// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
+	if (ImGui::DragFloat3("colliderSize_", (float*)&colliderSize_, 0.01f)) {
+		// コライダーの大きさを変更
+		BoxCollider* collider = dynamic_cast<BoxCollider*>(holder_->GetCollider(0));
+		if (collider != nullptr) collider->SetSize(colliderSize_);
+	}
+
+	// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
+	// 攻撃方向の設定
+	// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
+	ImGui::DragFloat3("direction_", (float*)&direction_, 0.01f);
+
+	// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
+	// 実行ボタンの設定
+	// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
 	if (ImGui::Button("Execute")) Execute();
+
+	// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
+	// 近距離攻撃がヒットしたかどうか
+	// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
+	ImGui::SameLine();
+	ImGui::Text("isHit : %s",isOneHit_ ? "true" : "false");
 }
 
 bool Component_MeleeAttack::AutoDelete(float _time)

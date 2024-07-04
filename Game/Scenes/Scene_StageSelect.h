@@ -12,7 +12,8 @@ private:
 	int StageIndex;
 	bool isSelectButtonMoving_;
 	float moveselectButton;//ボタンを動かすための速度
-	std::string easingfunc_;
+	//std::string easingfunc_;
+	float maxButtonmove_;//開始位置が違くても指定した距離動くようにするのでそのための変数
 public:
 	Scene_StageSelect(GameObject* parent);
 

@@ -6,7 +6,7 @@
 #include "../Objects/UI/UIPanel.h"
 #include "../Objects/UI/UIButton.h"
 Scene_StageSelect::Scene_StageSelect(GameObject* parent)
-	: GameObject(parent, "Scene_StageSelect"), isSelectButtonMoving_(false), moveselectButton(0.0f)
+	: GameObject(parent, "Scene_StageSelect"), isSelectButtonMoving_(false), moveselectButton(0.f),maxButtonmove_(0.f),StageIndex(0)
 {
 }
 
@@ -18,18 +18,13 @@ void Scene_StageSelect::Initialize()
 		uipanel->Load(uiData);
 	}
 
-	StageIndex = 0;
-
 	stageImages.push_back(dynamic_cast<UIButton*>(uipanel->GetUIObject("StageSelectButton1")));
 	stageImages.push_back(dynamic_cast<UIButton*>(uipanel->GetUIObject("StageSelectButton2")));
-
-	
 }
 
 void Scene_StageSelect::Update()
 {
-	float targetPosX_ = 0.0f;
-
+	//stageSelectButtonが押されたらシーンに移動
 	UIButton* stageSelectButton = stageImages[StageIndex];
 	if (stageSelectButton == nullptr)return;
 	if (stageSelectButton->OnClick()) {
@@ -58,24 +53,12 @@ void Scene_StageSelect::Update()
 		float selectButtonPos = stageSelectButton->GetPosition().x;
 
 		//Buttonのx座標更新
-		selectButtonPos = Direct3D::EaseFunc[easingfunc_](moveselectButton);
-
+		//selectButtonPos = Direct3D::EaseFunc[easingfunc_](moveselectButton);
+		selectButtonPos += moveselectButton;
 		// 位置更新
 		stageSelectButton->SetPosition({ selectButtonPos, stageSelectButton->GetPosition().y,stageSelectButton->GetPosition().z });
 
-		float maxButtonPos = 1.;
-
-
-		if (selectButtonPos >= maxButtonPos) {
-			isSelectButtonMoving_ = false;
-			moveselectButton = 0.f;
-
-		}
-		if (selectButtonPos < -1.) {
-			isSelectButtonMoving_ = false;
-			moveselectButton = 0.f;
-		}
-
+		//指定した距離移動したらisSelectButtonMovingをfalseにする
 	
 	}
 }

@@ -15,6 +15,8 @@ class UIPanel : public UIObject
 {
 private:
 
+	vector<UIObject*> objects_;
+
 	UIButton* pUIButton_;
 	UIImage* pUIImage_;
 
@@ -29,14 +31,14 @@ public:
 	void Load(json& _loadObj);
 	void DrawData();
 
-	//void AddUIObject(UIObject* _object);
-	//void DeleteUIObject(UIObject* _object);
-	//void DeleteAllUIObject();
+	void AddUIObject(UIObject* _object);
+	void DeleteUIObject(UIObject* _object);
+	void DeleteAllUIObject();
 
 	//レイヤー番号順にソート
-	//void SortUIObject();
+	void SortUIObject();
 
 	///UIObject* GetUIObject(string _name);
-	vector<UIObject*> GetUIObjects() { return childList_; };
+	vector<UIObject*> GetUIObjects() { return objects_; };
 };
 

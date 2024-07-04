@@ -102,11 +102,11 @@ public:
 	static bool CompareLayerNumber(UIObject* _object1, UIObject* _object2);
 
 	//子オブジェクトをソートするための関数
-	void SortChildren();
+	//void SortChildren();
 
-	void AddUIObject(UIObject* _object);
+	/*void AddUIObject(UIObject* _object);
 	void DeleteUIObject(UIObject* _object);
-	void DeleteAllUIObject();
+	void DeleteAllUIObject();*/
 
 };
 

@@ -192,35 +192,35 @@ bool UIObject::CompareLayerNumber(UIObject* _object1, UIObject* _object2)
 	return _object1->GetLayerNumber() < _object2->GetLayerNumber();
 }
 
-void UIObject::SortChildren()
-{
-	std::sort(childList_.begin(), childList_.end(), UIObject::CompareLayerNumber);
-}
+//void UIObject::SortChildren()
+//{
+//	std::sort(childList_.begin(), childList_.end(), UIObject::CompareLayerNumber);
+//}
 
-void UIObject::AddUIObject(UIObject* _object)
-{
-	// リストに追加
-	if (_object != nullptr)childList_.push_back(_object);
-}
-
-void UIObject::DeleteUIObject(UIObject* _object)
-{
-	// オブジェクトを削除する
-	_object->KillMe();
-
-	// オブジェクトのイテレータを取得する
-	auto it = std::find(childList_.begin(), childList_.end(), _object);
-
-	// イテレータが見つかった場合、ベクターから削除する
-	if (it != childList_.end()) childList_.erase(it);
-}
-
-void UIObject::DeleteAllUIObject()
-{
-	// 全てのオブジェクトを削除
-	for (auto obj : childList_)obj->KillMe();
-	childList_.clear();
-}
+//void UIObject::AddUIObject(UIObject* _object)
+//{
+//	// リストに追加
+//	if (_object != nullptr)childList_.push_back(_object);
+//}
+//
+//void UIObject::DeleteUIObject(UIObject* _object)
+//{
+//	// オブジェクトを削除する
+//	_object->KillMe();
+//
+//	// オブジェクトのイテレータを取得する
+//	auto it = std::find(childList_.begin(), childList_.end(), _object);
+//
+//	// イテレータが見つかった場合、ベクターから削除する
+//	if (it != childList_.end()) childList_.erase(it);
+//}
+//
+//void UIObject::DeleteAllUIObject()
+//{
+//	// 全てのオブジェクトを削除
+//	for (auto obj : childList_)obj->KillMe();
+//	childList_.clear();
+//}
 
 
 UIObject* CreateUIObject(string _name, UIType _type,UIObject* _parent, int _layerNum)

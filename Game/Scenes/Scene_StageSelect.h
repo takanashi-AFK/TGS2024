@@ -6,16 +6,15 @@ class UIButton;
 #include <vector>
 class Scene_StageSelect: public GameObject
 {
-private:
-	UIPanel* uipanel;
 
+private:
+	UIPanel* uipanel;//UIパネルのポインタ変数
 	std::vector<UIButton*>stageImages;
 	int StageIndex;
-	bool isSelectButtonMoving_;
+	bool isSelectButtonMoving_;//ボタンが動いてるかどうか
 	float moveselectButton;//ボタンを動かすための割合
-	float MoveButtonDistance_;//ボタンの移動距離
 	std::string easingfunc_;//いーじんぐ
-	float maxButtonmove_;//開始位置が違くても指定した距離動くようにするのでそのための変数
+	float maxButtonmove_;//指定距離の変数
 
 public:
 	Scene_StageSelect(GameObject* parent);

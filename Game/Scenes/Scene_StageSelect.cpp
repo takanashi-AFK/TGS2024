@@ -18,10 +18,11 @@ void Scene_StageSelect::Initialize()
 	uipanel = Instantiate<UIPanel>(this);
 	//uiData‚Éjsonƒtƒ@ƒCƒ‹‚ª‘¶Ý‚µ‚½‚Ì‚Å‚ ‚ê‚Îuipanel‚É•Û‘¶‚³‚ê‚Ä‚¢‚é
 	json uiData;
-	if (JsonReader::Load("Datas/UILayouts/StageSelect.json", uiData)) {
+	if (JsonReader::Load("Datas/UILayouts/StageSelect2.json", uiData)) {
 		uipanel->Load(uiData);
 	}
 
+	
 	stageImages.push_back(dynamic_cast<UIButton*>(uipanel->GetUIObject("StageSelectButton1")));
 	stageImages.push_back(dynamic_cast<UIButton*>(uipanel->GetUIObject("StageSelectButton2")));
 }

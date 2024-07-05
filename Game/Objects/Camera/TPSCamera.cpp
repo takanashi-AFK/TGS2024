@@ -141,9 +141,13 @@ void TPSCamera::DrawData()
     std::vector<string> objNames;
     objNames.push_back("null");
 
-    for (auto obj : (((Stage*)FindObject("Stage"))->GetStageObjects()))objNames.push_back(obj->GetObjectName());
+    for (auto obj : (((Stage*)FindObject("Stage"))->GetStageObjects()))
+        objNames.push_back(obj->GetObjectName());
 
     static int select = 0;
+
+    if (select >= objNames.size())return;
+
     if (ImGui::BeginCombo("target_", objNames[select].c_str())) {
         for (int i = 0; i < objNames.size(); i++) {
             bool is_selected = (select == i);
@@ -167,7 +171,7 @@ void TPSCamera::Save(json& saveObj)
 
 void TPSCamera::Load(json& loadObj)
 {
-	if(loadObj.contains("isActive_"))isActive_ = loadObj["isActive_"];
+	if (loadObj.contains("isActive_"))isActive_ = loadObj["isActive_"];
 	if (loadObj.contains("sensitivity_"))sensitivity_ = loadObj["sensitivity_"];
 	if (loadObj.contains("targetHeight_"))targetHeight_ = loadObj["targetHeight_"];
 	if (loadObj.contains("targetDistance_"))targetDistance_ = loadObj["targetDistance_"];

@@ -11,8 +11,8 @@ class Component_BossBehavior : public Component
 private:
 
 	enum STATE { SHOT, TACKLE, SHOCK, WAIT, };	// 状態
-	STATE nowState_;					// 現在の状態	
-	STATE prevState_;					// １フレーム前の状態
+	STATE nowState_;							// 現在の状態	
+	STATE prevState_;							// １フレーム前の状態
 
 	StageObject* target_;
 	string targetName_;
@@ -77,11 +77,25 @@ public:
 	/// </summary>
 	void DrawData() override;
 
+//------------ボスの行動メソッド----------------//
+
+	/// <summary>
+	/// 射撃
+	/// </summary>
 	void Shot();
 
+	/// <summary>
+	/// 突進
+	/// </summary>
 	void Tackle();
 
+	/// <summary>
+	/// 衝撃波(未実装) 浮かび上がり、急速に落下したときに発生する衝撃波ダメージの予定
+	/// </summary>
 	void Shock();
 
-	void Wait();					// 待機
+	/// <summary>
+	/// 待機
+	/// </summary>
+	void Wait();					
 };

@@ -513,7 +513,7 @@ namespace Direct3D
 
 	//三角形と線分の衝突判定（衝突判定に使用）
 	//https://pheema.hatenablog.jp/entry/ray-triangle-intersection
-	bool Intersect(XMFLOAT3 & start, XMFLOAT3 & direction, XMFLOAT3 & v0, XMFLOAT3 & v1, XMFLOAT3 & v2, float* distance)
+	bool Intersect(XMFLOAT3& start, XMFLOAT3& direction, XMFLOAT3& v0, XMFLOAT3& v1, XMFLOAT3& v2, float* distance, XMVECTOR* pos)
 	{
 		// 微小な定数([M?ller97] での値)
 		constexpr float kEpsilon = 1e-6f;
@@ -528,7 +528,7 @@ namespace Direct3D
 		// 三角形に対して、レイが平行に入射するような場合 det = 0 となる。
 		// det が小さすぎると 1/det が大きくなりすぎて数値的に不安定になるので
 		// det ? 0 の場合は交差しないこととする。
-		if (-kEpsilon < det && det < kEpsilon) 
+		if (-kEpsilon < det && det < kEpsilon)
 		{
 			return false;
 		}
@@ -548,19 +548,21 @@ namespace Direct3D
 		// v が 0 <= v <= 1 かつ u + v <= 1 を満たすことを調べる。
 		// すなわち、v が 0 <= v <= 1 - u をみたしているかを調べればOK。
 		float v = XMVector3Dot(XMLoadFloat3(&direction), beta).m128_f32[0] * invDet;
-		if (v < 0.0f || u + v > 1.0f) 
+		if (v < 0.0f || u + v > 1.0f)
 		{
 			return false;
 		}
 
 		// t が 0 <= t を満たすことを調べる。
 		float t = XMVector3Dot(edge2, beta).m128_f32[0] * invDet;
-		if (t < 0.0f) 
+		if (t < 0.0f)
 		{
 			return false;
 		}
 
 		*distance = t;
+		*pos = XMLoadFloat3(&v0) + (edge1 * u) + (edge2 * v);
+
 		return true;
 	}
 

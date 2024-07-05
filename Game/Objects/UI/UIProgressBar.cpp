@@ -163,13 +163,15 @@ void UIProgressBar::DrawData()
     //for (auto obj : objects) {
     //    //HPゲージを探して取得
     //    for (auto healthGaugeComp : obj->FindComponent(HealthGauge))
-    //        //配列にすべてのオブジェクトとコンポーネントを入れる？
+    //        //配列にオブジェクトとコンポーネントを一つにまとめて入れる？
     //        gauges.push_back({ obj,healthGaugeComp,obj->GetObjectName(),healthGaugeComp->GetName() });
     //        //技ゲージ...
     //}
     //static int select = 0;
     //    //どのゲージを参照するか
-    //if (ImGui::BeginCombo("gauge_", gauges[select]))
+    //if (ImGui::BeginCombo("gauge_", gauges[select]->GatName().c_str())) {
+    //    
+    //}
    
 
     //gaugeCompNames.push_back("null");

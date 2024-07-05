@@ -6,7 +6,7 @@
 UIPanel* pUIPanel_ = new UIPanel;
 
 UIPanel::UIPanel()
-	: UIObject("UIPanel",UI_PANEL,nullptr,0)
+	: UIObject(),pUIButton_(nullptr),pUIImage_(nullptr)
 {
 }
 
@@ -39,7 +39,6 @@ void UIPanel::Draw()
 
 void UIPanel::Release()
 {
-	DeleteAllUIObject();
 }
 
 void UIPanel::Save(json& _saveObj)

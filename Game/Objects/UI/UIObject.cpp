@@ -82,7 +82,7 @@ void UIObject::ChildDrawData()
 	// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
 	// オブジェクトの削除ボタン
 	// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
-	if (ImGui::SmallButton("delete"))((UIPanel*)FindObject("UIPanel"))->DeleteUIObject(this);
+	if (ImGui::SmallButton("delete"))((UIPanel*)GetParent())->DeleteUIObject(this);
 	ImGui::Separator();
 
 	// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
@@ -229,8 +229,8 @@ UIObject* CreateUIObject(string _name, UIType _type,UIObject* _parent, int _laye
 		case UI_IMAGE:obj = new UIImage(_name, _parent,_layerNum); break;
 		case UI_TEXT:break;
 		case UI_PANEL:obj = new UIPanel(); break;
-        //default:obj = nullptr; break;
-		default:obj = new UIObject(_name, _type, _parent, _layerNum); break;
+        default:obj = nullptr; break;
+		//default:obj = new UIObject(_name, _type, _parent, _layerNum); break;
 	}
 	// インスタンスが生成できなかった場合はnullptrを返す
 	if (obj == nullptr)return nullptr;
@@ -280,7 +280,7 @@ void UIObject::DrawSub()
 
 void UIObject::ReleaseSub()
 {
-	Release();
+	
 
 	for (auto it = childList_.begin(); it != childList_.end();)
 	{
@@ -288,6 +288,8 @@ void UIObject::ReleaseSub()
 		SAFE_DELETE(*it);
 		it = childList_.erase(it);
 	}
+
+	Release();
 }
 
 bool UIObject::IsDead()

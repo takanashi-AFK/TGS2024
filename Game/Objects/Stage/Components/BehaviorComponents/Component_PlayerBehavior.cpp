@@ -47,7 +47,7 @@ void Component_PlayerBehavior::Update()
 
 	frontVec_ = move->GetMoveDirction();
 
-	melee->SetForward(frontVec_);
+	//melee->SetForward(frontVec_);
 
 	// HPゲージの表示
 	ImGui::ProgressBar(progress, ImVec2(0.0f, 0.0f), "Player HP");

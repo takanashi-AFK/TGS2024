@@ -171,7 +171,8 @@ public:
     /// </returns>
     string GetName() { return name_; }
 
-
+    void Execute() { isActive_ = true; }
+    void Stop() { isActive_ = false; }
 
 };
 

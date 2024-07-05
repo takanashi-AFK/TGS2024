@@ -21,16 +21,6 @@ public:
 	Component_Attack(StageObject* _holder, string _name, ComponentType _type,Component* _parent);
 
 	/// <summary>
-	/// UŒ‚Às
-	/// </summary>
-	void Execute() { isActive_ = true; }
-
-	/// <summary>
-	/// UŒ‚’â~
-	/// </summary>
-	void Stop() { isActive_ = false; }
-
-	/// <summary>
 	/// UŒ‚—Í‚ğİ’è
 	/// </summary>
 	/// <param name="_power"></param>

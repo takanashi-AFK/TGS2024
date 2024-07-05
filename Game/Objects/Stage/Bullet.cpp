@@ -56,7 +56,7 @@ void Bullet::OnCollision(GameObject* _target)
 		((Component_HealthGauge*)hm)->TakeDamage(20);
 
 		// プレイヤーのHPが0以下の場合
-		if (((Component_HealthGauge*)hm)->GetHP() <= 0) {
+		if (((Component_HealthGauge*)hm)->GetNow() <= 0) {
 
 			// プレイヤーを消す
 			((Stage*)FindObject("Stage"))->DeleteStageObject((StageObject*)_target);

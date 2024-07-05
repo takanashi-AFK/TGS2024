@@ -43,25 +43,25 @@ void Component_HealthGauge::DrawData()
 
 }
 
-float Component_HealthGauge::GetHP() const
-{
-	return nowHp_;
-}
-
-void Component_HealthGauge::SetHP(float _newHP)
-{
-	if(_newHP <= maxHp_)nowHp_ = _newHP;
-}
-
-float Component_HealthGauge::GetMax() const
-{
-	return maxHp_;
-}
-
-void Component_HealthGauge::SetMax(float _newMax)
-{
-	maxHp_ = _newMax;
-}
+//float Component_HealthGauge::GetHP() const
+//{
+//	return nowHp_;
+//}
+//
+//void Component_HealthGauge::SetHP(float _newHP)
+//{
+//	if(_newHP <= maxHp_)nowHp_ = _newHP;
+//}
+//
+//float Component_HealthGauge::GetMax() const
+//{
+//	return maxHp_;
+//}
+//
+//void Component_HealthGauge::SetMax(float _newMax)
+//{
+//	maxHp_ = _newMax;
+//}
 
 void Component_HealthGauge::TakeDamage(float _damageValue)
 {

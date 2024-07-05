@@ -26,7 +26,7 @@ void Component_PlayerBehavior::Update()
 	auto hm = dynamic_cast<Component_HealthGauge*>(GetChildComponent("HealthGauge"));
 
 	// 進捗を0.0〜1.0の範囲で計算
-	float progress = hm->GetHP() / hm->GetMax();
+	float progress = hm->GetNow() / hm->GetMax();
 
 	// HPゲージの表示
 	ImGui::ProgressBar(progress, ImVec2(0.0f, 0.0f), "Player HP");

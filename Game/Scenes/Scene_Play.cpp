@@ -50,7 +50,7 @@ void Scene_Play::Initialize()
 void Scene_Play::Update()
 {
 	//HPが0になったらエンドシーンに移行
-	if (playerHealth_->GetHP() == 0) {
+	if (playerHealth_->GetNow() == 0) {
 		SceneManager* pChangeScene = (SceneManager*)FindObject("SceneManager");
 		pChangeScene->ChangeScene(SCENE_ID_END, TID_BLACKOUT);
 	}

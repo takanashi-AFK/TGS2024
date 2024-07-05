@@ -53,26 +53,6 @@ public:
 	void DrawData() override;
 
 	/// <summary>
-	/// HPの値を取得
-	/// </summary>
-	/// <returns></returns>
-	float GetHP() const;
-
-	/// <summary>
-	/// HPの値を設定
-	/// </summary>
-	/// <param name="_newHP">与えられたHP</param>
-	void SetHP(float _newHP);
-
-	/// <returns>体力の最大値</returns>
-	float GetMax() const;
-
-	/// <summary>
-	/// 体力の最大値を設定
-	/// </summary>
-	void SetMax(float _newMax);
-
-	/// <summary>
 	/// ダメージを受けた際の計算
 	/// </summary>
 	/// <param name="_damageValue">ダメージ値</param>

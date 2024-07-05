@@ -27,29 +27,16 @@ void UIProgressBar::Initialize()
 
 void UIProgressBar::Update()
 {
-    // 参照しているコンポーネントがあるかどうかを調べて取得する
-    if (referenceGauge_.this_ == nullptr) {
-        auto holderObject = (StageObject*)FindObject(referenceGauge_.holderName_);
-        if (holderObject) {
-            Component* component = holderObject->FindComponent(referenceGauge_.thisName_);
-            referenceGauge_.this_ = dynamic_cast<Component_Gauge*>(component);
-        }
+    //参照しているコンポーネントがあるかどうか
+    if (referenceGauge_.this_ == nullptr)
+        referenceGauge_.this_ = (Component_Gauge*)((StageObject*)FindObject(referenceGauge_.holderName_))->FindComponent(referenceGauge_.thisName_);
+    if(referenceGauge_.this_ == nullptr)return;
+    //参照するゲージコンポーネントから値を取得
+    if (referenceGauge_.this_ != nullptr) {
+        gaugeMaxValue_ = referenceGauge_.this_->GetMax();
+        gaugeNowValue_ = referenceGauge_.this_->GetNow();
     }
-
-    // 参照するコンポーネントがない場合、終了
-    if (referenceGauge_.this_ == nullptr) return;
-
-    // HealthGaugeコンポーネントとしてキャストして値を取得
-     healthGauge_ = dynamic_cast<Component_HealthGauge*>(referenceGauge_.this_);
-    if (healthGauge_) {
-          gaugeMaxValue_ = healthGauge_->GetMax();
-          gaugeNowValue_ = healthGauge_->GetHP();
-    }
-
-    /*if (healthGauge_ != nullptr) {
-        gaugeMaxValue_ = healthGauge_->GetMax();
-        gaugeNowValue_ = healthGauge_->GetHP();
-    }*/
+    
 }
 
 void UIProgressBar::Draw()
@@ -159,20 +146,35 @@ void UIProgressBar::DrawData()
    // ステージ情報を取得
     vector<StageObject*> objects = ((Stage*)FindObject("Stage"))->GetStageObjects();
 
-    ////ステージ内のオブジェクトを参照してすべてのゲージコンポーネントを取得
-    //for (auto obj : objects) {
-    //    //HPゲージを探して取得
-    //    for (auto healthGaugeComp : obj->FindComponent(HealthGauge))
-    //        //配列にオブジェクトとコンポーネントを一つにまとめて入れる？
-    //        gauges.push_back({ obj,healthGaugeComp,obj->GetObjectName(),healthGaugeComp->GetName() });
-    //        //技ゲージ...
-    //}
-    //static int select = 0;
-    //    //どのゲージを参照するか
-    //if (ImGui::BeginCombo("gauge_", gauges[select]->GatName().c_str())) {
-    //    
-    //}
+    //ステージ内のオブジェクトを参照してすべてのゲージコンポーネントを取得
+    for (auto obj : objects) {
+        //HPゲージを探して取得
+        for (auto healthGaugeComp : obj->FindComponent(HealthGauge)) {
+            //配列にオブジェクトとコンポーネントを一つにまとめて入れる？
+            auto gaugeComp = dynamic_cast<Component_Gauge*>(healthGaugeComp);
+            gauges.push_back({ obj,gaugeComp,obj->GetObjectName(),gaugeComp->GetName() });
+        }
+            //技ゲージ...
+    }
+    static int select = 0;
+        //コンボボックスでgaugeのコンテナにあるselect番目のコンポーネントを文字列に変換して受け取る？
+    if (ImGui::BeginCombo("gauge_", gauges[select].thisName_.c_str())) {
+        for (int i = 0; i < gauges.size(); i++) {
+            //selectが現在のインデックスiと等しいかどうかをチェック。
+            bool is_selected = (select == i);
+            //is_selectedがtrueなら要素名を表示する
+            if (ImGui::Selectable(gauges[select].thisName_.c_str(), is_selected))
+                select = i;
+            if (is_selected)
+                //選択されたアイテムにフォーカスをセット
+                ImGui::SetItemDefaultFocus(); 
+        }
+        ImGui::EndCombo();
+    }
    
+    //メンバ変数の struct gauge referenceGauge_に選択されたゲージを設定
+    referenceGauge_ = gauges[select];
+
 
     //gaugeCompNames.push_back("null");
     //auto stage = (Stage*)FindObject("Stage");

@@ -16,6 +16,8 @@ void Component_HealthGauge::Initialize()
 
 void Component_HealthGauge::Update()
 {
+	SetMax(maxHp_);
+	SetNow(nowHp_);
 }
 
 void Component_HealthGauge::Release()

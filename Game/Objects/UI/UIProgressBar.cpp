@@ -28,8 +28,9 @@ void UIProgressBar::Initialize()
 void UIProgressBar::Update()
 {
     //参照しているコンポーネントがあるかどうか
-    if (referenceGauge_.this_ == nullptr)
-        referenceGauge_.this_ = (Component_Gauge*)((StageObject*)FindObject(referenceGauge_.holderName_))->FindComponent(referenceGauge_.thisName_);
+  //  if (referenceGauge_.this_ == nullptr)
+		//// これが悪い なんでrefereceGaugeがnullなのにreferenceGaugeのholderName_を？
+  //      referenceGauge_.this_ = (Component_Gauge*)((StageObject*)FindObject(referenceGauge_.holderName_))->FindComponent(referenceGauge_.thisName_);
     if(referenceGauge_.this_ == nullptr)return;
     //参照するゲージコンポーネントから値を取得
     if (referenceGauge_.this_ != nullptr) {
@@ -157,6 +158,8 @@ void UIProgressBar::DrawData()
             //技ゲージ...
     }
     static int select = 0;
+
+	if (gauges.empty())return;
         //コンボボックスでgaugeのコンテナにあるselect番目のコンポーネントを文字列に変換して受け取る？
     if (ImGui::BeginCombo("gauge_", gauges[select].thisName_.c_str())) {
         for (int i = 0; i < gauges.size(); i++) {
@@ -172,8 +175,14 @@ void UIProgressBar::DrawData()
         ImGui::EndCombo();
     }
    
+  
     //メンバ変数の struct gauge referenceGauge_に選択されたゲージを設定
     referenceGauge_ = gauges[select];
+
+    gaugeMaxValue_ = referenceGauge_.this_->GetMax();
+	gaugeNowValue_ = referenceGauge_.this_->GetNow();
+
+    ImGui::Text("%f,%f", gaugeMaxValue_, gaugeNowValue_);
 
 
     //gaugeCompNames.push_back("null");

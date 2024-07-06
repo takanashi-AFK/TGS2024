@@ -41,14 +41,14 @@ void Scene_Test::Initialize()
 	}
 
 	// TPSカメラの生成
-	//TPSCamera* tpsCamera = Instantiate<TPSCamera>(this);
+	TPSCamera* tpsCamera = Instantiate<TPSCamera>(this);
 
 #ifdef _DEBUG
 	// ゲームエディターの生成
 	GameEditor* gameEditor = Instantiate<GameEditor>(this);
 	gameEditor->SetEditStage(pStage);
 	gameEditor->SetEditUIPanel(uiPanel);
-	//gameEditor->SetTPSCamera(tpsCamera);
+	gameEditor->SetTPSCamera(tpsCamera);
 #endif // _DEBUG
 }
 

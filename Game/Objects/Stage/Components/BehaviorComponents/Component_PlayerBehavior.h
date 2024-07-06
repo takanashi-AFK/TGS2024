@@ -2,13 +2,15 @@
 #include "../Component.h"
 #include <DirectXMath.h>
 #include "../../StageObject.h"
-
+#include <vector>
+#include "../../../../../Engine/ResourceManager/Model.h"
 class Component_PlayerBehavior : public Component
 {
 private:
 	DirectX::XMVECTOR frontVec_;
 	StageObject* target_;	// ターゲット
 	string targetName_;
+	std::vector<RayCastData> rayHitObjectList_;
 
 public:
 	Component_PlayerBehavior(string _name,StageObject* _holder,Component* _parent);

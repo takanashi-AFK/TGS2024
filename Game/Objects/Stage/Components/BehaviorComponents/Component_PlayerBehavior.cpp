@@ -7,7 +7,6 @@
 #include "../../../../../Engine/DirectX/Input.h"
 #include "../../../../../Engine/GameObject/Camera.h"
 #include "../../../../../Engine/ImGui/imgui.h"
-#include "../../../../../Engine/ResourceManager/Model.h"
 #include "../../Stage.h"
 #include "../../StageObject.h"
 #include "../../SkySphere.h"
@@ -16,7 +15,14 @@
 #include "../HealthManagerComponents/Component_HealthManager.h"
 #include "../MoveComponents/Component_WASDInputMove.h"
 #include "../TimerComponent/Component_Timer.h"
+#include <algorithm> 
 
+
+struct CompareDist {
+	bool operator()(const RayCastData& lhs, const RayCastData& rhs) const {
+		return lhs.dist < rhs.dist;
+	}
+};
 
 Component_PlayerBehavior::Component_PlayerBehavior(string _name, StageObject* _holder, Component* _parent)
 	: Component(_holder, _name, PlayerBehavior,_parent)
@@ -66,29 +72,7 @@ void Component_PlayerBehavior::Update()
 	if (target_ == nullptr) target_ = (StageObject*)holder_->FindObject(targetName_);
 
 	
-	XMVECTOR shootDir = { 0,0,0,0 };
-	Stage* pStage = ((Stage*)holder_->FindObject("Stage"));
-	if (pStage == nullptr)return;
-	auto stageObj = pStage->GetStageObjects();
 
-	for (auto obj : stageObj) {
-		if (obj->GetObjectName() == holder_->GetObjectName())continue;
-
-		int hGroundModel = obj->GetModelHandle();
-		if (hGroundModel < 0)continue;
-
-		RayCastData data;
-		data.start = Camera::GetPosition();   //レイの発射位置
-		data.dir = Camera::GetTarget();
-		Model::RayCast(hGroundModel, &data);  //レイを発射
-
-		//レイが当たったら
-		if (data.hit) {
-			
-			//holder_->AddCollider(new SphereCollider(data.pos, 0.5f));
-		}
-	
-	}
 
 
 	// 枠内にいるENEMY属性を持ったStageObjectをターゲットにする
@@ -100,29 +84,74 @@ void Component_PlayerBehavior::Update()
 		//Stage* pStage = ((Stage*)holder_->FindObject("Stage"));
 		//if (pStage == nullptr)return;
 		//auto stageObj = pStage->GetStageObjects();
-
 		//for (auto obj : stageObj) {
 		//	if (obj->GetObjectName() == holder_->GetObjectName())continue;
-
 		//	int hGroundModel = obj->GetModelHandle();
 		//	if (hGroundModel < 0)continue;
-
 		//	RayCastData data;
 		//	data.start = Camera::GetPosition();   //レイの発射位置
 		//	XMStoreFloat3(&data.dir, Camera::GetSightLine());        //レイの方向
 		//	Model::RayCast(hGroundModel, &data);  //レイを発射
-
 		//	//レイが当たったら
 		//	if (data.hit) {
 		//		XMFLOAT3 holderPos = holder_->GetPosition();
 		//		shootDir = XMVector3Normalize(XMLoadFloat3(&data.pos) - XMLoadFloat3(&holderPos));
-
 		//	}
 		//	else
 		//	{
 		//		shootDir = Camera::GetSightLine();
 		//	}
 		//}
+
+		XMVECTOR shootDir = { 0,0,0,0 };
+		Stage* pStage = ((Stage*)holder_->FindObject("Stage"));
+		if (pStage == nullptr)return;
+		auto stageObj = pStage->GetStageObjects();
+
+		// すべてのオブジェクトに対してレイを飛ばす
+		for (auto obj : stageObj) {
+			if (obj->GetObjectName() == holder_->GetObjectName())continue;
+
+			int hGroundModel = obj->GetModelHandle();
+			if (hGroundModel < 0)continue;
+
+			RayCastData data;
+			data.start = Camera::GetPosition();   //レイの発射位置
+			XMStoreFloat3(&data.dir, Camera::GetSightLine());
+			Model::RayCast(hGroundModel, &data);  //レイを発射
+
+			//レイが当たったら
+			if (data.hit) {
+				// レイの情報をリストに追加
+				rayHitObjectList_.push_back(data);
+				ImGui::Text("Ray hit at: %f, %f, %f", data.pos.x, data.pos.y, data.pos.z);
+			}
+
+		}
+
+		// リストが空なら
+		if (rayHitObjectList_.empty()) {
+			shootDir = Camera::GetSightLine();
+		}
+		else {
+			// 配列の中身を比較して最も近いものを取得
+			// プレイやーの位置からの距離を計算し、shootDirに代入
+			auto min_iter = std::min_element(rayHitObjectList_.begin(), rayHitObjectList_.end(), CompareDist());
+
+			// イテレータが有効か確認して最小要素の dist を出力
+			if (min_iter != rayHitObjectList_.end()) {
+				XMFLOAT3 holderPos = holder_->GetPosition();
+				shootDir = XMVector3Normalize(XMLoadFloat3(&min_iter->pos) - XMLoadFloat3(&holderPos));
+				// holder_->AddCollider(new SphereCollider(min_iter->pos, 0.5f));
+
+				ImGui::Text("Closest hit at: %f, %f, %f", min_iter->pos.x, min_iter->pos.y, min_iter->pos.z);
+
+			}
+			rayHitObjectList_.clear();
+
+		}
+	
+
 		shoot->SetShootingDirection(shootDir);
 			
 		shoot->SetShootingSpeed(2.f);

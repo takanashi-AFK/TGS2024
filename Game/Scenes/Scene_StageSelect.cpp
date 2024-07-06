@@ -18,7 +18,7 @@ void Scene_StageSelect::Initialize()
 	uipanel = Instantiate<UIPanel>(this);
 	//uiDataにjsonファイルが存在したのであればuipanelに保存されている
 	json uiData;
-	if (JsonReader::Load("Datas/UILayouts/StageSelect2.json", uiData)) {
+	if (JsonReader::Load("Datas/UILayouts/StageSelect.json", uiData)) {
 		uipanel->Load(uiData);
 	}
 
@@ -47,7 +47,7 @@ void Scene_StageSelect::Update()
 #endif // DEBUG
 
 	//---------ステージ選択画面がスクロール式で移動するようにする-----------------------------------
-	maxButtonmove_ = 3.f;
+	maxButtonmove_ = 1.5f;
 	
 	//stageSelectButtonが押されたらPlayシーンに移動
 	UIButton* stageSelectButton = stageImages[StageIndex];
@@ -61,9 +61,6 @@ void Scene_StageSelect::Update()
 	UIButton* nextButton = dynamic_cast<UIButton*>(uipanel->GetUIObject("NextButton"));
 	if (nextButton == nullptr)return;
 	if (nextButton->OnClick()) {
-		//割合を増やす
-		moveselectButton = 0.01;
-
 		isSelectButtonMoving_ = true;
 		
 		StageIndex = (StageIndex + 1) % stageImages.size();
@@ -74,37 +71,31 @@ void Scene_StageSelect::Update()
 	if (buckButton == nullptr)return;
 	if (buckButton->OnClick()) {
 		//isSelectButtonMovingをtrueにする
-		moveselectButton = -0.01;
-
 		isSelectButtonMoving_ = true;
-		
+
 		StageIndex = (StageIndex - 1 + stageImages.size()) % stageImages.size();
 	}
 
 	//trueになっている間StageImageがスクロール式に動く
-	if (isSelectButtonMoving_) {
+	if (isSelectButtonMoving_ == true) {
 		for (int i = 0; i < stageImages.size(); ++i) {
-			UIButton* button = stageImages[i];
+			stageSelectButton = stageImages[i];
 
-			float selectButtonPos = button->GetPosition().x;
+			float selectButtonPos = stageSelectButton->GetPosition().x;
 
-			// ボタンのx座標更新
-			selectButtonPos += maxButtonmove_ * Direct3D::EaseFunc[easingfunc_](std::abs(moveselectButton));
+			moveselectButton += 0.01;
+
+			selectButtonPos = moveselectButton;
 
 			// 位置更新
-			button->SetPosition({ selectButtonPos, button->GetPosition().y, button->GetPosition().z });
-
-
-			//指定した距離移動したらisSelectButtonMovingをfalseにする
-			if ((moveselectButton > 0 && selectButtonPos >= maxButtonmove_) ||
-				(moveselectButton < 0 && selectButtonPos <= -maxButtonmove_)) {
-				isSelectButtonMoving_ = false;
-				moveselectButton = 0;
-			}
-
+			stageSelectButton->SetPosition({selectButtonPos, stageSelectButton->GetPosition().y, stageSelectButton->GetPosition().z });
+			
 		}
 	}
-
+	if (moveselectButton >=maxButtonmove_) {
+		isSelectButtonMoving_ = false;
+		moveselectButton = 0;
+	}
 	/*for (size_t i = 0; i < stageImages.size(); ++i)
 	{
 		UIButton* button = stageImages[i];

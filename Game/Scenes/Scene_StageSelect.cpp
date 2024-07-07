@@ -76,25 +76,30 @@ void Scene_StageSelect::Update()
 		StageIndex = (StageIndex - 1 + stageImages.size()) % stageImages.size();
 	}
 
-	//trueになっている間StageImageがスクロール式に動く
-	if (isSelectButtonMoving_ == true) {
-		for (int i = 0; i < stageImages.size(); ++i) {
-			stageSelectButton = stageImages[i];
+	if (isSelectButtonMoving_) {
+		
 
-			float selectButtonPos = stageSelectButton->GetPosition().x;
+		for (int i = 0; i < stageImages.size(); ++i) {
+			
+			UIButton* button = stageImages[i];
+
+			//そのi番目にあるボタンの画像のx座標をを取得し変数名に代入
+			float ButtonPos = button->GetPosition().x;
 
 			moveselectButton += 0.01;
 
-			selectButtonPos = moveselectButton;
+			//割合をButtonPosに代入
+			ButtonPos = moveselectButton;
 
-			// 位置更新
-			stageSelectButton->SetPosition({selectButtonPos, stageSelectButton->GetPosition().y, stageSelectButton->GetPosition().z });
+			button->SetPosition(ButtonPos, stageImages[i]->GetPosition().y, stageImages[i]->GetPosition().z);
 			
 		}
-	}
-	if (moveselectButton >=maxButtonmove_) {
-		isSelectButtonMoving_ = false;
-		moveselectButton = 0;
+		
+		//moveselevvutButtonがmaxButtonmove分移動したら
+		if (moveselectButton >= maxButtonmove_) {
+			moveselectButton = 0;
+			isSelectButtonMoving_ = false;
+		}
 	}
 	/*for (size_t i = 0; i < stageImages.size(); ++i)
 	{

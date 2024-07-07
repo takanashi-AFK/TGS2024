@@ -88,10 +88,7 @@ void Scene_StageSelect::Update()
 
 			moveselectButton += 0.01;
 
-			//Š„‡‚ðButtonPos‚É‘ã“ü
-			ButtonPos = moveselectButton;
-
-			button->SetPosition(ButtonPos, stageImages[i]->GetPosition().y, stageImages[i]->GetPosition().z);
+			button->SetPosition(ButtonPos += moveselectButton , stageImages[i]->GetPosition().y, stageImages[i]->GetPosition().z);
 			
 		}
 		

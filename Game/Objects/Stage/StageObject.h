@@ -120,9 +120,21 @@ public:
 	/// <returns></returns>
 	AttributeType GetAttribute() { return attribute_; }
 
+	/// <summary>
+	/// モデル番号の取得
+	/// </summary>
+	/// <returns>モデル番号</returns>
+	int GetModelHandle() { return modelHandle_; }
 
+	/// <summary>
+	/// 接地処理
+	/// </summary>
+	/// <param name="_fallSpeed">落下速度</param>
 	void OnGround(float _fallSpeed);
 
+	/// <summary>
+	/// 壁めり込み防止処理
+	/// </summary>
 	void CollisionWall();
 
 };

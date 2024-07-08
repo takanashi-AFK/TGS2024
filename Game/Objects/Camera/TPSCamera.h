@@ -12,6 +12,7 @@ private:
 	bool isActive_;
 	float targetHeight_;
 	float targetDistance_;
+	XMVECTOR prevAxis_;
 public:
 	TPSCamera(GameObject* parent);
 	void Initialize() override;

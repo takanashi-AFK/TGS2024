@@ -14,7 +14,7 @@ namespace {
 
 
 TPSCamera::TPSCamera(GameObject* parent)
-	:GameObject(parent, "TPSCamera"), angle_({ 0,0 }), sensitivity_(DEF_SENSITIVITY), pTarget_(nullptr), isActive_(true), targetHeight_(4.f), targetDistance_(7.f)
+	:GameObject(parent, "TPSCamera"), angle_({ 0,0 }), sensitivity_(DEF_SENSITIVITY), pTarget_(nullptr), isActive_(true), targetHeight_(4.f), targetDistance_(7.f), prevAxis_({ 1,0,0,0 })
 {
 }
 
@@ -92,6 +92,10 @@ void TPSCamera::Update()
         // 縦回転の軸を作成
         XMVECTOR axis = XMLoadFloat3(&center) - XMLoadFloat3(&prevCenter);
 
+        if (XMVector3Equal(axis, XMVectorZero())) {
+            axis = prevAxis_;
+        }
+
         //// 回転行列を作成
         XMMATRIX rotateAxis = XMMatrixRotationAxis(axis, XMConvertToRadians(angle_.x));
 
@@ -105,10 +109,14 @@ void TPSCamera::Update()
         XMVECTOR newCenter_To_camPosition = -newCenter_To_camTarget;
         XMVECTOR origin_To_camPosition = XMLoadFloat3(&center) + newCenter_To_camPosition;
         XMStoreFloat3(&camPosition, origin_To_camPosition);
+
+        if(!XMVector3Equal(axis, XMVectorZero()))
+        prevAxis_ = axis;
     }
 
     Camera::SetTarget(camTarget);
     Camera::SetPosition(camPosition);
+
 }
 
 void TPSCamera::Draw()

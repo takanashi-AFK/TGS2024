@@ -86,16 +86,10 @@ void Scene_StageSelect::Update()
 
 			moveselectButton += 0.01;
 
-			button->SetPosition(ButtonPos +=moveselectButton, stageImages[i]->GetPosition().y, stageImages[i]->GetPosition().z);
+			button->SetPosition(ButtonPos +=maxButtonmove_*Direct3D::EaseFunc[easingfunc_](moveselectButton), stageImages[i]->GetPosition().y, stageImages[i]->GetPosition().z);
            
 		}
 		
-		//moveselevvutButton‚ªmaxButtonmove•ªˆÚ“®‚µ‚½‚ç
-		/*if (moveselectButton >= maxButtonmove_) {
-			moveselectButton = 0;
-			isSelectButtonMoving_ = false;
-		}*/
-
 		if (stageImages[1]->GetPosition().x >= 0|| moveselectButton >= maxButtonmove_) {
 			moveselectButton = 0;
 			isSelectButtonMoving_ = false;
@@ -116,7 +110,7 @@ void Scene_StageSelect::Update()
 
 			moveselectButton += 0.01;
 
-			button->SetPosition(ButtonPos -= moveselectButton, stageImages[i]->GetPosition().y, stageImages[i]->GetPosition().z);
+			button->SetPosition(ButtonPos -= maxButtonmove_ * Direct3D::EaseFunc[easingfunc_](moveselectButton), stageImages[i]->GetPosition().y, stageImages[i]->GetPosition().z);
 
 			if (stageImages[0]->GetPosition().x <= 0 || moveselectButton <= -maxButtonmove_) {
 				moveselectButton = 0;

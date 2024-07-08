@@ -27,7 +27,7 @@ void UIProgressBar::Initialize()
 
 void UIProgressBar::Update()
 {
-    //参照しているコンポーネントがあるかどうか
+  //参照しているコンポーネントがあるかどうか
   //  if (referenceGauge_.this_ == nullptr)
 		//// これが悪い なんでrefereceGaugeがnullなのにreferenceGaugeのholderName_を？
   //      referenceGauge_.this_ = (Component_Gauge*)((StageObject*)FindObject(referenceGauge_.holderName_))->FindComponent(referenceGauge_.thisName_);
@@ -142,9 +142,10 @@ void UIProgressBar::DrawData()
 // ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
 // ゲージコンポーネント情報を取得
 // ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
+ // ゲージコンポーネント情報を取得
     vector<gauge> gauges;
-    
-   // ステージ情報を取得
+
+    // ステージ情報を取得
     vector<StageObject*> objects = ((Stage*)FindObject("Stage"))->GetStageObjects();
 
     //ステージ内のオブジェクトを参照してすべてのゲージコンポーネントを取得
@@ -155,62 +156,77 @@ void UIProgressBar::DrawData()
             auto gaugeComp = dynamic_cast<Component_Gauge*>(healthGaugeComp);
             gauges.push_back({ obj,gaugeComp,obj->GetObjectName(),gaugeComp->GetName() });
         }
-            //技ゲージ...
+        //技ゲージ...
     }
     static int select = 0;
 
-	if (gauges.empty())return;
-        //コンボボックスでgaugeのコンテナにあるselect番目のコンポーネントを文字列に変換して受け取る？
+    if (gauges.empty())return;
+    //コンボボックスでgaugeのコンテナにあるselect番目のコンポーネントを文字列に変換して受け取る？
     if (ImGui::BeginCombo("gauge_", gauges[select].thisName_.c_str())) {
         for (int i = 0; i < gauges.size(); i++) {
             //selectが現在のインデックスiと等しいかどうかをチェック。
             bool is_selected = (select == i);
             //is_selectedがtrueなら要素名を表示する
-            if (ImGui::Selectable(gauges[select].thisName_.c_str(), is_selected))
+            if (ImGui::Selectable(gauges[i].thisName_.c_str(), is_selected))
                 select = i;
             if (is_selected)
                 //選択されたアイテムにフォーカスをセット
-                ImGui::SetItemDefaultFocus(); 
+                ImGui::SetItemDefaultFocus();
         }
         ImGui::EndCombo();
     }
-   
-  
+
+
     //メンバ変数の struct gauge referenceGauge_に選択されたゲージを設定
     referenceGauge_ = gauges[select];
 
     gaugeMaxValue_ = referenceGauge_.this_->GetMax();
-	gaugeNowValue_ = referenceGauge_.this_->GetNow();
+    gaugeNowValue_ = referenceGauge_.this_->GetNow();
 
     ImGui::Text("%f,%f", gaugeMaxValue_, gaugeNowValue_);
 
 
-    //gaugeCompNames.push_back("null");
-    //auto stage = (Stage*)FindObject("Stage");
-    //if (stage) {
-    //    for (auto obj : stage->GetStageObjects()) {
-    //        for (auto component : obj->FindComponent(HealthGauge)) {
-    //            //ステージ内のすべてのオブジェクトの名前を取得
-    //            gaugeCompNames.push_back(obj->GetObjectName());
-    //            break;
-    //        }
-    //    }
-    //}
+    //vector<gauge> gauges;
 
-    //// 取得した名前のリストを参照してImGuiで選択できるように
+    //// ステージ情報を取得
+    //vector<StageObject*> objects = ((Stage*)FindObject("Stage"))->GetStageObjects();
+
+    ////ステージ内のオブジェクトを参照してすべてのゲージコンポーネントを取得
+    //for (auto obj : objects) {
+    //    //HPゲージを探して取得
+    //    for (auto healthGaugeComp : obj->FindComponent(HealthGauge)) {
+    //        //配列にオブジェクトとコンポーネントを一つにまとめて入れる？
+    //        auto gaugeComp = dynamic_cast<Component_Gauge*>(healthGaugeComp);
+    //        gauges.push_back({ obj,gaugeComp,obj->GetObjectName(),gaugeComp->GetName() });
+    //    }
+    //    //技ゲージ...
+    //}
     //static int select = 0;
 
-    //if (ImGui::BeginCombo("target_", gaugeCompNames[select].c_str())) {
-    //    for (int i = 0; i < gaugeCompNames.size(); i++) {
+    //if (gauges.empty())return;
+    ////コンボボックスでgaugeのコンテナにあるselect番目のコンポーネントを文字列に変換して受け取る？
+    //if (ImGui::BeginCombo("gauge_", gauges[select].thisName_.c_str())) {
+    //    for (int i = 0; i < gauges.size(); i++) {
+    //        //selectが現在のインデックスiと等しいかどうかをチェック。
     //        bool is_selected = (select == i);
-    //        if (ImGui::Selectable(gaugeCompNames[i].c_str(), is_selected)) select = i;
-    //        if (is_selected) ImGui::SetItemDefaultFocus();
+    //        //is_selectedがtrueなら要素名を表示する
+    //        if (ImGui::Selectable(gauges[select].thisName_.c_str(), is_selected))
+    //            select = i;
+    //        if (is_selected)
+    //            //選択されたアイテムにフォーカスをセット
+    //            ImGui::SetItemDefaultFocus();
     //    }
     //    ImGui::EndCombo();
     //}
 
-    //選択されたindexから名前を割り出す
-    //targetName_ = gaugeCompNames[select];
+
+    ////メンバ変数の struct gauge referenceGauge_に選択されたゲージを設定
+    //referenceGauge_ = gauges[select];
+
+    //gaugeMaxValue_ = referenceGauge_.this_->GetMax();
+    //gaugeNowValue_ = referenceGauge_.this_->GetNow();
+
+    //ImGui::Text("%f,%f", gaugeMaxValue_, gaugeNowValue_);
 
     // ゲージの制御
     ImGui::DragFloat("Current Value", &gaugeNowValue_, 1.f, gaugeMaxValue_);

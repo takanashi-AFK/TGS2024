@@ -7,8 +7,12 @@
 #include "../Objects/UI/UIButton.h"
 #include"../../Engine/ImGui/imgui.h"
 #include"../../Engine/DirectX/Direct3D.h"
+
+namespace {
+	 float maxButtonMove_ = 1.5f;
+}
 Scene_StageSelect::Scene_StageSelect(GameObject* parent)
-	: GameObject(parent, "Scene_StageSelect"), isSelectButtonMoving_(false), moveselectButton(0.f),maxButtonmove_(0.f),StageIndex(0),easingfunc_()
+	: GameObject(parent, "Scene_StageSelect"), isSelectButtonMoving_(false), moveselectButton(0.f),StageIndex(0),easingfunc_()
 {
 }
 
@@ -47,7 +51,7 @@ void Scene_StageSelect::Update()
 #endif // DEBUG
 
 	//---------ステージ選択画面がスクロール式で移動するようにする-----------------------------------
-	maxButtonmove_ = 1.5f;
+	
 	
 	//stageSelectButtonが押されたらPlayシーンに移動
 	UIButton* stageSelectButton = stageImages[StageIndex];
@@ -62,7 +66,8 @@ void Scene_StageSelect::Update()
 	if (nextButton == nullptr)return;
 	if (nextButton->OnClick()) {
 		isSelectButtonMoving_ = true;
-		isMinusSelectButtonMoving_ = false;
+		
+		RightButtonMoving();
 		StageIndex = (StageIndex + 1) % stageImages.size();
 	}
 	
@@ -70,59 +75,15 @@ void Scene_StageSelect::Update()
 	UIButton* backButton = dynamic_cast<UIButton*>(uipanel->GetUIObject("BuckButton"));
 	if (backButton == nullptr)return;
 	if (backButton->OnClick()) {
-		//isSelectButtonMovingをtrueにする
-		isSelectButtonMoving_ = false;
 		isMinusSelectButtonMoving_ = true;
+		LeftButtonMoving();
 		StageIndex = (StageIndex - 1 + stageImages.size()) % stageImages.size();
 	}
+	// 右にボタンを動かす処理
+	
 
-	if (isSelectButtonMoving_) {
-		for (int i = 0; i < stageImages.size(); ++i) {
-			
-			UIButton* button = stageImages[i];
-
-			//そのi番目にあるボタンの画像のx座標をを取得し変数名に代入
-			float ButtonPos = button->GetPosition().x;
-
-			moveselectButton += 0.01;
-
-			button->SetPosition(ButtonPos +=maxButtonmove_*Direct3D::EaseFunc[easingfunc_](moveselectButton), stageImages[i]->GetPosition().y, stageImages[i]->GetPosition().z);
-           
-		}
-		
-		if (stageImages[1]->GetPosition().x >= 0|| moveselectButton >= maxButtonmove_) {
-			moveselectButton = 0;
-			isSelectButtonMoving_ = false;
-
-			// 1番目の画像を0の位置に固定
-			stageImages[1]->SetPosition(0, stageImages[1]->GetPosition().y, stageImages[1]->GetPosition().z);
-		}
-	}
-
-	if (isMinusSelectButtonMoving_) {
-
-		for (int i = 0; i < stageImages.size(); ++i) {
-
-			UIButton* button = stageImages[i];
-
-			//そのi番目にあるボタンの画像のx座標をを取得し変数名に代入
-			float ButtonPos = button->GetPosition().x;
-
-			moveselectButton += 0.01;
-
-			button->SetPosition(ButtonPos -= maxButtonmove_ * Direct3D::EaseFunc[easingfunc_](moveselectButton), stageImages[i]->GetPosition().y, stageImages[i]->GetPosition().z);
-
-			if (stageImages[0]->GetPosition().x <= 0 || moveselectButton <= -maxButtonmove_) {
-				moveselectButton = 0;
-				isMinusSelectButtonMoving_ = false;
-
-				// 1番目の画像を0の位置に固定
-				stageImages[0]->SetPosition(0, stageImages[0]->GetPosition().y, stageImages[0]->GetPosition().z);
-			}
-
-		}
-
-	}
+	// 左にボタンを動かす処理
+	
 	/*for (size_t i = 0; i < stageImages.size(); ++i)
 	{
 		UIButton* button = stageImages[i];
@@ -141,4 +102,61 @@ void Scene_StageSelect::Draw()
 
 void Scene_StageSelect::Release()
 {
+}
+
+void Scene_StageSelect::RightButtonMoving()
+{
+
+	if (isSelectButtonMoving_) {
+		for (int i = 0; i < stageImages.size(); ++i) {
+
+			UIButton* button = stageImages[i];
+
+			//そのi番目にあるボタンの画像のx座標をを取得し変数名に代入
+			float ButtonPos = button->GetPosition().x;
+
+			moveselectButton += 0.01;
+
+			button->SetPosition(ButtonPos += maxButtonMove_ * Direct3D::EaseFunc[easingfunc_](moveselectButton), stageImages[i]->GetPosition().y, stageImages[i]->GetPosition().z);
+
+		}
+
+		if (stageImages[1]->GetPosition().x >= 0 || moveselectButton >= maxButtonMove_) {
+			moveselectButton = 0;
+			isSelectButtonMoving_ = false;
+
+			// 1番目の画像を0の位置に固定
+			stageImages[1]->SetPosition(0, stageImages[1]->GetPosition().y, stageImages[1]->GetPosition().z);
+		}
+	}
+	
+}
+
+void Scene_StageSelect::LeftButtonMoving()
+{
+
+	if (isMinusSelectButtonMoving_) {
+
+		for (int i = 0; i < stageImages.size(); ++i) {
+
+			UIButton* button = stageImages[i];
+
+			//そのi番目にあるボタンの画像のx座標をを取得し変数名に代入
+			float ButtonPos = button->GetPosition().x;
+
+			moveselectButton += 0.01;
+
+			button->SetPosition(ButtonPos -= maxButtonMove_ * Direct3D::EaseFunc[easingfunc_](moveselectButton), stageImages[i]->GetPosition().y, stageImages[i]->GetPosition().z);
+
+			if (stageImages[0]->GetPosition().x <= 0 || moveselectButton <= maxButtonMove_) {
+				moveselectButton = 0;
+				isMinusSelectButtonMoving_ = false;
+
+				// 1番目の画像を0の位置に固定
+				stageImages[0]->SetPosition(0, stageImages[0]->GetPosition().y, stageImages[0]->GetPosition().z);
+			}
+
+		}
+
+	}
 }

@@ -15,7 +15,6 @@ private:
 	bool isMinusSelectButtonMoving_;//-方向に動いているかどうか
 	float moveselectButton;//ボタンを動かすための割合
 	std::string easingfunc_;//いーじんぐ
-	float maxButtonmove_;//指定距離の変数
 
 public:
 	Scene_StageSelect(GameObject* parent);
@@ -27,5 +26,16 @@ public:
 	void Draw() override;
 
 	void Release() override;
+
+private:
+	/// <summary>
+	/// ボタンが右に動く関数
+	/// </summary>
+	void RightButtonMoving();
+
+	/// <summary>
+	/// ボタンが左に動く関数
+	/// </summary>
+	void LeftButtonMoving();
 };
 

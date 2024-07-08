@@ -70,7 +70,7 @@ void Bullet::OnCollision(GameObject* _target)
 	StageObject* target = dynamic_cast<StageObject*>(_target);
 	if (!target) return;
 
-
+	if (target->GetObjectName() == shooter_->GetObjectName())return;
 	auto list = target->FindComponent(HealthManager);
 
 	if (list.empty()) return;

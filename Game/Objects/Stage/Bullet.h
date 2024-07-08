@@ -17,6 +17,7 @@ private:
 	int frame_;				// 経過フレーム	
 	float speed_;			// 移動速度
 	XMVECTOR direction_;	// 移動方向
+	StageObject* shooter_;	// 発射したオブジェクト
 
 	// effekseer: 変形行列
 	std::shared_ptr<EFFEKSEERLIB::EFKTransform> mt;/*★★★*/
@@ -64,6 +65,12 @@ public:
 	/// 実行
 	/// </summary>
 	void Execute() { isActive_ = true; }
+
+	/// <summary>
+	/// なんのオブジェクトが発射したかを設定
+	/// </summary>
+	/// <param name="_shooter"></param>
+	void SetShooter(StageObject* _shooter) { shooter_ = _shooter; }
 
 private:
 	/// <summary>

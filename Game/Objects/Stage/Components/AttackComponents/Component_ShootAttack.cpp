@@ -21,6 +21,8 @@ void Component_ShootAttack::Update()
 
 	// 撃ち放つプレハブを生成
 	Bullet* bulletPrefab = Instantiate<Bullet>(holder_->GetParent());
+
+	bulletPrefab->SetShooter(holder_);
 	
 	// 撃ち放つ速度を設定
 	bulletPrefab->SetSpeed(shootingSpeed_);

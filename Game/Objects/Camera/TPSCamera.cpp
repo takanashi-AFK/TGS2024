@@ -14,7 +14,7 @@ namespace {
 
 
 TPSCamera::TPSCamera(GameObject* parent)
-	:GameObject(parent, "TPSCamera"), angle_({ 0,0 }), sensitivity_(DEF_SENSITIVITY), pTarget_(nullptr), isActive_(true), targetHeight_(4.f), targetDistance_(7.f), prevAxis_({ 0,0,0,0 })
+	:GameObject(parent, "TPSCamera"), angle_({ 0,0 }), sensitivity_(DEF_SENSITIVITY), pTarget_(nullptr), isActive_(true), targetHeight_(4.f), targetDistance_(7.f), prevAxis_({ 1,0,0,0 })
 {
 }
 

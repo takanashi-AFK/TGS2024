@@ -49,7 +49,7 @@ void Bullet::OnCollision(GameObject* _target)
 	if (_target->GetObjectName() == "Char_Player") {
 
 		// プレイヤーのHPマネージャーコンポーネントを取得
-		Component* hm = ((StageObject*)_target)->FindComponent("HealthManager");
+		Component* hm = ((StageObject*)_target)->FindComponent("PlayerHealthGauge");
 		if (hm == nullptr)return;
 
 		// プレイヤーのHPを減らす

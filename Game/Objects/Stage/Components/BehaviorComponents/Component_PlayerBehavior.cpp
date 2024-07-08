@@ -71,10 +71,6 @@ void Component_PlayerBehavior::Update()
 
 	if (target_ == nullptr) target_ = (StageObject*)holder_->FindObject(targetName_);
 
-	
-
-
-
 	// 枠内にいるENEMY属性を持ったStageObjectをターゲットにする
 	if (Input::IsMouseButton(1) && Input::IsMouseButtonDown(0))
 	{
@@ -114,10 +110,11 @@ void Component_PlayerBehavior::Update()
 
 			int hGroundModel = obj->GetModelHandle();
 			if (hGroundModel < 0)continue;
-
+			XMVECTOR sightLine = Camera::GetSightLine();
+			XMFLOAT3 camPos = Camera::GetPosition();
 			RayCastData data;
-			data.start = Camera::GetPosition();   //レイの発射位置
-			XMStoreFloat3(&data.dir, Camera::GetSightLine());
+			data.start = camPos;   //レイの発射位置
+			XMStoreFloat3(&data.dir, sightLine);
 			Model::RayCast(hGroundModel, &data);  //レイを発射
 
 			//レイが当たったら
@@ -131,7 +128,8 @@ void Component_PlayerBehavior::Update()
 
 		// リストが空なら
 		if (rayHitObjectList_.empty()) {
-			shootDir = Camera::GetSightLine();
+			XMVECTOR sightLine = Camera::GetSightLine();
+			shootDir = sightLine;
 		}
 		else {
 			// 配列の中身を比較して最も近いものを取得

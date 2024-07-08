@@ -18,12 +18,12 @@ void Component_PlayerBehavior::Initialize()
 
 	// 子コンポーネントの追加
 	if (FindChildComponent("InputMove") == false)AddChildComponent(CreateComponent("InputMove", WASDInputMove, holder_, this));
-	if (FindChildComponent("HealthGauge") == false)AddChildComponent(CreateComponent("HealthGauge", HealthGauge, holder_, this));
+	if (FindChildComponent("HealthGauge") == false)AddChildComponent(CreateComponent("PlayerHealthGauge", HealthGauge, holder_, this));
 }
 
 void Component_PlayerBehavior::Update()
 {
-	auto hm = dynamic_cast<Component_HealthGauge*>(GetChildComponent("HealthGauge"));
+	auto hm = dynamic_cast<Component_HealthGauge*>(GetChildComponent("PlayerHealthGauge"));
 
 	// 進捗を0.0〜1.0の範囲で計算
 	float progress = hm->GetNow() / hm->GetMax();

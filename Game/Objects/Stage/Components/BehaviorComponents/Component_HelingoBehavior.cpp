@@ -28,11 +28,21 @@ void Component_HelingoBehavior::Initialize()
 	if (FindChildComponent("Timer") == false)AddChildComponent(CreateComponent("Timer", Timer, holder_, this));
 	if (FindChildComponent("Chase") == false)AddChildComponent(CreateComponent("Chase", Chase, holder_, this));
 	if (FindChildComponent("HelingoFall") == false)AddChildComponent(CreateComponent("HelingoFall", HelingoFall, holder_, this));
-
+	if (FindChildComponent("HealthGauge") == false)AddChildComponent(CreateComponent("HelingoHealthGauge", HealthGauge, holder_, this));
 }
 
 void Component_HelingoBehavior::Update()
 {
+
+	auto hm = dynamic_cast<Component_HealthGauge*>(GetChildComponent("HelingoHealthGauge"));
+
+	// 進捗を0.0?1.0の範囲で計算
+	float progress = hm->GetNow() / hm->GetMax();
+
+	// HPゲージの表示
+	ImGui::ProgressBar(progress, ImVec2(0.0f, 0.0f), "Helingo HP");
+
+
 	if (target_ == nullptr) target_ = (StageObject*)holder_->FindObject(targetName_);
 	if (target_ == nullptr) return;
 
@@ -85,7 +95,7 @@ void Component_HelingoBehavior::OnCollision(GameObject* _target)
 	if (_target->GetObjectName() == "Char_Player") {
 
 		// プレイヤーのHPマネージャーコンポーネントを取得
-        Component* hm = ((StageObject*)_target)->FindComponent("HealthGauge");
+        Component* hm = ((StageObject*)_target)->FindComponent("PlayerHealthGauge");
 		if (hm == nullptr)return;
 
 		// プレイヤーのHPを減らす

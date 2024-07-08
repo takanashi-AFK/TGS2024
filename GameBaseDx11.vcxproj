@@ -144,7 +144,6 @@
     <ClCompile Include="Game\Objects\Stage\Components\BehaviorComponents\Component_PlayerBehavior.cpp" />
     <ClCompile Include="Game\Objects\Stage\Components\MoveComponents\Component_WASDInputMove.cpp" />
     <ClCompile Include="Game\Objects\Stage\Components\BehaviorComponents\Component_CactanBehavior.cpp" />
-    <ClCompile Include="Game\Objects\Stage\Components\HealthManagerComponents\Component_HealthManager.cpp" />
     <ClCompile Include="Game\Objects\Stage\Bullet.cpp" />
     <ClCompile Include="Game\Objects\Stage\Components\AttackComponents\Component_ShootAttack.cpp" />
     <ClCompile Include="Game\Objects\Stage\Components\AttackComponents\Component_Attack.cpp" />
@@ -217,7 +216,6 @@
     <ClInclude Include="Game\Objects\Stage\Components\BehaviorComponents\Component_PlayerBehavior.h" />
     <ClInclude Include="Game\Objects\Stage\Components\MoveComponents\Component_WASDInputMove.h" />
     <ClInclude Include="Game\Objects\Stage\Components\BehaviorComponents\Component_CactanBehavior.h" />
-    <ClInclude Include="Game\Objects\Stage\Components\HealthManagerComponents\Component_HealthManager.h" />
     <ClInclude Include="Game\Objects\Stage\Bullet.h" />
     <ClInclude Include="Game\Objects\Stage\Components\AttackComponents\Component_ShootAttack.h" />
     <ClInclude Include="Game\Objects\Stage\Components\AttackComponents\Component_Attack.h" />

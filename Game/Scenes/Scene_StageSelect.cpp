@@ -52,7 +52,6 @@ void Scene_StageSelect::Update()
 
 	//---------ステージ選択画面がスクロール式で移動するようにする-----------------------------------
 	
-	
 	//stageSelectButtonが押されたらPlayシーンに移動
 	UIButton* stageSelectButton = stageImages[StageIndex];
 	if (stageSelectButton == nullptr)return;
@@ -66,8 +65,6 @@ void Scene_StageSelect::Update()
 	if (nextButton == nullptr)return;
 	if (nextButton->OnClick()) {
 		isSelectButtonMoving_ = true;
-		
-		RightButtonMoving();
 		StageIndex = (StageIndex + 1) % stageImages.size();
 	}
 	
@@ -76,13 +73,15 @@ void Scene_StageSelect::Update()
 	if (backButton == nullptr)return;
 	if (backButton->OnClick()) {
 		isMinusSelectButtonMoving_ = true;
-		LeftButtonMoving();
+		
 		StageIndex = (StageIndex - 1 + stageImages.size()) % stageImages.size();
 	}
-	// 右にボタンを動かす処理
-	
-
-	// 左にボタンを動かす処理
+	if (isSelectButtonMoving_) {
+		RightButtonMoving();
+	 }
+	 if (isMinusSelectButtonMoving_) {
+		LeftButtonMoving();
+	}
 	
 	/*for (size_t i = 0; i < stageImages.size(); ++i)
 	{
@@ -107,7 +106,7 @@ void Scene_StageSelect::Release()
 void Scene_StageSelect::RightButtonMoving()
 {
 
-	if (isSelectButtonMoving_) {
+	
 		for (int i = 0; i < stageImages.size(); ++i) {
 
 			UIButton* button = stageImages[i];
@@ -128,16 +127,12 @@ void Scene_StageSelect::RightButtonMoving()
 			// 1番目の画像を0の位置に固定
 			stageImages[1]->SetPosition(0, stageImages[1]->GetPosition().y, stageImages[1]->GetPosition().z);
 		}
-	}
 	
 }
 
 void Scene_StageSelect::LeftButtonMoving()
 {
-
-	if (isMinusSelectButtonMoving_) {
-
-		for (int i = 0; i < stageImages.size(); ++i) {
+	for (int i = 0; i < stageImages.size(); ++i) {
 
 			UIButton* button = stageImages[i];
 
@@ -155,8 +150,5 @@ void Scene_StageSelect::LeftButtonMoving()
 				// 1番目の画像を0の位置に固定
 				stageImages[0]->SetPosition(0, stageImages[0]->GetPosition().y, stageImages[0]->GetPosition().z);
 			}
-
-		}
-
 	}
 }

@@ -101,13 +101,6 @@ public:
 	//オブジェクトをレイヤー番号で比較するための関数
 	static bool CompareLayerNumber(UIObject* _object1, UIObject* _object2);
 
-	//子オブジェクトをソートするための関数
-	void SortChildren();
-
-	//void AddUIObject(UIObject* _object);
-	//void DeleteUIObject(UIObject* _object);
-	//void DeleteAllUIObject();
-
 };
 
 UIObject* CreateUIObject(string _name, UIType _type, UIObject* _parent, int _layerNum);

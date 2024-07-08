@@ -11,7 +11,8 @@ private:
 	UIPanel* uipanel;//UIパネルのポインタ変数
 	std::vector<UIButton*>stageImages;
 	int StageIndex;
-	bool isSelectButtonMoving_;//ボタンが動いてるかどうか
+	bool isSelectButtonMoving_;//ボタンが動いてるかどうか(+方向)
+	bool isMinusSelectButtonMoving_;//-方向に動いているかどうか
 	float moveselectButton;//ボタンを動かすための割合
 	std::string easingfunc_;//いーじんぐ
 	float maxButtonmove_;//指定距離の変数

@@ -62,23 +62,21 @@ void Scene_StageSelect::Update()
 	if (nextButton == nullptr)return;
 	if (nextButton->OnClick()) {
 		isSelectButtonMoving_ = true;
-		
+		isMinusSelectButtonMoving_ = false;
 		StageIndex = (StageIndex + 1) % stageImages.size();
 	}
 	
 	//Buttonが押されたら-方向に移動し画像を入れ替える
-	UIButton* buckButton = dynamic_cast<UIButton*>(uipanel->GetUIObject("BuckButton"));
-	if (buckButton == nullptr)return;
-	if (buckButton->OnClick()) {
+	UIButton* backButton = dynamic_cast<UIButton*>(uipanel->GetUIObject("BuckButton"));
+	if (backButton == nullptr)return;
+	if (backButton->OnClick()) {
 		//isSelectButtonMovingをtrueにする
-		isSelectButtonMoving_ = true;
-
+		isSelectButtonMoving_ = false;
+		isMinusSelectButtonMoving_ = true;
 		StageIndex = (StageIndex - 1 + stageImages.size()) % stageImages.size();
 	}
 
 	if (isSelectButtonMoving_) {
-		
-
 		for (int i = 0; i < stageImages.size(); ++i) {
 			
 			UIButton* button = stageImages[i];
@@ -88,15 +86,48 @@ void Scene_StageSelect::Update()
 
 			moveselectButton += 0.01;
 
-			button->SetPosition(ButtonPos += moveselectButton , stageImages[i]->GetPosition().y, stageImages[i]->GetPosition().z);
-			
+			button->SetPosition(ButtonPos +=moveselectButton, stageImages[i]->GetPosition().y, stageImages[i]->GetPosition().z);
+           
 		}
 		
 		//moveselevvutButtonがmaxButtonmove分移動したら
-		if (moveselectButton >= maxButtonmove_) {
+		/*if (moveselectButton >= maxButtonmove_) {
 			moveselectButton = 0;
 			isSelectButtonMoving_ = false;
+		}*/
+
+		if (stageImages[1]->GetPosition().x >= 0|| moveselectButton >= maxButtonmove_) {
+			moveselectButton = 0;
+			isSelectButtonMoving_ = false;
+
+			// 1番目の画像を0の位置に固定
+			stageImages[1]->SetPosition(0, stageImages[1]->GetPosition().y, stageImages[1]->GetPosition().z);
 		}
+	}
+
+	if (isMinusSelectButtonMoving_) {
+
+		for (int i = 0; i < stageImages.size(); ++i) {
+
+			UIButton* button = stageImages[i];
+
+			//そのi番目にあるボタンの画像のx座標をを取得し変数名に代入
+			float ButtonPos = button->GetPosition().x;
+
+			moveselectButton += 0.01;
+
+			button->SetPosition(ButtonPos -= moveselectButton, stageImages[i]->GetPosition().y, stageImages[i]->GetPosition().z);
+
+			if (stageImages[0]->GetPosition().x <= 0 || moveselectButton <= -maxButtonmove_) {
+				moveselectButton = 0;
+				isMinusSelectButtonMoving_ = false;
+
+				// 1番目の画像を0の位置に固定
+				stageImages[0]->SetPosition(0, stageImages[0]->GetPosition().y, stageImages[0]->GetPosition().z);
+			}
+
+		}
+
 	}
 	/*for (size_t i = 0; i < stageImages.size(); ++i)
 	{

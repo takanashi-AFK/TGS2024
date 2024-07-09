@@ -10,6 +10,7 @@
 
 // XMFLOAT3型の変数をコンマ区切りで表示するマクロ
 #define REFERENCE_XMFLOAT3(p) p.x,p.y,p.z 
+#define REFERENCE_XMFLOAT4(p) p.x,p.y,p.z,p.w 
 
 #define REFERENCE_XMVECTOR3(p) XMVectorGetX(p),XMVectorGetY(p),XMVectorGetZ(p)
 

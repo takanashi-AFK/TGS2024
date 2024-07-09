@@ -47,7 +47,6 @@ namespace Image
 			pData->fileName = fileName;
 		}
 
-
 		//g‚Á‚Ä‚È‚¢”Ô†‚ª–³‚¢‚©’T‚·
 		for (int i = 0; i < _datas.size(); i++)
 		{
@@ -75,12 +74,22 @@ namespace Image
 	//•`‰æ
 	void Draw(int handle)
 	{
+		Draw(handle, Direct3D::SHADER_2D);
+	}
+
+	void Draw(int handle, Direct3D::SHADER_TYPE _type)
+	{
+		Draw(handle, _type, XMFLOAT3(1, 1, 1));
+	}
+
+	void Draw(int handle, Direct3D::SHADER_TYPE _type, XMFLOAT3 _color)
+	{
 		if (handle < 0 || handle >= _datas.size() || _datas[handle] == nullptr)
 		{
 			return;
 		}
 		_datas[handle]->transform.Calclation();
-		_datas[handle]->pSprite->Draw(_datas[handle]->transform, _datas[handle]->rect, _datas[handle]->alpha);
+		_datas[handle]->pSprite->Draw(_datas[handle]->transform, _datas[handle]->rect, _datas[handle]->alpha, _type,_color);
 	}
 
 

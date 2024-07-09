@@ -60,6 +60,7 @@ void Component_CactanBehavior::Update()
 	}
 	else{
 
+		
 		// タイマーを停止
 		auto timer = dynamic_cast<Component_Timer*>(GetChildComponent("Timer"));
 		if (timer == nullptr)return;

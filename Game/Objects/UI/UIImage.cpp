@@ -10,7 +10,6 @@ UIImage::UIImage(string _name, GameObject* parent)
 
 void UIImage::Initialize()
 {
-
 }
 
 void UIImage::Update()

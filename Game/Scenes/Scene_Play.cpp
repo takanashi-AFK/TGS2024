@@ -4,7 +4,7 @@
 #include"../Objects/Stage/SkySphere.h"
 #include"../Objects/Stage/Stage.h"
 #include "../Objects/UI/UIPanel.h"
-#include"../Objects/Stage/Components/HealthManagerComponents/Component_HealthManager.h"
+#include"../Objects/Stage/Components/GaugeComponents/Component_HealthGauge.h"
 #include"../Objects/Stage/Components/BehaviorComponents/Component_PlayerBehavior.h"
 #include"../../Engine/SceneManager.h"
 #include "../Objects/UI/UIButton.h"

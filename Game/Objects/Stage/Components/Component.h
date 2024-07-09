@@ -17,7 +17,7 @@ enum ComponentType {
     RotationX,
     RotationZ,
     MoveX,
-    HealthManager,
+    HealthGauge,
     Chase,
 	CircleRangeDetector,
     FanRangeDetector,

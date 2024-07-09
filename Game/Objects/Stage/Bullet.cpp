@@ -4,7 +4,7 @@
 #include "../../../Engine/Global.h"
 #include "../../../Engine/ImGui/imgui.h"
 #include "../../../Engine/ResourceManager/Model.h"
-#include "Components/HealthManagerComponents/Component_HealthManager.h"
+#include "Components/GaugeComponents/Component_HealthGauge.h"
 #include "Stage.h"
 
 Bullet::Bullet(GameObject* _parent) 

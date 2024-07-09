@@ -6,7 +6,6 @@
 #include "../../../../../Engine/DirectX/Direct3D.h"
 #include "../../../../../Engine/DirectX/Input.h"
 #include "../../../../../Engine/GameObject/Camera.h"
-#include "../../../../../Engine/ImGui/imgui.h"
 #include "../../Stage.h"
 #include "../../StageObject.h"
 #include "../../SkySphere.h"
@@ -16,6 +15,8 @@
 #include "../MoveComponents/Component_WASDInputMove.h"
 #include "../TimerComponent/Component_Timer.h"
 #include <algorithm> 
+#include "../../../../../Game/Objects/Stage/Components/GaugeComponents/Component_HealthGauge.h"
+#include "../../../../../Engine/ImGui/imgui.h"
 
 
 struct CompareDist {
@@ -39,15 +40,15 @@ void Component_PlayerBehavior::Initialize()
     if (FindChildComponent("MeleeAttack") == false)AddChildComponent(CreateComponent("MeleeAttack", MeleeAttack, holder_, this));
     if (FindChildComponent("ShootAttack") == false)AddChildComponent(CreateComponent("ShootAttack", ShootAttack, holder_, this));
     if (FindChildComponent("Timer") == false)AddChildComponent(CreateComponent("Timer", Timer, holder_, this));
-    if (FindChildComponent("HealthManager") == false)AddChildComponent(CreateComponent("HealthManager", HealthManager, holder_, this));
+    if (FindChildComponent("HealthGauge") == false)AddChildComponent(CreateComponent("PlayerHealthGauge", HealthGauge, holder_, this));
 }
 
 void Component_PlayerBehavior::Update()
 {
-    auto hm = dynamic_cast<Component_HealthManager*>(GetChildComponent("HealthManager"));
+	auto hm = dynamic_cast<Component_HealthGauge*>(GetChildComponent("PlayerHealthGauge"));
     if (hm == nullptr)return;
-    // 進捗を0.0〜1.0の範囲で計算
-    float progress = hm->GetHP() / hm->GetMax();
+	// 進捗を0.0〜1.0の範囲で計算
+	float progress = hm->GetNow() / hm->GetMax();
 
     auto move = dynamic_cast<Component_WASDInputMove*>(GetChildComponent("InputMove"));
     if (move == nullptr)return;

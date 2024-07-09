@@ -4,12 +4,12 @@
 #include"../../Engine/GameObject/GameObject.h"
 
 // 前方宣言
-class Component_HealthManager;
+class Component_HealthGauge;
 
 class Scene_Play:public GameObject
 {
 private:
-	Component_HealthManager* playerHealth_; //プレイヤーのHPを管理するコンポーネント
+	Component_HealthGauge* playerHealth_; //プレイヤーのHPを管理するコンポーネント
 
 public:
 	//コンストラクタ

@@ -12,7 +12,7 @@ namespace {
 	 float maxButtonMove_ = 1.5f;
 }
 Scene_StageSelect::Scene_StageSelect(GameObject* parent)
-	: GameObject(parent, "Scene_StageSelect"), isSelectButtonMoving_(false), moveselectButton(0.f),StageIndex(0),easingfunc_()
+	: GameObject(parent, "Scene_StageSelect"), isRightButtonMoving_(false), isLeftSelectButtonMoving_(false),moveselectButton(0.f),StageIndex(0),easingfunc_()
 {
 }
 
@@ -64,7 +64,7 @@ void Scene_StageSelect::Update()
 	UIButton* nextButton = dynamic_cast<UIButton*>(uipanel->GetUIObject("NextButton"));
 	if (nextButton == nullptr)return;
 	if (nextButton->OnClick()) {
-		isSelectButtonMoving_ = true;
+		isRightButtonMoving_ = true;
 		StageIndex = (StageIndex + 1) % stageImages.size();
 	}
 	
@@ -72,14 +72,14 @@ void Scene_StageSelect::Update()
 	UIButton* backButton = dynamic_cast<UIButton*>(uipanel->GetUIObject("BuckButton"));
 	if (backButton == nullptr)return;
 	if (backButton->OnClick()) {
-		isMinusSelectButtonMoving_ = true;
+		isLeftSelectButtonMoving_ = true;
 		
 		StageIndex = (StageIndex - 1 + stageImages.size()) % stageImages.size();
 	}
-	if (isSelectButtonMoving_) {
+	if (isRightButtonMoving_) {
 		RightButtonMoving();
 	 }
-	 if (isMinusSelectButtonMoving_) {
+	 if (isLeftSelectButtonMoving_) {
 		LeftButtonMoving();
 	}
 	
@@ -122,7 +122,7 @@ void Scene_StageSelect::RightButtonMoving()
 
 		if (stageImages[1]->GetPosition().x >= 0 || moveselectButton >= maxButtonMove_) {
 			moveselectButton = 0;
-			isSelectButtonMoving_ = false;
+			isRightButtonMoving_ = false;
 
 			// 1”Ô–Ú‚Ì‰æ‘œ‚ð0‚ÌˆÊ’u‚ÉŒÅ’è
 			stageImages[1]->SetPosition(0, stageImages[1]->GetPosition().y, stageImages[1]->GetPosition().z);
@@ -145,10 +145,35 @@ void Scene_StageSelect::LeftButtonMoving()
 
 			if (stageImages[0]->GetPosition().x <= 0 || moveselectButton <= maxButtonMove_) {
 				moveselectButton = 0;
-				isMinusSelectButtonMoving_ = false;
+				isLeftSelectButtonMoving_ = false;
 
 				// 1”Ô–Ú‚Ì‰æ‘œ‚ð0‚ÌˆÊ’u‚ÉŒÅ’è
 				stageImages[0]->SetPosition(0, stageImages[0]->GetPosition().y, stageImages[0]->GetPosition().z);
 			}
 	}
 }
+
+void Scene_StageSelect::MoveButtons(bool _moving)
+{
+	for (int i = 0; i < stageImages.size(); ++i) {
+
+		UIButton* button = stageImages[i];
+		float ButtonPos = button->GetPosition().x;
+		moveselectButton += 0.01;
+
+		if (_moving) {
+			button->SetPosition(ButtonPos += maxButtonMove_ * Direct3D::EaseFunc[easingfunc_](moveselectButton), stageImages[i]->GetPosition().y, stageImages[i]->GetPosition().z);
+		}
+		else {
+			button->SetPosition(ButtonPos -= maxButtonMove_ * Direct3D::EaseFunc[easingfunc_](moveselectButton), stageImages[i]->GetPosition().y, stageImages[i]->GetPosition().z);
+		}
+	}
+	if (stageImages[1]->GetPosition().x >= 0 || moveselectButton >= maxButtonMove_
+		|| stageImages[0]->GetPosition().x <= 0 || moveselectButton <= maxButtonMove_) {
+		moveselectButton = 0;
+		if (_moving) {
+
+		}
+	}
+}
+

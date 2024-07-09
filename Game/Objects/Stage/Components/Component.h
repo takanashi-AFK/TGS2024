@@ -22,7 +22,7 @@ enum ComponentType {
 	CircleRangeDetector,
     FanRangeDetector,
     HelingoBehavior,
-	CactanBihavior,
+	CactanBehavior,
     Timer,
     HelingoFall,
     WASDInputMove,

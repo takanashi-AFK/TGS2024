@@ -34,7 +34,7 @@ void Scene_Play::Initialize()
 		//		Component_PlayerBehavior* playerBeha = dynamic_cast<Component_PlayerBehavior*>(pList->FindComponent("PlayerBehavior"));
 		//		if (playerBeha != nullptr) {
 		//			//playerBehaから子コンポーネントを取得する
-		//			playerHealth_ = dynamic_cast<Component_HealthManager*>(playerBeha->GetChildComponent("HealthManager"));
+		//			playerHealth_ = dynamic_cast<Component_HealthGauge*>(playerBeha->GetChildComponent("HealthGauge"));
 		//		}
 		//	}
 		//}

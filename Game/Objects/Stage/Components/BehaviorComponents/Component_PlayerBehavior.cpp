@@ -11,7 +11,7 @@
 #include "../../SkySphere.h"
 #include "../AttackComponents/Component_MeleeAttack.h"
 #include "../AttackComponents/Component_ShootAttack.h"
-#include "../HealthManagerComponents/Component_HealthManager.h"
+#include "../GaugeComponents/Component_HealthGauge.h"
 #include "../MoveComponents/Component_WASDInputMove.h"
 #include "../TimerComponent/Component_Timer.h"
 #include <algorithm> 

@@ -71,16 +71,16 @@ void Bullet::OnCollision(GameObject* _target)
 	if (!target) return;
 
 	if (target->GetObjectName() == shooter_->GetObjectName())return;
-	auto list = target->FindComponent(HealthManager);
+	auto list = target->FindComponent(HealthGauge);
 
 	if (list.empty()) return;
 	// ƒ_ƒ[ƒWˆ—
 	for (auto hm : list) {
 
-		((Component_HealthManager*)hm)->TakeDamage(20);
+		((Component_HealthGauge*)hm)->TakeDamage(20);
 		this->KillMe();
 
-		if (((Component_HealthManager*)hm)->GetHP() <= 0.f) {
+		if (((Component_HealthGauge*)hm)->GetNow() <= 0.f) {
 			((Stage*)FindObject("Stage"))->DeleteStageObject((StageObject*)_target);
 		}
 	}

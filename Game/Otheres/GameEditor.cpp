@@ -212,6 +212,12 @@ void GameEditor::DrawDatalsCamera()
 		Camera::SetPosition(cameraPosition_);
 		// ƒJƒƒ‰‚ÌÅ“_‚ğİ’è
 		Camera::SetTarget(cameraTarget_);
+
+		if (ImGui::Button("Default"))
+		{
+			cameraPosition_ = {0,30,-20};
+			cameraTarget_ = {0,-20,20};
+		}
 		break;
 
 	case TPS:

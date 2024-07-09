@@ -86,7 +86,7 @@ void TPSCamera::Update()
     // ｘ軸の回転を行う
     {
         // 中心を移動
-        XMVECTOR newCenter = (XMLoadFloat3(&camPosition) + XMLoadFloat3(&camTarget)) * centerShiftAmount_;
+        XMVECTOR newCenter = (XMLoadFloat3(&camPosition) + XMLoadFloat3(&camTarget)) * 0.5f;
         XMFLOAT3 prevCenter = center;
         XMStoreFloat3(&center, newCenter);
 

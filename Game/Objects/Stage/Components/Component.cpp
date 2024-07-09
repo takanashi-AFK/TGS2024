@@ -213,7 +213,7 @@ Component* CreateComponent(string _name,ComponentType _type, StageObject* _holde
 	case CircleRangeDetector:comp = new Component_CircleRangeDetector(_name,_holder, _parent); break;
 	case FanRangeDetector:comp = new Component_FanRangeDetector(_name,_holder, _parent); break;
 	case HelingoBehavior:comp = new Component_HelingoBehavior(_name,_holder, _parent); break;
-	case CactanBihavior:comp = new Component_CactanBehavior(_name, _holder, _parent); break;
+	case CactanBehavior:comp = new Component_CactanBehavior(_name, _holder, _parent); break;
 	case PlayerBehavior:comp = new Component_PlayerBehavior(_name, _holder, _parent); break;
 	case Timer:comp = new Component_Timer(_name,_holder, _parent); break;
 	case HealthGauge:comp = new Component_HealthGauge(_name,_holder, _parent); break;
@@ -239,12 +239,12 @@ string ComponentTypeToString(ComponentType _type)
 	switch (_type)
 	{
 	case BossBehavior: return "BossBehaviorComponent";
-	case CactanBihavior: return "CactanBihaviorComponent";
+	case CactanBehavior: return "CactanBehaviorComponent";
 	case Chase: return "ChaseComponent";
 	case CircleRangeDetector: return "CircleRangeDetectorComponent";
 	case Fall: return "FallComponent";
 	case FanRangeDetector: return "FanRangeDetectorComponent";
-	case HealthManager: return "HealthManagerComponent";
+	case HealthGauge: return "HealthGaugeComponent";
 	case HelingoBehavior: return "HelingoBehaviorComponent";
 	case HelingoFall: return "HelingoFallComponent";
 	case MeleeAttack: return "MeleeAttackComponent";
@@ -258,8 +258,6 @@ string ComponentTypeToString(ComponentType _type)
 	case ShootAttack: return "ShootAttackComponent";
 	case TackleMove: return "TackleMoveComponent";
 	case Timer: return "TimerComponent";
-	case HealthGauge: return "HealthGaugeComponent";
-	case ShootAttack: return "ShootAttackComponent";
 	case WASDInputMove: return "WASDInputMoveComponent";
 	default: return "None";
 	}	

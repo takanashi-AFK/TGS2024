@@ -90,7 +90,6 @@ public:
 	/// </summary>
 	Component* FindComponent(string _name);
 
-	vector<Component*>FindComponent(ComponentType _type);
 	/// <summary>
 	/// コンポーネントをリストから探す
 	/// </summary>

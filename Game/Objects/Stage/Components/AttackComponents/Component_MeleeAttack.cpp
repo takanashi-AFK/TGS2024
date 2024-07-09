@@ -3,7 +3,7 @@
 #include "../../../../../Engine/Collider/BoxCollider.h"
 #include "../../../../../Engine/ImGui/imgui.h"
 #include "../TimerComponent/Component_Timer.h"
-#include "../HealthManagerComponents/Component_HealthManager.h"
+#include "../GaugeComponents/Component_HealthGauge.h"
 #include "../../Stage.h"
 
 Component_MeleeAttack::Component_MeleeAttack(string _name, StageObject* _holder, Component* _parent)
@@ -111,11 +111,11 @@ void Component_MeleeAttack::OnCollision(GameObject* _target)
 	if (target == nullptr) return;
 
 	// ダメージ処理
-	for (auto hm : target->FindComponent(HealthManager)) {
-		((Component_HealthManager*)hm)->TakeDamage(power_);
+	for (auto hm : target->FindComponent(HealthGauge)) {
+		((Component_HealthGauge*)hm)->TakeDamage(power_);
 		isHit_ = true;  // ダメージ処理の直後にフラグを設定
 
-		if (((Component_HealthManager*)hm)->GetHP() <= 0.f) {
+		if (((Component_HealthGauge*)hm)->GetNow() <= 0.f) {
 			((Stage*)holder_->FindObject("Stage"))->DeleteStageObject((StageObject*)_target);
 		}
 	}

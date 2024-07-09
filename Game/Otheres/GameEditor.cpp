@@ -270,15 +270,29 @@ void GameEditor::UIObjectClreateWindow()
 				ImGui::EndCombo();
 			}
 
-			// レイヤー番号を入力
+
+			//レイヤー番号を入力
+			static int beforeLayerNumber = -1; //直前のレイヤー番号
+			bool isLayerNumberDuplicate = false; //レイヤー番号が重複しているか
 			ImGui::InputInt("LayerNumber", &layerNumberCount_);
-			//layerNumbertが0以下場合は1にする
-			if (layerNumberCount_ <= 0)layerNumberCount_ = 1;
+			//重複チェック
+			for (const auto& uiObject : editUIPanel_->GetUIObjects()) {
+				if (uiObject->GetLayerNumber() == layerNumberCount_) {
+					isLayerNumberDuplicate = true;
+					break;
+				}
+			}
 
+			if (layerNumberCount_ <= 0) {
+				layerNumberCount_ = 1;
+			}
 
-
+			//警告表示
+			if (isLayerNumberDuplicate) {
+				ImGui::TextColored(ImVec4(1, 0, 0, 1), "LayerNumber is duplicated");
+			}
 			// 生成ボタン
-			if (ImGui::Button("Create")) {
+			if (ImGui::Button("Create") && !isLayerNumberDuplicate) {
 				// UIオブジェクトを作成・追加
 				UIObject* obj = CreateUIObject(nameBuffer, uitype, editUIPanel_,layerNumberCount_);
 				if (obj != nullptr) {

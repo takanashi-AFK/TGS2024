@@ -113,6 +113,7 @@ void UIObject::ChildDrawData()
 	if (ImGui::TreeNode("LayerNumber"))
 	{
 		ImGui::Text("Image Layer Number: %d", GetLayerNumber());
+		//layerNumber‚ğ•ÏX‚·‚é
 		ImGui::InputInt("Layer Number", &layerNumber_);
 		//layerNumbert‚ª0ˆÈ‰ºê‡‚Í1‚É‚·‚é
 		if (layerNumber_ <= 0)layerNumber_ = 1;

@@ -43,9 +43,6 @@ void UIButton::Draw()
 
 void UIButton::Release()
 {
-    //©g‚ğíœ
-    //Image::Release(imageHandle_);
-
 }
 
 void UIButton::Save(json& saveObj)

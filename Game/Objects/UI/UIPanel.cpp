@@ -115,17 +115,3 @@ void UIPanel::SortUIObject()
 	// レイヤー番号でソート
 	std::sort(childList_.begin(), childList_.end(), UIObject::CompareLayerNumber);
 }
-
-
-//UIObject* UIPanel::GetUIObject(string _name)
-//{
-//	UIObject* result = nullptr;
-//
-//	for (auto obj : childList_) {
-//		if (obj->GetObjectName() == _name) {
-//			result = obj;
-//			break;
-//		}
-//	}
-//	return result;
-//}

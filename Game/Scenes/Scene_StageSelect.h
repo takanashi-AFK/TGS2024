@@ -1,21 +1,14 @@
 #pragma once
 #include "../../Engine/GameObject/GameObject.h"
 
-class  UIPanel;
-class UIButton;
-#include <vector>
+class UIPanel;
+
 class Scene_StageSelect: public GameObject
 {
 
 private:
-	UIPanel* uipanel;//UIパネルのポインタ変数
-	std::vector<UIButton*>stageImages;
-	int StageIndex;
-	bool isRightButtonMoving_;//ボタンが右方向に動いてるかどうか
-	bool isLeftSelectButtonMoving_;//-方向に動いているかどうか
-	float moveselectButton;//ボタンを動かすための割合
-	std::string easingfunc_;//いーじんぐ
-
+	UIPanel* pUIPanel_;
+	int selectIndex_;
 public:
 	Scene_StageSelect(GameObject* parent);
 
@@ -28,16 +21,5 @@ public:
 	void Release() override;
 
 private:
-	/// <summary>
-	/// ボタンが右に動く関数
-	/// </summary>
-	void RightButtonMoving();
-
-	/// <summary>
-	/// ボタンが左に動く関数
-	/// </summary>
-	void LeftButtonMoving();
-
-	void MoveButtons(bool _moving);
 };
 

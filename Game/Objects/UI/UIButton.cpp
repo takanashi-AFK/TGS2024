@@ -25,10 +25,37 @@ void UIButton::Update()
     // マウスの座標を画像の座標に変換
     ConvertToImageCoordinates(mousePos);
 
+	// マウスが画像の上に乗っているかどうかで画像の透明度を変更
 	if (IsMouseOver(mousePos))
         Image::SetAlpha(imageHandle_, 192);
 	else 
         Image::SetAlpha(imageHandle_, 256);
+
+    if (isMove_ == true) {
+
+        // 保有者の位置を取得
+        XMFLOAT3 nowPosition = startPosition_;
+
+        // 移動ベクトルを作成
+        XMVECTOR move;
+        if(easeFunc_  != "")move = XMLoadFloat3(&startPosition_) + XMVector3Normalize(direction_) * (distance_ * Direct3D::EaseFunc[easeFunc_](rate_));
+		else move = XMLoadFloat3(&startPosition_) + XMVector3Normalize(direction_) * (distance_ * rate_);
+
+        // 保有者の位置を移動
+        XMStoreFloat3(&nowPosition, move);
+
+        // 保有者の位置を設定
+        SetPosition(nowPosition);
+
+        // 割合を進める
+        rate_ += 0.01f;
+
+        if (rate_ >= 1) {
+            // 移動終了
+            isMove_ = false;
+            rate_ = 0;
+        }
+    }
 }
 
 void UIButton::Draw()
@@ -138,6 +165,15 @@ bool UIButton::OnClick()
 
     //マウスのポジションが画像の領域に入っているかつ左クリックが押されたら
     return IsMouseOver(mousePos) && Input::IsMouseButtonDown(0);
+}
+
+void UIButton::Move(float _distance, XMVECTOR _direction, string _easeFunc)
+{
+	isMove_ = true;
+	startPosition_ = transform_.position_;
+	distance_ = _distance;
+	direction_ = _direction;
+	easeFunc_ = _easeFunc;
 }
 
 bool UIButton::IsMouseOver(XMFLOAT2 _mousePosition)

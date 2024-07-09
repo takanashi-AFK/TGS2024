@@ -1,3 +1,4 @@
+
 #include "UIProgressBar.h"
 #include "../../../Engine/ImGui/imgui.h"
 #include "../../../Engine/Global.h"
@@ -9,7 +10,7 @@
 
 
 UIProgressBar::UIProgressBar(string _name, GameObject* parent)
-	:UIObject(_name, UIType::UI_PROGRESSBAR, parent),
+    :UIObject(_name, UIType::UI_PROGRESSBAR, parent),
     gaugeMaxValue_(100.0f),  // 初期値を設定
     gaugeNowValue_(50.0f)  // 初期値を設定
 {
@@ -27,31 +28,31 @@ void UIProgressBar::Initialize()
 
 void UIProgressBar::Update()
 {
-  //参照しているコンポーネントがあるかどうか
-  //  if (referenceGauge_.this_ == nullptr)
-		//// これが悪い なんでrefereceGaugeがnullなのにreferenceGaugeのholderName_を？
-  //      referenceGauge_.this_ = (Component_Gauge*)((StageObject*)FindObject(referenceGauge_.holderName_))->FindComponent(referenceGauge_.thisName_);
-    if(referenceGauge_.this_ == nullptr)return;
+    //参照しているコンポーネントがあるかどうか
+    //  if (referenceGauge_.this_ == nullptr)
+          //// これが悪い なんでrefereceGaugeがnullなのにreferenceGaugeのholderName_を？
+    //      referenceGauge_.this_ = (Component_Gauge*)((StageObject*)FindObject(referenceGauge_.holderName_))->FindComponent(referenceGauge_.thisName_);
+    if (referenceGauge_.this_ == nullptr)return;
     //参照するゲージコンポーネントから値を取得
     if (referenceGauge_.this_ != nullptr) {
         gaugeMaxValue_ = referenceGauge_.this_->GetMax();
         gaugeNowValue_ = referenceGauge_.this_->GetNow();
     }
-    
+
 }
 
 void UIProgressBar::Draw()
 {
     if (imageHandle_ < 0) return;
-    
-   // 設定された値から変形行列`transform_`の値を計算
-   // ゲージのスケールを計算
+
+    // 設定された値から変形行列`transform_`の値を計算
+    // ゲージのスケールを計算
     transGauge_ = transform_;
     transGauge_.scale_.x = (gaugeNowValue_ / gaugeMaxValue_) * transFrame_.scale_.x;
     // ゲージの画像を描画
     Image::SetTransform(pictGaugeHandle_, transGauge_);
-    Image::Draw(pictGaugeHandle_,Direct3D::SHADER_BAR,color_);
-    
+    Image::Draw(pictGaugeHandle_, Direct3D::SHADER_BAR, color_);
+
     transFrame_ = transform_;
 
     Image::SetTransform(pictFrameHandle_, transFrame_);
@@ -137,12 +138,12 @@ void UIProgressBar::DrawData()
     // ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
     ImVec4 inputCol = { REFERENCE_XMFLOAT3(color_),0 };
     ImGui::ColorEdit4("Color", (float*)&inputCol);
-    color_ = {REFERENCE_XMFLOAT3(inputCol)};
+    color_ = { REFERENCE_XMFLOAT3(inputCol) };
 
-// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
-// ゲージコンポーネント情報を取得
-// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
- // ゲージコンポーネント情報を取得
+    // ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
+    // ゲージコンポーネント情報を取得
+    // ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
+     // ゲージコンポーネント情報を取得
     vector<gauge> gauges;
 
     // ステージ情報を取得
@@ -154,6 +155,7 @@ void UIProgressBar::DrawData()
         for (auto healthGaugeComp : obj->FindComponent(HealthGauge)) {
             //配列にオブジェクトとコンポーネントを一つにまとめて入れる？
             auto gaugeComp = dynamic_cast<Component_Gauge*>(healthGaugeComp);
+            if (gaugeComp == nullptr)continue;
             gauges.push_back({ obj,gaugeComp,obj->GetObjectName(),gaugeComp->GetName() });
         }
         //技ゲージ...
@@ -250,4 +252,3 @@ void UIProgressBar::SetGaugeMaxValue(float _maxValue)
 void UIProgressBar::SetGaugeCurrentValue(float _nowValue) {
     gaugeNowValue_ = _nowValue;
 }
-

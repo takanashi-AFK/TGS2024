@@ -72,7 +72,8 @@ void Component_PlayerBehavior::Update()
 
     XMVECTOR sightLine = Camera::GetSightLine();
     XMFLOAT3 camPos = Camera::GetPosition();
-
+         // ヒット位置のワールド座標
+    static XMFLOAT3 pos{};
     // 枠内にいるENEMY属性を持ったStageObjectをターゲットにする
     if (Input::IsMouseButton(1) && Input::IsMouseButtonDown(0))
     {
@@ -82,8 +83,7 @@ void Component_PlayerBehavior::Update()
 
         auto stageObj = pStage->GetStageObjects();
         StageObject* hitObject = nullptr;
-        XMFLOAT3 hitPosition{}; // ヒット位置のワールド座標
-
+        XMFLOAT3 hitPosition{};
         // すべてのオブジェクトに対してレイを飛ばす
         for (auto obj : stageObj) {
             if (obj->GetObjectName() == holder_->GetObjectName()) continue;
@@ -91,39 +91,58 @@ void Component_PlayerBehavior::Update()
             int hGroundModel = obj->GetModelHandle();
             if (hGroundModel < 0) continue;
 
-            RayCastData data;
-            data.start = camPos;  // レイの発射位置
+    //        RayCastData data;
+    //        data.start = camPos;  // レイの発射位置
 
-            // オブジェクトの逆行列を取得
-            XMMATRIX objMatrixInv = XMMatrixInverse(nullptr, obj->GetWorldMatrix());
+    //        // オブジェクトの逆行列を取得
+    //        XMMATRIX objMatrixInv = XMMatrixInverse(nullptr, obj->GetWorldMatrix());
 
-            // レイの開始位置をオブジェクトのローカル座標に変換
-            XMVECTOR startVec = XMLoadFloat3(&data.start);
-            startVec = XMVector3TransformCoord(startVec, objMatrixInv);
-            XMStoreFloat3(&data.start, startVec);
-            ImGui::Text("start %f,%f,%f", data.start);
+    //        // レイの開始位置をオブジェクトのローカル座標に変換
+    //        XMVECTOR startVec = XMLoadFloat3(&data.start);
+    //        startVec = XMVector3TransformCoord(startVec, objMatrixInv);
+    //        XMStoreFloat3(&data.start, startVec);
 
-            // レイの方向をオブジェクトのローカル座標に変換
-            XMVECTOR dirVec = sightLine; // sightLineを使用
-            dirVec = XMVector3TransformCoord(dirVec, objMatrixInv);
-            dirVec = XMVector3Normalize(dirVec);
-            XMStoreFloat3(&data.dir, dirVec);
-            ImGui::Text("dir %f,%f,%f", data.dir);
+    //        // レイの方向をオブジェクトのローカル座標に変換
+    //        XMVECTOR dirVec = sightLine; // sightLineを使用
+    //        dirVec = XMVector3TransformCoord(dirVec, objMatrixInv);
+    //        dirVec = XMVector3Normalize(dirVec);
+    //        XMStoreFloat3(&data.dir, dirVec);
 
-            Model::RayCast(hGroundModel, &data);  // レイを発射
+    //        Model::RayCast(hGroundModel, &data);  // レイを発射
 
-            // レイが当たったら
+    //        // レイが当たったら
+    //        if (data.hit) {
+    //            // レイの情報をリストに追加
+    //            rayHitObjectList_.push_back(data);
+    //            hitObject = obj;
+
+    //            // ヒット位置のワールド座標を計算
+    //            XMVECTOR hitPosLocal = XMLoadFloat3(&data.pos); // ヒット位置のローカル座標
+    //            XMVECTOR hitPosWorld = XMVector3TransformCoord(hitPosLocal, obj->GetWorldMatrix());
+    //            XMStoreFloat3(&hitPosition, hitPosWorld);
+				//pos = hitPosition;
+    //        }
+
+
+			RayCastData data;
+			data.start = camPos;  // レイの発射位置 カメラの位置のためworld座標
+
+			XMStoreFloat3(&data.dir, XMVector3Normalize(sightLine)); // レイの方向 単位ベクトルのため、座標系に依存しないものと考える
+
+			Model::RayCast(obj->GetModelHandle(), &data);  // レイを発射
+
+			// レイが当たったら
             if (data.hit) {
-                // レイの情報をリストに追加
-                rayHitObjectList_.push_back(data);
-                hitObject = obj;
+				// 命中したオブジェクトが何か
+				// hitObject = obj;
 
-                // ヒット位置のワールド座標を計算
-                XMVECTOR hitPosLocal = XMLoadFloat3(&data.pos); // ヒット位置のローカル座標
-                XMVECTOR hitPosWorld = XMVector3TransformCoord(hitPosLocal, obj->GetWorldMatrix());
-                XMStoreFloat3(&hitPosition, hitPosWorld);
-                ImGui::Text("pos %f,%f,%f", hitPosition);
+				XMVECTOR hitPosWorld = XMVector3TransformCoord(XMLoadFloat3(&data.pos), obj->GetWorldMatrix());
+
+                XMStoreFloat3(&data.pos,hitPosWorld);
+				rayHitObjectList_.push_back(data);
             }
+
+
         }
 
         // リストが空なら
@@ -138,7 +157,7 @@ void Component_PlayerBehavior::Update()
             // イテレータが有効か確認して最小要素の dist を出力
             if (min_iter != rayHitObjectList_.end()) {
                 XMFLOAT3 holderPos = holder_->GetPosition();
-                shootDir = XMVector3Normalize(XMLoadFloat3(&hitPosition) - XMLoadFloat3(&holderPos));
+                shootDir = XMVector3Normalize(XMLoadFloat3(&min_iter->pos) - XMLoadFloat3(&holderPos));
             }
             rayHitObjectList_.clear();
         }
@@ -148,11 +167,12 @@ void Component_PlayerBehavior::Update()
         shoot->Execute();
 		shootDir = {};
     }
-
     else if (Input::IsMouseButtonDown(0))
     {
         melee->Execute();
     }
+    ImGui::Text("pos %f,%f,%f", pos.x, pos.y, pos.z);
+
 }
 
 void Component_PlayerBehavior::Release()

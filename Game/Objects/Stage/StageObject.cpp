@@ -223,7 +223,10 @@ void StageObject::Draw()
 void StageObject::Release()
 {
 	// 保有するコンポーネントの開放処理
-	for (auto comp : myComponents_) comp->ChildRelease();
+	for (auto comp : myComponents_) {
+		comp->ChildRelease();
+		delete comp;
+	}
 	myComponents_.clear();
 }
 

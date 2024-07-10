@@ -58,7 +58,10 @@ void Component::ChildUpdate()
 void Component::ChildRelease()
 {
 	// 子コンポーネントの開放
-	for (auto comp : childComponents_) comp->ChildRelease();
+	for (auto comp : childComponents_) {
+		comp->ChildRelease();
+		delete comp;
+	}
 	childComponents_.clear();
 	
 	// 自身の開放

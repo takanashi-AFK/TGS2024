@@ -142,8 +142,6 @@ void Component_PlayerBehavior::Update()
                 XMStoreFloat3(&data.pos,hitPosWorld);
 				rayHitObjectList_.push_back(data);
             }
-
-
         }
 
         // リストが空なら

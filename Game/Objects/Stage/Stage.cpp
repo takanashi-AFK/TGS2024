@@ -2,6 +2,7 @@
 
 // インクルード
 #include "StageObject.h"
+#include "Components/Component.h"
 #include "../../../Engine/ImGui/imgui.h"
 #include "../../../Engine/GameObject/Camera.h"
 
@@ -80,4 +81,14 @@ void Stage::DeleteAllStageObject()
 	// リスト内にある要素をすべて削除
 	for (auto obj : objects_) obj->KillMe();
 	objects_.clear();
+}
+
+Component* Stage::FindComponent(string _name)
+{
+	Component* comp = nullptr;
+	for (auto obj : objects_) {
+		comp = obj->FindComponent(_name);
+		if (comp != nullptr)return comp;
+	}
+	return nullptr;
 }

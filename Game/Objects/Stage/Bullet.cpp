@@ -80,7 +80,7 @@ void Bullet::OnCollision(GameObject* _target)
 		((Component_HealthGauge*)hm)->TakeDamage(20);
 		this->KillMe();
 
-		if (((Component_HealthGauge*)hm)->GetNow() <= 0.f) {
+		if (((Component_HealthGauge*)hm)->GetIsDead()) {
 			((Stage*)FindObject("Stage"))->DeleteStageObject((StageObject*)_target);
 		}
 	}

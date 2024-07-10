@@ -107,19 +107,71 @@ void UIObject::ChildDrawData()
 	}
 
 
+	//// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
+	//// レイヤー番号を描画
+	//// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
+	//if (ImGui::TreeNode("LayerNumber"))
+	//{
+	//	ImGui::Text("Image Layer Number: %d", GetLayerNumber());
+
+	//	//layerNumberを変更する
+	//	ImGui::InputInt("Layer Number", &layerNumber_);
+	//	//layerNumbertが0以下場合は1にする
+	//	if (layerNumber_ <= 0)layerNumber_ = 1;
+
+	//	ImGui::TreePop();
+	//}
+	
+	
 	// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
 	// レイヤー番号を描画
 	// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
 	if (ImGui::TreeNode("LayerNumber"))
-	{
-		ImGui::Text("Image Layer Number: %d", GetLayerNumber());
+	{ 
+		layerNumber_ = GetLayerNumber();
+		ImGui::Text("Image Layer Number: %d", layerNumber_);
+
+		//こっちの方がエディター上の動きは分かりやすいかも
 		//layerNumberを変更する
-		ImGui::InputInt("Layer Number", &layerNumber_);
-		//layerNumbertが0以下場合は1にする
-		if (layerNumber_ <= 0)layerNumber_ = 1;
+		// レイヤー番号の変更を受け付ける
+		static int newLayerNumber = layerNumber_;
+		if (ImGui::InputInt("Layer Number", &newLayerNumber))
+		{
+			// newLayerNumberが現在のレイヤー番号と異なる場合に更新を試みる
+			if (newLayerNumber != layerNumber_)
+			{
+				SetLayerNumber(newLayerNumber);
+			}
+		}
+		
+
+		//エディター上だと動きがちょっと分かりずらい
+		/*
+		//layerNumberを変更する
+		static int newLayerNumber = layerNumber_;
+		ImGui::InputInt("Layer Number", &newLayerNumber);
+		if (newLayerNumber <= 0)newLayerNumber = 1;
+
+		// レイヤー番号を変更するボタン
+		if (ImGui::Button("Change Layer Number"))
+		{
+			SetLayerNumber(newLayerNumber);
+		}
+		*/
+		
+		//レイヤー番号が重複している場合はポップアップを表示
+		if (ImGui::BeginPopupModal("LayerNumberDuplicate", NULL, ImGuiWindowFlags_AlwaysAutoResize))
+		{
+			ImGui::Text("Layer Number is Duplicate!!");
+
+			if (ImGui::Button("OK", ImVec2(120, 0)))ImGui::CloseCurrentPopup();
+			ImGui::EndPopup();
+		}
+
 
 		ImGui::TreePop();
 	}
+
 	// 固有情報を描画
 	this->DrawData();
 }
@@ -185,6 +237,44 @@ void UIObject::PushBackChild(UIObject* obj)
 
 	obj->pParent_ = this;
 	childList_.push_back(obj);
+
+}
+
+void UIObject::SetLayerNumber(int newLayerNumber_)
+{
+	//新しいレイヤー番号が0以下なら1にする
+	if (newLayerNumber_ <= 0)newLayerNumber_ = 1;
+
+	//重複チェック
+	UIObject* root = GetRootJob();//ここはparentでもいいんじゃないかと思う(予想)
+	if (root != nullptr && root->IsLayerNumberDuplicate(newLayerNumber_))
+	{
+		//重複している場合はポップアップを表示
+		ImGui::OpenPopup("LayerNumberDuplicate");
+	}
+	else
+	{
+		//重複していない場合はレイヤー番号を設定
+		layerNumber_ = newLayerNumber_;
+	}
+}
+
+bool UIObject::IsLayerNumberDuplicate(int newLayerNumber_)
+{
+	// 自分自身以外のオブジェクトでレイヤー番号が重複しているかチェック
+	if (this->layerNumber_ == newLayerNumber_ && this != this->GetRootJob())
+	{
+		return true;
+	}
+
+	//子オブジェクトのレイヤー番号と比較
+	for (auto it = childList_.begin(); it != childList_.end(); it++)
+	{
+		if ((*it)->IsLayerNumberDuplicate(newLayerNumber_))return true;
+	}
+
+	//重複していない
+	return false;
 
 }
 

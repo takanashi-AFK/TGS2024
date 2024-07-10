@@ -95,8 +95,20 @@ public:
 	/// <param name="obj"></param>
 	void PushBackChild(UIObject* obj);
 
+	/// <summary>
+	/// 新しいレイヤー番号を設定
+	/// </summary>
+	/// <param name="newLayerNumber_">新しいレイヤー番号</param>
+	void SetLayerNumber(int newLayerNumber_);
 	// Getter
 	int GetLayerNumber() { return layerNumber_; }
+
+	/// <summary>
+	/// レイヤーが重複しているかどうか
+	/// </summary>
+	/// <param name="newLayerNumber_"></param>
+	/// <returns></returns>
+	bool IsLayerNumberDuplicate(int newLayerNumber_);
 
 	//オブジェクトをレイヤー番号で比較するための関数
 	static bool CompareLayerNumber(UIObject* _object1, UIObject* _object2);

@@ -156,6 +156,7 @@
     <ClCompile Include="Game\Objects\Stage\Components\DetectorComponents\Component_FanRangeDetector.cpp" />
     <ClCompile Include="Game\Objects\Stage\Components\BehaviorComponents\Component_HelingoBehavior.cpp" />
     <ClCompile Include="Game\Objects\Stage\Components\DetectorComponents\Component_CircleRangeDetector.cpp" />
+    <ClCompile Include="Game\Objects\Stage\Components\TeleporterComponent\Component_Teleporter.cpp" />
     <ClCompile Include="Game\Objects\Stage\Components\TimerComponent\Component_Timer.cpp" />
     <ClCompile Include="Game\Objects\Stage\Components\MoveComponents\Component_Chase.cpp" />
     <ClCompile Include="Engine\ResourceManager\Transition.cpp" />
@@ -270,6 +271,7 @@
     <ClInclude Include="Engine\GameObject\Transform.h" />
     <ClInclude Include="Game\Objects\Stage\Components\MoveComponents\Component_HelingoFall.h" />
     <ClInclude Include="Game\Objects\Stage\Components\RotationComponents\Component_RotationY.h" />
+    <ClInclude Include="Game\Objects\Stage\Components\TeleporterComponent\Component_Teleporter.h" />
     <ClInclude Include="Game\Objects\Stage\Components\TimerComponent\Component_Timer.h" />
     <ClInclude Include="Game\Objects\Stage\StageObject.h" />
     <ClInclude Include="Game\Objects\UI\UIProgressBar.h" />

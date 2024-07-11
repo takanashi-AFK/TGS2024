@@ -4,7 +4,7 @@
 #include "../DetectorComponents/Component_CircleRangeDetector.h"
 #include "../../Stage.h"
 Component_Teleporter::Component_Teleporter(string _name, StageObject* _holder, Component* _parent) :
-    Component(_holder, _name, Teleporter, _parent)
+    Component(_holder, _name, Teleporter, _parent), teleportState_(TELEPORTING)
 {
 }
 
@@ -25,8 +25,9 @@ void Component_Teleporter::Update()
 
     if (detector->IsContains())
     {
-        // テレポート対象を指定された座標に移動
-        target_->SetPosition(teleportPosition_);
+        TeleportingState();
+        //// テレポート対象を指定された座標に移動
+        //target_->SetPosition(teleportPosition_);
     }
 
 }
@@ -86,7 +87,32 @@ void Component_Teleporter::DrawData()
     }
 }
 
-void Component_Teleporter::Teleport(GameObject* _target)
+void Component_Teleporter::IdleState(Component_CircleRangeDetector* detector)
 {
+    if (detector->IsContains())
+    {
+        // コライダーとPlayerBehaviorを持っているかを確認
+        // 機能を非アクティブにする
+       
+    }
+}
 
+void Component_Teleporter::TeleportingState()
+{
+    scaleValue_ -= 0.01f;
+
+    if (scaleValue_ <= 0.0f)
+    {
+        scaleValue_ = 0.0f;
+        target_->SetPosition(teleportPosition_);
+        //teleportState_ = Effect;
+       
+    }
+    target_->SetScale(XMFLOAT3(scaleValue_, scaleValue_, scaleValue_));
+
+}
+
+void Component_Teleporter::EffectState()
+{
+    // エフェクト処理（必要に応じて追加）
 }

@@ -4,9 +4,18 @@
 #include "../Component.h"
 #include "../../StageObject.h"
 #include <string>
+#include "../DetectorComponents/Component_CircleRangeDetector.h"
 class Component_Teleporter : public Component
 {
 private:
+	enum TELEPORTERSTATE
+	{
+		IDLE,
+		TELEPORTING,
+		EFFECT,
+	};
+	TELEPORTERSTATE teleportState_;
+	float scaleValue_;
 	StageObject* target_;
 	string targetName_;
 	XMFLOAT3 teleportPosition_; // テレポート先の座標
@@ -55,9 +64,7 @@ public:
    /// <param name="_target">衝突対象</param>
 	void Teleport(GameObject* _target);
 
-	/// <summary>
-	/// テレポート先を設定
-	/// </summary>
-	/// <param name="position">テレポート先の座標</param>
-	void SetTeleportPosition(const XMFLOAT3& position);
+	void IdleState(Component_CircleRangeDetector* detector);
+	void TeleportingState();
+	void EffectState();
 };

@@ -3,8 +3,11 @@
 //インクルード
 #include "../Component.h"
 #include "../../StageObject.h"
-#include <string>
 #include "../DetectorComponents/Component_CircleRangeDetector.h"
+#include "../../../../../EffekseeLib/EffekseerVFX.h"
+#include <DirectXMath.h>
+#include <string>
+using namespace DirectX;
 class Component_Teleporter : public Component
 {
 private:
@@ -12,13 +15,18 @@ private:
 	{
 		IDLE,
 		TELEPORTING,
-		EFFECT,
+		TELEPORTSTART,
 	};
 	TELEPORTERSTATE teleportState_;
+
 	float scaleValue_;
+	float lowerLimit_;
 	StageObject* target_;
 	string targetName_;
 	XMFLOAT3 teleportPosition_; // テレポート先の座標
+
+	// effekseer: 変形行列
+	std::shared_ptr<EFFEKSEERLIB::EFKTransform> mt;/*★★★*/
 public:
 	/// <summary>
 	/// コンストラクタ
@@ -58,13 +66,9 @@ public:
 	/// </summary>
 	void DrawData() override;
 
-	/// <summary>
-   /// 衝突処理
-   /// </summary>
-   /// <param name="_target">衝突対象</param>
-	void Teleport(GameObject* _target);
+	void Idle();
+	void Teleporting();
+	void TeleportStart();
 
-	void IdleState(Component_CircleRangeDetector* detector);
-	void TeleportingState();
-	void EffectState();
+
 };

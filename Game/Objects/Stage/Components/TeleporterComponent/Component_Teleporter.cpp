@@ -3,8 +3,13 @@
 #include "../../../../../Engine/Global.h"
 #include "../DetectorComponents/Component_CircleRangeDetector.h"
 #include "../../Stage.h"
+
+namespace {
+    EFFEKSEERLIB::EFKTransform t;/*★★★*/
+}
+
 Component_Teleporter::Component_Teleporter(string _name, StageObject* _holder, Component* _parent) :
-    Component(_holder, _name, Teleporter, _parent), teleportState_(TELEPORTING)
+    Component(_holder, _name, Teleporter, _parent), teleportState_(IDLE), scaleValue_(0.01f), lowerLimit_(0.0f)
 {
 }
 
@@ -12,6 +17,8 @@ void Component_Teleporter::Initialize()
 {
     // 必要なコンポーネントを追加
     if (FindChildComponent("CircleRangeDetector") == false)AddChildComponent(CreateComponent("CircleRangeDetector", CircleRangeDetector, holder_, this));
+    // effekseer: :Effectの読み込み
+    EFFEKSEERLIB::gEfk->AddEffect("sword", "Effects/Salamander12.efk");/*★★★*/
 }
 
 void Component_Teleporter::Update()
@@ -20,15 +27,20 @@ void Component_Teleporter::Update()
     if (target_ == nullptr)target_ = (StageObject*)holder_->FindObject(targetName_);
     if (target_ == nullptr)return;
 
-    auto detector = dynamic_cast<Component_CircleRangeDetector*>(GetChildComponent("CircleRangeDetector"));
-    if (detector == nullptr)return;
-
-    if (detector->IsContains())
+    switch (teleportState_)
     {
-        TeleportingState();
-        //// テレポート対象を指定された座標に移動
-        //target_->SetPosition(teleportPosition_);
+    case IDLE:
+        Idle();
+        break;
+    case TELEPORTING:
+        Teleporting();
+        break;
+    case TELEPORTSTART:
+        TeleportStart();
+        break;
     }
+
+   
 
 }
 
@@ -87,32 +99,56 @@ void Component_Teleporter::DrawData()
     }
 }
 
-void Component_Teleporter::IdleState(Component_CircleRangeDetector* detector)
+void Component_Teleporter::Idle()
 {
+    auto detector = dynamic_cast<Component_CircleRangeDetector*>(GetChildComponent("CircleRangeDetector"));
+    if (detector == nullptr)return;
+
     if (detector->IsContains())
     {
-        // コライダーとPlayerBehaviorを持っているかを確認
-        // 機能を非アクティブにする
-       
+        teleportState_ = TELEPORTING;
     }
 }
 
-void Component_Teleporter::TeleportingState()
+void Component_Teleporter::Teleporting()
 {
-    scaleValue_ -= 0.01f;
+    
+    XMFLOAT3 targetScale_ = target_->GetScale();
+   
+    // スケールを減少させる
+    targetScale_.x -= scaleValue_;
+    targetScale_.y -= scaleValue_;
+    targetScale_.z -= scaleValue_;
 
-    if (scaleValue_ <= 0.0f)
+    // effekseer: :Effectの再生情報の設定
+    target_->SetScale(targetScale_);
+    DirectX::XMStoreFloat4x4(&(t.matrix), holder_->GetWorldMatrix());/*★★★*/
+    t.isLoop = false;/*★★★*/
+    t.maxFrame = 60;/*★★★*/
+    t.speed = 1.0f;/*★★★*/
+
+
+    // effekseer: :Effectの再生
+    mt = EFFEKSEERLIB::gEfk->Play("sword", t);/*★★★*/
+
+    if (target_ = 0)
     {
-        scaleValue_ = 0.0f;
-        target_->SetPosition(teleportPosition_);
-        //teleportState_ = Effect;
-       
+        teleportState_ = TELEPORTSTART;
     }
-    target_->SetScale(XMFLOAT3(scaleValue_, scaleValue_, scaleValue_));
-
 }
 
-void Component_Teleporter::EffectState()
+void Component_Teleporter::TeleportStart()
 {
-    // エフェクト処理（必要に応じて追加）
+    XMFLOAT3 targetScale_ = target_->GetScale();
+
+    // スケールを減少させる
+    targetScale_.x += scaleValue_;
+    targetScale_.y += scaleValue_;
+    targetScale_.z += scaleValue_;
+
+    // effekseer: :Effectの再生情報の設定
+    target_->SetScale(targetScale_);
+    target_->SetPosition(teleportPosition_);
+    teleportState_ = IDLE;
 }
+

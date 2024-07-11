@@ -285,6 +285,7 @@
     <ClCompile Include="Game\Objects\Stage\Components\GaugeComponents\Component_HealthGauge.cpp" />
     <ClCompile Include="Game\Objects\UI\UIProgressBar.cpp" />
     <ClCompile Include="Game\Objects\UI\UIText.cpp" />
+    <ClCompile Include="Game\Objects\Stage\Components\TeleporterComponent\Component_Teleporter.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Collider\BoxCollider.h">
@@ -499,6 +500,7 @@
     <ClInclude Include="Game\Objects\Stage\Components\GaugeComponents\Component_HealthGauge.h" />
     <ClInclude Include="Game\Objects\UI\UIProgressBar.h" />
     <ClInclude Include="Game\Objects\UI\UIText.h" />
+    <ClInclude Include="Game\Objects\Stage\Components\TeleporterComponent\Component_Teleporter.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Assets\Shader\Simple2D.hlsl">

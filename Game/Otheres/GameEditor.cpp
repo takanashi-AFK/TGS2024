@@ -208,16 +208,21 @@ void GameEditor::DrawDatalsCamera()
 		ImGui::DragFloat3("Camera position", &cameraPosition_.x);
 		// カメラの焦点を設定
 		ImGui::DragFloat3("Camera target", &cameraTarget_.x);
-		// カメラの位置を設定
-		Camera::SetPosition(cameraPosition_);
-		// カメラの焦点を設定
-		Camera::SetTarget(cameraTarget_);
 
-		if (ImGui::Button("Default"))
-		{
-			cameraPosition_ = {0,30,-20};
-			cameraTarget_ = {0,-20,20};
+		ImGui::DragFloat3("3D CamMove", &threeDCamMove_.x);
+		// 初期化ボタン
+		if (ImGui::Button("Default")){
+			cameraPosition_ = { 0,30,-20 };
+			cameraTarget_   = { 0,-20,20 };
+			threeDCamMove_  = { 0,0,0 };
 		}
+		
+		
+		// カメラの位置を設定
+		Camera::SetPosition(cameraPosition_ + threeDCamMove_);
+		// カメラの焦点を設定
+		Camera::SetTarget(cameraTarget_ + threeDCamMove_);
+
 		break;
 
 	case TPS:

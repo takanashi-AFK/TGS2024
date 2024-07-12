@@ -5,6 +5,7 @@
 #include "../../StageObject.h"
 #include "../DetectorComponents/Component_CircleRangeDetector.h"
 #include "../../../../../EffekseeLib/EffekseerVFX.h"
+#include "../MoveComponents/Component_WASDInputMove.h"
 #include <DirectXMath.h>
 #include <string>
 using namespace DirectX;
@@ -13,9 +14,9 @@ class Component_Teleporter : public Component
 private:
 	enum TELEPORTERSTATE
 	{
-		IDLE,
-		TELEPORTING,
 		TELEPORTSTART,
+		TELEPORTING,
+		TELEPORTEND,
 	};
 	TELEPORTERSTATE teleportState_;
 
@@ -25,7 +26,7 @@ private:
 	StageObject* target_;
 	string targetName_;
 	XMFLOAT3 teleportPosition_; // テレポート先の座標
-
+	Component_WASDInputMove* move_;
 	// effekseer: 変形行列
 	std::shared_ptr<EFFEKSEERLIB::EFKTransform> mt;/*★★★*/
 public:
@@ -67,9 +68,8 @@ public:
 	/// </summary>
 	void DrawData() override;
 
-	void Idle();
-	void Teleporting();
 	void TeleportStart();
-
+	void Teleporting();
+	void TeleportEnd();
 
 };

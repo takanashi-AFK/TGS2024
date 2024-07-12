@@ -9,7 +9,7 @@ namespace {
 }
 
 Component_Teleporter::Component_Teleporter(string _name, StageObject* _holder, Component* _parent) :
-    Component(_holder, _name, Teleporter, _parent), teleportState_(IDLE), scaleValue_(0.01f), lowerLimit_(0.0f), default_(1.0f)
+    Component(_holder, _name, Teleporter, _parent), teleportState_(TELEPORTSTART), scaleValue_(0.01f), lowerLimit_(0.0f), default_(1.0f)
 {
 }
 
@@ -18,7 +18,7 @@ void Component_Teleporter::Initialize()
     // 必要なコンポーネントを追加
     if (FindChildComponent("CircleRangeDetector") == false)AddChildComponent(CreateComponent("CircleRangeDetector", CircleRangeDetector, holder_, this));
     // effekseer: :Effectの読み込み
-    EFFEKSEERLIB::gEfk->AddEffect("sword", "Effects/Salamander12.efk");/*★★★*/
+    EFFEKSEERLIB::gEfk->AddEffect("Sylph10", "Effects/Sylph10.efk");/*★★★*/
 }
 
 void Component_Teleporter::Update()
@@ -27,21 +27,19 @@ void Component_Teleporter::Update()
     if (target_ == nullptr)target_ = (StageObject*)holder_->FindObject(targetName_);
     if (target_ == nullptr)return;
 
+    
     switch (teleportState_)
     {
-    case IDLE:
-        Idle();
+    case TELEPORTSTART:
+        TeleportStart();
         break;
     case TELEPORTING:
         Teleporting();
         break;
-    case TELEPORTSTART:
-        TeleportStart();
+    case TELEPORTEND:
+        TeleportEnd();
         break;
     }
-
-   
-
 }
 
 void Component_Teleporter::Release()
@@ -99,22 +97,24 @@ void Component_Teleporter::DrawData()
     }
 }
 
-void Component_Teleporter::Idle()
+void Component_Teleporter::TeleportStart()
 {
     auto detector = dynamic_cast<Component_CircleRangeDetector*>(GetChildComponent("CircleRangeDetector"));
     if (detector == nullptr)return;
 
     if (detector->IsContains())
     {
+        //move_->Stop();
         teleportState_ = TELEPORTING;
     }
+    
 }
 
 void Component_Teleporter::Teleporting()
 {   
     XMFLOAT3 targetScale_ = target_->GetScale();
     if (targetScale_.x <= lowerLimit_ )
-        teleportState_ = TELEPORTSTART;    
+        teleportState_ = TELEPORTEND;    
     else {
         // スケールを減少させる
         targetScale_.x -= scaleValue_;
@@ -130,23 +130,25 @@ void Component_Teleporter::Teleporting()
 
 
         // effekseer: :Effectの再生
-        mt = EFFEKSEERLIB::gEfk->Play("sword", t);/*★★★*/
+        mt = EFFEKSEERLIB::gEfk->Play("Sylph10", t);/*★★★*/
     }
     target_->SetScale(targetScale_);
     
 }
 
-void Component_Teleporter::TeleportStart()
+void Component_Teleporter::TeleportEnd()
 {
     target_->SetPosition(teleportPosition_);
     XMFLOAT3 targetScale_ = target_->GetScale();
     if (targetScale_.x >= default_)
-        teleportState_ = IDLE;
+        teleportState_ = TELEPORTSTART;
+    
     else {
         targetScale_.x += scaleValue_;
         targetScale_.y += scaleValue_;
         targetScale_.z += scaleValue_;
     }
     target_->SetScale(targetScale_);
+
 }
 

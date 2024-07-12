@@ -21,6 +21,7 @@ private:
 
 	float scaleValue_;
 	float lowerLimit_;
+	float default_;
 	StageObject* target_;
 	string targetName_;
 	XMFLOAT3 teleportPosition_; // テレポート先の座標

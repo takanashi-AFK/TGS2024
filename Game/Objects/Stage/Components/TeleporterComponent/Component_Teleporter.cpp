@@ -9,7 +9,7 @@ namespace {
 }
 
 Component_Teleporter::Component_Teleporter(string _name, StageObject* _holder, Component* _parent) :
-    Component(_holder, _name, Teleporter, _parent), teleportState_(IDLE), scaleValue_(0.01f), lowerLimit_(0.0f)
+    Component(_holder, _name, Teleporter, _parent), teleportState_(IDLE), scaleValue_(0.01f), lowerLimit_(0.0f), default_(1.0f)
 {
 }
 
@@ -111,44 +111,42 @@ void Component_Teleporter::Idle()
 }
 
 void Component_Teleporter::Teleporting()
-{
-    
+{   
     XMFLOAT3 targetScale_ = target_->GetScale();
-   
-    // スケールを減少させる
-    targetScale_.x -= scaleValue_;
-    targetScale_.y -= scaleValue_;
-    targetScale_.z -= scaleValue_;
+    if (targetScale_.x <= lowerLimit_ )
+        teleportState_ = TELEPORTSTART;    
+    else {
+        // スケールを減少させる
+        targetScale_.x -= scaleValue_;
+        targetScale_.y -= scaleValue_;
+        targetScale_.z -= scaleValue_;
 
-    // effekseer: :Effectの再生情報の設定
-    target_->SetScale(targetScale_);
-    DirectX::XMStoreFloat4x4(&(t.matrix), holder_->GetWorldMatrix());/*★★★*/
-    t.isLoop = false;/*★★★*/
-    t.maxFrame = 60;/*★★★*/
-    t.speed = 1.0f;/*★★★*/
+        // effekseer: :Effectの再生情報の設定
+
+        DirectX::XMStoreFloat4x4(&(t.matrix), holder_->GetWorldMatrix());/*★★★*/
+        t.isLoop = false;/*★★★*/
+        t.maxFrame = 60;/*★★★*/
+        t.speed = 1.0f;/*★★★*/
 
 
-    // effekseer: :Effectの再生
-    mt = EFFEKSEERLIB::gEfk->Play("sword", t);/*★★★*/
-
-    if (target_ = 0)
-    {
-        teleportState_ = TELEPORTSTART;
+        // effekseer: :Effectの再生
+        mt = EFFEKSEERLIB::gEfk->Play("sword", t);/*★★★*/
     }
+    target_->SetScale(targetScale_);
+    
 }
 
 void Component_Teleporter::TeleportStart()
 {
-    XMFLOAT3 targetScale_ = target_->GetScale();
-
-    // スケールを減少させる
-    targetScale_.x += scaleValue_;
-    targetScale_.y += scaleValue_;
-    targetScale_.z += scaleValue_;
-
-    // effekseer: :Effectの再生情報の設定
-    target_->SetScale(targetScale_);
     target_->SetPosition(teleportPosition_);
-    teleportState_ = IDLE;
+    XMFLOAT3 targetScale_ = target_->GetScale();
+    if (targetScale_.x >= default_)
+        teleportState_ = IDLE;
+    else {
+        targetScale_.x += scaleValue_;
+        targetScale_.y += scaleValue_;
+        targetScale_.z += scaleValue_;
+    }
+    target_->SetScale(targetScale_);
 }
 

@@ -230,7 +230,7 @@ void StageObject::Release()
 	myComponents_.clear();
 }
 
-void StageObject::OnCollision(GameObject* _target)
+void StageObject::OnCollision(GameObject* _target, Collider*  _collider)
 {
 	// 保有するコンポーネントの衝突処理
 	for (auto comp : myComponents_)comp->ChildOnCollision(_target);

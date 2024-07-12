@@ -16,8 +16,9 @@ void Component_MeleeAttack::Initialize()
 	// コンポーネントを追加
 	if (FindChildComponent("Timer") == false) AddChildComponent(CreateComponent("Timer", Timer, holder_, this));
 
+	collider_ = new BoxCollider(XMFLOAT3(0, 0, 0), XMFLOAT3(1, 1, 1));
 	//コライダーの追加
-	holder_->AddCollider(new BoxCollider(XMFLOAT3(0, 0, 0), XMFLOAT3(1, 1, 1)));
+	holder_->AddCollider(collider_);
 }
 
 void Component_MeleeAttack::Update()
@@ -101,7 +102,7 @@ void Component_MeleeAttack::DrawData()
 
 }
 
-void Component_MeleeAttack::OnCollision(GameObject* _target)
+void Component_MeleeAttack::OnCollision(GameObject* _target,Collider*  _collider)
 {
 	// 有効でない場合は処理を行わない
 	if (!isActive_ || isHit_) return;

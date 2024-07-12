@@ -62,7 +62,7 @@ void Bullet::Draw()
 	//Model::Draw(modelHandle_);
 }
 
-void Bullet::OnCollision(GameObject* _target)
+void Bullet::OnCollision(GameObject* _target, Collider*  _collider)
 {
 	if (isActive_ == false)return;
 

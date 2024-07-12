@@ -8,7 +8,7 @@ private:
 	XMVECTOR direction_;	// 攻撃方向
 	XMFLOAT3 colliderSize_; // コライダーの大きさ
 	bool isHit_;			// ヒットしたかどうか
-
+	BoxCollider* collider_;
 public:
 	/// <summary>
 	/// コンストラクタ
@@ -42,7 +42,7 @@ public:
 	/// 衝突判定
 	/// </summary>
 	/// <param name="_target"></param>
-	void OnCollision(GameObject* _target) override;
+	void OnCollision(GameObject* _target, Collider* _collider) ;
 	
 	/// <summary>
 	/// 攻撃方向の設定

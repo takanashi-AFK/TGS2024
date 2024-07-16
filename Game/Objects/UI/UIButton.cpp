@@ -174,14 +174,13 @@ bool UIButton::IsMouseOver(XMFLOAT2 _mousePosition)
 	//    // 判定範囲内にマウスカーソルが入っているかどうかを返す
 	//    return (_mousePosition.x >= left && _mousePosition.x <= right && _mousePosition.y >= top && _mousePosition.y <= bottom);
 
-		//行列取得
+	//行列取得
 	XMMATRIX buttonMat = transform_.GetWorldMatrix();
 
 	//逆行列計算
 	XMMATRIX buttonMattrix = XMMatrixInverse(nullptr, buttonMat);
 
-
-
+	XMVECTOR mouseVecPos = XMVectorSet(_mousePosition.x, _mousePosition.y, 0, 0);
 }
 
 void UIButton::ConvertToImageCoordinates(XMFLOAT2& _position)

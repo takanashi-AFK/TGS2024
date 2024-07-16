@@ -3,11 +3,7 @@
 #include <vector>
 #include "UIObject.h"
 
-class UIButton;
-class UIImage;
-class UIPanel;
 
-extern UIPanel* pUIPanel_;
 using std::vector;
 
 
@@ -15,11 +11,17 @@ class UIPanel : public UIObject
 {
 private:
 
-	UIButton* pUIButton_;
-	UIImage* pUIImage_;
+	//シングルトンインスタンス
+	static UIPanel* instance_;
+
+	//コンストラクタ
+	UIPanel();
 
 public:
-	UIPanel();
+
+	//シングルトンインスタンスの取得
+	static UIPanel* GetInstance();
+	
 	void Initialize() override;
 	void Update() override;
 	void Draw() override;
@@ -36,6 +38,13 @@ public:
 	//レイヤー番号順にソート
 	void SortUIObject();
 	vector<UIObject*> GetUIObjects() { return childList_; };
+
+	// セッターを追加
+	void SetName(const std::string& name){ objectName_ = name; }
+	void SetParent(UIObject* parent) { pParent_ = parent; }
+	void SetLayerNum(int layerNum) { layerNumber_ = layerNum; }
+
+
 
 };
 

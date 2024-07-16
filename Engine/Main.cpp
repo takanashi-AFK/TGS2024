@@ -99,7 +99,10 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	RootObject* pRootObject = new RootObject;
 	pRootObject->Initialize();
 
+	//UIPanelのインスタンス取得と初期化
+	UIPanel* pUIPanel_ = UIPanel::GetInstance();
 	pUIPanel_->Initialize();
+
 
 
 

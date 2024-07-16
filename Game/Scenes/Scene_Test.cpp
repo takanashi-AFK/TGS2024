@@ -43,9 +43,12 @@ if (JsonReader::Load("Datas/CameraLayouts/camera.json", camData)) {
 	GameEditor* gameEditor = Instantiate<GameEditor>(this);
 
 
+
 	gameEditor->SetEditStage(pStage);
 
 
+	// UIƒpƒlƒ‹‚Ì¶¬
+	UIPanel* pUIPanel_ = UIPanel::GetInstance();
 	gameEditor->SetEditUIPanel(pUIPanel_);
 
 

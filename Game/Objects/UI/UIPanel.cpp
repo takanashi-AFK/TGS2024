@@ -1,13 +1,21 @@
 #include "UIPanel.h"
-#include "UIButton.h"
-#include "UIImage.h"
 #include "../../Otheres/GameEditor.h"
 
-UIPanel* pUIPanel_ = new UIPanel;
+UIPanel* UIPanel::instance_ = nullptr;
 
 UIPanel::UIPanel()
-	: UIObject(),pUIButton_(nullptr),pUIImage_(nullptr)
+	: UIObject()
 {
+}
+
+UIPanel* UIPanel::GetInstance()
+{
+	if (instance_ == nullptr)
+	{
+		instance_ = new UIPanel();
+	}
+		
+	return instance_;
 }
 
 void UIPanel::Initialize()

@@ -292,9 +292,8 @@ UIObject* CreateUIObject(string _name, UIType _type,UIObject* _parent, int _laye
 		case UI_BUTTON:obj = new UIButton(_name, _parent,_layerNum); break;
 		case UI_IMAGE:obj = new UIImage(_name, _parent,_layerNum); break;
 		case UI_TEXT:break;
-		case UI_PANEL:obj = new UIPanel(); break;
+		case UI_PANEL:obj = UIPanel::GetInstance(); break;
         default:obj = nullptr; break;
-		//default:obj = new UIObject(_name, _type, _parent, _layerNum); break;
 	}
 	// インスタンスが生成できなかった場合はnullptrを返す
 	if (obj == nullptr)return nullptr;

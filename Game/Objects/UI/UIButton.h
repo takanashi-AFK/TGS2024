@@ -6,7 +6,7 @@ class UIButton : public UIObject
 	string imageFilePath_;
 	int imageHandle_;
 public:
-	UIButton(string _name, GameObject* parent);
+	UIButton(string _name, UIObject* parent, int _layerNum);
 	void Initialize() override;
 	void Update() override;
 	void Draw() override;

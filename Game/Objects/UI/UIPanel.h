@@ -17,7 +17,14 @@ private:
 	//コンストラクタ
 	UIPanel();
 
+	// コピーコンストラクタの削除
+	UIPanel(const UIPanel&) = delete;
+	// 代入演算子の削除
+	UIPanel& operator=(const UIPanel&) = delete;
+
 public:
+
+	
 
 	//シングルトンインスタンスの取得
 	static UIPanel* GetInstance();

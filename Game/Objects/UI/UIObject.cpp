@@ -345,3 +345,4 @@ bool UIObject::IsDead()
 {
 	return (state_.dead != 0);
 }
+

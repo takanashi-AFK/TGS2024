@@ -10,16 +10,15 @@ using std::vector;
 class UIPanel : public UIObject
 {
 private:
-
-	//ƒVƒ“ƒOƒ‹ƒgƒ“ƒCƒ“ƒXƒ^ƒ“ƒX
+	//ï¿½Vï¿½ï¿½ï¿½Oï¿½ï¿½ï¿½gï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½Xï¿½^ï¿½ï¿½ï¿½X
 	static UIPanel* instance_;
 
-	//ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+	//ï¿½Rï¿½ï¿½ï¿½Xï¿½gï¿½ï¿½ï¿½Nï¿½^
 	UIPanel();
 
 public:
 
-	//ƒVƒ“ƒOƒ‹ƒgƒ“ƒCƒ“ƒXƒ^ƒ“ƒX‚Ìæ“¾
+	//ï¿½Vï¿½ï¿½ï¿½Oï¿½ï¿½ï¿½gï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½Xï¿½^ï¿½ï¿½ï¿½Xï¿½Ìæ“¾
 	static UIPanel* GetInstance();
 	
 	void Initialize() override;
@@ -34,7 +33,7 @@ public:
 	void DeleteUIObject(UIObject* _object);
 	void DeleteAllUIObject();
 
-	//ƒŒƒCƒ„[”Ô†‡‚Éƒ\[ƒg
+	//ï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½[ï¿½Ôï¿½ï¿½ï¿½ï¿½Éƒ\ï¿½[ï¿½g
 	void SortUIObject();
 	vector<UIObject*> GetUIObjects() { return childList_; };
 };

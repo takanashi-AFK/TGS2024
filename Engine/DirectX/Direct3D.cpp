@@ -425,7 +425,39 @@ namespace Direct3D
 			rdc.FrontCounterClockwise = FALSE;	//反時計回りは表面じゃない
 			pDevice_->CreateRasterizerState(&rdc, &shaderBundle[SHADER_SKY].pRasterizerState);
 		}
+		//BAR
+		{
+			// 頂点シェーダの作成（コンパイル）
+			ID3DBlob* pCompileVS = NULL;
+			D3DCompileFromFile(L"Shader/Progress.hlsl", nullptr, nullptr, "VS", "vs_5_0", NULL, 0, &pCompileVS, NULL);
+			pDevice_->CreateVertexShader(pCompileVS->GetBufferPointer(), pCompileVS->GetBufferSize(), NULL, &shaderBundle[SHADER_BAR].pVertexShader);
 
+
+			// ピクセルシェーダの作成（コンパイル）
+			ID3DBlob* pCompilePS = NULL;
+			D3DCompileFromFile(L"Shader/Progress.hlsl", nullptr, nullptr, "PS", "ps_5_0", NULL, 0, &pCompilePS, NULL);
+			pDevice_->CreatePixelShader(pCompilePS->GetBufferPointer(), pCompilePS->GetBufferSize(), NULL, &shaderBundle[SHADER_BAR].pPixelShader);
+
+
+			// 頂点レイアウトの作成（1頂点の情報が何のデータをどんな順番で持っているか）
+			D3D11_INPUT_ELEMENT_DESC layout[] = {
+				{ "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, vectorSize * 0, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+				{ "TEXCOORD", 0, DXGI_FORMAT_R32G32_FLOAT,    0, vectorSize * 1, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+			};
+			pDevice_->CreateInputLayout(layout, 2, pCompileVS->GetBufferPointer(), pCompileVS->GetBufferSize(), &shaderBundle[SHADER_BAR].pVertexLayout);
+
+
+			//シェーダーが無事作成できたので、コンパイルしたやつはいらない
+			pCompileVS->Release();
+			pCompilePS->Release();
+
+			//ラスタライザ作成
+			D3D11_RASTERIZER_DESC rdc = {};
+			rdc.CullMode = D3D11_CULL_BACK;
+			rdc.FillMode = D3D11_FILL_SOLID;
+			rdc.FrontCounterClockwise = TRUE;
+			pDevice_->CreateRasterizerState(&rdc, &shaderBundle[SHADER_BAR].pRasterizerState);
+		}
 	}
 
 
@@ -513,7 +545,7 @@ namespace Direct3D
 
 	//三角形と線分の衝突判定（衝突判定に使用）
 	//https://pheema.hatenablog.jp/entry/ray-triangle-intersection
-	bool Intersect(XMFLOAT3 & start, XMFLOAT3 & direction, XMFLOAT3 & v0, XMFLOAT3 & v1, XMFLOAT3 & v2, float* distance)
+	bool Intersect(XMFLOAT3& start, XMFLOAT3& direction, XMFLOAT3& v0, XMFLOAT3& v1, XMFLOAT3& v2, float* distance, XMVECTOR* pos)
 	{
 		// 微小な定数([M?ller97] での値)
 		constexpr float kEpsilon = 1e-6f;
@@ -528,7 +560,7 @@ namespace Direct3D
 		// 三角形に対して、レイが平行に入射するような場合 det = 0 となる。
 		// det が小さすぎると 1/det が大きくなりすぎて数値的に不安定になるので
 		// det ? 0 の場合は交差しないこととする。
-		if (-kEpsilon < det && det < kEpsilon) 
+		if (-kEpsilon < det && det < kEpsilon)
 		{
 			return false;
 		}
@@ -548,19 +580,21 @@ namespace Direct3D
 		// v が 0 <= v <= 1 かつ u + v <= 1 を満たすことを調べる。
 		// すなわち、v が 0 <= v <= 1 - u をみたしているかを調べればOK。
 		float v = XMVector3Dot(XMLoadFloat3(&direction), beta).m128_f32[0] * invDet;
-		if (v < 0.0f || u + v > 1.0f) 
+		if (v < 0.0f || u + v > 1.0f)
 		{
 			return false;
 		}
 
 		// t が 0 <= t を満たすことを調べる。
 		float t = XMVector3Dot(edge2, beta).m128_f32[0] * invDet;
-		if (t < 0.0f) 
+		if (t < 0.0f)
 		{
 			return false;
 		}
 
 		*distance = t;
+		*pos = XMLoadFloat3(&v0) + (edge1 * u) + (edge2 * v);
+
 		return true;
 	}
 

@@ -35,7 +35,7 @@ namespace Direct3D
 
 
 	//■シェーダー関連で必要なセット
-	enum SHADER_TYPE{SHADER_3D, SHADER_2D, SHADER_UNLIT, SHADER_BILLBOARD,SHADER_SKY, SHADER_MAX};	//3タイプ（3D用、2D用、当たり判定枠表示用）
+	enum SHADER_TYPE{SHADER_3D, SHADER_2D, SHADER_UNLIT, SHADER_BILLBOARD,SHADER_SKY,SHADER_BAR, SHADER_MAX};	//3タイプ（3D用、2D用、当たり判定枠表示用）
 	struct SHADER_BUNDLE
 	{
 		//【頂点入力レイアウト情報】
@@ -105,7 +105,7 @@ namespace Direct3D
 	//引数：v0,v1,v2	三角形の各頂点位置
 	//引数：distance	衝突点までの距離を返す
 	//戻値：衝突したかどうか
-	bool Intersect(XMFLOAT3& start, XMFLOAT3& direction, XMFLOAT3 &v0, XMFLOAT3& v1, XMFLOAT3& v2, float* distance);
+	bool Intersect(XMFLOAT3& start, XMFLOAT3& direction, XMFLOAT3 &v0, XMFLOAT3& v1, XMFLOAT3& v2, float* distance,XMVECTOR* pos);
 
 	//Zバッファへの書き込みON/OFF
 	//引数：isWrite	  true=書き込みON／false=書き込みOFF

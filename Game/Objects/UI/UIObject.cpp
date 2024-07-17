@@ -1,8 +1,13 @@
-#include "UIButton.h"
+#include "UIObject.h"
+
 #include "../../../Engine/Global.h"
 #include "../../../Engine/ImGui/imgui.h"
-#include "UIImage.h"
+
 #include "UIPanel.h"
+#include "UIButton.h"
+#include "UIImage.h"
+#include "UIText.h"
+#include "UIProgressBar.h"
 
 UIObject::UIObject():
 	UIObject("",UI_NONE,nullptr,0)
@@ -33,61 +38,61 @@ UIObject::~UIObject()
 
 void UIObject::ChildSave(json& _saveObj)
 {
-	// ƒ^ƒCƒv‚ğ•Û‘¶
+	// ã‚¿ã‚¤ãƒ—ã‚’ä¿å­˜
 	_saveObj["type_"] = type_;
 	
-	// ƒIƒuƒWƒFƒNƒg–¼‚ğ•Û‘¶
+	// ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆåã‚’ä¿å­˜
 	_saveObj["objectName_"] = objectName_;
 
-	// ƒŒƒCƒ„[”Ô†‚ğ•Û‘¶
+	// ãƒ¬ã‚¤ãƒ¤ãƒ¼ç•ªå·ã‚’ä¿å­˜
 	_saveObj["layerNumber_"] = layerNumber_;
 
-	// ©g‚Ì•ÏŒ`s—ñî•ñ‚ğ•Û‘¶
+	// è‡ªèº«ã®å¤‰å½¢è¡Œåˆ—æƒ…å ±ã‚’ä¿å­˜
 	_saveObj["position_"] = { REFERENCE_XMFLOAT3(transform_.position_) };
 	_saveObj["rotate_"] = { REFERENCE_XMFLOAT3(transform_.rotate_) };
 	_saveObj["scale_"] = { REFERENCE_XMFLOAT3(transform_.scale_) };
 
-	// ©g‚ÌŒÅ—Lî•ñ‚ğ•Û‘¶
+	// è‡ªèº«ã®å›ºæœ‰æƒ…å ±ã‚’ä¿å­˜
 	this->Save(_saveObj);
 }
 
 void UIObject::ChildLoad(json& _loadObj)
 {
-	// ƒ^ƒCƒv‚ğ“Ç
+	// ã‚¿ã‚¤ãƒ—ã‚’èª­è¾¼
 	if(_loadObj.contains("type_"))type_ = (UIType)_loadObj["type_"].get<int>();
 
-	// ƒIƒuƒWƒFƒNƒg–¼‚ğ“Ç
+	// ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆåã‚’èª­è¾¼
 	if (_loadObj.contains("objectName_"))objectName_ = _loadObj["objectName_"];
 
-	// ƒŒƒCƒ„[”Ô†‚ğ“Ç
+	// ãƒ¬ã‚¤ãƒ¤ãƒ¼ç•ªå·ã‚’èª­è¾¼
 	if (_loadObj.contains("layerNumber_"))layerNumber_ = _loadObj["layerNumber_"].get<int>();
 
-	// •ÏŒ`s—ñî•ñ‚ğ“Ç
+	// å¤‰å½¢è¡Œåˆ—æƒ…å ±ã‚’èª­è¾¼
 	if (_loadObj.contains("position_"))transform_.position_ = { _loadObj["position_"][0].get<float>(),_loadObj["position_"][1].get<float>(), _loadObj["position_"][2].get<float>() };
 	if (_loadObj.contains("rotate_"))transform_.rotate_ = { _loadObj["rotate_"][0].get<float>(),_loadObj["rotate_"][1].get<float>(), _loadObj["rotate_"][2].get<float>() };
 	if (_loadObj.contains("scale_"))transform_.scale_ = { _loadObj["scale_"][0].get<float>(),_loadObj["scale_"][1].get<float>(), _loadObj["scale_"][2].get<float>() };
 
-	// ŒÅ—Lî•ñ‚ğ“Ç
+	// å›ºæœ‰æƒ…å ±ã‚’èª­è¾¼
 	this->Load(_loadObj);
 }
 
 void UIObject::ChildDrawData()
 {
-	// 
-	// ƒIƒuƒWƒFƒNƒg–¼‚ğ•\¦
-	// 
+	// ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼
+	// ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆåã‚’è¡¨ç¤º
+	// ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼
 	ImGui::Text(this->objectName_.c_str());
 	ImGui::SameLine();
 
-	// 
-	// ƒIƒuƒWƒFƒNƒg‚Ìíœƒ{ƒ^ƒ“
-	// 
+	// ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼
+	// ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®å‰Šé™¤ãƒœã‚¿ãƒ³
+	// ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼
 	if (ImGui::SmallButton("delete"))((UIPanel*)GetParent())->DeleteUIObject(this);
 	ImGui::Separator();
 
-	// 
-	// ƒIƒuƒWƒFƒNƒg‚Ì–¼‘O‚ğ•ÏX
-	// 
+	// ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼
+	// ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®åå‰ã‚’å¤‰æ›´
+	// ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼
 	if (ImGui::TreeNode("name")) {
 		ImGui::Text("Current name : %s", this->objectName_.c_str());
 		char buffer[256] = "";
@@ -96,27 +101,27 @@ void UIObject::ChildDrawData()
 		ImGui::TreePop();
 	}
 
-	// 
-	// ©g‚Ì•ÏŒ`î•ñ‚ğ•`‰æ
-	// 
+	// ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼
+	// è‡ªèº«ã®å¤‰å½¢æƒ…å ±ã‚’æç”»
+	// ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼
 	if (ImGui::TreeNode("transform_")) {
-		ImGui::DragFloat3("position_", &transform_.position_.x, 0.1f);
-		ImGui::DragFloat3("rotate_", &transform_.rotate_.x, 1.f, -360.f, 360.f);
-		ImGui::DragFloat3("scale_", &transform_.scale_.x, 0.1f, 0.f, LONG_MAX);
+		if(isPositionLocked_ == false)ImGui::DragFloat3("position_", &transform_.position_.x, 0.1f);
+		if(isRotateLocked_ == false)ImGui::DragFloat3("rotate_", &transform_.rotate_.x, 1.f, -360.f, 360.f);
+		if(isScaleLocked_ == false)ImGui::DragFloat3("scale_", &transform_.scale_.x, 0.1f, 0.f, LONG_MAX);
 		ImGui::TreePop();
 	}
 
-	// 
-	// ƒŒƒCƒ„[”Ô†‚ğ•`‰æ
-	// 
+	// ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼
+	// ãƒ¬ã‚¤ãƒ¤ãƒ¼ç•ªå·ã‚’æç”»
+	// ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼
 	if (ImGui::TreeNode("LayerNumber"))
 	{ 
 		layerNumber_ = GetLayerNumber();
 		ImGui::Text("Image Layer Number: %d", layerNumber_);
 
-		//‚±‚Á‚¿‚Ì•û‚ªƒGƒfƒBƒ^[ã‚Ì“®‚«‚Í•ª‚©‚è‚â‚·‚¢‚©‚à
-		//layerNumber‚ğ•ÏX‚·‚é
-		// ƒŒƒCƒ„[”Ô†‚Ì•ÏX‚ğó‚¯•t‚¯‚é
+		//ã“ã£ã¡ã®æ–¹ãŒã‚¨ãƒ‡ã‚£ã‚¿ãƒ¼ä¸Šã®å‹•ãã¯åˆ†ã‹ã‚Šã‚„ã™ã„ã‹ã‚‚
+		//layerNumberã‚’å¤‰æ›´ã™ã‚‹
+		// ãƒ¬ã‚¤ãƒ¤ãƒ¼ç•ªå·ã®å¤‰æ›´ã‚’å—ã‘ä»˜ã‘ã‚‹
 		 static int newLayerNumber = layerNumber_;
 
 		if(newLayerNumber < 0)newLayerNumber = 1;
@@ -133,7 +138,7 @@ void UIObject::ChildDrawData()
 		}
 
 
-		//ƒŒƒCƒ„[”Ô†‚ªd•¡‚µ‚Ä‚¢‚éê‡‚Íƒ|ƒbƒvƒAƒbƒv‚ğ•\¦
+		//ãƒ¬ã‚¤ãƒ¤ãƒ¼ç•ªå·ãŒé‡è¤‡ã—ã¦ã„ã‚‹å ´åˆã¯ãƒãƒƒãƒ—ã‚¢ãƒƒãƒ—ã‚’è¡¨ç¤º
 		if (ImGui::BeginPopupModal("LayerNumberDuplicate", NULL, ImGuiWindowFlags_AlwaysAutoResize))
 		{
 			ImGui::Text("Layer Number is Duplicate!!");
@@ -146,7 +151,7 @@ void UIObject::ChildDrawData()
 		ImGui::TreePop();
 	}
 
-	// ŒÅ—Lî•ñ‚ğ•`‰æ
+	// å›ºæœ‰æƒ…å ±ã‚’æç”»
 	this->DrawData();
 }
 
@@ -157,32 +162,32 @@ void UIObject::KillMe()
 
 UIObject* UIObject::FindChildObject(const std::string& name)
 {
-	//q‹Ÿ‚ª‚¢‚È‚¢‚È‚çI‚í‚è
+	//å­ä¾›ãŒã„ãªã„ãªã‚‰çµ‚ã‚ã‚Š
 	if (childList_.empty())
 		return nullptr;
 
-	//ƒCƒeƒŒ[ƒ^
-	auto it = childList_.begin();	//æ“ª
-	auto end = childList_.end();	//––”ö
+	//ã‚¤ãƒ†ãƒ¬ãƒ¼ã‚¿
+	auto it = childList_.begin();	//å…ˆé ­
+	auto end = childList_.end();	//æœ«å°¾
 
-	//qƒIƒuƒWƒFƒNƒg‚ğ1ŒÂ‚¸‚Â’T‚·
+	//å­ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’1å€‹ãšã¤æ¢ã™
 	while (it != end)
 	{
-		//“¯‚¶–¼‘O‚ÌƒIƒuƒWƒFƒNƒg‚ğŒ©‚Â‚¯‚½‚ç‚»‚ê‚ğ•Ô‚·
+		//åŒã˜åå‰ã®ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’è¦‹ã¤ã‘ãŸã‚‰ãã‚Œã‚’è¿”ã™
 		if((*it)->GetObjectName() == name)
 			return *it;
 
-		//‚»‚Ìq‹Ÿi‘·jˆÈ~‚É‚¢‚È‚¢‚©’T‚·
+		//ãã®å­ä¾›ï¼ˆå­«ï¼‰ä»¥é™ã«ã„ãªã„ã‹æ¢ã™
 		UIObject* obj = (*it)->FindChildObject(name);
 		if (obj != nullptr) {
 			return obj;
 		}
 
-		//Ÿ‚Ìq‚Ö
+		//æ¬¡ã®å­ã¸
 		it++;
 	}
 
-	//Œ©‚Â‚©‚ç‚È‚©‚Á‚½
+	//è¦‹ã¤ã‹ã‚‰ãªã‹ã£ãŸ
 	return nullptr;
 }
 
@@ -216,41 +221,41 @@ void UIObject::PushBackChild(UIObject* obj)
 
 void UIObject::SetLayerNumber(int newLayerNumber_)
 {
-	////V‚µ‚¢ƒŒƒCƒ„[”Ô†‚ª0ˆÈ‰º‚È‚ç1‚É‚·‚é
+	////æ–°ã—ã„ãƒ¬ã‚¤ãƒ¤ãƒ¼ç•ªå·ãŒ0ä»¥ä¸‹ãªã‚‰1ã«ã™ã‚‹
 	//if (newLayerNumber_ <= 0) {
 	//	ImGui::OpenPopup("LayerNumberisUnder_0");
 	//	return;
 	//}
 
-	//d•¡ƒ`ƒFƒbƒN
-	UIObject* root = GetRootJob();//‚±‚±‚Íparent‚Å‚à‚¢‚¢‚ñ‚¶‚á‚È‚¢‚©‚Æv‚¤(—\‘z)
+	//é‡è¤‡ãƒã‚§ãƒƒã‚¯
+	UIObject* root = GetRootJob();//ã“ã“ã¯parentã§ã‚‚ã„ã„ã‚“ã˜ã‚ƒãªã„ã‹ã¨æ€ã†(äºˆæƒ³)
 	if (root != nullptr && root->IsLayerNumberDuplicate(newLayerNumber_))
 	{
-		//d•¡‚µ‚Ä‚¢‚éê‡‚Íƒ|ƒbƒvƒAƒbƒv‚ğ•\¦
+		//é‡è¤‡ã—ã¦ã„ã‚‹å ´åˆã¯ãƒãƒƒãƒ—ã‚¢ãƒƒãƒ—ã‚’è¡¨ç¤º
 		ImGui::OpenPopup("LayerNumberDuplicate");
 	}
 	else
 	{
-		//d•¡‚µ‚Ä‚¢‚È‚¢ê‡‚ÍƒŒƒCƒ„[”Ô†‚ğİ’è
+		//é‡è¤‡ã—ã¦ã„ãªã„å ´åˆã¯ãƒ¬ã‚¤ãƒ¤ãƒ¼ç•ªå·ã‚’è¨­å®š
 		layerNumber_ = newLayerNumber_;
 	}
 }
 
 bool UIObject::IsLayerNumberDuplicate(int newLayerNumber_)
 {
-	// ©•ª©gˆÈŠO‚ÌƒIƒuƒWƒFƒNƒg‚ÅƒŒƒCƒ„[”Ô†‚ªd•¡‚µ‚Ä‚¢‚é‚©ƒ`ƒFƒbƒN
+	// è‡ªåˆ†è‡ªèº«ä»¥å¤–ã®ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã§ãƒ¬ã‚¤ãƒ¤ãƒ¼ç•ªå·ãŒé‡è¤‡ã—ã¦ã„ã‚‹ã‹ãƒã‚§ãƒƒã‚¯
 	if (this->layerNumber_ == newLayerNumber_ && this != this->GetRootJob())
 	{
 		return true;
 	}
 
-	//qƒIƒuƒWƒFƒNƒg‚ÌƒŒƒCƒ„[”Ô†‚Æ”äŠr
+	//å­ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®ãƒ¬ã‚¤ãƒ¤ãƒ¼ç•ªå·ã¨æ¯”è¼ƒ
 	for (auto it = childList_.begin(); it != childList_.end(); it++)
 	{
 		if ((*it)->IsLayerNumberDuplicate(newLayerNumber_))return true;
 	}
 
-	//d•¡‚µ‚Ä‚¢‚È‚¢
+	//é‡è¤‡ã—ã¦ã„ãªã„
 	return false;
 
 }
@@ -262,26 +267,28 @@ bool UIObject::CompareLayerNumber(UIObject* _object1, UIObject* _object2)
 
 UIObject* CreateUIObject(string _name, UIType _type,UIObject* _parent, int _layerNum)
 {
-	// ƒCƒ“ƒXƒ^ƒ“ƒX‚ğ¶¬‚·‚é
+	// ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã‚’ç”Ÿæˆã™ã‚‹
 	UIObject* obj = nullptr;
 	switch (_type)
 	{
+
 		case UI_BUTTON:obj = new UIButton(_name, _parent,_layerNum); break;
 		case UI_IMAGE:obj = new UIImage(_name, _parent,_layerNum); break;
 		case UI_TEXT:break;
 		case UI_PANEL:obj = UIPanel::GetInstance(); break;
         default:obj = nullptr; break;
+
 	}
-	// ƒCƒ“ƒXƒ^ƒ“ƒX‚ª¶¬‚Å‚«‚È‚©‚Á‚½ê‡‚Ínullptr‚ğ•Ô‚·
+	// ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ãŒç”Ÿæˆã§ããªã‹ã£ãŸå ´åˆã¯nullptrã‚’è¿”ã™
 	if (obj == nullptr)return nullptr;
 
-	// eƒIƒuƒWƒFƒNƒg‚ÌqƒIƒuƒWƒFƒNƒg‚Æ‚µ‚Ä“o˜^‚·‚é
+	// è¦ªã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®å­ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã¨ã—ã¦ç™»éŒ²ã™ã‚‹
 	if (_parent != nullptr)_parent->PushBackChild(obj);
 	
-	// ‰Šú‰»‚ğs‚¤
+	// åˆæœŸåŒ–ã‚’è¡Œã†
 	obj->Initialize();
 
-	// ¶¬‚µ‚½ƒIƒuƒWƒFƒNƒg‚ğ•Ô‚·
+	// ç”Ÿæˆã—ãŸã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’è¿”ã™
 	return obj;
 }
 
@@ -292,7 +299,9 @@ string GetUITypeString(UIType _type)
 	case UI_BUTTON:return "BUTTON";
 	case UI_IMAGE:return "IMAGE";
 	case UI_TEXT:return "TEXT";
+
 	case UI_PANEL:return "";
+
 	default:return "UNKNOWN";
 	}
 }

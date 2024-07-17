@@ -2,7 +2,7 @@
 #include "../DirectX/Direct3D.h"
 #include "Text.h"
 
-Text::Text() : hPict_(-1), width_(16), height_(32), fileName_("Fonts/char.png"), rowLength_(16)
+Text::Text() : hPict_(-1), width_(16), height_(32), fileName_("Fonts/char.png"), rowLength_(16), scale(1.0f)
 {
 }
 
@@ -63,6 +63,7 @@ void Text::Draw(int x, int y, const char* str)
 		Transform transform;
 		transform.position_.x = px;
 		transform.position_.y = py;
+		transform.scale_ = XMFLOAT3(scale, scale, scale);
 		Image::SetTransform(hPict_, transform);
 
 		//•\Ž¦‚·‚é”ÍˆÍ
@@ -72,7 +73,7 @@ void Text::Draw(int x, int y, const char* str)
 		Image::Draw(hPict_);
 
 		//ŽŸ‚ÌˆÊ’u‚É‚¸‚ç‚·
-		px += width_ / (float)(Direct3D::screenWidth_ / 2.0f);
+		px += width_ * scale / (float)(Direct3D::screenWidth_ / 2.0f);
 	}
 }
 

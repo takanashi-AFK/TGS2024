@@ -1,20 +1,21 @@
-﻿#include "TPSCamera.h"
-#include "../../../Engine/DirectX/Input.h"
+﻿#include "../../../Engine/DirectX/Input.h"
 #include "../../../Engine/GameObject/Camera.h"
+#include "../../../Engine/ImGui/imgui.h"
 #include "../Stage/Stage.h"
 #include "../Stage/StageObject.h"
-#include "../../../Engine/ImGui/imgui.h"
+#include "TPSCamera.h"
 
 
 namespace {
     const float DEF_SENSITIVITY = 0.3f;
     const float SENSITIVITY_MAX = 1;
     const float SENSITIVITY_MIN = 0;
+    const float ROTATE_UPPER_LIMIT = -80.f;
+    const float ROTATE_LOWER_LIMIT = 80.f;
 }
 
-
 TPSCamera::TPSCamera(GameObject* parent)
-	:GameObject(parent, "TPSCamera"), angle_({ 0,0 }), sensitivity_(DEF_SENSITIVITY), pTarget_(nullptr), isActive_(true), targetHeight_(4.f), targetDistance_(7.f)
+	:GameObject(parent, "TPSCamera"), angle_({ 0,0 }), sensitivity_(DEF_SENSITIVITY), pTarget_(nullptr), isActive_(true), targetHeight_(4.f), targetDistance_(7.f), prevAxis_({ 1,0,0,0 })
 {
 }
 
@@ -47,9 +48,9 @@ void TPSCamera::Update()
         angle_.y += mouseMove.x * sensitivity_;
         // ｘ軸回転の上限・下限を設定し回転を制限
         {
-            const float upperlimit = -80.f;
+            float upperlimit = ROTATE_UPPER_LIMIT;
             if (angle_.x < upperlimit)angle_.x -= mouseMove.y * sensitivity_;
-            const float lowerlimit = 80.f;
+            float lowerlimit = ROTATE_LOWER_LIMIT;
             if (angle_.x > lowerlimit)angle_.x -= mouseMove.y * sensitivity_;
         }
     }
@@ -92,6 +93,10 @@ void TPSCamera::Update()
         // 縦回転の軸を作成
         XMVECTOR axis = XMLoadFloat3(&center) - XMLoadFloat3(&prevCenter);
 
+        if (XMVector3Equal(axis, XMVectorZero())) {
+            axis = prevAxis_;
+        }
+
         //// 回転行列を作成
         XMMATRIX rotateAxis = XMMatrixRotationAxis(axis, XMConvertToRadians(angle_.x));
 
@@ -105,10 +110,14 @@ void TPSCamera::Update()
         XMVECTOR newCenter_To_camPosition = -newCenter_To_camTarget;
         XMVECTOR origin_To_camPosition = XMLoadFloat3(&center) + newCenter_To_camPosition;
         XMStoreFloat3(&camPosition, origin_To_camPosition);
+
+        if(!XMVector3Equal(axis, XMVectorZero()))
+        prevAxis_ = axis;
     }
 
     Camera::SetTarget(camTarget);
     Camera::SetPosition(camPosition);
+
 }
 
 void TPSCamera::Draw()
@@ -141,9 +150,13 @@ void TPSCamera::DrawData()
     std::vector<string> objNames;
     objNames.push_back("null");
 
-    for (auto obj : (((Stage*)FindObject("Stage"))->GetStageObjects()))objNames.push_back(obj->GetObjectName());
+    for (auto obj : (((Stage*)FindObject("Stage"))->GetStageObjects()))
+        objNames.push_back(obj->GetObjectName());
 
     static int select = 0;
+
+    if (select >= objNames.size())return;
+
     if (ImGui::BeginCombo("target_", objNames[select].c_str())) {
         for (int i = 0; i < objNames.size(); i++) {
             bool is_selected = (select == i);

@@ -56,9 +56,6 @@
     <Filter Include="03Game\Objects\Stage\Components\TimerComponent">
       <UniqueIdentifier>{e193f086-ad1a-497c-8887-062579a167cb}</UniqueIdentifier>
     </Filter>
-    <Filter Include="03Game\Objects\Stage\Components\HealthManagerComponents">
-      <UniqueIdentifier>{253bc07e-fe5e-486e-93dd-e51a1f20aea0}</UniqueIdentifier>
-    </Filter>
     <Filter Include="03Game\Objects\Stage\Components\AttackComponents">
       <UniqueIdentifier>{89b3ed5f-a98e-4fe9-8112-e3c5e40330d7}</UniqueIdentifier>
     </Filter>
@@ -199,9 +196,6 @@
     <ClCompile Include="Engine\ResourceManager\Transition.cpp">
       <Filter>01Engine\ResourceManager</Filter>
     </ClCompile>
-    <ClCompile Include="Game\Objects\Stage\Components\HealthManagerComponents\Component_HealthManager.cpp">
-      <Filter>03Game\Objects\Stage\Components\HealthManagerComponents</Filter>
-    </ClCompile>
     <ClCompile Include="Game\Objects\Stage\Components\MoveComponents\Component_Chase.cpp">
       <Filter>03Game\Objects\Stage\Components\MoveComponents</Filter>
     </ClCompile>
@@ -286,6 +280,13 @@
     <ClCompile Include="EffekseeLib\EffekseerVFX.cpp" />
     <ClCompile Include="Game\Objects\Stage\Components\BehaviorComponents\Component_BossBehavior.cpp" />
     <ClCompile Include="Game\Objects\Stage\Components\MoveComponents\Component_TackleMove.cpp" />
+
+    <ClCompile Include="Game\Objects\Stage\Components\AttackComponents\Component_MeleeAttack.cpp" />
+    <ClCompile Include="Game\Objects\Stage\Components\GaugeComponents\Component_Gauge.cpp" />
+    <ClCompile Include="Game\Objects\Stage\Components\GaugeComponents\Component_HealthGauge.cpp" />
+    <ClCompile Include="Game\Objects\UI\UIProgressBar.cpp" />
+    <ClCompile Include="Game\Objects\UI\UIText.cpp" />
+
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Collider\BoxCollider.h">
@@ -417,9 +418,6 @@
     <ClInclude Include="Engine\ResourceManager\Transition.h">
       <Filter>01Engine\ResourceManager</Filter>
     </ClInclude>
-    <ClInclude Include="Game\Objects\Stage\Components\HealthManagerComponents\Component_HealthManager.h">
-      <Filter>03Game\Objects\Stage\Components\HealthManagerComponents</Filter>
-    </ClInclude>
     <ClInclude Include="Game\Objects\Stage\Components\MoveComponents\Component_Chase.h">
       <Filter>03Game\Objects\Stage\Components\MoveComponents</Filter>
     </ClInclude>
@@ -498,6 +496,13 @@
     <ClInclude Include="EffekseeLib\EffekseerVFX.h" />
     <ClInclude Include="Game\Objects\Stage\Components\BehaviorComponents\Component_BossBehavior.h" />
     <ClInclude Include="Game\Objects\Stage\Components\MoveComponents\Component_TackleMove.h" />
+
+    <ClInclude Include="Game\Objects\Stage\Components\AttackComponents\Component_MeleeAttack.h" />
+    <ClInclude Include="Game\Objects\Stage\Components\GaugeComponents\Component_Gauge.h" />
+    <ClInclude Include="Game\Objects\Stage\Components\GaugeComponents\Component_HealthGauge.h" />
+    <ClInclude Include="Game\Objects\UI\UIProgressBar.h" />
+    <ClInclude Include="Game\Objects\UI\UIText.h" />
+
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Assets\Shader\Simple2D.hlsl">
@@ -516,6 +521,9 @@
       <Filter>02Shader</Filter>
     </FxCompile>
     <FxCompile Include="Assets\Shader\Shadow.hlsl">
+      <Filter>02Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="Assets\Shader\Progress.hlsl">
       <Filter>02Shader</Filter>
     </FxCompile>
   </ItemGroup>

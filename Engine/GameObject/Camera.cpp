@@ -55,3 +55,5 @@ XMMATRIX Camera::GetProjectionMatrix() { return _proj; }
 
 //ビルボード用回転行列を取得
 XMMATRIX Camera::GetBillboardMatrix(){	return _billBoard; }
+
+XMVECTOR Camera::GetSightLine() { return XMLoadFloat3(&_target) - XMLoadFloat3(&_position); }

@@ -1,14 +1,15 @@
 #include "Scene_Play.h"
 
-// ƒCƒ“ƒNƒ‹[ƒh
+// ã‚¤ãƒ³ã‚¯ãƒ«ãƒ¼ãƒ‰
 #include"../Objects/Stage/SkySphere.h"
 #include"../Objects/Stage/Stage.h"
 #include "../Objects/UI/UIPanel.h"
-#include"../Objects/Stage/Components/HealthManagerComponents/Component_HealthManager.h"
+#include"../Objects/Stage/Components/GaugeComponents/Component_HealthGauge.h"
 #include"../Objects/Stage/Components/BehaviorComponents/Component_PlayerBehavior.h"
 #include"../../Engine/SceneManager.h"
 #include "../Objects/UI/UIButton.h"
 #include "../Objects/Camera/TPSCamera.h"
+#include "../../Engine/ImGui/imgui.h"
 
 Scene_Play::Scene_Play(GameObject* parent)
 {
@@ -16,23 +17,23 @@ Scene_Play::Scene_Play(GameObject* parent)
 
 void Scene_Play::Initialize()
 {
-	// ƒXƒJƒCƒXƒtƒBƒA‚ğ¶¬
+	// ã‚¹ã‚«ã‚¤ã‚¹ãƒ•ã‚£ã‚¢ã‚’ç”Ÿæˆ
 	Instantiate<SkySphere>(this);
 
-	// ƒXƒe[ƒW‚ğ¶¬
+	// ã‚¹ãƒ†ãƒ¼ã‚¸ã‚’ç”Ÿæˆ
 	Stage* pStage = Instantiate<Stage>(this); {
-		// ƒXƒe[ƒW‚ğ“Ç‚İ‚İ
+		// ã‚¹ãƒ†ãƒ¼ã‚¸ã‚’èª­ã¿è¾¼ã¿
 		json stageData;
-		JsonReader::Load("Datas/StageLayouts/stage_Test00_sugawara.json", stageData);
+		JsonReader::Load("Datas/StageLayouts/stage_beta_00.json", stageData);
 		pStage->Load(stageData);
 	}
-	//	//”ÍˆÍfor•ª‚ÅƒIƒuƒWƒFƒNƒgƒŠƒXƒg‚Ìæ“¾
+	//	//ç¯„å›²foråˆ†ã§ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆãƒªã‚¹ãƒˆã®å–å¾—
 	//	for (auto pList : pStage->GetStageObjects()) {
-	//		//ƒŠƒXƒg“à‚Å‚Æ‚¤‚ë‚­‚³‚ê‚Ä‚¢‚éPlayerBehavior‚ª‚ ‚Á‚½‚çƒRƒ“ƒ|[ƒlƒ“ƒg‚ğƒLƒƒƒXƒg‚µ‚Ä‘ã“ü
+	//		//ãƒªã‚¹ãƒˆå†…ã§ã¨ã†ã‚ãã•ã‚Œã¦ã„ã‚‹PlayerBehaviorãŒã‚ã£ãŸã‚‰ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã‚’ã‚­ãƒ£ã‚¹ãƒˆã—ã¦ä»£å…¥
 	//		if (pList->FindComponent("PlayerBehavior")) {
 	//			Component_PlayerBehavior* playerBeha = dynamic_cast<Component_PlayerBehavior*>(pList->FindComponent("PlayerBehavior"));
 	//			if (playerBeha != nullptr) {
-	//				//playerBeha‚©‚çqƒRƒ“ƒ|[ƒlƒ“ƒg‚ğæ“¾‚·‚é
+	//				//playerBehaã‹ã‚‰å­ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã‚’å–å¾—ã™ã‚‹
 	//				playerHealth_ = dynamic_cast<Component_HealthManager*>(playerBeha->GetChildComponent("HealthManager"));
 	//			}
 	//		}
@@ -49,11 +50,12 @@ void Scene_Play::Initialize()
 
 void Scene_Play::Update()
 {
-	////HP‚ª0‚É‚È‚Á‚½‚çƒGƒ“ƒhƒV[ƒ“‚ÉˆÚs
+	////HPãŒ0ã«ãªã£ãŸã‚‰ã‚¨ãƒ³ãƒ‰ã‚·ãƒ¼ãƒ³ã«ç§»è¡Œ
 	//if (playerHealth_->GetHP() == 0) {
 	//	SceneManager* pChangeScene = (SceneManager*)FindObject("SceneManager");
 	//	pChangeScene->ChangeScene(SCENE_ID_END, TID_BLACKOUT);
 	//}
+
 }
 
 void Scene_Play::Draw()

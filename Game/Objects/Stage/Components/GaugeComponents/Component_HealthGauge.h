@@ -1,25 +1,24 @@
 #pragma once
 //インクルード
-#include"../Component.h"
-
+#include"Component_Gauge.h"
 
 /// <summary>
 /// 体力の増減を管理するコンポーネント
 /// </summary>
-class Component_HealthManager :public Component 
+class Component_HealthGauge :public Component_Gauge
 {
 private:
 
-	float max_; //体力の上限
-	float hp_;  //体力
-
+	float maxHp_; //体力の上限
+	float nowHp_;  //体力
+	
 public:
 
 	/// <summary>
 	/// コンストラクタ
 	/// </summary>
 	/// <param name="_holder">保有者</param>
-	Component_HealthManager(string _name, StageObject* _holder, Component* _parent);
+	Component_HealthGauge(string _name, StageObject* _holder, Component* _parent);
 
 	/// <summary>
 	/// 初期化
@@ -54,26 +53,6 @@ public:
 	void DrawData() override;
 
 	/// <summary>
-	/// HPの値を取得
-	/// </summary>
-	/// <returns></returns>
-	float GetHP() const;
-
-	/// <summary>
-	/// HPの値を設定
-	/// </summary>
-	/// <param name="_newHP">与えられたHP</param>
-	void SetHP(float _newHP);
-
-	/// <returns>体力の最大値</returns>
-	float GetMax() const;
-
-	/// <summary>
-	/// 体力の最大値を設定
-	/// </summary>
-	void SetMax(float _newMax);
-
-	/// <summary>
 	/// ダメージを受けた際の計算
 	/// </summary>
 	/// <param name="_damageValue">ダメージ値</param>
@@ -89,4 +68,8 @@ public:
 	/// 体力のリセット(最大値に戻す)
 	/// </summary>
 	void Reset();
+
+	float GetIsDead() const { return (nowHp_ <= 0); }
+
+	
 };

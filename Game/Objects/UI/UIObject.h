@@ -14,52 +14,58 @@ enum UIType {
 	UI_IMAGE,
 	UI_TEXT,
 	UI_PANEL,
+	UI_PROGRESSBAR,
 	UI_MAX,
 };
 
 class UIObject
 {
-protected:
-	std::string objectName_; // ƒIƒuƒWƒFƒNƒg–¼
-	Transform transform_; // ˆÊ’u‚âŒü‚«‚È‚Ç‚ğŠÇ—‚·‚éƒIƒuƒWƒFƒNƒg
-	bool isEnable_;	// —LŒø‚©‚Ç‚¤‚©
-	UIType type_;	// UI‚Ìí—Ş
-	int layerNumber_; // ƒŒƒCƒ„[”Ô†
-	std::vector<UIObject*> childList_;  // qƒIƒuƒWƒFƒNƒg‚ÌƒŠƒXƒg
-	UIObject* pParent_;// eƒIƒuƒWƒFƒNƒg
+private:
+	bool isPositionLocked_;
+	bool isRotateLocked_;
+	bool isScaleLocked_;
 
-	//ƒtƒ‰ƒO
+protected:
+	std::string objectName_; // Æ’IÆ’uÆ’WÆ’FÆ’NÆ’gâ€“Â¼
+	Transform transform_; // Ë†ÃŠâ€™uâ€šÃ¢Å’Ã¼â€šÂ«â€šÃˆâ€šÃ‡â€šÃ°Å Ã‡â€”Ââ€šÂ·â€šÃ©Æ’IÆ’uÆ’WÆ’FÆ’NÆ’g
+	bool isEnable_;	// â€”LÅ’Ã¸â€šÂ©â€šÃ‡â€šÂ¤â€šÂ©
+	UIType type_;	// UIâ€šÃŒÅ½Ã­â€”Ã
+	int layerNumber_; // Æ’Å’Æ’CÆ’â€Â[â€Ã”Ââ€ 
+	std::vector<UIObject*> childList_;  // Å½qÆ’IÆ’uÆ’WÆ’FÆ’NÆ’gâ€šÃŒÆ’Å Æ’XÆ’g
+	UIObject* pParent_;// ÂeÆ’IÆ’uÆ’WÆ’FÆ’NÆ’g
+
+	//Æ’tÆ’â€°Æ’O
 	struct UI_STATE
 	{
-		unsigned initialized : 1;	//‰Šú‰»Ï‚İ‚©
-		unsigned entered : 1;		//XV‚·‚é‚©
-		unsigned visible : 1;		//•`‰æ‚·‚é‚©
-		unsigned dead : 1;			//íœ‚·‚é‚©
+		unsigned initialized : 1;	//Ââ€°Å Ãºâ€°Â»ÂÃâ€šÃâ€šÂ©
+		unsigned entered : 1;		//ÂXÂVâ€šÂ·â€šÃ©â€šÂ©
+		unsigned visible : 1;		//â€¢`â€°Ã¦â€šÂ·â€šÃ©â€šÂ©
+		unsigned dead : 1;			//ÂÃ­ÂÅ“â€šÂ·â€šÃ©â€šÂ©
 	};
 	UI_STATE state_;
 
 public:
 
-	//ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+	//Æ’RÆ’â€œÆ’XÆ’gÆ’â€°Æ’NÆ’^
 	UIObject();
 	UIObject(UIObject* parent);
 	UIObject(string _name, UIType _type, UIObject* parent, int _layerNum);
 
-	//ƒfƒXƒgƒ‰ƒNƒ^
+	//Æ’fÆ’XÆ’gÆ’â€°Æ’NÆ’^
 	virtual ~UIObject();
 
-	//ŠeƒIƒuƒWƒFƒNƒg‚Å•K‚¸ì‚éŠÖ”
+	//Å eÆ’IÆ’uÆ’WÆ’FÆ’NÆ’gâ€šÃ…â€¢Kâ€šÂ¸ÂÃ¬â€šÃ©Å Ã–Ââ€
 	virtual void Initialize() {};
 	virtual void Update() {};
 	virtual void Draw() {};
 	virtual void Release() {};
 
-	//©•ª‚ÌŠY“–ŠÖ”‚ğ“Ç‚ñ‚¾ŒãAq‹Ÿ‚ÌŠÖ”‚àŒÄ‚Ô
+	//Å½Â©â€¢Âªâ€šÃŒÅ Yâ€œâ€“Å Ã–Ââ€â€šÃ°â€œÃ‡â€šÃ±â€šÂ¾Å’Ã£ÂAÅ½qâ€¹Å¸â€šÃŒÅ Ã–Ââ€â€šÃ Å’Ã„â€šÃ”
 	void UpdateSub();
 	void DrawSub();
 	void ReleaseSub();
 
-	bool IsDead(); //íœ‚·‚é‚©‚Ç‚¤‚©
+	bool IsDead(); //ÂÃ­ÂÅ“â€šÂ·â€šÃ©â€šÂ©â€šÃ‡â€šÂ¤â€šÂ©
 
 
 	virtual void Save(json& saveObj) {};
@@ -70,49 +76,56 @@ public:
 	void ChildLoad(json& _loadObj);
 	void ChildDrawData();
 
-	void KillMe();	// ©•ª‚ğíœ‚·‚é
+	void KillMe();	// Å½Â©â€¢Âªâ€šÃ°ÂÃ­ÂÅ“â€šÂ·â€šÃ©
 
-	//–¼‘O‚ÅƒIƒuƒWƒFƒNƒg‚ğŒŸõi‘ÎÛ‚Í©•ª‚Ìq‹ŸˆÈ‰ºj
-	//ˆø”Fname	ŒŸõ‚·‚é–¼‘O
-	//–ß’lFŒ©‚Â‚¯‚½ƒIƒuƒWƒFƒNƒg‚ÌƒAƒhƒŒƒXiŒ©‚Â‚©‚ç‚È‚¯‚ê‚Înullptrj
+	//â€“Â¼â€˜Oâ€šÃ…Æ’IÆ’uÆ’WÆ’FÆ’NÆ’gâ€šÃ°Å’Å¸ÂÃµÂiâ€˜ÃÂÃ›â€šÃÅ½Â©â€¢Âªâ€šÃŒÅ½qâ€¹Å¸Ë†Ãˆâ€°ÂºÂj
+	//Ë†Ã¸Ââ€ÂFname	Å’Å¸ÂÃµâ€šÂ·â€šÃ©â€“Â¼â€˜O
+	//â€“ÃŸâ€™lÂFÅ’Â©â€šÃ‚â€šÂ¯â€šÂ½Æ’IÆ’uÆ’WÆ’FÆ’NÆ’gâ€šÃŒÆ’AÆ’hÆ’Å’Æ’XÂiÅ’Â©â€šÃ‚â€šÂ©â€šÃ§â€šÃˆâ€šÂ¯â€šÃªâ€šÃnullptrÂj
 	UIObject* FindChildObject(const std::string& name);
 	UIObject* FindObject(const std::string& name){ return GetRootJob()->FindChildObject(name); }
 
 
-	//ƒIƒuƒWƒFƒNƒg‚Ì–¼‘O‚ğæ“¾
-	//–ß’lF–¼‘O
+	//Æ’IÆ’uÆ’WÆ’FÆ’NÆ’gâ€šÃŒâ€“Â¼â€˜Oâ€šÃ°Å½Ã¦â€œÂ¾
+	//â€“ÃŸâ€™lÂFâ€“Â¼â€˜O
 	const std::string& GetObjectName(void) const;
 
-	//RootƒIƒuƒWƒFƒNƒg‚ğæ“¾(UIPanel)
+	//RootÆ’IÆ’uÆ’WÆ’FÆ’NÆ’gâ€šÃ°Å½Ã¦â€œÂ¾(UIPanel)
 	UIObject* GetRootJob();
 
-	//eƒIƒuƒWƒFƒNƒg‚ğæ“¾
+	//ÂeÆ’IÆ’uÆ’WÆ’FÆ’NÆ’gâ€šÃ°Å½Ã¦â€œÂ¾
 	UIObject* GetParent();
 
 	/// <summary>
-	/// qƒIƒuƒWƒFƒNƒg‚ğ’Ç‰Á(ƒŠƒXƒg‚ÌÅŒã‚Ö)
+	/// Å½qÆ’IÆ’uÆ’WÆ’FÆ’NÆ’gâ€šÃ°â€™Ã‡â€°Ã(Æ’Å Æ’XÆ’gâ€šÃŒÂÃ…Å’Ã£â€šÃ–)
 	/// </summary>
 	/// <param name="obj"></param>
 	void PushBackChild(UIObject* obj);
 
 	/// <summary>
-	/// V‚µ‚¢ƒŒƒCƒ„[”Ô†‚ğİ’è
+	/// ÂVâ€šÂµâ€šÂ¢Æ’Å’Æ’CÆ’â€Â[â€Ã”Ââ€ â€šÃ°ÂÃâ€™Ã¨
 	/// </summary>
-	/// <param name="newLayerNumber_">V‚µ‚¢ƒŒƒCƒ„[”Ô†</param>
+	/// <param name="newLayerNumber_">ÂVâ€šÂµâ€šÂ¢Æ’Å’Æ’CÆ’â€Â[â€Ã”Ââ€ </param>
 	void SetLayerNumber(int newLayerNumber_);
 	// Getter
 	int GetLayerNumber() { return layerNumber_; }
 
 	/// <summary>
-	/// ƒŒƒCƒ„[‚ªd•¡‚µ‚Ä‚¢‚é‚©‚Ç‚¤‚©
+	/// Æ’Å’Æ’CÆ’â€Â[â€šÂªÂdâ€¢Â¡â€šÂµâ€šÃ„â€šÂ¢â€šÃ©â€šÂ©â€šÃ‡â€šÂ¤â€šÂ©
 	/// </summary>
 	/// <param name="newLayerNumber_"></param>
 	/// <returns></returns>
 	bool IsLayerNumberDuplicate(int newLayerNumber_);
 
-	//ƒIƒuƒWƒFƒNƒg‚ğƒŒƒCƒ„[”Ô†‚Å”äŠr‚·‚é‚½‚ß‚ÌŠÖ”
+	//Æ’IÆ’uÆ’WÆ’FÆ’NÆ’gâ€šÃ°Æ’Å’Æ’CÆ’â€Â[â€Ã”Ââ€ â€šÃ…â€Ã¤Å râ€šÂ·â€šÃ©â€šÂ½â€šÃŸâ€šÃŒÅ Ã–Ââ€
 	static bool CompareLayerNumber(UIObject* _object1, UIObject* _object2);
 
+	void LockPosition() { isPositionLocked_ = true; }
+	void LockRotate() { isRotateLocked_ = true; }
+	void LockScale() { isScaleLocked_ = true; }
+
+	void UnlockPosition() { isPositionLocked_ = false; }
+	void UnlockRotate() { isRotateLocked_ = false; }
+	void UnlockScale() { isScaleLocked_ = false; }
 };
 
 UIObject* CreateUIObject(string _name, UIType _type, UIObject* _parent, int _layerNum);

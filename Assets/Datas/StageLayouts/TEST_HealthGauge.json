@@ -1,0 +1,1 @@
+{"cactan":{"modelFilePath_":"Models/Cactan.fbx","myComponents_":{"HealthGauge":{"maxnowHp_":100.0,"name_":"HealthGauge","nowHp_":100.0,"type_":18}},"position_":[0.0,0.0,0.0],"rotate_":[0.0,0.0,0.0],"scale_":[1.0,1.0,1.0]},"tile":{"modelFilePath_":"Models/tile.fbx","position_":[0.0,0.0,0.0],"rotate_":[0.0,0.0,0.0],"scale_":[1.0,1.0,1.0]}}

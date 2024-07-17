@@ -10,6 +10,7 @@ using std::vector;
 
 // 前方宣言
 class StageObject;
+class Component;
 
 /// <summary>
 /// ステージを管理するクラス
@@ -85,5 +86,7 @@ public:
 	/// オブジェクトリストを取得
 	/// </returns>
 	vector<StageObject*>& GetStageObjects() { return objects_; }
+
+	Component* FindComponent(string _name);
 };
 

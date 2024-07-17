@@ -8,6 +8,10 @@
 // using宣言
 using std::vector;
 
+enum AttributeType {
+	ENEMY,
+	ATMAX
+};
 /// <summary>
 /// ステージに登場するオブジェクトのクラス
 /// </summary>
@@ -17,7 +21,12 @@ protected:
 	vector<Component*> myComponents_;   // 自身が保有するコンポーネント群
 	string modelFilePath_;              // モデルのファイルパス
 	int modelHandle_;                   // モデル番号
-   
+	AttributeType attribute_;           // 属性
+	bool isOnGround_;                   // 地面に設置するかどうか
+	bool isCollisionWall_;              // 壁に当たったかどうか
+	float fallSpeed_;                   // 落下速度
+
+	bool isShadeVisible_;               // 陰の表示
 public:
 	/// <summary>
 	/// コンストラクタ
@@ -50,7 +59,7 @@ public:
 	/// <summary>
 	/// 衝突処理
 	/// </summary>
-	void OnCollision(GameObject* _target) override;
+	void OnCollision(GameObject* _target, Collider* _collider) override;
 
 	/// <summary>
 	/// 保存
@@ -82,6 +91,11 @@ public:
 	Component* FindComponent(string _name);
 
 	/// <summary>
+	/// コンポーネントをリストから探す
+	/// </summary>
+	vector<Component*> FindComponent(ComponentType _type);
+
+	/// <summary>
 	/// コンポーネントをリストから削除
 	/// </summary>
 	/// <param name="_comp">削除するコンポーネント</param>
@@ -93,6 +107,36 @@ public:
 	/// </summary>
 	/// <returns>削除できたかどうか</returns>
 	bool DeleteAllComponent();
+
+	/// <summary>
+	/// 属性のセット
+	/// </summary>
+	/// <param name="_type">AttributeType</param>
+	void SetAttribute(AttributeType _type) { attribute_ = _type; }
+
+	/// <summary>
+	/// 属性のゲッター
+	/// </summary>
+	/// <returns></returns>
+	AttributeType GetAttribute() { return attribute_; }
+
+	/// <summary>
+	/// モデル番号の取得
+	/// </summary>
+	/// <returns>モデル番号</returns>
+	int GetModelHandle() { return modelHandle_; }
+
+	/// <summary>
+	/// 接地処理
+	/// </summary>
+	/// <param name="_fallSpeed">落下速度</param>
+	void OnGround(float _fallSpeed);
+
+	/// <summary>
+	/// 壁めり込み防止処理
+	/// </summary>
+	void CollisionWall();
+
 };
 
 /// <summary>

@@ -22,9 +22,9 @@ void Scene_Test::Initialize()
 
 	// ステージを作成
 	Stage* pStage = Instantiate<Stage>(this); {
-		json stageData;
-		JsonReader::Load("Datas/efectTest.json", stageData);
-		pStage->Load(stageData);
+		/*json stageData;
+		JsonReader::Load("Datas/StageLayouts/stage_beta_00.json", stageData);
+		pStage->Load(stageData);*/
 	}
 
 // デフォルトカメラ情報の読み込み

@@ -51,6 +51,8 @@ namespace Image
 	//引数：handle	描画したい画像の番号
 	//引数：matrix	ワールド行列
 	void Draw(int handle);
+	void Draw(int handle,Direct3D::SHADER_TYPE _type);
+	void Draw(int handle, Direct3D::SHADER_TYPE _type,XMFLOAT3 _color);
 
 	//任意の画像を開放
 	//引数：handle	開放したいモデルの番号

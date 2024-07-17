@@ -10,7 +10,6 @@ UIImage::UIImage(string _name, UIObject* parent, int _layerNum)
 
 void UIImage::Initialize()
 {
-
 }
 
 void UIImage::Update()

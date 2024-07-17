@@ -9,6 +9,7 @@
 namespace {
 	static bool isShowAddComponentWindow_ = false; // コンポーネント追加ウィンドウの表示フラグ
 	static bool isShowSetComponentNameWindow_ = false; // コンポーネント追加ウィンドウの表示フラグ
+	const float MODEL_SCALE = 1.f; // モデルのスケール
 	static ComponentType selectComponentType_; // 選択されたコンポーネントタイプ
 
 	void DrawAddComponentWindow(StageObject* _holder)
@@ -55,7 +56,8 @@ namespace {
 
 
 StageObject::StageObject(string _name, string _modelFilePath, GameObject* _parent)
-	:GameObject(_parent,_name),modelFilePath_(_modelFilePath),modelHandle_(-1),myComponents_()
+	:GameObject(_parent, _name), modelFilePath_(_modelFilePath), modelHandle_(-1), myComponents_(), fallSpeed_(1), isOnGround_(false)
+	, isShadeVisible_(true)
 {
 }
 
@@ -89,6 +91,20 @@ Component* StageObject::FindComponent(string _name)
 	return result;
 }
 
+vector<Component*> StageObject::FindComponent(ComponentType _type)
+{
+	vector<Component*> result;
+
+	for (auto comp : myComponents_) {
+		if (comp->GetType() == _type)result.push_back(comp);
+
+		// 子コンポーネントを再帰的に検索
+		auto childComps = comp->GetChildComponent(_type);
+		result.insert(result.end(), childComps.begin(), childComps.end());
+	}
+	return result;
+}
+
 bool StageObject::DeleteComponent(Component* _comp)
 {
 	// イテレータに、"myComponents_"内で探したいデータを登録
@@ -107,6 +123,74 @@ bool StageObject::DeleteAllComponent()
 	myComponents_.clear();return true;
 }
 
+void StageObject::OnGround(float _fallSpeed)
+{
+	if (isOnGround_ == false)return;
+
+	Stage* pStage = (Stage*)FindObject("Stage");
+	if (pStage == nullptr)return;
+	auto stageObj = pStage->GetStageObjects();
+
+	for (auto obj : stageObj) {
+		if (obj->GetObjectName() == this->objectName_)
+			continue;
+
+		int hGroundModel = obj->modelHandle_;
+		if (hGroundModel < 0)continue;
+
+		RayCastData data;
+		data.start = transform_.position_;   //レイの発射位置
+		data.dir = XMFLOAT3(0, -1, 0);       //レイの方向
+		Model::RayCast(hGroundModel, &data); //レイを発射
+
+		//レイが当たったら
+		if (data.hit) {
+			//その分位置を下げる
+			transform_.position_.y -= (data.dist- (MODEL_SCALE/2)) * _fallSpeed;
+		}
+	}
+}
+
+void StageObject::CollisionWall()
+{
+	if (!isCollisionWall_) return;
+
+	Stage* pStage = static_cast<Stage*>(FindObject("Stage"));
+	if (pStage == nullptr) return;
+	auto stageObj = pStage->GetStageObjects();
+
+	for (auto obj : stageObj) {
+		if (obj->GetObjectName() == this->objectName_)
+			continue;
+
+		int hGroundModel = obj->modelHandle_;
+		if (hGroundModel < 0) continue;
+
+		std::vector<XMFLOAT3> directions = {
+			XMFLOAT3(1, 0, 0),  // right
+			XMFLOAT3(-1, 0, 0), // left
+			XMFLOAT3(0, 0, 1),  // forward
+			XMFLOAT3(0, 0, -1)  // backward
+		};
+
+		for (const auto& dir : directions) {
+			RayCastData data;
+			data.start = transform_.position_; // レイの発射位置
+			data.dir = dir; // レイの方向
+			Model::RayCast(hGroundModel, &data); // レイを発射
+
+			if (data.dist < 0.6f && data.dist > 0.0f) {
+				if (dir.x != 0) {
+					transform_.position_.x -= dir.x * (0.6f - data.dist);
+				}
+				else if (dir.z != 0) {
+					transform_.position_.z -= dir.z * (0.6f - data.dist);
+				}
+			}
+		}
+	}
+}
+
 void StageObject::Initialize()
 {
 	// モデルの読み込み
@@ -121,26 +205,35 @@ void StageObject::Update()
 {
 	// 保有するコンポーネントの更新処理
 	for (auto comp : myComponents_)comp->ChildUpdate();
+	OnGround(fallSpeed_);
+	CollisionWall();
 }
 
 void StageObject::Draw()
 {
+	if (isShadeVisible_ == false)Direct3D::SetShader(Direct3D::SHADER_SKY);
+
 	// モデルの描画
 	Model::SetTransform(modelHandle_, transform_);
 	Model::Draw(modelHandle_);
+
+	if (isShadeVisible_ == true)Direct3D::SetShader(Direct3D::SHADER_3D);
 }
 
 void StageObject::Release()
 {
 	// 保有するコンポーネントの開放処理
-	for (auto comp : myComponents_) comp->ChildRelease();
+	for (auto comp : myComponents_) {
+		comp->ChildRelease();
+		delete comp;
+	}
 	myComponents_.clear();
 }
 
-void StageObject::OnCollision(GameObject* _target)
+void StageObject::OnCollision(GameObject* _target, Collider* _collider)
 {
 	// 保有するコンポーネントの衝突処理
-	for (auto comp : myComponents_)comp->ChildOnCollision(_target);
+	for (auto comp : myComponents_)comp->ChildOnCollision(_target, _collider);
 }
 
 void StageObject::Save(json& _saveObj)
@@ -149,9 +242,20 @@ void StageObject::Save(json& _saveObj)
 	_saveObj["position_"] = { REFERENCE_XMFLOAT3(transform_.position_) };
 	_saveObj["rotate_"] = { REFERENCE_XMFLOAT3(transform_.rotate_) };
 	_saveObj["scale_"] = { REFERENCE_XMFLOAT3(transform_.scale_)};
+	_saveObj["fallSpeed_"] = fallSpeed_;
+	_saveObj["isOnGround_"] = isOnGround_;
+	_saveObj["isCollisionWall_"] = isCollisionWall_;
 	
 	// 自身のモデルのファイルパスを保存
 	_saveObj["modelFilePath_"] = modelFilePath_;
+
+	// 陰影の表示フラグを保存
+	_saveObj["isShadeVisible_"] = isShadeVisible_;
+
+	// 接地処理の情報を保存
+	_saveObj["isOnGround_"] = isOnGround_;
+	_saveObj["isCollisionWall_"] = isCollisionWall_;
+	_saveObj["fallSpeed_"] = fallSpeed_;
 
 	// コンポーネント情報を保存
 	for (auto comp : myComponents_)comp->ChildSave(_saveObj["myComponents_"][comp->GetName()]);
@@ -163,12 +267,25 @@ void StageObject::Load(json& _loadObj)
 	this->DeleteAllComponent();
 
 	// 変形行列情報を読込
-	transform_.position_ = { _loadObj["position_"][0].get<float>(),_loadObj["position_"][1].get<float>(), _loadObj["position_"][2].get<float>() };
-	transform_.rotate_ = { _loadObj["rotate_"][0].get<float>(),_loadObj["rotate_"][1].get<float>(), _loadObj["rotate_"][2].get<float>() };
-	transform_.scale_ = { _loadObj["scale_"][0].get<float>(),_loadObj["scale_"][1].get<float>(), _loadObj["scale_"][2].get<float>() };
+
+	if (_loadObj.contains("position_"))transform_.position_ = { _loadObj["position_"][0].get<float>(),_loadObj["position_"][1].get<float>(), _loadObj["position_"][2].get<float>() };
+	if (_loadObj.contains("rotate_"))transform_.rotate_ = { _loadObj["rotate_"][0].get<float>(),_loadObj["rotate_"][1].get<float>(), _loadObj["rotate_"][2].get<float>() };
+	if (_loadObj.contains("scale_"))transform_.scale_ = { _loadObj["scale_"][0].get<float>(),_loadObj["scale_"][1].get<float>(), _loadObj["scale_"][2].get<float>() };
+	if (_loadObj.contains("fallSpeed_"))fallSpeed_ = _loadObj["fallSpeed_"];
+	if (_loadObj.contains("isOnGround_"))isOnGround_ = _loadObj["isOnGround_"];
+	if (_loadObj.contains("isCollisionWall_"))isCollisionWall_ = _loadObj["isCollisionWall_"];
+
 
 	// モデルのファイルパスを読込
 	modelFilePath_ = _loadObj["modelFilePath_"];
+
+	// 陰影の表示フラグを読込
+	if(_loadObj.contains("isShadeVisible_"))isShadeVisible_ = _loadObj["isShadeVisible_"];
+
+	// 接地処理の情報を読込
+	if (_loadObj.contains("isOnGround_"))isOnGround_ = _loadObj["isOnGround_"];
+	if (_loadObj.contains("isCollisionWall_"))isCollisionWall_ = _loadObj["isCollisionWall_"];
+	if (_loadObj.contains("fallSpeed_"))fallSpeed_ = _loadObj["fallSpeed_"];
 
 	// コンポーネントインスタンスを生成
 	for (auto& obj : _loadObj["myComponents_"]) {
@@ -200,6 +317,26 @@ void StageObject::DrawData()
 	// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
 	if(ImGui::SmallButton("delete"))((Stage*)FindObject("Stage"))->DeleteStageObject(this);
 	ImGui::Separator();
+
+	// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
+	// 接地処理
+	// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
+	if (ImGui::TreeNode("OnGround")) {
+		ImGui::Checkbox("isOnGround", &isOnGround_);
+		ImGui::SameLine();
+		ImGui::Checkbox("isCollisionWall", &isCollisionWall_);
+		ImGui::DragFloat("fallSpeed", &fallSpeed_, 0.1f, 0.f, 1.f);
+
+		ImGui::TreePop();
+	}
+
+	// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
+	// シェードの表示
+	// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
+	if (ImGui::TreeNode("shade")) {
+		ImGui::Checkbox("isShadeVisible", &isShadeVisible_);
+		ImGui::TreePop();
+	}
 
 	// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
 	// オブジェクトの名前を変更
@@ -236,9 +373,12 @@ void StageObject::DrawData()
 		ImGui::TreePop();
 	}
 
+
+
 	// コンポーネント追加ウィンドウを描画
 	if (isShowAddComponentWindow_)DrawAddComponentWindow(this);
 	if (isShowSetComponentNameWindow_)DrawSetComponentNameWindow(this);
+
 
 }
 

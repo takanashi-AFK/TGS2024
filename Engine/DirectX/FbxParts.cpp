@@ -440,7 +440,7 @@ void FbxParts::Draw(Transform& transform)
 		UINT    offset = 0;
 		Direct3D::pContext_->IASetIndexBuffer(ppIndexBuffer_[i], DXGI_FORMAT_R32_UINT, 0);
 
-
+		
 		
 		// パラメータの受け渡し
 		D3D11_MAPPED_SUBRESOURCE pdata;
@@ -455,7 +455,7 @@ void FbxParts::Draw(Transform& transform)
 		cb.cameraPosition = XMFLOAT4(Camera::GetPosition().x, Camera::GetPosition().y, Camera::GetPosition().z, 0);
 		cb.lightDirection = XMFLOAT4(1, -1, 1, 0);
 		cb.isTexture = pMaterial_[i].pTexture != nullptr;
-
+		
 
 		Direct3D::pContext_->Map(pConstantBuffer_, 0, D3D11_MAP_WRITE_DISCARD, 0, &pdata);	// GPUからのリソースアクセスを一時止める
 		memcpy_s(pdata.pData, pdata.RowPitch, (void*)(&cb), sizeof(cb));		// リソースへ値を送る
@@ -600,16 +600,24 @@ void FbxParts::RayCast(RayCastData * data)
 			ver[1] = pVertexData_[ppIndexData_[i][j * 3 + 1]].position;
 			ver[2] = pVertexData_[ppIndexData_[i][j * 3 + 2]].position;
 
+			//3頂点をベクトルに変換
+			XMVECTOR vec[3];
+			vec[0] = XMLoadFloat3(&ver[0]);
+			vec[1] = XMLoadFloat3(&ver[1]);
+			vec[2] = XMLoadFloat3(&ver[2]);
+
 			BOOL  hit = FALSE;
 			float dist = 0.0f;
-
-			hit = Direct3D::Intersect(data->start, data->dir, ver[0], ver[1], ver[2], &dist);
+			XMVECTOR pos;
+			hit = Direct3D::Intersect(data->start, data->dir, ver[0], ver[1], ver[2], &dist,&pos);
 
 
 			if (hit && dist < data->dist)
 			{
 				data->hit = TRUE;
 				data->dist = dist;
+				XMStoreFloat3(&data->pos, pos);
+
 			}
 		}
 	}

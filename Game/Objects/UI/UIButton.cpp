@@ -7,23 +7,27 @@
 
 using namespace FileManager;
 
+
 UIButton::UIButton(string _name, UIObject* parent , int _layerNum)
 	: UIObject(_name, UIType::UI_BUTTON, parent, _layerNum), imageHandle_(-1), imageFilePath_()
+
 {
 }
 
 void UIButton::Initialize()
 {
+    LockRotate();
+
 }
 
 void UIButton::Update()
 {
     if (imageHandle_ < 0)return;
 
-    // ƒ}ƒEƒX‚ÌÀ•W‚ðŽæ“¾
+    // ãƒžã‚¦ã‚¹ã®åº§æ¨™ã‚’å–å¾—
     XMFLOAT2 mousePos = { Input::GetMousePosition().x,Input::GetMousePosition().y };
 
-    // ƒ}ƒEƒX‚ÌÀ•W‚ð‰æ‘œ‚ÌÀ•W‚É•ÏŠ·
+    // ãƒžã‚¦ã‚¹ã®åº§æ¨™ã‚’ç”»åƒã®åº§æ¨™ã«å¤‰æ›
     ConvertToImageCoordinates(mousePos);
 
 	if (IsMouseOver(mousePos))
@@ -34,7 +38,7 @@ void UIButton::Update()
 
 void UIButton::Draw()
 {
-    // ‰æ‘œ‚ª“Ç‚Ýž‚Ü‚ê‚Ä‚¢‚È‚¢ê‡‚Íˆ—‚ðs‚í‚È‚¢
+    // ç”»åƒãŒèª­ã¿è¾¼ã¾ã‚Œã¦ã„ãªã„å ´åˆã¯å‡¦ç†ã‚’è¡Œã‚ãªã„
     if (imageHandle_ < 0)return;
 
 	Image::SetTransform(imageHandle_, transform_);
@@ -66,41 +70,41 @@ void UIButton::DrawData()
 		ImGui::SameLine();
 
         if (ImGui::SmallButton("...")) {
-            //Œ»Ý‚ÌƒJƒŒƒ“ƒgƒfƒBƒŒƒNƒgƒŠ‚ðŠo‚¦‚Ä‚¨‚­
+            //ç¾åœ¨ã®ã‚«ãƒ¬ãƒ³ãƒˆãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã‚’è¦šãˆã¦ãŠã
             char defaultCurrentDir[MAX_PATH];
             GetCurrentDirectory(MAX_PATH, defaultCurrentDir);
 
-            // ’Ç‰Á‚·‚éƒIƒuƒWƒFƒNƒg‚Ìƒ‚ƒfƒ‹ƒtƒ@ƒCƒ‹ƒpƒX‚ðÝ’è
+            // è¿½åŠ ã™ã‚‹ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®ãƒ¢ãƒ‡ãƒ«ãƒ•ã‚¡ã‚¤ãƒ«ãƒ‘ã‚¹ã‚’è¨­å®š
             {
-                // uƒtƒ@ƒCƒ‹‚ðŠJ‚­vƒ_ƒCƒAƒƒO‚ÌÝ’è—p\‘¢‘Ì‚ðÝ’è
+                // ã€Œãƒ•ã‚¡ã‚¤ãƒ«ã‚’é–‹ãã€ãƒ€ã‚¤ã‚¢ãƒ­ã‚°ã®è¨­å®šç”¨æ§‹é€ ä½“ã‚’è¨­å®š
                 OPENFILENAME ofn; {
-                    TCHAR szFile[MAX_PATH] = {}; // ƒtƒ@ƒCƒ‹–¼‚ðŠi”[‚·‚éƒoƒbƒtƒ@
-                    ZeroMemory(&ofn, sizeof(ofn)); // \‘¢‘Ì‚Ì‰Šú‰»
-                    ofn.lStructSize = sizeof(ofn); // \‘¢‘Ì‚ÌƒTƒCƒY
-                    ofn.lpstrFile = szFile; // ƒtƒ@ƒCƒ‹–¼‚ðŠi”[‚·‚éƒoƒbƒtƒ@
-                    ofn.lpstrFile[0] = '\0'; // ‰Šú‰»
-                    ofn.nMaxFile = sizeof(szFile); // ƒtƒ@ƒCƒ‹–¼ƒoƒbƒtƒ@‚ÌƒTƒCƒY
-                    ofn.lpstrFilter = TEXT("PNGƒtƒ@ƒCƒ‹(*.fbx)\0*.png\0‚·‚×‚Ä‚Ìƒtƒ@ƒCƒ‹(*.*)\0*.*\0"); // ƒtƒBƒ‹ƒ^[iFBXƒtƒ@ƒCƒ‹‚Ì‚Ý•\Ž¦j
-                    ofn.nFilterIndex = 1; // ‰Šú‘I‘ð‚·‚éƒtƒBƒ‹ƒ^[
-                    ofn.Flags = OFN_PATHMUSTEXIST | OFN_FILEMUSTEXIST; // ƒtƒ‰ƒOiƒtƒ@ƒCƒ‹‚ª‘¶Ý‚·‚é‚±‚ÆAƒpƒX‚ª‘¶Ý‚·‚é‚±‚Æ‚ðŠm”Fj
-                    ofn.lpstrInitialDir = TEXT("."); // ƒJƒŒƒ“ƒgƒfƒBƒŒƒNƒgƒŠ‚ð‰Šú‘I‘ðˆÊ’u‚Æ‚µ‚ÄÝ’è
+                    TCHAR szFile[MAX_PATH] = {}; // ãƒ•ã‚¡ã‚¤ãƒ«åã‚’æ ¼ç´ã™ã‚‹ãƒãƒƒãƒ•ã‚¡
+                    ZeroMemory(&ofn, sizeof(ofn)); // æ§‹é€ ä½“ã®åˆæœŸåŒ–
+                    ofn.lStructSize = sizeof(ofn); // æ§‹é€ ä½“ã®ã‚µã‚¤ã‚º
+                    ofn.lpstrFile = szFile; // ãƒ•ã‚¡ã‚¤ãƒ«åã‚’æ ¼ç´ã™ã‚‹ãƒãƒƒãƒ•ã‚¡
+                    ofn.lpstrFile[0] = '\0'; // åˆæœŸåŒ–
+                    ofn.nMaxFile = sizeof(szFile); // ãƒ•ã‚¡ã‚¤ãƒ«åãƒãƒƒãƒ•ã‚¡ã®ã‚µã‚¤ã‚º
+                    ofn.lpstrFilter = TEXT("PNGãƒ•ã‚¡ã‚¤ãƒ«(*.fbx)\0*.png\0ã™ã¹ã¦ã®ãƒ•ã‚¡ã‚¤ãƒ«(*.*)\0*.*\0"); // ãƒ•ã‚£ãƒ«ã‚¿ãƒ¼ï¼ˆFBXãƒ•ã‚¡ã‚¤ãƒ«ã®ã¿è¡¨ç¤ºï¼‰
+                    ofn.nFilterIndex = 1; // åˆæœŸé¸æŠžã™ã‚‹ãƒ•ã‚£ãƒ«ã‚¿ãƒ¼
+                    ofn.Flags = OFN_PATHMUSTEXIST | OFN_FILEMUSTEXIST; // ãƒ•ãƒ©ã‚°ï¼ˆãƒ•ã‚¡ã‚¤ãƒ«ãŒå­˜åœ¨ã™ã‚‹ã“ã¨ã€ãƒ‘ã‚¹ãŒå­˜åœ¨ã™ã‚‹ã“ã¨ã‚’ç¢ºèªï¼‰
+                    ofn.lpstrInitialDir = TEXT("."); // ã‚«ãƒ¬ãƒ³ãƒˆãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã‚’åˆæœŸé¸æŠžä½ç½®ã¨ã—ã¦è¨­å®š
                 }
 
-                // ƒtƒ@ƒCƒ‹‚ð‘I‘ð‚·‚éƒ_ƒCƒAƒƒO‚Ì•\Ž¦
+                // ãƒ•ã‚¡ã‚¤ãƒ«ã‚’é¸æŠžã™ã‚‹ãƒ€ã‚¤ã‚¢ãƒ­ã‚°ã®è¡¨ç¤º
                 if (GetOpenFileName(&ofn) == TRUE) {
-                    // ƒtƒ@ƒCƒ‹ƒpƒX‚ðŽæ“¾
+                    // ãƒ•ã‚¡ã‚¤ãƒ«ãƒ‘ã‚¹ã‚’å–å¾—
                     imageFilePath_ = ofn.lpstrFile;
 
-                    // ƒJƒŒƒ“ƒgƒfƒBƒŒƒNƒgƒŠ‚©‚ç‚Ì‘Š‘ÎƒpƒX‚ðŽæ“¾
+                    // ã‚«ãƒ¬ãƒ³ãƒˆãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã‹ã‚‰ã®ç›¸å¯¾ãƒ‘ã‚¹ã‚’å–å¾—
                     imageFilePath_ = FileManager::GetAssetsRelativePath(imageFilePath_);
 
-                    // •¶Žš—ñ“à‚Ì"\\"‚ð"/"‚É’uŠ·
+                    // æ–‡å­—åˆ—å†…ã®"\\"ã‚’"/"ã«ç½®æ›
                     FileManager::ReplaceBackslashes(imageFilePath_);
 
-                    // ƒfƒBƒŒƒNƒgƒŠ‚ð–ß‚·
+                    // ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã‚’æˆ»ã™
                     SetCurrentDirectory(defaultCurrentDir);
 
-                    // ‰æ‘œ‚ð“Ç‚Ýž‚Þ
+                    // ç”»åƒã‚’èª­ã¿è¾¼ã‚€
                     SetImage(imageFilePath_);
                 }
                 else {
@@ -131,45 +135,45 @@ void UIButton::SetImage(string _imageFilePath)
 
 bool UIButton::OnClick()
 {
-    // ƒ}ƒEƒX‚ÌÀ•W‚ðŽæ“¾
+    // ãƒžã‚¦ã‚¹ã®åº§æ¨™ã‚’å–å¾—
     XMFLOAT2 mousePos = { Input::GetMousePosition().x,Input::GetMousePosition().y };
 
-    // ƒ}ƒEƒX‚ÌÀ•W‚ð‰æ‘œ‚ÌÀ•W‚É•ÏŠ·
+    // ãƒžã‚¦ã‚¹ã®åº§æ¨™ã‚’ç”»åƒã®åº§æ¨™ã«å¤‰æ›
     ConvertToImageCoordinates(mousePos);
 
-    //ƒ}ƒEƒX‚Ìƒ|ƒWƒVƒ‡ƒ“‚ª‰æ‘œ‚Ì—Ìˆæ‚É“ü‚Á‚Ä‚¢‚é‚©‚Â¶ƒNƒŠƒbƒN‚ª‰Ÿ‚³‚ê‚½‚ç
+    //ãƒžã‚¦ã‚¹ã®ãƒã‚¸ã‚·ãƒ§ãƒ³ãŒç”»åƒã®é ˜åŸŸã«å…¥ã£ã¦ã„ã‚‹ã‹ã¤å·¦ã‚¯ãƒªãƒƒã‚¯ãŒæŠ¼ã•ã‚ŒãŸã‚‰
     return IsMouseOver(mousePos) && Input::IsMouseButtonDown(0);
 }
 
 bool UIButton::IsMouseOver(XMFLOAT2 _mousePosition)
 {
-    // ‰æ‘œ‚ª“Ç‚Ýž‚Ü‚ê‚Ä‚¢‚È‚¢ê‡‚Íˆ—‚ðs‚í‚È‚¢
+    // ç”»åƒãŒèª­ã¿è¾¼ã¾ã‚Œã¦ã„ãªã„å ´åˆã¯å‡¦ç†ã‚’è¡Œã‚ãªã„
     if (imageHandle_ < 0)return false;
 
-	// ƒ}ƒEƒXƒJ[ƒ\ƒ‹‚ÌÀ•W‚ðŽæ“¾
+	// ãƒžã‚¦ã‚¹ã‚«ãƒ¼ã‚½ãƒ«ã®åº§æ¨™ã‚’å–å¾—
     XMFLOAT2 imageSize = Image::GetSize(imageHandle_); {
-        // ‰æ‘œ‚ÌƒTƒCƒY‚ð‰æ–ÊƒTƒCƒY‚É‡‚í‚¹‚é
+        // ç”»åƒã®ã‚µã‚¤ã‚ºã‚’ç”»é¢ã‚µã‚¤ã‚ºã«åˆã‚ã›ã‚‹
         imageSize.x = imageSize.x / Direct3D::screenWidth_;
         imageSize.y = imageSize.y / Direct3D::screenHeight_;
     }
 
-    // ‰æ‘œ‚Ì”¼•ª‚ÌƒTƒCƒY‚ðŽæ“¾
+    // ç”»åƒã®åŠåˆ†ã®ã‚µã‚¤ã‚ºã‚’å–å¾—
     float imageHelfWidth = imageSize.x /2.f;
     float imageHelfHeight = imageSize.y /2.f;
 
-    // ‰æ‘œ‚Ì’†SÀ•W‚ðŽæ“¾
+    // ç”»åƒã®ä¸­å¿ƒåº§æ¨™ã‚’å–å¾—
     XMFLOAT2 center = { transform_.position_.x,transform_.position_.y };
 
-    // ‰æ‘œ‚ÌŠg‘å—¦‚ðŽæ“¾
+    // ç”»åƒã®æ‹¡å¤§çŽ‡ã‚’å–å¾—
     XMFLOAT2 scale = { transform_.scale_.x,transform_.scale_.y };
 
-    // ”»’è—p‚Ì”ÍˆÍ‚Ì’l‚ðŽæ“¾
-    float top = center.y - (imageHelfHeight * 2.f * scale.y);       // ‰æ‘œ‚Ì’†S‚©‚çã‚É‰æ‘œ‚Ì‚‚³‚Ì”¼•ª‚Ì‹——£
-    float bottom = center.y + (imageHelfHeight * 2.f * scale.y);    // ‰æ‘œ‚Ì’†S‚©‚ç‰º‚É‰æ‘œ‚Ì‚‚³‚Ì”¼•ª‚Ì‹——£
-    float left = center.x - (imageHelfWidth * 2.f * scale.x);       // ‰æ‘œ‚Ì’†S‚©‚ç¶‚É‰æ‘œ‚Ì•‚Ì”¼•ª‚Ì‹——£
-    float right = center.x + (imageHelfWidth * 2.f * scale.x);      // ‰æ‘œ‚Ì’†S‚©‚ç‰E‚É‰æ‘œ‚Ì•‚Ì”¼•ª‚Ì‹——£
+    // åˆ¤å®šç”¨ã®ç¯„å›²ã®å€¤ã‚’å–å¾—
+    float top = center.y - (imageHelfHeight * 2.f * scale.y);       // ç”»åƒã®ä¸­å¿ƒã‹ã‚‰ä¸Šã«ç”»åƒã®é«˜ã•ã®åŠåˆ†ã®è·é›¢
+    float bottom = center.y + (imageHelfHeight * 2.f * scale.y);    // ç”»åƒã®ä¸­å¿ƒã‹ã‚‰ä¸‹ã«ç”»åƒã®é«˜ã•ã®åŠåˆ†ã®è·é›¢
+    float left = center.x - (imageHelfWidth * 2.f * scale.x);       // ç”»åƒã®ä¸­å¿ƒã‹ã‚‰å·¦ã«ç”»åƒã®å¹…ã®åŠåˆ†ã®è·é›¢
+    float right = center.x + (imageHelfWidth * 2.f * scale.x);      // ç”»åƒã®ä¸­å¿ƒã‹ã‚‰å³ã«ç”»åƒã®å¹…ã®åŠåˆ†ã®è·é›¢
     
-    // ”»’è”ÍˆÍ“à‚Éƒ}ƒEƒXƒJ[ƒ\ƒ‹‚ª“ü‚Á‚Ä‚¢‚é‚©‚Ç‚¤‚©‚ð•Ô‚·
+    // åˆ¤å®šç¯„å›²å†…ã«ãƒžã‚¦ã‚¹ã‚«ãƒ¼ã‚½ãƒ«ãŒå…¥ã£ã¦ã„ã‚‹ã‹ã©ã†ã‹ã‚’è¿”ã™
     return (_mousePosition.x >= left && _mousePosition.x <= right && _mousePosition.y >= top && _mousePosition.y <= bottom);
 }
 
@@ -183,7 +187,7 @@ void UIButton::ConvertToImageCoordinates(XMFLOAT2& _position)
     scHeight = scHeight * 0.7;
 #endif // _DEBUG
 
-    // ƒ}ƒEƒX‚ÌÀ•W‚ð‰æ‘œ‚ÌÀ•W‚É•ÏŠ·
+    // ãƒžã‚¦ã‚¹ã®åº§æ¨™ã‚’ç”»åƒã®åº§æ¨™ã«å¤‰æ›
     _position.x = (float)(_position.x * 2.0f) / (float)scWidth - 1.0f;
     _position.y = 1.0f - (float)(_position.y * 2.0f) / (float)scHeight;
 }

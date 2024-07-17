@@ -276,6 +276,11 @@ namespace EFFEKSEERLIB {
             }
             return nullptr;
         }
+
+        bool IsEffectPlaying(std::string_view effect_name) const {
+            return EffectInstances.find(effect_name.data()) != EffectInstances.end();
+        }
+
         void SetFPS(float fps) { fps_ = fps; }
 
     private:

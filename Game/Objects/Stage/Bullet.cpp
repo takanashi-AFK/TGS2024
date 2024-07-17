@@ -4,7 +4,7 @@
 #include "../../../Engine/Global.h"
 #include "../../../Engine/ImGui/imgui.h"
 #include "../../../Engine/ResourceManager/Model.h"
-#include "Components/HealthManagerComponents/Component_HealthManager.h"
+#include "Components/GaugeComponents/Component_HealthGauge.h"
 #include "Stage.h"
 
 Bullet::Bullet(GameObject* _parent) 
@@ -15,26 +15,27 @@ Bullet::Bullet(GameObject* _parent)
 void Bullet::Initialize()
 {
 	// コライダーを追加
-	AddCollider(new SphereCollider(XMFLOAT3(0, 0, 0), 0.3f));
+	AddCollider(new SphereCollider(XMFLOAT3(0, 0, 0), 0.5f));
 
 	// モデルの読み込み
 	modelHandle_ = Model::Load(modelFilePath_);
 	assert(modelHandle_ >= 0);
 
-	SetScale(0.2f);
+	//SetScale(0.2f);
 
 	// effekseer: :Effectの読み込み
-	EFFEKSEERLIB::gEfk->AddEffect("A_Salamander4", "Effects/A_Salamander4.efk");/*★★★*/
+	EFFEKSEERLIB::gEfk->AddEffect("Sylph10", "Effects/Sylph10.efk");/*★★★*/
 
 	// effekseer: :Effectの再生情報の設定
 	EFFEKSEERLIB::EFKTransform t;/*★★★*/
 	DirectX::XMStoreFloat4x4(&(t.matrix), transform_.GetWorldMatrix());/*★★★*/
 	t.isLoop = false;/*★★★*/
-	t.maxFrame = 60;/*★★★*/
-	t.speed = 1.0f;/*★★★*/
+	t.maxFrame = 180;/*★★★*/
+	t.speed = 1.f;/*★★★*/
+
 
 	// effekseer: :Effectの再生
-	mt = EFFEKSEERLIB::gEfk->Play("A_Salamander4", t);/*★★★*/
+	mt = EFFEKSEERLIB::gEfk->Play("Sylph10", t);/*★★★*/
 
 }
 
@@ -47,6 +48,7 @@ void Bullet::Update()
 	Move(direction_,speed_);
 
 	// 自動削除
+	//if (EFFEKSEERLIB::gEfk->IsEffectPlaying("Sylph10") == false)KillMe();
 	AutoDelete(2.f);
 
 	// effekseer: :Effectの再生情報の更新
@@ -56,31 +58,33 @@ void Bullet::Update()
 void Bullet::Draw()
 {
 	// モデルの描画
-	Model::SetTransform(modelHandle_, transform_);
-	Model::Draw(modelHandle_);
+	//Model::SetTransform(modelHandle_, transform_);
+	//Model::Draw(modelHandle_);
 }
 
-void Bullet::OnCollision(GameObject* _target)
+void Bullet::OnCollision(GameObject* _target, Collider* _collider)
 {
-	// プレイヤーと衝突した場合
-	if (_target->GetObjectName() == "Char_Player") {
+	if (isActive_ == false)return;
 
-		// プレイヤーのHPマネージャーコンポーネントを取得
-		Component* hm = ((StageObject*)_target)->FindComponent("HealthManager");
-		if (hm == nullptr)return;
+	// ターゲットがStageObjectでない場合は処理を行わない
+	StageObject* target = dynamic_cast<StageObject*>(_target);
+	if (!target) return;
 
-		// プレイヤーのHPを減らす
-		((Component_HealthManager*)hm)->TakeDamage(20);
+	if (target->GetObjectName() == shooter_->GetObjectName())return;
+	auto list = target->FindComponent(HealthGauge);
 
-		// プレイヤーのHPが0以下の場合
-		if (((Component_HealthManager*)hm)->GetHP() <= 0) {
+	if (list.empty()) return;
+	// ダメージ処理
+	for (auto hm : list) {
 
-			// プレイヤーを消す
+		((Component_HealthGauge*)hm)->TakeDamage(20);
+		this->KillMe();
+
+		if (((Component_HealthGauge*)hm)->GetIsDead()) {
 			((Stage*)FindObject("Stage"))->DeleteStageObject((StageObject*)_target);
 		}
-		
-		this->KillMe();
 	}
+
 }
 
 void Bullet::Move(XMVECTOR _dir, float _speed)

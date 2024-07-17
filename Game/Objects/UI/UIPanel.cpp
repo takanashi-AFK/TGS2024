@@ -1,7 +1,12 @@
 #include "UIPanel.h"
 #include "../../Otheres/GameEditor.h"
 
+
 UIPanel* UIPanel::instance_ = nullptr;
+
+// ã‚¤ãƒ³ã‚¯ãƒ«ãƒ¼ãƒ‰
+#include "UIObject.h"
+#include "../../../Engine/ResourceManager/Image.h"
 
 UIPanel::UIPanel()
 	: UIObject()
@@ -24,13 +29,14 @@ void UIPanel::Initialize()
 
 void UIPanel::Update()
 {
+	
 }
 
 void UIPanel::Draw()
 {
-	//ƒŒƒCƒ„[”Ô†‚ÅƒIƒuƒWƒFƒNƒg‚ğƒ\[ƒg
+	//ãƒ¬ã‚¤ãƒ¤ãƒ¼ç•ªå·ã§ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’ã‚½ãƒ¼ãƒˆ
 	SortUIObject();
-	// ŠeƒIƒuƒWƒFƒNƒg‚Ì•`‰æˆ—
+	// å„ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®æç”»å‡¦ç†
 	for (auto obj : childList_)
 	{
 		obj->DrawData();
@@ -43,31 +49,31 @@ void UIPanel::Release()
 
 void UIPanel::Save(json& _saveObj)
 {
-	// ŠeƒIƒuƒWƒFƒNƒg‚Ì•Û‘¶ˆ—
+	// å„ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®ä¿å­˜å‡¦ç†
 	for (auto obj : childList_)obj->ChildSave(_saveObj[obj->GetObjectName()]);
 }
 
 void UIPanel::Load(json& _loadObj)
 {
-	// ‘S‚Ä‚ÌƒIƒuƒWƒFƒNƒg‚ğíœ
+	// å…¨ã¦ã®ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’å‰Šé™¤
 	DeleteAllUIObject();
 
 	for (auto it = _loadObj.begin(); it != _loadObj.end(); ++it) {
 
-		// ƒŒƒCƒ„[”Ô†‚ğ“Ç‚İæ‚é
-		int layerNumber = it.value().value("layerNumber", 0);  // ƒfƒtƒHƒ‹ƒg’l0
+		// ãƒ¬ã‚¤ãƒ¤ãƒ¼ç•ªå·ã‚’èª­ã¿å–ã‚‹
+		int layerNumber = it.value().value("layerNumber", 0);  // ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆå€¤0
 
-		// ƒIƒuƒWƒFƒNƒg‚ÌƒCƒ“ƒXƒ^ƒ“ƒX‚ğ¶¬
+		// ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã‚’ç”Ÿæˆ
 		UIObject* obj = CreateUIObject(it.key(), it.value()["type_"], this,layerNumber);
 
-		// ƒIƒuƒWƒFƒNƒgî•ñ‚ğ“Ç
+		// ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆæƒ…å ±ã‚’èª­è¾¼
 		obj->ChildLoad(it.value());
 	}
 }
 
 void UIPanel::DrawData()
 {
-	// ŠeƒIƒuƒWƒFƒNƒg‚ÌƒcƒŠ[‚Ì•`‰æ
+	// å„ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®ãƒ„ãƒªãƒ¼ã®æç”»
 	for (auto obj : childList_)
 	{
 		obj->DrawData();
@@ -76,18 +82,18 @@ void UIPanel::DrawData()
 
 void UIPanel::DeleteUIObject(UIObject* _object)
 {
-	// ƒIƒuƒWƒFƒNƒg‚ğíœ‚·‚é
+	// ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’å‰Šé™¤ã™ã‚‹
 	_object->KillMe();
 
-	// ƒIƒuƒWƒFƒNƒg‚ÌƒCƒeƒŒ[ƒ^‚ğæ“¾‚·‚é
+	// ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®ã‚¤ãƒ†ãƒ¬ãƒ¼ã‚¿ã‚’å–å¾—ã™ã‚‹
 	auto it = std::find(childList_.begin(), childList_.end(), _object);
-	// ƒCƒeƒŒ[ƒ^‚ªŒ©‚Â‚©‚Á‚½ê‡AƒxƒNƒ^[‚©‚çíœ‚·‚é
+	// ã‚¤ãƒ†ãƒ¬ãƒ¼ã‚¿ãŒè¦‹ã¤ã‹ã£ãŸå ´åˆã€ãƒ™ã‚¯ã‚¿ãƒ¼ã‹ã‚‰å‰Šé™¤ã™ã‚‹
 	if (it != childList_.end()) childList_.erase(it);
 }
 
 void UIPanel::DeleteAllUIObject()
 {
-	// ‘S‚Ä‚ÌƒIƒuƒWƒFƒNƒg‚ğíœ
+	// å…¨ã¦ã®ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’å‰Šé™¤
 	for (auto obj : childList_)obj->KillMe();
 	childList_.clear();
 }
@@ -95,6 +101,6 @@ void UIPanel::DeleteAllUIObject()
 
 void UIPanel::SortUIObject()
 {
-	// ƒŒƒCƒ„[”Ô†‚Åƒ\[ƒg
+	// ãƒ¬ã‚¤ãƒ¤ãƒ¼ç•ªå·ã§ã‚½ãƒ¼ãƒˆ
 	std::sort(childList_.begin(), childList_.end(), UIObject::CompareLayerNumber);
 }

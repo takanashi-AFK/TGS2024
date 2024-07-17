@@ -1,24 +1,31 @@
 #include "Component_CactanBehavior.h"
 
-#include "../../StageObject.h" 
-#include "../TimerComponent/Component_Timer.h"
-#include "../AttackComponents/Component_ShootAttack.h"
-#include "../DetectorComponents/Component_CircleRangeDetector.h"
+#include "../../../../../Engine/Global.h"
 #include "../../../../../Engine/ImGui/imgui.h"
 #include "../../Stage.h"
-#include "../../../../../Engine/Global.h"
+#include "../../StageObject.h" 
+#include "../AttackComponents/Component_ShootAttack.h"
+#include "../DetectorComponents/Component_CircleRangeDetector.h"
+#include "../GaugeComponents/Component_HealthGauge.h"
+
+#include "../TimerComponent/Component_Timer.h"
 
 Component_CactanBehavior::Component_CactanBehavior(string _name, StageObject* _holder, Component* _parent)
-	:Component(_holder, _name, CactanBihavior, _parent)
+	:Component(_holder, _name, CactanBehavior, _parent)
 {
 }
 
 void Component_CactanBehavior::Initialize()
 {
+	holder_->SetAttribute(ENEMY);
+	holder_->AddCollider(new BoxCollider(XMFLOAT3(0, 0, 0), XMFLOAT3(1, 1, 1)));
+
 	// 必要なコンポーネントを追加
 	if (FindChildComponent("CircleRangeDetector") == false)AddChildComponent(CreateComponent("CircleRangeDetector",CircleRangeDetector,holder_,this));
 	if (FindChildComponent("ShootAttack") == false)AddChildComponent(CreateComponent("ShootAttack", ShootAttack, holder_, this));
 	if (FindChildComponent("Timer") == false)AddChildComponent(CreateComponent("Timer", Timer, holder_, this));
+	if (FindChildComponent("HealthGauge") == false)AddChildComponent(CreateComponent("HealthGauge", HealthGauge, holder_, this));
+
 }
 
 void Component_CactanBehavior::Update()
@@ -54,6 +61,7 @@ void Component_CactanBehavior::Update()
 	}
 	else{
 
+		
 		// タイマーを停止
 		auto timer = dynamic_cast<Component_Timer*>(GetChildComponent("Timer"));
 		if (timer == nullptr)return;

@@ -11,7 +11,6 @@ Sprite::Sprite():
 //デストラクタ
 Sprite::~Sprite()
 {
-
 	SAFE_RELEASE(pVertexBuffer_);
 	SAFE_RELEASE(pIndexBuffer_);
 }
@@ -99,19 +98,28 @@ void Sprite::InitIndex()
 	Direct3D::pDevice_->CreateBuffer(&bd, &InitData, &pIndexBuffer_);
 }
 
-
-
 void Sprite::Draw(Transform& transform, RECT rect, float alpha)
 {
+	Draw(transform, rect, alpha, Direct3D::SHADER_2D);
+}
+
+void Sprite::Draw(Transform& transform, RECT rect, float alpha, Direct3D::SHADER_TYPE _shader)
+{
+	Draw(transform, rect, alpha, Direct3D::SHADER_2D,XMFLOAT3(1,1,1));
+}
+
+void Sprite::Draw(Transform& transform, RECT rect, float alpha, Direct3D::SHADER_TYPE _shader,XMFLOAT3 _color)
+{
 	//いろいろ設定
-	Direct3D::SetShader(Direct3D::SHADER_2D);
+	Direct3D::SetShader(_shader);
+	Direct3D::SetBlendMode(Direct3D::BLEND_DEFAULT);
+
 	UINT stride = sizeof(VERTEX);
 	UINT offset = 0;
 	Direct3D::pContext_->IASetVertexBuffers(0, 1, &pVertexBuffer_, &stride, &offset);
 	Direct3D::pContext_->VSSetConstantBuffers(0, 1, &pConstantBuffer_);
 	Direct3D::pContext_->PSSetConstantBuffers(0, 1, &pConstantBuffer_);
 	Direct3D::SetDepthBafferWriteEnable(false);
-
 
 	// インデックスバッファーをセット
 	stride = sizeof(int);
@@ -121,7 +129,6 @@ void Sprite::Draw(Transform& transform, RECT rect, float alpha)
 	// パラメータの受け渡し
 	D3D11_MAPPED_SUBRESOURCE pdata;
 	CONSTANT_BUFFER cb;
-
 
 	//表示するサイズに合わせる
 	XMMATRIX cut = XMMatrixScaling((float)rect.right, (float)rect.bottom ,1);
@@ -141,9 +148,8 @@ void Sprite::Draw(Transform& transform, RECT rect, float alpha)
 	XMMATRIX mTexel = mTexScale * mTexTrans;
 	cb.uvTrans = XMMatrixTranspose(mTexel);
 	
-
 	// テクスチャ合成色情報を渡す
-	cb.color = XMFLOAT4(1, 1, 1, alpha);
+	cb.color = XMFLOAT4(_color.x, _color.y, _color.z, alpha);
 
 	Direct3D::pContext_->Map(pConstantBuffer_, 0, D3D11_MAP_WRITE_DISCARD, 0, &pdata);	// GPUからのリソースアクセスを一時止める
 	memcpy_s(pdata.pData, pdata.RowPitch, (void*)(&cb), sizeof(cb));		// リソースへ値を送る
@@ -163,5 +169,8 @@ void Sprite::Draw(Transform& transform, RECT rect, float alpha)
 	Direct3D::SetShader(Direct3D::SHADER_3D);
 
 	Direct3D::SetDepthBafferWriteEnable(true);
-
 }
+
+
+
+

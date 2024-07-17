@@ -119,7 +119,7 @@ public:
 
 	//何かと衝突した場合に呼ばれる（オーバーライド用）
 	//引数：pTarget	衝突した相手
-	virtual void OnCollision(GameObject* pTarget,Collider* collider) {};
+	virtual void OnCollision(GameObject* pTarget) {};
 
 	//コライダー（衝突判定）を削除
 	void ClearCollider();

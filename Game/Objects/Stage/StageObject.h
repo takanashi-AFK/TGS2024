@@ -59,7 +59,7 @@ public:
 	/// <summary>
 	/// Õ“Ëˆ—
 	/// </summary>
-	void OnCollision(GameObject* _target, Collider*  _collider) override;
+	void OnCollision(GameObject* _target) override;
 
 	/// <summary>
 	/// •Û‘¶

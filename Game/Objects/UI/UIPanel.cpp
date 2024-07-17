@@ -33,7 +33,6 @@ void UIPanel::Draw()
 	// 各オブジェクトの描画処理
 	for (auto obj : childList_)
 	{
-		//obj->SortChildren();
 		obj->DrawData();
 	}
 }

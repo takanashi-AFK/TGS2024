@@ -258,6 +258,9 @@ void GameEditor::UIObjectClreateWindow()
 
 			if (ImGui::BeginCombo(":seting type", type.c_str())) {
 				for (int i = 0; i < UIType::UI_MAX; i++) {
+					std::string uiTypeString = GetUITypeString((UIType)i);
+					if (uiTypeString.empty()) continue; // 空文字列を無視
+
 					bool isSelected = (type == GetUITypeString((UIType)i));
 					if (ImGui::Selectable(GetUITypeString((UIType)i).c_str(), isSelected)) {
 						type = GetUITypeString((UIType)i);
@@ -296,7 +299,6 @@ void GameEditor::UIObjectClreateWindow()
 				// UIオブジェクトを作成・追加
 				UIObject* obj = CreateUIObject(nameBuffer, uitype, editUIPanel_,layerNumberCount_);
 				if (obj != nullptr) {
-					//editUIPanel_->AddUIObject(obj);
 					isShowCreateUIObjectWindow_ = false;
 					//レイヤー番号の更新
 					layerNumberCount_++;

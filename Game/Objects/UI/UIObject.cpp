@@ -283,6 +283,7 @@ string GetUITypeString(UIType _type)
 	case UI_BUTTON:return "BUTTON";
 	case UI_IMAGE:return "IMAGE";
 	case UI_TEXT:return "TEXT";
+	case UI_PANEL:return "";
 	default:return "UNKNOWN";
 	}
 }

@@ -70,7 +70,7 @@ void Component_BossBehavior::Release()
 {
 }
 
-void Component_BossBehavior::OnCollision(GameObject* _target)
+void Component_BossBehavior::OnCollision(GameObject* _target, Collider* _collider)
 {
 }
 

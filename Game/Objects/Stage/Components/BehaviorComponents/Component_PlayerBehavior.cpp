@@ -186,7 +186,7 @@ void Component_PlayerBehavior::DrawData()
     ImGui::Text("%f", timer->GetNowTime());
 }
 
-void Component_PlayerBehavior::OnCollision(GameObject* _target)
+void Component_PlayerBehavior::OnCollision(GameObject* _target, Collider* _collider)
 {
 }
 

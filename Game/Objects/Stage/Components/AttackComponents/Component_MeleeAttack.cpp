@@ -27,22 +27,28 @@ void Component_MeleeAttack::Update()
 
 	if (!isActive_) return;
 
+
 	Collider* collider = dynamic_cast<BoxCollider*>(holder_->GetCollider(0));
 	if (!collider) return;
 
 	{
 		XMFLOAT3 front{};
 
+		// 正面ベクトルがなかったら
 		if (XMVector3Equal(forward_, XMVectorZero())) {
+			// 前回の正面ベクトルを使う
 			forward_ = prevFrontVec_;
 		}
 
+		// 正面ベクトルを取得
 		XMStoreFloat3(&front, forward_);
 
 		prevFrontVec_ = forward_;
 
-	collider->SetCenter(front);
+		// 正面ベクトルを使ってコライダーの中心を更新
+		collider->SetCenter(front);
 
+		// 時間がたったら中心に戻す
 		if (AutoDelete(0.03f)) {
 			collider->SetCenter(XMFLOAT3{ 0, 0, 0 });
 			Stop();
@@ -76,7 +82,7 @@ bool Component_MeleeAttack::AutoDelete(float _time)
 	return false;
 }
 
-void Component_MeleeAttack::OnCollision(GameObject* _target)
+void Component_MeleeAttack::OnCollision(GameObject* _target, Collider* _collider)
 {
 	if (!isActive_ || isHit_) return;
 

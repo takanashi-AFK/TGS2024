@@ -2,10 +2,12 @@
 
 // インクルード
 #include "../../../../Engine/Json/JsonReader.h"
+#include "../../../../Engine/Collider/Collider.h"
 
 // 前方宣言
 class StageObject;
 class GameObject;
+
 
 // using宣言
 using std::vector;
@@ -79,7 +81,7 @@ public:
 	/// <summary>
 	/// 衝突処理
 	/// </summary>
-	virtual void OnCollision(GameObject* _target) {};
+	virtual void OnCollision(GameObject* _target, Collider* _collider) {};
 
 	/// <summary>
 	/// 保存
@@ -116,7 +118,7 @@ public:
 	/// <summary>
 	/// 衝突処理
 	/// </summary>
-	void ChildOnCollision(GameObject* _target);
+	void ChildOnCollision(GameObject* _target, Collider* _collider);
 
 	/// <summary>
 	/// 自身＆子コンポーネントを描画

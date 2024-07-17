@@ -68,13 +68,13 @@ void Component::ChildRelease()
 	this->Release();
 }
 
-void Component::ChildOnCollision(GameObject* _target)
+void Component::ChildOnCollision(GameObject* _target, Collider* _collider)
 {
 	// 自身の衝突処理
-	this->OnCollision(_target);
+	this->OnCollision(_target,_collider);
 
 	// 子コンポーネントの衝突処理
-	for (auto comp : childComponents_)comp->ChildOnCollision(_target);
+	for (auto comp : childComponents_)comp->ChildOnCollision(_target,_collider);
 }
 
 void Component::ChildDrawData()

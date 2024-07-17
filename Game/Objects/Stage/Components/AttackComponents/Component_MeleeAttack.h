@@ -18,7 +18,7 @@ public:
 
 	bool AutoDelete(float _time);
 
-	void OnCollision(GameObject* _target) override;
+	void OnCollision(GameObject* _target, Collider* _collider) override;
 
 	void SetForward(XMVECTOR _forward) { forward_ = _forward; }
 };

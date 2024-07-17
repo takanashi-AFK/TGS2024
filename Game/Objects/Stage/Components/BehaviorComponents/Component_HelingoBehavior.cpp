@@ -80,7 +80,7 @@ void Component_HelingoBehavior::Release()
 {
 }
 
-void Component_HelingoBehavior::OnCollision(GameObject* _target)
+void Component_HelingoBehavior::OnCollision(GameObject* _target, Collider* _collider)
 {
 	// ƒvƒŒƒCƒ„[‚ÆÕ“Ë‚µ‚½ê‡
 	if (_target->GetObjectName() == "Char_Player") {

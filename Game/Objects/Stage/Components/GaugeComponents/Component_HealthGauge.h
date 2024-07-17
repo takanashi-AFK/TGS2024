@@ -69,5 +69,7 @@ public:
 	/// </summary>
 	void Reset();
 
+	float GetIsDead() const { return (nowHp_ <= 0); }
+
 	
 };

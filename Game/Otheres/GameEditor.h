@@ -46,6 +46,9 @@ private:
 
 	XMFLOAT3 cameraPosition_;			// ƒJƒƒ‰‚ÌˆÊ’u
 	XMFLOAT3 cameraTarget_;				// ƒJƒƒ‰‚Ì‰ñ“]
+
+	XMFLOAT3 threeDCamMove_{};
+
 public:
 	GameEditor(GameObject* _parent);
 	void Initialize() override;

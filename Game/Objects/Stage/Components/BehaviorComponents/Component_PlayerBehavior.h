@@ -20,7 +20,7 @@ public:
 	void Release() override;
 	void DrawData() override;
 	
-	void OnCollision(GameObject* _target) override;	
+	void OnCollision(GameObject* _target, Collider* _collider) override;
 
 	//bool IsEnemyInRect(StageObject* _target);
 

@@ -24,3 +24,8 @@ std::string FileManager::GetAssetsRelativePath(const std::string& absolutePath)
 		return absolutePath;
 	}
 }
+
+XMFLOAT3 operator+(XMFLOAT3& a, const XMFLOAT3& b)
+{
+	return XMFLOAT3(a.x + b.x, a.y + b.y, a.z + b.z);
+}

@@ -274,7 +274,7 @@ UIObject* CreateUIObject(string _name, UIType _type,UIObject* _parent, int _laye
 	{
 		case UI_BUTTON:obj = new UIButton(_name, _parent,_layerNum); break;
 		case UI_IMAGE:obj = new UIImage(_name, _parent,_layerNum); break;
-		case UI_TEXT:break;
+		case UI_TEXT:obj = new UIText(_name, _parent, _layerNum); break;
 		case UI_PANEL:obj = UIPanel::GetInstance(); break;
 		case UI_PROGRESSBAR: obj = new UIProgressBar(_name, _parent, _layerNum); break;
         default:obj = nullptr; break;

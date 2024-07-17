@@ -27,10 +27,6 @@ void UIProgressBar::Initialize()
 
 void UIProgressBar::Update()
 {
-    // 参照するゲージコンポーネントが設定されていない場合は、読み込む
-    if (referenceGauge_.this_ == nullptr){
-        referenceGauge_.this_ = (Component_Gauge*)((Stage*)FindObject("Stage"))->FindComponent(referenceGauge_.thisName_);
-    }
     // 参照するゲージコンポーネントがいない場合は、処理を終了
     if (referenceGauge_.this_ == nullptr) return;
 

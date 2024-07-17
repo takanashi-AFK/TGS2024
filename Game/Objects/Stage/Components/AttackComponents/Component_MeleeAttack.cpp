@@ -90,11 +90,11 @@ void Component_MeleeAttack::OnCollision(GameObject* _target, Collider* _collider
 	if (!target) return;
 
 	for (auto hm : target->FindComponent(HealthGauge)) {
-		((Component_HealthGauge*)hm)->TakeDamage(power_);
-		isHit_ = true; 
-
-		if (((Component_HealthGauge*)hm)->GetNow() <= 0.f) {
+		((Component_HealthGauge*)hm)->TakeDamage(20);
+		if (((Component_HealthGauge*)hm)->GetIsDead()) {
 			((Stage*)holder_->FindObject("Stage"))->DeleteStageObject((StageObject*)_target);
 		}
+		isHit_ = true;
 	}
+
 }

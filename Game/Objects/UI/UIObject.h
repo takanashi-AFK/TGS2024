@@ -1,7 +1,10 @@
 #pragma once
-#include "../../../Engine/GameObject/GameObject.h"
 #include <vector>
 #include "../../../Engine/Json/JsonReader.h"
+#include "../../../../../Engine/GameObject/Transform.h"
+#include "../../../../../Engine/Collider/BoxCollider.h"
+#include "../../../../../Engine/Collider/SphereCollider.h"
+
 
 using std::vector;
 
@@ -11,10 +14,11 @@ enum UIType {
 	UI_IMAGE,
 	UI_TEXT,
 	UI_PROGRESSBAR,
+	UI_PANEL,
 	UI_MAX,
 };
 
-class UIObject : public GameObject
+class UIObject
 {
 private:
 	bool isPositionLocked_;
@@ -22,16 +26,47 @@ private:
 	bool isScaleLocked_;
 
 protected:
+	std::string objectName_; // オブジェクト名
+	Transform transform_; // 位置や向きなどを管理するオブジェクト
 	bool isEnable_;	// 有効かどうか
 	UIType type_;	// UIの種類
+	int layerNumber_; // レイヤー番号
+	std::vector<UIObject*> childList_;  // 子オブジェクトのリスト
+	UIObject* pParent_;// 親オブジェクト
+
+	//フラグ
+	struct UI_STATE
+	{
+		unsigned initialized : 1;	//初期化済みか
+		unsigned entered : 1;		//更新するか
+		unsigned visible : 1;		//描画するか
+		unsigned dead : 1;			//削除するか
+	};
+	UI_STATE state_;
 
 public:
-	UIObject(string _name,UIType _type,GameObject* parent);
-   
-	virtual void Initialize() override{}
-	virtual void Update() override{}
-	virtual void Draw() override{}
-	virtual void Release() override{}
+
+	//コンストラクタ
+	UIObject();
+	UIObject(UIObject* parent);
+	UIObject(string _name, UIType _type, UIObject* parent, int _layerNum);
+
+	//デストラクタ
+	virtual ~UIObject();
+
+	//各オブジェクトで必ず作る関数
+	virtual void Initialize() {};
+	virtual void Update() {};
+	virtual void Draw() {};
+	virtual void Release() {};
+
+	//自分の該当関数を読んだ後、子供の関数も呼ぶ
+	void UpdateSub();
+	void DrawSub();
+	void ReleaseSub();
+
+	bool IsDead(); //削除するかどうか
+
 
 	virtual void Save(json& saveObj) {};
 	virtual void Load(json& loadObj) {};
@@ -48,7 +83,52 @@ public:
 	void UnlockPosition() { isPositionLocked_ = false; }
 	void UnlockRotate() { isRotateLocked_ = false; }
 	void UnlockScale() { isScaleLocked_ = false; }
+
+	void KillMe();	// 自分を削除する
+
+	//名前でオブジェクトを検索（対象は自分の子供以下）
+	//引数：name	検索する名前
+	//戻値：見つけたオブジェクトのアドレス（見つからなければnullptr）
+	UIObject* FindChildObject(const std::string& name);
+	UIObject* FindObject(const std::string& name){ return GetRootJob()->FindChildObject(name); }
+
+
+	//オブジェクトの名前を取得
+	//戻値：名前
+	const std::string& GetObjectName(void) const;
+
+	//Rootオブジェクトを取得(UIPanel)
+	UIObject* GetRootJob();
+
+	//親オブジェクトを取得
+	UIObject* GetParent();
+
+	/// <summary>
+	/// 子オブジェクトを追加(リストの最後へ)
+	/// </summary>
+	/// <param name="obj"></param>
+	void PushBackChild(UIObject* obj);
+
+	/// <summary>
+	/// 新しいレイヤー番号を設定
+	/// </summary>
+	/// <param name="newLayerNumber_">新しいレイヤー番号</param>
+	void SetLayerNumber(int newLayerNumber_);
+	// Getter
+	int GetLayerNumber() { return layerNumber_; }
+
+	/// <summary>
+	/// レイヤーが重複しているかどうか
+	/// </summary>
+	/// <param name="newLayerNumber_"></param>
+	/// <returns></returns>
+	bool IsLayerNumberDuplicate(int newLayerNumber_);
+
+	//オブジェクトをレイヤー番号で比較するための関数
+	static bool CompareLayerNumber(UIObject* _object1, UIObject* _object2);
+
 };
 
-UIObject* CreateUIObject(string _name, UIType _type, GameObject* _parent);
+UIObject* CreateUIObject(string _name, UIType _type, UIObject* _parent, int _layerNum);
 string GetUITypeString(UIType _type);
+

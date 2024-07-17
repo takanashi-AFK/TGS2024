@@ -40,12 +40,12 @@ void Scene_Play::Initialize()
 		//}
 	}
 
-	TPSCamera* tpsCamera = Instantiate<TPSCamera>(this); {
-		json camData;
-		if (JsonReader::Load("Datas/CameraLayouts/TPSCamera.json", camData)) {
-			tpsCamera->Load(camData);
-		}
-	}
+	//TPSCamera* tpsCamera = Instantiate<TPSCamera>(this); {
+	//	json camData;
+	//	if (JsonReader::Load("Datas/CameraLayouts/TPSCamera.json", camData)) {
+	//		tpsCamera->Load(camData);
+	//	}
+	//}
 }
 
 void Scene_Play::Update()

@@ -18,7 +18,7 @@ namespace {
 
 
 GameEditor::GameEditor(GameObject* _parent)
-	:GameObject(_parent, "StageEditor"), editStage_(nullptr), selectEditStageObjectIndex_(-1), editUIPanel_(nullptr), selectEditUIObjectIndex_(-1), editType_(NONE),cameraType_(TPS)
+	:GameObject(_parent, "StageEditor"), editStage_(nullptr), selectEditStageObjectIndex_(-1), editUIPanel_(nullptr), selectEditUIObjectIndex_(-1), editType_(NONE),layerNumberCount_(1)
 {
 }
 
@@ -208,16 +208,21 @@ void GameEditor::DrawDatalsCamera()
 		ImGui::DragFloat3("Camera position", &cameraPosition_.x);
 		// カメラの焦点を設定
 		ImGui::DragFloat3("Camera target", &cameraTarget_.x);
-		// カメラの位置を設定
-		Camera::SetPosition(cameraPosition_);
-		// カメラの焦点を設定
-		Camera::SetTarget(cameraTarget_);
 
-		if (ImGui::Button("Default"))
-		{
-			cameraPosition_ = {0,30,-20};
-			cameraTarget_ = {0,-20,20};
+		ImGui::DragFloat3("3D CamMove", &threeDCamMove_.x);
+		// 初期化ボタン
+		if (ImGui::Button("Default")){
+			cameraPosition_ = { 0,30,-20 };
+			cameraTarget_   = { 0,-20,20 };
+			threeDCamMove_  = { 0,0,0 };
 		}
+		
+		
+		// カメラの位置を設定
+		Camera::SetPosition(cameraPosition_ + threeDCamMove_);
+		// カメラの焦点を設定
+		Camera::SetTarget(cameraTarget_ + threeDCamMove_);
+
 		break;
 
 	case TPS:
@@ -264,6 +269,9 @@ void GameEditor::UIObjectClreateWindow()
 
 			if (ImGui::BeginCombo(":seting type", type.c_str())) {
 				for (int i = 0; i < UIType::UI_MAX; i++) {
+					std::string uiTypeString = GetUITypeString((UIType)i);
+					if (uiTypeString.empty()) continue; // 空文字列を無視
+
 					bool isSelected = (type == GetUITypeString((UIType)i));
 					if (ImGui::Selectable(GetUITypeString((UIType)i).c_str(), isSelected)) {
 						type = GetUITypeString((UIType)i);
@@ -276,13 +284,35 @@ void GameEditor::UIObjectClreateWindow()
 				ImGui::EndCombo();
 			}
 
+
+			//レイヤー番号を入力
+			static int beforeLayerNumber = -1; //直前のレイヤー番号
+			bool isLayerNumberDuplicate = false; //レイヤー番号が重複しているか
+			ImGui::InputInt("LayerNumber", &layerNumberCount_);
+			//重複チェック
+			for (const auto& uiObject : editUIPanel_->GetUIObjects()) {
+				if (uiObject->GetLayerNumber() == layerNumberCount_) {
+					isLayerNumberDuplicate = true;
+					break;
+				}
+			}
+
+			if (layerNumberCount_ <= 0) {
+				layerNumberCount_ = 1;
+			}
+
+			//警告表示
+			if (isLayerNumberDuplicate) {
+				ImGui::TextColored(ImVec4(1, 0, 0, 1), "LayerNumber is duplicated");
+			}
 			// 生成ボタン
-			if (ImGui::Button("Create")) {
+			if (ImGui::Button("Create") && !isLayerNumberDuplicate) {
 				// UIオブジェクトを作成・追加
-				UIObject* obj = CreateUIObject(nameBuffer, uitype, editUIPanel_);
+				UIObject* obj = CreateUIObject(nameBuffer, uitype, editUIPanel_,layerNumberCount_);
 				if (obj != nullptr) {
-					editUIPanel_->AddUIObject(obj);
 					isShowCreateUIObjectWindow_ = false;
+					//レイヤー番号の更新
+					layerNumberCount_++;
 				}
 			}
 		}

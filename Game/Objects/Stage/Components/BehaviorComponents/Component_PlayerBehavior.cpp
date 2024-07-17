@@ -56,8 +56,8 @@ void Component_PlayerBehavior::Update()
     if (melee == nullptr)return;
 
     frontVec_ = move->GetMoveDirction();
-
-    //melee->SetForward(frontVec_);
+    melee->SetForward(frontVec_);
+   
 
     // HPゲージの表示
     ImGui::ProgressBar(progress, ImVec2(0.0f, 0.0f), "Player HP");
@@ -186,7 +186,7 @@ void Component_PlayerBehavior::DrawData()
     ImGui::Text("%f", timer->GetNowTime());
 }
 
-void Component_PlayerBehavior::OnCollision(GameObject* _target)
+void Component_PlayerBehavior::OnCollision(GameObject* _target, Collider* _collider)
 {
 }
 

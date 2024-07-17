@@ -1,32 +1,41 @@
 #pragma once
-#include "../../../Engine/GameObject/GameObject.h"
 #include "../../../Engine/Json/JsonReader.h"
 #include <vector>
+#include "UIObject.h"
 
-class UIObject;
 
 using std::vector;
 
-class UIPanel : public GameObject
+
+class UIPanel : public UIObject
 {
 private:
-	vector<UIObject*> objects_;
+
+	//シングルトンインスタンス
+	static UIPanel* instance_;
+
+	//コンストラクタ
+	UIPanel();
+
 public:
-	UIPanel(GameObject* parent);
+
+	//シングルトンインスタンスの取得
+	static UIPanel* GetInstance();
+	
 	void Initialize() override;
 	void Update() override;
 	void Draw() override;
 	void Release() override;
 
-	void Save(json& _saveObj);
-	void Load(json& _loadObj);
-	void DrawData();
+	void Save(json& _saveObj)override;
+	void Load(json& _loadObj)override;
+	void DrawData()override;
 
-	void AddUIObject(UIObject* _object);
 	void DeleteUIObject(UIObject* _object);
 	void DeleteAllUIObject();
 
-	UIObject* GetUIObject(string _name);
-	vector<UIObject*> GetUIObjects() { return objects_; };
+	//レイヤー番号順にソート
+	void SortUIObject();
+	vector<UIObject*> GetUIObjects() { return childList_; };
 };
 

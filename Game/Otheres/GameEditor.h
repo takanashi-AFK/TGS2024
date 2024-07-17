@@ -39,6 +39,7 @@ private:
 	EditType editType_;				// 編集対象の種類
 
 	bool isShowCreateUIObjectWindow_;	// UIオブジェクト作成ウィンドウを表示するか
+	int layerNumberCount_;			// レイヤー番号のカウント
 
 	CameraType cameraType_;			// カメラの種類
 
@@ -46,6 +47,9 @@ private:
 
 	XMFLOAT3 cameraPosition_;			// カメラの位置
 	XMFLOAT3 cameraTarget_;				// カメラの回転
+
+	XMFLOAT3 threeDCamMove_{};
+
 public:
 	GameEditor(GameObject* _parent);
 	void Initialize() override;

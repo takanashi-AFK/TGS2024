@@ -3,8 +3,8 @@
 #include "../../../Engine/ImGui/imgui.h"
 #include "../../../Engine/DirectX/Direct3D.h"
 
-UIText::UIText(string _name, GameObject* parent)
-	: UIObject(_name, UI_TEXT, parent), pText_(nullptr), drawText_(""), size_(1.f), floatNum_(nullptr)
+UIText::UIText(string _name, UIObject* parent,int _layerNum)
+	: UIObject(_name, UI_TEXT, parent, _layerNum), pText_(nullptr), drawText_(""), size_(1.f), floatNum_(nullptr)
 {
 }
 

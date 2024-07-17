@@ -13,7 +13,7 @@ private:
 	float* floatNum_;
 
 public:
-	UIText(string _name, GameObject* parent);
+	UIText(string _name, UIObject* parent, int _layerNum);
 	void Initialize() override;
 	void Update() override;
 	void Draw() override;

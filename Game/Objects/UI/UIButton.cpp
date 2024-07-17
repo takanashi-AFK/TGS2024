@@ -7,8 +7,8 @@
 
 using namespace FileManager;
 
-UIButton::UIButton(string _name, GameObject* parent)
-	: UIObject(_name, UIType::UI_BUTTON, parent),imageHandle_(-1),imageFilePath_()
+UIButton::UIButton(string _name, UIObject* parent , int _layerNum)
+	: UIObject(_name, UIType::UI_BUTTON, parent, _layerNum), imageHandle_(-1), imageFilePath_()
 {
 }
 

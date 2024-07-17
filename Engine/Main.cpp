@@ -10,6 +10,8 @@
 
 #include "global.h"
 #include "GameObject/RootObject.h"
+#include "../Game/Objects/UI/UIPanel.h"
+#include "../Game/Otheres/GameEditor.h"
 #include "ResourceManager/Model.h"
 #include "ResourceManager/Image.h"
 #include "GameObject/Camera.h"
@@ -33,7 +35,6 @@
 
 //定数宣言
 const char* WIN_CLASS_NAME = "SampleGame";	//ウィンドウクラス名
-
 
 //プロトタイプ宣言
 HWND InitApp(HINSTANCE hInstance, int screenWidth, int screenHeight, int nCmdShow);
@@ -97,6 +98,12 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	//すべてのゲームオブジェクトの親となるオブジェクト
 	RootObject* pRootObject = new RootObject;
 	pRootObject->Initialize();
+
+	//UIPanelのインスタンス取得と初期化
+	UIPanel* pUIPanel_ = UIPanel::GetInstance();
+	pUIPanel_->Initialize();
+
+
 
 
 	//メッセージループ（何か起きるのを待つ）
@@ -169,6 +176,9 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 				//ルートオブジェクトのUpdateを呼んだあと、自動的に子、孫のUpdateが呼ばれる
 				pRootObject->UpdateSub();
 
+				pUIPanel_->UpdateSub();
+
+
 				//カメラを更新
 				Camera::Update();
 
@@ -187,6 +197,9 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 				//全オブジェクトを描画
 				//ルートオブジェクトのDrawを呼んだあと、自動的に子、孫のUpdateが呼ばれる
 				pRootObject->DrawSub();
+
+				pUIPanel_->DrawSub();
+
 
 				// effekseerの描画
 				EFFEKSEERLIB::gEfk->Draw();/*★★★*/
@@ -226,6 +239,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	Model::AllRelease();
 	Image::AllRelease();
 	pRootObject->ReleaseSub();
+	pUIPanel_->ReleaseSub();
 	SAFE_DELETE(pRootObject);
 	Direct3D::Release();
 

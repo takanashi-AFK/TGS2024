@@ -3,11 +3,13 @@
 // インクルード
 #include "../../Engine/GameObject/GameObject.h"
 
+
 /// <summary>
 /// テストシーンを管理するクラス
 /// </summary>
 class Scene_Test : public GameObject
 {
+
 public:
 	/// <summary>
 	/// コンストラクタ

@@ -117,15 +117,21 @@ void UIObject::ChildDrawData()
 		//こっちの方がエディター上の動きは分かりやすいかも
 		//layerNumberを変更する
 		// レイヤー番号の変更を受け付ける
-		static int newLayerNumber = layerNumber_;
-		if (ImGui::InputInt("Layer Number", &newLayerNumber))
-		{
-			// newLayerNumberが現在のレイヤー番号と異なる場合に更新を試みる
+		 static int newLayerNumber = layerNumber_;
+
+		if(newLayerNumber < 0)newLayerNumber = 1;
+
+		ImGui::InputInt("Layer Number", &newLayerNumber);
+
+		if (ImGui::Button("Confirm")) {
+
 			if (newLayerNumber != layerNumber_)
 			{
 				SetLayerNumber(newLayerNumber);
 			}
+
 		}
+
 
 		//レイヤー番号が重複している場合はポップアップを表示
 		if (ImGui::BeginPopupModal("LayerNumberDuplicate", NULL, ImGuiWindowFlags_AlwaysAutoResize))
@@ -210,8 +216,11 @@ void UIObject::PushBackChild(UIObject* obj)
 
 void UIObject::SetLayerNumber(int newLayerNumber_)
 {
-	//新しいレイヤー番号が0以下なら1にする
-	if (newLayerNumber_ <= 0)newLayerNumber_ = 1;
+	////新しいレイヤー番号が0以下なら1にする
+	//if (newLayerNumber_ <= 0) {
+	//	ImGui::OpenPopup("LayerNumberisUnder_0");
+	//	return;
+	//}
 
 	//重複チェック
 	UIObject* root = GetRootJob();//ここはparentでもいいんじゃないかと思う(予想)

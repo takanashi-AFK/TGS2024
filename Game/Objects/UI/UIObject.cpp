@@ -106,23 +106,6 @@ void UIObject::ChildDrawData()
 		ImGui::TreePop();
 	}
 
-
-	//// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
-	//// レイヤー番号を描画
-	//// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
-	//if (ImGui::TreeNode("LayerNumber"))
-	//{
-	//	ImGui::Text("Image Layer Number: %d", GetLayerNumber());
-
-	//	//layerNumberを変更する
-	//	ImGui::InputInt("Layer Number", &layerNumber_);
-	//	//layerNumbertが0以下場合は1にする
-	//	if (layerNumber_ <= 0)layerNumber_ = 1;
-
-	//	ImGui::TreePop();
-	//}
-	
-	
 	// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
 	// レイヤー番号を描画
 	// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
@@ -143,22 +126,7 @@ void UIObject::ChildDrawData()
 				SetLayerNumber(newLayerNumber);
 			}
 		}
-		
 
-		//エディター上だと動きがちょっと分かりずらい
-		/*
-		//layerNumberを変更する
-		static int newLayerNumber = layerNumber_;
-		ImGui::InputInt("Layer Number", &newLayerNumber);
-		if (newLayerNumber <= 0)newLayerNumber = 1;
-
-		// レイヤー番号を変更するボタン
-		if (ImGui::Button("Change Layer Number"))
-		{
-			SetLayerNumber(newLayerNumber);
-		}
-		*/
-		
 		//レイヤー番号が重複している場合はポップアップを表示
 		if (ImGui::BeginPopupModal("LayerNumberDuplicate", NULL, ImGuiWindowFlags_AlwaysAutoResize))
 		{

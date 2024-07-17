@@ -35,14 +35,7 @@ void UIPanel::Draw()
 	{
 		//obj->SortChildren();
 		obj->DrawData();
-
 	}
-
-	//SortChildren();
-
-	/*SortUIObject();
-	DrawData();*/
-
 }
 
 void UIPanel::Release()
@@ -70,9 +63,6 @@ void UIPanel::Load(json& _loadObj)
 
 		// オブジェクト情報を読込
 		obj->ChildLoad(it.value());
-
-		// オブジェクトをリストに追加
-		//AddUIObject(obj);
 	}
 }
 
@@ -85,12 +75,6 @@ void UIPanel::DrawData()
 	}
 }
 
-//void UIPanel::AddUIObject(UIObject* _object)
-//{
-//	// リストに追加
-//	if (_object != nullptr)childList_.push_back(_object);
-//}
-
 void UIPanel::DeleteUIObject(UIObject* _object)
 {
 	// オブジェクトを削除する
@@ -100,14 +84,6 @@ void UIPanel::DeleteUIObject(UIObject* _object)
 	auto it = std::find(childList_.begin(), childList_.end(), _object);
 	// イテレータが見つかった場合、ベクターから削除する
 	if (it != childList_.end()) childList_.erase(it);
-
-	////chaildList_にある子オブジェクトのReleaseを呼ぶ
-	//for (auto obj : childList_) {
-	//	obj->Release();
-	//}
-
-
-
 }
 
 void UIPanel::DeleteAllUIObject()

@@ -28,8 +28,6 @@ void UIImage::Draw()
 
 void UIImage::Release()
 {
-    //©g‚ğíœ
-	//Image::Release(imageHandle_);
 }
 
 void UIImage::Save(json& saveObj)

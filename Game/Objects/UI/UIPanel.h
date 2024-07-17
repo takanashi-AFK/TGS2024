@@ -31,20 +31,11 @@ public:
 	void Load(json& _loadObj)override;
 	void DrawData()override;
 
-	//void AddUIObject(UIObject* _object);
 	void DeleteUIObject(UIObject* _object);
 	void DeleteAllUIObject();
 
 	//レイヤー番号順にソート
 	void SortUIObject();
 	vector<UIObject*> GetUIObjects() { return childList_; };
-
-	// セッターを追加
-	void SetName(const std::string& name){ objectName_ = name; }
-	void SetParent(UIObject* parent) { pParent_ = parent; }
-	void SetLayerNum(int layerNum) { layerNumber_ = layerNum; }
-
-
-
 };
 

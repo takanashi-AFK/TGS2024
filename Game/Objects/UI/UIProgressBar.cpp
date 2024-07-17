@@ -9,8 +9,8 @@
 #include "../../../Game/Objects/Stage/Components/Component.h"
 
 
-UIProgressBar::UIProgressBar(string _name, GameObject* parent)
-    :UIObject(_name, UIType::UI_PROGRESSBAR, parent)
+UIProgressBar::UIProgressBar(string _name, UIObject* parent,int _layerNum)
+    :UIObject(_name, UIType::UI_PROGRESSBAR, parent, _layerNum)
 {
 }
 

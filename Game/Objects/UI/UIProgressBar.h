@@ -38,7 +38,7 @@ private:
     }referenceGauge_;
 
 public:
-    UIProgressBar(std::string _name, GameObject* parent);
+    UIProgressBar(std::string _name, UIObject* parent, int _layerNum);
     void Initialize() override;
     void Update() override;
     void Draw() override;

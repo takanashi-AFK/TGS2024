@@ -276,7 +276,7 @@ UIObject* CreateUIObject(string _name, UIType _type,UIObject* _parent, int _laye
 		case UI_IMAGE:obj = new UIImage(_name, _parent,_layerNum); break;
 		case UI_TEXT:break;
 		case UI_PANEL:obj = UIPanel::GetInstance(); break;
-		case UI_PROGRESSBAR: obj = new UIProgressBar(_name, _parent); break;
+		case UI_PROGRESSBAR: obj = new UIProgressBar(_name, _parent, _layerNum); break;
         default:obj = nullptr; break;
 	}
 	// インスタンスが生成できなかった場合はnullptrを返す

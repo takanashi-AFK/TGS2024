@@ -14,7 +14,7 @@ UIButton::UIButton(string _name, GameObject* parent)
 
 void UIButton::Initialize()
 {
-	LockRotate();
+	//LockRotate();
 
 }
 
@@ -156,8 +156,8 @@ bool UIButton::IsMouseOver(XMFLOAT2 _mousePosition)
 	}
 
 	// 画像の半分のサイズを取得
-	float imageHelfWidth = imageSize.x / 2.f;
-	float imageHelfHeight = imageSize.y / 2.f;
+	//float imageHelfWidth = imageSize.x /2.f;
+	//float imageHelfHeight = imageSize.y/2.f;
 
 	//    // 画像の中心座標を取得
 	//    XMFLOAT2 center = { transform_.position_.x,transform_.position_.y };
@@ -174,13 +174,26 @@ bool UIButton::IsMouseOver(XMFLOAT2 _mousePosition)
 	//    // 判定範囲内にマウスカーソルが入っているかどうかを返す
 	//    return (_mousePosition.x >= left && _mousePosition.x <= right && _mousePosition.y >= top && _mousePosition.y <= bottom);
 
+	//画像のサイズを取得
+	float imageWidth = imageSize.x;
+	float imageHeight = imageSize.y;
+
 	//行列取得
 	XMMATRIX buttonMat = transform_.GetWorldMatrix();
 
 	//逆行列計算
 	XMMATRIX buttonMattrix = XMMatrixInverse(nullptr, buttonMat);
 
-	XMVECTOR mouseVecPos = XMVectorSet(_mousePosition.x, _mousePosition.y, 0, 0);
+	//マウスのポジションをベクターに変換
+	XMVECTOR mouseVecPos = XMVectorSet(_mousePosition.x, _mousePosition.y, 0.0f, 0.0f);
+
+	//逆行列とベクター型のマウスのポジションをかける
+	XMVECTOR localMousePos = XMVector2TransformCoord(mouseVecPos, buttonMattrix);
+
+	XMFLOAT2 currentMousePos;
+	XMStoreFloat2(&currentMousePos, localMousePos);
+
+	return (currentMousePos.x >= -imageWidth && currentMousePos.x <= imageHeight && currentMousePos.y >= -imageHeight&& currentMousePos.y <= imageHeight);
 }
 
 void UIButton::ConvertToImageCoordinates(XMFLOAT2& _position)

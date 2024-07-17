@@ -14,7 +14,7 @@ UIButton::UIButton(string _name, GameObject* parent)
 
 void UIButton::Initialize()
 {
-	LockRotate();
+	//LockRotate();
 
 }
 
@@ -189,7 +189,7 @@ bool UIButton::IsMouseOver(XMFLOAT2 _mousePosition)
 	XMFLOAT2 currentMousePos;
 	XMStoreFloat2(&currentMousePos, localMousePos);
 
-	return (currentMousePos.x >= -imageHelfWidth *2&& currentMousePos.x <= imageHelfWidth*2 && currentMousePos.y >= -imageHelfHeight*2 && currentMousePos.y <= imageHelfHeight*2);
+	return (currentMousePos.x >= -imageHelfWidth *2&& currentMousePos.x <= imageHelfWidth*2 && currentMousePos.y >= -imageHelfHeight&& currentMousePos.y <= imageHelfHeight);
 }
 
 void UIButton::ConvertToImageCoordinates(XMFLOAT2& _position)

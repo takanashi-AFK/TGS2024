@@ -28,8 +28,12 @@ void TPSCamera::Update()
 	if (isActive_ == false)return;
 
     if (pTarget_ == nullptr) pTarget_ = FindObject(targetName_);
-    if (pTarget_ == nullptr) return;
+    if (pTarget_ == nullptr) {
 
+        Camera::SetPosition({ 0,30,-20 });
+        Camera::SetTarget({ 0,-20,20 });
+        return;
+    }
     // カメラの焦点・位置を格納する変数を用意
     XMFLOAT3 camTarget{};
     XMFLOAT3 camPosition{};

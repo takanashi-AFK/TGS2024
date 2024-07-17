@@ -64,6 +64,7 @@ public:
 	void LoadUIPanel();
 
 	void SetTPSCamera(TPSCamera* _tpsCamera) { tpsCamera_ = _tpsCamera; }
+	void SetCameraType(CameraType _cameraType) { cameraType_ = _cameraType; }
 private:
 	void DrawWorldOutLiner();
 	void DrawStageOutLiner();

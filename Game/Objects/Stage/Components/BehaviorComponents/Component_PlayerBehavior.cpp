@@ -57,10 +57,12 @@ void Component_PlayerBehavior::Update()
 
     frontVec_ = move->GetMoveDirction();
     melee->SetForward(frontVec_);
-   
 
-    // HPゲージの表示
-    ImGui::ProgressBar(progress, ImVec2(0.0f, 0.0f), "Player HP");
+    if (frontVec_.m128_f32[0] != 0.f ||
+        frontVec_.m128_f32[1] != 0.f ||
+        frontVec_.m128_f32[2] != 0.f) {
+        holder_->PlayAnimation(0, 60, 1);
+    }
 
 
     auto shoot = dynamic_cast<Component_ShootAttack*>(GetChildComponent("ShootAttack"));
@@ -91,39 +93,6 @@ void Component_PlayerBehavior::Update()
 
             int hGroundModel = obj->GetModelHandle();
             if (hGroundModel < 0) continue;
-
-    //        RayCastData data;
-    //        data.start = camPos;  // レイの発射位置
-
-    //        // オブジェクトの逆行列を取得
-    //        XMMATRIX objMatrixInv = XMMatrixInverse(nullptr, obj->GetWorldMatrix());
-
-    //        // レイの開始位置をオブジェクトのローカル座標に変換
-    //        XMVECTOR startVec = XMLoadFloat3(&data.start);
-    //        startVec = XMVector3TransformCoord(startVec, objMatrixInv);
-    //        XMStoreFloat3(&data.start, startVec);
-
-    //        // レイの方向をオブジェクトのローカル座標に変換
-    //        XMVECTOR dirVec = sightLine; // sightLineを使用
-    //        dirVec = XMVector3TransformCoord(dirVec, objMatrixInv);
-    //        dirVec = XMVector3Normalize(dirVec);
-    //        XMStoreFloat3(&data.dir, dirVec);
-
-    //        Model::RayCast(hGroundModel, &data);  // レイを発射
-
-    //        // レイが当たったら
-    //        if (data.hit) {
-    //            // レイの情報をリストに追加
-    //            rayHitObjectList_.push_back(data);
-    //            hitObject = obj;
-
-    //            // ヒット位置のワールド座標を計算
-    //            XMVECTOR hitPosLocal = XMLoadFloat3(&data.pos); // ヒット位置のローカル座標
-    //            XMVECTOR hitPosWorld = XMVector3TransformCoord(hitPosLocal, obj->GetWorldMatrix());
-    //            XMStoreFloat3(&hitPosition, hitPosWorld);
-				//pos = hitPosition;
-    //        }
-
 
 			RayCastData data;
 			data.start = camPos;  // レイの発射位置 カメラの位置のためworld座標

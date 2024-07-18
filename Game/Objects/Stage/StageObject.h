@@ -137,6 +137,7 @@ public:
 	/// </summary>
 	void CollisionWall();
 
+	void PlayAnimation(int _start, int _end, float _speed);
 };
 
 /// <summary>

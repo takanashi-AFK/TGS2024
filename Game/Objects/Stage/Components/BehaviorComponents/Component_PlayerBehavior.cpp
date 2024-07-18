@@ -58,10 +58,17 @@ void Component_PlayerBehavior::Update()
     frontVec_ = move->GetMoveDirction();
     melee->SetForward(frontVec_);
 
-    if (frontVec_.m128_f32[0] != 0.f ||
-        frontVec_.m128_f32[1] != 0.f ||
-        frontVec_.m128_f32[2] != 0.f) {
-        holder_->PlayAnimation(0, 60, 1);
+    if(move->GetIsMove() == true) {
+        holder_->PlayAnimation(0, 40, 1);
+        auto timer = dynamic_cast<Component_Timer*>(GetChildComponent("Timer"));
+        if (timer == nullptr)return;
+        if(timer->GetIsCountNow() == false)
+        timer->SetTime(0.66f);
+        timer->Start();
+        if (timer->GetIsEnd())isAnimationNow_ = false;
+	}
+    else {
+        holder_->PlayAnimation(0,0,1);
     }
 
 

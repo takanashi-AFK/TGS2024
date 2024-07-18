@@ -12,6 +12,7 @@ private:
 	string targetName_;
 	std::vector<RayCastData> rayHitObjectList_;
 	float shootHeight_;		// î≠éÀÇ∑ÇÈçÇÇ≥
+	bool isAnimationNow_;
 
 
 public:

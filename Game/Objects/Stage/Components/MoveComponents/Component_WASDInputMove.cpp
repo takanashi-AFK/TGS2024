@@ -10,7 +10,7 @@ namespace
 }
 
 Component_WASDInputMove::Component_WASDInputMove(string _name, StageObject* _holder, Component* _parent)
-	:Component(_holder, _name, WASDInputMove, _parent)
+	:Component(_holder, _name, WASDInputMove, _parent), isActive_(true), isMove_(false)
 {
 }
 
@@ -22,7 +22,7 @@ void Component_WASDInputMove::Update()
 {
     // このコンポーネントがアクティブでない場合、処理を終了
     if (!isActive_) return;
-
+    isMove_ = false;
     // 基本のベクトルを用意、初期化
     dir_ = XMVectorZero();
 
@@ -32,10 +32,10 @@ void Component_WASDInputMove::Update()
     sightLine = XMVector3Normalize(sightLine);
 
     // 入力に応じて方向ベクトルを設定
-    if (Input::IsKey(DIK_W)) dir_ += sightLine;
-    if (Input::IsKey(DIK_A)) dir_ += XMVector3Transform(sightLine, XMMatrixRotationY(XMConvertToRadians(-90)));
-    if (Input::IsKey(DIK_S)) dir_ += -sightLine;
-    if (Input::IsKey(DIK_D)) dir_ += XMVector3Transform(sightLine, XMMatrixRotationY(XMConvertToRadians(90)));
+    if (Input::IsKey(DIK_W)) dir_ += sightLine; isMove_ = true;
+    if (Input::IsKey(DIK_A)) dir_ += XMVector3Transform(sightLine, XMMatrixRotationY(XMConvertToRadians(-90))); isMove_ = true;
+    if (Input::IsKey(DIK_S)) dir_ += -sightLine; isMove_ = true;
+    if (Input::IsKey(DIK_D)) dir_ += XMVector3Transform(sightLine, XMMatrixRotationY(XMConvertToRadians(90)));isMove_ = true;
     dir_ = XMVector3Normalize(dir_);
     XMVECTOR move = dir_ * speed;
 

@@ -14,6 +14,9 @@ class Component_ShootAttack :public Component_Attack
 private:
 	float shootingSpeed_;			// 弾の速度
 	XMVECTOR shootingDirection_;	// 弾の方向
+	XMFLOAT3 shootingPosition_;		// 弾の発射位置
+
+	bool isShootPositionSet_;		// 発射位置が設定されているか
 public:
 	/// <summary>
 	/// コンストラクタ
@@ -65,5 +68,9 @@ public:
 	/// <param name="_direction">弾の方向</param>
 	void SetShootingDirection(XMVECTOR _direction) { shootingDirection_ = _direction; }
 
+
+	void SetShootingPosition(XMFLOAT3 _position) {
+		shootingPosition_ = _position; isShootPositionSet_ = true;
+	}
 };
 

@@ -11,6 +11,8 @@ private:
 	StageObject* target_;	// ターゲット
 	string targetName_;
 	std::vector<RayCastData> rayHitObjectList_;
+	float shootHeight_;		// 発射する高さ
+
 
 public:
 	Component_PlayerBehavior(string _name,StageObject* _holder,Component* _parent);

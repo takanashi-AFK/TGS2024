@@ -161,6 +161,10 @@ void Component_PlayerBehavior::Update()
             rayHitObjectList_.clear();
         }
 
+        // 発射位置を設定
+        XMFLOAT3 shootPosition = holder_->GetPosition();
+        shootPosition.y += shootHeight_;
+        shoot->SetShootingPosition(shootPosition);
         shoot->SetShootingDirection(shootDir);
         shoot->SetShootingSpeed(2.f);
         shoot->Execute();

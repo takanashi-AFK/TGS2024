@@ -31,7 +31,8 @@ void Component_ShootAttack::Update()
 	bulletPrefab->SetDirection(shootingDirection_);
 
 	// Œ‚‚¿•ú‚ÂˆÊ’u‚ðÝ’è
-	bulletPrefab->SetPosition(holder_->GetPosition());
+	if (isShootPositionSet_ == true)bulletPrefab->SetPosition(shootingPosition_);
+	else bulletPrefab->SetPosition(holder_->GetPosition());
 
 	// Œ‚‚¿•ú‚Â
 	bulletPrefab->Execute();

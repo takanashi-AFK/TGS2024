@@ -77,6 +77,12 @@
     <Filter Include="03Game\Scenes\DebugScenes">
       <UniqueIdentifier>{1c6dc499-8b4a-49c0-bc06-4dc6d7caecc4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="00Effekseer">
+      <UniqueIdentifier>{0d38d0e2-263e-4437-8a79-3052074af8da}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03Game\Objects\Stage\Components\GaugeComponents">
+      <UniqueIdentifier>{b204fc05-9186-4452-bf13-d3d5eadc3e8c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine\Collider\BoxCollider.cpp">
@@ -226,9 +232,6 @@
     <ClCompile Include="Game\Objects\Stage\Components\AttackComponents\Component_ShootAttack.cpp">
       <Filter>03Game\Objects\Stage\Components\AttackComponents</Filter>
     </ClCompile>
-    <ClCompile Include="Game\Objects\Stage\Components\AttackComponents\Component_Attack.cpp">
-      <Filter>03Game\Objects\Stage\Components\MoveComponents</Filter>
-    </ClCompile>
     <ClCompile Include="Game\Objects\Stage\Components\MoveComponents\Component_WASDInputMove.cpp">
       <Filter>03Game\Objects\Stage\Components\MoveComponents</Filter>
     </ClCompile>
@@ -277,16 +280,35 @@
     <ClCompile Include="Game\Scenes\Scene_Test.cpp">
       <Filter>03Game\Scenes\DebugScenes</Filter>
     </ClCompile>
-    <ClCompile Include="EffekseeLib\EffekseerVFX.cpp" />
     <ClCompile Include="Game\Objects\Stage\Components\BehaviorComponents\Component_BossBehavior.cpp" />
     <ClCompile Include="Game\Objects\Stage\Components\MoveComponents\Component_TackleMove.cpp" />
-    <ClCompile Include="Game\Objects\Stage\Components\AttackComponents\Component_MeleeAttack.cpp" />
-    <ClCompile Include="Game\Objects\Stage\Components\GaugeComponents\Component_Gauge.cpp" />
-    <ClCompile Include="Game\Objects\Stage\Components\GaugeComponents\Component_HealthGauge.cpp" />
-    <ClCompile Include="Game\Objects\UI\UIProgressBar.cpp" />
-    <ClCompile Include="Game\Objects\UI\UIText.cpp" />
-    <ClCompile Include="Game\Objects\Stage\Components\BehaviorComponents\Component_BossBehavior.cpp" />
-    <ClCompile Include="Game\Objects\Stage\Components\MoveComponents\Component_TackleMove.cpp" />
+    <ClCompile Include="EffekseeLib\EffekseerVFX.cpp">
+      <Filter>00Effekseer</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Objects\UI\UIProgressBar.cpp">
+      <Filter>03Game\Objects\UIObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Objects\UI\UIText.cpp">
+      <Filter>03Game\Objects\UIObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Objects\Stage\Components\BehaviorComponents\Component_BossBehavior.cpp">
+      <Filter>03Game\Objects\Stage\Components\BehaviorComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Objects\Stage\Components\AttackComponents\Component_Attack.cpp">
+      <Filter>03Game\Objects\Stage\Components\AttackComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Objects\Stage\Components\GaugeComponents\Component_Gauge.cpp">
+      <Filter>03Game\Objects\Stage\Components\GaugeComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Objects\Stage\Components\GaugeComponents\Component_HealthGauge.cpp">
+      <Filter>03Game\Objects\Stage\Components\GaugeComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Objects\Stage\Components\AttackComponents\Component_MeleeAttack.cpp">
+      <Filter>03Game\Objects\Stage\Components\AttackComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Objects\Stage\Components\MoveComponents\Component_TackleMove.cpp">
+      <Filter>03Game\Objects\Stage\Components\MoveComponents</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Collider\BoxCollider.h">
@@ -493,16 +515,32 @@
     <ClInclude Include="Game\Scenes\Scene_Test.h">
       <Filter>03Game\Scenes\DebugScenes</Filter>
     </ClInclude>
-    <ClInclude Include="EffekseeLib\EffekseerVFX.h" />
     <ClInclude Include="Game\Objects\Stage\Components\BehaviorComponents\Component_BossBehavior.h" />
     <ClInclude Include="Game\Objects\Stage\Components\MoveComponents\Component_TackleMove.h" />
-    <ClInclude Include="Game\Objects\Stage\Components\AttackComponents\Component_MeleeAttack.h" />
-    <ClInclude Include="Game\Objects\Stage\Components\GaugeComponents\Component_Gauge.h" />
-    <ClInclude Include="Game\Objects\Stage\Components\GaugeComponents\Component_HealthGauge.h" />
-    <ClInclude Include="Game\Objects\UI\UIProgressBar.h" />
-    <ClInclude Include="Game\Objects\UI\UIText.h" />
-    <ClInclude Include="Game\Objects\Stage\Components\BehaviorComponents\Component_BossBehavior.h" />
-    <ClInclude Include="Game\Objects\Stage\Components\MoveComponents\Component_TackleMove.h" />
+    <ClInclude Include="EffekseeLib\EffekseerVFX.h">
+      <Filter>00Effekseer</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Objects\UI\UIText.h">
+      <Filter>03Game\Objects\UIObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Objects\UI\UIProgressBar.h">
+      <Filter>03Game\Objects\UIObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Objects\Stage\Components\BehaviorComponents\Component_BossBehavior.h">
+      <Filter>03Game\Objects\Stage\Components\BehaviorComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Objects\Stage\Components\GaugeComponents\Component_Gauge.h">
+      <Filter>03Game\Objects\Stage\Components\GaugeComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Objects\Stage\Components\GaugeComponents\Component_HealthGauge.h">
+      <Filter>03Game\Objects\Stage\Components\GaugeComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Objects\Stage\Components\AttackComponents\Component_MeleeAttack.h">
+      <Filter>03Game\Objects\Stage\Components\AttackComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Objects\Stage\Components\MoveComponents\Component_TackleMove.h">
+      <Filter>03Game\Objects\Stage\Components\MoveComponents</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Assets\Shader\Simple2D.hlsl">

@@ -14,6 +14,16 @@ private:
 	float shootHeight_;		// î≠éÀÇ∑ÇÈçÇÇ≥
 	bool isAnimationNow_;
 
+	enum PlayerState {
+		PSTATE_IDLE = 0,
+		PSTATE_WALK,
+		PSTATE_WALKANDSHOOT,
+		PSTATE_MELEE,
+		PSTATE_SHOOT,
+		PSTATE_DIE,
+		PSTATE_MAX
+	}nowState;
+
 
 public:
 	Component_PlayerBehavior(string _name,StageObject* _holder,Component* _parent);
@@ -24,6 +34,12 @@ public:
 	void DrawData() override;
 	
 	void OnCollision(GameObject* _target, Collider* _collider) override;
+
+	void Idle();
+	void Walk();
+	void WalkAndShoot();
+	void Melee();
+	void Shoot();
 
 	//bool IsEnemyInRect(StageObject* _target);
 

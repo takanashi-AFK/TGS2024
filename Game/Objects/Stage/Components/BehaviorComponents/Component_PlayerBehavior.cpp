@@ -47,9 +47,105 @@ void Component_PlayerBehavior::Update()
 {
 	auto hm = dynamic_cast<Component_HealthGauge*>(GetChildComponent("PlayerHealthGauge"));
     if (hm == nullptr)return;
-	// 進捗を0.0〜1.0の範囲で計算
-	float progress = hm->GetNow() / hm->GetMax();
 
+ 
+
+    auto timer = dynamic_cast<Component_Timer*>(GetChildComponent("Timer"));
+    if (timer == nullptr) return;
+
+    auto melee = dynamic_cast<Component_MeleeAttack*>(GetChildComponent("MeleeAttack"));
+    if (melee == nullptr)return;
+
+    auto move = dynamic_cast<Component_WASDInputMove*>(GetChildComponent("InputMove"));
+    if (move == nullptr)return;
+
+    switch (nowState)
+    {
+    case Component_PlayerBehavior::PSTATE_IDLE:
+        Idle();  break;
+    case Component_PlayerBehavior::PSTATE_WALK:
+        Walk();  break;
+    case Component_PlayerBehavior::PSTATE_WALKANDSHOOT:
+        WalkAndShoot(); break;
+    case Component_PlayerBehavior::PSTATE_MELEE:
+        Melee(); break;
+    case Component_PlayerBehavior::PSTATE_SHOOT:
+        Shoot(); break;
+    default:
+        break;
+    }
+
+}
+
+void Component_PlayerBehavior::Release()
+{
+}
+
+void Component_PlayerBehavior::DrawData()
+{
+    ImGui::Text("%f,%f,%f,%f", frontVec_.m128_f32);
+    auto timer = dynamic_cast<Component_Timer*>(GetChildComponent("Timer"));
+    if (timer == nullptr)return;
+    ImGui::Text("%f", timer->GetNowTime());
+}
+
+void Component_PlayerBehavior::OnCollision(GameObject* _target, Collider* _collider)
+{
+}
+
+void Component_PlayerBehavior::Idle()
+{
+	holder_->PlayAnimation(0, 0, 1);
+	auto move = dynamic_cast<Component_WASDInputMove*>(GetChildComponent("InputMove"));
+	if (move == nullptr)return;
+
+	if (move->GetIsMove()) {
+		nowState = PSTATE_WALK;
+	}
+    else if(Input::IsMouseButton(1) && Input::IsMouseButtonDown(0)){
+        if(move->GetIsMove())
+            nowState = PSTATE_WALKANDSHOOT;
+		else
+		nowState = PSTATE_SHOOT;
+	}
+	else if (Input::IsMouseButtonDown(0)){
+		nowState = PSTATE_MELEE;
+	}
+    ImGui::Text("idle");
+
+    // 死んだら死
+}
+
+void Component_PlayerBehavior::Walk()
+{
+    auto move = dynamic_cast<Component_WASDInputMove*>(GetChildComponent("InputMove"));
+    if (move == nullptr)return;
+
+    static bool prevAnim = false;
+    if (move->GetIsMove() == true) {
+        ImGui::Text("Move");
+        if (prevAnim == false)holder_->PlayAnimation(0, 40, 1);
+        prevAnim = true;
+    }
+    else {
+        holder_->PlayAnimation(0, 0, 1);
+        prevAnim = false;
+        nowState = PSTATE_IDLE;
+    }
+    ImGui::Text("Walk");
+
+}
+
+void Component_PlayerBehavior::WalkAndShoot()
+{
+    Walk();
+    Shoot();
+    ImGui::Text("WalkAndShot");
+    nowState = PSTATE_IDLE;
+}
+
+void Component_PlayerBehavior::Melee()
+{
     auto move = dynamic_cast<Component_WASDInputMove*>(GetChildComponent("InputMove"));
     if (move == nullptr)return;
     auto melee = dynamic_cast<Component_MeleeAttack*>(GetChildComponent("MeleeAttack"));
@@ -57,33 +153,23 @@ void Component_PlayerBehavior::Update()
 
     frontVec_ = move->GetMoveDirction();
     melee->SetForward(frontVec_);
+    melee->Execute();
 
-    static bool prevAnim = false;
-    if (move->GetIsMove() == true) {
-    ImGui::Text("Move");
-        if (prevAnim == false)holder_->PlayAnimation(0, 40, 1);
-        prevAnim = true;
-    }
-    else {
-        holder_->PlayAnimation(0, 0, 1);
-        prevAnim = false;
-    }
+    nowState = PSTATE_IDLE;
+    ImGui::Text("Melee");
+}
 
+void Component_PlayerBehavior::Shoot()
+{
     auto shoot = dynamic_cast<Component_ShootAttack*>(GetChildComponent("ShootAttack"));
     if (shoot == nullptr) return;
-
-    auto timer = dynamic_cast<Component_Timer*>(GetChildComponent("Timer"));
-    if (timer == nullptr) return;
 
     if (target_ == nullptr) target_ = (StageObject*)holder_->FindObject(targetName_);
 
     XMVECTOR sightLine = Camera::GetSightLine();
     XMFLOAT3 camPos = Camera::GetPosition();
-         // ヒット位置のワールド座標
-    static XMFLOAT3 pos{};
     // 枠内にいるENEMY属性を持ったStageObjectをターゲットにする
-    if (Input::IsMouseButton(1) && Input::IsMouseButtonDown(0))
-    {
+    
         XMVECTOR shootDir = { 0, 0, 0, 0 };
         Stage* pStage = ((Stage*)holder_->FindObject("Stage"));
         if (pStage == nullptr) return;
@@ -98,22 +184,22 @@ void Component_PlayerBehavior::Update()
             int hGroundModel = obj->GetModelHandle();
             if (hGroundModel < 0) continue;
 
-			RayCastData data;
-			data.start = camPos;  // レイの発射位置 カメラの位置のためworld座標
+            RayCastData data;
+            data.start = camPos;  // レイの発射位置 カメラの位置のためworld座標
 
-			XMStoreFloat3(&data.dir, XMVector3Normalize(sightLine)); // レイの方向 単位ベクトルのため、座標系に依存しないものと考える
+            XMStoreFloat3(&data.dir, XMVector3Normalize(sightLine)); // レイの方向 単位ベクトルのため、座標系に依存しないものと考える
 
-			Model::RayCast(obj->GetModelHandle(), &data);  // レイを発射
+            Model::RayCast(obj->GetModelHandle(), &data);  // レイを発射
 
-			// レイが当たったら
+            // レイが当たったら
             if (data.hit) {
-				// 命中したオブジェクトが何か
-				// hitObject = obj;
+                // 命中したオブジェクトが何か
+                // hitObject = obj;
 
-				XMVECTOR hitPosWorld = XMVector3TransformCoord(XMLoadFloat3(&data.pos), obj->GetWorldMatrix());
+                XMVECTOR hitPosWorld = XMVector3TransformCoord(XMLoadFloat3(&data.pos), obj->GetWorldMatrix());
 
-                XMStoreFloat3(&data.pos,hitPosWorld);
-				rayHitObjectList_.push_back(data);
+                XMStoreFloat3(&data.pos, hitPosWorld);
+                rayHitObjectList_.push_back(data);
             }
         }
 
@@ -141,31 +227,12 @@ void Component_PlayerBehavior::Update()
         shoot->SetShootingDirection(shootDir);
         shoot->SetShootingSpeed(2.f);
         shoot->Execute();
-		shootDir = {};
-    }
-    else if (Input::IsMouseButtonDown(0))
-    {
-        melee->Execute();
-    }
-    ImGui::Text("pos %f,%f,%f", pos.x, pos.y, pos.z);
-
+        shootDir = {};
+        nowState = PSTATE_IDLE;
+        ImGui::Text("shoot");
 }
 
-void Component_PlayerBehavior::Release()
-{
-}
 
-void Component_PlayerBehavior::DrawData()
-{
-    ImGui::Text("%f,%f,%f,%f", frontVec_.m128_f32);
-    auto timer = dynamic_cast<Component_Timer*>(GetChildComponent("Timer"));
-    if (timer == nullptr)return;
-    ImGui::Text("%f", timer->GetNowTime());
-}
-
-void Component_PlayerBehavior::OnCollision(GameObject* _target, Collider* _collider)
-{
-}
 
 //bool Component_PlayerBehavior::IsEnemyInRect(StageObject* _target)
 //{

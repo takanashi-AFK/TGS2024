@@ -59,9 +59,6 @@
     <Filter Include="03Game\Objects\Stage\Components\AttackComponents">
       <UniqueIdentifier>{89b3ed5f-a98e-4fe9-8112-e3c5e40330d7}</UniqueIdentifier>
     </Filter>
-    <Filter Include="03Game\Objects\Otheres">
-      <UniqueIdentifier>{c2efa7cb-5f10-4c3c-b6f4-cff055139e25}</UniqueIdentifier>
-    </Filter>
     <Filter Include="03Game\Objects\Stage\Components\BehaviorComponents">
       <UniqueIdentifier>{b2d24188-4d4a-4098-a2d5-87aeda1fadfa}</UniqueIdentifier>
     </Filter>
@@ -82,6 +79,9 @@
     </Filter>
     <Filter Include="03Game\Objects\Stage\Components\GaugeComponents">
       <UniqueIdentifier>{b204fc05-9186-4452-bf13-d3d5eadc3e8c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03Game\Otheres">
+      <UniqueIdentifier>{c2efa7cb-5f10-4c3c-b6f4-cff055139e25}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -242,7 +242,7 @@
       <Filter>01Engine</Filter>
     </ClCompile>
     <ClCompile Include="Game\Otheres\GameEditor.cpp">
-      <Filter>03Game\Objects\Otheres</Filter>
+      <Filter>03Game\Otheres</Filter>
     </ClCompile>
     <ClCompile Include="Game\Objects\Stage\Components\MoveComponents\Component_HelingoFall.cpp">
       <Filter>03Game\Objects\Stage\Components\MoveComponents</Filter>
@@ -477,7 +477,7 @@
       <Filter>03Game\Objects\Stage\Components\BehaviorComponents</Filter>
     </ClInclude>
     <ClInclude Include="Game\Otheres\GameEditor.h">
-      <Filter>03Game\Objects\Otheres</Filter>
+      <Filter>03Game\Otheres</Filter>
     </ClInclude>
     <ClInclude Include="Game\Objects\Stage\Components\MoveComponents\Component_HelingoFall.h">
       <Filter>03Game\Objects\Stage\Components\MoveComponents</Filter>

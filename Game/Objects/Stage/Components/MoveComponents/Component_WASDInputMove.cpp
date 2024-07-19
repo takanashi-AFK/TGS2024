@@ -32,10 +32,10 @@ void Component_WASDInputMove::Update()
     sightLine = XMVector3Normalize(sightLine);
 
     // “ü—Í‚É‰‚¶‚Ä•ûŒüƒxƒNƒgƒ‹‚ğİ’è
-    if (Input::IsKey(DIK_W)) dir_ += sightLine; isMove_ = true;
-    if (Input::IsKey(DIK_A)) dir_ += XMVector3Transform(sightLine, XMMatrixRotationY(XMConvertToRadians(-90))); isMove_ = true;
-    if (Input::IsKey(DIK_S)) dir_ += -sightLine; isMove_ = true;
-    if (Input::IsKey(DIK_D)) dir_ += XMVector3Transform(sightLine, XMMatrixRotationY(XMConvertToRadians(90)));isMove_ = true;
+    if (Input::IsKey(DIK_W)) { dir_ += sightLine; isMove_ = true; }
+    if (Input::IsKey(DIK_A)) { dir_ += XMVector3Transform(sightLine, XMMatrixRotationY(XMConvertToRadians(-90))); isMove_ = true; }
+    if (Input::IsKey(DIK_S)) { dir_ += -sightLine; isMove_ = true;}
+    if (Input::IsKey(DIK_D)) { dir_ += XMVector3Transform(sightLine, XMMatrixRotationY(XMConvertToRadians(90))); isMove_ = true; }
     dir_ = XMVector3Normalize(dir_);
     XMVECTOR move = dir_ * speed;
 

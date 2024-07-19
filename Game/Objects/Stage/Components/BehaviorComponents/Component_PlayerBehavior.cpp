@@ -58,19 +58,16 @@ void Component_PlayerBehavior::Update()
     frontVec_ = move->GetMoveDirction();
     melee->SetForward(frontVec_);
 
-    if(move->GetIsMove() == true) {
-        holder_->PlayAnimation(0, 40, 1);
-        auto timer = dynamic_cast<Component_Timer*>(GetChildComponent("Timer"));
-        if (timer == nullptr)return;
-        if(timer->GetIsCountNow() == false)
-        timer->SetTime(0.66f);
-        timer->Start();
-        if (timer->GetIsEnd())isAnimationNow_ = false;
-	}
-    else {
-        holder_->PlayAnimation(0,0,1);
+    static bool prevAnim = false;
+    if (move->GetIsMove() == true) {
+    ImGui::Text("Move");
+        if (prevAnim == false)holder_->PlayAnimation(0, 40, 1);
+        prevAnim = true;
     }
-
+    else {
+        holder_->PlayAnimation(0, 0, 1);
+        prevAnim = false;
+    }
 
     auto shoot = dynamic_cast<Component_ShootAttack*>(GetChildComponent("ShootAttack"));
     if (shoot == nullptr) return;

@@ -26,6 +26,7 @@
 #include "RotationComponents/Component_RotationY.h"
 #include "RotationComponents/Component_RotationZ.h"
 #include "TimerComponent/Component_Timer.h"
+#include "TeleporterComponent/Component_Teleporter.h"
 
 Component::Component(StageObject* _holder, string _name,ComponentType _type)
     :holder_(_holder), name_(_name),type_(_type),childComponents_(),parent_(nullptr),isActive_(false)
@@ -227,6 +228,7 @@ Component* CreateComponent(string _name, ComponentType _type, StageObject* _hold
         case TackleMove: comp = new Component_TackleMove(_name, _holder, _parent); break;
         case Timer: comp = new Component_Timer(_name, _holder, _parent); break;
         case WASDInputMove: comp = new Component_WASDInputMove(_name, _holder, _parent); break;
+		case Teleporter: comp = new Component_Teleporter(_name, _holder, _parent); break;
         default: /* その他コンポーネントを追加する時は上記のように追加 */ break;
     }
     return comp;
@@ -262,6 +264,7 @@ string ComponentTypeToString(ComponentType _type)
 	case TackleMove: return "TackleMoveComponent";
 	case Timer: return "TimerComponent";
 	case WASDInputMove: return "WASDInputMoveComponent";
+	case Teleporter: return "TeleporterComponent";
 	default: return "None";
 	}	
 }

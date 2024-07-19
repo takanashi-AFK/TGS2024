@@ -71,13 +71,13 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>C:\Program Files\Autodesk\FBX\FBX SDK\2020.3.7\include;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\Program Files\Autodesk\FBX\FBX SDK\2020.3.7\lib\x64\debug;$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\Program Files\Autodesk\FBX\FBX SDK\2020.3.7\include;$(ProjectDir)\EffekseeLib\EffekseeLib\install_msvc2022_x64\include\Effekseer;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Program Files\Autodesk\FBX\FBX SDK\2020.3.7\lib\x64\debug;$(ProjectDir)\EffekseeLib\EffekseeLib\install_msvc2022_x64\lib;$(LibraryPath)</LibraryPath>
     <ExternalIncludePath>C:\Program Files\Autodesk\FBX\FBX SDK\2020.3.7\include;$(ExternalIncludePath)</ExternalIncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <IncludePath>C:\Program Files\Autodesk\FBX\FBX SDK\2020.3.7\include;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\Program Files\Autodesk\FBX\FBX SDK\2020.3.7\lib\x64\release;$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\Program Files\Autodesk\FBX\FBX SDK\2020.3.7\include;$(ProjectDir)\EffekseeLib\EffekseeLib\install_msvc2022_x64\include\Effekseer</IncludePath>
+    <LibraryPath>C:\Program Files\Autodesk\FBX\FBX SDK\2020.3.7\lib\x64\release;$(ProjectDir)\EffekseeLib\EffekseeLib\install_msvc2022_x64\lib;$(LibraryPath)</LibraryPath>
     <ExternalIncludePath>C:\Program Files\Autodesk\FBX\FBX SDK\2020.3.7\include;$(ExternalIncludePath)</ExternalIncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -105,6 +105,7 @@
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -130,6 +131,7 @@
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -137,12 +139,22 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Game\Objects\Stage\Components\HealthManagerComponents\Component_HealthManager.cpp" />
+    <ClCompile Include="Game\Objects\Stage\Components\AttackComponents\Component_MeleeAttack.cpp" />
+    <ClCompile Include="Game\Objects\Stage\Components\BehaviorComponents\Component_BossBehavior.cpp" />
+    <ClCompile Include="EffekseeLib\EffekseerVFX.cpp" />
+    <ClCompile Include="Game\Objects\Stage\Components\GaugeComponents\Component_Gauge.cpp" />
+    <ClCompile Include="Game\Objects\Stage\Components\GaugeComponents\Component_HealthGauge.cpp" />
+    <ClCompile Include="Game\Objects\Stage\Components\MoveComponents\Component_Fall.cpp" />
+    <ClCompile Include="Game\Objects\Stage\Components\MoveComponents\Component_Rise.cpp" />
+    <ClCompile Include="Game\Objects\Stage\Components\BehaviorComponents\Component_PlayerBehavior.cpp" />
+    <ClCompile Include="Game\Objects\Stage\Components\MoveComponents\Component_TackleMove.cpp" />
+    <ClCompile Include="Game\Objects\Stage\Components\MoveComponents\Component_WASDInputMove.cpp" />
+    <ClCompile Include="Game\Objects\Stage\Components\BehaviorComponents\Component_CactanBehavior.cpp" />
     <ClCompile Include="Game\Objects\Stage\Bullet.cpp" />
-    <ClCompile Include="Game\Objects\Stage\Components\AttackComponents\Component_CactanAttack\Component_CactanAttack.cpp" />
+    <ClCompile Include="Game\Objects\Stage\Components\AttackComponents\Component_ShootAttack.cpp" />
     <ClCompile Include="Game\Objects\Stage\Components\AttackComponents\Component_Attack.cpp" />
     <ClCompile Include="Game\Objects\Stage\Components\DetectorComponents\Component_FanRangeDetector.cpp" />
-    <ClCompile Include="Game\Objects\Stage\Components\EnemyComponents\Component_OtiBehavior.cpp" />
+    <ClCompile Include="Game\Objects\Stage\Components\BehaviorComponents\Component_HelingoBehavior.cpp" />
     <ClCompile Include="Game\Objects\Stage\Components\DetectorComponents\Component_CircleRangeDetector.cpp" />
     <ClCompile Include="Game\Objects\Stage\Components\TimerComponent\Component_Timer.cpp" />
     <ClCompile Include="Game\Objects\Stage\Components\MoveComponents\Component_Chase.cpp" />
@@ -178,9 +190,12 @@
     <ClCompile Include="Engine\ResourceManager\Text.cpp" />
     <ClCompile Include="Engine\DirectX\Texture.cpp" />
     <ClCompile Include="Engine\GameObject\Transform.cpp" />
-    <ClCompile Include="Game\Objects\Stage\Components\MoveComponents\Component_Fall.cpp" />
+    <ClCompile Include="Game\Objects\Stage\Components\MoveComponents\Component_HelingoFall.cpp" />
     <ClCompile Include="Game\Objects\Stage\Components\RotationComponents\Component_RotationY.cpp" />
     <ClCompile Include="Game\Objects\Stage\StageObject.cpp" />
+    <ClCompile Include="Game\Objects\UI\UIProgressBar.cpp" />
+    <ClCompile Include="Game\Scenes\Scene_End.cpp" />
+    <ClCompile Include="Game\Scenes\Scene_Play.cpp" />
     <ClCompile Include="Game\Scenes\Scene_Test.cpp" />
     <ClCompile Include="Game\Objects\Stage\Stage.cpp" />
     <ClCompile Include="Game\Objects\Stage\Components\RotationComponents\Component_Rotation.cpp" />
@@ -189,17 +204,35 @@
     <ClCompile Include="Game\Objects\Stage\Components\MoveComponents\Component_MoveX.cpp" />
     <ClCompile Include="Game\Objects\Stage\SkySphere.cpp" />
     <ClCompile Include="Game\Scenes\Scene_Splash.cpp" />
-    <ClCompile Include="Game\Otheres\StageEditor.cpp" />
+    <ClCompile Include="Game\Otheres\GameEditor.cpp" />
+    <ClCompile Include="Game\Objects\UI\UIPanel.cpp" />
+    <ClCompile Include="Game\Objects\UI\UIObject.cpp" />
+    <ClCompile Include="Engine\Global.cpp" />
+    <ClCompile Include="Game\Objects\UI\UIButton.cpp" />
+    <ClCompile Include="Game\Scenes\Scene_Title.cpp" />
+    <ClCompile Include="Game\Objects\UI\UIImage.cpp" />
+    <ClCompile Include="Game\Objects\Camera\TPSCamera.cpp" />
+    <ClCompile Include="Game\Objects\UI\UIText.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Game\Objects\Stage\Components\HealthManagerComponents\Component_HealthManager.h" />
+    <ClInclude Include="Game\Objects\Stage\Components\AttackComponents\Component_MeleeAttack.h" />
+    <ClInclude Include="EffekseeLib\EffekseerVFX.h" />
+    <ClInclude Include="Game\Objects\Stage\Components\BehaviorComponents\Component_BossBehavior.h" />
+    <ClInclude Include="Game\Objects\Stage\Components\GaugeComponents\Component_Gauge.h" />
+    <ClInclude Include="Game\Objects\Stage\Components\GaugeComponents\Component_HealthGauge.h" />
+    <ClInclude Include="Game\Objects\Stage\Components\MoveComponents\Component_Fall.h" />
+    <ClInclude Include="Game\Objects\Stage\Components\MoveComponents\Component_Rise.h" />
+    <ClInclude Include="Game\Objects\Stage\Components\BehaviorComponents\Component_PlayerBehavior.h" />
+    <ClInclude Include="Game\Objects\Stage\Components\MoveComponents\Component_TackleMove.h" />
+    <ClInclude Include="Game\Objects\Stage\Components\MoveComponents\Component_WASDInputMove.h" />
+    <ClInclude Include="Game\Objects\Stage\Components\BehaviorComponents\Component_CactanBehavior.h" />
     <ClInclude Include="Game\Objects\Stage\Bullet.h" />
-    <ClInclude Include="Game\Objects\Stage\Components\AttackComponents\Component_CactanAttack\Component_CactanAttack.h" />
+    <ClInclude Include="Game\Objects\Stage\Components\AttackComponents\Component_ShootAttack.h" />
     <ClInclude Include="Game\Objects\Stage\Components\AttackComponents\Component_Attack.h" />
     <ClInclude Include="Engine\ResourceManager\Transition.h" />
     <ClInclude Include="Game\Objects\Stage\Components\DetectorComponents\Component_CircleRangeDetector.h" />
     <ClInclude Include="Game\Objects\Stage\Components\DetectorComponents\Component_FanRangeDetector.h" />
-    <ClInclude Include="Game\Objects\Stage\Components\EnemyComponents\Component_OtiBehavior.h" />
+    <ClInclude Include="Game\Objects\Stage\Components\BehaviorComponents\Component_HelingoBehavior.h" />
     <ClInclude Include="Game\Objects\Stage\Components\MoveComponents\Component_Chase.h" />
     <ClInclude Include="Game\Objects\Stage\Components\Component.h" />
     <ClInclude Include="Engine\ImGui\imconfig.h" />
@@ -235,10 +268,11 @@
     <ClInclude Include="Engine\ResourceManager\Text.h" />
     <ClInclude Include="Engine\DirectX\Texture.h" />
     <ClInclude Include="Engine\GameObject\Transform.h" />
-    <ClInclude Include="Game\Objects\Stage\Components\MoveComponents\Component_Fall.h" />
+    <ClInclude Include="Game\Objects\Stage\Components\MoveComponents\Component_HelingoFall.h" />
     <ClInclude Include="Game\Objects\Stage\Components\RotationComponents\Component_RotationY.h" />
     <ClInclude Include="Game\Objects\Stage\Components\TimerComponent\Component_Timer.h" />
     <ClInclude Include="Game\Objects\Stage\StageObject.h" />
+    <ClInclude Include="Game\Objects\UI\UIProgressBar.h" />
     <ClInclude Include="Game\Scenes\Scene_Test.h" />
     <ClInclude Include="Game\Objects\Stage\Stage.h" />
     <ClInclude Include="Game\Objects\Stage\Components\RotationComponents\Component_Rotation.h" />
@@ -247,7 +281,16 @@
     <ClInclude Include="Game\Objects\Stage\Components\MoveComponents\Component_MoveX.h" />
     <ClInclude Include="Game\Objects\Stage\SkySphere.h" />
     <ClInclude Include="Game\Scenes\Scene_Splash.h" />
-    <ClInclude Include="Game\Otheres\StageEditor.h" />
+    <ClInclude Include="Game\Otheres\GameEditor.h" />
+    <ClInclude Include="Game\Objects\UI\UIPanel.h" />
+    <ClInclude Include="Game\Objects\UI\UIObject.h" />
+    <ClInclude Include="Game\Objects\UI\UIButton.h" />
+    <ClInclude Include="Game\Scenes\Scene_End.h" />
+    <ClInclude Include="Game\Scenes\Scene_Play.h" />
+    <ClInclude Include="Game\Scenes\Scene_Title.h" />
+    <ClInclude Include="Game\Objects\UI\UIImage.h" />
+    <ClInclude Include="Game\Objects\Camera\TPSCamera.h" />
+    <ClInclude Include="Game\Objects\UI\UIText.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Assets\Shader\BillBoard.hlsl">
@@ -257,6 +300,16 @@
     <FxCompile Include="Assets\Shader\Debug3D.hlsl">
       <EntryPointName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">VS</EntryPointName>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <EntryPointName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">VS</EntryPointName>
+    </FxCompile>
+    <FxCompile Include="Assets\Shader\Progress.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+      <EntryPointName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">VS</EntryPointName>
+      <EntryPointName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">VS</EntryPointName>
+      <EntryPointName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">VS</EntryPointName>
       <EntryPointName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">VS</EntryPointName>
     </FxCompile>
     <FxCompile Include="Assets\Shader\Shadow.hlsl">
@@ -283,9 +336,6 @@
       <EntryPointName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">VS</EntryPointName>
       <EntryPointName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">VS</EntryPointName>
     </FxCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="ClassDiagram.cd" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

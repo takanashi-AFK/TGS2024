@@ -3,6 +3,10 @@
 // インクルード
 #include "StageObject.h"
 
+// effekseer: インクルード
+#include "../../../EffekseeLib/EffekseerVFX.h"/*★★★*/
+
+
 /// <summary>
 /// 発射する弾を管理するクラス
 /// </summary>
@@ -13,6 +17,10 @@ private:
 	int frame_;				// 経過フレーム	
 	float speed_;			// 移動速度
 	XMVECTOR direction_;	// 移動方向
+	StageObject* shooter_;	// 発射したオブジェクト
+
+	// effekseer: 変形行列
+	std::shared_ptr<EFFEKSEERLIB::EFKTransform> mt;/*★★★*/
 
 public:
 	/// <summary>
@@ -37,6 +45,11 @@ public:
 	void Draw() override;
 
 	/// <summary>
+	/// 衝突処理
+	/// </summary>
+	void OnCollision(GameObject* _target, Collider* _collider) override;
+
+	/// <summary>
 	/// 移動速度を設定
 	/// </summary>
 	/// <param name="_speed">速度</param>
@@ -53,6 +66,12 @@ public:
 	/// </summary>
 	void Execute() { isActive_ = true; }
 
+	/// <summary>
+	/// なんのオブジェクトが発射したかを設定
+	/// </summary>
+	/// <param name="_shooter"></param>
+	void SetShooter(StageObject* _shooter) { shooter_ = _shooter; }
+
 private:
 	/// <summary>
 	/// 移動
@@ -67,4 +86,6 @@ private:
 	/// <param name="_sec">消えるまでの時間（秒）</param>
 	void AutoDelete(float _sec);
 };
+
+
 

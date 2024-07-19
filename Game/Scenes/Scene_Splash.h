@@ -10,7 +10,6 @@
 class Scene_Splash : public GameObject
 {
 private:
-	int imageHandle_;	// ‰æ‘œ”Ô†
 	float count_;		// Œo‰ßŠÔ
 
 public:

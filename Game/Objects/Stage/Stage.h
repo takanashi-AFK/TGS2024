@@ -10,6 +10,7 @@ using std::vector;
 
 // 前方宣言
 class StageObject;
+class Component;
 
 /// <summary>
 /// ステージを管理するクラス
@@ -17,7 +18,7 @@ class StageObject;
 class Stage : public GameObject
 {
 private:
-	friend class StageEditor;		// StageEditorクラスをフレンド宣言
+	friend class GameEditor;		// StageEditorクラスをフレンド宣言
 	vector<StageObject*> objects_;	// 自身が保有するステージオブジェクト群
 
 public:
@@ -85,5 +86,7 @@ public:
 	/// オブジェクトリストを取得
 	/// </returns>
 	vector<StageObject*>& GetStageObjects() { return objects_; }
+
+	Component* FindComponent(string _name);
 };
 

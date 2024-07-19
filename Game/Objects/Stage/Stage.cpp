@@ -2,6 +2,9 @@
 
 // インクルード
 #include "StageObject.h"
+#include "Components/Component.h"
+#include "../../../Engine/ImGui/imgui.h"
+#include "../../../Engine/GameObject/Camera.h"
 
 Stage::Stage(GameObject* _parent)
 	:GameObject(_parent,"Stage"),objects_()
@@ -62,14 +65,15 @@ void Stage::AddStageObject(StageObject* _obj)
 
 void Stage::DeleteStageObject(StageObject* _obj)
 {
-	// オブジェクトを削除する
-	_obj->KillMe();
 
 	// オブジェクトのイテレータを取得する
 	auto it = std::find(objects_.begin(), objects_.end(), _obj);
 
 	// イテレータが見つかった場合、ベクターから削除する
 	if (it != objects_.end()) objects_.erase(it);
+
+	// オブジェクトを削除する
+	_obj->KillMe();
 }
 
 void Stage::DeleteAllStageObject()
@@ -77,4 +81,14 @@ void Stage::DeleteAllStageObject()
 	// リスト内にある要素をすべて削除
 	for (auto obj : objects_) obj->KillMe();
 	objects_.clear();
+}
+
+Component* Stage::FindComponent(string _name)
+{
+	Component* comp = nullptr;
+	for (auto obj : objects_) {
+		comp = obj->FindComponent(_name);
+		if (comp != nullptr)return comp;
+	}
+	return nullptr;
 }

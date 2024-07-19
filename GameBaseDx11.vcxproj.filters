@@ -53,23 +53,29 @@
     <Filter Include="03Game\Objects\Stage\Components\DetectorComponents">
       <UniqueIdentifier>{1dfc5a77-2666-438e-b4a0-ccdf1e982c3a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="03Game\Objects\Stage\Components\EnemyComponents">
-      <UniqueIdentifier>{b2d24188-4d4a-4098-a2d5-87aeda1fadfa}</UniqueIdentifier>
-    </Filter>
     <Filter Include="03Game\Objects\Stage\Components\TimerComponent">
       <UniqueIdentifier>{e193f086-ad1a-497c-8887-062579a167cb}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="03Game\Objects\Stage\Components\HealthManagerComponents">
-      <UniqueIdentifier>{253bc07e-fe5e-486e-93dd-e51a1f20aea0}</UniqueIdentifier>
     </Filter>
     <Filter Include="03Game\Objects\Stage\Components\AttackComponents">
       <UniqueIdentifier>{89b3ed5f-a98e-4fe9-8112-e3c5e40330d7}</UniqueIdentifier>
     </Filter>
-    <Filter Include="03Game\Objects\Stage\Components\AttackComponents\CactanAttackComponent">
-      <UniqueIdentifier>{b9d431c3-052e-467e-8c1f-563b6fe34d8f}</UniqueIdentifier>
-    </Filter>
     <Filter Include="03Game\Objects\Otheres">
       <UniqueIdentifier>{c2efa7cb-5f10-4c3c-b6f4-cff055139e25}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03Game\Objects\Stage\Components\BehaviorComponents">
+      <UniqueIdentifier>{b2d24188-4d4a-4098-a2d5-87aeda1fadfa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03Game\Objects\UIObjects">
+      <UniqueIdentifier>{385dbb44-f08d-4e4f-907e-7a4dcc680484}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03Game\Objects\Camera">
+      <UniqueIdentifier>{f5344fd4-3bdb-4367-8a5e-5b76a7df6a6c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03Game\Scenes\ReleaseScenes">
+      <UniqueIdentifier>{e15cee35-4008-47be-aace-c32aa7c94d63}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03Game\Scenes\DebugScenes">
+      <UniqueIdentifier>{1c6dc499-8b4a-49c0-bc06-4dc6d7caecc4}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -190,18 +196,6 @@
     <ClCompile Include="Engine\ResourceManager\Transition.cpp">
       <Filter>01Engine\ResourceManager</Filter>
     </ClCompile>
-    <ClCompile Include="Game\Otheres\StageEditor.cpp">
-      <Filter>03Game\Objects\Otheres</Filter>
-    </ClCompile>
-    <ClCompile Include="Game\Scenes\Scene_Splash.cpp">
-      <Filter>03Game\Scenes</Filter>
-    </ClCompile>
-    <ClCompile Include="Game\Scenes\Scene_Test.cpp">
-      <Filter>03Game\Scenes</Filter>
-    </ClCompile>
-    <ClCompile Include="Game\Objects\Stage\Components\HealthManagerComponents\Component_HealthManager.cpp">
-      <Filter>03Game\Objects\Stage\Components\HealthManagerComponents</Filter>
-    </ClCompile>
     <ClCompile Include="Game\Objects\Stage\Components\MoveComponents\Component_Chase.cpp">
       <Filter>03Game\Objects\Stage\Components\MoveComponents</Filter>
     </ClCompile>
@@ -217,21 +211,82 @@
     <ClCompile Include="Game\Objects\Stage\Components\TimerComponent\Component_Timer.cpp">
       <Filter>03Game\Objects\Stage\Components\TimerComponent</Filter>
     </ClCompile>
-    <ClCompile Include="Game\Objects\Stage\Components\AttackComponents\Component_Attack.cpp">
-      <Filter>03Game\Objects\Stage\Components\AttackComponents</Filter>
-    </ClCompile>
-    <ClCompile Include="Game\Objects\Stage\Components\AttackComponents\Component_CactanAttack\Component_CactanAttack.cpp">
-      <Filter>03Game\Objects\Stage\Components\AttackComponents\CactanAttackComponent</Filter>
-    </ClCompile>
     <ClCompile Include="Game\Objects\Stage\Stage.cpp">
       <Filter>03Game\Objects\Stage</Filter>
     </ClCompile>
     <ClCompile Include="Game\Objects\Stage\Bullet.cpp">
       <Filter>03Game\Objects\Stage\StageObjects</Filter>
     </ClCompile>
-    <ClCompile Include="Game\Objects\Stage\Components\EnemyComponents\Component_OtiBehavior.cpp">
-      <Filter>03Game\Objects\Stage\Components\EnemyComponents</Filter>
+    <ClCompile Include="Game\Objects\Stage\Components\BehaviorComponents\Component_CactanBehavior.cpp">
+      <Filter>03Game\Objects\Stage\Components\BehaviorComponents</Filter>
     </ClCompile>
+    <ClCompile Include="Game\Objects\Stage\Components\BehaviorComponents\Component_HelingoBehavior.cpp">
+      <Filter>03Game\Objects\Stage\Components\BehaviorComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Objects\Stage\Components\AttackComponents\Component_ShootAttack.cpp">
+      <Filter>03Game\Objects\Stage\Components\AttackComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Objects\Stage\Components\AttackComponents\Component_Attack.cpp">
+      <Filter>03Game\Objects\Stage\Components\MoveComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Objects\Stage\Components\MoveComponents\Component_WASDInputMove.cpp">
+      <Filter>03Game\Objects\Stage\Components\MoveComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Objects\Stage\Components\BehaviorComponents\Component_PlayerBehavior.cpp">
+      <Filter>03Game\Objects\Stage\Components\BehaviorComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Global.cpp">
+      <Filter>01Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Otheres\GameEditor.cpp">
+      <Filter>03Game\Objects\Otheres</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Objects\Stage\Components\MoveComponents\Component_HelingoFall.cpp">
+      <Filter>03Game\Objects\Stage\Components\MoveComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Objects\Stage\Components\MoveComponents\Component_Rise.cpp">
+      <Filter>03Game\Objects\Stage\Components\MoveComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Objects\UI\UIButton.cpp">
+      <Filter>03Game\Objects\UIObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Objects\UI\UIObject.cpp">
+      <Filter>03Game\Objects\UIObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Objects\UI\UIPanel.cpp">
+      <Filter>03Game\Objects\UIObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Objects\Camera\TPSCamera.cpp">
+      <Filter>03Game\Objects\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Objects\UI\UIImage.cpp">
+      <Filter>03Game\Objects\UIObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Scenes\Scene_End.cpp">
+      <Filter>03Game\Scenes\ReleaseScenes</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Scenes\Scene_Play.cpp">
+      <Filter>03Game\Scenes\ReleaseScenes</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Scenes\Scene_Splash.cpp">
+      <Filter>03Game\Scenes\ReleaseScenes</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Scenes\Scene_Title.cpp">
+      <Filter>03Game\Scenes\ReleaseScenes</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Scenes\Scene_Test.cpp">
+      <Filter>03Game\Scenes\DebugScenes</Filter>
+    </ClCompile>
+    <ClCompile Include="EffekseeLib\EffekseerVFX.cpp" />
+    <ClCompile Include="Game\Objects\Stage\Components\BehaviorComponents\Component_BossBehavior.cpp" />
+    <ClCompile Include="Game\Objects\Stage\Components\MoveComponents\Component_TackleMove.cpp" />
+    <ClCompile Include="Game\Objects\Stage\Components\AttackComponents\Component_MeleeAttack.cpp" />
+    <ClCompile Include="Game\Objects\Stage\Components\GaugeComponents\Component_Gauge.cpp" />
+    <ClCompile Include="Game\Objects\Stage\Components\GaugeComponents\Component_HealthGauge.cpp" />
+    <ClCompile Include="Game\Objects\UI\UIProgressBar.cpp" />
+    <ClCompile Include="Game\Objects\UI\UIText.cpp" />
+    <ClCompile Include="Game\Objects\Stage\Components\BehaviorComponents\Component_BossBehavior.cpp" />
+    <ClCompile Include="Game\Objects\Stage\Components\MoveComponents\Component_TackleMove.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Collider\BoxCollider.h">
@@ -363,18 +418,6 @@
     <ClInclude Include="Engine\ResourceManager\Transition.h">
       <Filter>01Engine\ResourceManager</Filter>
     </ClInclude>
-    <ClInclude Include="Game\Otheres\StageEditor.h">
-      <Filter>03Game\Objects\Otheres</Filter>
-    </ClInclude>
-    <ClInclude Include="Game\Scenes\Scene_Splash.h">
-      <Filter>03Game\Scenes</Filter>
-    </ClInclude>
-    <ClInclude Include="Game\Scenes\Scene_Test.h">
-      <Filter>03Game\Scenes</Filter>
-    </ClInclude>
-    <ClInclude Include="Game\Objects\Stage\Components\HealthManagerComponents\Component_HealthManager.h">
-      <Filter>03Game\Objects\Stage\Components\HealthManagerComponents</Filter>
-    </ClInclude>
     <ClInclude Include="Game\Objects\Stage\Components\MoveComponents\Component_Chase.h">
       <Filter>03Game\Objects\Stage\Components\MoveComponents</Filter>
     </ClInclude>
@@ -393,15 +436,73 @@
     <ClInclude Include="Game\Objects\Stage\Components\AttackComponents\Component_Attack.h">
       <Filter>03Game\Objects\Stage\Components\AttackComponents</Filter>
     </ClInclude>
-    <ClInclude Include="Game\Objects\Stage\Components\AttackComponents\Component_CactanAttack\Component_CactanAttack.h">
-      <Filter>03Game\Objects\Stage\Components\AttackComponents\CactanAttackComponent</Filter>
-    </ClInclude>
     <ClInclude Include="Game\Objects\Stage\Bullet.h">
       <Filter>03Game\Objects\Stage\StageObjects</Filter>
     </ClInclude>
-    <ClInclude Include="Game\Objects\Stage\Components\EnemyComponents\Component_OtiBehavior.h">
-      <Filter>03Game\Objects\Stage\Components\EnemyComponents</Filter>
+    <ClInclude Include="Game\Objects\Stage\Components\BehaviorComponents\Component_CactanBehavior.h">
+      <Filter>03Game\Objects\Stage\Components\BehaviorComponents</Filter>
     </ClInclude>
+    <ClInclude Include="Game\Objects\Stage\Components\BehaviorComponents\Component_HelingoBehavior.h">
+      <Filter>03Game\Objects\Stage\Components\BehaviorComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Objects\Stage\Components\AttackComponents\Component_ShootAttack.h">
+      <Filter>03Game\Objects\Stage\Components\AttackComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Objects\Stage\Components\MoveComponents\Component_WASDInputMove.h">
+      <Filter>03Game\Objects\Stage\Components\MoveComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Objects\Stage\Components\BehaviorComponents\Component_PlayerBehavior.h">
+      <Filter>03Game\Objects\Stage\Components\BehaviorComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Otheres\GameEditor.h">
+      <Filter>03Game\Objects\Otheres</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Objects\Stage\Components\MoveComponents\Component_HelingoFall.h">
+      <Filter>03Game\Objects\Stage\Components\MoveComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Objects\Stage\Components\MoveComponents\Component_Rise.h">
+      <Filter>03Game\Objects\Stage\Components\MoveComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Objects\UI\UIPanel.h">
+      <Filter>03Game\Objects\UIObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Objects\UI\UIButton.h">
+      <Filter>03Game\Objects\UIObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Objects\UI\UIObject.h">
+      <Filter>03Game\Objects\UIObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Objects\Camera\TPSCamera.h">
+      <Filter>03Game\Objects\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Objects\UI\UIImage.h">
+      <Filter>03Game\Objects\UIObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Scenes\Scene_End.h">
+      <Filter>03Game\Scenes\ReleaseScenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Scenes\Scene_Play.h">
+      <Filter>03Game\Scenes\ReleaseScenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Scenes\Scene_Splash.h">
+      <Filter>03Game\Scenes\ReleaseScenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Scenes\Scene_Title.h">
+      <Filter>03Game\Scenes\ReleaseScenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Scenes\Scene_Test.h">
+      <Filter>03Game\Scenes\DebugScenes</Filter>
+    </ClInclude>
+    <ClInclude Include="EffekseeLib\EffekseerVFX.h" />
+    <ClInclude Include="Game\Objects\Stage\Components\BehaviorComponents\Component_BossBehavior.h" />
+    <ClInclude Include="Game\Objects\Stage\Components\MoveComponents\Component_TackleMove.h" />
+    <ClInclude Include="Game\Objects\Stage\Components\AttackComponents\Component_MeleeAttack.h" />
+    <ClInclude Include="Game\Objects\Stage\Components\GaugeComponents\Component_Gauge.h" />
+    <ClInclude Include="Game\Objects\Stage\Components\GaugeComponents\Component_HealthGauge.h" />
+    <ClInclude Include="Game\Objects\UI\UIProgressBar.h" />
+    <ClInclude Include="Game\Objects\UI\UIText.h" />
+    <ClInclude Include="Game\Objects\Stage\Components\BehaviorComponents\Component_BossBehavior.h" />
+    <ClInclude Include="Game\Objects\Stage\Components\MoveComponents\Component_TackleMove.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Assets\Shader\Simple2D.hlsl">
@@ -420,6 +521,9 @@
       <Filter>02Shader</Filter>
     </FxCompile>
     <FxCompile Include="Assets\Shader\Shadow.hlsl">
+      <Filter>02Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="Assets\Shader\Progress.hlsl">
       <Filter>02Shader</Filter>
     </FxCompile>
   </ItemGroup>

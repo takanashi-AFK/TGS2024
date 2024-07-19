@@ -4,6 +4,13 @@
 #include <Windows.h>
 #include <d3d11.h>
 #include <DirectXMath.h>
+#include <map>
+#include <functional>
+#include <string>
+
+using std::map;
+using std::function;
+using std::string;
 
 //リンカ
 #pragma comment(lib, "d3d11.lib")
@@ -28,7 +35,7 @@ namespace Direct3D
 
 
 	//■シェーダー関連で必要なセット
-	enum SHADER_TYPE{SHADER_3D, SHADER_2D, SHADER_UNLIT, SHADER_BILLBOARD,SHADER_SKY, SHADER_MAX};	//3タイプ（3D用、2D用、当たり判定枠表示用）
+	enum SHADER_TYPE{SHADER_3D, SHADER_2D, SHADER_UNLIT, SHADER_BILLBOARD,SHADER_SKY,SHADER_BAR, SHADER_MAX};	//3タイプ（3D用、2D用、当たり判定枠表示用）
 	struct SHADER_BUNDLE
 	{
 		//【頂点入力レイアウト情報】
@@ -55,17 +62,13 @@ namespace Direct3D
 		BLEND_DEFAULT, BLEND_ADD, BLEND_MAX
 	};
 
-
-
 	//その他
 	extern int		screenWidth_;		//スクリーンの幅
 	extern int		screenHeight_;		//スクリーンの高さ
 	extern bool		isDrawCollision_;	//コリジョンを表示するかフラグ
 
-
-
-
-
+	// イージング関数
+	extern map<string, function<double(double)>> EaseFunc;
 
 	////////////////////////ここからは関数///////////////////////////////
 
@@ -96,14 +99,13 @@ namespace Direct3D
 	//開放処理
 	void Release();
 
-
 	//三角形と線分（レイ）の衝突判定（衝突判定に使用）
 	//引数：start　		レイのスタート位置
 	//引数：direction	レイの方向
 	//引数：v0,v1,v2	三角形の各頂点位置
 	//引数：distance	衝突点までの距離を返す
 	//戻値：衝突したかどうか
-	bool Intersect(XMFLOAT3& start, XMFLOAT3& direction, XMFLOAT3 &v0, XMFLOAT3& v1, XMFLOAT3& v2, float* distance);
+	bool Intersect(XMFLOAT3& start, XMFLOAT3& direction, XMFLOAT3 &v0, XMFLOAT3& v1, XMFLOAT3& v2, float* distance,XMVECTOR* pos);
 
 	//Zバッファへの書き込みON/OFF
 	//引数：isWrite	  true=書き込みON／false=書き込みOFF

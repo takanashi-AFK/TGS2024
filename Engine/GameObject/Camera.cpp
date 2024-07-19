@@ -34,9 +34,12 @@ void Camera::Update()
 
 //焦点を設定
 void Camera::SetTarget(XMFLOAT3 target) { _target = target; }
+void Camera::SetTarget(float x, float y, float z) { Camera::SetTarget(XMFLOAT3(x, y, z)); }
 
 //位置を設定
 void Camera::SetPosition(XMFLOAT3 position) { _position = position; }
+void Camera::SetPosition(float x, float y, float z) { Camera::SetPosition(XMFLOAT3(x, y, z)); }
+
 
 //焦点を取得
 XMFLOAT3 Camera::GetTarget() { return _target; }
@@ -52,3 +55,5 @@ XMMATRIX Camera::GetProjectionMatrix() { return _proj; }
 
 //ビルボード用回転行列を取得
 XMMATRIX Camera::GetBillboardMatrix(){	return _billBoard; }
+
+XMVECTOR Camera::GetSightLine() { return XMLoadFloat3(&_target) - XMLoadFloat3(&_position); }

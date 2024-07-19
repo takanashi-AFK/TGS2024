@@ -47,7 +47,6 @@ namespace Image
 			pData->fileName = fileName;
 		}
 
-
 		//使ってない番号が無いか探す
 		for (int i = 0; i < _datas.size(); i++)
 		{
@@ -75,12 +74,22 @@ namespace Image
 	//描画
 	void Draw(int handle)
 	{
+		Draw(handle, Direct3D::SHADER_2D);
+	}
+
+	void Draw(int handle, Direct3D::SHADER_TYPE _type)
+	{
+		Draw(handle, _type, XMFLOAT3(1, 1, 1));
+	}
+
+	void Draw(int handle, Direct3D::SHADER_TYPE _type, XMFLOAT3 _color)
+	{
 		if (handle < 0 || handle >= _datas.size() || _datas[handle] == nullptr)
 		{
 			return;
 		}
 		_datas[handle]->transform.Calclation();
-		_datas[handle]->pSprite->Draw(_datas[handle]->transform, _datas[handle]->rect, _datas[handle]->alpha);
+		_datas[handle]->pSprite->Draw(_datas[handle]->transform, _datas[handle]->rect, _datas[handle]->alpha, _type,_color);
 	}
 
 
@@ -191,5 +200,26 @@ namespace Image
 		}
 		return _datas[handle]->transform.GetWorldMatrix();
 	}
+
+	//画像の幅を取得
+	int GetWidth(int handle)
+	{
+		return _datas[handle]->pSprite->GetTextureSize().x;
+	}
+
+	//画像の高さを取得
+	int GetHeight(int handle)
+	{
+		return _datas[handle]->pSprite->GetTextureSize().y;
+	}
+
+	//画像のサイズを取得
+	XMFLOAT2 GetSize(int handle)
+	{
+		XMFLOAT3 size = _datas[handle]->pSprite->GetTextureSize();
+		return {size.x,size.y};
+	}
+
+
 }
 

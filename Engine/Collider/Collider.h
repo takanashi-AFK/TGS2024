@@ -68,6 +68,7 @@ public:
 
 	//セッター
 	void SetGameObject(GameObject* gameObject) { pGameObject_ = gameObject; }
-
+	void SetCenter(XMFLOAT3 center) { center_ = center; }
+	void SetSize(XMFLOAT3 size) { size_ = size; }
 };
 

@@ -38,6 +38,7 @@ class FbxParts
 		XMFLOAT4 cameraPosition;//カメラの位置（ハイライトの計算に必要）
 		FLOAT	 shininess;		//ハイライトの強さ（MayaのCosinePower）
 		BOOL	 isTexture;		//テクスチャの有無
+		
 	};
 
 	// マテリアル情報（質感の情報）

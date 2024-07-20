@@ -4,9 +4,14 @@
 
 class UIPanel;
 
-class Scene_Title:public GameObject
+class Scene_Title :public GameObject
 {
-	UIPanel* pUIPanel_;
+	UIPanel* pUIPanel_;//UIパネルのオブジェクト生成
+
+	int bgmHandle_; //bgm番号
+
+	int seHandle_;//効果音番号
+
 public:
 	//コンストラクタ
 	Scene_Title(GameObject* parent);

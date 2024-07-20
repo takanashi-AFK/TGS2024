@@ -5,6 +5,8 @@
 #include "../../Engine/DirectX/Input.h"
 #include "../Objects/UI/UIPanel.h"
 #include "../Objects/UI/UIButton.h"
+#include"../../Engine/ResourceManager/Audio.h"
+
 
 Scene_Title::Scene_Title(GameObject* parent)
 	: GameObject(parent, "Scene_Title")

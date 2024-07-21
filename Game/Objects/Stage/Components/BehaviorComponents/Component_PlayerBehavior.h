@@ -4,6 +4,17 @@
 #include "../../StageObject.h"
 #include <vector>
 #include "../../../../../Engine/ResourceManager/Model.h"
+
+enum PlayerState {
+	PSTATE_IDLE = 0,
+	PSTATE_WALK,
+	PSTATE_WALKANDSHOOT,
+	PSTATE_MELEE,
+	PSTATE_SHOOT,
+	PSTATE_DIE,
+	PSTATE_MAX
+	};
+
 class Component_PlayerBehavior : public Component
 {
 private:
@@ -14,15 +25,7 @@ private:
 	float shootHeight_;		// î≠éÀÇ∑ÇÈçÇÇ≥
 	bool isAnimationNow_;
 
-	enum PlayerState {
-		PSTATE_IDLE = 0,
-		PSTATE_WALK,
-		PSTATE_WALKANDSHOOT,
-		PSTATE_MELEE,
-		PSTATE_SHOOT,
-		PSTATE_DIE,
-		PSTATE_MAX
-	}nowState,prevState;
+	PlayerState nowState, prevState;
 
 
 public:
@@ -45,6 +48,7 @@ public:
 	
 	void ShootExe();
 
+	PlayerState GetState() { return nowState; }
 	//bool IsEnemyInRect(StageObject* _target);
 
 	//XMFLOAT3 ConvertTo2DPos(StageObject* _target);

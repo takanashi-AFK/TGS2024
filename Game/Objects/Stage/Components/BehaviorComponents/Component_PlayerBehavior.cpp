@@ -14,6 +14,7 @@
 #include "../GaugeComponents/Component_HealthGauge.h"
 #include "../MoveComponents/Component_WASDInputMove.h"
 #include "../TimerComponent/Component_Timer.h"
+#include "../MotionComponent/Component_PlayerMotion.h"
 #include <algorithm> 
 #include "../../../../../Game/Objects/Stage/Components/GaugeComponents/Component_HealthGauge.h"
 #include "../../../../../Engine/ImGui/imgui.h"
@@ -41,6 +42,7 @@ void Component_PlayerBehavior::Initialize()
     if (FindChildComponent("ShootAttack") == false)AddChildComponent(CreateComponent("ShootAttack", ShootAttack, holder_, this));
     if (FindChildComponent("Timer") == false)AddChildComponent(CreateComponent("Timer", Timer, holder_, this));
     if (FindChildComponent("HealthGauge") == false)AddChildComponent(CreateComponent("PlayerHealthGauge", HealthGauge, holder_, this));
+    if (FindChildComponent("PlayerMotion") == false)AddChildComponent(CreateComponent("PlayerMotion", PlayerMotion, holder_, this));
 }
 
 void Component_PlayerBehavior::Update()
@@ -62,15 +64,15 @@ void Component_PlayerBehavior::Update()
 
     switch (nowState)
     {
-    case Component_PlayerBehavior::PSTATE_IDLE:
+    case PSTATE_IDLE:
         Idle();  break;
-    case Component_PlayerBehavior::PSTATE_WALK:
+    case PSTATE_WALK:
         Walk();  break;
-    case Component_PlayerBehavior::PSTATE_WALKANDSHOOT:
+    case PSTATE_WALKANDSHOOT:
         WalkAndShoot(); break;
-    case Component_PlayerBehavior::PSTATE_MELEE:
+    case PSTATE_MELEE:
         Melee(); break;
-    case Component_PlayerBehavior::PSTATE_SHOOT:
+    case PSTATE_SHOOT:
         Shoot(); break;
     default:
         break;
@@ -88,6 +90,13 @@ void Component_PlayerBehavior::DrawData()
     auto timer = dynamic_cast<Component_Timer*>(GetChildComponent("Timer"));
     if (timer == nullptr)return;
     ImGui::Text("%f", timer->GetNowTime());
+
+    if(ImGui::Button("Idle")) SetState(PSTATE_IDLE);
+	if (ImGui::Button("Walk")) SetState(PSTATE_WALK);
+	if (ImGui::Button("WalkAndShoot")) SetState(PSTATE_WALKANDSHOOT);
+	if (ImGui::Button("Melee")) SetState(PSTATE_MELEE);
+	if (ImGui::Button("Shoot")) SetState(PSTATE_SHOOT);
+
 }
 
 void Component_PlayerBehavior::OnCollision(GameObject* _target, Collider* _collider)
@@ -122,15 +131,11 @@ void Component_PlayerBehavior::Walk()
     static bool prevAnim = false;
     if (move->GetIsMove() == true) {
         ImGui::Text("Move");
-        if (prevAnim == false)holder_->PlayAnimation(0, 40, 1);
-        prevAnim = true;
         if (Input::IsMouseButton(1) && Input::IsMouseButtonDown(0)) {
             SetState(PSTATE_WALKANDSHOOT);
         }       
     }
     else {
-        holder_->PlayAnimation(0, 0, 1);
-        prevAnim = false;
         SetState(PSTATE_IDLE);
     }
     ImGui::Text("Walk");
@@ -139,7 +144,6 @@ void Component_PlayerBehavior::Walk()
 
 void Component_PlayerBehavior::WalkAndShoot()
 {
-    holder_->PlayAnimation(0, 40, 1);
 
     ShootExe();
     SetState(PSTATE_IDLE);

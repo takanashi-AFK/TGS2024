@@ -48,8 +48,6 @@ void Component_PlayerBehavior::Update()
 	auto hm = dynamic_cast<Component_HealthGauge*>(GetChildComponent("PlayerHealthGauge"));
     if (hm == nullptr)return;
 
- 
-
     auto timer = dynamic_cast<Component_Timer*>(GetChildComponent("Timer"));
     if (timer == nullptr) return;
 
@@ -58,6 +56,9 @@ void Component_PlayerBehavior::Update()
 
     auto move = dynamic_cast<Component_WASDInputMove*>(GetChildComponent("InputMove"));
     if (move == nullptr)return;
+
+    frontVec_ = move->GetMoveDirction();
+    melee->SetForward(frontVec_);
 
     switch (nowState)
     {
@@ -95,21 +96,17 @@ void Component_PlayerBehavior::OnCollision(GameObject* _target, Collider* _colli
 
 void Component_PlayerBehavior::Idle()
 {
-	holder_->PlayAnimation(0, 0, 1);
 	auto move = dynamic_cast<Component_WASDInputMove*>(GetChildComponent("InputMove"));
 	if (move == nullptr)return;
 
 	if (move->GetIsMove()) {
-		nowState = PSTATE_WALK;
-	}
-    else if(Input::IsMouseButton(1) && Input::IsMouseButtonDown(0)){
-        if(move->GetIsMove())
-            nowState = PSTATE_WALKANDSHOOT;
-		else
-		nowState = PSTATE_SHOOT;
-	}
+		SetState(PSTATE_WALK);
+	} 
+	else if (Input::IsMouseButton(1) && Input::IsMouseButtonDown(0) && nowState != PSTATE_WALK) {
+		SetState(PSTATE_SHOOT);
+    }
 	else if (Input::IsMouseButtonDown(0)){
-		nowState = PSTATE_MELEE;
+        SetState(PSTATE_MELEE);
 	}
     ImGui::Text("idle");
 
@@ -121,16 +118,20 @@ void Component_PlayerBehavior::Walk()
     auto move = dynamic_cast<Component_WASDInputMove*>(GetChildComponent("InputMove"));
     if (move == nullptr)return;
 
+  
     static bool prevAnim = false;
     if (move->GetIsMove() == true) {
         ImGui::Text("Move");
         if (prevAnim == false)holder_->PlayAnimation(0, 40, 1);
         prevAnim = true;
+        if (Input::IsMouseButton(1) && Input::IsMouseButtonDown(0)) {
+            SetState(PSTATE_WALKANDSHOOT);
+        }       
     }
     else {
         holder_->PlayAnimation(0, 0, 1);
         prevAnim = false;
-        nowState = PSTATE_IDLE;
+        SetState(PSTATE_IDLE);
     }
     ImGui::Text("Walk");
 
@@ -138,10 +139,11 @@ void Component_PlayerBehavior::Walk()
 
 void Component_PlayerBehavior::WalkAndShoot()
 {
-    Walk();
-    Shoot();
-    ImGui::Text("WalkAndShot");
-    nowState = PSTATE_IDLE;
+    holder_->PlayAnimation(0, 40, 1);
+
+    ShootExe();
+    SetState(PSTATE_IDLE);
+	ImGui::Text("WalkAndShoot");
 }
 
 void Component_PlayerBehavior::Melee()
@@ -151,15 +153,21 @@ void Component_PlayerBehavior::Melee()
     auto melee = dynamic_cast<Component_MeleeAttack*>(GetChildComponent("MeleeAttack"));
     if (melee == nullptr)return;
 
-    frontVec_ = move->GetMoveDirction();
-    melee->SetForward(frontVec_);
+
     melee->Execute();
 
-    nowState = PSTATE_IDLE;
+    SetState(PSTATE_IDLE);
     ImGui::Text("Melee");
 }
 
 void Component_PlayerBehavior::Shoot()
+{
+    ShootExe();
+    SetState(PSTATE_IDLE);
+    ImGui::Text("shoot");
+}
+
+void Component_PlayerBehavior::ShootExe()
 {
     auto shoot = dynamic_cast<Component_ShootAttack*>(GetChildComponent("ShootAttack"));
     if (shoot == nullptr) return;
@@ -169,67 +177,65 @@ void Component_PlayerBehavior::Shoot()
     XMVECTOR sightLine = Camera::GetSightLine();
     XMFLOAT3 camPos = Camera::GetPosition();
     // 枠内にいるENEMY属性を持ったStageObjectをターゲットにする
-    
-        XMVECTOR shootDir = { 0, 0, 0, 0 };
-        Stage* pStage = ((Stage*)holder_->FindObject("Stage"));
-        if (pStage == nullptr) return;
 
-        auto stageObj = pStage->GetStageObjects();
-        StageObject* hitObject = nullptr;
-        XMFLOAT3 hitPosition{};
-        // すべてのオブジェクトに対してレイを飛ばす
-        for (auto obj : stageObj) {
-            if (obj->GetObjectName() == holder_->GetObjectName()) continue;
+    XMVECTOR shootDir = { 0, 0, 0, 0 };
+    Stage* pStage = ((Stage*)holder_->FindObject("Stage"));
+    if (pStage == nullptr) return;
 
-            int hGroundModel = obj->GetModelHandle();
-            if (hGroundModel < 0) continue;
+    auto stageObj = pStage->GetStageObjects();
+    StageObject* hitObject = nullptr;
+    XMFLOAT3 hitPosition{};
+    // すべてのオブジェクトに対してレイを飛ばす
+    for (auto obj : stageObj) {
+        if (obj->GetObjectName() == holder_->GetObjectName()) continue;
 
-            RayCastData data;
-            data.start = camPos;  // レイの発射位置 カメラの位置のためworld座標
+        int hGroundModel = obj->GetModelHandle();
+        if (hGroundModel < 0) continue;
 
-            XMStoreFloat3(&data.dir, XMVector3Normalize(sightLine)); // レイの方向 単位ベクトルのため、座標系に依存しないものと考える
+        RayCastData data;
+        data.start = camPos;  // レイの発射位置 カメラの位置のためworld座標
 
-            Model::RayCast(obj->GetModelHandle(), &data);  // レイを発射
+        XMStoreFloat3(&data.dir, XMVector3Normalize(sightLine)); // レイの方向 単位ベクトルのため、座標系に依存しないものと考える
 
-            // レイが当たったら
-            if (data.hit) {
-                // 命中したオブジェクトが何か
-                // hitObject = obj;
+        Model::RayCast(obj->GetModelHandle(), &data);  // レイを発射
 
-                XMVECTOR hitPosWorld = XMVector3TransformCoord(XMLoadFloat3(&data.pos), obj->GetWorldMatrix());
+        // レイが当たったら
+        if (data.hit) {
+            // 命中したオブジェクトが何か
+            // hitObject = obj;
 
-                XMStoreFloat3(&data.pos, hitPosWorld);
-                rayHitObjectList_.push_back(data);
-            }
+            XMVECTOR hitPosWorld = XMVector3TransformCoord(XMLoadFloat3(&data.pos), obj->GetWorldMatrix());
+
+            XMStoreFloat3(&data.pos, hitPosWorld);
+            rayHitObjectList_.push_back(data);
         }
+    }
 
-        // リストが空なら
-        if (rayHitObjectList_.empty()) {
-            shootDir = sightLine;
+    // リストが空なら
+    if (rayHitObjectList_.empty()) {
+        shootDir = sightLine;
+    }
+    else {
+        // 配列の中身を比較して最も近いものを取得
+        // プレイヤーの位置からの距離を計算し、shootDirに代入
+        auto min_iter = std::min_element(rayHitObjectList_.begin(), rayHitObjectList_.end(), CompareDist());
+
+        // イテレータが有効か確認して最小要素の dist を出力
+        if (min_iter != rayHitObjectList_.end()) {
+            XMFLOAT3 holderPos = holder_->GetPosition();
+            shootDir = XMVector3Normalize(XMLoadFloat3(&min_iter->pos) - XMLoadFloat3(&holderPos));
         }
-        else {
-            // 配列の中身を比較して最も近いものを取得
-            // プレイヤーの位置からの距離を計算し、shootDirに代入
-            auto min_iter = std::min_element(rayHitObjectList_.begin(), rayHitObjectList_.end(), CompareDist());
+        rayHitObjectList_.clear();
+    }
 
-            // イテレータが有効か確認して最小要素の dist を出力
-            if (min_iter != rayHitObjectList_.end()) {
-                XMFLOAT3 holderPos = holder_->GetPosition();
-                shootDir = XMVector3Normalize(XMLoadFloat3(&min_iter->pos) - XMLoadFloat3(&holderPos));
-            }
-            rayHitObjectList_.clear();
-        }
-
-        // 発射位置を設定
-        XMFLOAT3 shootPosition = holder_->GetPosition();
-        shootPosition.y += shootHeight_;
-        shoot->SetShootingPosition(shootPosition);
-        shoot->SetShootingDirection(shootDir);
-        shoot->SetShootingSpeed(2.f);
-        shoot->Execute();
-        shootDir = {};
-        nowState = PSTATE_IDLE;
-        ImGui::Text("shoot");
+    // 発射位置を設定
+    XMFLOAT3 shootPosition = holder_->GetPosition();
+    shootPosition.y += shootHeight_;
+    shoot->SetShootingPosition(shootPosition);
+    shoot->SetShootingDirection(shootDir);
+    shoot->SetShootingSpeed(2.f);
+    shoot->Execute();
+    shootDir = {};
 }
 
 

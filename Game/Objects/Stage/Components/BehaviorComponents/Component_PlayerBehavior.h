@@ -22,7 +22,7 @@ private:
 		PSTATE_SHOOT,
 		PSTATE_DIE,
 		PSTATE_MAX
-	}nowState;
+	}nowState,prevState;
 
 
 public:
@@ -40,6 +40,10 @@ public:
 	void WalkAndShoot();
 	void Melee();
 	void Shoot();
+
+	void SetState(PlayerState _state) { prevState = nowState; nowState = _state; }
+	
+	void ShootExe();
 
 	//bool IsEnemyInRect(StageObject* _target);
 

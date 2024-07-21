@@ -4,6 +4,11 @@
 
 class Scene_End :public GameObject
 {
+private:
+	int badEndBgmHandle_;
+
+	int clearBgmHandle_;
+
 public:
 	//コンストラクタ
 	Scene_End(GameObject* parent_);

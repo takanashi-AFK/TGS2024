@@ -9,7 +9,7 @@
 
 
 Scene_Title::Scene_Title(GameObject* parent)
-	: GameObject(parent, "Scene_Title")
+	: GameObject(parent, "Scene_Title"), bgmHandle_(-1), seHandle_(-1)
 {
 }
 
@@ -26,10 +26,18 @@ void Scene_Title::Initialize()
 	//	json uiData;
 	//	if (JsonReader::Load("Datas/UILayouts/TitleScene.json", uiData))pUIPanel_->Load(uiData);
 	//}
+
+	bgmHandle_ = Audio::Load("Audio\\TestBGM.wav", true);
+	assert(bgmHandle_ >= 0);
+
+	seHandle_ = Audio::Load("Audio\\TestSE.wav");
+	assert(seHandle_ >= 0);
 }
 
 void Scene_Title::Update()
 {
+	Audio::Play(bgmHandle_);
+
 	//// ボタンが押されたらプレイシーンに移行
 	//UIButton* button = (UIButton*)pUIPanel_->GetUIObject("02StartButton");
 	//if (button == nullptr)return;

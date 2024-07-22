@@ -1,12 +1,16 @@
 #pragma once
 #include"../../Engine/GameObject/GameObject.h"
 
-
+enum  ENDSTATE { WIN, LOSE };
 class Scene_End :public GameObject
 {
+private:
+	
+
+	ENDSTATE endState_;
 public:
 	//コンストラクタ
-	Scene_End(GameObject* parent_);
+	Scene_End(GameObject* parent_/*, ENDSTATE state_*/);
 
 	//初期化
 	void Initialize() override;

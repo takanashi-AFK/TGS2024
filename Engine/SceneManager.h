@@ -2,7 +2,7 @@
 #include "global.h"
 #include "GameObject/GameObject.h"
 #include "ResourceManager/Transition.h"
-
+#include "../Game/Scenes/Scene_End.h"
 //ゲームに登場するシーン
 enum SCENE_ID
 {
@@ -37,10 +37,12 @@ public:
 	void ChangeScene(SCENE_ID next, TRANSITION_ID _type, float _time);
 	void ChangeScene(SCENE_ID next, TRANSITION_ID _type);
 	void ChangeScene(SCENE_ID next);
-
+	//void ChangeSceneState(SCENE_ID next, ENDSTATE state);
 private:
 
 	SCENE_ID currentSceneID_;	//現在のシーン
 	SCENE_ID nextSceneID_;		//次のシーン
 	SCENE_ID tmpID_;
+	//ENDSTATE nextState_;
+
 };

@@ -9,6 +9,7 @@
 #include "../../../../../Engine/ImGui/imgui.h"
 #include "../../Stage.h"
 #include "../../../../../Engine/Global.h"
+#include "../GaugeComponents/Component_HealthGauge.h"
 #include <random>
 
 namespace
@@ -32,7 +33,7 @@ void Component_BossBehavior::Initialize()
     if (!FindChildComponent("ShootAttack")) AddChildComponent(CreateComponent("ShootAttack", ShootAttack, holder_, this));
     if (!FindChildComponent("Timer")) AddChildComponent(CreateComponent("Timer", Timer, holder_, this));
     if (!FindChildComponent("TackleMove")) AddChildComponent(CreateComponent("TackleMove", TackleMove, holder_, this));
-
+    if (FindChildComponent("HealthGauge") == false)AddChildComponent(CreateComponent("BossHealthGauge", HealthGauge, holder_, this));
     // effekseer: :Effect‚Ì“Ç‚İ‚İ
     EFFEKSEERLIB::gEfk->AddEffect("sword", "Effects/Salamander12.efk");/*ššš*/
 
@@ -41,6 +42,12 @@ void Component_BossBehavior::Initialize()
 
 void Component_BossBehavior::Update()
 {
+
+    auto hm = dynamic_cast<Component_HealthGauge*>(GetChildComponent("PlayerHealthGauge"));
+    if (hm == nullptr)return;
+    // i’»‚ğ0.0?1.0‚Ì”ÍˆÍ‚ÅŒvZ
+    float progress = hm->GetNow() / hm->GetMax();
+
     if (target_ == nullptr) target_ = (StageObject*)holder_->FindObject(targetName_);
     if (target_ == nullptr || !isActive_) return;
 

@@ -92,4 +92,10 @@ void SceneManager::ChangeScene(SCENE_ID next, TRANSITION_ID _type, float _time)
 void SceneManager::ChangeScene(SCENE_ID next, TRANSITION_ID _type) { ChangeScene(next, _type, 2); }
 void SceneManager::ChangeScene(SCENE_ID next) { ChangeScene(next, TID_NONE); }
 
+//void SceneManager::ChangeSceneState(SCENE_ID next, ENDSTATE state)
+//{
+//	nextState_ = state;
+//	ChangeScene(next);
+//}
+
 

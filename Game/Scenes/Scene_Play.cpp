@@ -27,6 +27,22 @@ void Scene_Play::Initialize()
 		JsonReader::Load("Datas/StageLayouts/stage_beta_00.json", stageData);
 		pStage->Load(stageData);
 
+		// プレイヤーとボスのヘルスゲージを取得
+		for (auto pList : pStage->GetStageObjects()) {
+			if (pList->FindComponent("PlayerBehavior")) {
+				Component_PlayerBehavior* playerBeha = dynamic_cast<Component_PlayerBehavior*>(pList->FindComponent("PlayerBehavior"));
+				if (playerBeha != nullptr) {
+					playerHealth_ = dynamic_cast<Component_HealthGauge*>(playerBeha->GetChildComponent("HealthGauge"));
+				}
+			}
+			if (pList->FindComponent("BossBehavior")) {  // ボスのコンポーネントを仮定
+				Component_PlayerBehavior* bossBeha = dynamic_cast<Component_PlayerBehavior*>(pList->FindComponent("BossBehavior"));
+				if (bossBeha != nullptr) {
+					bossHealth_ = dynamic_cast<Component_HealthGauge*>(bossBeha->GetChildComponent("HealthGauge"));
+				}
+			}
+		}
+	}
 		////範囲for分でオブジェクトリストの取得
 		//for (auto pList : pStage->GetStageObjects()) {
 		//	//リスト内でとうろくされているPlayerBehaviorがあったらコンポーネントをキャストして代入
@@ -38,7 +54,6 @@ void Scene_Play::Initialize()
 		//		}
 		//	}
 		//}
-	}
 
 	//TPSCamera* tpsCamera = Instantiate<TPSCamera>(this); {
 	//	json camData;
@@ -51,16 +66,26 @@ void Scene_Play::Initialize()
 void Scene_Play::Update()
 {
 
-	if(ImGui::Button("END")) {
+	/*if(ImGui::Button("END")) {
 		SceneManager* pChangeScene = (SceneManager*)FindObject("SceneManager");
 		pChangeScene->ChangeScene(SCENE_ID_END, TID_BLACKOUT);
-	}
+	}*/
 
 	//HPが0になったらエンドシーンに移行
 	/*if (playerHealth_->GetHP() == 0) {
 		SceneManager* pChangeScene = (SceneManager*)FindObject("SceneManager");
 		pChangeScene->ChangeScene(SCENE_ID_END, TID_BLACKOUT);
 	}*/
+	// プレイヤーとボスのHPチェック
+	/*if (playerHealth_ && playerHealth_->GetMax() <= 0)
+	{
+		ChangeState(LOSE);
+	}
+	else if (bossHealth_ && bossHealth_->GetMax() <= 0)
+	{
+		ChangeState(WIN);
+	}*/
+
 }
 
 void Scene_Play::Draw()
@@ -70,3 +95,12 @@ void Scene_Play::Draw()
 void Scene_Play::Release()
 {
 }
+
+//void Scene_Play::ChangeState(ENDSTATE newState)
+//{
+//	SceneManager* pChangeScene = static_cast<SceneManager*>(FindObject("SceneManager"));
+//	if (pChangeScene)
+//	{
+//		pChangeScene->ChangeSceneState(SCENE_ID_END, newState);
+//	}
+//}

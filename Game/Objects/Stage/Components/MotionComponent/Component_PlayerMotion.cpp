@@ -13,6 +13,8 @@ void Component_PlayerMotion::Initialize()
 	// モデルのロード
 	auto stageObjectList = ((Stage*)holder_)->GetStageObjects();
 
+	// このPlayerBehaviorが取得できていないからこのコード見直す
+	// holder_がもってるPlayerBehaviorもってくればいいじゃんね
 	for (auto stageObject : stageObjectList) {
 		auto componentVector = stageObject->FindComponent(PlayerBehavior);
 		if (componentVector.empty()) continue;

@@ -281,6 +281,13 @@ namespace EFFEKSEERLIB {
             return EffectInstances.find(effect_name.data()) != EffectInstances.end();
         }
 
+        bool IsEffectEnd(std::string_view effect_name) const {
+            if (auto iter = EffectInstances.find(effect_name.data()); iter != EffectInstances.end()) {
+				return iter->second->elapsedTime > (iter->second->effectTransform->maxFrame / fps_);
+			}
+			return false;
+        }
+
         void SetFPS(float fps) { fps_ = fps; }
 
     private:

@@ -13,79 +13,32 @@
 class Bullet :public StageObject
 {
 private:
-	bool isActive_;			// 弾が動作中かどうか
-	int frame_;				// 経過フレーム	
-	float speed_;			// 移動速度
-	XMVECTOR direction_;	// 移動方向
-	StageObject* shooter_;	// 発射したオブジェクト
+	fs::path effectFilePath_;					// エフェクトファイルのパス
+	EFFEKSEERLIB::EFKTransform efkTransform_;	// エフェクトの情報
+	std::shared_ptr<EFFEKSEERLIB::EFKTransform> mt;
 
-	// effekseer: 変形行列
-	std::shared_ptr<EFFEKSEERLIB::EFKTransform> mt;/*★★★*/
+	bool isActive_;								// アクティブかどうか
 
+	XMVECTOR moveDirection_;					// 移動方向
+	float moveSpeed_;							// 移動速度
+	StageObject* shooter_;						// 発射したオブジェクト
 public:
-	/// <summary>
-	/// コンストラクタ
-	/// </summary>
-	/// <param name="_parent">親オブジェクト</param>
 	Bullet(GameObject* _parent);
 
-	/// <summary>
-	/// 初期化
-	/// </summary>
 	void Initialize() override;
-	
-	/// <summary>
-	/// 更新
-	/// </summary>
 	void Update() override;
-	
-	/// <summary>
-	/// 描画
-	/// </summary>
 	void Draw() override;
+	void Release() override;
 
-	/// <summary>
-	/// 衝突処理
-	/// </summary>
-	void OnCollision(GameObject* _target, Collider* _collider) override;
-
-	/// <summary>
-	/// 移動速度を設定
-	/// </summary>
-	/// <param name="_speed">速度</param>
-	void SetSpeed(float _speed) { speed_ = _speed; }
-	
-	/// <summary>
-	/// 移動方向を設定
-	/// </summary>
-	/// <param name="_direction">方向</param>
-	void SetDirection(XMVECTOR _direction) { direction_ = _direction; }
-
-	/// <summary>
-	/// 実行
-	/// </summary>
-	void Execute() { isActive_ = true; }
-
-	/// <summary>
-	/// なんのオブジェクトが発射したかを設定
-	/// </summary>
-	/// <param name="_shooter"></param>
+	void Execute();
+/*
+setter:*/
+	void SetDirection(XMVECTOR _direction) { moveDirection_ = _direction; }
+	void SetSpeed(float _speed) { moveSpeed_ = _speed; }
 	void SetShooter(StageObject* _shooter) { shooter_ = _shooter; }
-
-private:
-	/// <summary>
-	/// 移動
-	/// </summary>
-	/// <param name="_dir">方向</param>
-	/// <param name="_speed">速度</param>
-	void Move(XMVECTOR _dir, float _speed);
-
-	/// <summary>
-	/// 一定時間後に自身を削除
-	/// </summary>
-	/// <param name="_sec">消えるまでの時間（秒）</param>
-	void AutoDelete(float _sec);
+	void SetEffect(fs::path _efkFilePath, float _isLoop, int _maxFrame, float _speed);
 };
 
+Bullet* CreateBullet(GameObject* _parent, fs::path _efkFilePath, float _isLoop, int _maxFrame, float _speed);
 
 

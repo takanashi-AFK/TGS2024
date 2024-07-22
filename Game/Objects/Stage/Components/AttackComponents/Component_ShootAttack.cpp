@@ -20,8 +20,7 @@ void Component_ShootAttack::Update()
 	if (isActive_ == false)return;
 
 	// 撃ち放つプレハブを生成
-	Bullet* bulletPrefab = Instantiate<Bullet>(holder_->GetParent());
-
+	Bullet* bulletPrefab = CreateBullet(holder_->GetParent(),"Effects/Sylph10.efk",false,60,1.f);
 	bulletPrefab->SetShooter(holder_);
 	
 	// 撃ち放つ速度を設定

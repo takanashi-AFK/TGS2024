@@ -6,6 +6,7 @@
 #include "../../../../../Engine/DirectX/Direct3D.h"
 #include "../../../../../Engine/DirectX/Input.h"
 #include "../../../../../Engine/GameObject/Camera.h"
+#include"../../../../../Engine/ResourceManager/Audio.h"
 #include "../../Stage.h"
 #include "../../StageObject.h"
 #include "../../SkySphere.h"
@@ -26,7 +27,7 @@ struct CompareDist {
 };
 
 Component_PlayerBehavior::Component_PlayerBehavior(string _name, StageObject* _holder, Component* _parent)
-    : Component(_holder, _name, PlayerBehavior, _parent)
+    : Component(_holder, _name, PlayerBehavior, _parent),walkSEHandle_(-1)
 {
 }
 
@@ -41,6 +42,9 @@ void Component_PlayerBehavior::Initialize()
     if (FindChildComponent("ShootAttack") == false)AddChildComponent(CreateComponent("ShootAttack", ShootAttack, holder_, this));
     if (FindChildComponent("Timer") == false)AddChildComponent(CreateComponent("Timer", Timer, holder_, this));
     if (FindChildComponent("HealthGauge") == false)AddChildComponent(CreateComponent("PlayerHealthGauge", HealthGauge, holder_, this));
+
+    walkSEHandle_ = Audio::Load("Audio\\芝生の上を歩く.wav");
+    assert(walkSEHandle_ >= 0);
 }
 
 void Component_PlayerBehavior::Update()
@@ -51,6 +55,7 @@ void Component_PlayerBehavior::Update()
 	float progress = hm->GetNow() / hm->GetMax();
 
     auto move = dynamic_cast<Component_WASDInputMove*>(GetChildComponent("InputMove"));
+    if(move!=nullptr) Audio::Play(walkSEHandle_);
     if (move == nullptr)return;
     auto melee = dynamic_cast<Component_MeleeAttack*>(GetChildComponent("MeleeAttack"));
     if (melee == nullptr)return;

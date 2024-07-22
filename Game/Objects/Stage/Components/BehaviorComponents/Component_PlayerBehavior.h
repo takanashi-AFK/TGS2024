@@ -12,7 +12,7 @@ private:
 	string targetName_;
 	std::vector<RayCastData> rayHitObjectList_;
 	float shootHeight_;		// î≠éÀÇ∑ÇÈçÇÇ≥
-
+	int walkSEHandle_;
 
 public:
 	Component_PlayerBehavior(string _name,StageObject* _holder,Component* _parent);

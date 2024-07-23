@@ -193,7 +193,8 @@ bool UIButton::IsMouseOver(XMFLOAT2 _mousePosition)
 	XMFLOAT2 currentMousePos;
 	XMStoreFloat2(&currentMousePos, localMousePos);
 
-	return (currentMousePos.x >= -imageWidth && currentMousePos.x <= imageHeight && currentMousePos.y >= -imageHeight&& currentMousePos.y <= imageHeight);
+	return (currentMousePos.x >= -imageWidth  && currentMousePos.x <= imageWidth  &&
+		currentMousePos.y >= -imageHeight  && currentMousePos.y <= imageHeight );
 }
 
 void UIButton::ConvertToImageCoordinates(XMFLOAT2& _position)

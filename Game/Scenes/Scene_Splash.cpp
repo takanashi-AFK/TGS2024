@@ -5,7 +5,7 @@
 #include "../../Engine/ResourceManager/Image.h"
 #include "../../Engine/SceneManager.h"
 #include "../Objects/UI/UIPanel.h"
-
+#include"../../Engine/ResourceManager/Audio.h"
 // 定数
 namespace {
 	const float LIMIT_TIME = 1.f;				// シーンを切り替えるまでに掛かる時間（秒）
@@ -13,7 +13,7 @@ namespace {
 }
 
 Scene_Splash::Scene_Splash(GameObject* _parent)
-	:GameObject(_parent,"Scene_Splash"),count_()
+	:GameObject(_parent, "Scene_Splash"), count_(), splashSEHandle_(-1)
 {
 }
 
@@ -24,13 +24,18 @@ void Scene_Splash::Initialize()
 	//	json uiData;
 	//	if (JsonReader::Load("Datas/UILayouts/SplashScene.json", uiData))pUIPanel->Load(uiData);
 	//}
+	splashSEHandle_ = Audio::Load("Audio\\jingle15.wav");
+	assert(splashSEHandle_ >= 0);
 }
 
 void Scene_Splash::Update()
 {
+	Audio::Play(splashSEHandle_);
 	//// n秒経過したらシーンを移動
-	//if (count_ >= LIMIT_TIME * FPS)((SceneManager*)FindObject("SceneManager"))->ChangeScene(SCENE_ID_TITLE, TID_BLACKOUT);
-	//
+	//if (count_ >= LIMIT_TIME * FPS){
+	// Audio::Stop(splashSEHandle_);
+	// ((SceneManager*)FindObject("SceneManager"))->ChangeScene(SCENE_ID_TITLE, TID_BLACKOUT);
+	//}
 	//// カウントアップ
 	//count_++;
 }

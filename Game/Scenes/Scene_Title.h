@@ -8,7 +8,7 @@ class Scene_Title :public GameObject
 {
 	UIPanel* pUIPanel_;//UIパネルのオブジェクト生成
 
-	int bgmHandle_; //bgm番号
+	int titleBGMHandle_; //bgm番号
 
 	int seHandle_;//効果音番号
 

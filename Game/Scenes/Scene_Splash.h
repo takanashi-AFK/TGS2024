@@ -12,6 +12,7 @@ class Scene_Splash : public GameObject
 private:
 	float count_;		// 経過時間
 
+	int splashSEHandle_;//スプラッシュシーンのse番号
 public:
 	/// <summary>
 	/// コンストラクタ

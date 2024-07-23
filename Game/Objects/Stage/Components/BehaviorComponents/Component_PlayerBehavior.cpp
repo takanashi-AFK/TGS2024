@@ -21,113 +21,113 @@
 
 
 struct CompareDist {
-    bool operator()(const RayCastData& lhs, const RayCastData& rhs) const {
-        return lhs.dist < rhs.dist;
-    }
+	bool operator()(const RayCastData& lhs, const RayCastData& rhs) const {
+		return lhs.dist < rhs.dist;
+	}
 };
 
 Component_PlayerBehavior::Component_PlayerBehavior(string _name, StageObject* _holder, Component* _parent)
-    : Component(_holder, _name, PlayerBehavior, _parent),walkSEHandle_(-1)
+	: Component(_holder, _name, PlayerBehavior, _parent), walkSEHandle_(-1)
 {
 }
 
 void Component_PlayerBehavior::Initialize()
 {
-    // コライダーの追加
-    holder_->AddCollider(new BoxCollider(XMFLOAT3(0, 0, 0), XMFLOAT3(1, 1, 1)));
+	// コライダーの追加
+	holder_->AddCollider(new BoxCollider(XMFLOAT3(0, 0, 0), XMFLOAT3(1, 1, 1)));
 
-    // 子コンポーネントの追加
-    if (FindChildComponent("InputMove") == false)AddChildComponent(CreateComponent("InputMove", WASDInputMove, holder_, this));
-    if (FindChildComponent("MeleeAttack") == false)AddChildComponent(CreateComponent("MeleeAttack", MeleeAttack, holder_, this));
-    if (FindChildComponent("ShootAttack") == false)AddChildComponent(CreateComponent("ShootAttack", ShootAttack, holder_, this));
-    if (FindChildComponent("Timer") == false)AddChildComponent(CreateComponent("Timer", Timer, holder_, this));
-    if (FindChildComponent("HealthGauge") == false)AddChildComponent(CreateComponent("PlayerHealthGauge", HealthGauge, holder_, this));
+	// 子コンポーネントの追加
+	if (FindChildComponent("InputMove") == false)AddChildComponent(CreateComponent("InputMove", WASDInputMove, holder_, this));
+	if (FindChildComponent("MeleeAttack") == false)AddChildComponent(CreateComponent("MeleeAttack", MeleeAttack, holder_, this));
+	if (FindChildComponent("ShootAttack") == false)AddChildComponent(CreateComponent("ShootAttack", ShootAttack, holder_, this));
+	if (FindChildComponent("Timer") == false)AddChildComponent(CreateComponent("Timer", Timer, holder_, this));
+	if (FindChildComponent("HealthGauge") == false)AddChildComponent(CreateComponent("PlayerHealthGauge", HealthGauge, holder_, this));
 
-    walkSEHandle_ = Audio::Load("Audio\\芝生の上を歩く.wav");
-    assert(walkSEHandle_ >= 0);
+	walkSEHandle_ = Audio::Load("Audio\\芝生の上を歩く.wav");
+	assert(walkSEHandle_ >= 0);
 }
 
 void Component_PlayerBehavior::Update()
 {
 	auto hm = dynamic_cast<Component_HealthGauge*>(GetChildComponent("PlayerHealthGauge"));
-    if (hm == nullptr)return;
+	if (hm == nullptr)return;
 	// 進捗を0.0〜1.0の範囲で計算
 	float progress = hm->GetNow() / hm->GetMax();
 
-    auto move = dynamic_cast<Component_WASDInputMove*>(GetChildComponent("InputMove"));
-    if(move!=nullptr) Audio::Play(walkSEHandle_);
-    if (move == nullptr)return;
-    auto melee = dynamic_cast<Component_MeleeAttack*>(GetChildComponent("MeleeAttack"));
-    if (melee == nullptr)return;
+	auto move = dynamic_cast<Component_WASDInputMove*>(GetChildComponent("InputMove"));
+	if (move != nullptr) Audio::Play(walkSEHandle_);
+	if (move == nullptr)Audio::Stop(walkSEHandle_); return;
+	auto melee = dynamic_cast<Component_MeleeAttack*>(GetChildComponent("MeleeAttack"));
+	if (melee == nullptr)return;
 
-    frontVec_ = move->GetMoveDirction();
-    melee->SetForward(frontVec_);
-   
-
-    // HPゲージの表示
-    ImGui::ProgressBar(progress, ImVec2(0.0f, 0.0f), "Player HP");
+	frontVec_ = move->GetMoveDirction();
+	melee->SetForward(frontVec_);
 
 
-    auto shoot = dynamic_cast<Component_ShootAttack*>(GetChildComponent("ShootAttack"));
-    if (shoot == nullptr) return;
+	// HPゲージの表示
+	ImGui::ProgressBar(progress, ImVec2(0.0f, 0.0f), "Player HP");
 
-    auto timer = dynamic_cast<Component_Timer*>(GetChildComponent("Timer"));
-    if (timer == nullptr) return;
 
-    if (target_ == nullptr) target_ = (StageObject*)holder_->FindObject(targetName_);
+	auto shoot = dynamic_cast<Component_ShootAttack*>(GetChildComponent("ShootAttack"));
+	if (shoot == nullptr) return;
 
-    XMVECTOR sightLine = Camera::GetSightLine();
-    XMFLOAT3 camPos = Camera::GetPosition();
-         // ヒット位置のワールド座標
-    static XMFLOAT3 pos{};
-    // 枠内にいるENEMY属性を持ったStageObjectをターゲットにする
-    if (Input::IsMouseButton(1) && Input::IsMouseButtonDown(0))
-    {
-        XMVECTOR shootDir = { 0, 0, 0, 0 };
-        Stage* pStage = ((Stage*)holder_->FindObject("Stage"));
-        if (pStage == nullptr) return;
+	auto timer = dynamic_cast<Component_Timer*>(GetChildComponent("Timer"));
+	if (timer == nullptr) return;
 
-        auto stageObj = pStage->GetStageObjects();
-        StageObject* hitObject = nullptr;
-        XMFLOAT3 hitPosition{};
-        // すべてのオブジェクトに対してレイを飛ばす
-        for (auto obj : stageObj) {
-            if (obj->GetObjectName() == holder_->GetObjectName()) continue;
+	if (target_ == nullptr) target_ = (StageObject*)holder_->FindObject(targetName_);
 
-            int hGroundModel = obj->GetModelHandle();
-            if (hGroundModel < 0) continue;
+	XMVECTOR sightLine = Camera::GetSightLine();
+	XMFLOAT3 camPos = Camera::GetPosition();
+	// ヒット位置のワールド座標
+	static XMFLOAT3 pos{};
+	// 枠内にいるENEMY属性を持ったStageObjectをターゲットにする
+	if (Input::IsMouseButton(1) && Input::IsMouseButtonDown(0))
+	{
+		XMVECTOR shootDir = { 0, 0, 0, 0 };
+		Stage* pStage = ((Stage*)holder_->FindObject("Stage"));
+		if (pStage == nullptr) return;
 
-    //        RayCastData data;
-    //        data.start = camPos;  // レイの発射位置
+		auto stageObj = pStage->GetStageObjects();
+		StageObject* hitObject = nullptr;
+		XMFLOAT3 hitPosition{};
+		// すべてのオブジェクトに対してレイを飛ばす
+		for (auto obj : stageObj) {
+			if (obj->GetObjectName() == holder_->GetObjectName()) continue;
 
-    //        // オブジェクトの逆行列を取得
-    //        XMMATRIX objMatrixInv = XMMatrixInverse(nullptr, obj->GetWorldMatrix());
+			int hGroundModel = obj->GetModelHandle();
+			if (hGroundModel < 0) continue;
 
-    //        // レイの開始位置をオブジェクトのローカル座標に変換
-    //        XMVECTOR startVec = XMLoadFloat3(&data.start);
-    //        startVec = XMVector3TransformCoord(startVec, objMatrixInv);
-    //        XMStoreFloat3(&data.start, startVec);
+			//        RayCastData data;
+			//        data.start = camPos;  // レイの発射位置
 
-    //        // レイの方向をオブジェクトのローカル座標に変換
-    //        XMVECTOR dirVec = sightLine; // sightLineを使用
-    //        dirVec = XMVector3TransformCoord(dirVec, objMatrixInv);
-    //        dirVec = XMVector3Normalize(dirVec);
-    //        XMStoreFloat3(&data.dir, dirVec);
+			//        // オブジェクトの逆行列を取得
+			//        XMMATRIX objMatrixInv = XMMatrixInverse(nullptr, obj->GetWorldMatrix());
 
-    //        Model::RayCast(hGroundModel, &data);  // レイを発射
+			//        // レイの開始位置をオブジェクトのローカル座標に変換
+			//        XMVECTOR startVec = XMLoadFloat3(&data.start);
+			//        startVec = XMVector3TransformCoord(startVec, objMatrixInv);
+			//        XMStoreFloat3(&data.start, startVec);
 
-    //        // レイが当たったら
-    //        if (data.hit) {
-    //            // レイの情報をリストに追加
-    //            rayHitObjectList_.push_back(data);
-    //            hitObject = obj;
+			//        // レイの方向をオブジェクトのローカル座標に変換
+			//        XMVECTOR dirVec = sightLine; // sightLineを使用
+			//        dirVec = XMVector3TransformCoord(dirVec, objMatrixInv);
+			//        dirVec = XMVector3Normalize(dirVec);
+			//        XMStoreFloat3(&data.dir, dirVec);
 
-    //            // ヒット位置のワールド座標を計算
-    //            XMVECTOR hitPosLocal = XMLoadFloat3(&data.pos); // ヒット位置のローカル座標
-    //            XMVECTOR hitPosWorld = XMVector3TransformCoord(hitPosLocal, obj->GetWorldMatrix());
-    //            XMStoreFloat3(&hitPosition, hitPosWorld);
-				//pos = hitPosition;
-    //        }
+			//        Model::RayCast(hGroundModel, &data);  // レイを発射
+
+			//        // レイが当たったら
+			//        if (data.hit) {
+			//            // レイの情報をリストに追加
+			//            rayHitObjectList_.push_back(data);
+			//            hitObject = obj;
+
+			//            // ヒット位置のワールド座標を計算
+			//            XMVECTOR hitPosLocal = XMLoadFloat3(&data.pos); // ヒット位置のローカル座標
+			//            XMVECTOR hitPosWorld = XMVector3TransformCoord(hitPosLocal, obj->GetWorldMatrix());
+			//            XMStoreFloat3(&hitPosition, hitPosWorld);
+						//pos = hitPosition;
+			//        }
 
 
 			RayCastData data;
@@ -138,48 +138,48 @@ void Component_PlayerBehavior::Update()
 			Model::RayCast(obj->GetModelHandle(), &data);  // レイを発射
 
 			// レイが当たったら
-            if (data.hit) {
+			if (data.hit) {
 				// 命中したオブジェクトが何か
 				// hitObject = obj;
 
 				XMVECTOR hitPosWorld = XMVector3TransformCoord(XMLoadFloat3(&data.pos), obj->GetWorldMatrix());
 
-                XMStoreFloat3(&data.pos,hitPosWorld);
+				XMStoreFloat3(&data.pos, hitPosWorld);
 				rayHitObjectList_.push_back(data);
-            }
-        }
+			}
+		}
 
-        // リストが空なら
-        if (rayHitObjectList_.empty()) {
-            shootDir = sightLine;
-        }
-        else {
-            // 配列の中身を比較して最も近いものを取得
-            // プレイヤーの位置からの距離を計算し、shootDirに代入
-            auto min_iter = std::min_element(rayHitObjectList_.begin(), rayHitObjectList_.end(), CompareDist());
+		// リストが空なら
+		if (rayHitObjectList_.empty()) {
+			shootDir = sightLine;
+		}
+		else {
+			// 配列の中身を比較して最も近いものを取得
+			// プレイヤーの位置からの距離を計算し、shootDirに代入
+			auto min_iter = std::min_element(rayHitObjectList_.begin(), rayHitObjectList_.end(), CompareDist());
 
-            // イテレータが有効か確認して最小要素の dist を出力
-            if (min_iter != rayHitObjectList_.end()) {
-                XMFLOAT3 holderPos = holder_->GetPosition();
-                shootDir = XMVector3Normalize(XMLoadFloat3(&min_iter->pos) - XMLoadFloat3(&holderPos));
-            }
-            rayHitObjectList_.clear();
-        }
+			// イテレータが有効か確認して最小要素の dist を出力
+			if (min_iter != rayHitObjectList_.end()) {
+				XMFLOAT3 holderPos = holder_->GetPosition();
+				shootDir = XMVector3Normalize(XMLoadFloat3(&min_iter->pos) - XMLoadFloat3(&holderPos));
+			}
+			rayHitObjectList_.clear();
+		}
 
-        // 発射位置を設定
-        XMFLOAT3 shootPosition = holder_->GetPosition();
-        shootPosition.y += shootHeight_;
-        shoot->SetShootingPosition(shootPosition);
-        shoot->SetShootingDirection(shootDir);
-        shoot->SetShootingSpeed(2.f);
-        shoot->Execute();
+		// 発射位置を設定
+		XMFLOAT3 shootPosition = holder_->GetPosition();
+		shootPosition.y += shootHeight_;
+		shoot->SetShootingPosition(shootPosition);
+		shoot->SetShootingDirection(shootDir);
+		shoot->SetShootingSpeed(2.f);
+		shoot->Execute();
 		shootDir = {};
-    }
-    else if (Input::IsMouseButtonDown(0))
-    {
-        melee->Execute();
-    }
-    ImGui::Text("pos %f,%f,%f", pos.x, pos.y, pos.z);
+	}
+	else if (Input::IsMouseButtonDown(0))
+	{
+		melee->Execute();
+	}
+	ImGui::Text("pos %f,%f,%f", pos.x, pos.y, pos.z);
 
 }
 
@@ -189,10 +189,10 @@ void Component_PlayerBehavior::Release()
 
 void Component_PlayerBehavior::DrawData()
 {
-    ImGui::Text("%f,%f,%f,%f", frontVec_.m128_f32);
-    auto timer = dynamic_cast<Component_Timer*>(GetChildComponent("Timer"));
-    if (timer == nullptr)return;
-    ImGui::Text("%f", timer->GetNowTime());
+	ImGui::Text("%f,%f,%f,%f", frontVec_.m128_f32);
+	auto timer = dynamic_cast<Component_Timer*>(GetChildComponent("Timer"));
+	if (timer == nullptr)return;
+	ImGui::Text("%f", timer->GetNowTime());
 }
 
 void Component_PlayerBehavior::OnCollision(GameObject* _target, Collider* _collider)

@@ -24,25 +24,24 @@ void Component_PlayerMotion::Update()
 	// 現在のStateを取得
 	state_ = ((Component_PlayerBehavior*)parent_)->GetState();
 
-	// ここうまくいってないから確認お願い
 	if (state_ == PSTATE_WALK) {
 		// playerBehaviorのモデルハンドルを変える
-		((StageObject*)parent_)->SetModelHandle(motionModelMap_[PSTATE_WALK]);
+		((StageObject*)holder_)->SetModelHandle(motionModelMap_[PSTATE_WALK]);
 
 		if (prevAnim == false) holder_->PlayAnimation(0, 40, 1);
 		prevAnim = true;
 	}
 	else if (state_ == PSTATE_SHOOT) {
-		((StageObject*)parent_)->SetModelHandle(motionModelMap_[PSTATE_SHOOT]);
+		((StageObject*)holder_)->SetModelHandle(motionModelMap_[PSTATE_SHOOT]);
 
 		if (prevAnim == false)holder_->PlayAnimation(0, 101, 1);
 		prevAnim = true;
 		
 	}
 	else if (state_ == PSTATE_IDLE) {
-		((StageObject*)parent_)->SetModelHandle(motionModelMap_[PSTATE_IDLE]);
+		((StageObject*)holder_)->SetModelHandle(motionModelMap_[PSTATE_IDLE]);
 		prevAnim = false;
-		holder_->PlayAnimation(0, 0, 1);
+		if (prevAnim == false)holder_->PlayAnimation(0, 150, 1);
 	}
 	else {
 		prevAnim = false;
@@ -50,7 +49,7 @@ void Component_PlayerMotion::Update()
 	}
 
 	ImGui::Text("state_: %d", state_);
-	ImGui::Text("nowModelHandle : %d", ((StageObject*)parent_)->GetModelHandle());
+	ImGui::Text("nowModelHandle : %d", ((StageObject*)holder_)->GetModelHandle());
 	ImGui::Text(prevAnim ? "isAnimationNow_ :true" : "isAnimationNow_ :false");
 }
 

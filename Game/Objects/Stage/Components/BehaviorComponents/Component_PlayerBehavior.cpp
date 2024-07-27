@@ -167,6 +167,7 @@ void Component_PlayerBehavior::Melee()
 void Component_PlayerBehavior::Shoot()
 {
     ShootExe();
+    // アニメーションが終わったらState変更
     SetState(PSTATE_IDLE);
     ImGui::Text("shoot");
 }

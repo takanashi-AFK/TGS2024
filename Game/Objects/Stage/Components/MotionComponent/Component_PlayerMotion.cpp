@@ -19,38 +19,36 @@ void Component_PlayerMotion::Initialize()
 
 void Component_PlayerMotion::Update()
 {
-	static bool prevAnim = false;
 	if (parent_ == nullptr) return;
 	// Œ»Ý‚ÌState‚ðŽæ“¾
 	state_ = ((Component_PlayerBehavior*)parent_)->GetState();
+	static bool prevAnim = false;
 
-	if (state_ == PSTATE_WALK) {
-		// playerBehavior‚Ìƒ‚ƒfƒ‹ƒnƒ“ƒhƒ‹‚ð•Ï‚¦‚é
+	switch (state_)
+	{
+	case PSTATE_IDLE:
+		((StageObject*)holder_)->SetModelHandle(motionModelMap_[PSTATE_IDLE]);
+		if (prevAnim == false)holder_->PlayAnimation(0, 200, 1);
+		prevAnim = true; break;
+
+	case PSTATE_WALK:
+
 		((StageObject*)holder_)->SetModelHandle(motionModelMap_[PSTATE_WALK]);
-
 		if (prevAnim == false) holder_->PlayAnimation(0, 40, 1);
 		prevAnim = true;
-	}
-	else if (state_ == PSTATE_SHOOT) {
+		break;
+	case PSTATE_SHOOT:
 		((StageObject*)holder_)->SetModelHandle(motionModelMap_[PSTATE_SHOOT]);
-
 		if (prevAnim == false)holder_->PlayAnimation(0, 101, 1);
 		prevAnim = true;
-		
-	}
-	else if (state_ == PSTATE_IDLE) {
-		((StageObject*)holder_)->SetModelHandle(motionModelMap_[PSTATE_IDLE]);
-		prevAnim = false;
-		if (prevAnim == false)holder_->PlayAnimation(0, 150, 1);
-	}
-	else {
+		break;
+	default:
+
 		prevAnim = false;
 		holder_->PlayAnimation(0, 0, 1);
 	}
-
 	ImGui::Text("state_: %d", state_);
 	ImGui::Text("nowModelHandle : %d", ((StageObject*)holder_)->GetModelHandle());
-	ImGui::Text(prevAnim ? "isAnimationNow_ :true" : "isAnimationNow_ :false");
 }
 
 void Component_PlayerMotion::Release()

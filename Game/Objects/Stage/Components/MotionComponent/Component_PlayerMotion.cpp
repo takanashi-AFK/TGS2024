@@ -26,12 +26,17 @@ void Component_PlayerMotion::Update()
 
     switch (state_)
     {
+        // 待機状態だったら
     case PSTATE_IDLE:
+		// 待機状態のアニメーションの終了フレームを設定
+        animationEndFrame_ = 200;
+		// モデルが待機状態のモデルじゃなかったら変更
         if (((StageObject*)holder_)->GetModelHandle() != motionModelMap_[PSTATE_IDLE]) {
             ((StageObject*)holder_)->SetModelHandle(motionModelMap_[PSTATE_IDLE]);
-            currentFrame_ = 0;  // モデルが変わったときにフレームをリセット
+            // モデルが変わったときにフレームをリセット
+            currentFrame_ = 0;  
         }
-        animationEndFrame_ = 200;
+		// モデルが変わったときにアニメーションを再生
         if (currentFrame_ == 0) {
             holder_->PlayAnimation(0, animationEndFrame_, 1);
         }
@@ -62,6 +67,8 @@ void Component_PlayerMotion::Update()
 
     // 現在のフレームをインクリメント
     currentFrame_++;
+
+	// アニメーションの終了フレームに達したらフレームをリセット
     if (currentFrame_ >= animationEndFrame_) {
         currentFrame_ = 0;
     }

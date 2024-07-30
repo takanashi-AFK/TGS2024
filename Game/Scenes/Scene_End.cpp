@@ -1,7 +1,7 @@
 #include "Scene_End.h"
 
 
-#include "../Objects/UI/UIText.h"
+#include "../Objects/UI/UIPanel.h"
 #include "../../Engine/Global.h"
 #include "../../Engine/ImGui/imgui.h"
 
@@ -13,8 +13,8 @@ void Scene_End::Initialize()
 {
 	json ScoreText;
 	if (JsonReader::Load("TestEndScene_layout.json", ScoreText)) {
-		UIText* ptext = Instantiate<UIText>(this);
-		ptext->Load(ScoreText);
+		UIPanel* panel = UIPanel::GetInstance();
+		panel->Load(ScoreText);
 	}
 }
 

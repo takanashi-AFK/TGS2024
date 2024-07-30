@@ -4,6 +4,7 @@
 
 class Scene_End :public GameObject
 {
+
 public:
 	//コンストラクタ
 	Scene_End(GameObject* parent_);

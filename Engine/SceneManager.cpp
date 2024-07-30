@@ -4,6 +4,7 @@
 #include "ResourceManager/Model.h"
 #include "ResourceManager/Image.h"
 #include "ResourceManager/Audio.h"
+#include "../Game/Objects/UI/UIPanel.h"
 
 // 各シーン のインクルード
 #include "../Game/Scenes/Scene_Test.h"
@@ -44,6 +45,9 @@ void SceneManager::Update()
 	{
 		//そのシーンのオブジェクトを全削除
 		KillAllChildren();
+
+		// そのシーンのUIパネルを削除
+		UIPanel::GetInstance()->DeleteAllUIObject();
 
 		//ロードしたデータを全削除
 		Audio::Release();

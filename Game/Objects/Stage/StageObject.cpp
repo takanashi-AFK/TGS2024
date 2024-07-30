@@ -191,6 +191,12 @@ void StageObject::CollisionWall()
 	}
 }
 
+void StageObject::PlayAnimation(int _start, int _end, float _speed)
+{
+	Model::SetAnimFrame(modelHandle_,_start, _end, _speed);
+
+}
+
 void StageObject::Initialize()
 {
 	// ƒ‚ƒfƒ‹‚Ì“Ç‚İ‚İ

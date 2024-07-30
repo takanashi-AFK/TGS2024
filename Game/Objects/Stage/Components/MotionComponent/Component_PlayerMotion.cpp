@@ -19,11 +19,13 @@ void Component_PlayerMotion::Initialize()
 
 void Component_PlayerMotion::Update()
 {
-    if (parent_ == nullptr) return;
+    if (playerBehavior_ == nullptr) {
+        playerBehavior_ = (Component_PlayerBehavior*)holder_->FindComponent("PlayerBehavior");
+    }
 
-    // Œ»İ‚ÌState‚ğæ“¾
-    state_ = ((Component_PlayerBehavior*)parent_)->GetState();
+	if (playerBehavior_ == nullptr) return;
 
+	state_ = playerBehavior_->GetState();
     switch (state_)
     {
         // ‘Ò‹@ó‘Ô‚¾‚Á‚½‚ç

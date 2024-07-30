@@ -31,11 +31,6 @@ void UIPanel::Draw()
 {
 	//レイヤー番号でオブジェクトをソート
 	SortUIObject();
-	// 各オブジェクトの描画処理
-	for (auto obj : childList_)
-	{
-		obj->DrawData();
-	}
 }
 
 void UIPanel::Release()
@@ -98,4 +93,14 @@ void UIPanel::SortUIObject()
 {
 	// レイヤー番号でソート
 	std::sort(childList_.begin(), childList_.end(), UIObject::CompareLayerNumber);
+}
+
+UIObject* UIPanel::GetUIObject(std::string _name)
+{
+	// 名前でオブジェクトを検索
+	for (auto obj : childList_)
+	{
+		if (obj->GetObjectName() == _name)return obj;
+	}
+	return nullptr;
 }

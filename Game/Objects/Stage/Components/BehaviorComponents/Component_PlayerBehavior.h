@@ -19,10 +19,10 @@ class Component_PlayerBehavior : public Component
 {
 private:
 	DirectX::XMVECTOR frontVec_;
-	StageObject* target_;	// �^�[�Q�b�g
+	StageObject* target_;	// ターゲット
 	string targetName_;
 	std::vector<RayCastData> rayHitObjectList_;
-	float shootHeight_;		// ���˂��鍂��
+	float shootHeight_;		// 発射する高さ
 	bool isAnimationNow_;
 
 	PlayerState nowState, prevState;
@@ -49,6 +49,10 @@ public:
 	void ShootExe();
 
 	PlayerState GetState() { return nowState; }
+
+	bool IsDead();
+
+
 	//bool IsEnemyInRect(StageObject* _target);
 
 	//XMFLOAT3 ConvertTo2DPos(StageObject* _target);

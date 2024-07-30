@@ -59,9 +59,6 @@
     <Filter Include="03Game\Objects\Stage\Components\AttackComponents">
       <UniqueIdentifier>{89b3ed5f-a98e-4fe9-8112-e3c5e40330d7}</UniqueIdentifier>
     </Filter>
-    <Filter Include="03Game\Objects\Otheres">
-      <UniqueIdentifier>{c2efa7cb-5f10-4c3c-b6f4-cff055139e25}</UniqueIdentifier>
-    </Filter>
     <Filter Include="03Game\Objects\Stage\Components\BehaviorComponents">
       <UniqueIdentifier>{b2d24188-4d4a-4098-a2d5-87aeda1fadfa}</UniqueIdentifier>
     </Filter>
@@ -76,6 +73,15 @@
     </Filter>
     <Filter Include="03Game\Scenes\DebugScenes">
       <UniqueIdentifier>{1c6dc499-8b4a-49c0-bc06-4dc6d7caecc4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="00Effekseer">
+      <UniqueIdentifier>{0d38d0e2-263e-4437-8a79-3052074af8da}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03Game\Objects\Stage\Components\GaugeComponents">
+      <UniqueIdentifier>{b204fc05-9186-4452-bf13-d3d5eadc3e8c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03Game\Otheres">
+      <UniqueIdentifier>{c2efa7cb-5f10-4c3c-b6f4-cff055139e25}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -226,9 +232,6 @@
     <ClCompile Include="Game\Objects\Stage\Components\AttackComponents\Component_ShootAttack.cpp">
       <Filter>03Game\Objects\Stage\Components\AttackComponents</Filter>
     </ClCompile>
-    <ClCompile Include="Game\Objects\Stage\Components\AttackComponents\Component_Attack.cpp">
-      <Filter>03Game\Objects\Stage\Components\MoveComponents</Filter>
-    </ClCompile>
     <ClCompile Include="Game\Objects\Stage\Components\MoveComponents\Component_WASDInputMove.cpp">
       <Filter>03Game\Objects\Stage\Components\MoveComponents</Filter>
     </ClCompile>
@@ -239,7 +242,7 @@
       <Filter>01Engine</Filter>
     </ClCompile>
     <ClCompile Include="Game\Otheres\GameEditor.cpp">
-      <Filter>03Game\Objects\Otheres</Filter>
+      <Filter>03Game\Otheres</Filter>
     </ClCompile>
     <ClCompile Include="Game\Objects\Stage\Components\MoveComponents\Component_HelingoFall.cpp">
       <Filter>03Game\Objects\Stage\Components\MoveComponents</Filter>
@@ -277,6 +280,7 @@
     <ClCompile Include="Game\Scenes\Scene_Test.cpp">
       <Filter>03Game\Scenes\DebugScenes</Filter>
     </ClCompile>
+
     <ClCompile Include="EffekseeLib\EffekseerVFX.cpp" />
     <ClCompile Include="Game\Objects\Stage\Components\BehaviorComponents\Component_BossBehavior.cpp" />
     <ClCompile Include="Game\Objects\Stage\Components\MoveComponents\Component_TackleMove.cpp" />
@@ -289,6 +293,7 @@
     <ClCompile Include="Game\Objects\Stage\Components\MoveComponents\Component_TackleMove.cpp" />
     <ClCompile Include="Game\Objects\Stage\Components\MotionComponent\Component_Motion.cpp" />
     <ClCompile Include="Game\Objects\Stage\Components\MotionComponent\Component_PlayerMotion.cpp" />
+
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Collider\BoxCollider.h">
@@ -457,7 +462,7 @@
       <Filter>03Game\Objects\Stage\Components\BehaviorComponents</Filter>
     </ClInclude>
     <ClInclude Include="Game\Otheres\GameEditor.h">
-      <Filter>03Game\Objects\Otheres</Filter>
+      <Filter>03Game\Otheres</Filter>
     </ClInclude>
     <ClInclude Include="Game\Objects\Stage\Components\MoveComponents\Component_HelingoFall.h">
       <Filter>03Game\Objects\Stage\Components\MoveComponents</Filter>
@@ -507,6 +512,7 @@
     <ClInclude Include="Game\Objects\Stage\Components\MoveComponents\Component_TackleMove.h" />
     <ClInclude Include="Game\Objects\Stage\Components\MotionComponent\Component_Motion.h" />
     <ClInclude Include="Game\Objects\Stage\Components\MotionComponent\Component_PlayerMotion.h" />
+
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Assets\Shader\Simple2D.hlsl">

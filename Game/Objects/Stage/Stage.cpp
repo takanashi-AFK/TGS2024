@@ -2,7 +2,6 @@
 
 // インクルード
 #include "StageObject.h"
-#include "Components/Component.h"
 #include "../../../Engine/ImGui/imgui.h"
 #include "../../../Engine/GameObject/Camera.h"
 
@@ -83,6 +82,16 @@ void Stage::DeleteAllStageObject()
 	objects_.clear();
 }
 
+StageObject* Stage::GetStageObject(string _name)
+{
+	// オブジェクトを検索
+	for (auto obj : objects_) {
+		if (obj->GetObjectName() == _name)return obj;
+	}
+	return nullptr;
+
+}
+
 Component* Stage::FindComponent(string _name)
 {
 	Component* comp = nullptr;
@@ -91,4 +100,16 @@ Component* Stage::FindComponent(string _name)
 		if (comp != nullptr)return comp;
 	}
 	return nullptr;
+}
+
+vector<Component*> Stage::FindComponents(ComponentType _type)
+{
+	vector<Component*> result;
+	for (auto obj : objects_) {
+
+		// コンポーネントを再帰的に検索
+		auto comps = obj->FindComponent(_type);
+		result.insert(result.end(), comps.begin(), comps.end());
+	}
+	return result;
 }

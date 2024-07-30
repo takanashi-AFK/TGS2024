@@ -4,13 +4,12 @@
 #include"../../Engine/GameObject/GameObject.h"
 
 // 前方宣言
-class Component_HealthGauge;
+class Stage;
 
 class Scene_Play:public GameObject
 {
 private:
-	Component_HealthGauge* playerHealth_; //プレイヤーのHPを管理するコンポーネント
-
+	Stage* pStage_;
 public:
 	//コンストラクタ
 	Scene_Play(GameObject* parent);

@@ -19,12 +19,11 @@ private:
 
 	// コピーコンストラクタの削除
 	UIPanel(const UIPanel&) = delete;
+
 	// 代入演算子の削除
 	UIPanel& operator=(const UIPanel&) = delete;
 
 public:
-
-	
 
 	//シングルトンインスタンスの取得
 	static UIPanel* GetInstance();
@@ -43,6 +42,8 @@ public:
 
 	//レイヤー番号順にソート
 	void SortUIObject();
+
+	UIObject* GetUIObject(std::string _name);
 	vector<UIObject*> GetUIObjects() { return childList_; };
 };
 

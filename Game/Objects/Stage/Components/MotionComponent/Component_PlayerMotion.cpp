@@ -4,7 +4,7 @@
 #include "../../../../../Engine/ImGui/imgui.h"
 
 Component_PlayerMotion::Component_PlayerMotion(string _name, StageObject* _holder, Component* _parent)
-    :Component_Motion(_name, _holder, PlayerMotion, _parent), currentFrame_(0), animationEndFrame_(0)
+	:Component_Motion(_name, _holder, PlayerMotion, _parent), currentFrame_(0), animationEndFrame_(0), isAnimationEnd_(false)
 {
 }
 
@@ -35,6 +35,7 @@ void Component_PlayerMotion::Update()
             ((StageObject*)holder_)->SetModelHandle(motionModelMap_[PSTATE_IDLE]);
             // モデルが変わったときにフレームをリセット
             currentFrame_ = 0;  
+			isAnimationEnd_ = false;
         }
 		// モデルが変わったときにアニメーションを再生
         if (currentFrame_ == 0) {
@@ -43,22 +44,30 @@ void Component_PlayerMotion::Update()
         break;
 
     case PSTATE_WALK:
+        animationEndFrame_ = 40;
         if (((StageObject*)holder_)->GetModelHandle() != motionModelMap_[PSTATE_WALK]) {
             ((StageObject*)holder_)->SetModelHandle(motionModelMap_[PSTATE_WALK]);
             currentFrame_ = 0;  // モデルが変わったときにフレームをリセット
+            isAnimationEnd_ = false;
+
         }
-        animationEndFrame_ = 40;
-        if (currentFrame_ == 0) {
-            holder_->PlayAnimation(0, animationEndFrame_, 1);
+        if (currentFrame_ == previousFrame_) {
+            holder_->PlayAnimation(previousFrame_, animationEndFrame_, 1);
         }
+
+		previousFrame_ = currentFrame_;
+        // 途中で別Stateに移行した場合、
+		// Modelクラスに存在するGetAnimFrame関数を使ってアニメーションのフレームを取得し、
+
         break;
 
     case PSTATE_SHOOT:
+        animationEndFrame_ = 150;
         if (((StageObject*)holder_)->GetModelHandle() != motionModelMap_[PSTATE_SHOOT]) {
             ((StageObject*)holder_)->SetModelHandle(motionModelMap_[PSTATE_SHOOT]);
             currentFrame_ = 0;  // モデルが変わったときにフレームをリセット
+            isAnimationEnd_ = false;
         }
-        animationEndFrame_ = 101;
         if (currentFrame_ == 0) {
             holder_->PlayAnimation(0, animationEndFrame_, 1);
         }
@@ -69,8 +78,9 @@ void Component_PlayerMotion::Update()
     currentFrame_++;
 
 	// アニメーションの終了フレームに達したらフレームをリセット
-    if (currentFrame_ >= animationEndFrame_) {
+    if (currentFrame_ == animationEndFrame_) {
         currentFrame_ = 0;
+        isAnimationEnd_ = true;
     }
 
     ImGui::Text("state_: %d", state_);

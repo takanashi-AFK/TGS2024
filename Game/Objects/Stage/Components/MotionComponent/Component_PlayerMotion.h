@@ -10,11 +10,15 @@ private:
 	Component_PlayerBehavior* playerBehavior_;
 	int animationEndFrame_ = 0;
 	int currentFrame_ = 0;
+	bool isAnimationEnd_ = false;
+	int previousFrame_ = 0;
 public:
 	Component_PlayerMotion(string _name, StageObject* _holder, Component* _parent);
 	void Initialize() override;
 	void Update() override;
 	void Release() override;
 	void DrawData() override;
+
+	bool IsEndAnimation() { return isAnimationEnd_; }
 };
 

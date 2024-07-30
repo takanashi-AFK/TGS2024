@@ -166,9 +166,21 @@ void Component_PlayerBehavior::Melee()
 
 void Component_PlayerBehavior::Shoot()
 {
+
+    auto motion = dynamic_cast<Component_PlayerMotion*>(GetChildComponent("PlayerMotion"));
+    if (motion == nullptr)return;
+
+	static bool isShoot = false;
+
+	if (isShoot == false) {
     ShootExe();
+	isShoot = true;
+	}
     // アニメーションが終わったらState変更
+    if (motion->IsEndAnimation()) {
+	isShoot = false;
     SetState(PSTATE_IDLE);
+    }
     ImGui::Text("shoot");
 }
 

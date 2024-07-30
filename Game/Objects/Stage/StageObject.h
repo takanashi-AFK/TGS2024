@@ -137,6 +137,10 @@ public:
 	/// </summary>
 	void CollisionWall();
 
+	void PlayAnimation(int _start, int _end, float _speed);
+
+	void SetModelHandle(int _handle) { modelHandle_ = _handle; }
+
 };
 
 /// <summary>

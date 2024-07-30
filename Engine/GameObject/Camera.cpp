@@ -20,6 +20,17 @@ void Camera::Initialize()
 //更新（ビュー行列作成）
 void Camera::Update()
 {
+
+	// もしポジションがnullだったら
+	if (_position.x < -1.0e18f || _position.y < -1.0e18f || _position.z < -1.0e18f ||
+		_position.x > 1.0e18f || _position.y > 1.0e18f || _position.z > 1.0e18f ||
+		_target.x < -1.0e18f || _target.y < -1.0e18f || _target.z < -1.0e18f ||
+		_target.x > 1.0e18f || _target.y > 1.0e18f || _target.z > 1.0e18f)
+	{
+		Camera::SetPosition({ 0,30,-20 });
+		Camera::SetTarget({ 0,-20,20 });
+
+	}
 	//ビュー行列
 	_view = XMMatrixLookAtLH(XMVectorSet(_position.x, _position.y, _position.z, 0),
 		XMVectorSet(_target.x, _target.y, _target.z, 0), XMVectorSet(0, 1, 0, 0));

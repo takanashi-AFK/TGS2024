@@ -308,8 +308,7 @@ string GetUITypeString(UIType _type)
 void UIObject::UpdateSub()
 {
 	Update();
-	Transform();
-
+	
 	for (auto it = childList_.begin(); it != childList_.end(); it++)
 	{
 		(*it)->UpdateSub();
@@ -329,8 +328,6 @@ void UIObject::DrawSub()
 
 void UIObject::ReleaseSub()
 {
-	
-
 	for (auto it = childList_.begin(); it != childList_.end();)
 	{
 		(*it)->ReleaseSub();

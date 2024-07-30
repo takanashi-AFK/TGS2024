@@ -6,6 +6,8 @@
 #include "../../Engine/ImGui/imgui.h"
 #include "../Objects/UI/UIPanel.h"
 #include "../Objects/UI/UIButton.h"
+#include "../Objects/Stage/Stage.h"
+#include "../../Engine/GameObject/Camera.h"
 
 Scene_Title::Scene_Title(GameObject* parent)
 	: GameObject(parent, "Scene_Title")
@@ -14,7 +16,7 @@ Scene_Title::Scene_Title(GameObject* parent)
 
 void Scene_Title::Initialize()
 {
-	// jsonファイルを読み込む
+	// UILayout_jsonファイルを読み込む
 	json loadData;
 	if (JsonReader::Load("Datas/UILayouts/titleScene_layout.json", loadData)) {
 
@@ -25,13 +27,13 @@ void Scene_Title::Initialize()
 		panel->Load(loadData);
 	}
 }
-//
+
 void Scene_Title::Update()
 {
 	// シーン切替処理
 	{
 		// ボタンを取得
-		UIButton* button = (UIButton*)UIPanel::GetInstance()->GetUIObject("startButton");
+		UIButton* button = (UIButton*)UIPanel::GetInstance()->GetUIObject("title_startButton");
 
 		// ボタンが取得できたら
 		if (button != nullptr) {
@@ -42,6 +44,7 @@ void Scene_Title::Update()
 				// シーンを切り替える
 				SceneManager* sceneManager = (SceneManager*)FindObject("SceneManager");
 				sceneManager->ChangeScene(SCENE_ID_PLAY, TID_BLACKOUT);
+				button = nullptr;
 			}
 		}
 	}

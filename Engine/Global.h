@@ -29,3 +29,10 @@ namespace FileManager {
 }
 
 XMFLOAT3 operator+(XMFLOAT3& a, const XMFLOAT3& b);
+
+
+/// 臨時のグローバル変数 fix: 本来はここに置くべきではない 
+/// スコアマネージャーを作成することで解決する
+
+// ゲームのスコア
+extern int g_score;

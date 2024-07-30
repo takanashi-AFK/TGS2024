@@ -49,6 +49,9 @@ void Component_PlayerBehavior::Update()
     if (hm == nullptr)return;
 	// 進捗を0.0〜1.0の範囲で計算
 	float progress = hm->GetNow() / hm->GetMax();
+    
+    if(ImGui::Button("dead"))hm->TakeDamage(1000);
+
 
     auto move = dynamic_cast<Component_WASDInputMove*>(GetChildComponent("InputMove"));
     if (move == nullptr)return;
@@ -192,6 +195,14 @@ void Component_PlayerBehavior::DrawData()
 
 void Component_PlayerBehavior::OnCollision(GameObject* _target, Collider* _collider)
 {
+}
+
+bool Component_PlayerBehavior::IsDead()
+{
+    auto hg = dynamic_cast<Component_HealthGauge*>(GetChildComponent("PlayerHealthGauge"));
+	if (hg == nullptr)return false;
+
+	return hg->IsDead();
 }
 
 //bool Component_PlayerBehavior::IsEnemyInRect(StageObject* _target)

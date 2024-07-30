@@ -24,6 +24,8 @@ public:
 	
 	void OnCollision(GameObject* _target, Collider* _collider) override;
 
+	bool IsDead();
+
 	//bool IsEnemyInRect(StageObject* _target);
 
 	//XMFLOAT3 ConvertTo2DPos(StageObject* _target);

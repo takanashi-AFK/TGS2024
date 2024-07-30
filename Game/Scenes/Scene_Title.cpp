@@ -3,11 +3,9 @@
 // インクルード
 #include"../../Engine/SceneManager.h"
 #include "../../Engine/DirectX/Input.h"
-#include "../../Engine/ImGui/imgui.h"
 #include "../Objects/UI/UIPanel.h"
 #include "../Objects/UI/UIButton.h"
 #include "../Objects/Stage/Stage.h"
-#include "../../Engine/GameObject/Camera.h"
 
 Scene_Title::Scene_Title(GameObject* parent)
 	: GameObject(parent, "Scene_Title")
@@ -48,9 +46,6 @@ void Scene_Title::Update()
 			}
 		}
 	}
-
-	// debug
-	ImGui::Text("Scene_Title");
 }
 
 void Scene_Title::Draw()

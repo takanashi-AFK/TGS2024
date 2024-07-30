@@ -2,6 +2,8 @@
 
 // インクルード
 #include "../../../Engine/GameObject/GameObject.h"
+#include "Components/Component.h"
+
 #include "../../../Engine/Json/JsonReader.h"
 #include <vector>
 
@@ -10,7 +12,6 @@ using std::vector;
 
 // 前方宣言
 class StageObject;
-class Component;
 
 /// <summary>
 /// ステージを管理するクラス
@@ -87,6 +88,9 @@ public:
 	/// </returns>
 	vector<StageObject*>& GetStageObjects() { return objects_; }
 
+	StageObject* GetStageObject(string _name);
+
 	Component* FindComponent(string _name);
+	vector<Component*> FindComponents(ComponentType _type);
 };
 

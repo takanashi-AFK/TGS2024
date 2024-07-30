@@ -17,50 +17,10 @@ Scene_Play::Scene_Play(GameObject* parent)
 
 void Scene_Play::Initialize()
 {
-	// スカイスフィアを生成
-	Instantiate<SkySphere>(this);
-
-	// ステージを生成
-	Stage* pStage = Instantiate<Stage>(this); {
-		// ステージを読み込み
-		json stageData;
-		JsonReader::Load("Datas/StageLayouts/stage_beta_00.json", stageData);
-		pStage->Load(stageData);
-
-		////範囲for分でオブジェクトリストの取得
-		//for (auto pList : pStage->GetStageObjects()) {
-		//	//リスト内でとうろくされているPlayerBehaviorがあったらコンポーネントをキャストして代入
-		//	if (pList->FindComponent("PlayerBehavior")) {
-		//		Component_PlayerBehavior* playerBeha = dynamic_cast<Component_PlayerBehavior*>(pList->FindComponent("PlayerBehavior"));
-		//		if (playerBeha != nullptr) {
-		//			//playerBehaから子コンポーネントを取得する
-		//			playerHealth_ = dynamic_cast<Component_HealthGauge*>(playerBeha->GetChildComponent("HealthGauge"));
-		//		}
-		//	}
-		//}
-	}
-
-	//TPSCamera* tpsCamera = Instantiate<TPSCamera>(this); {
-	//	json camData;
-	//	if (JsonReader::Load("Datas/CameraLayouts/TPSCamera.json", camData)) {
-	//		tpsCamera->Load(camData);
-	//	}
-	//}
 }
 
 void Scene_Play::Update()
 {
-
-	if(ImGui::Button("END")) {
-		SceneManager* pChangeScene = (SceneManager*)FindObject("SceneManager");
-		pChangeScene->ChangeScene(SCENE_ID_END, TID_BLACKOUT);
-	}
-
-	//HPが0になったらエンドシーンに移行
-	/*if (playerHealth_->GetHP() == 0) {
-		SceneManager* pChangeScene = (SceneManager*)FindObject("SceneManager");
-		pChangeScene->ChangeScene(SCENE_ID_END, TID_BLACKOUT);
-	}*/
 }
 
 void Scene_Play::Draw()

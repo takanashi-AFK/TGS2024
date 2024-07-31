@@ -4,7 +4,7 @@
 #include "../Objects/UI/UIPanel.h"
 #include "../../Engine/Global.h"
 #include "../../Engine/ImGui/imgui.h"
-#include"../Objects/UI/UIText.h"
+
 Scene_End::Scene_End(GameObject* parent_)
 {
 }
@@ -14,7 +14,6 @@ void Scene_End::Initialize()
 	json ScoreText;
 	if (JsonReader::Load("TestEndScene_layout.json", ScoreText)) {
 		UIPanel* panel = UIPanel::GetInstance();
-		
 		panel->Load(ScoreText);
 	}
 }

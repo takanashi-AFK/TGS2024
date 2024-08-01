@@ -12,15 +12,16 @@ Scene_End::Scene_End(GameObject* parent_)
 void Scene_End::Initialize()
 {
 	json ScoreText;
+
+	UIPanel* panel = UIPanel::GetInstance();
 	if (JsonReader::Load("Datas/TestEndScene_layout.json", ScoreText)) {
-		UIPanel* panel = UIPanel::GetInstance();
+
 		panel->Load(ScoreText);
-
-
-		UIText* scoreText = (UIText*)panel->GetUIObject("Score");
-		scoreText->SetText(g_score);
 	}
 
+	//UIテキストで保存されているテキストを探す
+	UIText* scoreText = (UIText*)panel->GetUIObject("Score");
+	scoreText->SetText(std::to_string(g_score));
 }
 
 void Scene_End::Update()

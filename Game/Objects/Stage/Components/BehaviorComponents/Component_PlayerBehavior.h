@@ -9,6 +9,7 @@ enum PlayerState {
 	PSTATE_IDLE = 0,
 	PSTATE_WALK,
 	PSTATE_WALKANDSHOOT,
+	PSTATE_WALKANDMELEE,
 	PSTATE_MELEE,
 	PSTATE_SHOOT,
 	PSTATE_DIE,
@@ -41,6 +42,7 @@ public:
 	void Idle();
 	void Walk();
 	void WalkAndShoot();
+	void WalkAndMelee();
 	void Melee();
 	void Shoot();
 

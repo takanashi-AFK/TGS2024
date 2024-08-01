@@ -36,12 +36,18 @@ void Component_MeleeAttack::Update()
 
 		// 正面ベクトルがなかったら
 		if (XMVector3Equal(forward_, XMVectorZero())) {
+
 			// 前回の正面ベクトルを使う
 			forward_ = prevFrontVec_;
+			if (XMVector3Equal(prevFrontVec_, XMVectorZero())) {
+				forward_ = XMVectorSet(0, 0, 1, 0);	// 初期値
+
+			}
 		}
 
 		// 正面ベクトルを取得
 		XMStoreFloat3(&front, forward_);
+
 
 		prevFrontVec_ = forward_;
 
@@ -52,7 +58,7 @@ void Component_MeleeAttack::Update()
 		if (AutoDelete(0.03f)) {
 			collider->SetCenter(XMFLOAT3{ 0, 0, 0 });
 			Stop();
-			isHit_ = false;  
+			isHit_ = false;
 		}
 	}
 }
@@ -91,7 +97,7 @@ void Component_MeleeAttack::OnCollision(GameObject* _target, Collider* _collider
 
 	for (auto hm : target->FindComponent(HealthGauge)) {
 		((Component_HealthGauge*)hm)->TakeDamage(power_);
-		isHit_ = true; 
+		isHit_ = true;
 
 		if (((Component_HealthGauge*)hm)->GetNow() <= 0.f) {
 			((Stage*)holder_->FindObject("Stage"))->DeleteStageObject((StageObject*)_target);

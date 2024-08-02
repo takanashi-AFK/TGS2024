@@ -26,20 +26,20 @@ void Component_Teleporter::Update()
 	auto detector = dynamic_cast<Component_CircleRangeDetector*>(GetChildComponent("CircleRangeDetector"));
 	if (detector == nullptr)return;
 
-	// PlayerBehaviorを持つオブジェクトを検索
-	auto playerList = ((Stage*)holder_->GetParent())->GetStageObjects();
-	for (auto a : playerList) {
+	//// PlayerBehaviorを持つオブジェクトを検索
+	//auto playerList = ((Stage*)holder_->GetParent())->GetStageObjects();
+	//for (auto a : playerList) {
 
-		StageObject* pl = a;
-		if (pl != nullptr) {
+	//	StageObject* pl = a;
+	//	if (pl != nullptr) {
 
-			if (pl->FindComponent("PlayerBehavior")) {
-				playerBehavior_ = pl->FindComponent("PlayerBehavior");
-				target_ = pl;
-				break;
-			}
-		}
-	}
+	//		if (pl->FindComponent("PlayerBehavior")) {
+	//			playerBehavior_ = pl->FindComponent("PlayerBehavior");
+	//			target_ = pl;
+	//			break;
+	//		}
+	//	}
+	//}
 
 	// 検出対象の設定
 	detector->SetTarget(target_);
@@ -71,6 +71,25 @@ void Component_Teleporter::DrawData()
 	else if (changeType_ == CHANGE_SCENE) {
 		ImGui::InputInt("ChangeSceneID", (int*)&changeSceneID_);
 	}
+
+	//対象の選択
+	vector<string> objNames;
+	objNames.push_back("null");
+
+	for (auto obj : ((Stage*)holder_->GetParent())->GetStageObjects())objNames.push_back(obj->GetObjectName());
+
+	static int select = 0;
+	if (ImGui::BeginCombo("target_", objNames[select].c_str())) {
+		for (int i = 0; i < objNames.size(); i++) {
+			bool is_selected = (select == i);
+			if (ImGui::Selectable(objNames[i].c_str(), is_selected))select = i;
+			if (is_selected)ImGui::SetItemDefaultFocus();
+		}
+		ImGui::EndCombo();
+	}
+
+	if (select == 0)target_ = nullptr;
+	else target_ = (StageObject*)holder_->FindObject(objNames[select]);
 }
 
 void Component_Teleporter::Teleport()
@@ -86,11 +105,14 @@ void Component_Teleporter::Teleport()
 		timer->SetTime(3.f);
 		timer->Start();
 
-		// ターゲットのWASDを探す(2個以上ついていない想定)
+		// ターゲットのWASDを探す
 		if (target_ != nullptr) {
-			Component_WASDInputMove* inputMove = dynamic_cast<Component_WASDInputMove*>(playerBehavior_->GetChildComponent("InputMove"));
-			if (inputMove == nullptr)return;
-			inputMove->Stop();
+			auto inputMove = target_->FindComponent(WASDInputMove);
+			if (inputMove.empty())return;
+			for (auto iMove : inputMove) {
+				iMove->Stop();
+				break;
+			}
 		}
 
 		if (timer->GetIsEnd()) {
@@ -113,7 +135,6 @@ void Component_Teleporter::Teleport()
 		//	sceneManager->ChangeScene(changeSceneID_, TID_BLACKOUT);
 		//}
 		//else if (changeType_ == CHANGE_JSON) {
-
 		//	// JSONファイルの読込
 		//	json loadData;
 		//	if (JsonReader::Load(changeJsonPath_, loadData)) {
@@ -135,13 +156,16 @@ void Component_Teleporter::Teleport()
 		if (timer->GetIsEnd()) {
 			// ターゲットのWASDを探す(2個以上ついていない想定)
 			if (target_ != nullptr) {
-				Component_WASDInputMove* inputMove = dynamic_cast<Component_WASDInputMove*>(playerBehavior_-> GetChildComponent("InputMove"));
-				if (inputMove == nullptr)return;
-				inputMove->Stop();
+				auto inputMove = target_->FindComponent(WASDInputMove);
+				if (inputMove.empty())return;
+				for (auto iMove : inputMove) {
+					iMove->Stop();
+					break;
+				}
+			}
 				timer->Reset();
 				isEffectEnd = false;
 				isEffectNow = false;
-			}
 		}
 	}
 }

@@ -25,5 +25,9 @@ public:
 
 	void SetText(string _text) { drawText_ = _text; }
 	void SetText(float* _num) { floatNum_ = _num; }
+
+	string GetText() { return drawText_; }
+
+
 };
 

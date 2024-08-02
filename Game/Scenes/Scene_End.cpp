@@ -22,10 +22,10 @@ void Scene_End::Initialize()
 	//UIテキストで保存されているテキストを探す
 	UIText* scoreText = (UIText*)panel->GetUIObject("Score");
 
-	std::string savedText = ScoreText["Score"]["text"].get<std::string>();
+	std::string savedText = scoreText->GetText();
 
 	string updatestring = savedText + std::to_string(g_score);
-	//これだと上書きされてまう。ほんらいはg_scoreだけじゃなくてScore:も残ってほしい
+
 	scoreText->SetText(updatestring);
 
 }

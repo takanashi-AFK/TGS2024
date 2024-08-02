@@ -19,6 +19,7 @@ private:
 	SCENE_ID changeSceneID_;
 	string changeJsonPath_;
 	StageObject* target_;
+	Component* playerBehavior_;
 
 	Stage* pStage_;
 

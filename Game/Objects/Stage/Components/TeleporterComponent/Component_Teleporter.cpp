@@ -5,6 +5,7 @@
 #include "../../../../../Engine/ImGui/imgui.h"
 #include "../TimerComponent/Component_Timer.h"
 #include "../../../../../Engine/Global.h"
+#include "../MoveComponents/Component_WASDInputMove.h"
 
 Component_Teleporter::Component_Teleporter(string _name, StageObject* _holder, Component* _parent)
 :Component(_holder, _name, Teleporter, _parent)
@@ -33,6 +34,7 @@ void Component_Teleporter::Update()
 		if (pl != nullptr) {
 
 			if (pl->FindComponent("PlayerBehavior")) {
+				playerBehavior_ = pl->FindComponent("PlayerBehavior");
 				target_ = pl;
 				break;
 			}
@@ -86,7 +88,8 @@ void Component_Teleporter::Teleport()
 
 		// ターゲットのWASDを探す(2個以上ついていない想定)
 		if (target_ != nullptr) {
-			auto inputMove = target_->FindComponent("InputMove");
+			Component_WASDInputMove* inputMove = dynamic_cast<Component_WASDInputMove*>(playerBehavior_->GetChildComponent("InputMove"));
+			if (inputMove == nullptr)return;
 			inputMove->Stop();
 		}
 
@@ -104,20 +107,21 @@ void Component_Teleporter::Teleport()
 			// teleportPos_への座標変更
 			target_->SetPosition(teleportPos_);
 		}
-		else if (changeType_ == CHANGE_SCENE) {
-			// ChangeSceneName_へのシーン遷移
-			SceneManager* sceneManager = (SceneManager*)holder_->GetParent()->FindObject("SceneManager");
-			sceneManager->ChangeScene(changeSceneID_, TID_BLACKOUT);
-		}
-		else if (changeType_ == CHANGE_JSON) {
-			// JSONファイルの読込
-			json loadData;
-			if (JsonReader::Load(changeJsonPath_, loadData)) {
-				// ステージを作成
-				pStage_ = Instantiate<Stage>(holder_->GetParent());
-				pStage_->Load(loadData);
-			}
-		}
+		//else if (changeType_ == CHANGE_SCENE) {
+		//	// ChangeSceneName_へのシーン遷移
+		//	SceneManager* sceneManager = (SceneManager*)holder_->GetParent()->FindObject("SceneManager");
+		//	sceneManager->ChangeScene(changeSceneID_, TID_BLACKOUT);
+		//}
+		//else if (changeType_ == CHANGE_JSON) {
+
+		//	// JSONファイルの読込
+		//	json loadData;
+		//	if (JsonReader::Load(changeJsonPath_, loadData)) {
+		//		// ステージを作成
+		//		pStage_ = Instantiate<Stage>(holder_->GetParent());
+		//		pStage_->Load(loadData);
+		//	}
+		//}
 		isEffectNow = false;
 		isEffectEnd = true;
 	}
@@ -131,16 +135,14 @@ void Component_Teleporter::Teleport()
 		if (timer->GetIsEnd()) {
 			// ターゲットのWASDを探す(2個以上ついていない想定)
 			if (target_ != nullptr) {
-				auto inputMove = target_->FindComponent("InputMove");
+				Component_WASDInputMove* inputMove = dynamic_cast<Component_WASDInputMove*>(playerBehavior_-> GetChildComponent("InputMove"));
+				if (inputMove == nullptr)return;
 				inputMove->Stop();
 				timer->Reset();
 				isEffectEnd = false;
 				isEffectNow = false;
-				
 			}
 		}
-
-
 	}
 }
 

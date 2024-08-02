@@ -171,7 +171,7 @@ void Component_PlayerBehavior::Melee()
     auto melee = dynamic_cast<Component_MeleeAttack*>(GetChildComponent("MeleeAttack"));
     if (melee == nullptr)return;
 
-    frontVec_ = move->GetMoveDirction();
+    frontVec_ = move->GetMoveDirection();
     melee->SetForward(frontVec_);
     melee->Execute();
 

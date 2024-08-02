@@ -17,9 +17,7 @@ public:
 	void DrawData() override;
 	void Save(json& _saveObj) override;
 	void Load(json& _loadObj) override;
-	void Execute(){isActive_ = true;}
-	void Stop(){isActive_ = false;}
-	XMVECTOR GetMoveDirction() { return dir_; }
+	XMVECTOR GetMoveDirection() { return dir_; }
 	bool GetIsMove() { return isMove_; }
 
 private:

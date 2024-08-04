@@ -5,6 +5,8 @@
 #include "../../Engine/Global.h"
 #include "../../Engine/ImGui/imgui.h"
 #include"../Objects/UI/UIText.h"
+
+#include"../Manager/ScoreManager.h"
 Scene_End::Scene_End(GameObject* parent_)
 {
 }
@@ -19,12 +21,14 @@ void Scene_End::Initialize()
 		panel->Load(ScoreText);
 	}
 
+	manager = new ScoreManager;
+
 	//UIテキストで保存されているテキストを探す
 	UIText* scoreText = (UIText*)panel->GetUIObject("Score");
 
 	std::string savedText = scoreText->GetText();
 
-	string updatestring = savedText + std::to_string(g_score);
+	string updatestring = savedText + std::to_string(manager->GetScore());
 
 	scoreText->SetText(updatestring);
 

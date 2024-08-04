@@ -5,11 +5,12 @@
 
 // 前方宣言
 class Stage;
-
-class Scene_Play:public GameObject
+class ScoreManager;
+class Scene_Play :public GameObject
 {
 private:
 	Stage* pStage_;
+	ScoreManager* pScore;
 public:
 	//コンストラクタ
 	Scene_Play(GameObject* parent);

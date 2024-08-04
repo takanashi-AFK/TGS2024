@@ -11,6 +11,9 @@
 #include "../Objects/Camera/TPSCamera.h"
 #include "../../Engine/ImGui/imgui.h"
 #include "../../Engine/Global.h"
+#include"../Manager/ScoreManager.h"
+
+
 
 Scene_Play::Scene_Play(GameObject* parent)
 {
@@ -37,6 +40,9 @@ void Scene_Play::Initialize()
 		TPSCamera* tpsCamera = Instantiate<TPSCamera>(this);
 		tpsCamera->Load(camData);
 	}
+
+	pScore = new ScoreManager;
+
 }
 
 void Scene_Play::Update()
@@ -54,9 +60,9 @@ void Scene_Play::Update()
 			for (auto comp : comp_playerBehaviors) {
 
 				// プレイヤーコンポーネントが死んでいたら
-				if (((Component_PlayerBehavior*)comp)->IsDead() == true) { 
-					
-					g_score = 0;
+				if (((Component_PlayerBehavior*)comp)->IsDead() == true) {
+
+					pScore->AddScore(0);
 					isSceneChange = true;
 				}
 			}
@@ -82,7 +88,7 @@ void Scene_Play::Update()
 		// debug
 		{
 			if (ImGui::Button("end")) {
-				g_score = 100;
+				pScore->AddScore(200);
 				isSceneChange = true;
 			}
 		}

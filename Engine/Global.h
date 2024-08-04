@@ -35,4 +35,4 @@ XMFLOAT3 operator+(XMFLOAT3& a, const XMFLOAT3& b);
 /// スコアマネージャーを作成することで解決する
 
 // ゲームのスコア
-extern int g_score;
+//extern int g_score;

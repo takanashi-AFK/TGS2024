@@ -1,10 +1,10 @@
 #pragma once
 #include"../../Engine/GameObject/GameObject.h"
 
-
+class ScoreManager;
 class Scene_End :public GameObject
 {
-
+	ScoreManager* manager;
 public:
 	//コンストラクタ
 	Scene_End(GameObject* parent_);

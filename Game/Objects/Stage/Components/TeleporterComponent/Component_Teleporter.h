@@ -17,7 +17,7 @@ class Component_Teleporter : public Component
 private:
 	bool isActive_;
 	bool isTeleport_;
-
+	string targetName_;
 
 	XMFLOAT3 teleportPos_;
 	SCENE_ID changeSceneID_;

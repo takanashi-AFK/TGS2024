@@ -19,6 +19,8 @@ Component_Teleporter::Component_Teleporter(string _name, StageObject* _holder, C
 
 void Component_Teleporter::Initialize()
 {
+	if (target_ == nullptr)target_ = (StageObject*)holder_->FindObject(targetName_);
+	if (target_ == nullptr)return;
 	// 子コンポーネントの追加
 	if (FindChildComponent("CircleRangeDetector") == false)AddChildComponent(CreateComponent("CircleRangeDetector", CircleRangeDetector, holder_, this));
 	if (FindChildComponent("Timer") == false)AddChildComponent(CreateComponent("Timer", Timer, holder_, this));
@@ -48,21 +50,7 @@ void Component_Teleporter::Update()
 	if (detector == nullptr)return;
 	auto timer = dynamic_cast<Component_Timer*>(GetChildComponent("Timer"));
 	if (timer == nullptr)return;
-	//// PlayerBehaviorを持つオブジェクトを検索
-	//auto playerList = ((Stage*)holder_->GetParent())->GetStageObjects();
-	//for (auto a : playerList) {
-
-	//	StageObject* pl = a;
-	//	if (pl != nullptr) {
-
-	//		if (pl->FindComponent("PlayerBehavior")) {
-	//			playerBehavior_ = pl->FindComponent("PlayerBehavior");
-	//			target_ = pl;
-	//			break;
-	//		}
-	//	}
-	//}
-
+	
 	// 検出対象の設定
 	detector->SetTarget(target_);
 
@@ -110,7 +98,7 @@ void Component_Teleporter::Load(json& _loadObj)
 	if (_loadObj.contains("isActive_"))isActive_ = _loadObj["isActive_"];
 	if (_loadObj.contains("teleportPos_"))
 		teleportPos_ = { _loadObj["teleportPos_"][0].get<float>(),_loadObj["teleportPos_"][1].get<float>(), _loadObj["teleportPos_"][2].get<float>() };
-	if (_loadObj.contains("target_"))target_ = (StageObject*)holder_->FindObject(_loadObj["target_"]);
+	if (_loadObj.contains("target_"))targetName_ = _loadObj["target_"];
 	if (_loadObj.contains("effectType_"))effectType_ = _loadObj["effectType_"];
 	if (_loadObj.contains("changeType_"))changeType_ = _loadObj["changeType_"];
 }

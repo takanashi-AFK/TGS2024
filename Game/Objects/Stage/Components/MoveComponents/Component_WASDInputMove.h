@@ -6,7 +6,6 @@ using namespace DirectX;
 class Component_WASDInputMove : public Component
 {
 private:
-	bool isActive_;
 	bool isMove_;
 	XMVECTOR dir_;
 public:

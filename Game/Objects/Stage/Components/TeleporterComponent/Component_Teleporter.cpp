@@ -6,7 +6,7 @@
 #include "../TimerComponent/Component_Timer.h"
 #include "../../../../../Engine/Global.h"
 #include "../MoveComponents/Component_WASDInputMove.h"
-
+#include "../../../../../Engine/Global.h"
 Component_Teleporter::Component_Teleporter(string _name, StageObject* _holder, Component* _parent)
 :Component(_holder, _name, Teleporter, _parent)
 {
@@ -25,7 +25,8 @@ void Component_Teleporter::Update()
 
 	auto detector = dynamic_cast<Component_CircleRangeDetector*>(GetChildComponent("CircleRangeDetector"));
 	if (detector == nullptr)return;
-
+	auto timer = dynamic_cast<Component_Timer*>(GetChildComponent("Timer"));
+	if (timer == nullptr)return;
 	//// PlayerBehaviorを持つオブジェクトを検索
 	//auto playerList = ((Stage*)holder_->GetParent())->GetStageObjects();
 	//for (auto a : playerList) {
@@ -46,6 +47,27 @@ void Component_Teleporter::Update()
 
 	if (detector->IsContains()) {
 		Teleport();
+	}
+
+	if (isTeleport_ == true) {
+		// タイマー開始
+		timer->SetTime(0.5f);
+		timer->Start();
+
+		// タイマー終了
+		if (timer->GetIsEnd()) {
+			// ターゲットのWASDを探す(2個以上ついていない想定)
+			if (target_ != nullptr) {
+				auto inputMove = target_->FindComponent(WASDInputMove);
+				if (inputMove.empty())return;
+				for (auto iMove : inputMove) {
+					iMove->Execute();
+					break;
+				}
+			}
+			timer->Reset();
+			isTeleport_ = false;
+		}
 	}
 }
 
@@ -70,6 +92,51 @@ void Component_Teleporter::DrawData()
 	}
 	else if (changeType_ == CHANGE_SCENE) {
 		ImGui::InputInt("ChangeSceneID", (int*)&changeSceneID_);
+	}
+	else if (changeType_ == CHANGE_JSON) {
+		if (ImGui::Button("...")) {
+
+			//現在のカレントディレクトリを覚えておく
+			char defaultCurrentDir[MAX_PATH];
+			GetCurrentDirectory(MAX_PATH, defaultCurrentDir);
+
+			// 追加するオブジェクトのモデルファイルパスを設定
+			{
+				// 「ファイルを開く」ダイアログの設定用構造体を設定
+				OPENFILENAME ofn; {
+					TCHAR szFile[MAX_PATH] = {}; // ファイル名を格納するバッファ
+					ZeroMemory(&ofn, sizeof(ofn)); // 構造体の初期化
+					ofn.lStructSize = sizeof(ofn); // 構造体のサイズ
+					ofn.lpstrFile = szFile; // ファイル名を格納するバッファ
+					ofn.lpstrFile[0] = '\0'; // 初期化
+					ofn.nMaxFile = sizeof(szFile); // ファイル名バッファのサイズ
+					ofn.lpstrFilter = TEXT("jsonファイル(*.json)\0*.json\0すべてのファイル(*.*)\0*.*\0"); // フィルター（FBXファイルのみ表示）
+					ofn.nFilterIndex = 1; // 初期選択するフィルター
+					ofn.Flags = OFN_PATHMUSTEXIST | OFN_FILEMUSTEXIST; // フラグ（ファイルが存在すること、パスが存在することを確認）
+					ofn.lpstrInitialDir = TEXT("."); // カレントディレクトリを初期選択位置として設定
+				}
+
+				// ファイルを選択するダイアログの表示
+				if (GetOpenFileName(&ofn) == TRUE) {
+					// ファイルパスを取得
+					changeJsonPath_ = ofn.lpstrFile;
+
+					// カレントディレクトリからの相対パスを取得
+					changeJsonPath_ = FileManager::GetAssetsRelativePath(changeJsonPath_);
+
+					// 文字列内の"\\"を"/"に置換
+					FileManager::ReplaceBackslashes(changeJsonPath_);
+
+					// ディレクトリを戻す
+					SetCurrentDirectory(defaultCurrentDir);
+				}
+				else {
+					return;
+				}
+			}ImGui::SameLine();
+		}
+			ImGui::Text(changeJsonPath_.c_str());
+
 	}
 
 	//対象の選択
@@ -134,40 +201,22 @@ void Component_Teleporter::Teleport()
 		//	SceneManager* sceneManager = (SceneManager*)holder_->GetParent()->FindObject("SceneManager");
 		//	sceneManager->ChangeScene(changeSceneID_, TID_BLACKOUT);
 		//}
-		//else if (changeType_ == CHANGE_JSON) {
-		//	// JSONファイルの読込
-		//	json loadData;
-		//	if (JsonReader::Load(changeJsonPath_, loadData)) {
-		//		// ステージを作成
-		//		pStage_ = Instantiate<Stage>(holder_->GetParent());
-		//		pStage_->Load(loadData);
-		//	}
-		//}
-		isEffectNow = false;
-		isEffectEnd = true;
-	}
+		else if (changeType_ == CHANGE_JSON) {
+			// JSONファイルの読込
 
-	if (isEffectEnd == true) {
-		// タイマー開始
-		timer->SetTime(0.5f);
-		timer->Start();
-
-		// タイマー終了
-		if (timer->GetIsEnd()) {
-			// ターゲットのWASDを探す(2個以上ついていない想定)
-			if (target_ != nullptr) {
-				auto inputMove = target_->FindComponent(WASDInputMove);
-				if (inputMove.empty())return;
-				for (auto iMove : inputMove) {
-					iMove->Stop();
-					break;
-				}
+			json loadData;
+			if (JsonReader::Load(changeJsonPath_, loadData)) {
+				// ステージを作成
+				json loadObj;
+				if (JsonReader::Load(changeJsonPath_, loadObj) == false) MessageBox(NULL, "読込に失敗しました。", 0, 0);
+				((Stage*)holder_->GetParent())->Load(loadObj);
 			}
-				timer->Reset();
-				isEffectEnd = false;
-				isEffectNow = false;
 		}
+		isEffectNow = false;
+		isTeleport_ = true;
 	}
+
+
 }
 
 void Component_Teleporter::Execute(ChangeType _ch)

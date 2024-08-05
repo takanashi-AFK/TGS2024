@@ -2,6 +2,7 @@
 #include "../../Components/Component.h"
 #include "../../../../../Engine/SceneManager.h"
 #include "../../Stage.h"
+#include "../../../../../EffekseeLib/EffekseerVFX.h"
 
 enum ChangeType
 {
@@ -27,6 +28,11 @@ private:
 	Stage* pStage_;
 
 	ChangeType changeType_;
+
+	// effekseer: 変形行列
+	std::shared_ptr<EFFEKSEERLIB::EFKTransform> mt;/*★★★*/
+	std::vector<std::string> effectNames_;
+	std::string effectType_;
 public:
 		/// <summary>
 	    /// コンストラクタ

@@ -7,6 +7,11 @@
 #include "../../../../../Engine/Global.h"
 #include "../MoveComponents/Component_WASDInputMove.h"
 #include "../../../../../Engine/Global.h"
+
+namespace {
+	EFFEKSEERLIB::EFKTransform t;/*★★★*/
+}
+
 Component_Teleporter::Component_Teleporter(string _name, StageObject* _holder, Component* _parent)
 :Component(_holder, _name, Teleporter, _parent)
 {
@@ -17,6 +22,22 @@ void Component_Teleporter::Initialize()
 	// 子コンポーネントの追加
 	if (FindChildComponent("CircleRangeDetector") == false)AddChildComponent(CreateComponent("CircleRangeDetector", CircleRangeDetector, holder_, this));
 	if (FindChildComponent("Timer") == false)AddChildComponent(CreateComponent("Timer", Timer, holder_, this));
+	// エフェクトディレクトリをスキャン
+	std::string effectDirectory = "Effects";
+	for (const auto& entry : fs::directory_iterator(effectDirectory))
+	{
+		if (entry.path().extension() == ".efk")
+		{
+			std::string effectName = entry.path().stem().string();
+			effectNames_.push_back(effectName);
+			EFFEKSEERLIB::gEfk->AddEffect(effectName.c_str(), entry.path().string().c_str());
+		}
+	}
+	// デフォルトのエフェクトを設定
+	if (!effectNames_.empty())
+	{
+		effectType_ = effectNames_[0];
+	}
 }
 
 void Component_Teleporter::Update()
@@ -77,10 +98,21 @@ void Component_Teleporter::Release()
 
 void Component_Teleporter::Save(json& _saveObj)
 {
+	_saveObj["isActive_"] = isActive_;
+	_saveObj["teleportPos_"] = { REFERENCE_XMFLOAT3(teleportPos_) };
+	if (target_ != nullptr)_saveObj["target_"] = target_->GetObjectName();
+	_saveObj["effectType_"] = effectType_;
+	_saveObj["changeType_"] = changeType_;
 }
 
 void Component_Teleporter::Load(json& _loadObj)
 {
+	if (_loadObj.contains("isActive_"))isActive_ = _loadObj["isActive_"];
+	if (_loadObj.contains("teleportPos_"))
+		teleportPos_ = { _loadObj["teleportPos_"][0].get<float>(),_loadObj["teleportPos_"][1].get<float>(), _loadObj["teleportPos_"][2].get<float>() };
+	if (_loadObj.contains("target_"))target_ = (StageObject*)holder_->FindObject(_loadObj["target_"]);
+	if (_loadObj.contains("effectType_"))effectType_ = _loadObj["effectType_"];
+	if (_loadObj.contains("changeType_"))changeType_ = _loadObj["changeType_"];
 }
 
 void Component_Teleporter::DrawData()
@@ -136,7 +168,24 @@ void Component_Teleporter::DrawData()
 			}ImGui::SameLine();
 		}
 			ImGui::Text(changeJsonPath_.c_str());
+	}
 
+	// エフェクトの選択
+	if (ImGui::BeginCombo("Effect", effectType_.c_str()))
+	{
+		for (int i = 0; i < effectNames_.size(); ++i)
+		{
+			bool is_selected = (effectType_ == effectNames_[i]);
+			if (ImGui::Selectable(effectNames_[i].c_str(), is_selected))
+			{
+				effectType_ = effectNames_[i];
+			}
+			if (is_selected)
+			{
+				ImGui::SetItemDefaultFocus();
+			}
+		}
+		ImGui::EndCombo();
 	}
 
 	//対象の選択
@@ -165,11 +214,11 @@ void Component_Teleporter::Teleport()
 	if (timer == nullptr)return;
 	static bool isEffectEnd = false;
 	static bool isEffectNow = false;
-
 	if (isEffectEnd == false) {
+	target_->SetPosition(holder_->GetPosition());
 
 		// タイマー開始
-		timer->SetTime(3.f);
+		timer->SetTime(1.f);
 		timer->Start();
 
 		// ターゲットのWASDを探す
@@ -186,6 +235,14 @@ void Component_Teleporter::Teleport()
 			isEffectNow = true;
 			timer->Reset();
 		}
+
+		// effekseer: :Effectの再生情報の設定
+		DirectX::XMStoreFloat4x4(&(t.matrix), holder_->GetWorldMatrix());/*★★★*/
+		t.isLoop = false;/*★★★*/
+		t.maxFrame = 60;/*★★★*/
+		t.speed = 1.0f;/*★★★*/
+		// effekseer: :Effectの再生
+		mt = EFFEKSEERLIB::gEfk->Play(effectType_.c_str(), t);
 	}
 	
 	// タイマー終了

@@ -280,7 +280,6 @@
     <ClCompile Include="Game\Scenes\Scene_Test.cpp">
       <Filter>03Game\Scenes\DebugScenes</Filter>
     </ClCompile>
-
     <ClCompile Include="EffekseeLib\EffekseerVFX.cpp" />
     <ClCompile Include="Game\Objects\Stage\Components\BehaviorComponents\Component_BossBehavior.cpp" />
     <ClCompile Include="Game\Objects\Stage\Components\MoveComponents\Component_TackleMove.cpp" />
@@ -293,7 +292,7 @@
     <ClCompile Include="Game\Objects\Stage\Components\MoveComponents\Component_TackleMove.cpp" />
     <ClCompile Include="Game\Objects\Stage\Components\MotionComponent\Component_Motion.cpp" />
     <ClCompile Include="Game\Objects\Stage\Components\MotionComponent\Component_PlayerMotion.cpp" />
-
+    <ClCompile Include="Game\Objects\Stage\Components\AttackComponents\Component_Attack.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Collider\BoxCollider.h">
@@ -512,7 +511,6 @@
     <ClInclude Include="Game\Objects\Stage\Components\MoveComponents\Component_TackleMove.h" />
     <ClInclude Include="Game\Objects\Stage\Components\MotionComponent\Component_Motion.h" />
     <ClInclude Include="Game\Objects\Stage\Components\MotionComponent\Component_PlayerMotion.h" />
-
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Assets\Shader\Simple2D.hlsl">
@@ -536,5 +534,8 @@
     <FxCompile Include="Assets\Shader\Progress.hlsl">
       <Filter>02Shader</Filter>
     </FxCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
 </Project>

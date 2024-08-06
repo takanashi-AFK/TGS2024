@@ -7,9 +7,9 @@
 
 #pragma comment(lib, "d3d11.lib")
 #pragma comment(lib, "d3dcompiler.lib")
-#pragma comment(lib, "LibFbxSDK-MT.lib")
-#pragma comment(lib, "LibXml2-MT.lib")
-#pragma comment(lib, "zlib-MT.lib")
+//#pragma comment(lib, "LibFbxSDK-MT.lib")
+//#pragma comment(lib, "LibXml2-MT.lib")
+//#pragma comment(lib, "zlib-MT.lib")
 #pragma comment( lib, "WindowsCodecs.lib" )
 
 using namespace DirectX;
@@ -19,8 +19,8 @@ using namespace DirectX;
 //-----------------------------------------------------------
 class Texture
 {
-	ID3D11SamplerState*			pSampleLinear_;		//テクスチャサンプラー（テクスチャの貼り方）
-	ID3D11ShaderResourceView*	pTextureSRV_;		//シェーダーリソースビュー（テクスチャをシェーダーに送るためのもの）
+	ID3D11SamplerState* pSampleLinear_;		//テクスチャサンプラー（テクスチャの貼り方）
+	ID3D11ShaderResourceView* pTextureSRV_;		//シェーダーリソースビュー（テクスチャをシェーダーに送るためのもの）
 	XMFLOAT3					size_;				//画像ファイルのサイズ
 
 public:

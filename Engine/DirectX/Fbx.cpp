@@ -4,7 +4,7 @@
 
 
 
-Fbx::Fbx():_animSpeed(0)
+Fbx::Fbx() :_animSpeed(0)
 {
 }
 
@@ -27,7 +27,7 @@ HRESULT Fbx::Load(std::string fileName)
 	pFbxManager_ = FbxManager::Create();
 	pFbxScene_ = FbxScene::Create(pFbxManager_, "fbxscene");
 	FbxString FileName(fileName.c_str());
-	FbxImporter *fbxImporter = FbxImporter::Create(pFbxManager_, "imp");
+	FbxImporter* fbxImporter = FbxImporter::Create(pFbxManager_, "imp");
 	if (!fbxImporter->Initialize(FileName.Buffer(), -1, pFbxManager_->GetIOSettings()))
 	{
 		//失敗
@@ -35,6 +35,15 @@ HRESULT Fbx::Load(std::string fileName)
 	}
 	fbxImporter->Import(pFbxScene_);
 	fbxImporter->Destroy();
+	//ここにTriangulateを追加
+	FbxGeometryConverter geometryConverter(pFbxManager_);
+	geometryConverter.Triangulate(pFbxScene_, true, true);
+
+
+	geometryConverter.RemoveBadPolygonsFromMeshes(pFbxScene_);
+	//マテリアルごとにサブメッシュに分割（マテリアルごとにメッシュを読み込む）
+	geometryConverter.SplitMeshesPerMaterial(pFbxScene_, true);
+
 
 	// アニメーションのタイムモードの取得
 	_frameRate = pFbxScene_->GetGlobalSettings().GetTimeMode();
@@ -71,7 +80,7 @@ HRESULT Fbx::Load(std::string fileName)
 	return S_OK;
 }
 
-void Fbx::CheckNode(FbxNode * pNode, std::vector<FbxParts*>* pPartsList)
+void Fbx::CheckNode(FbxNode* pNode, std::vector<FbxParts*>* pPartsList)
 {
 	//そのノードにはメッシュ情報が入っているだろうか？
 	FbxNodeAttribute* attr = pNode->GetNodeAttribute();
@@ -146,7 +155,7 @@ void Fbx::Draw(Transform& transform, int frame)
 
 
 //レイキャスト（レイを飛ばして当たり判定）
-void Fbx::RayCast(RayCastData * data)
+void Fbx::RayCast(RayCastData* data)
 {
 	//すべてのパーツと判定
 	for (int i = 0; i < parts_.size(); i++)

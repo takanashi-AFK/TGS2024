@@ -42,7 +42,7 @@ HRESULT Fbx::Load(std::string fileName)
 
 	geometryConverter.RemoveBadPolygonsFromMeshes(pFbxScene_);
 	//マテリアルごとにサブメッシュに分割（マテリアルごとにメッシュを読み込む）
-	geometryConverter.SplitMeshesPerMaterial(pFbxScene_, true);
+	//geometryConverter.SplitMeshesPerMaterial(pFbxScene_, true);
 
 
 	// アニメーションのタイムモードの取得

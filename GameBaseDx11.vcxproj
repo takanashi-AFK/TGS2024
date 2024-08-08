@@ -71,14 +71,14 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>C:\Program Files\Autodesk\FBX\FBX SDK\2020.3.7\include;$(ProjectDir)\EffekseeLib\EffekseeLib\install_msvc2022_x64\include\Effekseer;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\Program Files\Autodesk\FBX\FBX SDK\2020.3.7\lib\x64\debug;$(ProjectDir)\EffekseeLib\EffekseeLib\install_msvc2022_x64\lib;$(LibraryPath)</LibraryPath>
-    <ExternalIncludePath>C:\Program Files\Autodesk\FBX\FBX SDK\2020.3.7\include;$(ExternalIncludePath)</ExternalIncludePath>
+    <IncludePath>$(ProjectDir)\EffekseeLib\EffekseeLib\install_msvc2022_x64\include\Effekseer;$(IncludePath)</IncludePath>
+    <LibraryPath>$(ProjectDir)\EffekseeLib\EffekseeLib\install_msvc2022_x64\lib;$(LibraryPath)</LibraryPath>
+    <ExternalIncludePath>$(ExternalIncludePath)</ExternalIncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <IncludePath>C:\Program Files\Autodesk\FBX\FBX SDK\2020.3.7\include;$(ProjectDir)\EffekseeLib\EffekseeLib\install_msvc2022_x64\include\Effekseer</IncludePath>
-    <LibraryPath>C:\Program Files\Autodesk\FBX\FBX SDK\2020.3.7\lib\x64\release;$(ProjectDir)\EffekseeLib\EffekseeLib\install_msvc2022_x64\lib;$(LibraryPath)</LibraryPath>
-    <ExternalIncludePath>C:\Program Files\Autodesk\FBX\FBX SDK\2020.3.7\include;$(ExternalIncludePath)</ExternalIncludePath>
+    <IncludePath>$(ProjectDir)\EffekseeLib\EffekseeLib\install_msvc2022_x64\include\Effekseer</IncludePath>
+    <LibraryPath>$(ProjectDir)\EffekseeLib\EffekseeLib\install_msvc2022_x64\lib;$(LibraryPath)</LibraryPath>
+    <ExternalIncludePath>$(ExternalIncludePath)</ExternalIncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <IncludePath>C:\Program Files\Autodesk\FBX\FBX SDK\2020.3.7\include;$(IncludePath)</IncludePath>
@@ -341,7 +341,17 @@
       <EntryPointName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">VS</EntryPointName>
     </FxCompile>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
+    <Import Project="packages\fbxsdk.2020.0.1.2\build\native\fbxsdk.targets" Condition="Exists('packages\fbxsdk.2020.0.1.2\build\native\fbxsdk.targets')" />
   </ImportGroup>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>このプロジェクトは、このコンピューター上にない NuGet パッケージを参照しています。それらのパッケージをダウンロードするには、[NuGet パッケージの復元] を使用します。詳細については、http://go.microsoft.com/fwlink/?LinkID=322105 を参照してください。見つからないファイルは {0} です。</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('packages\fbxsdk.2020.0.1.2\build\native\fbxsdk.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\fbxsdk.2020.0.1.2\build\native\fbxsdk.targets'))" />
+  </Target>
 </Project>

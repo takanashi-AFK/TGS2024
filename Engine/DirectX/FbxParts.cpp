@@ -622,3 +622,19 @@ void FbxParts::RayCast(RayCastData* data)
 		}
 	}
 }
+
+bool FbxParts::GetBonePositionAtNow(std::string boneName, XMFLOAT3* position)
+{
+	decltype(bonePair)::iterator it = bonePair.find(boneName);
+	if (it != bonePair.end())  // Œ©‚Â‚©‚Á‚½    
+	{
+		XMFLOAT4X4  m;
+		XMStoreFloat4x4(&m, it->second->newPose);
+		position->x = m._41;
+		position->y = m._42;
+		position->z = m._43;
+
+		return true;
+	}
+	return false;
+}

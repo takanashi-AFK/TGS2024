@@ -115,6 +115,7 @@ void Component_Teleporter::DrawData()
 {
 	ImGui::Checkbox("isActive", &isActive_);
 	ImGui::Combo("ChangeType", (int*)&changeType_, "CHANGE_TELEPORT\0CHANGE_SCENE\0CHANGE_JSON\0");
+
 	if (changeType_ == CHANGE_TELEPORT) {
 		ImGui::DragFloat3("TeleportPos", &teleportPos_.x, 0.1f);
 	}
@@ -123,7 +124,6 @@ void Component_Teleporter::DrawData()
 	}
 	else if (changeType_ == CHANGE_JSON) {
 		if (ImGui::Button("...")) {
-
 			//現在のカレントディレクトリを覚えておく
 			char defaultCurrentDir[MAX_PATH];
 			GetCurrentDirectory(MAX_PATH, defaultCurrentDir);
@@ -161,19 +161,30 @@ void Component_Teleporter::DrawData()
 				else {
 					return;
 				}
-			}ImGui::SameLine();
+			}
+			ImGui::SameLine();
 		}
-			ImGui::Text(changeJsonPath_.c_str());
+		ImGui::Text(changeJsonPath_.c_str());
 	}
 
 	// エフェクトの選択
-	if (ImGui::BeginCombo("Effect", effectType_.c_str()))
+	static int effectSelect = 0;
+
+	// effectType_ に基づいて初期値を設定する
+	auto it = std::find(effectNames_.begin(), effectNames_.end(), effectType_);
+	if (it != effectNames_.end())
+	{
+		effectSelect = std::distance(effectNames_.begin(), it);
+	}
+
+	if (ImGui::BeginCombo("Effect", effectNames_[effectSelect].c_str()))
 	{
 		for (int i = 0; i < effectNames_.size(); ++i)
 		{
-			bool is_selected = (effectType_ == effectNames_[i]);
+			bool is_selected = (effectSelect == i);
 			if (ImGui::Selectable(effectNames_[i].c_str(), is_selected))
 			{
+				effectSelect = i;
 				effectType_ = effectNames_[i];
 			}
 			if (is_selected)
@@ -191,11 +202,21 @@ void Component_Teleporter::DrawData()
 	for (auto obj : ((Stage*)holder_->GetParent())->GetStageObjects())objNames.push_back(obj->GetObjectName());
 
 	static int select = 0;
+
+	// target_の名前に基づいて初期値を設定する
+	if (target_ != nullptr) {
+		string targetName = target_->GetObjectName();
+		auto it = find(objNames.begin(), objNames.end(), targetName);
+		if (it != objNames.end()) {
+			select = distance(objNames.begin(), it);
+		}
+	}
+
 	if (ImGui::BeginCombo("target_", objNames[select].c_str())) {
 		for (int i = 0; i < objNames.size(); i++) {
 			bool is_selected = (select == i);
-			if (ImGui::Selectable(objNames[i].c_str(), is_selected))select = i;
-			if (is_selected)ImGui::SetItemDefaultFocus();
+			if (ImGui::Selectable(objNames[i].c_str(), is_selected)) select = i;
+			if (is_selected) ImGui::SetItemDefaultFocus();
 		}
 		ImGui::EndCombo();
 	}

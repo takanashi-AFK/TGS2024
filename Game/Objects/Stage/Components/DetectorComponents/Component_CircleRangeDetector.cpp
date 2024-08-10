@@ -50,40 +50,49 @@ void Component_CircleRangeDetector::DrawData()
 {
 #ifdef _DEBUG
 
+    // ImGuiでデータを描画
+    ImGui::Text("isContains_ : %s", isContains_ ? "true" : "false");
 
-	// ImGuiでデータを描画
-	
-	ImGui::Text("isContains_ : %s", isContains_ ? "true" : "false");
+    // 半径の入力
+    ImGui::DragFloat("radius_", &radius_);
 
-	// 半径の入力
-	ImGui::DragFloat("radius_", &radius_);
+    ImGui::Separator();
 
-	ImGui::Separator();
-	
-	//対象の選択
-	vector<string> objNames;
-	objNames.push_back("null");
+    //対象の選択
+    vector<string> objNames;
+    objNames.push_back("null");
 
-	for (auto obj : ((Stage*)holder_->GetParent())->GetStageObjects())objNames.push_back(obj->GetObjectName());
+    for (auto obj : ((Stage*)holder_->GetParent())->GetStageObjects()) {
+        objNames.push_back(obj->GetObjectName());
+    }
 
-	static int select = 0;
-	if (ImGui::BeginCombo("target_", objNames[select].c_str())) {
-		for (int i = 0; i < objNames.size(); i++) {
-			bool is_selected = (select == i);
-			if (ImGui::Selectable(objNames[i].c_str(), is_selected))select = i;
-			if (is_selected)ImGui::SetItemDefaultFocus();
-		}
-		ImGui::EndCombo();
-	}
+    static int select = 0;
 
-	if (select == 0)target_ = nullptr;
-	else target_ = (StageObject*)holder_->FindObject(objNames[select]);
+    // target_の名前に基づいて初期値を設定する
+    if (target_ != nullptr) {
+        string targetName = target_->GetObjectName();
+        auto it = find(objNames.begin(), objNames.end(), targetName);
+        if (it != objNames.end()) {
+            select = distance(objNames.begin(), it);
+        }
+    }
 
-	if (target_ != nullptr) {
-		XMFLOAT3 pos = target_->GetPosition();
-		ImGui::Text("position_ = %f,%f,%f", REFERENCE_XMFLOAT3(pos));
-	}
+    if (ImGui::BeginCombo("target_", objNames[select].c_str())) {
+        for (int i = 0; i < objNames.size(); i++) {
+            bool is_selected = (select == i);
+            if (ImGui::Selectable(objNames[i].c_str(), is_selected)) select = i;
+            if (is_selected) ImGui::SetItemDefaultFocus();
+        }
+        ImGui::EndCombo();
+    }
 
+    if (select == 0) target_ = nullptr;
+    else target_ = (StageObject*)holder_->FindObject(objNames[select]);
+
+    if (target_ != nullptr) {
+        XMFLOAT3 pos = target_->GetPosition();
+        ImGui::Text("position_ = %f,%f,%f", REFERENCE_XMFLOAT3(pos));
+    }
 
 #endif // _DEBUG
 }

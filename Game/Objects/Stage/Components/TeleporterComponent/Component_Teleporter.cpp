@@ -19,11 +19,6 @@ Component_Teleporter::Component_Teleporter(string _name, StageObject* _holder, C
 
 void Component_Teleporter::Initialize()
 {
-	if (target_ == nullptr)target_ = (StageObject*)holder_->FindObject(targetName_);
-	if (target_ == nullptr)return;
-	// 子コンポーネントの追加
-	if (FindChildComponent("CircleRangeDetector") == false)AddChildComponent(CreateComponent("CircleRangeDetector", CircleRangeDetector, holder_, this));
-	if (FindChildComponent("Timer") == false)AddChildComponent(CreateComponent("Timer", Timer, holder_, this));
 	// エフェクトディレクトリをスキャン
 	std::string effectDirectory = "Effects";
 	for (const auto& entry : fs::directory_iterator(effectDirectory))
@@ -40,10 +35,22 @@ void Component_Teleporter::Initialize()
 	{
 		effectType_ = effectNames_[0];
 	}
+	// 子コンポーネントの追加
+	if (FindChildComponent("CircleRangeDetector") == false)AddChildComponent(CreateComponent("CircleRangeDetector", CircleRangeDetector, holder_, this));
+	if (FindChildComponent("Timer") == false)AddChildComponent(CreateComponent("Timer", Timer, holder_, this));
+
+	auto detector = dynamic_cast<Component_CircleRangeDetector*>(GetChildComponent("CircleRangeDetector"));
+	if (detector == nullptr)return;
+
+	
 }
 
 void Component_Teleporter::Update()
 {
+	if (target_ == nullptr)
+		target_ = (StageObject*)holder_->FindObject(targetName_);
+	if (target_ == nullptr)return;
+
 	if (!isActive_)return;
 
 	auto detector = dynamic_cast<Component_CircleRangeDetector*>(GetChildComponent("CircleRangeDetector"));
@@ -88,7 +95,8 @@ void Component_Teleporter::Save(json& _saveObj)
 {
 	_saveObj["isActive_"] = isActive_;
 	_saveObj["teleportPos_"] = { REFERENCE_XMFLOAT3(teleportPos_) };
-	if (target_ != nullptr)_saveObj["target_"] = target_->GetObjectName();
+	if (target_ != nullptr)
+		_saveObj["target_"] = target_->GetObjectName();
 	_saveObj["effectType_"] = effectType_;
 	_saveObj["changeType_"] = changeType_;
 }

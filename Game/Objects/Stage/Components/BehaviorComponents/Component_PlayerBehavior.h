@@ -20,10 +20,10 @@ class Component_PlayerBehavior : public Component
 {
 private:
 	DirectX::XMVECTOR frontVec_;
-	StageObject* target_;	// ターゲット
+	StageObject* target_;	
 	string targetName_;
 	std::vector<RayCastData> rayHitObjectList_;
-	float shootHeight_;		// 発射する高さ
+	float shootHeight_;
 	bool isAnimationNow_;
 
 	PlayerState nowState, prevState;

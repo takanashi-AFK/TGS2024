@@ -83,6 +83,8 @@ void Component_CircleRangeDetector::DrawData()
 		XMFLOAT3 pos = target_->GetPosition();
 		ImGui::Text("position_ = %f,%f,%f", REFERENCE_XMFLOAT3(pos));
 	}
+
+
 #endif // _DEBUG
 }
 

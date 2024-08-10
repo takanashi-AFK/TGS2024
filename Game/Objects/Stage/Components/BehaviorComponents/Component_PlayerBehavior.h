@@ -9,6 +9,7 @@ enum PlayerState {
 	PSTATE_IDLE = 0,
 	PSTATE_WALK,
 	PSTATE_WALKANDSHOOT,
+	PSTATE_WALKANDMELEE,
 	PSTATE_MELEE,
 	PSTATE_SHOOT,
 	PSTATE_DIE,
@@ -19,10 +20,10 @@ class Component_PlayerBehavior : public Component
 {
 private:
 	DirectX::XMVECTOR frontVec_;
-	StageObject* target_;	// ターゲット
+	StageObject* target_;	
 	string targetName_;
 	std::vector<RayCastData> rayHitObjectList_;
-	float shootHeight_;		// 発射する高さ
+	float shootHeight_;
 	bool isAnimationNow_;
 
 	PlayerState nowState, prevState;
@@ -41,6 +42,7 @@ public:
 	void Idle();
 	void Walk();
 	void WalkAndShoot();
+	void WalkAndMelee();
 	void Melee();
 	void Shoot();
 

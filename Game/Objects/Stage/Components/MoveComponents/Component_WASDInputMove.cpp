@@ -12,7 +12,7 @@ namespace
 }
 
 Component_WASDInputMove::Component_WASDInputMove(string _name, StageObject* _holder, Component* _parent)
-	:Component(_holder, _name, WASDInputMove, _parent), isActive_(true), isMove_(false)
+	:Component(_holder, _name, WASDInputMove, _parent), isMove_(false)
 {
 }
 

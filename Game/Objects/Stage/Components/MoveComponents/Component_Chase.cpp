@@ -62,7 +62,7 @@ void Component_Chase::Load(json& _loadObj)
 {
 	if(_loadObj.contains("speed_"))speed_ = _loadObj["speed_"];
 	if(_loadObj.contains("isActive_"))isActive_ = _loadObj["isActive_"];
-	if (_loadObj.contains("target_"))targetName_ = _loadObj["target_"];
+	if(_loadObj.contains("target_"))targetName_ = _loadObj["target_"];
 	if(_loadObj.contains("limitDistance_"))limitDistance_ = _loadObj["limitDistance_"];
 }
 

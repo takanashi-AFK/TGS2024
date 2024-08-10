@@ -36,6 +36,8 @@ void Component_PlayerBehavior::Initialize()
     // コライダーの追加
     holder_->AddCollider(new BoxCollider(XMFLOAT3(0, 0, 0), XMFLOAT3(1, 1, 1)));
 
+    holder_->SetScale(XMFLOAT3(0.5f, 0.5f, 0.5f));
+
     // 子コンポーネントの追加
     if (FindChildComponent("InputMove") == false)AddChildComponent(CreateComponent("InputMove", WASDInputMove, holder_, this));
     if (FindChildComponent("MeleeAttack") == false)AddChildComponent(CreateComponent("MeleeAttack", MeleeAttack, holder_, this));
@@ -47,13 +49,13 @@ void Component_PlayerBehavior::Initialize()
 
 void Component_PlayerBehavior::Update()
 {
-	auto hm = dynamic_cast<Component_HealthGauge*>(GetChildComponent("PlayerHealthGauge"));
+    auto hm = dynamic_cast<Component_HealthGauge*>(GetChildComponent("PlayerHealthGauge"));
     if (hm == nullptr)return;
 
-	// 進捗を0.0〜1.0の範囲で計算
-	float progress = hm->GetNow() / hm->GetMax();
-    
-    if(ImGui::Button("dead"))hm->TakeDamage(1000);
+    // 進捗を0.0〜1.0の範囲で計算
+    float progress = hm->GetNow() / hm->GetMax();
+
+    if (ImGui::Button("dead"))hm->TakeDamage(1000);
 
 
 
@@ -66,8 +68,7 @@ void Component_PlayerBehavior::Update()
     auto move = dynamic_cast<Component_WASDInputMove*>(GetChildComponent("InputMove"));
     if (move == nullptr)return;
 
-    frontVec_ = move->GetMoveDirction();
-    melee->SetForward(frontVec_);
+
 
     switch (nowState)
     {
@@ -98,11 +99,11 @@ void Component_PlayerBehavior::DrawData()
     if (timer == nullptr)return;
     ImGui::Text("%f", timer->GetNowTime());
 
-    if(ImGui::Button("Idle")) SetState(PSTATE_IDLE);
-	if (ImGui::Button("Walk")) SetState(PSTATE_WALK);
-	if (ImGui::Button("WalkAndShoot")) SetState(PSTATE_WALKANDSHOOT);
-	if (ImGui::Button("Melee")) SetState(PSTATE_MELEE);
-	if (ImGui::Button("Shoot")) SetState(PSTATE_SHOOT);
+    if (ImGui::Button("Idle")) SetState(PSTATE_IDLE);
+    if (ImGui::Button("Walk")) SetState(PSTATE_WALK);
+    if (ImGui::Button("WalkAndShoot")) SetState(PSTATE_WALKANDSHOOT);
+    if (ImGui::Button("Melee")) SetState(PSTATE_MELEE);
+    if (ImGui::Button("Shoot")) SetState(PSTATE_SHOOT);
 
 }
 
@@ -112,18 +113,18 @@ void Component_PlayerBehavior::OnCollision(GameObject* _target, Collider* _colli
 
 void Component_PlayerBehavior::Idle()
 {
-	auto move = dynamic_cast<Component_WASDInputMove*>(GetChildComponent("InputMove"));
-	if (move == nullptr)return;
+    auto move = dynamic_cast<Component_WASDInputMove*>(GetChildComponent("InputMove"));
+    if (move == nullptr)return;
 
-	if (move->GetIsMove()) {
-		SetState(PSTATE_WALK);
-	} 
-	else if (Input::IsMouseButton(1) && Input::IsMouseButtonDown(0) && nowState != PSTATE_WALK) {
-		SetState(PSTATE_SHOOT);
+    if (move->GetIsMove()) {
+        SetState(PSTATE_WALK);
     }
-	else if (Input::IsMouseButtonDown(0)){
+    else if (Input::IsMouseButton(1) && Input::IsMouseButtonDown(0) && nowState != PSTATE_WALK) {
+        SetState(PSTATE_SHOOT);
+    }
+    else if (Input::IsMouseButtonDown(0)) {
         SetState(PSTATE_MELEE);
-	}
+    }
     ImGui::Text("idle");
 
     // 死んだら死
@@ -134,15 +135,18 @@ void Component_PlayerBehavior::Walk()
     auto move = dynamic_cast<Component_WASDInputMove*>(GetChildComponent("InputMove"));
     if (move == nullptr)return;
 
-  
+
     static bool prevAnim = false;
     if (move->GetIsMove() == true) {
         ImGui::Text("Move");
         if (Input::IsMouseButton(1) && Input::IsMouseButtonDown(0)) {
             SetState(PSTATE_WALKANDSHOOT);
-        }       
+        }
+        else if (Input::IsMouseButtonDown(0)) {
+            SetState(PSTATE_MELEE);
+        }
     }
-    else {
+    else{
         SetState(PSTATE_IDLE);
     }
     ImGui::Text("Walk");
@@ -151,10 +155,13 @@ void Component_PlayerBehavior::Walk()
 
 void Component_PlayerBehavior::WalkAndShoot()
 {
-
     ShootExe();
     SetState(PSTATE_IDLE);
-	ImGui::Text("WalkAndShoot");
+    ImGui::Text("WalkAndShoot");
+}
+
+void Component_PlayerBehavior::WalkAndMelee()
+{
 }
 
 void Component_PlayerBehavior::Melee()
@@ -164,7 +171,8 @@ void Component_PlayerBehavior::Melee()
     auto melee = dynamic_cast<Component_MeleeAttack*>(GetChildComponent("MeleeAttack"));
     if (melee == nullptr)return;
 
-
+    frontVec_ = move->GetMoveDirection();
+    melee->SetForward(frontVec_);
     melee->Execute();
 
     SetState(PSTATE_IDLE);
@@ -177,16 +185,16 @@ void Component_PlayerBehavior::Shoot()
     auto motion = dynamic_cast<Component_PlayerMotion*>(GetChildComponent("PlayerMotion"));
     if (motion == nullptr)return;
 
-	static bool isShoot = false;
+    static bool isShoot = false;
 
-	if (isShoot == false) {
-    ShootExe();
-	isShoot = true;
-	}
+    if (isShoot == false) {
+        ShootExe();
+        isShoot = true;
+    }
     // アニメーションが終わったらState変更
     if (motion->IsEndAnimation()) {
-	isShoot = false;
-    SetState(PSTATE_IDLE);
+        isShoot = false;
+        SetState(PSTATE_IDLE);
     }
     ImGui::Text("shoot");
 }
@@ -267,9 +275,9 @@ void Component_PlayerBehavior::ShootExe()
 bool Component_PlayerBehavior::IsDead()
 {
     auto hg = dynamic_cast<Component_HealthGauge*>(GetChildComponent("PlayerHealthGauge"));
-	if (hg == nullptr)return false;
+    if (hg == nullptr)return false;
 
-	return hg->IsDead();
+    return hg->IsDead();
 }
 
 //bool Component_PlayerBehavior::IsEnemyInRect(StageObject* _target)

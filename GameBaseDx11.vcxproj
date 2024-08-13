@@ -139,6 +139,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Game\GameEditor\GameEditor.cpp" />
+    <ClCompile Include="Game\Objects\Stage\Components\Component.cpp" />
+    <ClCompile Include="Game\Objects\Stage\Bullet.cpp" />
     <ClCompile Include="EffekseeLib\EffekseerVFX.cpp" />
     <ClCompile Include="Engine\ResourceManager\Transition.cpp" />
     <ClCompile Include="Engine\ImGui\imgui.cpp" />
@@ -172,8 +175,26 @@
     <ClCompile Include="Engine\DirectX\Texture.cpp" />
     <ClCompile Include="Engine\GameObject\Transform.cpp" />
     <ClCompile Include="Engine\Global.cpp" />
+    <ClCompile Include="Game\Scenes\Scene_End.cpp" />
+    <ClCompile Include="Game\Scenes\Scene_Play.cpp" />
+    <ClCompile Include="Game\Scenes\Scene_Splash.cpp" />
+    <ClCompile Include="Game\Scenes\Scene_Test.cpp" />
+    <ClCompile Include="Game\Scenes\Scene_Title.cpp" />
+    <ClCompile Include="Game\Objects\Stage\SkySphere.cpp" />
+    <ClCompile Include="Game\Objects\Stage\Stage.cpp" />
+    <ClCompile Include="Game\Objects\Stage\StageObject.cpp" />
+    <ClCompile Include="Game\Objects\TPSCamera\TPSCamera.cpp" />
+    <ClCompile Include="Game\Objects\UI\UIButton.cpp" />
+    <ClCompile Include="Game\Objects\UI\UIImage.cpp" />
+    <ClCompile Include="Game\Objects\UI\UIObject.cpp" />
+    <ClCompile Include="Game\Objects\UI\UIPanel.cpp" />
+    <ClCompile Include="Game\Objects\UI\UIProgressBar.cpp" />
+    <ClCompile Include="Game\Objects\UI\UIText.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Game\GameEditor\GameEditor.h" />
+    <ClInclude Include="Game\Objects\Stage\Components\Component.h" />
+    <ClInclude Include="Game\Objects\Stage\Bullet.h" />
     <ClInclude Include="EffekseeLib\EffekseerVFX.h" />
     <ClInclude Include="Engine\ResourceManager\Transition.h" />
     <ClInclude Include="Engine\ImGui\imconfig.h" />
@@ -209,6 +230,22 @@
     <ClInclude Include="Engine\ResourceManager\Text.h" />
     <ClInclude Include="Engine\DirectX\Texture.h" />
     <ClInclude Include="Engine\GameObject\Transform.h" />
+    <ClInclude Include="Game\Scenes\Scene_End.h" />
+    <ClInclude Include="Game\Scenes\Scene_Play.h" />
+    <ClInclude Include="Game\Scenes\Scene_Splash.h" />
+    <ClInclude Include="Game\Scenes\Scene_Test.h" />
+    <ClInclude Include="Game\Scenes\Scene_Title.h" />
+    <ClInclude Include="Game\Objects\Stage\SkySphere.h" />
+    <ClInclude Include="Game\Objects\Stage\Stage.h" />
+    <ClInclude Include="Game\Objects\Stage\StageObject.h" />
+    <ClInclude Include="Game\Objects\TPSCamera\TPSCamera.h" />
+    <ClInclude Include="resource.h" />
+    <ClInclude Include="Game\Objects\UI\UIButton.h" />
+    <ClInclude Include="Game\Objects\UI\UIImage.h" />
+    <ClInclude Include="Game\Objects\UI\UIObject.h" />
+    <ClInclude Include="Game\Objects\UI\UIPanel.h" />
+    <ClInclude Include="Game\Objects\UI\UIProgressBar.h" />
+    <ClInclude Include="Game\Objects\UI\UIText.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Assets\Shader\BillBoard.hlsl">
@@ -257,6 +294,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="GameBaseDx11.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

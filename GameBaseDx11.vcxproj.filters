@@ -29,6 +29,57 @@
     <Filter Include="00Effekseer">
       <UniqueIdentifier>{0d38d0e2-263e-4437-8a79-3052074af8da}</UniqueIdentifier>
     </Filter>
+    <Filter Include="03Game">
+      <UniqueIdentifier>{55889d47-298b-4bad-bdff-b16c28aeda59}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03Game\Scenes">
+      <UniqueIdentifier>{568eb430-be01-49c9-a908-2b50dd2c7913}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03Game\Objects">
+      <UniqueIdentifier>{6224f67a-cfbb-4908-b696-6bc25642c1b9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03Game\Objects\Stage">
+      <UniqueIdentifier>{f1f0b991-3504-4ec4-af57-02b51c76c157}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03Game\Objects\UI">
+      <UniqueIdentifier>{5b8947c1-9ec5-4feb-8f5f-9229c03ef6a8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03Game\Objects\TPSCamera">
+      <UniqueIdentifier>{f2d1a67d-c07f-4057-9abc-4bb9ed4d47e6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03Game\Objects\Stage\Components">
+      <UniqueIdentifier>{0aea058e-1e87-40aa-b41d-5e8066954cea}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03Game\Objects\Stage\Components\AttackComponents">
+      <UniqueIdentifier>{5bc9c703-5b26-4ba4-8e90-0a0ce3579229}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03Game\Objects\Stage\Components\BehaviorComponents">
+      <UniqueIdentifier>{4ad37d94-0d97-49a9-b532-786686a19d2f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03Game\Objects\Stage\Components\DetectorComponents">
+      <UniqueIdentifier>{05dca558-ea8f-4d2e-9e27-16295e29f75d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03Game\Objects\Stage\Components\GaugeComponents">
+      <UniqueIdentifier>{61abe109-1e79-49f0-8627-5045256cd280}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03Game\Objects\Stage\Components\MotionComponents">
+      <UniqueIdentifier>{0b0e9f58-236b-494b-9959-253752fab6dd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03Game\Objects\Stage\Components\MoveComponents">
+      <UniqueIdentifier>{32bac4f6-7d44-40c1-bc5f-22dfa3d03838}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03Game\Objects\Stage\Components\RotationComponents">
+      <UniqueIdentifier>{0f3515f2-45dd-4d8b-acbe-fccf3c66dcad}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03Game\Objects\Stage\Components\TeleporterComponents">
+      <UniqueIdentifier>{53b4e770-ef7e-45a2-bc8d-b9adf90a048f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03Game\Objects\Stage\Components\TimerComponent">
+      <UniqueIdentifier>{53943df1-dadc-4408-b59f-035afbc826d0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03Game\GameEditor">
+      <UniqueIdentifier>{1035dac5-99db-460e-8baa-b614e7efeb66}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine\Collider\BoxCollider.cpp">
@@ -131,6 +182,60 @@
     <ClCompile Include="Game\Objects\Stage\Components\MoveComponents\Component_TackleMove.cpp" />
     <ClCompile Include="EffekseeLib\EffekseerVFX.cpp">
       <Filter>00Effekseer</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Scenes\Scene_Test.cpp">
+      <Filter>03Game\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Scenes\Scene_End.cpp">
+      <Filter>03Game\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Scenes\Scene_Play.cpp">
+      <Filter>03Game\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Scenes\Scene_Splash.cpp">
+      <Filter>03Game\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Scenes\Scene_Title.cpp">
+      <Filter>03Game\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Objects\Stage\Bullet.cpp">
+      <Filter>03Game\Objects\Stage</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Objects\Stage\SkySphere.cpp">
+      <Filter>03Game\Objects\Stage</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Objects\Stage\Stage.cpp">
+      <Filter>03Game\Objects\Stage</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Objects\Stage\StageObject.cpp">
+      <Filter>03Game\Objects\Stage</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Objects\TPSCamera\TPSCamera.cpp">
+      <Filter>03Game\Objects\TPSCamera</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Objects\Stage\Components\Component.cpp">
+      <Filter>03Game\Objects\Stage\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\GameEditor\GameEditor.cpp">
+      <Filter>03Game\GameEditor</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Objects\UI\UIButton.cpp">
+      <Filter>03Game\Objects\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Objects\UI\UIImage.cpp">
+      <Filter>03Game\Objects\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Objects\UI\UIObject.cpp">
+      <Filter>03Game\Objects\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Objects\UI\UIPanel.cpp">
+      <Filter>03Game\Objects\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Objects\UI\UIProgressBar.cpp">
+      <Filter>03Game\Objects\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Objects\UI\UIText.cpp">
+      <Filter>03Game\Objects\UI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -241,6 +346,61 @@
     <ClInclude Include="EffekseeLib\EffekseerVFX.h">
       <Filter>00Effekseer</Filter>
     </ClInclude>
+    <ClInclude Include="Game\Scenes\Scene_Test.h">
+      <Filter>03Game\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Scenes\Scene_End.h">
+      <Filter>03Game\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Scenes\Scene_Play.h">
+      <Filter>03Game\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Scenes\Scene_Splash.h">
+      <Filter>03Game\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Scenes\Scene_Title.h">
+      <Filter>03Game\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Objects\Stage\Bullet.h">
+      <Filter>03Game\Objects\Stage</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Objects\Stage\SkySphere.h">
+      <Filter>03Game\Objects\Stage</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Objects\Stage\Stage.h">
+      <Filter>03Game\Objects\Stage</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Objects\Stage\StageObject.h">
+      <Filter>03Game\Objects\Stage</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Objects\TPSCamera\TPSCamera.h">
+      <Filter>03Game\Objects\TPSCamera</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Objects\Stage\Components\Component.h">
+      <Filter>03Game\Objects\Stage\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\GameEditor\GameEditor.h">
+      <Filter>03Game\GameEditor</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h" />
+    <ClInclude Include="Game\Objects\UI\UIButton.h">
+      <Filter>03Game\Objects\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Objects\UI\UIImage.h">
+      <Filter>03Game\Objects\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Objects\UI\UIObject.h">
+      <Filter>03Game\Objects\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Objects\UI\UIPanel.h">
+      <Filter>03Game\Objects\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Objects\UI\UIProgressBar.h">
+      <Filter>03Game\Objects\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Objects\UI\UIText.h">
+      <Filter>03Game\Objects\UI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Assets\Shader\Simple2D.hlsl">
@@ -267,5 +427,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="GameBaseDx11.rc" />
   </ItemGroup>
 </Project>

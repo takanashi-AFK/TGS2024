@@ -239,7 +239,6 @@
     <ClInclude Include="Game\Objects\Stage\Stage.h" />
     <ClInclude Include="Game\Objects\Stage\StageObject.h" />
     <ClInclude Include="Game\Objects\TPSCamera\TPSCamera.h" />
-    <ClInclude Include="resource.h" />
     <ClInclude Include="Game\Objects\UI\UIButton.h" />
     <ClInclude Include="Game\Objects\UI\UIImage.h" />
     <ClInclude Include="Game\Objects\UI\UIObject.h" />

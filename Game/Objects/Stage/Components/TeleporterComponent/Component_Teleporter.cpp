@@ -13,7 +13,7 @@ namespace {
 }
 
 Component_Teleporter::Component_Teleporter(string _name, StageObject* _holder, Component* _parent)
-:Component(_holder, _name, Teleporter, _parent)
+:Component(_holder, _name, Teleporter, _parent),isFirstEffect_(false)
 {
 }
 
@@ -232,7 +232,8 @@ void Component_Teleporter::Teleport()
 	static bool isEffectEnd = false;
 	static bool isEffectNow = false;
 	if (isEffectEnd == false) {
-	target_->SetPosition(holder_->GetPosition());
+
+		target_->SetPosition(holder_->GetPosition());
 
 		// タイマー開始
 		timer->SetTime(1.f);
@@ -253,6 +254,7 @@ void Component_Teleporter::Teleport()
 			timer->Reset();
 		}
 
+		if (isFirstEffect_ == false) {
 		// effekseer: :Effectの再生情報の設定
 		DirectX::XMStoreFloat4x4(&(t.matrix), holder_->GetWorldMatrix());/*★★★*/
 		t.isLoop = false;/*★★★*/
@@ -260,6 +262,8 @@ void Component_Teleporter::Teleport()
 		t.speed = 1.0f;/*★★★*/
 		// effekseer: :Effectの再生
 		mt = EFFEKSEERLIB::gEfk->Play(effectType_.c_str(), t);
+		isFirstEffect_ = true;
+		}
 	}
 	
 	// タイマー終了
@@ -288,6 +292,7 @@ void Component_Teleporter::Teleport()
 		}
 		isEffectNow = false;
 		isTeleport_ = true;
+		isFirstEffect_ = false;
 	}
 
 

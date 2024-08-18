@@ -291,12 +291,6 @@
       <EntryPointName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">VS</EntryPointName>
     </FxCompile>
   </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ResourceCompile Include="GameBaseDx11.rc" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
     <Import Project="packages\fbxsdk.2020.0.1.2\build\native\fbxsdk.targets" Condition="Exists('packages\fbxsdk.2020.0.1.2\build\native\fbxsdk.targets')" />

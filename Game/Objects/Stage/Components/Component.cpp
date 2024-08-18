@@ -62,3 +62,18 @@ vector<Component*> Component::GetChildComponent(ComponentType _comptype)
 {
 	return vector<Component*>();
 }
+
+Component* CreateComponent(string _name, ComponentType _type, StageObject* _holder, Component* _parent)
+{
+	return nullptr;
+}
+
+Component* CreateComponent(string _name, ComponentType _type, StageObject* _holder)
+{
+	return nullptr;
+}
+
+string ComponentTypeToString(ComponentType _comptype)
+{
+	return string();
+}

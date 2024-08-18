@@ -111,8 +111,8 @@ void StageObject::DrawImGui()
 	// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
 	// オブジェクトの削除ボタン
 	// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
-	if (ImGui::SmallButton("delete"))((Stage*)FindObject("Stage"))->DeleteStageObject(this);
-	ImGui::Separator();
+	//if (ImGui::SmallButton("delete"))((Stage*)FindObject("Stage"))->DeleteStageObject(this);
+	//ImGui::Separator();
 
 	if (ImGui::TreeNode("name")) {
 		ImGui::Text("Current name : %s", this->objectName_.c_str());
@@ -139,7 +139,7 @@ void StageObject::DrawImGui()
 		if (ImGui::SmallButton("AddComponent"))isShowAddCompWindow_ = true;
 
 		// 保有するコンポーネントの情報を描画
-		for (auto comp : myComponents_)comp->ChildDrawData();
+		for (auto comp : myComponents_)comp->ChildDrawImgui();
 		ImGui::TreePop();
 	}
 
@@ -202,72 +202,72 @@ bool StageObject::DeleteAllComponent()
 	myComponents_.clear(); return true;
 }
 
-void StageObject::OnGround(float _fallspeed)
-{
-	if (isOnGround_ == false)return;
+//void StageObject::OnGround(float _fallspeed)
+//{
+//	if (isOnGround_ == false)return;
+//
+//	Stage* pStage = static_cast<Stage*>(FindObject("Stage"));
+//	if (pStage == nullptr)return;
+//	auto stage = pStage->GetStageObject();
+//
+//	for (auto obj : stage) {
+//		if (obj->GetObjectName() == this->objectName_)
+//			continue;
+//		int StageModel = obj->modelHandle_;
+//		if (StageModel < 0)continue;
+//
+//		RayCastData rayCastData;
+//
+//		rayCastData.start = transform_.position_;
+//		rayCastData.dir = XMFLOAT3(0, -1, 0);
+//		Model::RayCast(StageModel, &rayCastData);
+//		if (rayCastData.hit) {
+//			transform_.position_.y -= (rayCastData.dist - (MODEL_SCALE / 2)) * _fallspeed;
+//
+//		}
+//	}
+//}
 
-	Stage* pStage = static_cast<Stage*>(FindObject("Stage"));
-	if (pStage == nullptr)return;
-	auto stage = pStage->GetStageObject();
-
-	for (auto obj : stage) {
-		if (obj->GetObjectName() == this->objectName_)
-			continue;
-		int StageModel = obj->modelHandle_;
-		if (StageModel < 0)continue;
-
-		RayCastData rayCastData;
-
-		rayCastData.start = transform_.position_;
-		rayCastData.dir = XMFLOAT3(0, -1, 0);
-		Model::RayCast(StageModel, &rayCastData);
-		if (rayCastData.hit) {
-			transform_.position_.y -= (rayCastData.dist - (MODEL_SCALE / 2)) * _fallspeed;
-
-		}
-	}
-}
-
-void StageObject::CollisionWall()
-{
-	if (!hitWallCollision_)return;
-
-	Stage* pStage = static_cast<Stage*>(FindObject("Stage"));
-	if (pStage == nullptr)return;
-	auto stage = pStage->GetStageObject();
-
-	for (auto obj : stage) {
-		if (obj->GetObjectName() == this->objectName_)
-			continue;
-		int StageModel = obj->modelHandle_;
-		if (StageModel < 0)continue;
-
-		vector<XMFLOAT3>directions{
-			XMFLOAT3(1,0,0),
-			XMFLOAT3(-1,0,0),
-			XMFLOAT3(0,0,1),
-			XMFLOAT3(0,0,-1)
-		};
-
-		for (auto dir : directions) {
-			RayCastData rayCastData;
-
-			rayCastData.start = transform_.position_;
-			rayCastData.dir = XMFLOAT3(0, -1, 0);
-			Model::RayCast(StageModel, &rayCastData);
-
-			if (rayCastData.dist < 0.6f && rayCastData.dist > 0.0f) {
-				if (dir.x != 0) {
-					transform_.position_.x -= dir.x * (0.6f - rayCastData.dist);
-				}
-				else if (dir.z != 0) {
-					transform_.position_.z -= dir.z * (0.6f - rayCastData.dist);
-				}
-			}
-		}
-	}
-
-}
+//void StageObject::CollisionWall()
+//{
+//	if (!hitWallCollision_)return;
+//
+//	Stage* pStage = static_cast<Stage*>(FindObject("Stage"));
+//	if (pStage == nullptr)return;
+//	auto stage = pStage->GetStageObject();
+//
+//	for (auto obj : stage) {
+//		if (obj->GetObjectName() == this->objectName_)
+//			continue;
+//		int StageModel = obj->modelHandle_;
+//		if (StageModel < 0)continue;
+//
+//		vector<XMFLOAT3>directions{
+//			XMFLOAT3(1,0,0),
+//			XMFLOAT3(-1,0,0),
+//			XMFLOAT3(0,0,1),
+//			XMFLOAT3(0,0,-1)
+//		};
+//
+//		for (auto dir : directions) {
+//			RayCastData rayCastData;
+//
+//			rayCastData.start = transform_.position_;
+//			rayCastData.dir = XMFLOAT3(0, -1, 0);
+//			Model::RayCast(StageModel, &rayCastData);
+//
+//			if (rayCastData.dist < 0.6f && rayCastData.dist > 0.0f) {
+//				if (dir.x != 0) {
+//					transform_.position_.x -= dir.x * (0.6f - rayCastData.dist);
+//				}
+//				else if (dir.z != 0) {
+//					transform_.position_.z -= dir.z * (0.6f - rayCastData.dist);
+//				}
+//			}
+//		}
+//	}
+//
+//}
 
 void StageObject::OnCollision(GameObject* _target, Collider* _collider)
 {

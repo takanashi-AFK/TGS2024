@@ -7,14 +7,14 @@
 #include "../Game/Objects/UI/UIPanel.h"
 
 // 各シーン のインクルード
-#include "../Game/Scenes/Scene_Test.h"
-#include "../Game/Scenes/Scene_Splash.h"
-#include"../Game/Scenes/Scene_Title.h"
-#include"../Game/Scenes/Scene_Play.h"
-#include"../Game/Scenes/Scene_End.h"
+//#include "../Game/Scenes/Scene_Test.h"
+//#include "../Game/Scenes/Scene_Splash.h"
+//#include"../Game/Scenes/Scene_Title.h"
+//#include"../Game/Scenes/Scene_Play.h"
+//#include"../Game/Scenes/Scene_End.h"
 //コンストラクタ
-SceneManager::SceneManager(GameObject * parent)
-	: GameObject(parent, "SceneManager"),currentSceneID_(),nextSceneID_(),tmpID_()
+SceneManager::SceneManager(GameObject* parent)
+	: GameObject(parent, "SceneManager"), currentSceneID_(), nextSceneID_(), tmpID_()
 {
 }
 
@@ -25,7 +25,7 @@ void SceneManager::Initialize()
 #ifdef _DEBUG
 	currentSceneID_ = SCENE_ID_TEST;
 	nextSceneID_ = currentSceneID_;
-	Instantiate<Scene_Test>(this);
+	//Instantiate<Scene_Test>(this);
 #else
 	currentSceneID_ = SCENE_ID_SPLASH;
 	nextSceneID_ = currentSceneID_;
@@ -47,7 +47,7 @@ void SceneManager::Update()
 		KillAllChildren();
 
 		// そのシーンのUIパネルを削除
-		UIPanel::GetInstance()->DeleteAllUIObject();
+		//UIPanel::GetInstance()->DeleteAllUIObject();
 
 		//ロードしたデータを全削除
 		Audio::Release();
@@ -57,11 +57,11 @@ void SceneManager::Update()
 		//次のシーンを作成
 		switch (nextSceneID_)
 		{
-		case SCENE_ID_TEST: Instantiate<Scene_Test>(this); break;
-		case SCENE_ID_SPLASH: Instantiate<Scene_Splash>(this); break;
-		case SCENE_ID_TITLE:Instantiate<Scene_Title>(this); break;
-		case SCENE_ID_PLAY:Instantiate<Scene_Play>(this); break;
-		case SCENE_ID_END:Instantiate<Scene_End>(this); break;
+			/*case SCENE_ID_TEST: Instantiate<Scene_Test>(this); break;
+			case SCENE_ID_SPLASH: Instantiate<Scene_Splash>(this); break;
+			case SCENE_ID_TITLE:Instantiate<Scene_Title>(this); break;
+			case SCENE_ID_PLAY:Instantiate<Scene_Play>(this); break;
+			case SCENE_ID_END:Instantiate<Scene_End>(this); break;*/
 		}
 		Audio::Initialize();
 		currentSceneID_ = nextSceneID_;

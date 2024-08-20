@@ -10,8 +10,8 @@
 
 #include "global.h"
 #include "GameObject/RootObject.h"
-#include "../Game/Objects/UI/UIPanel.h"
-#include "../Game/Otheres/GameEditor.h"
+//#include "../Game/Objects/UI/UIPanel.h"
+//#include "../Game/Otheres/GameEditor.h"
 #include "ResourceManager/Model.h"
 #include "ResourceManager/Image.h"
 #include "GameObject/Camera.h"
@@ -44,9 +44,9 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 // エントリーポイント
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
-//#if defined(DEBUG) | defined(_DEBUG)
-//	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
-//#endif
+	//#if defined(DEBUG) | defined(_DEBUG)
+	//	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
+	//#endif
 
 	srand((unsigned)time(NULL));
 	SetCurrentDirectory("Assets");
@@ -91,7 +91,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 	// effekseerの初期化
 	EFFEKSEERLIB::gEfk = new EFFEKSEERLIB::EffekseerManager;/*★★★*/
-	EFFEKSEERLIB::gEfk->Initialize(Direct3D::pDevice_,Direct3D::pContext_);/*★★★*/
+	EFFEKSEERLIB::gEfk->Initialize(Direct3D::pDevice_, Direct3D::pContext_);/*★★★*/
 
 
 	//ルートオブジェクト準備
@@ -100,8 +100,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	pRootObject->Initialize();
 
 	//UIPanelのインスタンス取得と初期化
-	UIPanel* pUIPanel_ = UIPanel::GetInstance();
-	pUIPanel_->Initialize();
+	/*UIPanel* pUIPanel_ = UIPanel::GetInstance();
+	pUIPanel_->Initialize();*/
 
 
 
@@ -176,7 +176,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 				//ルートオブジェクトのUpdateを呼んだあと、自動的に子、孫のUpdateが呼ばれる
 				pRootObject->UpdateSub();
 
-				pUIPanel_->UpdateSub();
+				//pUIPanel_->UpdateSub();
 
 
 				//カメラを更新
@@ -198,12 +198,12 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 				//ルートオブジェクトのDrawを呼んだあと、自動的に子、孫のUpdateが呼ばれる
 				pRootObject->DrawSub();
 
-				pUIPanel_->DrawSub();
+				//pUIPanel_->DrawSub();
 
 
 				// effekseerの描画
 				EFFEKSEERLIB::gEfk->Draw();/*★★★*/
-				
+
 				// 遠藤先生作成エフェクトの描画
 				// VFX::Draw();
 
@@ -220,7 +220,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 				//描画終了
 				Direct3D::EndDraw();
-				
+
 				//ちょっと休ませる
 				Sleep(1);
 			}
@@ -239,7 +239,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	Model::AllRelease();
 	Image::AllRelease();
 	pRootObject->ReleaseSub();
-	pUIPanel_->ReleaseSub();
+	//pUIPanel_->ReleaseSub();
 	SAFE_DELETE(pRootObject);
 	Direct3D::Release();
 
@@ -304,12 +304,12 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
 	switch (msg)
 	{
-	//ウィンドウを閉じた
+		//ウィンドウを閉じた
 	case WM_DESTROY:
 		PostQuitMessage(0);	//プログラム終了
 		return 0;
 
-	//マウスが動いた
+		//マウスが動いた
 	case WM_MOUSEMOVE:
 		Input::SetMousePosition(LOWORD(lParam), HIWORD(lParam));
 		return 0;

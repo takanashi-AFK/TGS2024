@@ -20,7 +20,7 @@ protected:
 	string componentname_;//コンポーネントの名前
 	ComponentType compType_;
 	StageObject* holder_;
-	vector<Component*>childComponent_;
+	//vector<Component*>childComponent_;
 	Component* compParent_;
 	bool isActive_;
 public:
@@ -71,6 +71,7 @@ public:
 	string GetName() { return componentname_; }
 
 	void Execute() { isActive_ = true; }
+
 	void Stop() { isActive_ = false; }
 };
 Component* CreateComponent(string _name, ComponentType _type, StageObject* _holder, Component* _parent);

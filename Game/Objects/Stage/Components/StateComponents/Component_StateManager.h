@@ -1,10 +1,17 @@
 #pragma once
 #include "Component_StateManager.h"
 #include "../../../../../Engine/ImGui/imgui.h"
-#include "State.h"
 #include <unordered_map>
 #include "../Component.h"
 #include "../../../../../Engine/Global.h"
+#include "State.h"
+
+enum StateType {
+    PLAYER_STATE_WALK = 0,
+    STATE_MAX
+    // 他の状態のタイプ
+};
+
 // 状態管理コンポーネント
 class Component_StateManager : public Component
 {
@@ -16,15 +23,23 @@ private:
     float count_;             // 〃のカウンタ
     string changeStateKey_;   // 〃の変更後の状態を指定するキー
     bool g_isAddStateWindowOpen;
+
+    int animSpeed_;
+    int animMaxFrame_;
+    int animStartFrame_;
 public:
+
+    Component_StateManager(string _name, StageObject* _holder, Component* _parent);
     // 初期化処理
-    void Initialize();
+    void Initialize() override;
 
     // 更新処理
-    void Update();
+    void Update()override;
+
+	void Release()override;
 
     // debug時、ImGuiで情報を表示する関数
-    void DrawData();
+    void DrawData()override;
 
 	void DrawAddStateWindow(Component_StateManager* _stateManager);
 
@@ -43,4 +58,7 @@ public:
         return true;
     }
 
+    State* CreateState(StateType type, const string& name);
+
+    State* GetCurrentState(string _key);
 };

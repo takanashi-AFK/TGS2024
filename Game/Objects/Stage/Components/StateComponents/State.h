@@ -1,4 +1,5 @@
-// 前方宣言
+
+#pragma once
 #include <string>
 class StageObject;
 using std::string;
@@ -13,5 +14,6 @@ public:
 	virtual void Initialize() = 0;  // 初期化
 	virtual void Start() = 0;       // 開始
 	virtual void Update() = 0;      // 更新
+	virtual void SetModel(string _filePath,int _animSpeed, int _animMaxFrame,int _animStartFrame) = 0;    // モデルの設定
 	string GetName() { return name_; }
 };

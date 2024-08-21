@@ -19,7 +19,7 @@ namespace {
 				if (ImGui::Selectable(ComponentTypeToString((ComponentType)i).c_str(), selectComponentType_ == i)) {
 
 					// 選択しているコンポーネントタイプを代入
-					selectComponentType_ = (ComponentType)i;
+					selectComponentType_ = (ComponentType)i; 
 
 					// ウィンドウを閉じる
 					isShowAddComponentWindow_ = false;

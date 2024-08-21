@@ -218,6 +218,7 @@
     <ClCompile Include="Game\Objects\Camera\TPSCamera.cpp" />
     <ClCompile Include="Game\Objects\UI\UIText.cpp" />
     <ClCompile Include="Game\Objects\Stage\Components\StateComponents\State.cpp" />
+    <ClCompile Include="Game\Objects\Stage\Components\StateComponents\PlayerState\PlayerState_Walk.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game\Objects\Stage\Components\StateComponents\Component_StateManager.h" />
@@ -301,6 +302,7 @@
     <ClInclude Include="Game\Objects\Camera\TPSCamera.h" />
     <ClInclude Include="Game\Objects\UI\UIText.h" />
     <ClInclude Include="Game\Objects\Stage\Components\StateComponents\State.h" />
+    <ClInclude Include="Game\Objects\Stage\Components\StateComponents\PlayerState\PlayerState_Walk.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Assets\Shader\BillBoard.hlsl">

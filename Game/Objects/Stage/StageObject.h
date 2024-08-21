@@ -141,6 +141,8 @@ public:
 
 	void SetModelHandle(int _handle) { modelHandle_ = _handle; }
 
+	string GetModelFilePath() { return modelFilePath_; }
+
 };
 
 /// <summary>

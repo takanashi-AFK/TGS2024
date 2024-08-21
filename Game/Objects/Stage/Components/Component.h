@@ -180,6 +180,8 @@ public:
 	void Execute() { isActive_ = true; }
 	void Stop() { isActive_ = false; }
 
+	StageObject* GetHolder() { return holder_; }
+
 };
 
 /// <summary>

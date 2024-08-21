@@ -294,6 +294,8 @@
     <ClCompile Include="Game\Objects\Stage\Components\MotionComponent\Component_PlayerMotion.cpp" />
     <ClCompile Include="Game\Objects\Stage\Components\AttackComponents\Component_Attack.cpp" />
     <ClCompile Include="Game\Objects\Stage\Components\TeleporterComponent\Component_Teleporter.cpp" />
+    <ClCompile Include="Game\Objects\Stage\Components\StateComponents\State.cpp" />
+    <ClCompile Include="Game\Objects\Stage\Components\StateComponents\Component_StateManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Collider\BoxCollider.h">
@@ -513,6 +515,8 @@
     <ClInclude Include="Game\Objects\Stage\Components\MotionComponent\Component_Motion.h" />
     <ClInclude Include="Game\Objects\Stage\Components\MotionComponent\Component_PlayerMotion.h" />
     <ClInclude Include="Game\Objects\Stage\Components\TeleporterComponent\Component_Teleporter.h" />
+    <ClInclude Include="Game\Objects\Stage\Components\StateComponents\State.h" />
+    <ClInclude Include="Game\Objects\Stage\Components\StateComponents\Component_StateManager.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Assets\Shader\Simple2D.hlsl">

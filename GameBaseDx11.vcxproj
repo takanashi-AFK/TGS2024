@@ -139,6 +139,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Game\Objects\Stage\Components\StateComponents\Component_StateManager.cpp" />
     <ClCompile Include="Game\Objects\Stage\Components\TeleporterComponent\Component_Teleporter.cpp" />
     <ClCompile Include="Game\Objects\Stage\Components\MotionComponent\Component_PlayerMotion.cpp" />
     <ClCompile Include="Game\Objects\Stage\Components\MotionComponent\Component_Motion.cpp" />
@@ -216,8 +217,10 @@
     <ClCompile Include="Game\Objects\UI\UIImage.cpp" />
     <ClCompile Include="Game\Objects\Camera\TPSCamera.cpp" />
     <ClCompile Include="Game\Objects\UI\UIText.cpp" />
+    <ClCompile Include="Game\Objects\Stage\Components\StateComponents\State.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Game\Objects\Stage\Components\StateComponents\Component_StateManager.h" />
     <ClInclude Include="Game\Objects\Stage\Components\TeleporterComponent\Component_Teleporter.h" />
     <ClInclude Include="Game\Objects\Stage\Components\MotionComponent\Component_PlayerMotion.h" />
     <ClInclude Include="Game\Objects\Stage\Components\MotionComponent\Component_Motion.h" />
@@ -297,6 +300,7 @@
     <ClInclude Include="Game\Objects\UI\UIImage.h" />
     <ClInclude Include="Game\Objects\Camera\TPSCamera.h" />
     <ClInclude Include="Game\Objects\UI\UIText.h" />
+    <ClInclude Include="Game\Objects\Stage\Components\StateComponents\State.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Assets\Shader\BillBoard.hlsl">

@@ -1,5 +1,5 @@
 #include "Scene_Test.h"
-
+#include"../Objects/Stage/Stage.h"
 Scene_Test::Scene_Test(GameObject* parent)
 {
 }

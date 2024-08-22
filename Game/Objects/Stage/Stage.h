@@ -13,8 +13,8 @@ class StageObject;
 class Stage :public GameObject
 {
 private:
-	friend class GameEditor;		// StageEditorクラスをフレンド宣言
-	vector<StageObject*> objects_;	// 自身が保有するステージオブジェクト群
+	//friend class GameEditor;		// StageEditorクラスをフレンド宣言
+	//vector<StageObject*> objects_;	// 自身が保有するステージオブジェクト群
 
 public:
 	Stage(GameObject* _parent);
@@ -25,6 +25,8 @@ public:
 
 	void Draw() override;
 
+	void Release() override;
 
+	void Save()
 };
 

@@ -178,8 +178,6 @@
     <ClCompile Include="Engine\Global.cpp">
       <Filter>01Engine</Filter>
     </ClCompile>
-    <ClCompile Include="Game\Objects\Stage\Components\BehaviorComponents\Component_BossBehavior.cpp" />
-    <ClCompile Include="Game\Objects\Stage\Components\MoveComponents\Component_TackleMove.cpp" />
     <ClCompile Include="EffekseeLib\EffekseerVFX.cpp">
       <Filter>00Effekseer</Filter>
     </ClCompile>
@@ -341,8 +339,6 @@
     <ClInclude Include="Engine\ResourceManager\Transition.h">
       <Filter>01Engine\ResourceManager</Filter>
     </ClInclude>
-    <ClInclude Include="Game\Objects\Stage\Components\BehaviorComponents\Component_BossBehavior.h" />
-    <ClInclude Include="Game\Objects\Stage\Components\MoveComponents\Component_TackleMove.h" />
     <ClInclude Include="EffekseeLib\EffekseerVFX.h">
       <Filter>00Effekseer</Filter>
     </ClInclude>
@@ -370,9 +366,6 @@
     <ClInclude Include="Game\Objects\Stage\Stage.h">
       <Filter>03Game\Objects\Stage</Filter>
     </ClInclude>
-    <ClInclude Include="Game\Objects\Stage\StageObject.h">
-      <Filter>03Game\Objects\Stage</Filter>
-    </ClInclude>
     <ClInclude Include="Game\Objects\TPSCamera\TPSCamera.h">
       <Filter>03Game\Objects\TPSCamera</Filter>
     </ClInclude>
@@ -382,7 +375,6 @@
     <ClInclude Include="Game\GameEditor\GameEditor.h">
       <Filter>03Game\GameEditor</Filter>
     </ClInclude>
-    <ClInclude Include="resource.h" />
     <ClInclude Include="Game\Objects\UI\UIButton.h">
       <Filter>03Game\Objects\UI</Filter>
     </ClInclude>
@@ -400,6 +392,9 @@
     </ClInclude>
     <ClInclude Include="Game\Objects\UI\UIText.h">
       <Filter>03Game\Objects\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Objects\Stage\StageObject.h">
+      <Filter>03Game\Objects\Stage</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -424,11 +419,5 @@
     <FxCompile Include="Assets\Shader\Progress.hlsl">
       <Filter>02Shader</Filter>
     </FxCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ResourceCompile Include="GameBaseDx11.rc" />
   </ItemGroup>
 </Project>

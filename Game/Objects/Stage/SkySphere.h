@@ -1,5 +1,8 @@
 #pragma once
-class SkySphere
+#include"StageObject.h"
+class SkySphere :public StageObject
 {
+public:
+
 };
 

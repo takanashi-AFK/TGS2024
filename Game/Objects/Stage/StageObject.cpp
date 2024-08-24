@@ -332,3 +332,6 @@ void StageObject::Release()
 	}
 	myComponents_.clear();
 }
+
+
+//StageObjectではコンポーネントを管理するクラス。自分が調べてQuiitaとかでみたらコンポーネント指向はObjectがコンポーネントを管理するのが基本らしい。(?)

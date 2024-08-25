@@ -48,12 +48,12 @@ void Component_KingCactanBehavior::Update()
 		if (chase == nullptr)return;
 
 		//n秒ごとにチェイスを実行
-		if (timer->SetTime()) {
 
-			chase->SetTarget(target_);
-			chase->Start();
 
-		}
+		chase->SetTarget(target_);
+		chase->Start();
+
+
 		else {
 
 			chase->Stop();

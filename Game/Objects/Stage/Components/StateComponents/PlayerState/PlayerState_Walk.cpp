@@ -20,7 +20,3 @@ void PlayerState_Walk::Start()
 void PlayerState_Walk::Update()
 {
 }
-
-void PlayerState_Walk::SetModel(string _filePath, int _animSpeed, int _animMaxFrame, int _animStartFrame)
-{
-}

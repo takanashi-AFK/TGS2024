@@ -10,6 +10,5 @@ public:
 	void Initialize() override;
 	void Start() override;
 	void Update() override;
-	void SetModel(string _filePath, int _animSpeed, int _animMaxFrame, int _animStartFrame) override;
 };
 

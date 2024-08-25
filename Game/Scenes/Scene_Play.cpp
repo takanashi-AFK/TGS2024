@@ -4,8 +4,6 @@
 #include"../Objects/Stage/SkySphere.h"
 #include"../Objects/Stage/Stage.h"
 #include "../Objects/UI/UIPanel.h"
-#include"../Objects/Stage/Components/GaugeComponents/Component_HealthGauge.h"
-#include"../Objects/Stage/Components/BehaviorComponents/Component_PlayerBehavior.h"
 #include"../../Engine/SceneManager.h"
 #include "../Objects/UI/UIButton.h"
 #include "../Objects/Camera/TPSCamera.h"
@@ -48,18 +46,18 @@ void Scene_Play::Update()
 		// プレイヤーが死んだらシーンを切り替える
 		{
 			// ステージ内にプレイヤーコンポーネントを持っているキャラクターが存在するかどうかを判定し取得
-			vector<Component*> comp_playerBehaviors = pStage_->FindComponents(PlayerBehavior);
+			//vector<Component*> comp_playerBehaviors = pStage_->FindComponents(PlayerBehavior);
 
-			// 範囲for文でプレイヤーコンポーネントの生存フラグを確認
-			for (auto comp : comp_playerBehaviors) {
+			//// 範囲for文でプレイヤーコンポーネントの生存フラグを確認
+			//for (auto comp : comp_playerBehaviors) {
 
-				// プレイヤーコンポーネントが死んでいたら
-				if (((Component_PlayerBehavior*)comp)->IsDead() == true) { 
-					
-					g_score = 0;
-					isSceneChange = true;
-				}
-			}
+			//	// プレイヤーコンポーネントが死んでいたら
+			//	if (((Component_PlayerBehavior*)comp)->IsDead() == true) { 
+			//		
+			//		g_score = 0;
+			//		isSceneChange = true;
+			//	}
+			//}
 		}
 
 		// ボスが死んだらシーンを切り替える

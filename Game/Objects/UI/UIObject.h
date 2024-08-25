@@ -13,7 +13,6 @@ enum UIType {
 	UI_BUTTON,
 	UI_IMAGE,
 	UI_TEXT,
-	UI_PROGRESSBAR,
 	UI_PANEL,
 	UI_MAX,
 };

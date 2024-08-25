@@ -8,7 +8,6 @@
 class StageObject;
 class GameObject;
 
-
 // using宣言
 using std::vector;
 
@@ -41,10 +40,7 @@ enum ComponentType
 	StateManager,
 	// コンポーネント追加時に識別番号を追加
 	Max
-	
 };
-
-
 
 // コンポ―ネント基底クラス
 class Component

@@ -147,6 +147,7 @@ bool Component::AddChildComponent(Component* _comp)
 	childComponents_.push_back(_comp);
 	return true;
 }
+
 bool Component::DeleteChildComponent(string _name)
 {
     // リスト内のコンポーネントを探す

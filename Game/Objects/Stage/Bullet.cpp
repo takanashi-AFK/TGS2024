@@ -4,7 +4,7 @@
 #include "../../../Engine/Global.h"
 #include "../../../Engine/ImGui/imgui.h"
 #include "../../../Engine/ResourceManager/Model.h"
-#include "Components/GaugeComponents/Component_HealthGauge.h"
+//#include "Components/GaugeComponents/Component_HealthGauge.h"
 #include "Stage.h"
 
 Bullet::Bullet(GameObject* _parent) 
@@ -71,19 +71,19 @@ void Bullet::OnCollision(GameObject* _target, Collider* _collider)
 	if (!target) return;
 
 	if (target->GetObjectName() == shooter_->GetObjectName())return;
-	auto list = target->FindComponent(HealthGauge);
+	//auto list = target->FindComponent(HealthGauge);
 
-	if (list.empty()) return;
-	// ダメージ処理
-	for (auto hm : list) {
+	//if (list.empty()) return;
+	//// ダメージ処理
+	//for (auto hm : list) {
 
-		((Component_HealthGauge*)hm)->TakeDamage(20);
-		this->KillMe();
+	//	((Component_HealthGauge*)hm)->TakeDamage(20);
+	//	this->KillMe();
 
-		if (((Component_HealthGauge*)hm)->IsDead()) {
-			((Stage*)FindObject("Stage"))->DeleteStageObject((StageObject*)_target);
-		}
-	}
+	//	if (((Component_HealthGauge*)hm)->IsDead()) {
+	//		((Stage*)FindObject("Stage"))->DeleteStageObject((StageObject*)_target);
+	//	}
+	//}
 
 }
 

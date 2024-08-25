@@ -5,7 +5,7 @@
 #include "../../../../../Engine/GameObject/Camera.h"
 #include "../../../../../Engine/GameObject/GameObject.h"
 #include "../../../Camera/TPSCamera.h"
-
+#include "../../../Game/Objects/Stage/Components/StateComponents/Component_StateManager.h"
 namespace
 {
 	float speed = 0.1f;
@@ -18,11 +18,12 @@ Component_WASDInputMove::Component_WASDInputMove(string _name, StageObject* _hol
 
 void Component_WASDInputMove::Initialize()
 {
+    // インターフェースの初期化
+    StateObserver::Initialize(this->holder_);
 }
 
 void Component_WASDInputMove::Update()
 {
-
     // このコンポーネントがアクティブでない場合、処理を終了
     if (!isActive_) return;
     isMove_ = false;
@@ -75,6 +76,16 @@ void Component_WASDInputMove::Load(json& _loadObj)
 {
 	if(_loadObj.contains("isActive_"))isActive_ = _loadObj["isActive_"];
     if(_loadObj.contains("speed_"))speed = _loadObj["speed_"];
+}
+
+void Component_WASDInputMove::OnStateChange(std::unordered_map<std::string, State*> _states, State& _nowState)
+{
+    // 現在の状態が待機状態だったら
+    if (_nowState == *_states["idle"]) {
+        if (isMove_ == true) {
+            _nowState = *_states["move"];
+        }
+    }
 }
 
 void Component_WASDInputMove::Move(XMVECTOR _dir, float _speed)

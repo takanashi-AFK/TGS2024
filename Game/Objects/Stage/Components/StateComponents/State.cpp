@@ -39,9 +39,9 @@ void State::Load(json& _loadObj)
 
 void State::DrawAddModelWindow()
 {
-    if (g_isAddModelWindowOpen_) {
+    if (isAddModelWindowOpen_) {
         // ImGui::Begin の戻り値でウィンドウが開いているか確認
-        if (ImGui::Begin("Add Model", &g_isAddModelWindowOpen_)) {
+        if (ImGui::Begin("Add Model", &isAddModelWindowOpen_)) {
             static string filePath{};
 
             static int speed, max, start = 0;
@@ -95,7 +95,7 @@ void State::DrawAddModelWindow()
                     modelDatas_.push_back(modelData);
                     
                     modelData.Load();
-                    g_isAddModelWindowOpen_ = false; // 確定ボタンでウィンドウを閉じる
+                    isAddModelWindowOpen_ = false; // 確定ボタンでウィンドウを閉じる
                 }
             }
         }

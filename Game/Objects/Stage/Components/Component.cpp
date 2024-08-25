@@ -2,6 +2,7 @@
 
 // インクルード
 #include "../../../../Engine/ImGui/imgui.h"
+#include "../../../../Engine/Global.h"
 #include "../StageObject.h"
 
 // 作成したコンポーネントのインクルード
@@ -33,11 +34,13 @@
 Component::Component(StageObject* _holder, string _name,ComponentType _type)
     :holder_(_holder), name_(_name),type_(_type),childComponents_(),parent_(nullptr),isActive_(false)
 {
+	name_ = stringConverter::ConvertToLower(name_);
 }
 
 Component::Component(StageObject* _holder, string _name, ComponentType _type, Component* _parent)
 	: holder_(_holder), name_(_name), type_(_type), childComponents_(),parent_(_parent), isActive_(false)
 {
+	name_ = stringConverter::ConvertToLower(name_);
 }
 
 void Component::ChildIntialize()
@@ -163,6 +166,7 @@ bool Component::DeleteChildComponent(string _name)
 
 bool Component::FindChildComponent(string _name)
 {
+	_name = stringConverter::ConvertToLower(_name);
     // リスト内のコンポーネントを探す
     for (auto comp : childComponents_)
     {
@@ -176,6 +180,7 @@ bool Component::FindChildComponent(string _name)
 
 Component* Component::GetChildComponent(string _name)
 {
+	_name = stringConverter::ConvertToLower(_name);
     // リスト内のコンポーネントを探す
     for (auto comp : childComponents_)
     {

@@ -22,8 +22,9 @@ struct ModelData {
 
 class State
 {
+
 private:
-	bool g_isAddModelWindowOpen_;
+	bool isAddModelWindowOpen_;
 protected:
 	string name_;  // 状態名
 	StageObject* holder_;  // 保有者
@@ -34,10 +35,14 @@ public:
 	virtual void Start() = 0;       // 開始
 	virtual void Update() = 0;      // 更新
 	void Save(json &_saveObj);
-	void Load(json& _loadObj);
-	void AddModel() { g_isAddModelWindowOpen_ = true; }
+	void Load(json &_loadObj);
+	void AddModel() { isAddModelWindowOpen_ = true; }
 	void DrawAddModelWindow();
 	void ChildInitialize();
 	string GetName() { return name_; }
 	std::vector<ModelData> GetModelDatas() { return modelDatas_; }	
+
+	bool operator==(const State& other) const {
+		return name_ == other.name_;
+	}
 };

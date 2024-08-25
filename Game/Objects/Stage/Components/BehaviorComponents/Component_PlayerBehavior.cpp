@@ -270,8 +270,6 @@ void Component_PlayerBehavior::ShootExe()
     shootDir = {};
 }
 
-
-
 bool Component_PlayerBehavior::IsDead()
 {
     auto hg = dynamic_cast<Component_HealthGauge*>(GetChildComponent("PlayerHealthGauge"));

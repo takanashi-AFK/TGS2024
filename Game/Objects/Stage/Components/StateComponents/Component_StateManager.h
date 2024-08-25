@@ -1,14 +1,15 @@
 #pragma once
-#include "Component_StateManager.h"
 #include "../../../../../Engine/ImGui/imgui.h"
 #include <unordered_map>
 #include "../Component.h"
 #include "../../../../../Engine/Global.h"
 #include "State.h"
+class StateObserver;
 
-enum StateType {
-    PLAYER_STATE_WALK = 0,
-    STATE_MAX
+enum STATE_TYPE {
+    WALK = 0,
+	IDLE,
+    MAX
     // 他の状態のタイプ
 };
 
@@ -18,11 +19,12 @@ class Component_StateManager : public Component
 private:
     std::unordered_map<string, State*> stateList_; // 保持する状態の配列
     string currentStateKey_;  // 現在の状態を指定するキー
-
+    std::vector<StateObserver*> observers_;
+    State* currentState_;
     float changeLimit_;       // 状態を変更する際、変更まで時間を要する場合のリミッター
     float count_;             // 〃のカウンタ
     string changeStateKey_;   // 〃の変更後の状態を指定するキー
-    bool g_isAddStateWindowOpen;
+    bool isAddStateWindowOpen_;
 public:
 
     Component_StateManager(string _name, StageObject* _holder, Component* _parent);
@@ -57,7 +59,9 @@ public:
 	void Save(json& _saveObj)override;
 	void Load(json& _loadObj)override;
 
-    State* CreateState(StateType type, const string& name);
+    State* CreateState(STATE_TYPE _stateType, const string& name);
 
-    State* GetCurrentState(string _key);
+    State* GetCurrentState();
+
+	void AddStateObserver(StateObserver* observer) { observers_.push_back(observer); }
 };

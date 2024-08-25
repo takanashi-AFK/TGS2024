@@ -1,11 +1,11 @@
 #include "Global.h"
 
-void FileManager::ReplaceBackslashes(string& str)
+void FileManager::ReplaceBackslashes(string& _str)
 {
-	size_t found = str.find("\\");
+	size_t found = _str.find("\\");
 	while (found != string::npos) {
-		str.replace(found, 1, "/"); // "\\" を "/" に置換する
-		found = str.find("\\", found + 1); // 次の "\\" を検索する
+		_str.replace(found, 1, "/"); // "\\" を "/" に置換する
+		found = _str.find("\\", found + 1); // 次の "\\" を検索する
 	}
 }
 
@@ -32,3 +32,19 @@ XMFLOAT3 operator+(XMFLOAT3& a, const XMFLOAT3& b)
 
 // ゲームのスコア
 int g_score = 0;
+
+string stringConverter::ConvertToLower(string _str)
+{
+	for (int i = 0; i < _str.size(); i++) {
+		_str[i] = tolower(_str[i]);
+	}
+	return _str;
+}
+
+string stringConverter::ConvertToUpper(string _str)
+{
+	for (int i = 0; i < _str.size(); i++) {
+		_str[i] = toupper(_str[i]);
+	}
+	return _str;
+}

@@ -1,5 +1,6 @@
 #pragma once
 #include "DirectX/Direct3D.h"
+#include <cctype>
 
 // ＝＝ マクロ ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝ //
 
@@ -30,6 +31,10 @@ namespace FileManager {
 
 XMFLOAT3 operator+(XMFLOAT3& a, const XMFLOAT3& b);
 
+namespace stringConverter {
+	string ConvertToLower(string _str);
+	string ConvertToUpper(string _str);
+}
 
 /// 臨時のグローバル変数 fix: 本来はここに置くべきではない 
 /// スコアマネージャーを作成することで解決する

@@ -183,6 +183,8 @@ public:
 
 	StageObject* GetHolder() { return holder_; }
 
+
+
 };
 
 /// <summary>

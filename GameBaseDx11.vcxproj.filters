@@ -297,6 +297,7 @@
     <ClCompile Include="Game\Objects\Stage\Components\StateComponents\State.cpp" />
     <ClCompile Include="Game\Objects\Stage\Components\StateComponents\Component_StateManager.cpp" />
     <ClCompile Include="Game\Objects\Stage\Components\StateComponents\PlayerState\PlayerState_Walk.cpp" />
+    <ClCompile Include="Game\Objects\Stage\Components\StateComponents\StateObserver.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Collider\BoxCollider.h">
@@ -519,6 +520,7 @@
     <ClInclude Include="Game\Objects\Stage\Components\StateComponents\State.h" />
     <ClInclude Include="Game\Objects\Stage\Components\StateComponents\Component_StateManager.h" />
     <ClInclude Include="Game\Objects\Stage\Components\StateComponents\PlayerState\PlayerState_Walk.h" />
+    <ClInclude Include="Game\Objects\Stage\Components\StateComponents\StateObserver.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Assets\Shader\Simple2D.hlsl">

@@ -1,7 +1,7 @@
 #include "Component_StateManager.h"
 #include "../../StageObject.h"
 #include "PlayerState/PlayerState_Walk.h"
-
+#include "../StateComponents/StateObserver.h"
 
 Component_StateManager::Component_StateManager(string _name, StageObject* _holder, Component* _parent)
 	: Component(_holder, _name, StateManager,_parent)
@@ -29,6 +29,12 @@ void Component_StateManager::Update()
 	// キーで指定された状態が存在するかどうかを確認し、現在の状態の更新処理を実行
 	if (stateList_.find(currentStateKey_) != stateList_.end()) stateList_[currentStateKey_]->Update();
 	}
+
+	// 現在どの状態なのかを判定し、currentStateに代入
+	for (auto* observer : observers_) {
+		observer->OnStateChange(stateList_,*currentState_);
+	}
+
 }
 
 void Component_StateManager::Release()
@@ -38,9 +44,9 @@ void Component_StateManager::Release()
 void Component_StateManager::DrawData()
 {
 	// 状態を追加
-	if (ImGui::SmallButton("Add State"))g_isAddStateWindowOpen = true;
+	if (ImGui::SmallButton("Add State"))isAddStateWindowOpen_ = true;
 	// 状態追加用ウィンドウ
-	if (g_isAddStateWindowOpen)DrawAddStateWindow(this);
+	if (isAddStateWindowOpen_)DrawAddStateWindow(this);
 
 	// 追加されている状態をツリーノードで表示
 	if (ImGui::TreeNode("State list")) {
@@ -76,17 +82,17 @@ void Component_StateManager::DrawAddStateWindow(Component_StateManager* _stateMa
 
 	// 状態の種類を選択するためのImGuiウィジェットを追加
 	static int stateTypeIndex = 0;
-	const char* stateTypes[] = { "Walking" }; // 状態のタイプ
+	const char* stateTypes[] = { "Walk" }; // 状態のタイプ
 	ImGui::Combo("State Type", &stateTypeIndex, stateTypes, IM_ARRAYSIZE(stateTypes));
 
-	StateType selectedType = static_cast<StateType>(stateTypeIndex);
+	STATE_TYPE selectedType = static_cast<STATE_TYPE>(stateTypeIndex);
 
-	// インスタンスができたら
 	if (ImGui::Button("Confirm")) {
-	// インスタンスを作成
-	State* state = CreateState(selectedType, inputText);
-		_stateManager->AddState(state);
-		g_isAddStateWindowOpen = false;
+		State* state = CreateState(selectedType, inputText);
+		if (state != nullptr) {
+			_stateManager->AddState(state);
+			isAddStateWindowOpen_ = false;
+		}
 	}
 }
 
@@ -108,18 +114,15 @@ void Component_StateManager::Load(json& _loadObj)
 	if (_loadObj.contains("currentStateKey_"))currentStateKey_=_loadObj["currentStateKey_"];
 }
 
-State* Component_StateManager::CreateState(StateType type, const string& name)
+State* Component_StateManager::CreateState(STATE_TYPE _stateType, const string& name)
 {
-	switch (type) {
-	case StateType::PLAYER_STATE_WALK:
+	if (_stateType == STATE_TYPE::WALK) {
 		return new PlayerState_Walk(name, holder_);
-		// 他の状態の生成
-	default:
-		return nullptr;
 	}
+	// ここにelseでほかの状態を追加
 }
 
-State* Component_StateManager::GetCurrentState(string _key)
+State* Component_StateManager::GetCurrentState()
 {
-	return stateList_[_key];
+	return stateList_[currentStateKey_];
 }

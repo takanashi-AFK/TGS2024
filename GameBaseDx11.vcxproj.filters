@@ -280,7 +280,6 @@
     <ClCompile Include="Game\Scenes\Scene_Test.cpp">
       <Filter>03Game\Scenes\DebugScenes</Filter>
     </ClCompile>
-    <ClCompile Include="EffekseeLib\EffekseerVFX.cpp" />
     <ClCompile Include="Game\Objects\Stage\Components\MoveComponents\Component_TackleMove.cpp" />
     <ClCompile Include="Game\Objects\Stage\Components\AttackComponents\Component_MeleeAttack.cpp" />
     <ClCompile Include="Game\Objects\UI\UIText.cpp" />
@@ -306,6 +305,9 @@
     </ClCompile>
     <ClCompile Include="Game\Objects\Stage\Components\GaugeComponents\Component_HealthGauge.cpp">
       <Filter>03Game\Objects\Stage\Components\GaugeComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="EffekseeLib\EffekseerVFX.cpp">
+      <Filter>00Effekseer</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -513,7 +515,6 @@
     <ClInclude Include="Game\Scenes\Scene_Test.h">
       <Filter>03Game\Scenes\DebugScenes</Filter>
     </ClInclude>
-    <ClInclude Include="EffekseeLib\EffekseerVFX.h" />
     <ClInclude Include="Game\Objects\Stage\Components\MoveComponents\Component_TackleMove.h" />
     <ClInclude Include="Game\Objects\Stage\Components\AttackComponents\Component_MeleeAttack.h" />
     <ClInclude Include="Game\Objects\UI\UIText.h" />
@@ -536,6 +537,9 @@
     </ClInclude>
     <ClInclude Include="Game\Objects\UI\UIProgressBar.h">
       <Filter>03Game\Objects\UIObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="EffekseeLib\EffekseerVFX.h">
+      <Filter>00Effekseer</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -13,7 +13,7 @@ class GameObject;
 using std::vector;
 
 // コンポーネントタイプ
-enum ComponentType 
+enum ComponentType
 {
 	BossBehavior,
 	CactanBehavior,
@@ -38,9 +38,10 @@ enum ComponentType
 	WASDInputMove,
 	PlayerMotion,
 	Teleporter,
+	KingCactanBehavior,
 	// コンポーネント追加時に識別番号を追加
 	Max
-	
+
 };
 
 
@@ -63,7 +64,7 @@ public:
 	/// <param name="_holder">保有者</param>
 	/// <param name="_name">名前</param>
 	Component(StageObject* _holder, string _name, ComponentType _type);
-	Component(StageObject* _holder, string _name,ComponentType _type,Component* _parent);
+	Component(StageObject* _holder, string _name, ComponentType _type, Component* _parent);
 
 	/// <summary>
 	/// 初期化
@@ -161,7 +162,7 @@ public:
 	/// </returns>
 	/// <param name="_type">コンポーネントタイプ</param>
 	Component* GetChildComponent(string _name);
-	
+
 	/// <returns>
 	/// 子コンポーネントを取得
 	/// </returns>
@@ -188,8 +189,8 @@ public:
 /// <param name="_type">コンポーネントタイプ</param>
 /// <param name="_holder">保有者</param>
 /// <returns>作成したコンポーネント</returns>
-Component* CreateComponent(string _name,ComponentType _type,StageObject* _holder, Component* _parent);
-Component* CreateComponent(string _name,ComponentType _type,StageObject* _holder);
+Component* CreateComponent(string _name, ComponentType _type, StageObject* _holder, Component* _parent);
+Component* CreateComponent(string _name, ComponentType _type, StageObject* _holder);
 
 
 /// <summary>

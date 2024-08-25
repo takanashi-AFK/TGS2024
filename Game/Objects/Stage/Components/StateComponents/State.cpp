@@ -28,10 +28,10 @@ void State::Load(json& _loadObj)
 		modelDatas_.clear();
 		for (const auto& data : _loadObj["modelData"]) {
 			ModelData modelData;
-			modelData.filePath = data["filePath"];
-			modelData.animSpeed = data["animSpeed"];
-			modelData.animMaxFrame = data["animMaxFrame"];
-			modelData.animStartFrame = data["animStartFrame"];
+			if(_loadObj.contains("filePath")) modelData.filePath = data["filePath"];
+            if (_loadObj.contains("animSpeed"))modelData.animSpeed = data["animSpeed"];
+            if (_loadObj.contains("animMaxFrame"))modelData.animMaxFrame = data["animMaxFrame"];
+            if (_loadObj.contains("animStartFrame"))modelData.animStartFrame = data["animStartFrame"];
 			modelDatas_.push_back(modelData);  
 		}
 	}
@@ -59,7 +59,7 @@ void State::DrawAddModelWindow()
                     ofn.lpstrFile = szFile;
                     ofn.lpstrFile[0] = '\0';
                     ofn.nMaxFile = sizeof(szFile);
-                    ofn.lpstrFilter = TEXT("JSONファイル(*.json)\0*.json\0すべてのファイル(*.*)\0*.*\0");
+                    ofn.lpstrFilter = TEXT("FBXファイル(*.fbx)\0*.fbx\0すべてのファイル(*.*)\0*.*\0");
                     ofn.nFilterIndex = 1;
                     ofn.Flags = OFN_PATHMUSTEXIST | OFN_FILEMUSTEXIST;
                     ofn.lpstrInitialDir = TEXT(".");

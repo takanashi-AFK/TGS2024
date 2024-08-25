@@ -23,10 +23,6 @@ private:
     float count_;             // 〃のカウンタ
     string changeStateKey_;   // 〃の変更後の状態を指定するキー
     bool g_isAddStateWindowOpen;
-
-    int animSpeed_;
-    int animMaxFrame_;
-    int animStartFrame_;
 public:
 
     Component_StateManager(string _name, StageObject* _holder, Component* _parent);
@@ -57,6 +53,9 @@ public:
         stateList_[_state->GetName()] = _state;
         return true;
     }
+
+	void Save(json& _saveObj)override;
+	void Load(json& _loadObj)override;
 
     State* CreateState(StateType type, const string& name);
 

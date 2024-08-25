@@ -45,19 +45,25 @@ void Component_StateManager::DrawData()
 	// 追加されている状態をツリーノードで表示
 	if (ImGui::TreeNode("State list")) {
 		// ここに現在追加されているStateを表示
-		for (auto state : stateList_) {
-			const type_info& id = typeid(*state.second);
-			ImGui::Text("Name : %s", state.second->GetName().c_str());
-			ImGui::Text("Class : %s", id.name());
+		for (auto state : stateList_) { 
+			if (ImGui::TreeNode("state")) {
 
-			std::vector<ModelData> modelDataList = state.second->GetModelDatas();
+				const type_info& id = typeid(*state.second);
+				ImGui::Text("Name : %s", state.second->GetName().c_str());
+				ImGui::Text("Class : %s", id.name());
+				if (holder_->GetModelFilePath() != "") {
+				ImGui::Text("Base Model : %s", holder_->GetModelFilePath().c_str());
+				}
+				std::vector<ModelData> modelDataList = state.second->GetModelDatas();
 
-			for (auto modelData : modelDataList) {
-				ImGui::Text("Model : %s", modelData.filePath.c_str());
+				for (auto modelData : modelDataList) {
+					ImGui::Text("Model : %s", modelData.filePath.c_str());
+				}
+
+				if (ImGui::SmallButton("Add Model"))state.second->AddModel();
+				state.second->DrawAddModelWindow();
+				ImGui::TreePop();
 			}
-
-			if (ImGui::SmallButton("Add Model"))state.second->AddModel();
-			state.second->DrawAddModelWindow();
 		}
 		ImGui::TreePop();
 	}
@@ -82,6 +88,24 @@ void Component_StateManager::DrawAddStateWindow(Component_StateManager* _stateMa
 		_stateManager->AddState(state);
 		g_isAddStateWindowOpen = false;
 	}
+}
+
+void Component_StateManager::Save(json& _saveObj)
+{
+	// 各状態の保存
+	for (auto state : stateList_) {
+		state.second->Save(_saveObj);
+	}
+	_saveObj["currentStateKey_"] = currentStateKey_;
+}
+
+void Component_StateManager::Load(json& _loadObj)
+{
+	// 各状態の読み込み
+	for (auto state : stateList_) {
+		state.second->Load(_loadObj);
+	}
+	if (_loadObj.contains("currentStateKey_"))currentStateKey_=_loadObj["currentStateKey_"];
 }
 
 State* Component_StateManager::CreateState(StateType type, const string& name)

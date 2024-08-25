@@ -8,42 +8,18 @@
 class StageObject;
 class GameObject;
 
-
 // using宣言
 using std::vector;
 
 // コンポーネントタイプ
 enum ComponentType 
 {
-	BossBehavior,
-	CactanBehavior,
-	Chase,
-	CircleRangeDetector,
-	Fall,
-	FanRangeDetector,
-	HealthGauge,
-	HelingoBehavior,
-	HelingoFall,
-	MeleeAttack,
-	MoveX,
-	PlayerBehavior,
-	Rise,
-	Rotation,
-	RotationX,
-	RotationY,
-	RotationZ,
-	ShootAttack,
-	TackleMove,
-	Timer,
-	WASDInputMove,
-	PlayerMotion,
-	Teleporter,
+	StateManager,   // ステートマネージャー
+	InputMove,      // 入力移動
+
 	// コンポーネント追加時に識別番号を追加
 	Max
-	
 };
-
-
 
 // コンポ―ネント基底クラス
 class Component

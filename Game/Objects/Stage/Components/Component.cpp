@@ -5,29 +5,8 @@
 #include "../StageObject.h"
 
 // 作成したコンポーネントのインクルード
-#include "AttackComponents/Component_MeleeAttack.h"
-#include "AttackComponents/Component_ShootAttack.h"
-#include "BehaviorComponents/Component_BossBehavior.h"
-#include "BehaviorComponents/Component_CactanBehavior.h"
-#include "BehaviorComponents/Component_HelingoBehavior.h"
-#include "BehaviorComponents/Component_PlayerBehavior.h"
-#include "DetectorComponents/Component_CircleRangeDetector.h"
-#include "DetectorComponents/Component_FanRangeDetector.h"
-#include "GaugeComponents/Component_HealthGauge.h"
-#include "MoveComponents/Component_Chase.h"
-#include "MoveComponents/Component_Fall.h"
-#include "MoveComponents/Component_HelingoFall.h"
-#include "MoveComponents/Component_MoveX.h"
-#include "MoveComponents/Component_Rise.h"
-#include "MoveComponents/Component_TackleMove.h"
-#include "MoveComponents/Component_WASDInputMove.h"
-#include "RotationComponents/Component_Rotation.h"
-#include "RotationComponents/Component_RotationX.h"
-#include "RotationComponents/Component_RotationY.h"
-#include "RotationComponents/Component_RotationZ.h"
-#include "TimerComponent/Component_Timer.h"
-#include "MotionComponent/Component_PlayerMotion.h"
-#include "TeleporterComponent/Component_Teleporter.h"
+#include "StateManagerComponent/Component_StateManager.h"
+#include "MoveComponent/Component_InputMove.h"
 
 Component::Component(StageObject* _holder, string _name,ComponentType _type)
     :holder_(_holder), name_(_name),type_(_type),childComponents_(),parent_(nullptr),isActive_(false)
@@ -143,6 +122,7 @@ bool Component::AddChildComponent(Component* _comp)
 	childComponents_.push_back(_comp);
 	return true;
 }
+
 bool Component::DeleteChildComponent(string _name)
 {
     // リスト内のコンポーネントを探す
@@ -208,30 +188,10 @@ Component* CreateComponent(string _name, ComponentType _type, StageObject* _hold
     // タイプ(識別番号にしたがってコンポーネントを作成)
     switch (_type)
     {
-        case BossBehavior: comp = new Component_BossBehavior(_name, _holder, _parent); break;
-        case CactanBehavior: comp = new Component_CactanBehavior(_name, _holder, _parent); break;
-        case Chase: comp = new Component_Chase(_name, _holder, _parent); break;
-        case CircleRangeDetector: comp = new Component_CircleRangeDetector(_name, _holder, _parent); break;
-        case Fall: comp = new Component_Fall(_name, _holder, _parent); break;
-        case FanRangeDetector: comp = new Component_FanRangeDetector(_name, _holder, _parent); break;
-        case HealthGauge: comp = new Component_HealthGauge(_name, _holder, _parent); break;
-        case HelingoBehavior: comp = new Component_HelingoBehavior(_name, _holder, _parent); break;
-        case HelingoFall: comp = new Component_HelingoFall(_name, _holder, _parent); break;
-        case MeleeAttack: comp = new Component_MeleeAttack(_name, _holder, _parent); break;
-        case MoveX: comp = new Component_MoveX(_name, _holder, _parent); break;
-        case PlayerBehavior: comp = new Component_PlayerBehavior(_name, _holder, _parent); break;
-        case Rise: comp = new Component_Rise(_name, _holder, _parent); break;
-        case Rotation: comp = new Component_Rotation(_name, _holder, _parent); break;
-        case RotationX: comp = new Component_RotationX(_name, _holder, _parent); break;
-        case RotationY: comp = new Component_RotationY(_name, _holder, _parent); break;
-        case RotationZ: comp = new Component_RotationZ(_name, _holder, _parent); break;
-        case ShootAttack: comp = new Component_ShootAttack(_name, _holder, _parent); break;
-        case TackleMove: comp = new Component_TackleMove(_name, _holder, _parent); break;
-        case Timer: comp = new Component_Timer(_name, _holder, _parent); break;
-        case WASDInputMove: comp = new Component_WASDInputMove(_name, _holder, _parent); break;
-		case PlayerMotion: comp = new Component_PlayerMotion(_name, _holder, _parent); break;
-		case Teleporter: comp = new Component_Teleporter(_name, _holder, _parent); break;
-        default: /* その他コンポーネントを追加する時は上記のように追加 */ break;
+		case ComponentType::StateManager: comp = new Component_StateManager(_name, _holder, _parent); break;
+		case ComponentType::InputMove: comp = new Component_InputMove(_name, _holder, _parent); break;
+
+		default: /* その他コンポーネントを追加する時は上記のように追加 */ break;
     }
     return comp;
 }
@@ -245,30 +205,8 @@ string ComponentTypeToString(ComponentType _type)
 {
 	switch (_type)
 	{
-	case BossBehavior: return "BossBehaviorComponent";
-	case CactanBehavior: return "CactanBehaviorComponent";
-	case Chase: return "ChaseComponent";
-	case CircleRangeDetector: return "CircleRangeDetectorComponent";
-	case Fall: return "FallComponent";
-	case FanRangeDetector: return "FanRangeDetectorComponent";
-	case HealthGauge: return "HealthGaugeComponent";
-	case HelingoBehavior: return "HelingoBehaviorComponent";
-	case HelingoFall: return "HelingoFallComponent";
-	case MeleeAttack: return "MeleeAttackComponent";
-	case MoveX: return "MoveXComponent";
-	case PlayerBehavior: return "PlayerBehaviorComponent";
-	case Rise: return "RiseComponent";
-	case Rotation: return "RotationComponent";
-	case RotationX: return "RotationXComponent";
-	case RotationY: return "RotationYComponent";
-	case RotationZ: return "RotationZComponent";
-	case ShootAttack: return "ShootAttackComponent";
-	case TackleMove: return "TackleMoveComponent";
-	case Timer: return "TimerComponent";
-	case WASDInputMove: return "WASDInputMoveComponent";
-	case PlayerMotion: return "PlayerMotionComponent";
-	case Teleporter: return "TeleporterComponent";
-
-	default: return "None";
+		case ComponentType::StateManager:	return "StateManager";
+		case ComponentType::InputMove:		return "InputMove";
+		default: return "None";
 	}	
 }

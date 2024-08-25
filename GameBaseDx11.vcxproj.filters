@@ -44,24 +44,6 @@
     <Filter Include="03Game\Objects\Stage\StageObjects">
       <UniqueIdentifier>{acd2e8da-cefc-4962-a08d-21834c85660b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="03Game\Objects\Stage\Components\MoveComponents">
-      <UniqueIdentifier>{75ad066e-987b-46d3-a42a-b30e23af65c2}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="03Game\Objects\Stage\Components\RotationComponents">
-      <UniqueIdentifier>{19ec8ed2-0f53-4dbc-8bd5-2d4a58e4275b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="03Game\Objects\Stage\Components\DetectorComponents">
-      <UniqueIdentifier>{1dfc5a77-2666-438e-b4a0-ccdf1e982c3a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="03Game\Objects\Stage\Components\TimerComponent">
-      <UniqueIdentifier>{e193f086-ad1a-497c-8887-062579a167cb}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="03Game\Objects\Stage\Components\AttackComponents">
-      <UniqueIdentifier>{89b3ed5f-a98e-4fe9-8112-e3c5e40330d7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="03Game\Objects\Stage\Components\BehaviorComponents">
-      <UniqueIdentifier>{b2d24188-4d4a-4098-a2d5-87aeda1fadfa}</UniqueIdentifier>
-    </Filter>
     <Filter Include="03Game\Objects\UIObjects">
       <UniqueIdentifier>{385dbb44-f08d-4e4f-907e-7a4dcc680484}</UniqueIdentifier>
     </Filter>
@@ -76,9 +58,6 @@
     </Filter>
     <Filter Include="00Effekseer">
       <UniqueIdentifier>{0d38d0e2-263e-4437-8a79-3052074af8da}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="03Game\Objects\Stage\Components\GaugeComponents">
-      <UniqueIdentifier>{b204fc05-9186-4452-bf13-d3d5eadc3e8c}</UniqueIdentifier>
     </Filter>
     <Filter Include="03Game\Otheres">
       <UniqueIdentifier>{c2efa7cb-5f10-4c3c-b6f4-cff055139e25}</UniqueIdentifier>
@@ -181,41 +160,11 @@
     <ClCompile Include="Game\Objects\Stage\StageObject.cpp">
       <Filter>03Game\Objects\Stage\StageObjects</Filter>
     </ClCompile>
-    <ClCompile Include="Game\Objects\Stage\Components\MoveComponents\Component_MoveX.cpp">
-      <Filter>03Game\Objects\Stage\Components\MoveComponents</Filter>
-    </ClCompile>
-    <ClCompile Include="Game\Objects\Stage\Components\RotationComponents\Component_Rotation.cpp">
-      <Filter>03Game\Objects\Stage\Components\RotationComponents</Filter>
-    </ClCompile>
-    <ClCompile Include="Game\Objects\Stage\Components\RotationComponents\Component_RotationX.cpp">
-      <Filter>03Game\Objects\Stage\Components\RotationComponents</Filter>
-    </ClCompile>
-    <ClCompile Include="Game\Objects\Stage\Components\RotationComponents\Component_RotationY.cpp">
-      <Filter>03Game\Objects\Stage\Components\RotationComponents</Filter>
-    </ClCompile>
-    <ClCompile Include="Game\Objects\Stage\Components\RotationComponents\Component_RotationZ.cpp">
-      <Filter>03Game\Objects\Stage\Components\RotationComponents</Filter>
-    </ClCompile>
     <ClCompile Include="Game\Objects\Stage\Components\Component.cpp">
       <Filter>03Game\Objects\Stage\Components</Filter>
     </ClCompile>
     <ClCompile Include="Engine\ResourceManager\Transition.cpp">
       <Filter>01Engine\ResourceManager</Filter>
-    </ClCompile>
-    <ClCompile Include="Game\Objects\Stage\Components\MoveComponents\Component_Chase.cpp">
-      <Filter>03Game\Objects\Stage\Components\MoveComponents</Filter>
-    </ClCompile>
-    <ClCompile Include="Game\Objects\Stage\Components\MoveComponents\Component_Fall.cpp">
-      <Filter>03Game\Objects\Stage\Components\MoveComponents</Filter>
-    </ClCompile>
-    <ClCompile Include="Game\Objects\Stage\Components\DetectorComponents\Component_CircleRangeDetector.cpp">
-      <Filter>03Game\Objects\Stage\Components\DetectorComponents</Filter>
-    </ClCompile>
-    <ClCompile Include="Game\Objects\Stage\Components\DetectorComponents\Component_FanRangeDetector.cpp">
-      <Filter>03Game\Objects\Stage\Components\DetectorComponents</Filter>
-    </ClCompile>
-    <ClCompile Include="Game\Objects\Stage\Components\TimerComponent\Component_Timer.cpp">
-      <Filter>03Game\Objects\Stage\Components\TimerComponent</Filter>
     </ClCompile>
     <ClCompile Include="Game\Objects\Stage\Stage.cpp">
       <Filter>03Game\Objects\Stage</Filter>
@@ -223,32 +172,11 @@
     <ClCompile Include="Game\Objects\Stage\Bullet.cpp">
       <Filter>03Game\Objects\Stage\StageObjects</Filter>
     </ClCompile>
-    <ClCompile Include="Game\Objects\Stage\Components\BehaviorComponents\Component_CactanBehavior.cpp">
-      <Filter>03Game\Objects\Stage\Components\BehaviorComponents</Filter>
-    </ClCompile>
-    <ClCompile Include="Game\Objects\Stage\Components\BehaviorComponents\Component_HelingoBehavior.cpp">
-      <Filter>03Game\Objects\Stage\Components\BehaviorComponents</Filter>
-    </ClCompile>
-    <ClCompile Include="Game\Objects\Stage\Components\AttackComponents\Component_ShootAttack.cpp">
-      <Filter>03Game\Objects\Stage\Components\AttackComponents</Filter>
-    </ClCompile>
-    <ClCompile Include="Game\Objects\Stage\Components\MoveComponents\Component_WASDInputMove.cpp">
-      <Filter>03Game\Objects\Stage\Components\MoveComponents</Filter>
-    </ClCompile>
-    <ClCompile Include="Game\Objects\Stage\Components\BehaviorComponents\Component_PlayerBehavior.cpp">
-      <Filter>03Game\Objects\Stage\Components\BehaviorComponents</Filter>
-    </ClCompile>
     <ClCompile Include="Engine\Global.cpp">
       <Filter>01Engine</Filter>
     </ClCompile>
     <ClCompile Include="Game\Otheres\GameEditor.cpp">
       <Filter>03Game\Otheres</Filter>
-    </ClCompile>
-    <ClCompile Include="Game\Objects\Stage\Components\MoveComponents\Component_HelingoFall.cpp">
-      <Filter>03Game\Objects\Stage\Components\MoveComponents</Filter>
-    </ClCompile>
-    <ClCompile Include="Game\Objects\Stage\Components\MoveComponents\Component_Rise.cpp">
-      <Filter>03Game\Objects\Stage\Components\MoveComponents</Filter>
     </ClCompile>
     <ClCompile Include="Game\Objects\UI\UIButton.cpp">
       <Filter>03Game\Objects\UIObjects</Filter>
@@ -281,19 +209,12 @@
       <Filter>03Game\Scenes\DebugScenes</Filter>
     </ClCompile>
     <ClCompile Include="EffekseeLib\EffekseerVFX.cpp" />
-    <ClCompile Include="Game\Objects\Stage\Components\BehaviorComponents\Component_BossBehavior.cpp" />
-    <ClCompile Include="Game\Objects\Stage\Components\MoveComponents\Component_TackleMove.cpp" />
-    <ClCompile Include="Game\Objects\Stage\Components\AttackComponents\Component_MeleeAttack.cpp" />
-    <ClCompile Include="Game\Objects\Stage\Components\GaugeComponents\Component_Gauge.cpp" />
-    <ClCompile Include="Game\Objects\Stage\Components\GaugeComponents\Component_HealthGauge.cpp" />
-    <ClCompile Include="Game\Objects\UI\UIProgressBar.cpp" />
     <ClCompile Include="Game\Objects\UI\UIText.cpp" />
-    <ClCompile Include="Game\Objects\Stage\Components\BehaviorComponents\Component_BossBehavior.cpp" />
-    <ClCompile Include="Game\Objects\Stage\Components\MoveComponents\Component_TackleMove.cpp" />
-    <ClCompile Include="Game\Objects\Stage\Components\MotionComponent\Component_Motion.cpp" />
-    <ClCompile Include="Game\Objects\Stage\Components\MotionComponent\Component_PlayerMotion.cpp" />
-    <ClCompile Include="Game\Objects\Stage\Components\AttackComponents\Component_Attack.cpp" />
-    <ClCompile Include="Game\Objects\Stage\Components\TeleporterComponent\Component_Teleporter.cpp" />
+    <ClCompile Include="Game\Objects\Stage\Components\StateManagerComponent\Component_StateManager.cpp" />
+    <ClCompile Include="Game\Objects\Stage\Components\StateManagerComponent\States\State.cpp" />
+    <ClCompile Include="Game\Objects\Stage\Components\StateManagerComponent\StateObserver.cpp" />
+    <ClCompile Include="Game\Objects\Stage\Components\MoveComponent\Component_InputMove.cpp" />
+    <ClCompile Include="Game\Objects\Stage\Components\StateManagerComponent\States\State_Idle.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Collider\BoxCollider.h">
@@ -404,71 +325,17 @@
     <ClInclude Include="Game\Objects\Stage\StageObject.h">
       <Filter>03Game\Objects\Stage\StageObjects</Filter>
     </ClInclude>
-    <ClInclude Include="Game\Objects\Stage\Components\MoveComponents\Component_MoveX.h">
-      <Filter>03Game\Objects\Stage\Components\MoveComponents</Filter>
-    </ClInclude>
-    <ClInclude Include="Game\Objects\Stage\Components\RotationComponents\Component_Rotation.h">
-      <Filter>03Game\Objects\Stage\Components\RotationComponents</Filter>
-    </ClInclude>
-    <ClInclude Include="Game\Objects\Stage\Components\RotationComponents\Component_RotationX.h">
-      <Filter>03Game\Objects\Stage\Components\RotationComponents</Filter>
-    </ClInclude>
-    <ClInclude Include="Game\Objects\Stage\Components\RotationComponents\Component_RotationY.h">
-      <Filter>03Game\Objects\Stage\Components\RotationComponents</Filter>
-    </ClInclude>
-    <ClInclude Include="Game\Objects\Stage\Components\RotationComponents\Component_RotationZ.h">
-      <Filter>03Game\Objects\Stage\Components\RotationComponents</Filter>
-    </ClInclude>
     <ClInclude Include="Game\Objects\Stage\Components\Component.h">
       <Filter>03Game\Objects\Stage\Components</Filter>
     </ClInclude>
     <ClInclude Include="Engine\ResourceManager\Transition.h">
       <Filter>01Engine\ResourceManager</Filter>
     </ClInclude>
-    <ClInclude Include="Game\Objects\Stage\Components\MoveComponents\Component_Chase.h">
-      <Filter>03Game\Objects\Stage\Components\MoveComponents</Filter>
-    </ClInclude>
-    <ClInclude Include="Game\Objects\Stage\Components\MoveComponents\Component_Fall.h">
-      <Filter>03Game\Objects\Stage\Components\MoveComponents</Filter>
-    </ClInclude>
-    <ClInclude Include="Game\Objects\Stage\Components\DetectorComponents\Component_CircleRangeDetector.h">
-      <Filter>03Game\Objects\Stage\Components\DetectorComponents</Filter>
-    </ClInclude>
-    <ClInclude Include="Game\Objects\Stage\Components\DetectorComponents\Component_FanRangeDetector.h">
-      <Filter>03Game\Objects\Stage\Components\DetectorComponents</Filter>
-    </ClInclude>
-    <ClInclude Include="Game\Objects\Stage\Components\TimerComponent\Component_Timer.h">
-      <Filter>03Game\Objects\Stage\Components\TimerComponent</Filter>
-    </ClInclude>
-    <ClInclude Include="Game\Objects\Stage\Components\AttackComponents\Component_Attack.h">
-      <Filter>03Game\Objects\Stage\Components\AttackComponents</Filter>
-    </ClInclude>
     <ClInclude Include="Game\Objects\Stage\Bullet.h">
       <Filter>03Game\Objects\Stage\StageObjects</Filter>
     </ClInclude>
-    <ClInclude Include="Game\Objects\Stage\Components\BehaviorComponents\Component_CactanBehavior.h">
-      <Filter>03Game\Objects\Stage\Components\BehaviorComponents</Filter>
-    </ClInclude>
-    <ClInclude Include="Game\Objects\Stage\Components\BehaviorComponents\Component_HelingoBehavior.h">
-      <Filter>03Game\Objects\Stage\Components\BehaviorComponents</Filter>
-    </ClInclude>
-    <ClInclude Include="Game\Objects\Stage\Components\AttackComponents\Component_ShootAttack.h">
-      <Filter>03Game\Objects\Stage\Components\AttackComponents</Filter>
-    </ClInclude>
-    <ClInclude Include="Game\Objects\Stage\Components\MoveComponents\Component_WASDInputMove.h">
-      <Filter>03Game\Objects\Stage\Components\MoveComponents</Filter>
-    </ClInclude>
-    <ClInclude Include="Game\Objects\Stage\Components\BehaviorComponents\Component_PlayerBehavior.h">
-      <Filter>03Game\Objects\Stage\Components\BehaviorComponents</Filter>
-    </ClInclude>
     <ClInclude Include="Game\Otheres\GameEditor.h">
       <Filter>03Game\Otheres</Filter>
-    </ClInclude>
-    <ClInclude Include="Game\Objects\Stage\Components\MoveComponents\Component_HelingoFall.h">
-      <Filter>03Game\Objects\Stage\Components\MoveComponents</Filter>
-    </ClInclude>
-    <ClInclude Include="Game\Objects\Stage\Components\MoveComponents\Component_Rise.h">
-      <Filter>03Game\Objects\Stage\Components\MoveComponents</Filter>
     </ClInclude>
     <ClInclude Include="Game\Objects\UI\UIPanel.h">
       <Filter>03Game\Objects\UIObjects</Filter>
@@ -501,18 +368,12 @@
       <Filter>03Game\Scenes\DebugScenes</Filter>
     </ClInclude>
     <ClInclude Include="EffekseeLib\EffekseerVFX.h" />
-    <ClInclude Include="Game\Objects\Stage\Components\BehaviorComponents\Component_BossBehavior.h" />
-    <ClInclude Include="Game\Objects\Stage\Components\MoveComponents\Component_TackleMove.h" />
-    <ClInclude Include="Game\Objects\Stage\Components\AttackComponents\Component_MeleeAttack.h" />
-    <ClInclude Include="Game\Objects\Stage\Components\GaugeComponents\Component_Gauge.h" />
-    <ClInclude Include="Game\Objects\Stage\Components\GaugeComponents\Component_HealthGauge.h" />
-    <ClInclude Include="Game\Objects\UI\UIProgressBar.h" />
     <ClInclude Include="Game\Objects\UI\UIText.h" />
-    <ClInclude Include="Game\Objects\Stage\Components\BehaviorComponents\Component_BossBehavior.h" />
-    <ClInclude Include="Game\Objects\Stage\Components\MoveComponents\Component_TackleMove.h" />
-    <ClInclude Include="Game\Objects\Stage\Components\MotionComponent\Component_Motion.h" />
-    <ClInclude Include="Game\Objects\Stage\Components\MotionComponent\Component_PlayerMotion.h" />
-    <ClInclude Include="Game\Objects\Stage\Components\TeleporterComponent\Component_Teleporter.h" />
+    <ClInclude Include="Game\Objects\Stage\Components\StateManagerComponent\Component_StateManager.h" />
+    <ClInclude Include="Game\Objects\Stage\Components\StateManagerComponent\States\State.h" />
+    <ClInclude Include="Game\Objects\Stage\Components\StateManagerComponent\StateObserver.h" />
+    <ClInclude Include="Game\Objects\Stage\Components\MoveComponent\Component_InputMove.h" />
+    <ClInclude Include="Game\Objects\Stage\Components\StateManagerComponent\States\State_Idle.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Assets\Shader\Simple2D.hlsl">

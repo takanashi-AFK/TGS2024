@@ -236,7 +236,7 @@ Component* CreateComponent(string _name, ComponentType _type, StageObject* _hold
         case TackleMove: comp = new Component_TackleMove(_name, _holder, _parent); break;
         case Timer: comp = new Component_Timer(_name, _holder, _parent); break;
         case InputMove: comp = new Component_InputMove(_name, _holder, _parent); break;
-		case PlayerMotion: comp = new Component_PlayerMotion(_name, _holder, _parent); break;
+	//	case PlayerMotion: comp = new Component_PlayerMotion(_name, _holder, _parent); break;
 		case Teleporter: comp = new Component_Teleporter(_name, _holder, _parent); break;
 		case StateManager: comp = new Component_StateManager(_name, _holder, _parent); break;
         default: /* その他コンポーネントを追加する時は上記のように追加 */ break;

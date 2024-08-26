@@ -4,7 +4,7 @@ class PlayerState_Walk :
     public State
 {
 public:
-	PlayerState_Walk(string name,StageObject* _holder);
+	PlayerState_Walk(string _name);
 	~PlayerState_Walk();
 
 	void Initialize() override;

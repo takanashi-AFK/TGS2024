@@ -51,6 +51,8 @@ void Component_StateManager::DrawData()
 	// 状態追加用ウィンドウ
 	if (isAddStateWindowOpen_)DrawAddStateWindow(this);
 
+	if (currentState_ != nullptr)
+	ImGui::Text("%s", currentState_->GetName().c_str());
 	// 追加されている状態をツリーノードで表示
 	if (ImGui::TreeNode("State list")) {
 		// ここに現在追加されているStateを表示
@@ -147,6 +149,7 @@ State* Component_StateManager::CreateState(string _name, STATE_TYPE _type)
 	switch (_type)
 	{
 	case Idle: return new State_Idle(_name);
+	case Walk: return new PlayerState_Walk(_name);
 	default: return nullptr;
 	}
 	// ここにelseでほかの状態を追加

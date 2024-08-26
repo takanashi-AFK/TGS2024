@@ -139,7 +139,31 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Game\Objects\Stage\Components\AttackComponents\Component_Attack.cpp" />
+    <ClCompile Include="Game\Objects\Stage\Components\AttackComponents\Component_ShootAttack.cpp" />
+    <ClCompile Include="Game\Objects\Stage\Components\BehaviorComponents\Component_CactanBehavior.cpp" />
+    <ClCompile Include="Game\Objects\Stage\Components\BehaviorComponents\Component_HelingoBehavior.cpp" />
+    <ClCompile Include="Game\Objects\Stage\Components\BehaviorComponents\Component_PlayerBehavior.cpp" />
+    <ClCompile Include="Game\Objects\Stage\Components\DetectorComponents\Component_CircleRangeDetector.cpp" />
+    <ClCompile Include="Game\Objects\Stage\Components\DetectorComponents\Component_FanRangeDetector.cpp" />
+    <ClCompile Include="Game\Objects\Stage\Components\GaugeComponents\Component_Gauge.cpp" />
+    <ClCompile Include="Game\Objects\Stage\Components\GaugeComponents\Component_HealthGauge.cpp" />
+    <ClCompile Include="Game\Objects\Stage\Components\MoveComponents\Component_Chase.cpp" />
+    <ClCompile Include="Game\Objects\Stage\Components\MoveComponents\Component_Fall.cpp" />
+    <ClCompile Include="Game\Objects\Stage\Components\MoveComponents\Component_HelingoFall.cpp" />
+    <ClCompile Include="Game\Objects\Stage\Components\MoveComponents\Component_MoveX.cpp" />
+    <ClCompile Include="Game\Objects\Stage\Components\MoveComponents\Component_Rise.cpp" />
+    <ClCompile Include="Game\Objects\Stage\Components\MoveComponents\Component_TackleMove.cpp" />
+    <ClCompile Include="Game\Objects\Stage\Components\MoveComponent\Component_InputMove.cpp" />
+    <ClCompile Include="Game\Objects\Stage\Components\RotationComponents\Component_Rotation.cpp" />
+    <ClCompile Include="Game\Objects\Stage\Components\RotationComponents\Component_RotationX.cpp" />
+    <ClCompile Include="Game\Objects\Stage\Components\RotationComponents\Component_RotationY.cpp" />
+    <ClCompile Include="Game\Objects\Stage\Components\RotationComponents\Component_RotationZ.cpp" />
     <ClCompile Include="Game\Objects\Stage\Components\StateComponents\Component_StateManager.cpp" />
+    <ClCompile Include="Game\Objects\Stage\Components\StateManagerComponent\Component_StateManager.cpp" />
+    <ClCompile Include="Game\Objects\Stage\Components\StateManagerComponent\StateObserver.cpp" />
+    <ClCompile Include="Game\Objects\Stage\Components\StateManagerComponent\States\State.cpp" />
+    <ClCompile Include="Game\Objects\Stage\Components\StateManagerComponent\States\State_Idle.cpp" />
     <ClCompile Include="Game\Objects\Stage\Components\TeleporterComponent\Component_Teleporter.cpp" />
     <ClCompile Include="Game\Objects\Stage\Components\MotionComponent\Component_PlayerMotion.cpp" />
     <ClCompile Include="Game\Objects\Stage\Components\MotionComponent\Component_Motion.cpp" />
@@ -179,6 +203,7 @@
     <ClCompile Include="Engine\ResourceManager\Text.cpp" />
     <ClCompile Include="Engine\DirectX\Texture.cpp" />
     <ClCompile Include="Engine\GameObject\Transform.cpp" />
+    <ClCompile Include="Game\Objects\Stage\Components\TimerComponent\Component_Timer.cpp" />
     <ClCompile Include="Game\Objects\Stage\StageObject.cpp" />
     <ClCompile Include="Game\Scenes\Scene_End.cpp" />
     <ClCompile Include="Game\Scenes\Scene_Play.cpp" />
@@ -200,7 +225,32 @@
     <ClCompile Include="Game\Objects\Stage\Components\StateComponents\StateObserver.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Game\Objects\Stage\Components\AttackComponents\Component_Attack.h" />
+    <ClInclude Include="Game\Objects\Stage\Components\AttackComponents\Component_ShootAttack.h" />
+    <ClInclude Include="Game\Objects\Stage\Components\BehaviorComponents\Component_BossBehavior.h" />
+    <ClInclude Include="Game\Objects\Stage\Components\BehaviorComponents\Component_CactanBehavior.h" />
+    <ClInclude Include="Game\Objects\Stage\Components\BehaviorComponents\Component_HelingoBehavior.h" />
+    <ClInclude Include="Game\Objects\Stage\Components\BehaviorComponents\Component_PlayerBehavior.h" />
+    <ClInclude Include="Game\Objects\Stage\Components\DetectorComponents\Component_CircleRangeDetector.h" />
+    <ClInclude Include="Game\Objects\Stage\Components\DetectorComponents\Component_FanRangeDetector.h" />
+    <ClInclude Include="Game\Objects\Stage\Components\GaugeComponents\Component_Gauge.h" />
+    <ClInclude Include="Game\Objects\Stage\Components\GaugeComponents\Component_HealthGauge.h" />
+    <ClInclude Include="Game\Objects\Stage\Components\MoveComponents\Component_Chase.h" />
+    <ClInclude Include="Game\Objects\Stage\Components\MoveComponents\Component_Fall.h" />
+    <ClInclude Include="Game\Objects\Stage\Components\MoveComponents\Component_HelingoFall.h" />
+    <ClInclude Include="Game\Objects\Stage\Components\MoveComponents\Component_MoveX.h" />
+    <ClInclude Include="Game\Objects\Stage\Components\MoveComponents\Component_Rise.h" />
+    <ClInclude Include="Game\Objects\Stage\Components\MoveComponents\Component_TackleMove.h" />
+    <ClInclude Include="Game\Objects\Stage\Components\MoveComponent\Component_InputMove.h" />
+    <ClInclude Include="Game\Objects\Stage\Components\RotationComponents\Component_Rotation.h" />
+    <ClInclude Include="Game\Objects\Stage\Components\RotationComponents\Component_RotationX.h" />
+    <ClInclude Include="Game\Objects\Stage\Components\RotationComponents\Component_RotationY.h" />
+    <ClInclude Include="Game\Objects\Stage\Components\RotationComponents\Component_RotationZ.h" />
     <ClInclude Include="Game\Objects\Stage\Components\StateComponents\Component_StateManager.h" />
+    <ClInclude Include="Game\Objects\Stage\Components\StateManagerComponent\Component_StateManager.h" />
+    <ClInclude Include="Game\Objects\Stage\Components\StateManagerComponent\StateObserver.h" />
+    <ClInclude Include="Game\Objects\Stage\Components\StateManagerComponent\States\State.h" />
+    <ClInclude Include="Game\Objects\Stage\Components\StateManagerComponent\States\State_Idle.h" />
     <ClInclude Include="Game\Objects\Stage\Components\TeleporterComponent\Component_Teleporter.h" />
     <ClInclude Include="Game\Objects\Stage\Components\MotionComponent\Component_PlayerMotion.h" />
     <ClInclude Include="Game\Objects\Stage\Components\MotionComponent\Component_Motion.h" />
@@ -242,6 +292,7 @@
     <ClInclude Include="Engine\ResourceManager\Text.h" />
     <ClInclude Include="Engine\DirectX\Texture.h" />
     <ClInclude Include="Engine\GameObject\Transform.h" />
+    <ClInclude Include="Game\Objects\Stage\Components\TimerComponent\Component_Timer.h" />
     <ClInclude Include="Game\Objects\Stage\StageObject.h" />
     <ClInclude Include="Game\Scenes\Scene_Test.h" />
     <ClInclude Include="Game\Objects\Stage\Stage.h" />

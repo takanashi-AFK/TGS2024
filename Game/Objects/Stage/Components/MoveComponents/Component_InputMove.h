@@ -1,6 +1,8 @@
 #pragma once
 #include "../Component.h"
-#include "../StateManagerComponent/StateObserver.h"
+#include "../StateComponents/StateObserver.h"
+#include "../StateComponents/Component_StateManager.h"
+
 
 class Component_InputMove : public Component , StateObserver
 {

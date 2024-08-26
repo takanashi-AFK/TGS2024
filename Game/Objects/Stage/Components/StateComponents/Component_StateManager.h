@@ -1,18 +1,11 @@
 #pragma once
-#include "../../../../../Engine/ImGui/imgui.h"
-#include <unordered_map>
-#include "../Component.h"
 #include "../../../../../Engine/Global.h"
+#include "../../../../../Engine/ImGui/imgui.h"
+#include "../Component.h"
 #include "State.h"
+#include <unordered_map>
 class StateObserver;
-
-enum STATE_TYPE {
-    WALK = 0,
-	IDLE,
-    MAX
-    // 他の状態のタイプ
-};
-
+using std::string;
 // 状態管理コンポーネント
 class Component_StateManager : public Component
 {
@@ -59,9 +52,13 @@ public:
 	void Save(json& _saveObj)override;
 	void Load(json& _loadObj)override;
 
-    State* CreateState(STATE_TYPE _stateType, const string& name);
+    State* CreateState(string _name, STATE_TYPE _type);
 
     State* GetCurrentState();
 
-	void AddStateObserver(StateObserver* observer) { observers_.push_back(observer); }
+    std::unordered_map<string, State*> GetStates() const { return stateList_; }
+
+    void SetCurrentState(State* _state) { currentState_ = _state; }
+
+	void AddObserver(StateObserver* observer) { observers_.push_back(observer); }
 };

@@ -21,7 +21,7 @@
 #include "MoveComponents/Component_MoveX.h"
 #include "MoveComponents/Component_Rise.h"
 #include "MoveComponents/Component_TackleMove.h"
-#include "MoveComponents/Component_WASDInputMove.h"
+#include "MoveComponents/Component_InputMove.h"
 #include "RotationComponents/Component_Rotation.h"
 #include "RotationComponents/Component_RotationX.h"
 #include "RotationComponents/Component_RotationY.h"
@@ -235,7 +235,7 @@ Component* CreateComponent(string _name, ComponentType _type, StageObject* _hold
         case ShootAttack: comp = new Component_ShootAttack(_name, _holder, _parent); break;
         case TackleMove: comp = new Component_TackleMove(_name, _holder, _parent); break;
         case Timer: comp = new Component_Timer(_name, _holder, _parent); break;
-        case WASDInputMove: comp = new Component_WASDInputMove(_name, _holder, _parent); break;
+        case InputMove: comp = new Component_InputMove(_name, _holder, _parent); break;
 		case PlayerMotion: comp = new Component_PlayerMotion(_name, _holder, _parent); break;
 		case Teleporter: comp = new Component_Teleporter(_name, _holder, _parent); break;
 		case StateManager: comp = new Component_StateManager(_name, _holder, _parent); break;
@@ -273,7 +273,7 @@ string ComponentTypeToString(ComponentType _type)
 	case ShootAttack: return "ShootAttackComponent";
 	case TackleMove: return "TackleMoveComponent";
 	case Timer: return "TimerComponent";
-	case WASDInputMove: return "WASDInputMoveComponent";
+	case InputMove: return "InputMoveComponent";
 	case PlayerMotion: return "PlayerMotionComponent";
 	case Teleporter: return "TeleporterComponent";
 	case StateManager: return "StateManagerComponent";

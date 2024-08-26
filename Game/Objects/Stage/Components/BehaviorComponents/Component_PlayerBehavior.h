@@ -1,9 +1,9 @@
 #pragma once
+#include "../../../../../Engine/ResourceManager/Model.h"
+#include "../../StageObject.h"
 #include "../Component.h"
 #include <DirectXMath.h>
-#include "../../StageObject.h"
 #include <vector>
-#include "../../../../../Engine/ResourceManager/Model.h"
 
 enum PlayerState {
 	PSTATE_IDLE = 0,

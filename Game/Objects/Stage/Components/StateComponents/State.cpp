@@ -3,6 +3,8 @@
 #include "../../../../../Engine/Global.h"
 using namespace FileManager;
 
+#include "PlayerState/State_Idle.h"
+
 void State::ChildInitialize()
 {
 	Initialize();
@@ -100,5 +102,24 @@ void State::DrawAddModelWindow()
             }
         }
         ImGui::End(); // ウィンドウを閉じる
+    }
+}
+
+State* CreateState(string _name, STATE_TYPE _type)
+{
+    switch (_type)
+    {
+    case Idle: return new State_Idle(_name);
+    default: return nullptr;
+    }
+}
+
+string StateTypeToString(STATE_TYPE _type)
+{
+    switch (_type)
+    {
+    case Idle: return "Idle";
+    case Walk: return "Walk";
+    default: return "None";
     }
 }

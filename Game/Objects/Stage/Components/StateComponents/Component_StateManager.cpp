@@ -2,6 +2,9 @@
 #include "../../StageObject.h"
 #include "PlayerState/PlayerState_Walk.h"
 #include "../StateComponents/StateObserver.h"
+#include "../../../../../Engine/DirectX/Input.h"
+
+#include "PlayerState/State_Idle.h"
 
 Component_StateManager::Component_StateManager(string _name, StageObject* _holder, Component* _parent)
 	: Component(_holder, _name, StateManager,_parent)
@@ -32,7 +35,7 @@ void Component_StateManager::Update()
 
 	// 現在どの状態なのかを判定し、currentStateに代入
 	for (auto* observer : observers_) {
-		observer->OnStateChange(stateList_,*currentState_);
+		observer->OnStateChange(this);
 	}
 
 }
@@ -75,25 +78,50 @@ void Component_StateManager::DrawData()
 	}
 }
 
-void Component_StateManager::DrawAddStateWindow(Component_StateManager* _stateManager) {
-	// 名前を設定
-	static char inputText[256] = {}; // バッファを定義
-	ImGui::InputText("State Name", inputText, sizeof(inputText));
+void Component_StateManager::DrawAddStateWindow(Component_StateManager* _stateManager) 
+{
 
-	// 状態の種類を選択するためのImGuiウィジェットを追加
-	static int stateTypeIndex = 0;
-	const char* stateTypes[] = { "Walk" }; // 状態のタイプ
-	ImGui::Combo("State Type", &stateTypeIndex, stateTypes, IM_ARRAYSIZE(stateTypes));
+	ImGui::Begin("Add State..."); {
 
-	STATE_TYPE selectedType = static_cast<STATE_TYPE>(stateTypeIndex);
+		// ステート名入力
+		static char stateName[256];
+		ImGui::InputText("State Name", stateName, 256);
 
-	if (ImGui::Button("Confirm")) {
-		State* state = CreateState(selectedType, inputText);
-		if (state != nullptr) {
-			_stateManager->AddState(state);
+		// ステートタイプを選択
+		// タイプを選択
+		static STATE_TYPE stateType = STATE_TYPE::None;	// 初期選択項目
+		static std::string type = "NONE";		// 初期選択項目
+
+		if (ImGui::BeginCombo(":seting type", type.c_str())) {
+			for (int i = 0; i < STATE_TYPE::None; i++) {
+				std::string uiTypeString = StateTypeToString((STATE_TYPE)i);
+				if (uiTypeString.empty()) continue; // 空文字列を無視
+
+				bool isSelected = (type == StateTypeToString((STATE_TYPE)i));
+				if (ImGui::Selectable(StateTypeToString((STATE_TYPE)i).c_str(), isSelected)) {
+					type = StateTypeToString((STATE_TYPE)i);
+					stateType = (STATE_TYPE)i;
+				}
+				if (isSelected) {
+					ImGui::SetItemDefaultFocus();
+				}
+			}
+			ImGui::EndCombo();
+		}
+
+		if (ImGui::Button("add") || Input::IsKeyDown(DIK_RETURN)) {
+
+			// ステートを追加
+			stateList_[stateName] = CreateState(stateName, stateType);
+
+			// 現在のステートが存在しない場合は追加したステートを現在のステートに設定
+			if (currentState_ == nullptr) currentState_ = stateList_[stateName];
+
+			// ウィンドウを閉じる
 			isAddStateWindowOpen_ = false;
 		}
 	}
+	ImGui::End();
 }
 
 void Component_StateManager::Save(json& _saveObj)
@@ -114,10 +142,12 @@ void Component_StateManager::Load(json& _loadObj)
 	if (_loadObj.contains("currentStateKey_"))currentStateKey_=_loadObj["currentStateKey_"];
 }
 
-State* Component_StateManager::CreateState(STATE_TYPE _stateType, const string& name)
+State* Component_StateManager::CreateState(string _name, STATE_TYPE _type)
 {
-	if (_stateType == STATE_TYPE::WALK) {
-		return new PlayerState_Walk(name, holder_);
+	switch (_type)
+	{
+	case Idle: return new State_Idle(_name);
+	default: return nullptr;
 	}
 	// ここにelseでほかの状態を追加
 }

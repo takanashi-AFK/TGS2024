@@ -1,16 +1,19 @@
-#pragma once 
-#include <string>
-#include <unordered_map>
-// 状態変更を検知するインターフェースクラス
-class StageObject;  
-class State;
+#pragma once
+
+// インクルード
+
 class Component_StateManager;
-class StateObserver {
+
+class StageObject;
+
+class StateObserver
+{
 public:
-	StateObserver() {};
+	// 初期化
+	// クラスを継承した場合、必ず呼び出すこと
+	bool Entry(StageObject* holder_);
 
-    void Initialize(StageObject* holder_);
-
-    // インターフェース純粋仮想関数 
-    virtual void OnStateChange(std::unordered_map<std::string, State*>_states, State& _nowState) = 0;
+	// ステート変更通知
+	virtual void OnStateChange(Component_StateManager* _stateManager) = 0;
 };
+

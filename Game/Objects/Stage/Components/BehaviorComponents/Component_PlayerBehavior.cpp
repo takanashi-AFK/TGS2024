@@ -6,18 +6,18 @@
 #include "../../../../../Engine/DirectX/Direct3D.h"
 #include "../../../../../Engine/DirectX/Input.h"
 #include "../../../../../Engine/GameObject/Camera.h"
+#include "../../../../../Engine/ImGui/imgui.h"
+#include "../../../../../Game/Objects/Stage/Components/GaugeComponents/Component_HealthGauge.h"
+#include "../../SkySphere.h"
 #include "../../Stage.h"
 #include "../../StageObject.h"
-#include "../../SkySphere.h"
 #include "../AttackComponents/Component_MeleeAttack.h"
 #include "../AttackComponents/Component_ShootAttack.h"
 #include "../GaugeComponents/Component_HealthGauge.h"
-#include "../MoveComponents/Component_WASDInputMove.h"
-#include "../TimerComponent/Component_Timer.h"
 #include "../MotionComponent/Component_PlayerMotion.h"
+#include "../MoveComponents/Component_InputMove.h"
+#include "../TimerComponent/Component_Timer.h"
 #include <algorithm> 
-#include "../../../../../Game/Objects/Stage/Components/GaugeComponents/Component_HealthGauge.h"
-#include "../../../../../Engine/ImGui/imgui.h"
 
 
 struct CompareDist {
@@ -39,7 +39,7 @@ void Component_PlayerBehavior::Initialize()
     holder_->SetScale(XMFLOAT3(0.5f, 0.5f, 0.5f));
 
     // 子コンポーネントの追加
-    if (FindChildComponent("InputMove") == false)AddChildComponent(CreateComponent("InputMove", WASDInputMove, holder_, this));
+    if (FindChildComponent("InputMove") == false)AddChildComponent(CreateComponent("InputMove", InputMove, holder_, this));
     if (FindChildComponent("MeleeAttack") == false)AddChildComponent(CreateComponent("MeleeAttack", MeleeAttack, holder_, this));
     if (FindChildComponent("ShootAttack") == false)AddChildComponent(CreateComponent("ShootAttack", ShootAttack, holder_, this));
     if (FindChildComponent("Timer") == false)AddChildComponent(CreateComponent("Timer", Timer, holder_, this));
@@ -65,7 +65,7 @@ void Component_PlayerBehavior::Update()
     auto melee = dynamic_cast<Component_MeleeAttack*>(GetChildComponent("MeleeAttack"));
     if (melee == nullptr)return;
 
-    auto move = dynamic_cast<Component_WASDInputMove*>(GetChildComponent("InputMove"));
+    auto move = dynamic_cast<Component_InputMove*>(GetChildComponent("InputMove"));
     if (move == nullptr)return;
 
 
@@ -113,10 +113,10 @@ void Component_PlayerBehavior::OnCollision(GameObject* _target, Collider* _colli
 
 void Component_PlayerBehavior::Idle()
 {
-    auto move = dynamic_cast<Component_WASDInputMove*>(GetChildComponent("InputMove"));
+    auto move = dynamic_cast<Component_InputMove*>(GetChildComponent("InputMove"));
     if (move == nullptr)return;
 
-    if (move->GetIsMove()) {
+    if (move/*判定*/) {
         SetState(PSTATE_WALK);
     }
     else if (Input::IsMouseButton(1) && Input::IsMouseButtonDown(0) && nowState != PSTATE_WALK) {
@@ -132,7 +132,7 @@ void Component_PlayerBehavior::Idle()
 
 void Component_PlayerBehavior::Walk()
 {
-    auto move = dynamic_cast<Component_WASDInputMove*>(GetChildComponent("InputMove"));
+    auto move = dynamic_cast<Component_InputMove*>(GetChildComponent("InputMove"));
     if (move == nullptr)return;
 
 
@@ -166,7 +166,7 @@ void Component_PlayerBehavior::WalkAndMelee()
 
 void Component_PlayerBehavior::Melee()
 {
-    auto move = dynamic_cast<Component_WASDInputMove*>(GetChildComponent("InputMove"));
+    auto move = dynamic_cast<Component_InputMove*>(GetChildComponent("InputMove"));
     if (move == nullptr)return;
     auto melee = dynamic_cast<Component_MeleeAttack*>(GetChildComponent("MeleeAttack"));
     if (melee == nullptr)return;

@@ -5,7 +5,7 @@
 #include "../../../../../Engine/ImGui/imgui.h"
 #include "../TimerComponent/Component_Timer.h"
 #include "../../../../../Engine/Global.h"
-#include "../MoveComponents/Component_WASDInputMove.h"
+#include "../MoveComponents/Component_InputMove.h"
 #include "../../../../../Engine/Global.h"
 
 namespace {
@@ -74,7 +74,7 @@ void Component_Teleporter::Update()
 		if (timer->GetIsEnd()) {
 			// ターゲットのWASDを探す(2個以上ついていない想定)
 			if (target_ != nullptr) {
-				auto inputMove = target_->FindComponent(WASDInputMove);
+				auto inputMove = target_->FindComponent(InputMove);
 				if (inputMove.empty())return;
 				for (auto iMove : inputMove) {
 					iMove->Execute();
@@ -241,7 +241,7 @@ void Component_Teleporter::Teleport()
 
 		// ターゲットのWASDを探す
 		if (target_ != nullptr) {
-			auto inputMove = target_->FindComponent(WASDInputMove);
+			auto inputMove = target_->FindComponent(InputMove);
 			if (inputMove.empty())return;
 			for (auto iMove : inputMove) {
 				iMove->Stop();

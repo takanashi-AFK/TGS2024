@@ -34,7 +34,7 @@ enum ComponentType
 	ShootAttack,
 	TackleMove,
 	Timer,
-	WASDInputMove,
+	InputMove,
 	PlayerMotion,
 	Teleporter,
 	StateManager,

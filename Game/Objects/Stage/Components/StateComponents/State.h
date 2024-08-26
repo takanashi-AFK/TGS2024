@@ -6,6 +6,13 @@
 class StageObject;
 using std::string;
 // 状態の動作 基底クラス
+// ステートタイプ
+enum STATE_TYPE
+{
+	Idle,
+	Walk,
+	None
+};
 
 struct ModelData {
 	int modelHandle;
@@ -46,3 +53,5 @@ public:
 		return name_ == other.name_;
 	}
 };
+State* CreateState(string _name, STATE_TYPE _type);
+string StateTypeToString(STATE_TYPE _type);

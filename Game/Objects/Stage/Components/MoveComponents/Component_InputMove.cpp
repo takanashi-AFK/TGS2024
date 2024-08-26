@@ -5,7 +5,7 @@
 #include "../../../../../Engine/DirectX/Input.h"
 #include "../../../Camera/TPSCamera.h"
 #include "../../StageObject.h"
-#include "../StateManagerComponent/Component_StateManager.h"
+#include "../StateComponents/Component_StateManager.h"
 
 Component_InputMove::Component_InputMove(string _name, StageObject* _holder, Component* _parent)
 	: Component(_holder, _name, ComponentType::InputMove, _parent)

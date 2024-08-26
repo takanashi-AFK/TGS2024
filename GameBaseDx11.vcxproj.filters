@@ -219,7 +219,6 @@
     <ClCompile Include="Game\Objects\Stage\Components\StateComponents\PlayerState\PlayerState_Walk.cpp" />
     <ClCompile Include="Game\Objects\Stage\Components\StateComponents\StateObserver.cpp" />
     <ClCompile Include="Game\Objects\Stage\Components\AttackComponents\Component_MeleeAttack.cpp" />
-    <ClCompile Include="Game\Objects\Stage\Components\MoveComponent\Component_InputMove.cpp" />
     <ClCompile Include="Game\Objects\Stage\Components\MoveComponents\Component_Chase.cpp" />
     <ClCompile Include="Game\Objects\Stage\Components\MoveComponents\Component_Fall.cpp" />
     <ClCompile Include="Game\Objects\Stage\Components\MoveComponents\Component_HelingoFall.cpp" />
@@ -239,11 +238,9 @@
     <ClCompile Include="Game\Objects\Stage\Components\GaugeComponents\Component_HealthGauge.cpp" />
     <ClCompile Include="Game\Objects\Stage\Components\AttackComponents\Component_Attack.cpp" />
     <ClCompile Include="Game\Objects\Stage\Components\AttackComponents\Component_ShootAttack.cpp" />
-    <ClCompile Include="Game\Objects\Stage\Components\StateManagerComponent\States\State.cpp" />
-    <ClCompile Include="Game\Objects\Stage\Components\StateManagerComponent\States\State_Idle.cpp" />
-    <ClCompile Include="Game\Objects\Stage\Components\StateManagerComponent\Component_StateManager.cpp" />
-    <ClCompile Include="Game\Objects\Stage\Components\StateManagerComponent\StateObserver.cpp" />
+    <ClCompile Include="Game\Objects\Stage\Components\StateComponents\PlayerState\State_Idle.cpp" />
     <ClCompile Include="Game\Objects\Stage\Components\TimerComponent\Component_Timer.cpp" />
+    <ClCompile Include="Game\Objects\Stage\Components\MoveComponents\Component_InputMove.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Collider\BoxCollider.h">
@@ -406,7 +403,6 @@
     <ClInclude Include="Game\Objects\Stage\Components\StateComponents\PlayerState\PlayerState_Walk.h" />
     <ClInclude Include="Game\Objects\Stage\Components\StateComponents\StateObserver.h" />
     <ClInclude Include="Game\Objects\Stage\Components\AttackComponents\Component_MeleeAttack.h" />
-    <ClInclude Include="Game\Objects\Stage\Components\MoveComponent\Component_InputMove.h" />
     <ClInclude Include="Game\Objects\Stage\Components\MoveComponents\Component_Chase.h" />
     <ClInclude Include="Game\Objects\Stage\Components\MoveComponents\Component_Fall.h" />
     <ClInclude Include="Game\Objects\Stage\Components\MoveComponents\Component_HelingoFall.h" />
@@ -427,11 +423,9 @@
     <ClInclude Include="Game\Objects\Stage\Components\GaugeComponents\Component_HealthGauge.h" />
     <ClInclude Include="Game\Objects\Stage\Components\AttackComponents\Component_Attack.h" />
     <ClInclude Include="Game\Objects\Stage\Components\AttackComponents\Component_ShootAttack.h" />
-    <ClInclude Include="Game\Objects\Stage\Components\StateManagerComponent\States\State.h" />
-    <ClInclude Include="Game\Objects\Stage\Components\StateManagerComponent\States\State_Idle.h" />
-    <ClInclude Include="Game\Objects\Stage\Components\StateManagerComponent\Component_StateManager.h" />
-    <ClInclude Include="Game\Objects\Stage\Components\StateManagerComponent\StateObserver.h" />
+    <ClInclude Include="Game\Objects\Stage\Components\StateComponents\PlayerState\State_Idle.h" />
     <ClInclude Include="Game\Objects\Stage\Components\TimerComponent\Component_Timer.h" />
+    <ClInclude Include="Game\Objects\Stage\Components\MoveComponents\Component_InputMove.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Assets\Shader\Simple2D.hlsl">

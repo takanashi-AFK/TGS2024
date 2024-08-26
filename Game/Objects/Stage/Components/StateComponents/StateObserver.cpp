@@ -3,11 +3,17 @@
 #include "../../../Stage/StageObject.h"
 
 
-void StateObserver::Initialize(StageObject* holder_)
+bool StateObserver::Entry(StageObject* _holder)
 {
-   // 状態管理コンポーネントを取得
-   Component_StateManager* comp_stateManager = (Component_StateManager*)holder_->FindComponent("StateManagerComponent");
+    // 保有者が持つ、状態管理コンポーネントを取得
+    vector<Component*> comps = _holder->FindComponent(ComponentType::StateManager);
 
-   // nullじゃなければ、オブザーバーとしてStateManagerに追加
-   if (comp_stateManager != nullptr) comp_stateManager->AddStateObserver(this);
+    bool isEntry = false;
+    // 状態管理コンポーネントが存在する場合、オブザーバーリストに登録
+    for (auto comp_stateManager : comps) {
+        if (comp_stateManager != nullptr) ((Component_StateManager*)comp_stateManager)->AddObserver(this);
+        isEntry = true;
+    }
+
+    return isEntry;
 }

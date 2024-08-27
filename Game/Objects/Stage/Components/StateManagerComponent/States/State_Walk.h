@@ -1,11 +1,11 @@
 #pragma once
 #include "State.h"
 
-class State_Idle : public State
+class State_Walk : public State
 {
 public:
 	// コンストラクタ
-	State_Idle(string _name,StageObject* _holder) :State(_name,StateType::Idle,_holder){};
+	State_Walk(string _name, StageObject* _holder) :State(_name, StateType::Walk, _holder) {};
 
 	// 初期化
 	void Initialize() override;

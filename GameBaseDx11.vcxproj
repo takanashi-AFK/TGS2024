@@ -194,6 +194,7 @@
     <ClCompile Include="Game\Objects\Stage\Components\StateManagerComponent\States\State.cpp" />
     <ClCompile Include="Game\Objects\Stage\Components\StateManagerComponent\StateObserver.cpp" />
     <ClCompile Include="Game\Objects\Stage\Components\StateManagerComponent\States\State_Idle.cpp" />
+    <ClCompile Include="Game\Objects\Stage\Components\StateManagerComponent\States\State_Walk.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game\Objects\Stage\Components\MoveComponent\Component_InputMove.h" />
@@ -253,6 +254,7 @@
     <ClInclude Include="Game\Objects\Stage\Components\StateManagerComponent\States\State.h" />
     <ClInclude Include="Game\Objects\Stage\Components\StateManagerComponent\StateObserver.h" />
     <ClInclude Include="Game\Objects\Stage\Components\StateManagerComponent\States\State_Idle.h" />
+    <ClInclude Include="Game\Objects\Stage\Components\StateManagerComponent\States\State_Walk.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Assets\Shader\BillBoard.hlsl">

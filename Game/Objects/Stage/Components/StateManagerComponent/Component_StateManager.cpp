@@ -53,7 +53,7 @@ void Component_StateManager::Load(json& _loadObj)
 	for (auto state : _loadObj["states"].items()) {
 
 		// ステートを生成
-		State* s = CreateState(state.key(), (StateType)state.value()["type"].get<int>());
+		State* s = CreateState(state.key(), (StateType)state.value()["type"].get<int>(),holder_);
 
 		if(s != nullptr){
 			s->ChildLoad(state.value());
@@ -83,8 +83,10 @@ void Component_StateManager::DrawData()
 		
 		for (auto state : states_) {
 			if(ImGui::TreeNode(state.first.c_str())){
+				state.second->ChildDrawData();
 				ImGui::TreePop();
 			}
+
 		}
 		ImGui::TreePop();
 	}
@@ -137,7 +139,7 @@ void Component_StateManager::DrawAddStateWindow()
 		if (ImGui::Button("add") || Input::IsKeyDown(DIK_RETURN)) {
 			
 			// ステートを追加
-			states_[stateName] = CreateState(stateName, stateType);
+			states_[stateName] = CreateState(stateName, stateType,holder_);
 
 			// 現在のステートが存在しない場合は追加したステートを現在のステートに設定
 			if (currentState_ == nullptr) currentState_ = states_[stateName];

@@ -7,8 +7,8 @@
 #include "Components/GaugeComponents/Component_HealthGauge.h"
 #include "Stage.h"
 
-Bullet::Bullet(GameObject* _parent) 
-:StageObject("Bullet","Models/DebugCollision/SphereCollider.fbx", _parent),isActive_(false), frame_(), speed_(), direction_()
+Bullet::Bullet(GameObject* _parent)
+	:StageObject("Bullet", modelFilePath_, _parent), isActive_(false), frame_(), speed_(), direction_()
 {
 }
 
@@ -45,7 +45,7 @@ void Bullet::Update()
 	if (isActive_ == false)return;
 
 	// ˆÚ“®
-	Move(direction_,speed_);
+	Move(direction_, speed_);
 
 	// Ž©“®íœ
 	//if (EFFEKSEERLIB::gEfk->IsEffectPlaying("Sylph10") == false)KillMe();
@@ -58,8 +58,8 @@ void Bullet::Update()
 void Bullet::Draw()
 {
 	// ƒ‚ƒfƒ‹‚Ì•`‰æ
-	//Model::SetTransform(modelHandle_, transform_);
-	//Model::Draw(modelHandle_);
+	Model::SetTransform(modelHandle_, transform_);
+	Model::Draw(modelHandle_);
 }
 
 void Bullet::OnCollision(GameObject* _target, Collider* _collider)
@@ -86,6 +86,8 @@ void Bullet::OnCollision(GameObject* _target, Collider* _collider)
 	}
 
 }
+
+
 
 void Bullet::Move(XMVECTOR _dir, float _speed)
 {

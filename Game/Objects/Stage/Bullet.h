@@ -5,7 +5,7 @@
 
 // effekseer: インクルード
 #include "../../../EffekseeLib/EffekseerVFX.h"/*★★★*/
-
+#include"../../../Engine/Json/JsonReader.h"
 
 /// <summary>
 /// 発射する弾を管理するクラス
@@ -33,12 +33,12 @@ public:
 	/// 初期化
 	/// </summary>
 	void Initialize() override;
-	
+
 	/// <summary>
 	/// 更新
 	/// </summary>
 	void Update() override;
-	
+
 	/// <summary>
 	/// 描画
 	/// </summary>
@@ -54,7 +54,7 @@ public:
 	/// </summary>
 	/// <param name="_speed">速度</param>
 	void SetSpeed(float _speed) { speed_ = _speed; }
-	
+
 	/// <summary>
 	/// 移動方向を設定
 	/// </summary>
@@ -65,6 +65,7 @@ public:
 	/// 実行
 	/// </summary>
 	void Execute() { isActive_ = true; }
+
 
 	/// <summary>
 	/// なんのオブジェクトが発射したかを設定

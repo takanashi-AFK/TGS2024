@@ -52,11 +52,10 @@ void Component_KingCactanBehavior::Update()
 		chase->SetTarget(target_);
 		chase->Start();
 
-
+		timer->Stop();
 		if (timer->GetIsEnd()) {
 
 			chase->Stop();
-			timer->Stop();
 
 			Component* shootcomp = GetChildComponent("ShootAttackComponent");
 			Component_ShootAttack* shoot = dynamic_cast<Component_ShootAttack*>(shootcomp);
@@ -65,8 +64,9 @@ void Component_KingCactanBehavior::Update()
 			XMFLOAT3 targetPos = target_->GetPosition();
 			shoot->SetShootingDirection(XMVector3Normalize(XMLoadFloat3(&targetPos) - XMLoadFloat3(&holderPos)));
 			shoot->Execute();
-
+			shoot->Stop();
 		}
+
 	}
 	else {
 

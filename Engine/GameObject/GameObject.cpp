@@ -194,7 +194,7 @@ void GameObject::KillAllChildren(void)
 
 std::list<Collider*> GameObject::GetColliderList()
 {
-	return std::list<Collider*>();
+	return colliderList_;
 }
 
 Collider* GameObject::GetCollider(int index)

@@ -70,5 +70,10 @@ public:
 	void SetGameObject(GameObject* gameObject) { pGameObject_ = gameObject; }
 	void SetCenter(XMFLOAT3 center) { center_ = center; }
 	void SetSize(XMFLOAT3 size) { size_ = size; }
+
+	//ÉQÉbÉ^Å[
+	XMFLOAT3 GetCenter() { return center_; }
+	XMFLOAT3 GetSize() { return size_; }
+	GameObject* GetGameObject() { return pGameObject_; }
 };
 

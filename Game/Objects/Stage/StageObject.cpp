@@ -114,6 +114,7 @@ bool StageObject::DeleteComponent(Component* _comp)
 	if (it == myComponents_.end()) return false;
 
 	// イテレータのコンポーネントを消す
+	(*it)->ChildRelease();
 	myComponents_.erase(it); return true;
 }
 

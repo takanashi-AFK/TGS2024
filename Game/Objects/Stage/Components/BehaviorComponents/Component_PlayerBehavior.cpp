@@ -15,6 +15,7 @@
 #include "../MoveComponents/Component_WASDInputMove.h"
 #include "../TimerComponent/Component_Timer.h"
 #include "../MotionComponent/Component_PlayerMotion.h"
+#include "../GuardComponent/Component_Guard.h"
 #include <algorithm> 
 #include "../../../../../Game/Objects/Stage/Components/GaugeComponents/Component_HealthGauge.h"
 #include "../../../../../Engine/ImGui/imgui.h"
@@ -45,6 +46,7 @@ void Component_PlayerBehavior::Initialize()
     if (FindChildComponent("Timer") == false)AddChildComponent(CreateComponent("Timer", Timer, holder_, this));
     if (FindChildComponent("HealthGauge") == false)AddChildComponent(CreateComponent("PlayerHealthGauge", HealthGauge, holder_, this));
     if (FindChildComponent("PlayerMotion") == false)AddChildComponent(CreateComponent("PlayerMotion", PlayerMotion, holder_, this));
+	if (FindChildComponent("Guard") == false)AddChildComponent(CreateComponent("Guard", ComponentType::Guard, holder_, this));
 }
 
 void Component_PlayerBehavior::Update()
@@ -82,6 +84,8 @@ void Component_PlayerBehavior::Update()
         Melee(); break;
     case PSTATE_SHOOT:
         Shoot(); break;
+    case PSTATE_GUARD:
+		Guard(); break;
     default:
         break;
     }
@@ -90,6 +94,7 @@ void Component_PlayerBehavior::Update()
 
 void Component_PlayerBehavior::Release()
 {
+	holder_->ClearCollider();
 }
 
 void Component_PlayerBehavior::DrawData()
@@ -197,6 +202,19 @@ void Component_PlayerBehavior::Shoot()
         SetState(PSTATE_IDLE);
     }
     ImGui::Text("shoot");
+}
+
+void Component_PlayerBehavior::Guard()
+{
+	auto guard = dynamic_cast<Component_Guard*>(GetChildComponent("Guard"));
+	if (guard == nullptr)return;
+
+	if (Input::IsKeyDown(DIK_SPACE)) {
+		guard->Execute();
+	}
+	else {
+		guard->Stop();
+	}
 }
 
 void Component_PlayerBehavior::ShootExe()

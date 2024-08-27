@@ -93,7 +93,7 @@ void Component_InputMove::OnStateChange(Component_StateManager* _stateManager)
 {
 	// 移動中かどうかでステートを変更
 	if(isMove_)
-		_stateManager->SetCurrentState(_stateManager->GetStates()["Walk"]);
+		_stateManager->SetCurrentState(_stateManager->GetState(STATE_TYPE::Walk));
 	else 
-		_stateManager->SetCurrentState(_stateManager->GetStates()["Idle"]);
+		_stateManager->SetCurrentState(_stateManager->GetState(STATE_TYPE::Idle));
 }

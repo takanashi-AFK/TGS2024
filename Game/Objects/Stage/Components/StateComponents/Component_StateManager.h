@@ -11,12 +11,11 @@ class Component_StateManager : public Component
 {
 private:
     std::unordered_map<string, State*> stateList_; // 保持する状態の配列
-    string currentStateKey_;  // 現在の状態を指定するキー
     std::vector<StateObserver*> observers_;
     State* currentState_;
+
     float changeLimit_;       // 状態を変更する際、変更まで時間を要する場合のリミッター
     float count_;             // 〃のカウンタ
-    string changeStateKey_;   // 〃の変更後の状態を指定するキー
     bool isAddStateWindowOpen_;
 public:
 
@@ -34,14 +33,14 @@ public:
 
 	void DrawAddStateWindow(Component_StateManager* _stateManager);
 
-    // 状態を変更する為の関数
-    bool ChangeState(string _key) {ChangeState(_key, 0);}
+    //// 状態を変更する為の関数
+    //bool ChangeState(string _key) {ChangeState(_key, 0);}
 
-    bool ChangeState(string _key, float _limit) {
-        changeStateKey_ = _key;
-        changeLimit_ = _limit;
-        count_ = 0;
-    }
+    //bool ChangeState(string _key, float _limit) {
+    //    changeStateKey_ = _key;
+    //    changeLimit_ = _limit;
+    //    count_ = 0;
+    //}
 
     bool AddState(State* _state) {
         if (_state == nullptr) return false;
@@ -54,10 +53,12 @@ public:
 
     State* CreateState(string _name, STATE_TYPE _type);
 
-    State* GetCurrentState();
 
     std::unordered_map<string, State*> GetStates() const { return stateList_; }
 
+    State* GetState(STATE_TYPE _type);
+
+    State* GetCurrentState();
     void SetCurrentState(State* _state) { currentState_ = _state; }
 
 	void AddObserver(StateObserver* observer) { observers_.push_back(observer); }

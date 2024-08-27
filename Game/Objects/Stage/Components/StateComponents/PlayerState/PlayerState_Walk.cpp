@@ -1,6 +1,6 @@
 #include "PlayerState_Walk.h"
 
-PlayerState_Walk::PlayerState_Walk(string _name) :State(_name, nullptr)
+PlayerState_Walk::PlayerState_Walk(string _name) :State(_name, nullptr,STATE_TYPE::Walk)
 {
 }
 

@@ -21,18 +21,11 @@ void Component_StateManager::Initialize()
 
 void Component_StateManager::Update()
 {
-	// 状態の変更処理 //////
-	if(currentStateKey_ != "") {
-		// 状態が遷移可能な場合遷移する
-		if (count_ >= changeLimit_) {
-			currentStateKey_ = changeStateKey_;  // 変更
-			stateList_[currentStateKey_]->Start();
-		}
-		count_ += 1 / FPS;  // カウントを進める
-	// キーで指定された状態が存在するかどうかを確認し、現在の状態の更新処理を実行
-	if (stateList_.find(currentStateKey_) != stateList_.end()) stateList_[currentStateKey_]->Update();
-	}
+	if (currentState_ == nullptr)return;
 
+	// キーで指定された状態が存在するかどうかを確認し、現在の状態の更新処理を実行
+	currentState_->Update();
+	
 	// 現在どの状態なのかを判定し、currentStateに代入
 	for (auto* observer : observers_) {
 		observer->OnStateChange(this);
@@ -129,21 +122,38 @@ void Component_StateManager::DrawAddStateWindow(Component_StateManager* _stateMa
 
 void Component_StateManager::Save(json& _saveObj)
 {
-	// 各状態の保存
+	// 現在のステート名を保存
+	_saveObj["currentStateName"] = currentState_ != nullptr ? currentState_->GetName() : "null";
+
+	// ステートリストを保存
 	for (auto state : stateList_) {
-		state.second->Save(_saveObj);
+		json stateObj;
+		state.second->ChildSave(stateObj);
+		_saveObj["states"][state.first] = stateObj;
 	}
-	_saveObj["currentStateKey_"] = currentStateKey_;
 }
 
 void Component_StateManager::Load(json& _loadObj)
 {
-	// 各状態の読み込み
-	for (auto state : stateList_) {
-		state.second->Load(_loadObj);
-		
+
+	// ステートリストを読込
+	for (auto state : _loadObj["states"].items()) {
+
+		// ステートを生成
+		State* s = CreateState(state.key(), (STATE_TYPE)state.value()["stateType_"].get<int>());
+
+		if (s != nullptr) {
+			s->ChildLoad(state.value());
+			stateList_[state.key()] = s;
+		}
 	}
-	if (_loadObj.contains("currentStateKey_"))currentStateKey_=_loadObj["currentStateKey_"];
+
+	// 現在のステート名を読込
+	string currentStateName = _loadObj["currentStateName"].get<string>();
+	currentState_ = stateList_[currentStateName];
+
+	// 現在のステートが存在しない場合はステートリストの先頭を現在のステートに設定
+	if (currentState_ == nullptr || !stateList_.empty()) currentState_ = stateList_.begin()->second;
 }
 
 State* Component_StateManager::CreateState(string _name, STATE_TYPE _type)
@@ -159,5 +169,13 @@ State* Component_StateManager::CreateState(string _name, STATE_TYPE _type)
 
 State* Component_StateManager::GetCurrentState()
 {
-	return stateList_[currentStateKey_];
+	return currentState_;
+}
+
+State* Component_StateManager::GetState(STATE_TYPE _type)
+{
+	for (auto state : stateList_) {
+		if (state.second->GetStateType() == _type)return state.second;
+	}
+	return nullptr;
 }

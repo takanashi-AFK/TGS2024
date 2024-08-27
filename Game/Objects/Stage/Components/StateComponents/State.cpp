@@ -12,38 +12,40 @@ void State::ChildInitialize()
 	for (auto& modelData : modelDatas_) modelData.Load();
 }
 
-void State::Save(json& _saveObj)
+
+void State::ChildSave(json& _saveObj)
 {
-	_saveObj["modelData"] = json::array(); 
-	for (int i = 0; i < modelDatas_.size(); i++) {
-		json data;
-		data["filePath"] = modelDatas_[i].filePath;
-		data["animSpeed"] = modelDatas_[i].animSpeed;
-		data["animMaxFrame"] = modelDatas_[i].animMaxFrame;
-		data["animStartFrame"] = modelDatas_[i].animStartFrame;
-		_saveObj["modelData"].push_back(data);
-	}
-	_saveObj["name_"] = name_;
-	_saveObj["type_"] = type_;
+    _saveObj["modelData"] = json::array();
+    for (int i = 0; i < modelDatas_.size(); i++) {
+        json data;
+        data["filePath"] = modelDatas_[i].filePath;
+        data["animSpeed"] = modelDatas_[i].animSpeed;
+        data["animMaxFrame"] = modelDatas_[i].animMaxFrame;
+        data["animStartFrame"] = modelDatas_[i].animStartFrame;
+        _saveObj["modelData"].push_back(data);
+    }
+    _saveObj["name_"] = name_;
+    _saveObj["stateType_"] = stateType_;
 
 }
 
-void State::Load(json& _loadObj)
+void State::ChildLoad(json& _loadObj)
 {
-	if (_loadObj.find("modelData") != _loadObj.end() && _loadObj["modelData"].is_array()) {
-		modelDatas_.clear();
-		for (const auto& data : _loadObj["modelData"]) {
-			ModelData modelData;
-			if(_loadObj.contains("filePath")) modelData.filePath = data["filePath"];
+    if (_loadObj.find("modelData") != _loadObj.end() && _loadObj["modelData"].is_array()) {
+        modelDatas_.clear();
+        for (const auto& data : _loadObj["modelData"]) {
+            ModelData modelData;
+            if (_loadObj.contains("filePath")) modelData.filePath = data["filePath"];
             if (_loadObj.contains("animSpeed"))modelData.animSpeed = data["animSpeed"];
             if (_loadObj.contains("animMaxFrame"))modelData.animMaxFrame = data["animMaxFrame"];
             if (_loadObj.contains("animStartFrame"))modelData.animStartFrame = data["animStartFrame"];
-			modelDatas_.push_back(modelData);  
-		}
-	}
+            modelDatas_.push_back(modelData);
+        }
+    }
 
-	if (_loadObj.contains("name_"))name_ = _loadObj["name_"];
-	if (_loadObj.contains("type_"))type_ = (STATE_TYPE)_loadObj["type_"];
+    if (_loadObj.contains("name_"))name_ = _loadObj["name_"];
+    if (_loadObj.contains("stateType_"))stateType_ = (STATE_TYPE)_loadObj["stateType_"];
+
 }
 
 void State::DrawAddModelWindow()

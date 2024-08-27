@@ -19,7 +19,7 @@ struct ModelData {
 	string filePath;
 	int animSpeed;
 	int animMaxFrame;
-	int animStartFrame;
+	float animStartFrame;
 	void Load() {
 		modelHandle = Model::Load(filePath);
 		assert(modelHandle >= -1);
@@ -34,20 +34,26 @@ private:
 	bool isAddModelWindowOpen_;
 protected:
 	string name_;  // 状態名
-	STATE_TYPE type_;  // 状態タイプ
+	STATE_TYPE stateType_;  // 状態タイプ
 	StageObject* holder_;  // 保有者
 	std::vector<ModelData> modelDatas_;
 public:
-	State(string _name, StageObject* _holder) :name_(_name), holder_(_holder) {}
+	State(string _name, StageObject* _holder, STATE_TYPE _stateType) 
+		:name_(_name), holder_(_holder),stateType_(_stateType) {}
 	virtual void Initialize() = 0;  // 初期化
 	virtual void Start() = 0;       // 開始
 	virtual void Update() = 0;      // 更新
-	void Save(json &_saveObj);
-	void Load(json &_loadObj);
+	virtual void Save(json& _saveObj) {}
+	virtual void Load(json &_loadObj){}
+
+	void ChildInitialize();
+	void ChildSave(json& _saveObj);
+	void ChildLoad(json& _loadObj);
+
 	void AddModel() { isAddModelWindowOpen_ = true; }
 	void DrawAddModelWindow();
-	void ChildInitialize();
 	string GetName() { return name_; }
+	STATE_TYPE GetStateType() { return stateType_; }
 	std::vector<ModelData> GetModelDatas() { return modelDatas_; }	
 
 	bool operator==(const State& other) const {

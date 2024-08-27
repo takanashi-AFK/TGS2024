@@ -269,7 +269,7 @@ string ComponentTypeToString(ComponentType _type)
 	case WASDInputMove: return "WASDInputMoveComponent";
 	case PlayerMotion: return "PlayerMotionComponent";
 	case Teleporter: return "TeleporterComponent";
-	case KingCactanBehavior:return "KingCactanBehavior";
+	case KingCactanBehavior:return "KingCactanBehaviorComponent";
 	default: return "None";
 	}
 }

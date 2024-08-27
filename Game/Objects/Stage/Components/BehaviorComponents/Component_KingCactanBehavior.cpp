@@ -19,48 +19,46 @@ void Component_KingCactanBehavior::Initialize()
 {
 	holder_->AddCollider(new BoxCollider(XMFLOAT3(0, 0, 0), XMFLOAT3(5, 5, 5)));
 
-	if (FindChildComponent("Chase") == false)AddChildComponent(CreateComponent("Chase", Chase, holder_, this));
-	if (FindChildComponent("CircleRangeDetector") == false)AddChildComponent(CreateComponent("CircleRangeDector", CircleRangeDetector, holder_, this));
-	if (FindChildComponent("ShootAttack") == false)AddChildComponent(CreateComponent("ShootAttack", ShootAttack, holder_, this));
-	if (FindChildComponent("HealthGauge") == false)AddChildComponent(CreateComponent("HealthGauge", HealthGauge, holder_, this));
-	if (FindChildComponent("Timer") == false)AddChildComponent(CreateComponent("Timer", Timer, holder_, this));
+	if (FindChildComponent("ChaseComponent") == false)AddChildComponent(CreateComponent("ChaseComponent", Chase, holder_, this));
+	if (FindChildComponent("CircleRangeDetectorComponent") == false)AddChildComponent(CreateComponent("CircleRangeDetectorComponent", CircleRangeDetector, holder_, this));
+	if (FindChildComponent("ShootAttackComponent") == false)AddChildComponent(CreateComponent("ShootAttackComponent", ShootAttack, holder_, this));
+	if (FindChildComponent("HealthGaugeComponent") == false)AddChildComponent(CreateComponent("HealthGaugeComponent", HealthGauge, holder_, this));
+	if (FindChildComponent("TimerComponent") == false)AddChildComponent(CreateComponent("TimerComponent", Timer, holder_, this));
 }
 
 void Component_KingCactanBehavior::Update()
 {
+	//ターゲットがいるかどうか
 	if (target_ == nullptr)target_ = (StageObject*)holder_->FindObject(targetName_);
 	if (target_ == nullptr)return;
 
-	Component* comp = GetChildComponent("CircleRangeDetector");
+	Component* comp = GetChildComponent("CircleRangeDetectorComponent");
 	Component_CircleRangeDetector* detector = dynamic_cast<Component_CircleRangeDetector*>(comp);
 	if (detector == nullptr)return;
 
 	//ターゲットが範囲内にいる場合
 	if (detector->IsContains()) {
 
-		Component* timerComp = GetChildComponent("Timer");
+		Component* timerComp = GetChildComponent("TimerComponent");
 		Component_Timer* timer = dynamic_cast<Component_Timer*>(timerComp);
 		if (timer == nullptr)return;
+		timer->SetTime(5.f);
 		timer->Start();
 
-		Component* chaseComp = GetChildComponent("Chase");
+		Component* chaseComp = GetChildComponent("ChaseComponent");
 		Component_Chase* chase = dynamic_cast<Component_Chase*>(chaseComp);
 		if (chase == nullptr)return;
-
-		//n秒ごとにチェイスを実行
-
 
 		chase->SetTarget(target_);
 		chase->Start();
 
 
-		else {
+		if (timer->GetIsEnd()) {
 
 			chase->Stop();
 			timer->Stop();
 
-
-			Component* shootcomp = GetChildComponent("ShootAttack");
+			Component* shootcomp = GetChildComponent("ShootAttackComponent");
 			Component_ShootAttack* shoot = dynamic_cast<Component_ShootAttack*>(shootcomp);
 			if (shoot == nullptr) return;
 			XMFLOAT3 holderPos = holder_->GetPosition();
@@ -72,7 +70,7 @@ void Component_KingCactanBehavior::Update()
 	}
 	else {
 
-		Component* timecomp = GetChildComponent("Timer");
+		Component* timecomp = GetChildComponent("TimerComponent");
 		Component_Timer* time = dynamic_cast<Component_Timer*>(timecomp);
 		if (time == nullptr)return;
 		time->Stop();
@@ -113,13 +111,13 @@ void Component_KingCactanBehavior::DrawData()
 		ImGui::EndCombo();
 	}
 
-	/*if (select == 0)target_ = nullptr;
+	if (select == 0)target_ = nullptr;
 	else {
 		target_ = (StageObject*)holder_->FindObject(objNames[select]);
 
-		auto detector = dynamic_cast<Component_CircleRangeDetector*>(GetChildComponent("CircleRangeDetector"));
-		detector->SetTarget(target_);
-	}*/
+		/*	auto detector = dynamic_cast<Component_CircleRangeDetector*>(GetChildComponent("CircleRangeDetector"));
+			detector->SetTarget(target_);*/
+	}
 
 #endif // _DEBUG
 }

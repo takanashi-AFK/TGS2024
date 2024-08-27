@@ -31,30 +31,15 @@ void Component_InputMove::Update()
 		TPSCamera* tpsCamera = (TPSCamera*)holder_->FindObject("TPSCamera");
 		if (tpsCamera != nullptr) {
 
-			// カメラの向きを取得
-			XMFLOAT2 angle = tpsCamera->GetAngle();
-
-			// カメラの視線ベクトルを取得
-			XMVECTOR cameraSightLine = Camera::GetSightLine();
-
-			// 入力による移動方向を取得
-			if (Input::IsKey(DIK_W)) {
-				moveDir += cameraSightLine;
-				isMove_ = true;
-			}
+			// 移動方向を計算
+			CalcDirection(moveDir, tpsCamera,false);
 		}
 
 		// カメラが存在しない場合
 		else {
-			// 入力による移動方向を取得
-			if (Input::IsKey(DIK_W)) {
-				moveDir += XMVectorSet(0.0f, 0.0f, 1.0f, 0.0f);
-				isMove_ = true;
-			}
+			// 移動方向を計算
+			CalcDirection(moveDir);
 		}
-
-		// 取得した方向ベクトルを正規化
-		moveDir = XMVector3Normalize(moveDir);
 	}
 
 	// 移動速度を指定
@@ -94,4 +79,66 @@ void Component_InputMove::OnStateChange(Component_StateManager* _stateManager)
 	// 移動中かどうかでステートを変更
 	if(isMove_)_stateManager->SetCurrentState(_stateManager->GetStates()["Walk"]);
 	else _stateManager->SetCurrentState(_stateManager->GetStates()["Idle"]);
+}
+
+void Component_InputMove::CalcDirection(XMVECTOR& _dir)
+{
+	// 入力による移動方向を取得
+	if (Input::IsKey(DIK_W)) {
+		_dir += XMVectorSet(0.0f, 0.0f, 1.0f, 0.0f);
+		isMove_ = true;
+	}
+
+	if (Input::IsKey(DIK_S)) {
+		_dir += XMVectorSet(0.0f, 0.0f, -1.0f, 0.0f);
+		isMove_ = true;
+	}
+
+	if (Input::IsKey(DIK_A)) {
+		_dir += XMVectorSet(-1.0f, 0.0f, 0.0f, 0.0f);
+		isMove_ = true;
+	}
+
+	if (Input::IsKey(DIK_D)) {
+		_dir += XMVectorSet(1.0f, 0.0f, 0.0f, 0.0f);
+		isMove_ = true;
+	}
+
+	// 取得した方向ベクトルを正規化
+	_dir = XMVector3Normalize(_dir);
+}
+
+void Component_InputMove::CalcDirection(XMVECTOR& _dir, TPSCamera* _cam,bool _isYMove)
+{
+	// カメラの向きを取得
+	XMFLOAT2 angle = _cam->GetAngle();
+
+	// カメラの視線ベクトルを取得
+	XMVECTOR cameraSightLine = Camera::GetSightLine();
+	if(_isYMove == false)cameraSightLine = XMVectorSetY(cameraSightLine, 0.0f);
+
+	// 入力による移動方向を取得
+	if (Input::IsKey(DIK_W)) {
+		_dir += cameraSightLine;
+		isMove_ = true;
+	}
+
+	if (Input::IsKey(DIK_S)) {
+		_dir += -cameraSightLine;
+		isMove_ = true;
+	}
+
+	if (Input::IsKey(DIK_A)) {
+		_dir += XMVector3Transform(cameraSightLine,XMMatrixRotationY(XMConvertToRadians(-90.0f)));
+		
+		isMove_ = true;
+	}
+
+	if (Input::IsKey(DIK_D)) {
+		_dir += XMVector3Transform(cameraSightLine, XMMatrixRotationY(XMConvertToRadians(90.0f)));
+		isMove_ = true;
+	}
+
+	// 取得した方向ベクトルを正規化
+	_dir = XMVector3Normalize(_dir);
 }

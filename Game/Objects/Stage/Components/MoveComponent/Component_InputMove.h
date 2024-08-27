@@ -2,6 +2,8 @@
 #include "../Component.h"
 #include "../StateManagerComponent/StateObserver.h"
 
+class TPSCamera;
+
 class Component_InputMove : public Component , StateObserver
 {
 private:
@@ -31,5 +33,9 @@ public:
 
 	// èÛë‘ïœçXí ím
 	void OnStateChange(Component_StateManager* _stateManager) override;
+
+private:
+	void CalcDirection(XMVECTOR& dir);
+	void CalcDirection(XMVECTOR& _dir, TPSCamera* _cam,bool _isYMove);
 };
 

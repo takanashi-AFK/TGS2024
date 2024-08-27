@@ -35,10 +35,38 @@ void Component_StateManager::Release()
 
 void Component_StateManager::Save(json& _saveObj)
 {
+	// 現在のステート名を保存
+	_saveObj["currentStateName"] = currentState_ != nullptr ? currentState_->GetName() : "null";
+
+	// ステートリストを保存
+	for (auto state : states_) {
+		json stateObj;
+		state.second->ChildSave(stateObj);
+		_saveObj["states"][state.first] = stateObj;
+	}
 }
 
 void Component_StateManager::Load(json& _loadObj)
 {
+
+	// ステートリストを読込
+	for (auto state : _loadObj["states"].items()) {
+
+		// ステートを生成
+		State* s = CreateState(state.key(), (StateType)state.value()["type"].get<int>());
+
+		if(s != nullptr){
+			s->ChildLoad(state.value());
+			states_[state.key()] = s;
+		}
+	}
+
+	// 現在のステート名を読込
+	string currentStateName = _loadObj["currentStateName"].get<string>();
+	currentState_ = states_[currentStateName];
+
+	// 現在のステートが存在しない場合はステートリストの先頭を現在のステートに設定
+	if (currentState_ == nullptr || !states_.empty() ) currentState_ = states_.begin()->second;
 }
 
 void Component_StateManager::DrawData()

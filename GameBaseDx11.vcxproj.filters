@@ -62,6 +62,18 @@
     <Filter Include="03Game\Otheres">
       <UniqueIdentifier>{c2efa7cb-5f10-4c3c-b6f4-cff055139e25}</UniqueIdentifier>
     </Filter>
+    <Filter Include="debug">
+      <UniqueIdentifier>{3ff1896e-9205-4641-b6e2-d29168c0b9e4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="debug\MoveComponent">
+      <UniqueIdentifier>{f1c7fce6-475d-443e-8806-7d8d9ca21aef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="debug\StateManagerComponent">
+      <UniqueIdentifier>{397f0249-1675-4aae-9a44-4199fb1ccb47}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="debug\StateManagerComponent\States">
+      <UniqueIdentifier>{fb745c31-f1d2-4aab-9318-ff63ce814138}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine\Collider\BoxCollider.cpp">
@@ -208,13 +220,27 @@
     <ClCompile Include="Game\Scenes\Scene_Test.cpp">
       <Filter>03Game\Scenes\DebugScenes</Filter>
     </ClCompile>
-    <ClCompile Include="EffekseeLib\EffekseerVFX.cpp" />
-    <ClCompile Include="Game\Objects\UI\UIText.cpp" />
-    <ClCompile Include="Game\Objects\Stage\Components\StateManagerComponent\Component_StateManager.cpp" />
-    <ClCompile Include="Game\Objects\Stage\Components\StateManagerComponent\States\State.cpp" />
-    <ClCompile Include="Game\Objects\Stage\Components\StateManagerComponent\StateObserver.cpp" />
-    <ClCompile Include="Game\Objects\Stage\Components\MoveComponent\Component_InputMove.cpp" />
-    <ClCompile Include="Game\Objects\Stage\Components\StateManagerComponent\States\State_Idle.cpp" />
+    <ClCompile Include="EffekseeLib\EffekseerVFX.cpp">
+      <Filter>00Effekseer</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Objects\UI\UIText.cpp">
+      <Filter>03Game\Objects\UIObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Objects\Stage\Components\MoveComponent\Component_InputMove.cpp">
+      <Filter>debug\MoveComponent</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Objects\Stage\Components\StateManagerComponent\Component_StateManager.cpp">
+      <Filter>debug\StateManagerComponent</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Objects\Stage\Components\StateManagerComponent\States\State.cpp">
+      <Filter>debug\StateManagerComponent\States</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Objects\Stage\Components\StateManagerComponent\States\State_Idle.cpp">
+      <Filter>debug\StateManagerComponent\States</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Objects\Stage\Components\StateManagerComponent\StateObserver.cpp">
+      <Filter>debug\StateManagerComponent</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Collider\BoxCollider.h">
@@ -367,13 +393,27 @@
     <ClInclude Include="Game\Scenes\Scene_Test.h">
       <Filter>03Game\Scenes\DebugScenes</Filter>
     </ClInclude>
-    <ClInclude Include="EffekseeLib\EffekseerVFX.h" />
-    <ClInclude Include="Game\Objects\UI\UIText.h" />
-    <ClInclude Include="Game\Objects\Stage\Components\StateManagerComponent\Component_StateManager.h" />
-    <ClInclude Include="Game\Objects\Stage\Components\StateManagerComponent\States\State.h" />
-    <ClInclude Include="Game\Objects\Stage\Components\StateManagerComponent\StateObserver.h" />
-    <ClInclude Include="Game\Objects\Stage\Components\MoveComponent\Component_InputMove.h" />
-    <ClInclude Include="Game\Objects\Stage\Components\StateManagerComponent\States\State_Idle.h" />
+    <ClInclude Include="EffekseeLib\EffekseerVFX.h">
+      <Filter>00Effekseer</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Objects\UI\UIText.h">
+      <Filter>03Game\Objects\UIObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Objects\Stage\Components\MoveComponent\Component_InputMove.h">
+      <Filter>debug\MoveComponent</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Objects\Stage\Components\StateManagerComponent\Component_StateManager.h">
+      <Filter>debug\StateManagerComponent</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Objects\Stage\Components\StateManagerComponent\States\State.h">
+      <Filter>debug\StateManagerComponent\States</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Objects\Stage\Components\StateManagerComponent\States\State_Idle.h">
+      <Filter>debug\StateManagerComponent\States</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Objects\Stage\Components\StateManagerComponent\StateObserver.h">
+      <Filter>debug\StateManagerComponent</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Assets\Shader\Simple2D.hlsl">

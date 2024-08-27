@@ -21,3 +21,17 @@ string StateTypeToString(StateType _type)
 	default: return "None";
 	}
 }
+
+void State::ChildSave(json& _saveObj)
+{
+	_saveObj["name"] = name_;
+
+	_saveObj["type"] = (int)type_;
+
+	Save(_saveObj);
+}
+
+void State::ChildLoad(json& _loadObj)
+{
+	Load(_loadObj);
+}

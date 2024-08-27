@@ -34,6 +34,7 @@ private:
 	bool isAddModelWindowOpen_;
 protected:
 	string name_;  // 状態名
+	STATE_TYPE type_;  // 状態タイプ
 	StageObject* holder_;  // 保有者
 	std::vector<ModelData> modelDatas_;
 public:

@@ -4,6 +4,7 @@
 using namespace FileManager;
 
 #include "PlayerState/State_Idle.h"
+#include "PlayerState/PlayerState_Walk.h"
 
 void State::ChildInitialize()
 {
@@ -22,6 +23,9 @@ void State::Save(json& _saveObj)
 		data["animStartFrame"] = modelDatas_[i].animStartFrame;
 		_saveObj["modelData"].push_back(data);
 	}
+	_saveObj["name_"] = name_;
+	_saveObj["type_"] = type_;
+
 }
 
 void State::Load(json& _loadObj)
@@ -37,6 +41,9 @@ void State::Load(json& _loadObj)
 			modelDatas_.push_back(modelData);  
 		}
 	}
+
+	if (_loadObj.contains("name_"))name_ = _loadObj["name_"];
+	if (_loadObj.contains("type_"))type_ = (STATE_TYPE)_loadObj["type_"];
 }
 
 void State::DrawAddModelWindow()
@@ -110,6 +117,7 @@ State* CreateState(string _name, STATE_TYPE _type)
     switch (_type)
     {
     case Idle: return new State_Idle(_name);
+	case Walk: return new PlayerState_Walk(_name);
     default: return nullptr;
     }
 }

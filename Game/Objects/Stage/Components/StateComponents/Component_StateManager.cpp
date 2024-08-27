@@ -51,13 +51,14 @@ void Component_StateManager::DrawData()
 	// 状態追加用ウィンドウ
 	if (isAddStateWindowOpen_)DrawAddStateWindow(this);
 
-	if (currentState_ != nullptr)
-	ImGui::Text("%s", currentState_->GetName().c_str());
+	// 現在のステート名を表示
+	ImGui::Text("currentState_: %s", currentState_ != nullptr ? currentState_->GetName().c_str() : "null");
+
 	// 追加されている状態をツリーノードで表示
 	if (ImGui::TreeNode("State list")) {
 		// ここに現在追加されているStateを表示
 		for (auto state : stateList_) { 
-			if (ImGui::TreeNode("state")) {
+			if (ImGui::TreeNode(state.second->GetName().c_str())) {
 
 				const type_info& id = typeid(*state.second);
 				ImGui::Text("Name : %s", state.second->GetName().c_str());
@@ -140,6 +141,7 @@ void Component_StateManager::Load(json& _loadObj)
 	// 各状態の読み込み
 	for (auto state : stateList_) {
 		state.second->Load(_loadObj);
+		
 	}
 	if (_loadObj.contains("currentStateKey_"))currentStateKey_=_loadObj["currentStateKey_"];
 }

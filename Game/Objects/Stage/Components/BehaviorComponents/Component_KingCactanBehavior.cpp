@@ -1,7 +1,7 @@
 #include "Component_KingCactanBehavior.h"
 
-#include"../../../../Engine/ImGui/imgui.h"
-#include"../../../../Engine/Global.h"
+#include"../../../../../Engine/ImGui/imgui.h"
+#include"../../../../../Engine/Global.h"
 #include "../../Stage.h"
 #include "../../StageObject.h" 
 #include"../MoveComponents/Component_Chase.h"
@@ -52,11 +52,15 @@ void Component_KingCactanBehavior::Update()
 		chase->SetTarget(target_);
 		chase->Start();
 
-		timer->Stop();
+		//タイマーが終了したのであれば
 		if (timer->GetIsEnd()) {
 
+			timer->Reset();
+
+			timer->Stop();
 			chase->Stop();
 
+			
 			Component* shootcomp = GetChildComponent("ShootAttackComponent");
 			Component_ShootAttack* shoot = dynamic_cast<Component_ShootAttack*>(shootcomp);
 			if (shoot == nullptr) return;
@@ -65,8 +69,9 @@ void Component_KingCactanBehavior::Update()
 			shoot->SetShootingDirection(XMVector3Normalize(XMLoadFloat3(&targetPos) - XMLoadFloat3(&holderPos)));
 			shoot->Execute();
 			shoot->Stop();
-		}
 
+		}
+		
 	}
 	else {
 

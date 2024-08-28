@@ -25,8 +25,7 @@ void Component_KingCactanBehavior::Initialize()
 	if (FindChildComponent("HealthGaugeComponent") == false)AddChildComponent(CreateComponent("HealthGaugeComponent", HealthGauge, holder_, this));
 	if (FindChildComponent("TimerComponent") == false)AddChildComponent(CreateComponent("TimerComponent", Timer, holder_, this));
 
-	Bullet* bullet = Instantiate<Bullet>(holder_->GetParent());
-	bullet->SetModelHandle("Models/Enemies/Cactan/cactan.fbx");
+
 }
 
 void Component_KingCactanBehavior::Update()
@@ -63,18 +62,20 @@ void Component_KingCactanBehavior::Update()
 			timer->Stop();
 			chase->Stop();
 
-			
+
 			Component* shootcomp = GetChildComponent("ShootAttackComponent");
 			Component_ShootAttack* shoot = dynamic_cast<Component_ShootAttack*>(shootcomp);
 			if (shoot == nullptr) return;
 			XMFLOAT3 holderPos = holder_->GetPosition();
 			XMFLOAT3 targetPos = target_->GetPosition();
+			Bullet* bullet = Instantiate<Bullet>(holder_->GetParent());
+			bullet->SetModelHandle("Models/Enemies/Cactan/cactan.fbx");
 			shoot->SetShootingDirection(XMVector3Normalize(XMLoadFloat3(&targetPos) - XMLoadFloat3(&holderPos)));
 			shoot->Execute();
 			shoot->Stop();
 
 		}
-		
+
 	}
 	else {
 

@@ -67,4 +67,7 @@ void Component_ShootAttack::DrawData()
 
 	// UŒ‚ƒ{ƒ^ƒ“
 	if (ImGui::Button("Execute"))this->Execute();
+
+	Bullet* bullet = Instantiate<Bullet>(holder_->GetParent());
+	bullet->DrawData();
 }

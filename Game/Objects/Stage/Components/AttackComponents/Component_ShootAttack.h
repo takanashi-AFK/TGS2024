@@ -5,7 +5,7 @@
 #include <DirectXMath.h>
 
 using namespace DirectX;
-
+class Bullet;
 /// <summary>
 /// ○〇を撃ち放つ攻撃コンポーネント
 /// </summary>
@@ -15,7 +15,6 @@ private:
 	float shootingSpeed_;			// 弾の速度
 	XMVECTOR shootingDirection_;	// 弾の方向
 	XMFLOAT3 shootingPosition_;		// 弾の発射位置
-
 	bool isShootPositionSet_;		// 発射位置が設定されているか
 public:
 	/// <summary>

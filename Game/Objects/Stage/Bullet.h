@@ -66,6 +66,11 @@ public:
 	/// </summary>
 	void Execute() { isActive_ = true; }
 
+	
+	
+
+	void DrawData() override;
+
 
 	/// <summary>
 	/// なんのオブジェクトが発射したかを設定

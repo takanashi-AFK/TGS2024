@@ -66,15 +66,16 @@ public:
 	/// </summary>
 	void Execute() { isActive_ = true; }
 
-	
-	void SetModelHandle(string _modelfilepath) { modelFilePath_ = _modelfilepath; }
 
+	void SetModelFilePath(string _modelfilepath) { modelFilePath_ = _modelfilepath; }
 
+	string  GetModelFilePath() { return modelFilePath_; }
 	/// <summary>
 	/// なんのオブジェクトが発射したかを設定
 	/// </summary>
 	/// <param name="_shooter"></param>
 	void SetShooter(StageObject* _shooter) { shooter_ = _shooter; }
+
 
 private:
 	/// <summary>

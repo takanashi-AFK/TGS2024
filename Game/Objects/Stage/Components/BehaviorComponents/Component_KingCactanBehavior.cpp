@@ -62,14 +62,16 @@ void Component_KingCactanBehavior::Update()
 			timer->Stop();
 			chase->Stop();
 
+			//behaviorからshootのメンバ、string pathにセットする
+			//shootからbulletのメンバ、string model pathにセットする
 
 			Component* shootcomp = GetChildComponent("ShootAttackComponent");
 			Component_ShootAttack* shoot = dynamic_cast<Component_ShootAttack*>(shootcomp);
 			if (shoot == nullptr) return;
 			XMFLOAT3 holderPos = holder_->GetPosition();
 			XMFLOAT3 targetPos = target_->GetPosition();
-			Bullet* bullet = Instantiate<Bullet>(holder_->GetParent());
-			bullet->SetModelHandle("Models/Enemies/Cactan/cactan.fbx");
+			Bullet* bullet = dynamic_cast<Bullet*>(shoot);
+			bullet->SetModelFilePath("Models/Enemies/Cactan/cactan.fbx");
 			shoot->SetShootingDirection(XMVector3Normalize(XMLoadFloat3(&targetPos) - XMLoadFloat3(&holderPos)));
 			shoot->Execute();
 			shoot->Stop();

@@ -9,7 +9,7 @@
 #include"../AttackComponents/Component_ShootAttack.h"
 #include"../GaugeComponents/Component_HealthGauge.h"
 #include"../TimerComponent/Component_Timer.h"
-
+#include"../../Bullet.h"
 Component_KingCactanBehavior::Component_KingCactanBehavior(string _name, StageObject* _holder, Component* _parent)
 	:Component(_holder, _name, KingCactanBehavior, _parent)
 {
@@ -24,6 +24,9 @@ void Component_KingCactanBehavior::Initialize()
 	if (FindChildComponent("ShootAttackComponent") == false)AddChildComponent(CreateComponent("ShootAttackComponent", ShootAttack, holder_, this));
 	if (FindChildComponent("HealthGaugeComponent") == false)AddChildComponent(CreateComponent("HealthGaugeComponent", HealthGauge, holder_, this));
 	if (FindChildComponent("TimerComponent") == false)AddChildComponent(CreateComponent("TimerComponent", Timer, holder_, this));
+
+	Bullet* bullet = Instantiate<Bullet>(holder_->GetParent());
+	bullet->SetModelHandle("Models/Enemies/Cactan/cactan.fbx");
 }
 
 void Component_KingCactanBehavior::Update()

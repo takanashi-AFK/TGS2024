@@ -67,9 +67,7 @@ public:
 	void Execute() { isActive_ = true; }
 
 	
-	
-
-	void DrawData() override;
+	void SetModelHandle(string _modelfilepath) { modelFilePath_ = _modelfilepath; }
 
 
 	/// <summary>

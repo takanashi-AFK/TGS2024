@@ -281,16 +281,11 @@
       <Filter>03Game\Scenes\DebugScenes</Filter>
     </ClCompile>
     <ClCompile Include="Game\Objects\Stage\Components\MoveComponents\Component_TackleMove.cpp" />
-    <ClCompile Include="Game\Objects\Stage\Components\AttackComponents\Component_MeleeAttack.cpp" />
     <ClCompile Include="Game\Objects\UI\UIText.cpp" />
-    <ClCompile Include="Game\Objects\Stage\Components\BehaviorComponents\Component_BossBehavior.cpp" />
     <ClCompile Include="Game\Objects\Stage\Components\MoveComponents\Component_TackleMove.cpp" />
     <ClCompile Include="Game\Objects\Stage\Components\MotionComponent\Component_Motion.cpp" />
     <ClCompile Include="Game\Objects\Stage\Components\MotionComponent\Component_PlayerMotion.cpp" />
     <ClCompile Include="Game\Objects\Stage\Components\TeleporterComponent\Component_Teleporter.cpp" />
-    <ClCompile Include="Game\Objects\Stage\Components\BehaviorComponents\Component_KingCactanBehavior.cpp">
-      <Filter>03Game\Objects\Stage\Components\BehaviorComponents</Filter>
-    </ClCompile>
     <ClCompile Include="Game\Objects\Stage\Components\AttackComponents\Component_Attack.cpp">
       <Filter>03Game\Objects\Stage\Components\AttackComponents</Filter>
     </ClCompile>
@@ -308,6 +303,15 @@
     </ClCompile>
     <ClCompile Include="EffekseeLib\EffekseerVFX.cpp">
       <Filter>00Effekseer</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Objects\Stage\Components\BehaviorComponents\Component_KingCactanBehavior.cpp">
+      <Filter>03Game\Objects\Stage\Components\BehaviorComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Objects\Stage\Components\BehaviorComponents\Component_BossBehavior.cpp">
+      <Filter>03Game\Objects\Stage\Components\BehaviorComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Objects\Stage\Components\AttackComponents\Component_MeleeAttack.cpp">
+      <Filter>03Game\Objects\Stage\Components\AttackComponents</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -516,9 +520,7 @@
       <Filter>03Game\Scenes\DebugScenes</Filter>
     </ClInclude>
     <ClInclude Include="Game\Objects\Stage\Components\MoveComponents\Component_TackleMove.h" />
-    <ClInclude Include="Game\Objects\Stage\Components\AttackComponents\Component_MeleeAttack.h" />
     <ClInclude Include="Game\Objects\UI\UIText.h" />
-    <ClInclude Include="Game\Objects\Stage\Components\BehaviorComponents\Component_BossBehavior.h" />
     <ClInclude Include="Game\Objects\Stage\Components\MoveComponents\Component_TackleMove.h" />
     <ClInclude Include="Game\Objects\Stage\Components\MotionComponent\Component_Motion.h" />
     <ClInclude Include="Game\Objects\Stage\Components\MotionComponent\Component_PlayerMotion.h" />
@@ -540,6 +542,12 @@
     </ClInclude>
     <ClInclude Include="EffekseeLib\EffekseerVFX.h">
       <Filter>00Effekseer</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Objects\Stage\Components\BehaviorComponents\Component_BossBehavior.h">
+      <Filter>03Game\Objects\Stage\Components\AttackComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Objects\Stage\Components\AttackComponents\Component_MeleeAttack.h">
+      <Filter>03Game\Objects\Stage\Components\AttackComponents</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

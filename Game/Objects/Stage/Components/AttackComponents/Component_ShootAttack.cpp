@@ -13,6 +13,7 @@ Component_ShootAttack::Component_ShootAttack(string _name, StageObject* _holder,
 
 void Component_ShootAttack::Initialize()
 {
+
 }
 
 void Component_ShootAttack::Update()
@@ -68,6 +69,4 @@ void Component_ShootAttack::DrawData()
 	// UŒ‚ƒ{ƒ^ƒ“
 	if (ImGui::Button("Execute"))this->Execute();
 
-	Bullet* bullet = Instantiate<Bullet>(holder_->GetParent());
-	bullet->DrawData();
 }

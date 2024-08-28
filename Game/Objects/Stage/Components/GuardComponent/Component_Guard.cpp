@@ -4,6 +4,7 @@
 #include "../../StageObject.h"
 #include "Component_Guard.h"
 #include <list>
+#include "../../../../../Engine/ImGui/imgui.h"
 
 namespace {
 	const float JUST_GUARD_DISTANCE = 0.5f;
@@ -18,7 +19,7 @@ Component_Guard::Component_Guard(string _name, StageObject* _holder, Component* 
 void Component_Guard::Initialize()
 {
 	// ガードコライダーの追加
-   guardCollider_ = new BoxCollider(XMFLOAT3(0,0,0),XMFLOAT3(2,2,2));
+   guardCollider_ = new BoxCollider(XMFLOAT3(0,0,0),XMFLOAT3(1,1,1));
    holder_->AddCollider(guardCollider_);
 }
 
@@ -59,18 +60,19 @@ void Component_Guard::Update()
 				if ((targetColliderSize.x + guardColliderSize.x + JUST_GUARD_DISTANCE > length) &&
 					(length > targetColliderSize.x + guardColliderSize.x)){
 					collider->GetGameObject()->KillMe();
+					ImGui::Text("just");
 					// 変数上昇
 					// just!
 				}
 				else if ((length > targetColliderSize.x + guardColliderSize.x) &&
 					(targetColliderSize.x + guardColliderSize.x + SUCCESS_GUARD_DISTANCE > length)) {
 					collider->GetGameObject()->KillMe();
+					ImGui::Text("success");
 					// 変数上昇
 					// success!
 				}
 			}
 		}
-
 		// 他コライダーとの距離を計算
 		// 対象コライダーの位置ベクトル - ガードコライダーの位置ベクトル
 		// その距離が
@@ -88,6 +90,11 @@ void Component_Guard::Update()
 void Component_Guard::Release()
 {
 	holder_->ClearCollider();
+}
+
+void Component_Guard::DrawData()
+{
+	isActive_ ? ImGui::Text("true") : ImGui::Text("false");
 }
 
 void Component_Guard::Save(json& _saveObj)

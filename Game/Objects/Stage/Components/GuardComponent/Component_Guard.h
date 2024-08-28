@@ -14,6 +14,7 @@ public:
 	void Initialize() override;
 	void Update() override;
 	void Release() override;
+	void DrawData() override;
 
 	void Save(json& _saveObj) override;
 	void Load(json& _loadObj) override;

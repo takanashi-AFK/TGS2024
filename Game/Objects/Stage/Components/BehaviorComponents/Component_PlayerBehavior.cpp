@@ -130,6 +130,10 @@ void Component_PlayerBehavior::Idle()
     else if (Input::IsMouseButtonDown(0)) {
         SetState(PSTATE_MELEE);
     }
+    else if (Input::IsKeyDown(DIK_LSHIFT)) {
+		SetState(PSTATE_GUARD);
+	}
+	else
     ImGui::Text("idle");
 
     // 死んだら死
@@ -209,12 +213,12 @@ void Component_PlayerBehavior::Guard()
 	auto guard = dynamic_cast<Component_Guard*>(GetChildComponent("Guard"));
 	if (guard == nullptr)return;
 
-	if (Input::IsKeyDown(DIK_SPACE)) {
-		guard->Execute();
-	}
-	else {
-		guard->Stop();
-	}
+	guard->Execute();
+
+    if (Input::IsKeyUp(DIK_LSHIFT)) {
+        guard->Stop();
+        SetState(PSTATE_IDLE);
+    }
 }
 
 void Component_PlayerBehavior::ShootExe()
@@ -287,8 +291,6 @@ void Component_PlayerBehavior::ShootExe()
     shoot->Execute();
     shootDir = {};
 }
-
-
 
 bool Component_PlayerBehavior::IsDead()
 {

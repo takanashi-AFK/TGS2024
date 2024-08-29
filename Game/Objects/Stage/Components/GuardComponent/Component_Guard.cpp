@@ -33,7 +33,6 @@ void Component_Guard::Update()
 		if (pStage == nullptr)return;
 		auto stageObj = pStage->GetStageObjects();
 
-
 		for (auto object : stageObj) {
 			// そのオブジェクトが持ってるコライダーを取得
 			std::list<Collider*>colliderList = object->GetColliderList();

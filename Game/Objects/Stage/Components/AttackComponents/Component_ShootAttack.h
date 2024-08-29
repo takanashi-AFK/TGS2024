@@ -16,6 +16,7 @@ private:
 	XMVECTOR shootingDirection_;	// 弾の方向
 	XMFLOAT3 shootingPosition_;		// 弾の発射位置
 	bool isShootPositionSet_;		// 発射位置が設定されているか
+	int BulletModelHandle_;
 public:
 	/// <summary>
 	/// コンストラクタ
@@ -71,5 +72,7 @@ public:
 	void SetShootingPosition(XMFLOAT3 _position) {
 		shootingPosition_ = _position; isShootPositionSet_ = true;
 	}
+
+	void SetBulletModelPath(string _modelFilePath) {  ; }
 };
 

@@ -70,8 +70,7 @@ void Component_KingCactanBehavior::Update()
 			if (shoot == nullptr) return;
 			XMFLOAT3 holderPos = holder_->GetPosition();
 			XMFLOAT3 targetPos = target_->GetPosition();
-			Bullet* bullet = dynamic_cast<Bullet*>(shoot);
-			bullet->SetModelFilePath("Models/Enemies/Cactan/cactan.fbx");
+			
 			shoot->SetShootingDirection(XMVector3Normalize(XMLoadFloat3(&targetPos) - XMLoadFloat3(&holderPos)));
 			shoot->Execute();
 			shoot->Stop();

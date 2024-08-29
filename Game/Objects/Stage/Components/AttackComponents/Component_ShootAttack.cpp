@@ -6,6 +6,7 @@
 #include "../../Stage.h"
 #include "../../../../../Engine/Global.h"
 
+
 Component_ShootAttack::Component_ShootAttack(string _name, StageObject* _holder, Component* _parent) :
 	Component_Attack(_holder, _name, ShootAttack, _parent), shootingSpeed_(), shootingDirection_()
 {
@@ -22,7 +23,9 @@ void Component_ShootAttack::Update()
 
 	// 撃ち放つプレハブを生成
 	Bullet* bulletPrefab = Instantiate<Bullet>(holder_->GetParent());
-
+	bulletPrefab->SetModelFilePath("Enemies/Cactan/cactan.fbx");
+	bulletPrefab->Draw();
+	
 	bulletPrefab->SetShooter(holder_);
 
 	// 撃ち放つ速度を設定

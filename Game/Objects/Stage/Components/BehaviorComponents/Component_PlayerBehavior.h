@@ -13,6 +13,7 @@ enum PlayerState {
 	PSTATE_MELEE,
 	PSTATE_SHOOT,
 	PSTATE_DIE,
+	PSTATE_DASH,
 	PSTATE_MAX
 	};
 
@@ -45,6 +46,7 @@ public:
 	void WalkAndMelee();
 	void Melee();
 	void Shoot();
+	void Dash();
 
 	void SetState(PlayerState _state) { prevState = nowState; nowState = _state; }
 	

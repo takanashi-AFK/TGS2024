@@ -69,7 +69,8 @@ public:
 
 	void SetModelFilePath(string _modelfilepath) { modelFilePath_ = _modelfilepath; }
 
-	string  GetModelFilePath() { return modelFilePath_; }
+	//string  GetModelFilePath() { return modelFilePath_; }
+	
 	/// <summary>
 	/// なんのオブジェクトが発射したかを設定
 	/// </summary>

@@ -23,9 +23,8 @@ void Component_ShootAttack::Update()
 
 	// 撃ち放つプレハブを生成
 	Bullet* bulletPrefab = Instantiate<Bullet>(holder_->GetParent());
-	bulletPrefab->SetModelFilePath("Enemies/Cactan/cactan.fbx");
-	bulletPrefab->Draw();
-	
+	bulletPrefab->SetModelFilePath(bulletModelFilePath_);
+	bulletPrefab->SetModelHandle(BulletModelHandle_);
 	bulletPrefab->SetShooter(holder_);
 
 	// 撃ち放つ速度を設定

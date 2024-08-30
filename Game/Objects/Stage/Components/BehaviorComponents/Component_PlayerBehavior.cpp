@@ -6,6 +6,7 @@
 #include "../../../../../Engine/DirectX/Direct3D.h"
 #include "../../../../../Engine/DirectX/Input.h"
 #include "../../../../../Engine/GameObject/Camera.h"
+#include <directxmath.h> 
 #include "../../Stage.h"
 #include "../../StageObject.h"
 #include "../../SkySphere.h"
@@ -18,6 +19,7 @@
 #include <algorithm> 
 #include "../../../../../Game/Objects/Stage/Components/GaugeComponents/Component_HealthGauge.h"
 #include "../../../../../Engine/ImGui/imgui.h"
+#include "../MoveComponents/Component_TackleMove.h"
 
 
 struct CompareDist {
@@ -26,6 +28,7 @@ struct CompareDist {
     }
 };
 
+using namespace DirectX;
 Component_PlayerBehavior::Component_PlayerBehavior(string _name, StageObject* _holder, Component* _parent)
     : Component(_holder, _name, PlayerBehavior, _parent)
 {
@@ -45,6 +48,7 @@ void Component_PlayerBehavior::Initialize()
     if (FindChildComponent("Timer") == false)AddChildComponent(CreateComponent("Timer", Timer, holder_, this));
     if (FindChildComponent("HealthGauge") == false)AddChildComponent(CreateComponent("PlayerHealthGauge", HealthGauge, holder_, this));
     if (FindChildComponent("PlayerMotion") == false)AddChildComponent(CreateComponent("PlayerMotion", PlayerMotion, holder_, this));
+    if (FindChildComponent("TackleMove") == false)AddChildComponent(CreateComponent("TackleMove", TackleMove, holder_, this));
 }
 
 void Component_PlayerBehavior::Update()
@@ -82,6 +86,8 @@ void Component_PlayerBehavior::Update()
         Melee(); break;
     case PSTATE_SHOOT:
         Shoot(); break;
+    case PSTATE_DASH:
+		Dash(); break;
     default:
         break;
     }
@@ -125,6 +131,9 @@ void Component_PlayerBehavior::Idle()
     else if (Input::IsMouseButtonDown(0)) {
         SetState(PSTATE_MELEE);
     }
+    else if (Input::IsKeyDown(DIK_SPACE)) {
+		SetState(PSTATE_DASH);
+	}
     ImGui::Text("idle");
 
     // 死んだら死
@@ -145,10 +154,15 @@ void Component_PlayerBehavior::Walk()
         else if (Input::IsMouseButtonDown(0)) {
             SetState(PSTATE_MELEE);
         }
+        else if (Input::IsKeyDown(DIK_SPACE)) {
+	        SetState(PSTATE_DASH);
+    	}
     }
     else{
         SetState(PSTATE_IDLE);
     }
+
+
     ImGui::Text("Walk");
 
 }
@@ -197,6 +211,32 @@ void Component_PlayerBehavior::Shoot()
         SetState(PSTATE_IDLE);
     }
     ImGui::Text("shoot");
+}
+
+void Component_PlayerBehavior::Dash()
+{
+    {
+        auto move = dynamic_cast<Component_WASDInputMove*>(GetChildComponent("InputMove"));
+        if (move == nullptr) return;
+
+        auto dash = dynamic_cast<Component_TackleMove*>(GetChildComponent("TackleMove"));
+        if (dash == nullptr) return;
+
+        frontVec_ = move->GetMoveDirection();
+
+
+         if (XMVector3Equal(frontVec_, XMVectorZero())) {
+            frontVec_ = { 0,0,-1,0 };
+         }
+            dash->SetDirection(frontVec_);
+            dash->SetDistance(5.f);
+            dash->Execute();
+            
+            SetState(PSTATE_IDLE);
+            
+        ImGui::Text("Dash");
+    }
+
 }
 
 void Component_PlayerBehavior::ShootExe()
@@ -269,8 +309,6 @@ void Component_PlayerBehavior::ShootExe()
     shoot->Execute();
     shootDir = {};
 }
-
-
 
 bool Component_PlayerBehavior::IsDead()
 {

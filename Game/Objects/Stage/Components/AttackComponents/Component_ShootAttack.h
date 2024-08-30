@@ -75,5 +75,7 @@ public:
 	}
 
 	void SetBulletModelPath(string _modelFilePath) { bulletModelFilePath_ = _modelFilePath; }
+
+	void SetModelHandle(int _BulletModelHandle) { BulletModelHandle_ = _BulletModelHandle; }
 };
 

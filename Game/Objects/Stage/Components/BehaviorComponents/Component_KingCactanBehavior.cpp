@@ -68,6 +68,7 @@ void Component_KingCactanBehavior::Update()
 			Component* shootcomp = GetChildComponent("ShootAttackComponent");
 			Component_ShootAttack* shoot = dynamic_cast<Component_ShootAttack*>(shootcomp);
 			shoot->SetBulletModelPath("Models/Enemies/Cactan/cactan.fbx");
+			shoot->SetModelHandle(shootModelhandle_);
 
 			if (shoot == nullptr) return;
 			XMFLOAT3 holderPos = holder_->GetPosition();

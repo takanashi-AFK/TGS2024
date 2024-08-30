@@ -5,7 +5,7 @@ class Component_KingCactanBehavior : public Component
 private:
 	StageObject* target_;//ターゲット
 	string targetName_;//ターゲットの名前
-
+	int shootModelhandle_;
 public:
 	/// <summary>
 	/// コンストラクタ

@@ -4,6 +4,7 @@
 #include"../Objects/Stage/SkySphere.h"
 #include"../Objects/Stage/Stage.h"
 #include "../Objects/UI/UIPanel.h"
+#include "../Objects/UI/UIImage.h"
 #include"../Objects/Stage/Components/GaugeComponents/Component_HealthGauge.h"
 #include"../Objects/Stage/Components/BehaviorComponents/Component_PlayerBehavior.h"
 #include"../../Engine/SceneManager.h"
@@ -18,6 +19,14 @@ Scene_Play::Scene_Play(GameObject* parent)
 
 void Scene_Play::Initialize()
 {
+	// UIパネルを取得
+	UIPanel* panel = UIPanel::GetInstance();
+	for (int i = 0; i < 4; i++) {
+		UIImage* countImage = (UIImage*)CreateUIObject("countDown" + std::to_string(i), UI_IMAGE, panel, i + 1);
+		countImage->SetImage("ここにイメージのパス" + std::to_string(i));
+
+		panel->PushBackChild(countImage);
+	}
 	// スカイスフィアの生成
 	SkySphere* skySphere = Instantiate<SkySphere>(this);
 
@@ -54,8 +63,8 @@ void Scene_Play::Update()
 			for (auto comp : comp_playerBehaviors) {
 
 				// プレイヤーコンポーネントが死んでいたら
-				if (((Component_PlayerBehavior*)comp)->IsDead() == true) { 
-					
+				if (((Component_PlayerBehavior*)comp)->IsDead() == true) {
+
 					g_score = 0;
 					isSceneChange = true;
 				}

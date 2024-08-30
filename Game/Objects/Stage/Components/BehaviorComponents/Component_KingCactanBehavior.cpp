@@ -10,8 +10,9 @@
 #include"../GaugeComponents/Component_HealthGauge.h"
 #include"../TimerComponent/Component_Timer.h"
 #include"../../Bullet.h"
+#include"../../../Engine/ResourceManager/Model.h"
 Component_KingCactanBehavior::Component_KingCactanBehavior(string _name, StageObject* _holder, Component* _parent)
-	:Component(_holder, _name, KingCactanBehavior, _parent)
+	:Component(_holder, _name, KingCactanBehavior, _parent),shootModelhandle_(-1)
 {
 }
 
@@ -25,7 +26,8 @@ void Component_KingCactanBehavior::Initialize()
 	if (FindChildComponent("HealthGaugeComponent") == false)AddChildComponent(CreateComponent("HealthGaugeComponent", HealthGauge, holder_, this));
 	if (FindChildComponent("TimerComponent") == false)AddChildComponent(CreateComponent("TimerComponent", Timer, holder_, this));
 
-
+	shootModelhandle_ = Model::Load("Models/Enemies/Cactan/cactan.fbx");
+	assert(shootModelhandle_ >= 0);
 }
 
 void Component_KingCactanBehavior::Update()
@@ -67,8 +69,8 @@ void Component_KingCactanBehavior::Update()
 
 			Component* shootcomp = GetChildComponent("ShootAttackComponent");
 			Component_ShootAttack* shoot = dynamic_cast<Component_ShootAttack*>(shootcomp);
-			shoot->SetBulletModelPath("Models/Enemies/Cactan/cactan.fbx");
-			shoot->SetModelHandle(shootModelhandle_);
+			//shoot->SetBulletModelPath("Models/Enemies/Cactan/cactan.fbx");
+			shoot->SetBulletModelHandle(shootModelhandle_);
 
 			if (shoot == nullptr) return;
 			XMFLOAT3 holderPos = holder_->GetPosition();

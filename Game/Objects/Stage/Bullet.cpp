@@ -20,7 +20,7 @@ void Bullet::Initialize()
 	// ƒ‚ƒfƒ‹‚Ì“Ç‚İ‚İ
 	modelHandle_ = Model::Load(modelFilePath_);
 	assert(modelHandle_ >= 0);
-
+	
 	//SetScale(0.2f);
 
 	// effekseer: :Effect‚Ì“Ç‚İ‚İ
@@ -53,6 +53,7 @@ void Bullet::Update()
 
 	// effekseer: :Effect‚ÌÄ¶î•ñ‚ÌXV
 	DirectX::XMStoreFloat4x4(&(mt->matrix), this->GetWorldMatrix());/*ššš*/
+	//SetModelHandle(modelHandle_);
 }
 
 void Bullet::Draw()

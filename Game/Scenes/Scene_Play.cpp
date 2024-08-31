@@ -28,7 +28,7 @@ void Scene_Play::Initialize()
 
 	// stageLayout_jsonファイルを読み込む
 	json loadData;
-	if (JsonReader::Load("Datas/StageLayouts/stage01_layout.json", loadData)) {
+	if (JsonReader::Load("Models/Player/playerBehaviorTest.json", loadData)) {
 
 		// ステージを作成
 		pStage_ = Instantiate<Stage>(this);
@@ -50,24 +50,24 @@ void Scene_Play::Update()
 {
 	// シーン切替処理
 	{
-		bool isSceneChange = false;
+		//bool isSceneChange = false;
 
-		// プレイヤーが死んだらシーンを切り替える
-		{
-			// ステージ内にプレイヤーコンポーネントを持っているキャラクターが存在するかどうかを判定し取得
-			vector<Component*> comp_playerBehaviors = pStage_->FindComponents(PlayerBehavior);
+		//// プレイヤーが死んだらシーンを切り替える
+		//{
+		//	// ステージ内にプレイヤーコンポーネントを持っているキャラクターが存在するかどうかを判定し取得
+		//	vector<Component*> comp_playerBehaviors = pStage_->FindComponents(PlayerBehavior);
 
-			// 範囲for文でプレイヤーコンポーネントの生存フラグを確認
-			for (auto comp : comp_playerBehaviors) {
+		//	// 範囲for文でプレイヤーコンポーネントの生存フラグを確認
+		//	for (auto comp : comp_playerBehaviors) {
 
-				// プレイヤーコンポーネントが死んでいたら
-				if (((Component_PlayerBehavior*)comp)->IsDead() == true) {
+		//		// プレイヤーコンポーネントが死んでいたら
+		//		if (((Component_PlayerBehavior*)comp)->IsDead() == true) {
 
-					g_score = 0;
-					isSceneChange = true;
-				}
-			}
-		}
+		//			g_score = 0;
+		//			isSceneChange = true;
+		//		}
+		//	}
+		//}
 
 		// ボスが死んだらシーンを切り替える
 		{
@@ -86,20 +86,20 @@ void Scene_Play::Update()
 			//}
 		}
 
-		// debug
-		{
-			if (ImGui::Button("end")) {
-				g_score = 100;
-				isSceneChange = true;
-			}
-		}
+		//// debug
+		//{
+		//	if (ImGui::Button("end")) {
+		//		g_score = 100;
+		//		isSceneChange = true;
+		//	}
+		//}
 
-		// シーン切替処理
-		if (isSceneChange) {
-			// シーンを切り替える
-			SceneManager* sceneManager = (SceneManager*)FindObject("SceneManager");
-			sceneManager->ChangeScene(SCENE_ID_END, TID_BLACKOUT);
-		}
+		//// シーン切替処理
+		//if (isSceneChange) {
+		//	// シーンを切り替える
+		//	SceneManager* sceneManager = (SceneManager*)FindObject("SceneManager");
+		//	sceneManager->ChangeScene(SCENE_ID_END, TID_BLACKOUT);
+		//}
 	}
 }
 

@@ -25,7 +25,13 @@
 
 namespace {
     const int SHOOT_FRAME = 115;
+
+    bool IsXMVectorZero(XMVECTOR _vec) {
+		return XMVector3Equal(_vec, XMVectorZero());
+	}
 }
+
+
 
 
 struct CompareDist {
@@ -110,10 +116,6 @@ void Component_PlayerBehavior::DrawData()
     if (ImGui::Button("Walk")) SetState(PSTATE_WALK);
     if (ImGui::Button("Shoot")) SetState(PSTATE_SHOOT);
 
-}
-
-void Component_PlayerBehavior::OnCollision(GameObject* _target, Collider* _collider)
-{
 }
 
 void Component_PlayerBehavior::Idle()
@@ -201,14 +203,19 @@ void Component_PlayerBehavior::Shoot()
     Component_WASDInputMove* move = (Component_WASDInputMove*)(GetChildComponent("InputMove"));
     if (move != nullptr) move->Stop();
 
-    // アニメーションが終わったら...
-    if (motion->IsEnd() || (move != nullptr && move->IsMove())) {
 
+    // NOTE: 終了するためのフラグ
+    bool isEnd = false;
+
+    // スペースキーが押されていたら...ダッシュ状態に遷移
+    if (Input::IsKeyDown(DIK_SPACE)) { isEnd = true; SetState(PSTATE_DASH); }
+
+    // アニメーションが終わったら...
+    if (motion->IsEnd()) { isEnd = true; SetState(PSTATE_IDLE); }
+
+    if(isEnd == true){
         // 射撃フラグをリセット
         isShoot = false;
-
-        // IDLE状態に遷移
-        SetState(PSTATE_IDLE);
 
         // 移動コンポーネントの再開
         if (move != nullptr) move->Execute();
@@ -217,26 +224,48 @@ void Component_PlayerBehavior::Shoot()
 
 void Component_PlayerBehavior::Dash()
 {
-    {
-        auto move = dynamic_cast<Component_WASDInputMove*>(GetChildComponent("InputMove"));
-        if (move == nullptr) return;
+    // NOTE: 一度だけダッシュ処理を実行するためのフラグ
+    static bool isDash = false;
+    
+    // 移動コンポーネントの取得 & 有無の確認
+    Component_WASDInputMove * move = (Component_WASDInputMove*)(GetChildComponent("InputMove"));
+    if (move == nullptr)return;
 
-        auto dash = dynamic_cast<Component_TackleMove*>(GetChildComponent("TackleMove"));
-        if (dash == nullptr) return;
+    // 突進コンポーネントの取得 & 有無の確認
+    Component_TackleMove* tackle = (Component_TackleMove*)(GetChildComponent("TackleMove"));
+    if (tackle != nullptr && isDash == false) {
 
-        frontVec_ = move->GetMoveDirection();
+        // 突進方向を設定
+        XMVECTOR dir{ 0,0,-1,0 }; {
+            // 移動を不可能にする
+            move->Stop();
 
+            // 移動方向がゼロベクトルでなければ、移動方向を取得
+            if (IsXMVectorZero(move->GetMoveDirection()) == false)dir = move->GetMoveDirection();
+        }
+		tackle->SetDirection(dir);
 
-         if (XMVector3Equal(frontVec_, XMVectorZero())) {
-            frontVec_ = { 0,0,-1,0 };
-         }
-            dash->SetDirection(frontVec_);
-            dash->SetDistance(5.f);
-            dash->Execute();
-            
-            SetState(PSTATE_IDLE);
-            
-        ImGui::Text("Dash");
+		// 突進距離を設定
+		tackle->SetDistance(5.f);
+
+		// 突進処理を実行
+		tackle->Execute();
+
+        // ダッシュフラグを立てる
+        isDash = true;
+    }
+
+    // 突進処理が終了していたら...
+    if (tackle->IsActived() == false) {
+
+        // ダッシュフラグをリセット
+		isDash = false;
+
+        //移動を可能にする
+        move->Execute();
+
+		// IDLE状態に遷移
+		SetState(PSTATE_IDLE);
     }
 }
 

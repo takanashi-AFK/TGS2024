@@ -13,6 +13,7 @@ void Component_PlayerMotion::Initialize()
     motionModelMap_.insert(std::make_pair(PSTATE_WALK, Model::Load("Models/Player/Running.fbx")));
     motionModelMap_.insert(std::make_pair(PSTATE_SHOOT, Model::Load("Models/Player/Fireball.fbx")));
     motionModelMap_.insert(std::make_pair(PSTATE_IDLE, Model::Load("Models/Player/Silly Dancing.fbx")));
+    motionModelMap_.insert(std::make_pair(PSTATE_DASH, Model::Load("Models/Player/Female Action Pose.fbx")));
     // モデルのロード
     auto stageObjectList = ((Stage*)holder_)->GetStageObjects();
 }
@@ -67,6 +68,19 @@ void Component_PlayerMotion::Update()
         animationEndFrame_ = 150;
         if (((StageObject*)holder_)->GetModelHandle() != motionModelMap_[PSTATE_SHOOT]) {
             ((StageObject*)holder_)->SetModelHandle(motionModelMap_[PSTATE_SHOOT]);
+            currentFrame_ = 0;  // モデルが変わったときにフレームをリセット
+            isAnimationEnd_ = false;
+        }
+        if (currentFrame_ == 0) {
+            holder_->PlayAnimation(0, animationEndFrame_, 1);
+        }
+        break;
+
+    case PSTATE_DASH:
+        animationEndFrame_ = 60;
+      
+        if (((StageObject*)holder_)->GetModelHandle() != motionModelMap_[PSTATE_DASH]) {
+            ((StageObject*)holder_)->SetModelHandle(motionModelMap_[PSTATE_DASH]);
             currentFrame_ = 0;  // モデルが変わったときにフレームをリセット
             isAnimationEnd_ = false;
         }

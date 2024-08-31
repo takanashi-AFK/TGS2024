@@ -1,6 +1,6 @@
 #include "CountDown.h"
 #include "../../../Engine/ResourceManager/Image.h"
-
+#include "../../../Engine/GameObject/Camera.h"
 namespace {
 	const int COUNT_DOWN_MAX = 240;		// カウントダウンの最大値
 	const int FPS = 60;					// フレームレート
@@ -29,6 +29,9 @@ void CountDown::Draw()
 
 	// カウントから画像のインデックスを取得
 	int index = (int)(count_ / FPS);
+
+	float camScale = count_ * 0.8f;
+	Camera::SetPosition(camScale + 1, camScale + 1, camScale + 1);
 
 	// 画像の描画
 	Image::SetTransform(countDownImages_[index], transform_);

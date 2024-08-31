@@ -39,15 +39,21 @@ void Scene_Play::Initialize()
 	json camData;
 	if (JsonReader::Load("Datas/CameraLayouts/TPSCamera.json", camData)) {
 
-		TPSCamera* tpsCamera = Instantiate<TPSCamera>(this);
-		tpsCamera->Load(camData);
+		tpsCamera_ = Instantiate<TPSCamera>(this);
+		tpsCamera_->Load(camData);
+		tpsCamera_->SetActive(false);
 	}
 
-	Instantiate<CountDown>(this);
+	countDown_ = Instantiate<CountDown>(this);
 }
 
 void Scene_Play::Update()
 {
+	if (countDown_->IsFinished()) {
+		tpsCamera_->SetActive(true);
+	}
+
+
 	// ƒV[ƒ“Ø‘Öˆ—
 	{
 		//bool isSceneChange = false;

@@ -6,6 +6,7 @@ class Component_CactanBehavior : public Component
 private:
 	StageObject* target_;
 	string targetName_;
+	int cactanBulletModelHandle_;
 public:
 	Component_CactanBehavior(string _name, StageObject* _holder, Component* _parent);
 	void Initialize() override;

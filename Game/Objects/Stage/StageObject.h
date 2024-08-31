@@ -26,6 +26,8 @@ protected:
 	bool isCollisionWall_;              // 壁に当たったかどうか
 	float fallSpeed_;                   // 落下速度
 
+	int debugBulletHandle_;
+
 	bool isShadeVisible_;               // 陰の表示
 public:
 	/// <summary>
@@ -34,7 +36,7 @@ public:
 	/// <param name="_name">オブジェクト名</param>
 	/// <param name="_modelFilePath">モデルファイルパス</param>
 	/// <param name="_parent">親オブジェクト</param>
-	StageObject(string _name,string _modelFilePath,GameObject* _parent);
+	StageObject(string _name, string _modelFilePath, GameObject* _parent);
 
 	/// <summary>
 	/// 初期化
@@ -141,6 +143,7 @@ public:
 
 	void SetModelHandle(int _handle) { modelHandle_ = _handle; }
 
+	void SetdebugModelHandle(int _debugModelHandle) { debugBulletHandle_ = _debugModelHandle; }
 };
 
 /// <summary>

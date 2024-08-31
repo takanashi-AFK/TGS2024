@@ -18,40 +18,42 @@ private:
 	bool isShootPositionSet_;		// 発射位置が設定されているか
 	int BulletModelHandle_;
 	string bulletModelFilePath_;
+
+	int debugBulletModelHandle_;//デバック用のモデルハンドル
 public:
 	/// <summary>
 	/// コンストラクタ
 	/// </summary>
 	/// <param name="_holder">コンポーネントの保持者</param>
 	Component_ShootAttack(string _name, StageObject* _holder, Component* _parent);
-	
+
 	/// <summary>
 	/// 初期化
 	/// </summary>
 	void Initialize() override;
-	
+
 	/// <summary>
 	/// 更新
 	/// </summary>
 	void Update() override;
-	
+
 	/// <summary>
 	/// 解放
 	/// </summary>
 	void Release() override;
-	
+
 	/// <summary>
 	/// 保存
 	/// </summary>
 	/// <param name="_savebj">データの保存情報</param>
 	void Save(json& _saveObj) override;
-	
+
 	/// <summary>
 	/// 読込
 	/// </summary>
 	/// <param name="_loadObj">データの読込情報</param>
 	void Load(json& _loadObj) override;
-	
+
 	/// <summary>
 	/// ImGuiパネル表示
 	/// </summary>
@@ -77,5 +79,7 @@ public:
 	void SetBulletModelPath(string _modelFilePath) { bulletModelFilePath_ = _modelFilePath; }
 
 	void SetBulletModelHandle(int _BulletModelHandle) { BulletModelHandle_ = _BulletModelHandle; }
+
+
 };
 

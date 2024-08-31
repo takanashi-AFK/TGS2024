@@ -25,6 +25,7 @@ void Component_ShootAttack::Update()
 	Bullet* bulletPrefab = Instantiate<Bullet>(holder_->GetParent());
 	//bulletPrefab->SetModelFilePath(bulletModelFilePath_);
 	bulletPrefab->SetModelHandle(BulletModelHandle_);
+	//bulletPrefab->SetdebugModelHandle(debugBulletModelHandle_);
 	bulletPrefab->SetShooter(holder_);
 
 	// Œ‚‚¿•ú‚Â‘¬“x‚ğİ’è

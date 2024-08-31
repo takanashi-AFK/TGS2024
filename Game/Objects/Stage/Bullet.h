@@ -19,6 +19,8 @@ private:
 	XMVECTOR direction_;	// 移動方向
 	StageObject* shooter_;	// 発射したオブジェクト
 
+
+
 	// effekseer: 変形行列
 	std::shared_ptr<EFFEKSEERLIB::EFKTransform> mt;/*★★★*/
 
@@ -70,7 +72,7 @@ public:
 	void SetModelFilePath(string _modelfilepath) { modelFilePath_ = _modelfilepath; }
 
 	//string  GetModelFilePath() { return modelFilePath_; }
-	
+
 	/// <summary>
 	/// なんのオブジェクトが発射したかを設定
 	/// </summary>

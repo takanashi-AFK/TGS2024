@@ -18,9 +18,15 @@ void Bullet::Initialize()
 	AddCollider(new SphereCollider(XMFLOAT3(0, 0, 0), 0.5f));
 
 	// モデルの読み込み
-	modelHandle_ = Model::Load(modelFilePath_);
-	assert(modelHandle_ >= 0);
-	
+	/*modelHandle_ = Model::Load(modelFilePath_);
+	assert(modelHandle_ >= 0);*/
+
+
+
+	debugBulletHandle_ = Model::Load("Models/DebugCollision/SphereCollider.fbx");
+	assert(debugBulletHandle_ >= 0);
+
+
 	//SetScale(0.2f);
 
 	// effekseer: :Effectの読み込み
@@ -53,14 +59,18 @@ void Bullet::Update()
 
 	// effekseer: :Effectの再生情報の更新
 	DirectX::XMStoreFloat4x4(&(mt->matrix), this->GetWorldMatrix());/*★★★*/
-	//SetModelHandle(modelHandle_);
 }
 
 void Bullet::Draw()
 {
+#ifdef _DEBUG
+	Model::SetTransform(debugBulletHandle_, transform_);
+	Model::Draw(debugBulletHandle_);
+
+#endif
 	// モデルの描画
-	Model::SetTransform(modelHandle_, transform_);
-	Model::Draw(modelHandle_);
+	/*Model::SetTransform(modelHandle_, transform_);
+	Model::Draw(modelHandle_);*/
 }
 
 void Bullet::OnCollision(GameObject* _target, Collider* _collider)

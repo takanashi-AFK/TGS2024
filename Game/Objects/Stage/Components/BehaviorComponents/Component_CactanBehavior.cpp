@@ -9,9 +9,9 @@
 #include "../GaugeComponents/Component_HealthGauge.h"
 
 #include "../TimerComponent/Component_Timer.h"
-
+#include"../../../../Engine/ResourceManager/Model.h"
 Component_CactanBehavior::Component_CactanBehavior(string _name, StageObject* _holder, Component* _parent)
-	:Component(_holder, _name, CactanBehavior, _parent)
+	:Component(_holder, _name, CactanBehavior, _parent), cactanBulletModelHandle_(-1)
 {
 }
 
@@ -21,10 +21,13 @@ void Component_CactanBehavior::Initialize()
 	holder_->AddCollider(new BoxCollider(XMFLOAT3(0, 0, 0), XMFLOAT3(1, 1, 1)));
 
 	// 必要なコンポーネントを追加
-	if (FindChildComponent("CircleRangeDetector") == false)AddChildComponent(CreateComponent("CircleRangeDetector",CircleRangeDetector,holder_,this));
+	if (FindChildComponent("CircleRangeDetector") == false)AddChildComponent(CreateComponent("CircleRangeDetector", CircleRangeDetector, holder_, this));
 	if (FindChildComponent("ShootAttack") == false)AddChildComponent(CreateComponent("ShootAttack", ShootAttack, holder_, this));
 	if (FindChildComponent("Timer") == false)AddChildComponent(CreateComponent("Timer", Timer, holder_, this));
 	if (FindChildComponent("HealthGauge") == false)AddChildComponent(CreateComponent("HealthGauge", HealthGauge, holder_, this));
+
+	cactanBulletModelHandle_ = Model::Load("Models/DebugCollision/SphereCollider.fbx");
+	assert(cactanBulletModelHandle_ >= 0);
 
 }
 
@@ -37,31 +40,31 @@ void Component_CactanBehavior::Update()
 	if (detector == nullptr)return;
 
 	// 範囲内にプレイヤーがいる場合
-	if (detector->IsContains()){
+	if (detector->IsContains()) {
 
 		// タイマーを開始
 		auto timer = dynamic_cast<Component_Timer*>(GetChildComponent("Timer"));
 		if (timer == nullptr)return;
 		timer->Start();
-		
+
 		// 3秒ごとにシュートアタックを実行
-		if (timer->IsIntervalTime(3.f)){
+		if (timer->IsIntervalTime(3.f)) {
 
 			auto shoot = dynamic_cast<Component_ShootAttack*>(GetChildComponent("ShootAttack"));
 			if (shoot == nullptr)return;
-
+			shoot->SetBulletModelHandle(cactanBulletModelHandle_);
 			// 撃ち放つ方向を設定
 			XMFLOAT3 holderPos = holder_->GetPosition();
-			XMFLOAT3 targetPos = target_->GetPosition();			
+			XMFLOAT3 targetPos = target_->GetPosition();
 			shoot->SetShootingDirection(XMVector3Normalize(XMLoadFloat3(&targetPos) - XMLoadFloat3(&holderPos)));
-			
+
 			// 撃つ
 			shoot->Execute();
 		}
 	}
-	else{
+	else {
 
-		
+
 		// タイマーを停止
 		auto timer = dynamic_cast<Component_Timer*>(GetChildComponent("Timer"));
 		if (timer == nullptr)return;
@@ -107,11 +110,10 @@ void Component_CactanBehavior::DrawData()
 	if (select == 0)target_ = nullptr;
 	else {
 		target_ = (StageObject*)holder_->FindObject(objNames[select]);
-		
+
 		auto detector = dynamic_cast<Component_CircleRangeDetector*>(GetChildComponent("CircleRangeDetector"));
 		detector->SetTarget(target_);
 	}
 #endif // _DEBUG
-	
+
 }
- 

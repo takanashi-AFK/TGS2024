@@ -12,7 +12,7 @@
 #include"../../Bullet.h"
 #include"../../../Engine/ResourceManager/Model.h"
 Component_KingCactanBehavior::Component_KingCactanBehavior(string _name, StageObject* _holder, Component* _parent)
-	:Component(_holder, _name, KingCactanBehavior, _parent),shootModelhandle_(-1)
+	:Component(_holder, _name, KingCactanBehavior, _parent), shootModelhandle_(-1)
 {
 }
 
@@ -64,18 +64,16 @@ void Component_KingCactanBehavior::Update()
 			timer->Stop();
 			chase->Stop();
 
-			//behaviorからshootのメンバ、string pathにセットする
-			//shootからbulletのメンバ、string model pathにセットする
 
 			Component* shootcomp = GetChildComponent("ShootAttackComponent");
 			Component_ShootAttack* shoot = dynamic_cast<Component_ShootAttack*>(shootcomp);
-			//shoot->SetBulletModelPath("Models/Enemies/Cactan/cactan.fbx");
+			if (shoot == nullptr) return;
 			shoot->SetBulletModelHandle(shootModelhandle_);
 
-			if (shoot == nullptr) return;
+
 			XMFLOAT3 holderPos = holder_->GetPosition();
 			XMFLOAT3 targetPos = target_->GetPosition();
-			
+
 			shoot->SetShootingDirection(XMVector3Normalize(XMLoadFloat3(&targetPos) - XMLoadFloat3(&holderPos)));
 			shoot->Execute();
 			shoot->Stop();
@@ -137,4 +135,3 @@ void Component_KingCactanBehavior::DrawData()
 #endif // _DEBUG
 }
 
-//5秒追従->止まる->撃つ->また動くの繰り返し

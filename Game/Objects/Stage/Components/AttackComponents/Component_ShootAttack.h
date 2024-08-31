@@ -76,7 +76,7 @@ public:
 		shootingPosition_ = _position; isShootPositionSet_ = true;
 	}
 
-	void SetBulletModelPath(string _modelFilePath) { bulletModelFilePath_ = _modelFilePath; }
+
 
 	void SetBulletModelHandle(int _BulletModelHandle) { BulletModelHandle_ = _BulletModelHandle; }
 

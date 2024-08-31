@@ -55,33 +55,27 @@ void Component_PlayerBehavior::Initialize()
 
 void Component_PlayerBehavior::Update()
 {
-    if(countDown == nullptr)
-    countDown = (CountDown*)(holder_->GetParent()->FindObject("CountDown"));
 
-    auto hm = dynamic_cast<Component_HealthGauge*>(GetChildComponent("PlayerHealthGauge"));
-    if (hm == nullptr)return;
+    // カウント制御されている場合の処理
+    {
+        CountDown* countDown = (CountDown*)(holder_->FindObject("CountDown"));
+        if (countDown != nullptr) {
 
-    // 進捗を0.0〜1.0の範囲で計算
-    float progress = hm->GetNow() / hm->GetMax();
+            // 移動コンポーネントの取得 & 有無の確認
+            Component_WASDInputMove* move = (Component_WASDInputMove*)(GetChildComponent("InputMove"));
+            if (GetChildComponent("InputMove") == nullptr)return;
 
-    if (ImGui::Button("dead"))hm->TakeDamage(1000);
+            // カウントダウンが終了した場合
+            if (countDown->IsFinished()) {
 
-
-
-    auto timer = dynamic_cast<Component_Timer*>(GetChildComponent("Timer"));
-    if (timer == nullptr) return;
-
-    auto melee = dynamic_cast<Component_MeleeAttack*>(GetChildComponent("MeleeAttack"));
-    if (melee == nullptr)return;
-
-    auto move = dynamic_cast<Component_WASDInputMove*>(GetChildComponent("InputMove"));
-    if (move == nullptr)return;
-
-    if (countDown->GetIsCountDown()) {
-        move->Stop();
-    }
-    else {
-        move->Execute();
+                //移動を可能にする
+                move->Execute();
+            }
+            else {
+                // 移動を不可能にする
+				move->Stop();
+			}
+        }
     }
 
     switch (nowState)

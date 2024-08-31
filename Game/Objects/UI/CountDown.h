@@ -1,12 +1,11 @@
 #pragma once
-#include "../../../Engine/GameObject/GameObject.h"
+#include "../../../../Engine/GameObject/GameObject.h"
 #include<vector>
-class CountDown :
-    public GameObject
+class CountDown : public GameObject
 {
 private:
 	std::vector<int> countDownImages_;
-	bool isCountDown_;
+	float count_;
 public:
 	CountDown(GameObject* _parent);
 	void Initialize() override;
@@ -14,7 +13,5 @@ public:
 	void Draw() override;
 	void Release() override;
 
-	bool GetIsCountDown() { return isCountDown_; }
-
+	bool IsFinished() const { return count_ <= 0; }
 };
-

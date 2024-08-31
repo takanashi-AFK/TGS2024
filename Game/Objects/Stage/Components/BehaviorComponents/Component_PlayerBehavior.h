@@ -28,8 +28,6 @@ private:
 	bool isAnimationNow_;
 
 	PlayerState nowState, prevState;
-	CountDown* countDown;
-
 public:
 	Component_PlayerBehavior(string _name,StageObject* _holder,Component* _parent);
 

@@ -10,6 +10,12 @@
 /// <summary>
 /// 発射する弾を管理するクラス
 /// </summary>
+
+struct EffectData {
+	std::string name;
+	std::string path;
+};
+
 class Bullet :public StageObject
 {
 private:
@@ -21,6 +27,7 @@ private:
 
 	// effekseer: 変形行列
 	std::shared_ptr<EFFEKSEERLIB::EFKTransform> mt;/*★★★*/
+	EffectData data_;
 
 public:
 	/// <summary>
@@ -72,6 +79,7 @@ public:
 	/// <param name="_shooter"></param>
 	void SetShooter(StageObject* _shooter) { shooter_ = _shooter; }
 
+	void SetEffectData(EffectData _data) { data_ = _data; }
 private:
 	/// <summary>
 	/// 移動
@@ -87,4 +95,4 @@ private:
 	void AutoDelete(float _sec);
 };
 
-Bullet* CreateBullet(GameObject* _parent);
+Bullet* CreateBullet(GameObject* _parent,EffectData _data);

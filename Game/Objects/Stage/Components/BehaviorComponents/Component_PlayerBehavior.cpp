@@ -60,9 +60,7 @@ void Component_PlayerBehavior::Initialize()
 
     // 子コンポーネントの追加
     if (FindChildComponent("InputMove") == false)AddChildComponent(CreateComponent("InputMove", WASDInputMove, holder_, this));
-    if (FindChildComponent("MeleeAttack") == false)AddChildComponent(CreateComponent("MeleeAttack", MeleeAttack, holder_, this));
     if (FindChildComponent("ShootAttack") == false)AddChildComponent(CreateComponent("ShootAttack", ShootAttack, holder_, this));
-    if (FindChildComponent("Timer") == false)AddChildComponent(CreateComponent("Timer", Timer, holder_, this));
     if (FindChildComponent("HealthGauge") == false)AddChildComponent(CreateComponent("PlayerHealthGauge", HealthGauge, holder_, this));
     if (FindChildComponent("PlayerMotion") == false)AddChildComponent(CreateComponent("PlayerMotion", PlayerMotion, holder_, this));
     if (FindChildComponent("TackleMove") == false)AddChildComponent(CreateComponent("TackleMove", TackleMove, holder_, this));
@@ -114,17 +112,20 @@ void Component_PlayerBehavior::Release()
 {
 }
 
+void Component_PlayerBehavior::Save(json& _saveObj)
+{
+	_saveObj["shootHeight"] = shootHeight_;
+}
+
+void Component_PlayerBehavior::Load(json& _loadObj)
+{
+    if (_loadObj.contains("shootHeight"))shootHeight_ = _loadObj["shootHeight"];
+}
+
 void Component_PlayerBehavior::DrawData()
 {
-    ImGui::Text("%f,%f,%f,%f", frontVec_.m128_f32);
-    auto timer = dynamic_cast<Component_Timer*>(GetChildComponent("Timer"));
-    if (timer == nullptr)return;
-    ImGui::Text("%f", timer->GetNowTime());
-
-    if (ImGui::Button("Idle")) SetState(PSTATE_IDLE);
-    if (ImGui::Button("Walk")) SetState(PSTATE_WALK);
-    if (ImGui::Button("Shoot")) SetState(PSTATE_SHOOT);
-
+    // 高さの設定
+    ImGui::DragFloat("ShootHeight", &shootHeight_, 0.1f);
 }
 
 void Component_PlayerBehavior::Idle()
@@ -196,9 +197,6 @@ void Component_PlayerBehavior::Shoot()
 
             // 発射方向を設定
             shoot->SetShootingDirection(CalcShootDirection());
-
-            // 発射速度を設定
-            shoot->SetShootingSpeed(2.f);
         }
 
         // 射撃処理を実行

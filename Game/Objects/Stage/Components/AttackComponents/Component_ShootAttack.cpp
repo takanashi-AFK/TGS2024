@@ -20,7 +20,7 @@ void Component_ShootAttack::Update()
 	if (isActive_ == false)return;
 
 	// Œ‚‚¿•ú‚ÂƒvƒŒƒnƒu‚ð¶¬
-	Bullet* bulletPrefab = CreateBullet(holder_->GetParent());
+	Bullet* bulletPrefab = CreateBullet(holder_->GetParent(), {"A_Salamander4","Effects/A_Salamander4.efk" });
 
 	bulletPrefab->SetShooter(holder_);
 	

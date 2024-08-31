@@ -21,10 +21,10 @@ void Bullet::Initialize()
 	modelHandle_ = Model::Load(modelFilePath_);
 	assert(modelHandle_ >= 0);
 
-	//SetScale(0.2f);
+	SetScale(0.2f);
 
 	// effekseer: :Effect‚Ì“Ç‚Ýž‚Ý
-	EFFEKSEERLIB::gEfk->AddEffect("Sylph10", "Effects/Sylph10.efk");/*ššš*/
+	EFFEKSEERLIB::gEfk->AddEffect(data_.name, data_.path);/*ššš*/
 
 	// effekseer: :Effect‚ÌÄ¶î•ñ‚ÌÝ’è
 	EFFEKSEERLIB::EFKTransform t;/*ššš*/
@@ -35,7 +35,7 @@ void Bullet::Initialize()
 
 
 	// effekseer: :Effect‚ÌÄ¶
-	mt = EFFEKSEERLIB::gEfk->Play("Sylph10", t);/*ššš*/
+	mt = EFFEKSEERLIB::gEfk->Play(data_.name, t);/*ššš*/
 
 }
 
@@ -103,11 +103,14 @@ void Bullet::AutoDelete(float _sec)
 	else frame_++;
 }
 
-Bullet* CreateBullet(GameObject* _parent)
+Bullet* CreateBullet(GameObject* _parent, EffectData _data)
 {
 	Bullet* bullet = new Bullet(_parent);
 
 	if(_parent != nullptr) _parent->PushBackChild(bullet);
+
+	bullet->SetEffectData(_data);
+
 	bullet->Initialize();
 	return bullet;
 }

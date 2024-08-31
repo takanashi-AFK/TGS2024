@@ -40,6 +40,11 @@ void Component_KingCactanBehavior::Update()
 	Component_CircleRangeDetector* detector = dynamic_cast<Component_CircleRangeDetector*>(comp);
 	if (detector == nullptr)return;
 
+	Component* shootcomp = GetChildComponent("ShootAttackComponent");
+	Component_ShootAttack* shoot = dynamic_cast<Component_ShootAttack*>(shootcomp);
+	if (shoot == nullptr) return;
+
+	shoot->SetBulletModelHandle(shootModelhandle_);
 	//ターゲットが範囲内にいる場合
 	if (detector->IsContains()) {
 
@@ -63,13 +68,6 @@ void Component_KingCactanBehavior::Update()
 
 			timer->Stop();
 			chase->Stop();
-
-
-			Component* shootcomp = GetChildComponent("ShootAttackComponent");
-			Component_ShootAttack* shoot = dynamic_cast<Component_ShootAttack*>(shootcomp);
-			if (shoot == nullptr) return;
-			shoot->SetBulletModelHandle(shootModelhandle_);
-
 
 			XMFLOAT3 holderPos = holder_->GetPosition();
 			XMFLOAT3 targetPos = target_->GetPosition();

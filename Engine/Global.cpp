@@ -25,6 +25,16 @@ std::string FileManager::GetAssetsRelativePath(const std::string& absolutePath)
 	}
 }
 
+std::string FileManager::GetFileNameFromPath(const std::string& path)
+{
+	return std::filesystem::path(path).filename().string();
+}
+
+
+// 関数: パスから拡張子なしのファイル名を取得する
+std::string FileManager::GetFileNameWithoutExtension(const std::string& path) {
+	return std::filesystem::path(path).stem().string();
+}
 XMFLOAT3 operator+(XMFLOAT3& a, const XMFLOAT3& b)
 {
 	return XMFLOAT3(a.x + b.x, a.y + b.y, a.z + b.z);

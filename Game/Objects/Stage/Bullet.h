@@ -5,16 +5,11 @@
 
 // effekseer: インクルード
 #include "../../../EffekseeLib/EffekseerVFX.h"/*★★★*/
-
+#include "../../../Engine/Global.h"
 
 /// <summary>
 /// 発射する弾を管理するクラス
 /// </summary>
-
-struct EffectData {
-	std::string name;
-	std::string path;
-};
 
 class Bullet :public StageObject
 {

@@ -3,6 +3,7 @@
 // インクルード
 #include "Component_Attack.h"
 #include <DirectXMath.h>
+#include "../../../Engine/Global.h"
 
 using namespace DirectX;
 
@@ -17,6 +18,9 @@ private:
 	XMFLOAT3 shootingPosition_;		// 弾の発射位置
 
 	bool isShootPositionSet_;		// 発射位置が設定されているか
+
+	EffectData data_;
+
 public:
 	/// <summary>
 	/// コンストラクタ
@@ -68,9 +72,10 @@ public:
 	/// <param name="_direction">弾の方向</param>
 	void SetShootingDirection(XMVECTOR _direction) { shootingDirection_ = _direction; }
 
-
 	void SetShootingPosition(XMFLOAT3 _position) {
 		shootingPosition_ = _position; isShootPositionSet_ = true;
 	}
+
+	void SetEffectData(EffectData _data) { data_ = _data; }
 };
 

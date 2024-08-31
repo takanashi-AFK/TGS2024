@@ -66,11 +66,13 @@ void Component_PlayerBehavior::Initialize()
 
 void Component_PlayerBehavior::Update()
 {
+
+    static bool isGameStart = false;
     // ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
     // カウント制御されている場合の処理
     // ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
     CountDown* countDown = (CountDown*)(holder_->FindObject("CountDown"));
-    if (countDown != nullptr) {
+    if (countDown != nullptr && isGameStart == false) {
 
         // 移動コンポーネントの取得 & 有無の確認
         Component_WASDInputMove* move = (Component_WASDInputMove*)(GetChildComponent("InputMove"));
@@ -81,6 +83,9 @@ void Component_PlayerBehavior::Update()
 
             //移動を可能にする
             move->Execute();
+
+            // ゲームスタートフラグを立てる
+            isGameStart = true;
         }
         else {
             // 移動を不可能にする
@@ -129,7 +134,7 @@ void Component_PlayerBehavior::Idle()
     if (move->IsMove()) SetState(PSTATE_WALK);
 
     // マウスの左ボタンが押されていたかつ、マウスの右ボタンが押されてたら、射撃状態に遷移
-    else if (Input::IsMouseButton(1) && Input::IsMouseButtonDown(0)) SetState(PSTATE_SHOOT);
+    else if (Input::IsMouseButtonDown(0)) SetState(PSTATE_SHOOT);
 
     // スペースキーが押されていたら...ダッシュ状態に遷移
     else if (Input::IsKeyDown(DIK_SPACE)) SetState(PSTATE_DASH);
@@ -152,7 +157,7 @@ void Component_PlayerBehavior::Walk()
     if (Input::IsKeyDown(DIK_SPACE)) SetState(PSTATE_DASH);
 
     // マウスの左ボタンが押されていたかつ、マウスの右ボタンが押されてたら、射撃状態に遷移
-    else if(Input::IsMouseButton(1) && Input::IsMouseButtonDown(0)) SetState(PSTATE_SHOOT);
+    else if(Input::IsMouseButtonDown(0)) SetState(PSTATE_SHOOT);
 }
 
 void Component_PlayerBehavior::Shoot()

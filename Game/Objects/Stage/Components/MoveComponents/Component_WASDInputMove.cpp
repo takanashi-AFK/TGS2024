@@ -24,7 +24,7 @@ void Component_WASDInputMove::Update()
 {
 
     // このコンポーネントがアクティブでない場合、処理を終了
-    if (!isActive_) return;
+    if (isActive_ == false) return;
     isMove_ = false;
     // 基本のベクトルを用意、初期化
     dir_ = XMVectorZero();

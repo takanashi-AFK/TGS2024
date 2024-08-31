@@ -3,7 +3,6 @@
 // インクルード
 #include"../Objects/Stage/SkySphere.h"
 #include"../Objects/Stage/Stage.h"
-#include "../Objects/UI/UIPanel.h"
 #include"../Objects/Stage/Components/GaugeComponents/Component_HealthGauge.h"
 #include"../Objects/Stage/Components/BehaviorComponents/Component_PlayerBehavior.h"
 #include"../../Engine/SceneManager.h"
@@ -11,6 +10,9 @@
 #include "../Objects/Camera/TPSCamera.h"
 #include "../../Engine/ImGui/imgui.h"
 #include "../../Engine/Global.h"
+#include "../../Engine/ResourceManager/Image.h"
+#include "../Objects/UI/CountDown.h"
+
 
 Scene_Play::Scene_Play(GameObject* parent)
 {
@@ -18,6 +20,9 @@ Scene_Play::Scene_Play(GameObject* parent)
 
 void Scene_Play::Initialize()
 {
+	UIPanel* panel_ = UIPanel::GetInstance();
+	//画像データのロード
+
 	// スカイスフィアの生成
 	SkySphere* skySphere = Instantiate<SkySphere>(this);
 
@@ -37,6 +42,8 @@ void Scene_Play::Initialize()
 		TPSCamera* tpsCamera = Instantiate<TPSCamera>(this);
 		tpsCamera->Load(camData);
 	}
+
+	Instantiate<CountDown>(this);
 }
 
 void Scene_Play::Update()
@@ -54,8 +61,8 @@ void Scene_Play::Update()
 			for (auto comp : comp_playerBehaviors) {
 
 				// プレイヤーコンポーネントが死んでいたら
-				if (((Component_PlayerBehavior*)comp)->IsDead() == true) { 
-					
+				if (((Component_PlayerBehavior*)comp)->IsDead() == true) {
+
 					g_score = 0;
 					isSceneChange = true;
 				}
@@ -99,7 +106,6 @@ void Scene_Play::Update()
 void Scene_Play::Draw()
 {
 }
-
 void Scene_Play::Release()
 {
 }

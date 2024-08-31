@@ -2,6 +2,8 @@
 
 // インクルード
 #include"../../Engine/GameObject/GameObject.h"
+#include "../Objects/UI/UIPanel.h"
+#include "../Objects/UI/UIImage.h"
 
 // 前方宣言
 class Stage;

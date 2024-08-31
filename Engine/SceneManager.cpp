@@ -23,9 +23,9 @@ void SceneManager::Initialize()
 {
 	//Å‰‚ÌƒV[ƒ“‚ğ€”õ
 #ifdef _DEBUG
-	currentSceneID_ = SCENE_ID_TEST;
+	currentSceneID_ = SCENE_ID_PLAY;
 	nextSceneID_ = currentSceneID_;
-	Instantiate<Scene_Test>(this);
+	Instantiate<Scene_Play>(this);
 #else
 	currentSceneID_ = SCENE_ID_SPLASH;
 	nextSceneID_ = currentSceneID_;

@@ -16,7 +16,7 @@ enum PlayerState {
 	PSTATE_DASH,
 	PSTATE_MAX
 	};
-
+class CountDown;
 class Component_PlayerBehavior : public Component
 {
 private:
@@ -28,7 +28,7 @@ private:
 	bool isAnimationNow_;
 
 	PlayerState nowState, prevState;
-
+	CountDown* countDown;
 
 public:
 	Component_PlayerBehavior(string _name,StageObject* _holder,Component* _parent);

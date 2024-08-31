@@ -6,6 +6,7 @@ class UIImage : public UIObject
 private:
 	string imageFilePath_;
 	int imageHandle_;
+	bool isDraw_;
 public:
 	UIImage(string _name, UIObject* parent, int _layerNum);
 	void Initialize() override;
@@ -18,5 +19,7 @@ public:
 	void DrawData() override;
 
 	void SetImage(string _imageFilePath);
+	void SetEnable(bool _enable) { isDraw_ = _enable; }
+	bool GetEnable() { return isDraw_; }
 };
 

@@ -20,6 +20,7 @@
 #include "../../../../../Game/Objects/Stage/Components/GaugeComponents/Component_HealthGauge.h"
 #include "../../../../../Engine/ImGui/imgui.h"
 #include "../MoveComponents/Component_TackleMove.h"
+#include "../../../UI/CountDown.h"
 
 
 struct CompareDist {
@@ -36,6 +37,7 @@ Component_PlayerBehavior::Component_PlayerBehavior(string _name, StageObject* _h
 
 void Component_PlayerBehavior::Initialize()
 {
+
     // コライダーの追加
     holder_->AddCollider(new BoxCollider(XMFLOAT3(0, 0, 0), XMFLOAT3(1, 1, 1)));
 
@@ -53,6 +55,9 @@ void Component_PlayerBehavior::Initialize()
 
 void Component_PlayerBehavior::Update()
 {
+    if(countDown == nullptr)
+    countDown = (CountDown*)(holder_->GetParent()->FindObject("CountDown"));
+
     auto hm = dynamic_cast<Component_HealthGauge*>(GetChildComponent("PlayerHealthGauge"));
     if (hm == nullptr)return;
 
@@ -72,7 +77,12 @@ void Component_PlayerBehavior::Update()
     auto move = dynamic_cast<Component_WASDInputMove*>(GetChildComponent("InputMove"));
     if (move == nullptr)return;
 
-
+    if (countDown->GetIsCountDown()) {
+        move->Stop();
+    }
+    else {
+        move->Execute();
+    }
 
     switch (nowState)
     {

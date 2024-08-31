@@ -21,8 +21,10 @@ void UIImage::Draw()
 	// ‰æ‘œ‚ª“Ç‚İ‚Ü‚ê‚Ä‚¢‚È‚¢ê‡‚Íˆ—‚ğs‚í‚È‚¢
 	if (imageHandle_ < 0)return;
 
-	Image::SetTransform(imageHandle_, transform_);
-	Image::Draw(imageHandle_);
+    if (isDraw_) {
+        Image::SetTransform(imageHandle_, transform_);
+        Image::Draw(imageHandle_);
+    }
 }
 
 void UIImage::Release()
@@ -100,4 +102,5 @@ void UIImage::SetImage(string _imageFilePath)
 {
 	imageFilePath_ = _imageFilePath;
 	imageHandle_ = Image::Load(_imageFilePath);
+	assert(imageHandle_ >= 0);
 }

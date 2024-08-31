@@ -87,5 +87,4 @@ private:
 	void AutoDelete(float _sec);
 };
 
-
-
+Bullet* CreateBullet(GameObject* _parent);

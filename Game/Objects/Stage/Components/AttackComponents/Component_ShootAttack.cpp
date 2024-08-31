@@ -20,7 +20,7 @@ void Component_ShootAttack::Update()
 	if (isActive_ == false)return;
 
 	// Œ‚‚¿•ú‚ÂƒvƒŒƒnƒu‚ğ¶¬
-	Bullet* bulletPrefab = Instantiate<Bullet>(holder_->GetParent());
+	Bullet* bulletPrefab = CreateBullet(holder_->GetParent());
 
 	bulletPrefab->SetShooter(holder_);
 	

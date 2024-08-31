@@ -29,6 +29,10 @@ namespace {
     bool IsXMVectorZero(XMVECTOR _vec) {
 		return XMVector3Equal(_vec, XMVectorZero());
 	}
+
+    bool IsWASDKey() {
+		return Input::IsKey(DIK_W) || Input::IsKey(DIK_A) || Input::IsKey(DIK_S) || Input::IsKey(DIK_D);
+	}
 }
 
 
@@ -269,8 +273,8 @@ void Component_PlayerBehavior::Dash()
         //移動を可能にする
         move->Execute();
 
-		// IDLE状態に遷移
-		SetState(PSTATE_IDLE);
+        // 状態を遷移
+        IsWASDKey() ? SetState(PSTATE_WALK) : SetState(PSTATE_IDLE);
     }
 }
 

@@ -103,3 +103,11 @@ void Bullet::AutoDelete(float _sec)
 	else frame_++;
 }
 
+Bullet* CreateBullet(GameObject* _parent)
+{
+	Bullet* bullet = new Bullet(_parent);
+
+	if(_parent != nullptr) _parent->PushBackChild(bullet);
+	bullet->Initialize();
+	return bullet;
+}

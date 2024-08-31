@@ -97,3 +97,8 @@ void Component_PlayerMotion::Release()
 void Component_PlayerMotion::DrawData()
 {
 }
+
+int Component_PlayerMotion::GetNowFrame()
+{
+    return Model::GetAnimFrame(motionModelMap_[state_]);
+}

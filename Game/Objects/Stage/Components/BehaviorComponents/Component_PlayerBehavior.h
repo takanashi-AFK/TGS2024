@@ -21,7 +21,6 @@ class Component_PlayerBehavior : public Component
 {
 private:
 	DirectX::XMVECTOR frontVec_;
-	StageObject* target_;	
 	string targetName_;
 	std::vector<RayCastData> rayHitObjectList_;
 	float shootHeight_;
@@ -40,23 +39,15 @@ public:
 
 	void Idle();
 	void Walk();
-	void WalkAndShoot();
-	void WalkAndMelee();
-	void Melee();
 	void Shoot();
 	void Dash();
 
 	void SetState(PlayerState _state) { prevState = nowState; nowState = _state; }
 	
-	void ShootExe();
-
-	PlayerState GetState() { return nowState; }
+	PlayerState GetState() const { return nowState; }
 
 	bool IsDead();
 
-
-	//bool IsEnemyInRect(StageObject* _target);
-
-	//XMFLOAT3 ConvertTo2DPos(StageObject* _target);
+	XMVECTOR CalcShootDirection();
 };
 

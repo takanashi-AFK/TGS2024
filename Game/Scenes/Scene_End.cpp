@@ -15,7 +15,7 @@ void Scene_End::Update()
 {
 	ImGui::Begin("result");
 	ImGui::Text("time : %d",1234);
-	ImGui::Text("score : %d", g_score);
+	ImGui::Text("score : %d", ScoreManager::GetScore());
 	for (int i = 0; i < 13;i++)ImGui::NewLine();
 	ImGui::Text("THANK YOU FOR PLAYING!");
 	ImGui::End();

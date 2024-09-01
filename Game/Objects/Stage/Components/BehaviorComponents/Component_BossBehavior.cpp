@@ -41,7 +41,7 @@ void Component_BossBehavior::Initialize()
 
 void Component_BossBehavior::Update()
 {
-    if (target_ == nullptr) target_ = (StageObject*)holder_->FindObject(targetName_);
+    if (target_ == nullptr) target_ = (StageObject*)holder_->GetParent()->FindObject(targetName_);
     if (target_ == nullptr || !isActive_) return;
 
     switch (nowState_)
@@ -108,8 +108,8 @@ void Component_BossBehavior::DrawData()
     ImGui::Text("%f", holder_->GetRotate().y);
     ImGui::Text("%f", timer->GetNowTime());
 
-    if (ImGui::Button("Activate"))
-        isActive_ = true;
+    if (ImGui::Checkbox("Activate", &isActive_));
+        
 
     // ‘ÎÛ‚Ì‘I‘ğ
     vector<string> objNames;

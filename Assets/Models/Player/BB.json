@@ -1,0 +1,74 @@
+{
+  "Boss": {
+    "fallSpeed_": 1.0,
+    "isCollisionWall_": false,
+    "isOnGround_": false,
+    "isShadeVisible_": true,
+    "modelFilePath_": "Models/Enemies/Cactan/cactan.fbx",
+    "myComponents_": {
+      "BossBehavior": {
+        "childComponents_": {
+          "CircleRangeDetector": {
+            "name_": "CircleRangeDetector",
+            "radius_": 13.0,
+            "target_": "object1",
+            "type_": 3
+          },
+          "ShootAttack": {
+            "EffectData": {
+              "name": "",
+              "path": ""
+            },
+            "name_": "ShootAttack",
+            "shootingDirection_": [ 0.9961947202682495, 0.0, -0.08715569972991943 ],
+            "shootingSpeed_": 0.4000000059604645,
+            "type_": 17
+          },
+          "TackleMove": {
+            "direction_": 0.7997439503669739,
+            "distance_": 25.689044952392578,
+            "easingType_": "InCubic",
+            "name_": "TackleMove",
+            "speed_": 0.009999999776482582,
+            "type_": 18
+          },
+          "Timer": {
+            "maxTime_": 180.0,
+            "name_": "Timer",
+            "nowTime_": 180.0,
+            "type_": 19
+          }
+        },
+        "name_": "BossBehavior",
+        "nextStateTime_": 3.0,
+        "rotateSpeed_": 5.0,
+        "shotRate_": 0.10000000149011612,
+        "shotrange_": 13.0,
+        "tacklerange_": 9.0,
+        "target_": "object1",
+        "type_": 0
+      }
+    },
+    "position_": [ 35.04059982299805, 0.0, 20.291446685791016 ],
+    "rotate_": [ 0.0, 100.0, 0.0 ],
+    "scale_": [ 5.0, 5.0, 5.0 ]
+  },
+  "object1": {
+    "fallSpeed_": 1.0,
+    "isCollisionWall_": false,
+    "isOnGround_": false,
+    "isShadeVisible_": true,
+    "modelFilePath_": "Models/Player/Silly Dancing.fbx",
+    "myComponents_": {
+      "wasd": {
+        "isActive_": true,
+        "name_": "wasd",
+        "speed_": 0.10000000149011612,
+        "type_": 20
+      }
+    },
+    "position_": [ 30.419708251953125, 0.0, 13.641192436218262 ],
+    "rotate_": [ 0.0, 172.70030212402344, 0.0 ],
+    "scale_": [ 0.5, 0.5, 0.5 ]
+  }
+}

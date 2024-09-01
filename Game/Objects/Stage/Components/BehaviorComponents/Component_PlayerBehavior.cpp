@@ -95,6 +95,11 @@ void Component_PlayerBehavior::Update()
         }
     }
     
+    // hp表示
+    Component_HealthGauge* hg = (Component_HealthGauge*)(GetChildComponent("PlayerHealthGauge"));
+    ImGui::Begin("Player");
+    ImGui::ProgressBar(static_cast<float>(hg->GetNow()) / hg->GetMax());
+    ImGui::End();
 
     // ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
     // 状態ごとの処理

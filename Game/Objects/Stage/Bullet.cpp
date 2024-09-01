@@ -64,24 +64,24 @@ void Bullet::OnCollision(GameObject* _target, Collider* _collider)
 {
 	if (isActive_ == false)return;
 
-	//// ターゲットがStageObjectでない場合は処理を行わない
-	//StageObject* target = dynamic_cast<StageObject*>(_target);
-	//if (!target) return;
+	// ターゲットがStageObjectでない場合は処理を行わない
+	StageObject* target = dynamic_cast<StageObject*>(_target);
+	if (!target) return;
 
-	//if (target->GetObjectName() == shooter_->GetObjectName())return;
-	//auto list = target->FindComponent(HealthGauge);
+	if (target->GetObjectName() == shooter_->GetObjectName())return;
+	auto list = target->FindComponent(HealthGauge);
 
-	//if (list.empty()) return;
-	//// ダメージ処理
-	//for (auto hm : list) {
+	if (list.empty()) return;
+	// ダメージ処理
+	for (auto hm : list) {
 
-	//	((Component_HealthGauge*)hm)->TakeDamage(20);
-	//	this->KillMe();
+		((Component_HealthGauge*)hm)->TakeDamage(20);
+		this->KillMe();
 
-	//	if (((Component_HealthGauge*)hm)->IsDead()) {
-	//		((Stage*)FindObject("Stage"))->DeleteStageObject((StageObject*)_target);
-	//	}
-	//}
+		if (((Component_HealthGauge*)hm)->IsDead()) {
+			((Stage*)FindObject("Stage"))->DeleteStageObject((StageObject*)_target);
+		}
+	}
 
 }
 

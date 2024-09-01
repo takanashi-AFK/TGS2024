@@ -11,6 +11,7 @@
 #include "../../../../../Engine/Global.h"
 #include <random>
 #include "../../../UI/CountDown.h"
+#include "../GaugeComponents/Component_HealthGauge.h"
 
 namespace
 {
@@ -39,11 +40,15 @@ void Component_BossBehavior::Initialize()
     if (!FindChildComponent("ShootAttack")) AddChildComponent(CreateComponent("ShootAttack", ShootAttack, holder_, this));
     if (!FindChildComponent("Timer")) AddChildComponent(CreateComponent("Timer", Timer, holder_, this));
     if (!FindChildComponent("TackleMove")) AddChildComponent(CreateComponent("TackleMove", TackleMove, holder_, this));
+    if (!FindChildComponent("HealthGauge")) AddChildComponent(CreateComponent("HealthGauge", HealthGauge, holder_, this));
+
 
     // effekseer: :Effectの読み込み
     EFFEKSEERLIB::gEfk->AddEffect("sword", "Effects/Salamander12.efk");/*★★★*/
 
-
+    // コライダーの追加
+    // fix: コライダーのサイズを今後データから読み込むように変更
+    holder_->AddCollider(new BoxCollider({}, {5.0f, 5.0f, 5.0f}));
 }
 
 void Component_BossBehavior::Update()
@@ -71,6 +76,14 @@ void Component_BossBehavior::Update()
 			isActive_ = false;
         }
     }
+
+
+    // hp表示
+    Component_HealthGauge* hg = (Component_HealthGauge*)(GetChildComponent("HealthGauge"));
+    ImGui::Begin("Cactann");
+    ImGui::ProgressBar(static_cast<float>(hg->GetNow()) / hg->GetMax());
+    ImGui::End();
+
 
     if (target_ == nullptr || !isActive_) return;
 
@@ -102,6 +115,12 @@ void Component_BossBehavior::Release()
 
 void Component_BossBehavior::OnCollision(GameObject* _target, Collider* _collider)
 {
+    Component_TackleMove* tackleMove = (Component_TackleMove*)(GetChildComponent("TackleMove"));
+    if (tackleMove == nullptr) return;
+
+    if (tackleMove->IsActived() == true && _target != nullptr) {
+        for (auto hg : ((StageObject*)_target)->FindComponent(HealthGauge))((Component_HealthGauge*)hg)->TakeDamage(30);
+    }
 }
 
 void Component_BossBehavior::Save(json& _saveObj)

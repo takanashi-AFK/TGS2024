@@ -12,6 +12,7 @@
 #include "../../Engine/Global.h"
 #include "../../Engine/ResourceManager/Image.h"
 #include "../Objects/UI/CountDown.h"
+#include "../../Engine/DirectX/Input.h"
 
 
 Scene_Play::Scene_Play(GameObject* parent)
@@ -49,10 +50,29 @@ void Scene_Play::Initialize()
 
 void Scene_Play::Update()
 {
-	if (countDown_->IsFinished()) {
-		tpsCamera_->SetActive(true);
-	}
+	// カーソル固定化処理
+	static bool fixedCursorPos = false; {
 
+		// 固定化の切り替え
+		if (Input::IsKeyDown(DIK_F3))fixedCursorPos = !fixedCursorPos;
+		
+		// カーソルの位置を中央に固定
+		if (fixedCursorPos) {
+			SetCursorPos(Direct3D::screenWidth_ / 2, Direct3D::screenHeight_ / 2);
+		}
+	}
+	
+	static bool isGameStart = false;
+	if (countDown_->IsFinished() && isGameStart == false) {
+
+		// カーソルの位置を中央に固定
+		fixedCursorPos = true;
+		
+		// カメラのアクティブ化
+		tpsCamera_->SetActive(true);
+
+		isGameStart = true;
+	}
 
 	// シーン切替処理
 	{

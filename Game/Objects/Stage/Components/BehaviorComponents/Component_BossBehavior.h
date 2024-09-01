@@ -27,6 +27,8 @@ private:
 
 	bool isActive_;
 
+	float shootHeight_;
+
 	// effekseer: 変形行列
 	std::shared_ptr<EFFEKSEERLIB::EFKTransform> mt;/*★★★*/
 
@@ -76,6 +78,8 @@ public:
 	/// ImGuiパネル表示
 	/// </summary>
 	void DrawData() override;
+
+	void OnCollision(GameObject* _target, Collider* _collider) override;
 
 //------------ボスの行動メソッド----------------//
 

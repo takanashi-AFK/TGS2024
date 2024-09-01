@@ -146,7 +146,7 @@ void StageObject::OnGround(float _fallSpeed)
 		//レイが当たったら
 		if (data.hit) {
 			//その分位置を下げる
-			transform_.position_.y -= (data.dist- (MODEL_SCALE/2)) * _fallSpeed;
+			transform_.position_.y -= (data.dist- (MODEL_SCALE/2 + groundOffset_)) * _fallSpeed;
 		}
 	}
 }
@@ -251,7 +251,8 @@ void StageObject::Save(json& _saveObj)
 	_saveObj["fallSpeed_"] = fallSpeed_;
 	_saveObj["isOnGround_"] = isOnGround_;
 	_saveObj["isCollisionWall_"] = isCollisionWall_;
-	
+	_saveObj["groundOffset_"] = groundOffset_;
+
 	// 自身のモデルのファイルパスを保存
 	_saveObj["modelFilePath_"] = modelFilePath_;
 
@@ -280,6 +281,7 @@ void StageObject::Load(json& _loadObj)
 	if (_loadObj.contains("fallSpeed_"))fallSpeed_ = _loadObj["fallSpeed_"];
 	if (_loadObj.contains("isOnGround_"))isOnGround_ = _loadObj["isOnGround_"];
 	if (_loadObj.contains("isCollisionWall_"))isCollisionWall_ = _loadObj["isCollisionWall_"];
+	if (_loadObj.contains("groundOffset_"))groundOffset_ = _loadObj["groundOffset_"];
 
 
 	// モデルのファイルパスを読込
@@ -332,9 +334,11 @@ void StageObject::DrawData()
 		ImGui::SameLine();
 		ImGui::Checkbox("isCollisionWall", &isCollisionWall_);
 		ImGui::DragFloat("fallSpeed", &fallSpeed_, 0.1f, 0.f, 1.f);
+		ImGui::DragFloat("groundOffset", &groundOffset_, 0.1f, 0.f, LONG_MAX);
 
 		ImGui::TreePop();
 	}
+
 
 	// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
 	// シェードの表示

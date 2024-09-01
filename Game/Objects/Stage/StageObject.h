@@ -25,6 +25,7 @@ protected:
 	bool isOnGround_;                   // 地面に設置するかどうか
 	bool isCollisionWall_;              // 壁に当たったかどうか
 	float fallSpeed_;                   // 落下速度
+	float groundOffset_;                // 地面からのオフセット
 
 	bool isShadeVisible_;               // 陰の表示
 public:

@@ -10,12 +10,15 @@
 #include "../../Stage.h"
 #include "../../../../../Engine/Global.h"
 #include <random>
+#include "../GaugeComponents/Component_HealthGauge.h"
+#include "../../../../../Engine/Collider/BoxCollider.h"
 
 namespace
 {
     const float SHOT_RATE = 0.2f;
     const float SHOT_ANGLE = 15;
     const int SHOT_TIME = 3;
+    const XMFLOAT3 BOSS_SIZE = XMFLOAT3(4,4,4);
     EFFEKSEERLIB::EFKTransform t;/*★★★*/
 }
 
@@ -33,10 +36,11 @@ void Component_BossBehavior::Initialize()
     if (!FindChildComponent("Timer")) AddChildComponent(CreateComponent("Timer", Timer, holder_, this));
     if (!FindChildComponent("TackleMove")) AddChildComponent(CreateComponent("TackleMove", TackleMove, holder_, this));
 
+	holder_->AddCollider(new BoxCollider(XMFLOAT3(0, 0, 0), BOSS_SIZE));
+    holder_->SetScale(BOSS_SIZE);
+
     // effekseer: :Effectの読み込み
     EFFEKSEERLIB::gEfk->AddEffect("sword", "Effects/Salamander12.efk");/*★★★*/
-
-
 }
 
 void Component_BossBehavior::Update()
@@ -72,6 +76,22 @@ void Component_BossBehavior::Release()
 
 void Component_BossBehavior::OnCollision(GameObject* _target, Collider* _collider)
 {
+    // ターゲットがStageObjectでない場合は処理を行わない
+    StageObject* target = (StageObject*)_target;
+    if (!target) return;
+
+    auto list = target->FindComponent(HealthGauge);
+    if (list.empty()) return;
+
+    // ダメージ処理
+    for (auto hm : list) {
+
+        ((Component_HealthGauge*)hm)->TakeDamage(20);
+
+        if (((Component_HealthGauge*)hm)->IsDead()) {
+            ((Stage*)holder_->GetParent()->FindObject("Stage"))->DeleteStageObject((StageObject*)_target);
+        }
+    }
 }
 
 void Component_BossBehavior::Save(json& _saveObj)
@@ -82,6 +102,7 @@ void Component_BossBehavior::Save(json& _saveObj)
     _saveObj["nextStateTime_"] = nextStateTime_;
     _saveObj["shotRate_"] = shotRate_;
     _saveObj["rotateSpeed_"] = rotateSpeed_;
+	_saveObj["shootHeight_"] = shootHeight_;   
 }
 
 void Component_BossBehavior::Load(json& _loadObj)
@@ -92,7 +113,9 @@ void Component_BossBehavior::Load(json& _loadObj)
     if (_loadObj.contains("nextStateTime_")) nextStateTime_ = _loadObj["nextStateTime_"];
     if (_loadObj.contains("shotRate_")) shotRate_ = _loadObj["shotRate_"];
     if (_loadObj.contains("rotateSpeed_")) rotateSpeed_ = _loadObj["rotateSpeed_"];
+	if (_loadObj.contains("shootHeight_")) shootHeight_ = _loadObj["shootHeight_"];
 }
+
 
 void Component_BossBehavior::DrawData()
 {
@@ -101,6 +124,7 @@ void Component_BossBehavior::DrawData()
     ImGui::DragFloat("nextStateTime_", &nextStateTime_);
     ImGui::DragFloat("shotRate_", &shotRate_);
     ImGui::DragFloat("rotateSpeed_", &rotateSpeed_);
+	ImGui::DragFloat("shootHeight_", &shootHeight_);
 #ifdef _DEBUG
     auto timer = dynamic_cast<Component_Timer*>(GetChildComponent("Timer"));
     if (timer == nullptr) return;
@@ -108,7 +132,7 @@ void Component_BossBehavior::DrawData()
     ImGui::Text("%f", holder_->GetRotate().y);
     ImGui::Text("%f", timer->GetNowTime());
 
-    if (ImGui::Checkbox("Activate", &isActive_));
+    ImGui::Checkbox("Activate", &isActive_);
         
 
     // 対象の選択
@@ -157,7 +181,9 @@ void Component_BossBehavior::Shot()
         XMVECTOR myDirection = { 0,0,1,0 };
 
         myDirection = XMVector3TransformCoord(myDirection, XMMatrixRotationY(XMConvertToRadians(holderRotate.y)));
-
+        XMFLOAT3 shootPosition = holder_->GetPosition();
+        shootPosition.y += shootHeight_;
+		shoot->SetShootingPosition(shootPosition);
         shoot->SetShootingDirection(myDirection);
         // 撃つ
         shoot->Execute();

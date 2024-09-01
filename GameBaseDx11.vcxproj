@@ -139,7 +139,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Game\Objects\Stage\Components\BehaviorComponents\Component_KingCactanBehavior.cpp" />
     <ClCompile Include="Game\Objects\UI\CountDown.cpp" />
     <ClCompile Include="Game\Objects\Stage\Components\TeleporterComponent\Component_Teleporter.cpp" />
     <ClCompile Include="Game\Objects\Stage\Components\MotionComponent\Component_PlayerMotion.cpp" />
@@ -220,7 +219,6 @@
     <ClCompile Include="Game\Objects\UI\UIText.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Game\Objects\Stage\Components\BehaviorComponents\Component_KingCactanBehavior.h" />
     <ClInclude Include="Game\Objects\UI\CountDown.h" />
     <ClInclude Include="Game\Objects\Stage\Components\TeleporterComponent\Component_Teleporter.h" />
     <ClInclude Include="Game\Objects\Stage\Components\MotionComponent\Component_PlayerMotion.h" />

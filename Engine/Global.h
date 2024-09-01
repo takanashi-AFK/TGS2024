@@ -25,6 +25,13 @@ const float FPS = 60.0f;	// フレームレート
 
 // ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝ //
 
+namespace ScoreManager {
+	extern float g_Score;
+
+	void AddScore(int score);
+	int GetScore();
+}
+
 // ファイル管理namespace
 namespace FileManager {
 	// 文字列内の全ての "\\" を "/" に置換する関数

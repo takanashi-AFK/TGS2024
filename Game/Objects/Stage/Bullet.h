@@ -24,6 +24,7 @@ private:
 	std::shared_ptr<EFFEKSEERLIB::EFKTransform> mt;/*★★★*/
 	EffectData data_;
 
+	float lifeTime_;	// 生存時間
 public:
 	/// <summary>
 	/// コンストラクタ
@@ -75,6 +76,8 @@ public:
 	void SetShooter(StageObject* _shooter) { shooter_ = _shooter; }
 
 	void SetEffectData(EffectData _data) { data_ = _data; }
+
+	void SetLifeTime(float _time) { lifeTime_ = _time; }
 private:
 	/// <summary>
 	/// 移動

@@ -31,6 +31,9 @@ void Component_ShootAttack::Update()
 	// 撃ち放つ方向を設定
 	bulletPrefab->SetDirection(shootingDirection_);
 
+	// 弾の生存時間を設定
+	bulletPrefab->SetLifeTime(bulletLifeTime_);
+	
 	// 撃ち放つ位置を設定
 	if (isShootPositionSet_ == true)bulletPrefab->SetPosition(shootingPosition_);
 	else bulletPrefab->SetPosition(holder_->GetPosition());
@@ -52,6 +55,9 @@ void Component_ShootAttack::Save(json& _saveObj)
 	_saveObj["shootingSpeed_"] = shootingSpeed_;
 	_saveObj["shootingDirection_"] = { REFERENCE_XMVECTOR3(shootingDirection_)};
 
+	// 弾の生存時間の保存
+	_saveObj["bulletLifeTime_"] = bulletLifeTime_;
+
 	// エフェクトデータの保存
 	_saveObj["EffectData"] = {
 		{"name",data_.name},
@@ -64,6 +70,9 @@ void Component_ShootAttack::Load(json& _loadObj)
 	// 速度と方向の読み込み
 	if (_loadObj.contains("shootingSpeed_"))shootingSpeed_ = _loadObj["shootingSpeed_"];
 	if (_loadObj.contains("shootingDirection_"))shootingDirection_ = XMVectorSet(_loadObj["shootingDirection_"][0], _loadObj["shootingDirection_"][1],_loadObj["shootingDirection_"][2],0);
+
+	// 弾の生存時間の読み込み
+	if (_loadObj.contains("bulletLifeTime_"))bulletLifeTime_ = _loadObj["bulletLifeTime_"];
 
 	// エフェクトデータの読み込み
 	if (_loadObj.contains("EffectData")) {
@@ -80,9 +89,12 @@ void Component_ShootAttack::DrawData()
 	// 方向の設定
 	ImGui::DragFloat3("Direction", (float*)&shootingDirection_, 0.1f);
 
+	// 弾を生存期間を設定
+	ImGui::DragFloat("bulletLifeTime_", &bulletLifeTime_, 0.1f, 0.f);
+
 	// 攻撃ボタン
 	if (ImGui::Button("Execute"))this->Execute();
-
+	
 	// エフェクトデータの表示
 	if(ImGui::TreeNode("Effect Data")) {
 

@@ -8,7 +8,7 @@
 #include "Stage.h"
 
 Bullet::Bullet(GameObject* _parent) 
-:StageObject("Bullet","Models/DebugCollision/SphereCollider.fbx", _parent),isActive_(false), frame_(), speed_(), direction_()
+:StageObject("Bullet","Models/DebugCollision/SphereCollider.fbx", _parent),isActive_(false), frame_(), speed_(), direction_(), shooter_(), mt(), data_(), lifeTime_(2.f)
 {
 }
 
@@ -33,10 +33,8 @@ void Bullet::Initialize()
 	t.maxFrame = 180;/*ššš*/
 	t.speed = 1.f;/*ššš*/
 
-
 	// effekseer: :Effect‚ÌÄ¶
 	mt = EFFEKSEERLIB::gEfk->Play(data_.name, t);/*ššš*/
-
 }
 
 void Bullet::Update()
@@ -49,7 +47,7 @@ void Bullet::Update()
 
 	// ©“®íœ
 	//if (EFFEKSEERLIB::gEfk->IsEffectPlaying("Sylph10") == false)KillMe();
-	AutoDelete(3.f);
+	AutoDelete(lifeTime_);
 
 	// effekseer: :Effect‚ÌÄ¶î•ñ‚ÌXV
 	DirectX::XMStoreFloat4x4(&(mt->matrix), this->GetWorldMatrix());/*ššš*/

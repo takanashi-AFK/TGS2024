@@ -18,7 +18,7 @@ private:
 	XMFLOAT3 shootingPosition_;		// ’e‚Ì”­ËˆÊ’u
 
 	bool isShootPositionSet_;		// ”­ËˆÊ’u‚ªİ’è‚³‚ê‚Ä‚¢‚é‚©
-
+	float bulletLifeTime_;				// ’e‚Ì¶‘¶ŠÔ
 	EffectData data_;
 
 public:

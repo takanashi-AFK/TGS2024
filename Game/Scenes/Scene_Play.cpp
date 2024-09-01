@@ -76,42 +76,45 @@ void Scene_Play::Update()
 
 	// シーン切替処理
 	{
-		//bool isSceneChange = false;
+		bool isSceneChange = false;
 
-		//// プレイヤーが死んだらシーンを切り替える
-		//{
-		//	// ステージ内にプレイヤーコンポーネントを持っているキャラクターが存在するかどうかを判定し取得
-		//	vector<Component*> comp_playerBehaviors = pStage_->FindComponents(PlayerBehavior);
-
-		//	// 範囲for文でプレイヤーコンポーネントの生存フラグを確認
-		//	for (auto comp : comp_playerBehaviors) {
-
-		//		// プレイヤーコンポーネントが死んでいたら
-		//		if (((Component_PlayerBehavior*)comp)->IsDead() == true) {
-
-		//			g_score = 0;
-		//			isSceneChange = true;
-		//		}
-		//	}
-		//}
-
-		// ボスが死んだらシーンを切り替える
+		// プレイヤーが死んだらシーンを切り替える
 		{
-			//// ステージ内にボスコンポーネントを持っているキャラクターが存在するかどうかを判定し取得
-			//vector<Component*> comp_bossBehaviors = pStage_->FindComponents(BossBehavior);
+			// ステージ内にプレイヤーコンポーネントを持っているキャラクターが存在するかどうかを判定し取得
+			vector<Component*> comp_playerBehaviors = pStage_->FindComponents(PlayerBehavior);
 
-			//// 範囲for文でボスコンポーネントの生存フラグを確認
-			//for (auto comp : comp_bossBehaviors) {
+			// ステージ内にボスコンポーネントを持っているキャラクターが存在するかどうかを判定し取得
+			vector<Component*> comp_bossBehaviors = pStage_->FindComponents(BossBehavior);
 
-			//	// ボスコンポーネントが死んでいたら
-			//	if (((Component_BossBehavior*)comp)->IsDead() == true) {
-			//		// シーンを切り替える
-			//		SceneManager* sceneManager = (SceneManager*)FindObject("SceneManager");
-			//		sceneManager->ChangeScene(SCENE_ID_END, TID_BLACKOUT);
-			//	}
-			//}
+
+			// 範囲for文でプレイヤーコンポーネントの生存フラグを確認
+			for (auto comp : comp_playerBehaviors) {
+
+				auto healthGauge = comp->GetChildComponent(ComponentType::HealthGauge);
+
+				for (auto hg : healthGauge) {
+					if (((Component_HealthGauge*)hg)->IsDead()) {
+						// シーンを切り替える
+						SceneManager* sceneManager = (SceneManager*)FindObject("SceneManager");
+						sceneManager->ChangeScene(SCENE_ID_END, TID_BLACKOUT);
+					}
+				}
+			}
+
+			// 範囲for文でプレイヤーコンポーネントの生存フラグを確認
+			for (auto comp : comp_bossBehaviors) {
+
+				auto healthGauge = comp->GetChildComponent(ComponentType::HealthGauge);
+
+				for (auto hg : healthGauge) {
+					if (((Component_HealthGauge*)hg)->IsDead()) {
+						// シーンを切り替える
+						SceneManager* sceneManager = (SceneManager*)FindObject("SceneManager");
+						sceneManager->ChangeScene(SCENE_ID_END, TID_BLACKOUT);
+					}
+				}
+			}
 		}
-
 		//// debug
 		//{
 		//	if (ImGui::Button("end")) {
@@ -127,6 +130,7 @@ void Scene_Play::Update()
 		//	sceneManager->ChangeScene(SCENE_ID_END, TID_BLACKOUT);
 		//}
 	}
+
 }
 
 void Scene_Play::Draw()

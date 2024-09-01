@@ -10,6 +10,7 @@
 #include "../../Stage.h"
 #include "../../../../../Engine/Global.h"
 #include <random>
+#include "../../../UI/CountDown.h"
 
 namespace
 {
@@ -23,6 +24,12 @@ Component_BossBehavior::Component_BossBehavior(string _name, StageObject* _holde
     : Component(_holder, _name, BossBehavior, _parent), nowState_(WAIT), prevState_(WAIT), isActive_(false),
     shotrange_{}, tacklerange_{}, nextStateTime_{}, shotRate_(SHOT_RATE), rotateSpeed_(SHOT_ANGLE), target_(nullptr), angle_{}
 {
+#ifdef _DEBUG
+	isActive_ = false;
+#else
+    isActive_ = true;
+#endif // DEBUG
+
 }
 
 void Component_BossBehavior::Initialize()
@@ -42,6 +49,29 @@ void Component_BossBehavior::Initialize()
 void Component_BossBehavior::Update()
 {
     if (target_ == nullptr) target_ = (StageObject*)holder_->GetParent()->FindObject(targetName_);
+
+    static bool isGameStart = false;
+    // ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
+    // カウント制御されている場合の処理
+    // ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
+    CountDown* countDown = (CountDown*)(holder_->FindObject("CountDown"));
+    if (countDown != nullptr && isGameStart == false) {
+
+        // カウントダウンが終了した場合
+        if (countDown->IsFinished()) {
+
+            //移動を可能にする
+            isActive_ = true;
+
+            // ゲームスタートフラグを立てる
+            isGameStart = true;
+        }
+        else {
+            // 移動を不可能にする
+			isActive_ = false;
+        }
+    }
+
     if (target_ == nullptr || !isActive_) return;
 
     switch (nowState_)
@@ -76,6 +106,7 @@ void Component_BossBehavior::OnCollision(GameObject* _target, Collider* _collide
 
 void Component_BossBehavior::Save(json& _saveObj)
 {
+    _saveObj["shootHeight_"] = shootHeight_;
     if (target_ != nullptr) _saveObj["target_"] = target_->GetObjectName();
     _saveObj["shotrange_"] = shotrange_;
     _saveObj["tacklerange_"] = tacklerange_;
@@ -86,6 +117,7 @@ void Component_BossBehavior::Save(json& _saveObj)
 
 void Component_BossBehavior::Load(json& _loadObj)
 {
+    if(_loadObj.contains("shootHeight_")) shootHeight_ = _loadObj["shootHeight_"];
     if (_loadObj.contains("target_")) targetName_ = _loadObj["target_"];
     if (_loadObj.contains("shotrange_")) shotrange_ = _loadObj["shotrange_"];
     if (_loadObj.contains("tacklerange_")) tacklerange_ = _loadObj["tacklerange_"];
@@ -96,6 +128,8 @@ void Component_BossBehavior::Load(json& _loadObj)
 
 void Component_BossBehavior::DrawData()
 {
+
+    ImGui::DragFloat("shootHeight_", &shootHeight_);
     ImGui::DragFloat("shotrange_", &shotrange_);
     ImGui::DragFloat("tacklerange_", &tacklerange_);
     ImGui::DragFloat("nextStateTime_", &nextStateTime_);
@@ -159,6 +193,12 @@ void Component_BossBehavior::Shot()
         myDirection = XMVector3TransformCoord(myDirection, XMMatrixRotationY(XMConvertToRadians(holderRotate.y)));
 
         shoot->SetShootingDirection(myDirection);
+
+        // 撃ち放つ位置を設定
+        XMFLOAT3 shootPosition = holder_->GetPosition();
+        shootPosition.y += shootHeight_;
+        shoot->SetShootingPosition(shootPosition);
+
         // 撃つ
         shoot->Execute();
     }
@@ -187,6 +227,7 @@ void Component_BossBehavior::Tackle()
 
     // 方向ベクトルの計算
     XMVECTOR direction = XMVector3Normalize(XMLoadFloat3(&targetPos) - XMLoadFloat3(&holderPosition));
+    direction = XMVectorSetY(direction, 0);
 
     // 距離の計算
     float distance = XMVectorGetX(XMVector3Length(XMLoadFloat3(&targetPos) - XMLoadFloat3(&holderPosition)));

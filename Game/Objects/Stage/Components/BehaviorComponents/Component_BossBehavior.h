@@ -24,6 +24,7 @@ private:
 	float shotRate_;
 	float rotateSpeed_;
 	float nextStateTime_;
+	float shootHeight_;
 
 	bool isActive_;
 

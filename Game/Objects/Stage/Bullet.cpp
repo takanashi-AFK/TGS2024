@@ -49,7 +49,7 @@ void Bullet::Update()
 
 	// 自動削除
 	//if (EFFEKSEERLIB::gEfk->IsEffectPlaying("Sylph10") == false)KillMe();
-	AutoDelete(2.f);
+	AutoDelete(3.f);
 
 	// effekseer: :Effectの再生情報の更新
 	DirectX::XMStoreFloat4x4(&(mt->matrix), this->GetWorldMatrix());/*★★★*/
@@ -66,24 +66,24 @@ void Bullet::OnCollision(GameObject* _target, Collider* _collider)
 {
 	if (isActive_ == false)return;
 
-	// ターゲットがStageObjectでない場合は処理を行わない
-	StageObject* target = dynamic_cast<StageObject*>(_target);
-	if (!target) return;
+	//// ターゲットがStageObjectでない場合は処理を行わない
+	//StageObject* target = dynamic_cast<StageObject*>(_target);
+	//if (!target) return;
 
-	if (target->GetObjectName() == shooter_->GetObjectName())return;
-	auto list = target->FindComponent(HealthGauge);
+	//if (target->GetObjectName() == shooter_->GetObjectName())return;
+	//auto list = target->FindComponent(HealthGauge);
 
-	if (list.empty()) return;
-	// ダメージ処理
-	for (auto hm : list) {
+	//if (list.empty()) return;
+	//// ダメージ処理
+	//for (auto hm : list) {
 
-		((Component_HealthGauge*)hm)->TakeDamage(20);
-		this->KillMe();
+	//	((Component_HealthGauge*)hm)->TakeDamage(20);
+	//	this->KillMe();
 
-		if (((Component_HealthGauge*)hm)->IsDead()) {
-			((Stage*)FindObject("Stage"))->DeleteStageObject((StageObject*)_target);
-		}
-	}
+	//	if (((Component_HealthGauge*)hm)->IsDead()) {
+	//		((Stage*)FindObject("Stage"))->DeleteStageObject((StageObject*)_target);
+	//	}
+	//}
 
 }
 

@@ -22,6 +22,7 @@
 #include "../MoveComponents/Component_TackleMove.h"
 #include "../../../UI/CountDown.h"
 #include "../../../Camera/TPSCamera.h"
+#include "../../../../../Engine/SceneManager.h"
 
 namespace {
     const int SHOOT_FRAME = 115;
@@ -126,6 +127,13 @@ void Component_PlayerBehavior::DrawData()
 {
     // 高さの設定
     ImGui::DragFloat("ShootHeight", &shootHeight_, 0.1f);
+
+    ImGui::DragFloat("utyaka", &ScoreManager::g_Score);
+    
+    if (ImGui::Button("SceneChange")) {
+        SceneManager* sceneManager = (SceneManager*)holder_->GetParent()->FindObject("SceneManager");
+        sceneManager->ChangeScene(SCENE_ID_END, TID_BLACKOUT);
+    }
 }
 
 void Component_PlayerBehavior::Idle()

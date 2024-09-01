@@ -46,4 +46,14 @@ XMFLOAT3 operator-(XMFLOAT3& a, const XMFLOAT3& b)
 }
 
 // ゲームのスコア
-int g_score = 0;
+namespace ScoreManager {
+	float g_Score = 0.f;
+
+	void ScoreManager::AddScore(int score) {
+		g_Score += score; 
+	}
+
+	int ScoreManager::GetScore(){
+		return g_Score; 
+	}
+}

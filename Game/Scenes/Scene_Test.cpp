@@ -54,7 +54,6 @@ if (JsonReader::Load("Datas/CameraLayouts/camera.json", camData)) {
 
 	gameEditor->SetTPSCamera(tpsCamera);
 
-
 #endif // _DEBUG
 }
 

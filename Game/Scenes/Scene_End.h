@@ -1,9 +1,12 @@
 #pragma once
 #include"../../Engine/GameObject/GameObject.h"
 
-
+class UIPanel;
 class Scene_End :public GameObject
 {
+private:
+	UIPanel* panel;
+
 public:
 	//コンストラクタ
 	Scene_End(GameObject* parent_);

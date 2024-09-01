@@ -5,6 +5,8 @@
 #include "../Objects/UI/UIPanel.h"
 #include "../Objects/UI/UIObject.h"
 #include "../Objects/UI/UIText.h"
+#include "../Objects/UI/UIButton.h"
+#include "../../Engine/SceneManager.h"
 
 Scene_End::Scene_End(GameObject* parent_)
 {
@@ -17,7 +19,7 @@ void Scene_End::Initialize()
 	if (JsonReader::Load("Datas/UILayouts/ResultScene_layout.json", loadData)) {
 
 		// UIƒpƒlƒ‹‚ðŽæ“¾
-		UIPanel* panel = UIPanel::GetInstance();
+		panel = UIPanel::GetInstance();
 		panel->Load(loadData);
 		UIText* text = (UIText*)panel->GetUIObject("ScoreNum");
 
@@ -29,15 +31,12 @@ void Scene_End::Initialize()
 
 void Scene_End::Update()
 {
-	ImGui::Begin("result");
-	ImGui::Text("time : %d",1234);
-	ImGui::Text("score : %d", ScoreManager::GetScore());
-	for (int i = 0; i < 13;i++)ImGui::NewLine();
-	ImGui::Text("THANK YOU FOR PLAYING!");
-	ImGui::End();
+	UIButton* button = (UIButton*)panel->GetUIObject("NextSceneButton");
 
-
-
+	if (button->OnClick()) {
+		SceneManager* sceneManager = (SceneManager*)FindObject("SceneManager");
+		sceneManager->ChangeScene(SCENE_ID_TITLE, TID_BLACKOUT);
+	}
 }
 
 void Scene_End::Draw()

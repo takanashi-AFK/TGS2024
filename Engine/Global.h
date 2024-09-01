@@ -26,7 +26,7 @@ const float FPS = 60.0f;	// フレームレート
 // ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝ //
 
 namespace ScoreManager {
-	extern int g_Score;
+	extern float g_Score;
 
 	void AddScore(int score);
 	int GetScore();

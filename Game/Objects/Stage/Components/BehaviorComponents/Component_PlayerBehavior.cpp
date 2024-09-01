@@ -128,7 +128,7 @@ void Component_PlayerBehavior::DrawData()
     // 高さの設定
     ImGui::DragFloat("ShootHeight", &shootHeight_, 0.1f);
 
-    ImGui::DragInt("utyaka", &ScoreManager::g_Score);
+    ImGui::DragFloat("utyaka", &ScoreManager::g_Score);
     
     if (ImGui::Button("SceneChange")) {
         SceneManager* sceneManager = (SceneManager*)holder_->GetParent()->FindObject("SceneManager");

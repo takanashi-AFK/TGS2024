@@ -15,6 +15,10 @@
 #define REFERENCE_XMFLOAT4(p) p.x,p.y,p.z,p.w 
 #define REFERENCE_XMVECTOR3(p) XMVectorGetX(p),XMVectorGetY(p),XMVectorGetZ(p)
 
+// オペレーターのオーバーロード
+XMFLOAT3 operator+(XMFLOAT3& a, const XMFLOAT3& b);
+XMFLOAT3 operator-(XMFLOAT3& a, const XMFLOAT3& b);
+
 // ＝＝ 定数 ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝ //
 
 const float FPS = 60.0f;	// フレームレート
@@ -36,7 +40,6 @@ namespace FileManager {
 	std::string GetFileNameWithoutExtension(const std::string& path);
 }
 
-XMFLOAT3 operator+(XMFLOAT3& a, const XMFLOAT3& b);
 
 
 /// 臨時のグローバル変数 fix: 本来はここに置くべきではない 
@@ -44,8 +47,6 @@ XMFLOAT3 operator+(XMFLOAT3& a, const XMFLOAT3& b);
 
 // ゲームのスコア
 extern int g_score;
-
-
 
 // エフェクトデータ
 // fix: 本来はここに置くべきではない

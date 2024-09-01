@@ -27,6 +27,7 @@ protected:
 	float fallSpeed_;                   // 落下速度
 
 	bool isShadeVisible_;               // 陰の表示
+	XMFLOAT3 onGroundOffset_;           // 地面に設置する際のオフセット
 public:
 	/// <summary>
 	/// コンストラクタ

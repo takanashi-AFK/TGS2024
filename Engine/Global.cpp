@@ -40,5 +40,10 @@ XMFLOAT3 operator+(XMFLOAT3& a, const XMFLOAT3& b)
 	return XMFLOAT3(a.x + b.x, a.y + b.y, a.z + b.z);
 }
 
+XMFLOAT3 operator-(XMFLOAT3& a, const XMFLOAT3& b)
+{
+	return XMFLOAT3(a.x - b.x, a.y - b.y, a.z - b.z);
+}
+
 // ゲームのスコア
 int g_score = 0;

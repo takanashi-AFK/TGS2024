@@ -172,6 +172,8 @@ public:
 	/// </returns>
 	ComponentType GetType() const { return type_; }
 
+	StageObject* GetHolder() const{ return holder_; }
+
 	/// <returns>
 	/// コンポーネント名を取得
 	/// </returns>

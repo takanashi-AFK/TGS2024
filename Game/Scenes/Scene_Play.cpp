@@ -50,6 +50,10 @@ void Scene_Play::Initialize()
 
 void Scene_Play::Update()
 {
+	TPSCamera* tpsCamera_ = (TPSCamera*)FindObject("TPSCamera");
+	if (tpsCamera_ == nullptr)return;
+
+
 	// カーソル固定化処理
 	static bool fixedCursorPos = false; {
 
@@ -81,10 +85,10 @@ void Scene_Play::Update()
 		// プレイヤーが死んだらシーンを切り替える
 		{
 			// ステージ内にプレイヤーコンポーネントを持っているキャラクターが存在するかどうかを判定し取得
-			vector<Component*> comp_playerBehaviors = pStage_->FindComponents(PlayerBehavior);
+			vector<Component*> comp_playerBehaviors = pStage_->FindComponents(ComponentType::PlayerBehavior);
 
 			// ステージ内にボスコンポーネントを持っているキャラクターが存在するかどうかを判定し取得
-			vector<Component*> comp_bossBehaviors = pStage_->FindComponents(BossBehavior);
+			vector<Component*> comp_bossBehaviors = pStage_->FindComponents(ComponentType::BossBehavior);
 
 
 			// 範囲for文でプレイヤーコンポーネントの生存フラグを確認
@@ -114,6 +118,7 @@ void Scene_Play::Update()
 					}
 				}
 			}
+			tpsCamera_->SetTarget(comp_playerBehaviors[0]->GetHolder());
 		}
 		//// debug
 		//{

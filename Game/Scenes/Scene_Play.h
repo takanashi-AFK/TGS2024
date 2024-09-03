@@ -9,8 +9,6 @@
 class Stage;
 class CountDown;
 class TPSCamera;
-class StageObject;
-class Component;
 class Scene_Play:public GameObject
 {
 private:
@@ -18,10 +16,9 @@ private:
 
 	CountDown* countDown_;
 	TPSCamera* tpsCamera_;
-	StageObject* player_;
+	
+	bool isGameStart_ = false;
 
-	Component* phm;
-	Component* bhm;
 public:
 	//コンストラクタ
 	Scene_Play(GameObject* parent);

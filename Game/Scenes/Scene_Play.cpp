@@ -66,8 +66,7 @@ void Scene_Play::Update()
 		}
 	}
 	
-	static bool isGameStart = false;
-	if (countDown_->IsFinished() && isGameStart == false) {
+	if (countDown_->IsFinished() && isGameStart_ == false) {
 
 		// カーソルの位置を中央に固定
 		fixedCursorPos = true;
@@ -75,13 +74,15 @@ void Scene_Play::Update()
 		// カメラのアクティブ化
 		tpsCamera_->SetActive(true);
 
-		isGameStart = true;
+		isGameStart_ = true;
 	}
 
 	// シーン切替処理
 	{
 		bool isSceneChange = false;
-
+		StageObject* player = nullptr;
+		Component* playerHealthGauge;
+		Component* bossHealthGauge;
 		// プレイヤーが死んだらシーンを切り替える
 		{
 			// ステージ内にプレイヤーコンポーネントを持っているキャラクターが存在するかどうかを判定し取得
@@ -97,7 +98,7 @@ void Scene_Play::Update()
 				vector<Component*> bHealthGaugeList = comp->GetChildComponent(ComponentType::HealthGauge);
 
 				for (auto bhg : bHealthGaugeList) {
-					bhm = bhg;
+					bossHealthGauge = bhg;
 				}
 			}
 
@@ -107,24 +108,27 @@ void Scene_Play::Update()
 
 				vector<Component*> pHealthGaugeList = comp->GetChildComponent(ComponentType::HealthGauge);
 
-				if (comp != nullptr && comp->GetHolder() != nullptr && player_ == nullptr) {
-					player_ = comp->GetHolder();
+				if (comp != nullptr && player == nullptr) {
+					player = comp->GetHolder();
 				}
 
 				for (auto hg : pHealthGaugeList) {
-					phm = hg;
+					playerHealthGauge = hg;
 				}
 			}
 
-			if (((Component_HealthGauge*)phm)->IsDead() || ((Component_HealthGauge*)bhm)->IsDead()) {
+			if (((Component_HealthGauge*)playerHealthGauge)->IsDead() || ((Component_HealthGauge*)bossHealthGauge)->IsDead()) {
 				SceneManager* sceneManager = (SceneManager*)FindObject("SceneManager");
 				// シーンを切り替える
 				sceneManager->ChangeScene(SCENE_ID_END, TID_BLACKOUT);
-			}
-			if (player_ != nullptr) {
-				tpsCamera_->SetTarget(player_);
+				player = nullptr;
+				isGameStart_ = false;
 			}
 
+
+			if (player != nullptr) {
+				tpsCamera_->SetTarget(player);
+			}
 		}
 		//// debug
 		//{

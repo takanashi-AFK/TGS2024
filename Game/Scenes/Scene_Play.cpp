@@ -91,34 +91,40 @@ void Scene_Play::Update()
 			vector<Component*> comp_bossBehaviors = pStage_->FindComponents(ComponentType::BossBehavior);
 
 
+			// 範囲for文でボスコンポーネントの生存フラグを確認
+			for (auto comp : comp_bossBehaviors) {
+
+				vector<Component*> bHealthGaugeList = comp->GetChildComponent(ComponentType::HealthGauge);
+
+				for (auto bhg : bHealthGaugeList) {
+					bhm = bhg;
+				}
+			}
+
+
 			// 範囲for文でプレイヤーコンポーネントの生存フラグを確認
 			for (auto comp : comp_playerBehaviors) {
 
-				auto healthGauge = comp->GetChildComponent(ComponentType::HealthGauge);
+				vector<Component*> pHealthGaugeList = comp->GetChildComponent(ComponentType::HealthGauge);
 
-				for (auto hg : healthGauge) {
-					if (((Component_HealthGauge*)hg)->IsDead()) {
-						// シーンを切り替える
-						SceneManager* sceneManager = (SceneManager*)FindObject("SceneManager");
-						sceneManager->ChangeScene(SCENE_ID_END, TID_BLACKOUT);
-					}
+				if (comp != nullptr && comp->GetHolder() != nullptr && player_ == nullptr) {
+					player_ = comp->GetHolder();
+				}
+
+				for (auto hg : pHealthGaugeList) {
+					phm = hg;
 				}
 			}
 
-			// 範囲for文でプレイヤーコンポーネントの生存フラグを確認
-			for (auto comp : comp_bossBehaviors) {
-
-				auto healthGauge = comp->GetChildComponent(ComponentType::HealthGauge);
-
-				for (auto hg : healthGauge) {
-					if (((Component_HealthGauge*)hg)->IsDead()) {
-						// シーンを切り替える
-						SceneManager* sceneManager = (SceneManager*)FindObject("SceneManager");
-						sceneManager->ChangeScene(SCENE_ID_END, TID_BLACKOUT);
-					}
-				}
+			if (((Component_HealthGauge*)phm)->IsDead() || ((Component_HealthGauge*)bhm)->IsDead()) {
+				SceneManager* sceneManager = (SceneManager*)FindObject("SceneManager");
+				// シーンを切り替える
+				sceneManager->ChangeScene(SCENE_ID_END, TID_BLACKOUT);
 			}
-			tpsCamera_->SetTarget(comp_playerBehaviors[0]->GetHolder());
+			if (player_ != nullptr) {
+				tpsCamera_->SetTarget(player_);
+			}
+
 		}
 		//// debug
 		//{
@@ -144,3 +150,6 @@ void Scene_Play::Draw()
 void Scene_Play::Release()
 {
 }
+
+// あとボスが死んだ際のシーン切り替えできてないから確認する
+// 処理順をプレイヤーと入れ替えるとかなんかそんな感じで

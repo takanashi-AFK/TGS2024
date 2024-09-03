@@ -7,8 +7,8 @@
 #include "Components/GaugeComponents/Component_HealthGauge.h"
 #include "Stage.h"
 
-Bullet::Bullet(GameObject* _parent) 
-:StageObject("Bullet","Models/DebugCollision/SphereCollider.fbx", _parent),isActive_(false), frame_(), speed_(), direction_(), shooter_(), mt(), data_(), lifeTime_(2.f)
+Bullet::Bullet(GameObject* _parent)
+	:StageObject("Bullet", "Models/DebugCollision/SphereCollider.fbx", _parent), isActive_(false), frame_(), speed_(), direction_(), shooter_(), mt(), data_(), lifeTime_(2.f), power_(20)
 {
 }
 
@@ -75,7 +75,7 @@ void Bullet::OnCollision(GameObject* _target, Collider* _collider)
 	// ƒ_ƒ[ƒWˆ—
 	for (auto hm : list) {
 
-		((Component_HealthGauge*)hm)->TakeDamage(20);
+		((Component_HealthGauge*)hm)->TakeDamage(power_);
 		this->KillMe();
 
 		if (((Component_HealthGauge*)hm)->IsDead()) {

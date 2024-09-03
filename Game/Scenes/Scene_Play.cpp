@@ -81,8 +81,8 @@ void Scene_Play::Update()
 	{
 		bool isSceneChange = false;
 		StageObject* player = nullptr;
-		Component* playerHealthGauge;
-		Component* bossHealthGauge;
+		static Component* playerHealthGauge = nullptr;
+		static Component* bossHealthGauge = nullptr;
 		// プレイヤーが死んだらシーンを切り替える
 		{
 			// ステージ内にプレイヤーコンポーネントを持っているキャラクターが存在するかどうかを判定し取得

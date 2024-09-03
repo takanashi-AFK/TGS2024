@@ -88,8 +88,6 @@ void Scene_Play::Update()
 			// ステージ内にプレイヤーコンポーネントを持っているキャラクターが存在するかどうかを判定し取得
 			vector<Component*> comp_playerBehaviors = pStage_->FindComponents(ComponentType::PlayerBehavior);
 
-			ImGui::Text("%d", comp_playerBehaviors.size());
-
 			// ステージ内にボスコンポーネントを持っているキャラクターが存在するかどうかを判定し取得
 			vector<Component*> comp_bossBehaviors = pStage_->FindComponents(ComponentType::BossBehavior);
 

@@ -16,7 +16,6 @@ private:
 
 	CountDown* countDown_;
 	TPSCamera* tpsCamera_;
-
 	
 	bool isGameStart_ = false;
 

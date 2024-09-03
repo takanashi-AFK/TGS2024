@@ -90,7 +90,6 @@ void Scene_Play::Update()
 			// ステージ内にボスコンポーネントを持っているキャラクターが存在するかどうかを判定し取得
 			vector<Component*> comp_bossBehaviors = pStage_->FindComponents(ComponentType::BossBehavior);
 
-			SceneManager* sceneManager = (SceneManager*)FindObject("SceneManager");
 
 			// 範囲for文でボスコンポーネントの生存フラグを確認
 			for (auto comp : comp_bossBehaviors) {
@@ -102,10 +101,6 @@ void Scene_Play::Update()
 				}
 			}
 
-			if (((Component_HealthGauge*)bhm)->IsDead()) {
-				// シーンを切り替える
-				sceneManager->ChangeScene(SCENE_ID_END, TID_BLACKOUT);
-			}
 
 			// 範囲for文でプレイヤーコンポーネントの生存フラグを確認
 			for (auto comp : comp_playerBehaviors) {
@@ -117,13 +112,15 @@ void Scene_Play::Update()
 				}
 
 				for (auto hg : pHealthGaugeList) {
-					if (((Component_HealthGauge*)hg)->IsDead()) {
-						// シーンを切り替える
-						sceneManager->ChangeScene(SCENE_ID_END, TID_BLACKOUT);
-					}
+					phm = hg;
 				}
 			}
 
+			if (((Component_HealthGauge*)phm)->IsDead() || ((Component_HealthGauge*)bhm)->IsDead()) {
+				SceneManager* sceneManager = (SceneManager*)FindObject("SceneManager");
+				// シーンを切り替える
+				sceneManager->ChangeScene(SCENE_ID_END, TID_BLACKOUT);
+			}
 			if (player_ != nullptr) {
 				tpsCamera_->SetTarget(player_);
 			}

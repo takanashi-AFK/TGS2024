@@ -19,6 +19,7 @@ private:
 	float speed_;			// 移動速度
 	XMVECTOR direction_;	// 移動方向
 	StageObject* shooter_;	// 発射したオブジェクト
+	int power_;
 
 	// effekseer: 変形行列
 	std::shared_ptr<EFFEKSEERLIB::EFKTransform> mt;/*★★★*/
@@ -78,6 +79,8 @@ public:
 	void SetEffectData(EffectData _data) { data_ = _data; }
 
 	void SetLifeTime(float _time) { lifeTime_ = _time; }
+
+	void SetPower(int _power) { power_ = _power; }
 private:
 	/// <summary>
 	/// 移動

@@ -33,6 +33,10 @@ void Component_ShootAttack::Update()
 
 	// ’e‚Ì¶‘¶ŽžŠÔ‚ðÝ’è
 	bulletPrefab->SetLifeTime(bulletLifeTime_);
+
+	bulletPrefab->SetPower(power_);
+
+
 	
 	// Œ‚‚¿•ú‚ÂˆÊ’u‚ðÝ’è
 	if (isShootPositionSet_ == true)bulletPrefab->SetPosition(shootingPosition_);

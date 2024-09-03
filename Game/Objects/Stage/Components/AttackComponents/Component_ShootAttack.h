@@ -72,9 +72,7 @@ public:
 	/// <param name="_direction">’e‚Ì•ûŒü</param>
 	void SetShootingDirection(XMVECTOR _direction) { shootingDirection_ = _direction; }
 
-	void SetShootingPosition(XMFLOAT3 _position) {
-		shootingPosition_ = _position; isShootPositionSet_ = true;
-	}
+	void SetShootingPosition(XMFLOAT3 _position) { shootingPosition_ = _position; isShootPositionSet_ = true;}
 
 	void SetEffectData(EffectData _data) { data_ = _data; }
 };

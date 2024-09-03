@@ -90,35 +90,44 @@ void Scene_Play::Update()
 			// ステージ内にボスコンポーネントを持っているキャラクターが存在するかどうかを判定し取得
 			vector<Component*> comp_bossBehaviors = pStage_->FindComponents(ComponentType::BossBehavior);
 
+			SceneManager* sceneManager = (SceneManager*)FindObject("SceneManager");
+
+			// 範囲for文でボスコンポーネントの生存フラグを確認
+			for (auto comp : comp_bossBehaviors) {
+
+				vector<Component*> bHealthGaugeList = comp->GetChildComponent(ComponentType::HealthGauge);
+
+				for (auto bhg : bHealthGaugeList) {
+					bhm = bhg;
+				}
+			}
+
+			if (((Component_HealthGauge*)bhm)->IsDead()) {
+				// シーンを切り替える
+				sceneManager->ChangeScene(SCENE_ID_END, TID_BLACKOUT);
+			}
 
 			// 範囲for文でプレイヤーコンポーネントの生存フラグを確認
 			for (auto comp : comp_playerBehaviors) {
 
-				auto healthGauge = comp->GetChildComponent(ComponentType::HealthGauge);
+				vector<Component*> pHealthGaugeList = comp->GetChildComponent(ComponentType::HealthGauge);
 
-				for (auto hg : healthGauge) {
+				if (comp != nullptr && comp->GetHolder() != nullptr && player_ == nullptr) {
+					player_ = comp->GetHolder();
+				}
+
+				for (auto hg : pHealthGaugeList) {
 					if (((Component_HealthGauge*)hg)->IsDead()) {
 						// シーンを切り替える
-						SceneManager* sceneManager = (SceneManager*)FindObject("SceneManager");
 						sceneManager->ChangeScene(SCENE_ID_END, TID_BLACKOUT);
 					}
 				}
 			}
 
-			// 範囲for文でプレイヤーコンポーネントの生存フラグを確認
-			for (auto comp : comp_bossBehaviors) {
-
-				auto healthGauge = comp->GetChildComponent(ComponentType::HealthGauge);
-
-				for (auto hg : healthGauge) {
-					if (((Component_HealthGauge*)hg)->IsDead()) {
-						// シーンを切り替える
-						SceneManager* sceneManager = (SceneManager*)FindObject("SceneManager");
-						sceneManager->ChangeScene(SCENE_ID_END, TID_BLACKOUT);
-					}
-				}
+			if (player_ != nullptr) {
+				tpsCamera_->SetTarget(player_);
 			}
-			tpsCamera_->SetTarget(comp_playerBehaviors[0]->GetHolder());
+
 		}
 		//// debug
 		//{
@@ -144,3 +153,6 @@ void Scene_Play::Draw()
 void Scene_Play::Release()
 {
 }
+
+// あとボスが死んだ際のシーン切り替えできてないから確認する
+// 処理順をプレイヤーと入れ替えるとかなんかそんな感じで

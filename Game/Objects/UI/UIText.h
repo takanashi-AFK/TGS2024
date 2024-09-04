@@ -9,8 +9,15 @@ private:
 	Text* pText_;
 	string drawText_;
 	float size_;
+	string fontFilePath_;
 
 	float* floatNum_;
+
+	int charWidth;
+	int charHeight;
+	int rowLength;
+
+	bool openChangeFontDialog_;
 
 public:
 	UIText(string _name, UIObject* parent, int _layerNum);
@@ -25,5 +32,7 @@ public:
 
 	void SetText(string _text) { drawText_ = _text; }
 	void SetText(float* _num) { floatNum_ = _num; }
+
+	void OpenChangeFontDialog();
 };
 

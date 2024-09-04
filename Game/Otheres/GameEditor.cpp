@@ -305,6 +305,7 @@ void GameEditor::UIObjectClreateWindow()
 			if (isLayerNumberDuplicate) {
 				ImGui::TextColored(ImVec4(1, 0, 0, 1), "LayerNumber is duplicated");
 			}
+
 			// 生成ボタン
 			if (ImGui::Button("Create") && !isLayerNumberDuplicate) {
 				// UIオブジェクトを作成・追加

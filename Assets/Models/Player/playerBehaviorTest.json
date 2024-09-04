@@ -1,1 +1,133 @@
-{"cactan":{"fallSpeed_":1.0,"isCollisionWall_":false,"isOnGround_":false,"modelFilePath_":"Models/Enemies/Cactan/cactan.fbx","myComponents_":{"bossBehavior":{"childComponents_":{"CircleRangeDetector":{"name_":"CircleRangeDetector","radius_":0.0,"target_":"player","type_":3},"HealthGauge":{"max_":800.0,"name_":"HealthGauge","now_":800.0,"type_":6},"ShootAttack":{"EffectData":{"name":"A_Salamander4","path":"Effects/A_Salamander4.efk"},"bulletLifeTime_":3.0,"name_":"ShootAttack","shootingDirection_":[0.0,0.0,0.0],"shootingSpeed_":0.30000001192092896,"type_":17},"TackleMove":{"direction_":0.0,"distance_":2.7284841053187847e-12,"easingType_":"InCubic","name_":"TackleMove","speed_":0.019999999552965164,"type_":18},"Timer":{"maxTime_":1500.0,"name_":"Timer","nowTime_":1500.0,"type_":19}},"name_":"bossBehavior","nextStateTime_":2.5,"rotateSpeed_":3.0,"shootHeight_":-1.2000000476837158,"shotRate_":0.10000000149011612,"shotrange_":10.0,"tacklerange_":10.0,"target_":"player","type_":0}},"onGroundOffset_":[0.0,1.75,0.0],"position_":[0.0,1.75,0.0],"rotate_":[0.0,0.0,0.0],"scale_":[3.0,3.0,3.0],"shaderType_":4},"player":{"fallSpeed_":0.10000000149011612,"isCollisionWall_":false,"isOnGround_":false,"modelFilePath_":"Models/Player/Silly Dancing.fbx","myComponents_":{"PlayerBehavior":{"childComponents_":{"InputMove":{"isActive_":false,"name_":"InputMove","speed_":0.10000000149011612,"type_":20},"PlayerHealthGauge":{"max_":800.0,"name_":"PlayerHealthGauge","now_":800.0,"type_":6},"PlayerMotion":{"name_":"PlayerMotion","type_":21},"ShootAttack":{"EffectData":{"name":"A_Salamander4","path":"Effects/A_Salamander4.efk"},"bulletLifeTime_":5.0,"name_":"ShootAttack","shootingDirection_":[0.0,-25.0,40.0],"shootingSpeed_":0.30000001192092896,"type_":17},"TackleMove":{"direction_":0.0,"distance_":6.0,"easingType_":"OutCubic","name_":"TackleMove","speed_":0.019999999552965164,"type_":18}},"name_":"PlayerBehavior","shootHeight":0.6000000238418579,"type_":11}},"onGroundOffset_":[0.0,0.0,0.0],"position_":[0.0,0.0,-13.0],"rotate_":[0.0,0.0,0.0],"scale_":[0.5,0.5,0.5],"shaderType_":4},"tile":{"fallSpeed_":1.0,"isCollisionWall_":false,"isOnGround_":false,"modelFilePath_":"Models/tile.fbx","onGroundOffset_":[0.0,0.0,0.0],"position_":[0.0,0.0,0.0],"rotate_":[0.0,0.0,0.0],"scale_":[1.0,1.0,1.0],"shaderType_":0}}
+{
+  "cactan": {
+    "fallSpeed_": 1.0,
+    "isCollisionWall_": false,
+    "isOnGround_": false,
+    "modelFilePath_": "Models/Enemies/Cactan/cactan.fbx",
+    "myComponents_": {
+      "bossBehavior": {
+        "childComponents_": {
+          "CircleRangeDetector": {
+            "name_": "CircleRangeDetector",
+            "radius_": 0.0,
+            "target_": "player",
+            "type_": 3
+          },
+          "HealthGauge": {
+            "max_": 1000.0,
+            "name_": "HealthGauge",
+            "now_": 1000.0,
+            "type_": 6
+          },
+          "ShootAttack": {
+            "EffectData": {
+              "name": "A_Salamander4",
+              "path": "Effects/A_Salamander4.efk"
+            },
+            "bulletLifeTime_": 3.0,
+            "name_": "ShootAttack",
+            "power_": 50,
+            "shootingDirection_": [ 0.0, 0.0, 0.0 ],
+            "shootingSpeed_": 0.30000001192092896,
+            "type_": 17
+          },
+          "TackleMove": {
+            "direction_": 0.0,
+            "distance_": 2.7284841053187847e-12,
+            "easingType_": "InCubic",
+            "name_": "TackleMove",
+            "speed_": 0.019999999552965164,
+            "type_": 18
+          },
+          "Timer": {
+            "maxTime_": 1500.0,
+            "name_": "Timer",
+            "nowTime_": 1500.0,
+            "type_": 19
+          }
+        },
+        "name_": "bossBehavior",
+        "nextStateTime_": 2.5,
+        "rotateSpeed_": 3.0,
+        "shootHeight_": -1.2000000476837158,
+        "shotRate_": 0.10000000149011612,
+        "shotrange_": 10.0,
+        "tacklerange_": 10.0,
+        "target_": "player",
+        "type_": 0
+      }
+    },
+    "onGroundOffset_": [ 0.0, 1.75, 0.0 ],
+    "position_": [ 0.0, 1.75, 0.0 ],
+    "rotate_": [ 0.0, 0.0, 0.0 ],
+    "scale_": [ 3.0, 3.0, 3.0 ],
+    "shaderType_": 4
+  },
+  "player": {
+    "fallSpeed_": 0.10000000149011612,
+    "isCollisionWall_": false,
+    "isOnGround_": false,
+    "modelFilePath_": "Models/Player/Silly Dancing.fbx",
+    "myComponents_": {
+      "PlayerBehavior": {
+        "childComponents_": {
+          "InputMove": {
+            "isActive_": false,
+            "name_": "InputMove",
+            "speed_": 0.10000000149011612,
+            "type_": 20
+          },
+          "PlayerHealthGauge": {
+            "max_": 800.0,
+            "name_": "PlayerHealthGauge",
+            "now_": 800.0,
+            "type_": 6
+          },
+          "PlayerMotion": {
+            "name_": "PlayerMotion",
+            "type_": 21
+          },
+          "ShootAttack": {
+            "EffectData": {
+              "name": "A_Salamander4",
+              "path": "Effects/A_Salamander4.efk"
+            },
+            "bulletLifeTime_": 5.0,
+            "name_": "ShootAttack",
+            "power_": 100,
+            "shootingDirection_": [ 0.0, -25.0, 40.0 ],
+            "shootingSpeed_": 0.30000001192092896,
+            "type_": 17
+          },
+          "TackleMove": {
+            "direction_": 0.0,
+            "distance_": 6.0,
+            "easingType_": "OutCubic",
+            "name_": "TackleMove",
+            "speed_": 0.019999999552965164,
+            "type_": 18
+          }
+        },
+        "name_": "PlayerBehavior",
+        "shootHeight": 0.6000000238418579,
+        "type_": 11
+      }
+    },
+    "onGroundOffset_": [ 0.0, 0.0, 0.0 ],
+    "position_": [ 0.0, 0.0, -13.0 ],
+    "rotate_": [ 0.0, 0.0, 0.0 ],
+    "scale_": [ 0.5, 0.5, 0.5 ],
+    "shaderType_": 4
+  },
+  "tile": {
+    "fallSpeed_": 1.0,
+    "isCollisionWall_": false,
+    "isOnGround_": false,
+    "modelFilePath_": "Models/tile.fbx",
+    "onGroundOffset_": [ 0.0, 0.0, 0.0 ],
+    "position_": [ 0.0, 0.0, 0.0 ],
+    "rotate_": [ 0.0, 0.0, 0.0 ],
+    "scale_": [ 1.0, 1.0, 1.0 ],
+    "shaderType_": 0
+  }
+}

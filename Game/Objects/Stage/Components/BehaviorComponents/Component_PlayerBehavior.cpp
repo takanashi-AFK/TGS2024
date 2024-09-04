@@ -207,8 +207,7 @@ void Component_PlayerBehavior::Shoot()
             XMFLOAT3 shootPosition = holder_->GetPosition();
             shootPosition.y += shootHeight_;
             shoot->SetShootingPosition(shootPosition);
-            shoot->SetPower(1000);
-
+            
             // 発射方向を設定
             shoot->SetShootingDirection(CalcShootDirection());
         }

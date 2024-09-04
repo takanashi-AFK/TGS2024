@@ -7,6 +7,9 @@
 /// </summary>
 class Component_HealthGauge :public Component_Gauge
 {
+private:
+	float prev_;	//前回の体力
+	float shaderChangeTime_;	//シェーダーを変更する時間
 public:
 	Component_HealthGauge(string _name, StageObject* _holder, Component* _parent);
 

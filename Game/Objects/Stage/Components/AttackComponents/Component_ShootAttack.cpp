@@ -35,8 +35,6 @@ void Component_ShootAttack::Update()
 	bulletPrefab->SetLifeTime(bulletLifeTime_);
 
 	bulletPrefab->SetPower(power_);
-
-
 	
 	// 撃ち放つ位置を設定
 	if (isShootPositionSet_ == true)bulletPrefab->SetPosition(shootingPosition_);
@@ -55,6 +53,9 @@ void Component_ShootAttack::Release()
 
 void Component_ShootAttack::Save(json& _saveObj)
 {
+	// 攻撃力の保存
+	_saveObj["power_"] = power_;
+
 	// 速度と方向の保存
 	_saveObj["shootingSpeed_"] = shootingSpeed_;
 	_saveObj["shootingDirection_"] = { REFERENCE_XMVECTOR3(shootingDirection_)};
@@ -71,6 +72,9 @@ void Component_ShootAttack::Save(json& _saveObj)
 
 void Component_ShootAttack::Load(json& _loadObj)
 {
+	// 攻撃力の読み込み
+	if (_loadObj.contains("power_"))power_ = _loadObj["power_"];
+
 	// 速度と方向の読み込み
 	if (_loadObj.contains("shootingSpeed_"))shootingSpeed_ = _loadObj["shootingSpeed_"];
 	if (_loadObj.contains("shootingDirection_"))shootingDirection_ = XMVectorSet(_loadObj["shootingDirection_"][0], _loadObj["shootingDirection_"][1],_loadObj["shootingDirection_"][2],0);
@@ -87,6 +91,9 @@ void Component_ShootAttack::Load(json& _loadObj)
 
 void Component_ShootAttack::DrawData()
 {
+	// 攻撃力の設定
+	ImGui::DragInt("Power", &power_);
+
 	// 速度の設定
 	ImGui::DragFloat("Speed", &shootingSpeed_, 0.1f,0.f);
 	

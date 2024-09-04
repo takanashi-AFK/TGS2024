@@ -213,8 +213,6 @@ void Component_BossBehavior::Shot()
 
         shoot->SetShootingDirection(myDirection);
 
-        shoot->SetPower(2000);
-
         // Œ‚‚¿•ú‚ÂˆÊ’u‚ðÝ’è
         XMFLOAT3 shootPosition = holder_->GetPosition();
         shootPosition.y += shootHeight_;

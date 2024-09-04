@@ -155,7 +155,7 @@ void Component_PlayerBehavior::Idle()
     else if (Input::IsMouseButtonDown(0) || Input::GetPadTrrigerR(0) > 0.7) SetState(PSTATE_SHOOT);
 
     // スペースキーが押されていたら...ダッシュ状態に遷移
-    else if (Input::IsKeyDown(DIK_SPACE) || Input::IsPadButtonDown(DIK_A)) SetState(PSTATE_DASH);
+    else if (Input::IsKeyDown(DIK_SPACE) || Input::IsPadButtonDown(VK_PAD_A)) SetState(PSTATE_DASH);
 }
 
 void Component_PlayerBehavior::Walk()
@@ -172,10 +172,10 @@ void Component_PlayerBehavior::Walk()
 
     // 状態優先度：ダッシュ > 射撃
     // スペースキーが押されていたら...ダッシュ状態に遷移
-    if (Input::IsKeyDown(DIK_SPACE)) SetState(PSTATE_DASH);
+    if (Input::IsKeyDown(DIK_SPACE) || Input::IsPadButtonDown(VK_PAD_A)) SetState(PSTATE_DASH);
 
     // マウスの左ボタンが押されていたかつ、マウスの右ボタンが押されてたら、射撃状態に遷移
-    else if(Input::IsMouseButtonDown(0)) SetState(PSTATE_SHOOT);
+    else if(Input::IsMouseButtonDown(0) || Input::GetPadTrrigerR(0) > 0.7) SetState(PSTATE_SHOOT);
 }
 
 void Component_PlayerBehavior::Shoot()

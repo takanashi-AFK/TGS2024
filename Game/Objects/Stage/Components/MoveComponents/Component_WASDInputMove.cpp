@@ -44,6 +44,20 @@ void Component_WASDInputMove::Update()
     if (Input::IsKey(DIK_A)) { dir_ += XMVector3Transform(sightLine, XMMatrixRotationY(XMConvertToRadians(-90))); isMove_ = true; holder_->SetRotateY((angle.y - 25) - 90); }
     if (Input::IsKey(DIK_S)) { dir_ += -sightLine; isMove_ = true; holder_->SetRotateY((angle.y - 25) + 180); }
     if (Input::IsKey(DIK_D)) { dir_ += XMVector3Transform(sightLine, XMMatrixRotationY(XMConvertToRadians(90))); isMove_ = true; holder_->SetRotateY((angle.y - 25) + 90);}
+
+    XMFLOAT3 padMove = Input::GetPadStickL();
+    
+	XMVECTOR padDir = XMVectorSet(padMove.x, 0, padMove.y, 0);
+
+    if (!XMVector3Equal(padDir, XMVectorZero())) {
+
+        holder_->SetRotateY(XMConvertToDegrees(atan2f(padMove.x, padMove.y)));
+        dir_ = XMVector3Normalize(-padDir);
+        isMove_ = true;
+    }
+
+	
+
     dir_ = XMVector3Normalize(dir_);
     XMVECTOR move = dir_ * speed;
 

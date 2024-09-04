@@ -44,8 +44,18 @@ void TPSCamera::Update()
         //ImGui::SliderFloat("sensitivity", &sensitivity_, SENSITIVITY_MIN, SENSITIVITY_MAX);
 #endif // _DEBUG
         XMFLOAT3 mouseMove = Input::GetMouseMove();
-        angle_.x += mouseMove.y * sensitivity_;
-        angle_.y += mouseMove.x * sensitivity_;
+
+        XMFLOAT3 padMove = Input::GetPadStickR();
+
+      
+            angle_.x += mouseMove.y * sensitivity_;
+            angle_.y += mouseMove.x * sensitivity_;
+        
+
+            angle_.x -= padMove.y * sensitivity_;
+            angle_.y += padMove.x * sensitivity_;
+        
+
         // ｘ軸回転の上限・下限を設定し回転を制限
         {
             float upperlimit = ROTATE_UPPER_LIMIT;

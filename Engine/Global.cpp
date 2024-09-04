@@ -45,6 +45,11 @@ XMFLOAT3 operator-(XMFLOAT3& a, const XMFLOAT3& b)
 	return XMFLOAT3(a.x - b.x, a.y - b.y, a.z - b.z);
 }
 
+bool operator == (XMFLOAT3& a, const XMFLOAT3& b)
+{
+	return (a.x == b.x) && (a.y == b.y) && (a.z == b.z);
+}
+
 // ゲームのスコア
 namespace ScoreManager {
 	float g_Score = 0.f;

@@ -151,11 +151,11 @@ void Component_PlayerBehavior::Idle()
     // `InputMove`コンポーネントの移動フラグが立っていたら...歩行状態に遷移
     if (move->IsMove()) SetState(PSTATE_WALK);
 
-    // マウスの左ボタンが押されていたかつ、マウスの右ボタンが押されてたら、射撃状態に遷移
-    else if (Input::IsMouseButtonDown(0)) SetState(PSTATE_SHOOT);
+    // マウスの左ボタンが押されていたら、射撃状態に遷移
+    else if (Input::IsMouseButtonDown(0) || Input::GetPadTrrigerR(0) > 0.7) SetState(PSTATE_SHOOT);
 
     // スペースキーが押されていたら...ダッシュ状態に遷移
-    else if (Input::IsKeyDown(DIK_SPACE)) SetState(PSTATE_DASH);
+    else if (Input::IsKeyDown(DIK_SPACE) || Input::IsPadButtonDown(DIK_A)) SetState(PSTATE_DASH);
 }
 
 void Component_PlayerBehavior::Walk()

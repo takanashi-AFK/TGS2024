@@ -5,6 +5,7 @@
 #include "../../../../../Engine/GameObject/Camera.h"
 #include "../../../../../Engine/GameObject/GameObject.h"
 #include "../../../Camera/TPSCamera.h"
+#include <cmath>
 
 namespace
 {
@@ -49,11 +50,16 @@ void Component_WASDInputMove::Update()
     
 	XMVECTOR padDir = XMVectorSet(padMove.x, 0, padMove.y, 0);
 
+
     if (!XMVector3Equal(padDir, XMVectorZero())) {
 
-        holder_->SetRotateY(XMConvertToDegrees(atan2f(padMove.x, padMove.y)));
-        dir_ = XMVector3Normalize(-padDir);
+        dir_ = XMVector3Normalize(padDir);
+
+        float angle = std::atan2(XMVectorGetX(dir_),XMVectorGetZ(dir_));
+
+        holder_->SetRotateY(XMConvertToDegrees(angle));
         isMove_ = true;
+
     }
 
 	

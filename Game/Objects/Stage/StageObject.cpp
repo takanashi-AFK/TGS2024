@@ -56,7 +56,7 @@ namespace {
 
 StageObject::StageObject(string _name, string _modelFilePath, GameObject* _parent)
 	:GameObject(_parent, _name), modelFilePath_(_modelFilePath), modelHandle_(-1), myComponents_(), fallSpeed_(1), isOnGround_(false)
-	, isShadeVisible_(true)
+	,shaderType_(Direct3D::SHADER_3D)
 {
 }
 
@@ -220,13 +220,13 @@ void StageObject::Update()
 
 void StageObject::Draw()
 {
-	if (isShadeVisible_ == false)Direct3D::SetShader(Direct3D::SHADER_SKY);
+	Direct3D::SetShader(shaderType_);
 
 	// モデルの描画
 	Model::SetTransform(modelHandle_, transform_);
 	Model::Draw(modelHandle_);
 
-	if (isShadeVisible_ == true)Direct3D::SetShader(Direct3D::SHADER_3D);
+	Direct3D::SetShader(Direct3D::SHADER_3D);
 }
 
 void StageObject::Release()
@@ -260,7 +260,7 @@ void StageObject::Save(json& _saveObj)
 	_saveObj["modelFilePath_"] = modelFilePath_;
 
 	// 陰影の表示フラグを保存
-	_saveObj["isShadeVisible_"] = isShadeVisible_;
+	_saveObj["shaderType_"] = (int)shaderType_;
 
 	// 接地処理の情報を保存
 	_saveObj["isOnGround_"] = isOnGround_;
@@ -290,7 +290,7 @@ void StageObject::Load(json& _loadObj)
 	modelFilePath_ = _loadObj["modelFilePath_"];
 
 	// 陰影の表示フラグを読込
-	if(_loadObj.contains("isShadeVisible_"))isShadeVisible_ = _loadObj["isShadeVisible_"];
+	if(_loadObj.contains("shaderType_"))shaderType_ = _loadObj["shaderType_"];
 
 	// 接地処理の情報を読込
 	if (_loadObj.contains("isOnGround_"))isOnGround_ = _loadObj["isOnGround_"];
@@ -344,7 +344,10 @@ void StageObject::DrawData()
 	// シェードの表示
 	// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
 	if (ImGui::TreeNode("shade")) {
-		ImGui::Checkbox("isShadeVisible", &isShadeVisible_);
+		
+		// fix: 存在しないシェーダーを入力可能なため修正が必要
+		// fix: シェーダータイプがint型で表示されるため修正が必要
+		ImGui::InputInt("shaderType_", (int*)& shaderType_);
 		ImGui::TreePop();
 	}
 

@@ -3,6 +3,7 @@
 // インクルード
 #include "../../../Engine/GameObject/GameObject.h"
 #include "Components/Component.h"
+#include "../../../Engine/DirectX/Direct3D.h"
 #include <vector>
 
 // using宣言
@@ -26,7 +27,7 @@ protected:
 	bool isCollisionWall_;              // 壁に当たったかどうか
 	float fallSpeed_;                   // 落下速度
 
-	bool isShadeVisible_;               // 陰の表示
+	Direct3D::SHADER_TYPE shaderType_;   // シェーダータイプ
 	XMFLOAT3 onGroundOffset_;           // 地面に設置する際のオフセット
 public:
 	/// <summary>

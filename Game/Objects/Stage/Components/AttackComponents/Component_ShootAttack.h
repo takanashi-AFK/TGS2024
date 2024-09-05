@@ -19,7 +19,8 @@ private:
 
 	bool isShootPositionSet_;		// 発射位置が設定されているか
 	float bulletLifeTime_;				// 弾の生存時間
-	EffectData data_;
+	EffectData data_;				// エフェクトデータ
+	float bulletColliderRadius_;	// 弾の当たり判定の半径
 
 public:
 	/// <summary>
@@ -60,20 +61,40 @@ public:
 	/// </summary>
 	void DrawData()override;
 
-	/// <summary>
-	/// 弾速を設定
-	/// </summary>
-	/// <param name="_speed">弾速</param>
+/*
+setter :*/
+	/// <param name="_speed"> 弾の速度</param>
 	void SetShootingSpeed(float _speed) { shootingSpeed_ = _speed; }
-
-	/// <summary>
-	/// 弾の方向を設定
-	/// </summary>
-	/// <param name="_direction">弾の方向</param>
+	
+	/// <param name="_direction"> 弾の方向</param>
 	void SetShootingDirection(XMVECTOR _direction) { shootingDirection_ = _direction; }
-
+	
+	/// <param name="_position"> 弾の発射位置</param>
 	void SetShootingPosition(XMFLOAT3 _position) { shootingPosition_ = _position; isShootPositionSet_ = true;}
-
+	
+	/// <param name="_data"> エフェクトデータ</param>
 	void SetEffectData(EffectData _data) { data_ = _data; }
+	
+	/// <param name="_time"> 弾の生存時間</param>
+	void SetBulletLifeTime(float _time) { bulletLifeTime_ = _time; }
+	
+	/// <param name="_radius"> 弾の当たり判定の半径</param>
+	void SetBulletColliderRadius(float _radius) { bulletColliderRadius_ = _radius; }
+/*
+getter :*/
+	/// <returns> 弾の速度</returns>
+	float GetShootingSpeed() const { return shootingSpeed_; }
+	
+	/// <returns> 弾の方向</returns>
+	XMVECTOR GetShootingDirection() const { return shootingDirection_; }
+	
+	/// <returns> 弾の発射位置</returns>
+	XMFLOAT3 GetShootingPosition() const { return shootingPosition_; }
+	
+	/// <returns> エフェクトデータ</returns>
+	float GetBulletLifeTime() const { return bulletLifeTime_; }
+	
+	/// <returns> 弾の生存時間</returns>
+	float GetBulletColliderRadius() const { return bulletColliderRadius_; }
 };
 

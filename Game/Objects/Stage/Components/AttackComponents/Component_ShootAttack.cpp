@@ -21,25 +21,29 @@ void Component_ShootAttack::Update()
 	if (isActive_ == false)return;
 
 	// 撃ち放つプレハブを生成
-	Bullet* bulletPrefab = CreateBullet(holder_->GetParent(), data_);
+	Bullet* bulletPrefab = CreateBullet(holder_->GetParent(), data_,bulletColliderRadius_); {
 
-	bulletPrefab->SetShooter(holder_);
+		// 弾を撃ち放ったオブジェクトを設定
+		bulletPrefab->SetShooter(holder_);
+
+		// 撃ち放つ速度を設定
+		bulletPrefab->SetSpeed(shootingSpeed_);
+
+		// 撃ち放つ方向を設定
+		bulletPrefab->SetDirection(shootingDirection_);
+
+		// 弾の生存時間を設定
+		bulletPrefab->SetLifeTime(bulletLifeTime_);
+
+		// 攻撃力を設定
+		bulletPrefab->SetPower(power_);
+
+		// 撃ち放つ位置を設定
+		if (isShootPositionSet_ == true)bulletPrefab->SetPosition(shootingPosition_);
+		else bulletPrefab->SetPosition(holder_->GetPosition());
+
+	}
 	
-	// 撃ち放つ速度を設定
-	bulletPrefab->SetSpeed(shootingSpeed_);
-
-	// 撃ち放つ方向を設定
-	bulletPrefab->SetDirection(shootingDirection_);
-
-	// 弾の生存時間を設定
-	bulletPrefab->SetLifeTime(bulletLifeTime_);
-
-	bulletPrefab->SetPower(power_);
-	
-	// 撃ち放つ位置を設定
-	if (isShootPositionSet_ == true)bulletPrefab->SetPosition(shootingPosition_);
-	else bulletPrefab->SetPosition(holder_->GetPosition());
-
 	// 撃ち放つ
 	bulletPrefab->Execute();
 	
@@ -63,11 +67,17 @@ void Component_ShootAttack::Save(json& _saveObj)
 	// 弾の生存時間の保存
 	_saveObj["bulletLifeTime_"] = bulletLifeTime_;
 
+	// 弾の大きさの保存
+	_saveObj["bulletColliderRadius_"] = bulletColliderRadius_;
+
 	// エフェクトデータの保存
 	_saveObj["EffectData"] = {
 		{"name",data_.name},
-		{"path",data_.path}
+		{"path",data_.path},
 	};
+
+	// エフェクトのスケールの保存
+	_saveObj["EffectData"]["scale"] = { REFERENCE_XMFLOAT3(data_.scale)};
 }
 
 void Component_ShootAttack::Load(json& _loadObj)
@@ -79,13 +89,17 @@ void Component_ShootAttack::Load(json& _loadObj)
 	if (_loadObj.contains("shootingSpeed_"))shootingSpeed_ = _loadObj["shootingSpeed_"];
 	if (_loadObj.contains("shootingDirection_"))shootingDirection_ = XMVectorSet(_loadObj["shootingDirection_"][0], _loadObj["shootingDirection_"][1],_loadObj["shootingDirection_"][2],0);
 
+	// 弾の大きさの読み込み
+	if (_loadObj.contains("bulletColliderRadius_"))bulletColliderRadius_ = _loadObj["bulletColliderRadius_"];
+
 	// 弾の生存時間の読み込み
 	if (_loadObj.contains("bulletLifeTime_"))bulletLifeTime_ = _loadObj["bulletLifeTime_"];
 
 	// エフェクトデータの読み込み
 	if (_loadObj.contains("EffectData")) {
-		data_.name = _loadObj["EffectData"]["name"];
-		data_.path = _loadObj["EffectData"]["path"];
+		if(_loadObj["EffectData"].contains("name")) data_.name = _loadObj["EffectData"]["name"];
+		if(_loadObj["EffectData"].contains("path")) data_.path = _loadObj["EffectData"]["path"];
+		if(_loadObj["EffectData"].contains("scale"))data_.scale = { _loadObj["EffectData"]["scale"][0].get<float>(),_loadObj["EffectData"]["scale"][1].get<float>(), _loadObj["EffectData"]["scale"][2].get<float>() };
 	}
 }
 
@@ -103,6 +117,9 @@ void Component_ShootAttack::DrawData()
 	// 弾を生存期間を設定
 	ImGui::DragFloat("bulletLifeTime_", &bulletLifeTime_, 0.1f, 0.f);
 
+	// 弾の大きさを設定
+	ImGui::DragFloat("bulletColliderRadius_", &bulletColliderRadius_, 0.1f, 0.f);
+
 	// 攻撃ボタン
 	if (ImGui::Button("Execute"))this->Execute();
 	
@@ -113,6 +130,7 @@ void Component_ShootAttack::DrawData()
 		ImGui::Text("Name: %s", data_.name.c_str());
 		// エフェクトのパス
 		ImGui::Text("Path: %s", data_.path.c_str());
+		ImGui::SameLine();
 
 		// エフェクトの設定
 		if (ImGui::Button("Set Effect")){
@@ -158,6 +176,10 @@ void Component_ShootAttack::DrawData()
 			// エフェクトの名前を設定
 			data_.name = GetFileNameWithoutExtension(data_.path);
 		}
+
+		// エフェクトのスケール
+		ImGui::DragFloat3("Scale", (float*)&data_.scale, 0.1f);
+
 		ImGui::TreePop();
 	}
 }

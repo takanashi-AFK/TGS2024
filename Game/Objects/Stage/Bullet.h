@@ -26,6 +26,7 @@ private:
 	EffectData data_;
 
 	float lifeTime_;	// 生存時間
+	float colliderRadius_;	// 当たり判定の半径
 public:
 	/// <summary>
 	/// コンストラクタ
@@ -81,6 +82,8 @@ public:
 	void SetLifeTime(float _time) { lifeTime_ = _time; }
 
 	void SetPower(int _power) { power_ = _power; }
+
+	void SetColliderRadius(float _radius) { colliderRadius_ = _radius; }
 private:
 	/// <summary>
 	/// 移動
@@ -96,4 +99,5 @@ private:
 	void AutoDelete(float _sec);
 };
 
+Bullet* CreateBullet(GameObject* _parent, EffectData _data, float _colderRadius); 
 Bullet* CreateBullet(GameObject* _parent,EffectData _data);

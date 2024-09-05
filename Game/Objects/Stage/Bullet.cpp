@@ -15,13 +15,11 @@ Bullet::Bullet(GameObject* _parent)
 void Bullet::Initialize()
 {
 	// コライダーを追加
-	AddCollider(new SphereCollider(XMFLOAT3(0, 0, 0), 0.5f));
+	AddCollider(new SphereCollider(XMFLOAT3(0, 0, 0), colliderRadius_));
 
 	// モデルの読み込み
 	modelHandle_ = Model::Load(modelFilePath_);
 	assert(modelHandle_ >= 0);
-
-	SetScale(0.2f);
 
 	// effekseer: :Effectの読み込み
 	EFFEKSEERLIB::gEfk->AddEffect(data_.name, data_.path);/*★★★*/
@@ -50,7 +48,9 @@ void Bullet::Update()
 	AutoDelete(lifeTime_);
 
 	// effekseer: :Effectの再生情報の更新
-	DirectX::XMStoreFloat4x4(&(mt->matrix), this->GetWorldMatrix());/*★★★*/
+	Transform effectTrans = transform_;
+	effectTrans.scale_ = data_.scale;
+	DirectX::XMStoreFloat4x4(&(mt->matrix), effectTrans.GetWorldMatrix());/*★★★*/
 }
 
 void Bullet::Draw()
@@ -101,14 +101,31 @@ void Bullet::AutoDelete(float _sec)
 	else frame_++;
 }
 
-Bullet* CreateBullet(GameObject* _parent, EffectData _data)
+Bullet* CreateBullet(GameObject* _parent, EffectData _data,float _colderRadius)
 {
+	// インスタンスの生成
 	Bullet* bullet = new Bullet(_parent);
 
+	// 親オブジェクトが存在する場合、子オブジェクトとして登録
 	if(_parent != nullptr) _parent->PushBackChild(bullet);
 
-	bullet->SetEffectData(_data);
+	// 設定
+	{
+		// 弾のエフェクトデータを設定
+		bullet->SetEffectData(_data);
 
-	bullet->Initialize();
+		// コライダーの半径を設定
+		bullet->SetColliderRadius(_colderRadius);
+
+		// 初期化
+		bullet->Initialize();
+	}
+
+	// 生成したインスタンスのアドレスを返す
 	return bullet;
+}
+
+Bullet* CreateBullet(GameObject* _parent, EffectData _data)
+{
+	return CreateBullet(_parent,_data,0.5f);
 }

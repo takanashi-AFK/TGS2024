@@ -16,19 +16,21 @@
           "HealthGauge": {
             "max_": 1000.0,
             "name_": "HealthGauge",
-            "now_": 1000.0,
+            "now_": 300.0,
             "type_": 6
           },
           "ShootAttack": {
             "EffectData": {
               "name": "Sylph13",
-              "path": "Effects/Sylph13.efk"
+              "path": "Effects/Sylph13.efk",
+              "scale": [ 0.5, 0.5, 0.5 ]
             },
+            "bulletColliderRadius_": 0.4000000059604645,
             "bulletLifeTime_": 3.0,
             "name_": "ShootAttack",
             "power_": 50,
-            "shootingDirection_": [ 0.0, 0.0, 0.0 ],
-            "shootingSpeed_": 0.20000001192092896,
+            "shootingDirection_": [ 1.0, 0.0, 0.0 ],
+            "shootingSpeed_": 0.20000001788139343,
             "type_": 17
           },
           "TackleMove": {
@@ -50,7 +52,7 @@
         "nextStateTime_": 2.5,
         "rotateSpeed_": 3.0,
         "shootHeight_": -1.2000000476837158,
-        "shotRate_": 0.05,
+        "shotRate_": 0.05000000074505806,
         "shotrange_": 10.0,
         "tacklerange_": 10.0,
         "target_": "00_player",
@@ -58,7 +60,7 @@
       }
     },
     "onGroundOffset_": [ 0.0, 1.5, 0.0 ],
-    "position_": [ 0.0, 1.5,0.0 ],
+    "position_": [ 0.0, 1.5, 0.0 ],
     "rotate_": [ 0.0, 0.0, 0.0 ],
     "scale_": [ 3.0, 3.0, 3.0 ],
     "shaderType_": 4
@@ -90,13 +92,15 @@
           "ShootAttack": {
             "EffectData": {
               "name": "A_Salamander4",
-              "path": "Effects/A_Salamander4.efk"
+              "path": "Effects/A_Salamander4.efk",
+              "scale": [ 0.20000000298023224, 0.20000000298023224, 0.20000000298023224 ]
             },
-            "bulletLifeTime_": 2.0,
+            "bulletColliderRadius_": 0.20000000298023224,
+            "bulletLifeTime_": 1.0,
             "name_": "ShootAttack",
             "power_": 100,
             "shootingDirection_": [ 0.0, -50.0, 40.0 ],
-            "shootingSpeed_": 0.30000001192092896,
+            "shootingSpeed_": 0.20000000298023224,
             "type_": 17
           },
           "TackleMove": {
@@ -114,7 +118,7 @@
       }
     },
     "onGroundOffset_": [ 0.0, 0.0, 0.0 ],
-    "position_": [ -2.1000001430511475, -0.5, -21.000003814697266 ],
+    "position_": [ 0.20884394645690918, 0.0, -18.4136962890625 ],
     "rotate_": [ 0.0, 0.0, 0.0 ],
     "scale_": [ 0.5, 0.5, 0.5 ],
     "shaderType_": 4
@@ -380,6 +384,226 @@
     "onGroundOffset_": [ 0.0, 0.0, 0.0 ],
     "position_": [ 30.0, 0.0, -20.0 ],
     "rotate_": [ 0.0, 270.0, 0.0 ],
+    "scale_": [ 1.0, 1.0, 1.0 ],
+    "shaderType_": 0
+  },
+  "ground_grass01": {
+    "fallSpeed_": 1.0,
+    "isCollisionWall_": false,
+    "isOnGround_": false,
+    "modelFilePath_": "Models/Nature Kit/ground_grass.fbx",
+    "onGroundOffset_": [ 0.0, 0.0, 0.0 ],
+    "position_": [ 30.0, 0.0, 0.0 ],
+    "rotate_": [ 0.0, 0.0, 0.0 ],
+    "scale_": [ 1.0, 1.0, 1.0 ],
+    "shaderType_": 0
+  },
+  "ground_grass02": {
+    "fallSpeed_": 1.0,
+    "isCollisionWall_": false,
+    "isOnGround_": false,
+    "modelFilePath_": "Models/Nature Kit/ground_grass.fbx",
+    "onGroundOffset_": [ 0.0, 0.0, 0.0 ],
+    "position_": [ 30.0, 0.0, 10.0 ],
+    "rotate_": [ 0.0, 0.0, 0.0 ],
+    "scale_": [ 1.0, 1.0, 1.0 ],
+    "shaderType_": 0
+  },
+  "ground_grass03": {
+    "fallSpeed_": 1.0,
+    "isCollisionWall_": false,
+    "isOnGround_": false,
+    "modelFilePath_": "Models/Nature Kit/ground_grass.fbx",
+    "onGroundOffset_": [ 0.0, 0.0, 0.0 ],
+    "position_": [ 30.0, 0.0, 20.0 ],
+    "rotate_": [ 0.0, 0.0, 0.0 ],
+    "scale_": [ 1.0, 1.0, 1.0 ],
+    "shaderType_": 0
+  },
+  "ground_grass04": {
+    "fallSpeed_": 1.0,
+    "isCollisionWall_": false,
+    "isOnGround_": false,
+    "modelFilePath_": "Models/Nature Kit/ground_grass.fbx",
+    "onGroundOffset_": [ 0.0, 0.0, 0.0 ],
+    "position_": [ 30.0, 0.0, -10.0 ],
+    "rotate_": [ 0.0, 0.0, 0.0 ],
+    "scale_": [ 1.0, 1.0, 1.0 ],
+    "shaderType_": 0
+  },
+  "ground_grass05": {
+    "fallSpeed_": 1.0,
+    "isCollisionWall_": false,
+    "isOnGround_": false,
+    "modelFilePath_": "Models/Nature Kit/ground_grass.fbx",
+    "onGroundOffset_": [ 0.0, 0.0, 0.0 ],
+    "position_": [ 30.0, 0.0, -20.0 ],
+    "rotate_": [ 0.0, 0.0, 0.0 ],
+    "scale_": [ 1.0, 1.0, 1.0 ],
+    "shaderType_": 0
+  },
+  "ground_grass06": {
+    "fallSpeed_": 1.0,
+    "isCollisionWall_": false,
+    "isOnGround_": false,
+    "modelFilePath_": "Models/Nature Kit/ground_grass.fbx",
+    "onGroundOffset_": [ 0.0, 0.0, 0.0 ],
+    "position_": [ 0.0, 0.0, 30.0 ],
+    "rotate_": [ 0.0, 0.0, 0.0 ],
+    "scale_": [ 1.0, 1.0, 1.0 ],
+    "shaderType_": 0
+  },
+  "ground_grass07": {
+    "fallSpeed_": 1.0,
+    "isCollisionWall_": false,
+    "isOnGround_": false,
+    "modelFilePath_": "Models/Nature Kit/ground_grass.fbx",
+    "onGroundOffset_": [ 0.0, 0.0, 0.0 ],
+    "position_": [ 10.0, 0.0, 30.0 ],
+    "rotate_": [ 0.0, 0.0, 0.0 ],
+    "scale_": [ 1.0, 1.0, 1.0 ],
+    "shaderType_": 0
+  },
+  "ground_grass08": {
+    "fallSpeed_": 1.0,
+    "isCollisionWall_": false,
+    "isOnGround_": false,
+    "modelFilePath_": "Models/Nature Kit/ground_grass.fbx",
+    "onGroundOffset_": [ 0.0, 0.0, 0.0 ],
+    "position_": [ 20.0, 0.0, 30.0 ],
+    "rotate_": [ 0.0, 0.0, 0.0 ],
+    "scale_": [ 1.0, 1.0, 1.0 ],
+    "shaderType_": 0
+  },
+  "ground_grass09": {
+    "fallSpeed_": 1.0,
+    "isCollisionWall_": false,
+    "isOnGround_": false,
+    "modelFilePath_": "Models/Nature Kit/ground_grass.fbx",
+    "onGroundOffset_": [ 0.0, 0.0, 0.0 ],
+    "position_": [ -10.0, 0.0, 30.0 ],
+    "rotate_": [ 0.0, 0.0, 0.0 ],
+    "scale_": [ 1.0, 1.0, 1.0 ],
+    "shaderType_": 0
+  },
+  "ground_grass10": {
+    "fallSpeed_": 1.0,
+    "isCollisionWall_": false,
+    "isOnGround_": false,
+    "modelFilePath_": "Models/Nature Kit/ground_grass.fbx",
+    "onGroundOffset_": [ 0.0, 0.0, 0.0 ],
+    "position_": [ -20.0, 0.0, 30.0 ],
+    "rotate_": [ 0.0, 0.0, 0.0 ],
+    "scale_": [ 1.0, 1.0, 1.0 ],
+    "shaderType_": 0
+  },
+  "ground_grass11": {
+    "fallSpeed_": 1.0,
+    "isCollisionWall_": false,
+    "isOnGround_": false,
+    "modelFilePath_": "Models/Nature Kit/ground_grass.fbx",
+    "onGroundOffset_": [ 0.0, 0.0, 0.0 ],
+    "position_": [ -30.0, 0.0, 0.0 ],
+    "rotate_": [ 0.0, 0.0, 0.0 ],
+    "scale_": [ 1.0, 1.0, 1.0 ],
+    "shaderType_": 0
+  },
+  "ground_grass12": {
+    "fallSpeed_": 1.0,
+    "isCollisionWall_": false,
+    "isOnGround_": false,
+    "modelFilePath_": "Models/Nature Kit/ground_grass.fbx",
+    "onGroundOffset_": [ 0.0, 0.0, 0.0 ],
+    "position_": [ -30.0, 0.0, 10.0 ],
+    "rotate_": [ 0.0, 0.0, 0.0 ],
+    "scale_": [ 1.0, 1.0, 1.0 ],
+    "shaderType_": 0
+  },
+  "ground_grass13": {
+    "fallSpeed_": 1.0,
+    "isCollisionWall_": false,
+    "isOnGround_": false,
+    "modelFilePath_": "Models/Nature Kit/ground_grass.fbx",
+    "onGroundOffset_": [ 0.0, 0.0, 0.0 ],
+    "position_": [ -30.0, 0.0, 20.0 ],
+    "rotate_": [ 0.0, 0.0, 0.0 ],
+    "scale_": [ 1.0, 1.0, 1.0 ],
+    "shaderType_": 0
+  },
+  "ground_grass14": {
+    "fallSpeed_": 1.0,
+    "isCollisionWall_": false,
+    "isOnGround_": false,
+    "modelFilePath_": "Models/Nature Kit/ground_grass.fbx",
+    "onGroundOffset_": [ 0.0, 0.0, 0.0 ],
+    "position_": [ -30.0, 0.0, -10.0 ],
+    "rotate_": [ 0.0, 0.0, 0.0 ],
+    "scale_": [ 1.0, 1.0, 1.0 ],
+    "shaderType_": 0
+  },
+  "ground_grass15": {
+    "fallSpeed_": 1.0,
+    "isCollisionWall_": false,
+    "isOnGround_": false,
+    "modelFilePath_": "Models/Nature Kit/ground_grass.fbx",
+    "onGroundOffset_": [ 0.0, 0.0, 0.0 ],
+    "position_": [ -30.0, 0.0, -20.0 ],
+    "rotate_": [ 0.0, 0.0, 0.0 ],
+    "scale_": [ 1.0, 1.0, 1.0 ],
+    "shaderType_": 0
+  },
+  "ground_grass16": {
+    "fallSpeed_": 1.0,
+    "isCollisionWall_": false,
+    "isOnGround_": false,
+    "modelFilePath_": "Models/Nature Kit/ground_grass.fbx",
+    "onGroundOffset_": [ 0.0, 0.0, 0.0 ],
+    "position_": [ 0.0, 0.0, -30.0 ],
+    "rotate_": [ 0.0, 0.0, 0.0 ],
+    "scale_": [ 1.0, 1.0, 1.0 ],
+    "shaderType_": 0
+  },
+  "ground_grass17": {
+    "fallSpeed_": 1.0,
+    "isCollisionWall_": false,
+    "isOnGround_": false,
+    "modelFilePath_": "Models/Nature Kit/ground_grass.fbx",
+    "onGroundOffset_": [ 0.0, 0.0, 0.0 ],
+    "position_": [ 10.0, 0.0, -30.0 ],
+    "rotate_": [ 0.0, 0.0, 0.0 ],
+    "scale_": [ 1.0, 1.0, 1.0 ],
+    "shaderType_": 0
+  },
+  "ground_grass18": {
+    "fallSpeed_": 1.0,
+    "isCollisionWall_": false,
+    "isOnGround_": false,
+    "modelFilePath_": "Models/Nature Kit/ground_grass.fbx",
+    "onGroundOffset_": [ 0.0, 0.0, 0.0 ],
+    "position_": [ 20.0, 0.0, -30.0 ],
+    "rotate_": [ 0.0, 0.0, 0.0 ],
+    "scale_": [ 1.0, 1.0, 1.0 ],
+    "shaderType_": 0
+  },
+  "ground_grass19": {
+    "fallSpeed_": 1.0,
+    "isCollisionWall_": false,
+    "isOnGround_": false,
+    "modelFilePath_": "Models/Nature Kit/ground_grass.fbx",
+    "onGroundOffset_": [ 0.0, 0.0, 0.0 ],
+    "position_": [ -10.0, 0.0, -30.0 ],
+    "rotate_": [ 0.0, 0.0, 0.0 ],
+    "scale_": [ 1.0, 1.0, 1.0 ],
+    "shaderType_": 0
+  },
+  "ground_grass20": {
+    "fallSpeed_": 1.0,
+    "isCollisionWall_": false,
+    "isOnGround_": false,
+    "modelFilePath_": "Models/Nature Kit/ground_grass.fbx",
+    "onGroundOffset_": [ 0.0, 0.0, 0.0 ],
+    "position_": [ -20.0, 0.0, -30.0 ],
+    "rotate_": [ 0.0, 0.0, 0.0 ],
     "scale_": [ 1.0, 1.0, 1.0 ],
     "shaderType_": 0
   },

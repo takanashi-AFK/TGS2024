@@ -60,4 +60,5 @@ extern int g_score;
 struct EffectData {
 	std::string name;
 	std::string path;
+	XMFLOAT3 scale;
 };

@@ -23,12 +23,12 @@
             "EffectData": {
               "name": "Sylph13",
               "path": "Effects/Sylph13.efk",
-              "scale": [ 0.5, 0.5, 0.5 ]
+              "scale": [ 0.4000000059604645, 0.4000000059604645, 0.4000000059604645 ]
             },
-            "bulletColliderRadius_": 0.4000000059604645,
+            "bulletColliderRadius_": 0.1000000059604645,
             "bulletLifeTime_": 3.0,
             "name_": "ShootAttack",
-            "power_": 50,
+            "power_": 50,dd
             "shootingDirection_": [ 1.0, 0.0, 0.0 ],
             "shootingSpeed_": 0.20000001788139343,
             "type_": 17

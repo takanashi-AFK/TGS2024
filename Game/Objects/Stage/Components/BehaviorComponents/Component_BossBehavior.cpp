@@ -17,7 +17,7 @@ namespace
 {
     const float SHOT_RATE = 0.2f;
     const float SHOT_ANGLE = 15;
-    const int SHOT_TIME = 3;
+    const int SHOT_TIME = 10;
     EFFEKSEERLIB::EFKTransform t;/*ššš*/
 }
 

@@ -29,7 +29,7 @@ void Scene_Play::Initialize()
 
 	// stageLayout_jsonファイルを読み込む
 	json loadData;
-	if (JsonReader::Load("Models/Player/playerBehaviorTest.json", loadData)) {
+	if (JsonReader::Load("Stage01.json", loadData)) {
 
 		// ステージを作成
 		pStage_ = Instantiate<Stage>(this);
@@ -90,7 +90,6 @@ void Scene_Play::Update()
 
 			// ステージ内にボスコンポーネントを持っているキャラクターが存在するかどうかを判定し取得
 			vector<Component*> comp_bossBehaviors = pStage_->FindComponents(ComponentType::BossBehavior);
-
 
 			// 範囲for文でボスコンポーネントの生存フラグを確認
 			for (auto comp : comp_bossBehaviors) {

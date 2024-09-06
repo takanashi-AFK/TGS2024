@@ -51,7 +51,7 @@ void UIProgressBar::Update()
     // ゲージのスケールを参照した値を基に設定
     {
 		// ゲージのスケールを設定 ※現在値/最大値
-        if (max_ != nullptr || now_ != nullptr)gaugeImage_.transform_.scale_.x = *now_ / *max_;
+        if (max_ != nullptr || now_ != nullptr)gaugeImage_.transform_.scale_.x = frameImage_.transform_.scale_.x * (*now_ / *max_);
 
 		// ゲージのスケールが0以下の場合は、0に設定
 		if (gaugeImage_.transform_.scale_.x <= 0)gaugeImage_.transform_.scale_.x = 0;

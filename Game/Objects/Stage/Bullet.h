@@ -5,11 +5,12 @@
 
 // effekseer: インクルード
 #include "../../../EffekseeLib/EffekseerVFX.h"/*★★★*/
-
+#include "../../../Engine/Global.h"
 
 /// <summary>
 /// 発射する弾を管理するクラス
 /// </summary>
+
 class Bullet :public StageObject
 {
 private:
@@ -18,10 +19,14 @@ private:
 	float speed_;			// 移動速度
 	XMVECTOR direction_;	// 移動方向
 	StageObject* shooter_;	// 発射したオブジェクト
+	int power_;
 
 	// effekseer: 変形行列
 	std::shared_ptr<EFFEKSEERLIB::EFKTransform> mt;/*★★★*/
+	EffectData data_;
 
+	float lifeTime_;	// 生存時間
+	float colliderRadius_;	// 当たり判定の半径
 public:
 	/// <summary>
 	/// コンストラクタ
@@ -72,6 +77,13 @@ public:
 	/// <param name="_shooter"></param>
 	void SetShooter(StageObject* _shooter) { shooter_ = _shooter; }
 
+	void SetEffectData(EffectData _data) { data_ = _data; }
+
+	void SetLifeTime(float _time) { lifeTime_ = _time; }
+
+	void SetPower(int _power) { power_ = _power; }
+
+	void SetColliderRadius(float _radius) { colliderRadius_ = _radius; }
 private:
 	/// <summary>
 	/// 移動
@@ -87,5 +99,5 @@ private:
 	void AutoDelete(float _sec);
 };
 
-
-
+Bullet* CreateBullet(GameObject* _parent, EffectData _data, float _colderRadius); 
+Bullet* CreateBullet(GameObject* _parent,EffectData _data);

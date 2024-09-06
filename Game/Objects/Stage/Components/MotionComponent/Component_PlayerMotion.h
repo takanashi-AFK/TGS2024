@@ -19,6 +19,8 @@ public:
 	void Release() override;
 	void DrawData() override;
 
-	bool IsEndAnimation() { return isAnimationEnd_; }
+	bool IsEnd() const { return isAnimationEnd_; }
+
+	int GetNowFrame();
 };
 

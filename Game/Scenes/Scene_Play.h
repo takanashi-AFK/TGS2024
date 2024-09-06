@@ -7,11 +7,18 @@
 
 // 前方宣言
 class Stage;
-
+class CountDown;
+class TPSCamera;
 class Scene_Play:public GameObject
 {
 private:
 	Stage* pStage_;
+
+	CountDown* countDown_;
+	TPSCamera* tpsCamera_;
+	
+	bool isGameStart_ = false;
+
 public:
 	//コンストラクタ
 	Scene_Play(GameObject* parent);

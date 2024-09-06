@@ -10,12 +10,14 @@
 #include "../../Stage.h"
 #include "../../../../../Engine/Global.h"
 #include <random>
+#include "../../../UI/CountDown.h"
+#include "../GaugeComponents/Component_HealthGauge.h"
 
 namespace
 {
     const float SHOT_RATE = 0.2f;
     const float SHOT_ANGLE = 15;
-    const int SHOT_TIME = 3;
+    const int SHOT_TIME = 5;
     EFFEKSEERLIB::EFKTransform t;/*★★★*/
 }
 
@@ -23,6 +25,12 @@ Component_BossBehavior::Component_BossBehavior(string _name, StageObject* _holde
     : Component(_holder, _name, BossBehavior, _parent), nowState_(WAIT), prevState_(WAIT), isActive_(false),
     shotrange_{}, tacklerange_{}, nextStateTime_{}, shotRate_(SHOT_RATE), rotateSpeed_(SHOT_ANGLE), target_(nullptr), angle_{}
 {
+#ifdef _DEBUG
+	isActive_ = false;
+#else
+    isActive_ = true;
+#endif // DEBUG
+
 }
 
 void Component_BossBehavior::Initialize()
@@ -32,16 +40,51 @@ void Component_BossBehavior::Initialize()
     if (!FindChildComponent("ShootAttack")) AddChildComponent(CreateComponent("ShootAttack", ShootAttack, holder_, this));
     if (!FindChildComponent("Timer")) AddChildComponent(CreateComponent("Timer", Timer, holder_, this));
     if (!FindChildComponent("TackleMove")) AddChildComponent(CreateComponent("TackleMove", TackleMove, holder_, this));
+    if (!FindChildComponent("HealthGauge")) AddChildComponent(CreateComponent("HealthGauge", HealthGauge, holder_, this));
+
 
     // effekseer: :Effectの読み込み
     EFFEKSEERLIB::gEfk->AddEffect("sword", "Effects/Salamander12.efk");/*★★★*/
 
-
+    // コライダーの追加
+    // fix: コライダーのサイズを今後データから読み込むように変更
+    holder_->AddCollider(new BoxCollider({}, {5.0f, 5.0f, 5.0f}));
 }
 
 void Component_BossBehavior::Update()
 {
-    if (target_ == nullptr) target_ = (StageObject*)holder_->FindObject(targetName_);
+    if (target_ == nullptr) target_ = (StageObject*)holder_->GetParent()->FindObject(targetName_);
+
+    static bool isGameStart = false;
+    // ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
+    // カウント制御されている場合の処理
+    // ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
+    CountDown* countDown = (CountDown*)(holder_->FindObject("CountDown"));
+    if (countDown != nullptr && isGameStart == false) {
+
+        // カウントダウンが終了した場合
+        if (countDown->IsFinished()) {
+
+            //移動を可能にする
+            isActive_ = true;
+
+            // ゲームスタートフラグを立てる
+            isGameStart = true;
+        }
+        else {
+            // 移動を不可能にする
+			isActive_ = false;
+        }
+    }
+
+
+    // hp表示
+    Component_HealthGauge* hg = (Component_HealthGauge*)(GetChildComponent("HealthGauge"));
+    ImGui::Begin("Cactann");
+    ImGui::ProgressBar(static_cast<float>(hg->GetNow()) / hg->GetMax());
+    ImGui::End();
+
+
     if (target_ == nullptr || !isActive_) return;
 
     switch (nowState_)
@@ -72,10 +115,17 @@ void Component_BossBehavior::Release()
 
 void Component_BossBehavior::OnCollision(GameObject* _target, Collider* _collider)
 {
+    Component_TackleMove* tackleMove = (Component_TackleMove*)(GetChildComponent("TackleMove"));
+    if (tackleMove == nullptr) return;
+
+    if (tackleMove->IsActived() == true && _target != nullptr) {
+        for (auto hg : ((StageObject*)_target)->FindComponent(HealthGauge))((Component_HealthGauge*)hg)->TakeDamage(30);
+    }
 }
 
 void Component_BossBehavior::Save(json& _saveObj)
 {
+    _saveObj["shootHeight_"] = shootHeight_;
     if (target_ != nullptr) _saveObj["target_"] = target_->GetObjectName();
     _saveObj["shotrange_"] = shotrange_;
     _saveObj["tacklerange_"] = tacklerange_;
@@ -86,6 +136,7 @@ void Component_BossBehavior::Save(json& _saveObj)
 
 void Component_BossBehavior::Load(json& _loadObj)
 {
+    if(_loadObj.contains("shootHeight_")) shootHeight_ = _loadObj["shootHeight_"];
     if (_loadObj.contains("target_")) targetName_ = _loadObj["target_"];
     if (_loadObj.contains("shotrange_")) shotrange_ = _loadObj["shotrange_"];
     if (_loadObj.contains("tacklerange_")) tacklerange_ = _loadObj["tacklerange_"];
@@ -96,6 +147,8 @@ void Component_BossBehavior::Load(json& _loadObj)
 
 void Component_BossBehavior::DrawData()
 {
+
+    ImGui::DragFloat("shootHeight_", &shootHeight_);
     ImGui::DragFloat("shotrange_", &shotrange_);
     ImGui::DragFloat("tacklerange_", &tacklerange_);
     ImGui::DragFloat("nextStateTime_", &nextStateTime_);
@@ -108,8 +161,8 @@ void Component_BossBehavior::DrawData()
     ImGui::Text("%f", holder_->GetRotate().y);
     ImGui::Text("%f", timer->GetNowTime());
 
-    if (ImGui::Button("Activate"))
-        isActive_ = true;
+    if (ImGui::Checkbox("Activate", &isActive_));
+        
 
     // 対象の選択
     vector<string> objNames;
@@ -159,6 +212,12 @@ void Component_BossBehavior::Shot()
         myDirection = XMVector3TransformCoord(myDirection, XMMatrixRotationY(XMConvertToRadians(holderRotate.y)));
 
         shoot->SetShootingDirection(myDirection);
+
+        // 撃ち放つ位置を設定
+        XMFLOAT3 shootPosition = holder_->GetPosition();
+        shootPosition.y += shootHeight_;
+        shoot->SetShootingPosition(shootPosition);
+
         // 撃つ
         shoot->Execute();
     }
@@ -187,6 +246,7 @@ void Component_BossBehavior::Tackle()
 
     // 方向ベクトルの計算
     XMVECTOR direction = XMVector3Normalize(XMLoadFloat3(&targetPos) - XMLoadFloat3(&holderPosition));
+    direction = XMVectorSetY(direction, 0);
 
     // 距離の計算
     float distance = XMVectorGetX(XMVector3Length(XMLoadFloat3(&targetPos) - XMLoadFloat3(&holderPosition)));

@@ -7,24 +7,22 @@
 #include "Components/GaugeComponents/Component_HealthGauge.h"
 #include "Stage.h"
 
-Bullet::Bullet(GameObject* _parent) 
-:StageObject("Bullet","Models/DebugCollision/SphereCollider.fbx", _parent),isActive_(false), frame_(), speed_(), direction_()
+Bullet::Bullet(GameObject* _parent)
+	:StageObject("Bullet", "Models/DebugCollision/SphereCollider.fbx", _parent), isActive_(false), frame_(), speed_(), direction_(), shooter_(), mt(), data_(), lifeTime_(2.f), power_(20)
 {
 }
 
 void Bullet::Initialize()
 {
 	// コライダーを追加
-	AddCollider(new SphereCollider(XMFLOAT3(0, 0, 0), 0.5f));
+	AddCollider(new SphereCollider(XMFLOAT3(0, 0, 0), colliderRadius_));
 
 	// モデルの読み込み
 	modelHandle_ = Model::Load(modelFilePath_);
 	assert(modelHandle_ >= 0);
 
-	//SetScale(0.2f);
-
 	// effekseer: :Effectの読み込み
-	EFFEKSEERLIB::gEfk->AddEffect("Sylph10", "Effects/Sylph10.efk");/*★★★*/
+	EFFEKSEERLIB::gEfk->AddEffect(data_.name, data_.path);/*★★★*/
 
 	// effekseer: :Effectの再生情報の設定
 	EFFEKSEERLIB::EFKTransform t;/*★★★*/
@@ -33,10 +31,8 @@ void Bullet::Initialize()
 	t.maxFrame = 180;/*★★★*/
 	t.speed = 1.f;/*★★★*/
 
-
 	// effekseer: :Effectの再生
-	mt = EFFEKSEERLIB::gEfk->Play("Sylph10", t);/*★★★*/
-
+	mt = EFFEKSEERLIB::gEfk->Play(data_.name, t);/*★★★*/
 }
 
 void Bullet::Update()
@@ -49,10 +45,12 @@ void Bullet::Update()
 
 	// 自動削除
 	//if (EFFEKSEERLIB::gEfk->IsEffectPlaying("Sylph10") == false)KillMe();
-	AutoDelete(2.f);
+	AutoDelete(lifeTime_);
 
 	// effekseer: :Effectの再生情報の更新
-	DirectX::XMStoreFloat4x4(&(mt->matrix), this->GetWorldMatrix());/*★★★*/
+	Transform effectTrans = transform_;
+	effectTrans.scale_ = data_.scale;
+	DirectX::XMStoreFloat4x4(&(mt->matrix), effectTrans.GetWorldMatrix());/*★★★*/
 }
 
 void Bullet::Draw()
@@ -77,7 +75,7 @@ void Bullet::OnCollision(GameObject* _target, Collider* _collider)
 	// ダメージ処理
 	for (auto hm : list) {
 
-		((Component_HealthGauge*)hm)->TakeDamage(20);
+		((Component_HealthGauge*)hm)->TakeDamage(power_);
 		this->KillMe();
 
 		if (((Component_HealthGauge*)hm)->IsDead()) {
@@ -103,3 +101,31 @@ void Bullet::AutoDelete(float _sec)
 	else frame_++;
 }
 
+Bullet* CreateBullet(GameObject* _parent, EffectData _data,float _colderRadius)
+{
+	// インスタンスの生成
+	Bullet* bullet = new Bullet(_parent);
+
+	// 親オブジェクトが存在する場合、子オブジェクトとして登録
+	if(_parent != nullptr) _parent->PushBackChild(bullet);
+
+	// 設定
+	{
+		// 弾のエフェクトデータを設定
+		bullet->SetEffectData(_data);
+
+		// コライダーの半径を設定
+		bullet->SetColliderRadius(_colderRadius);
+
+		// 初期化
+		bullet->Initialize();
+	}
+
+	// 生成したインスタンスのアドレスを返す
+	return bullet;
+}
+
+Bullet* CreateBullet(GameObject* _parent, EffectData _data)
+{
+	return CreateBullet(_parent,_data,0.5f);
+}

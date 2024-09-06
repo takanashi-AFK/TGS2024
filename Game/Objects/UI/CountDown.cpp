@@ -1,16 +1,21 @@
 #include "CountDown.h"
 #include "../../../Engine/ResourceManager/Image.h"
+#include "../../../Engine/GameObject/Camera.h"
+namespace {
+	const int COUNT_DOWN_MAX = 240;		// カウントダウンの最大値
+	const int FPS = 60;					// フレームレート
+	const int COUNT_DOWN_IMAGE_NUM = 4; // カウントダウンの画像の数
+}
 
 CountDown::CountDown(GameObject* _parent):
-	GameObject(_parent,"CountDown")
+	GameObject(_parent,"CountDown"),count_(COUNT_DOWN_MAX)
 {
 }
 
 void CountDown::Initialize()
 {
-	for (int i = 0; i < 4; i++) {
-		countDownImages_.push_back(Image::Load("Images/CountDown/count_" + std::to_string(i) + ".png"));
-	}
+	for (int i = 0; i < COUNT_DOWN_IMAGE_NUM; i++) countDownImages_.push_back(Image::Load("Images/CountDown/count_" + std::to_string(i) + ".png"));
+	
 }
 
 void CountDown::Update()
@@ -19,19 +24,21 @@ void CountDown::Update()
 
 void CountDown::Draw()
 {
-	static int count = 240;
+	// カウントが0以下なら描画しない
+	if(this->IsFinished())return;
 
+	// カウントから画像のインデックスを取得
+	int index = (int)(count_ / FPS);
 
-	if (count >= 0) {
-		count--;
-		Image::SetTransform(countDownImages_[(int)(count / 60)], transform_);
-		Image::Draw(countDownImages_[(int)(count / 60)]);
-		isCountDown_ = true;
-	}
-	else {
-		isCountDown_ = false;
-	}
+	float camScale = count_ * 0.8f;
+	Camera::SetPosition(camScale + 1, camScale + 1, camScale + 1);
 
+	// 画像の描画
+	Image::SetTransform(countDownImages_[index], transform_);
+	Image::Draw(countDownImages_[index]);
+	
+	// カウントを減少
+	count_--;
 }
 
 void CountDown::Release()

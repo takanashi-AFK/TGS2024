@@ -21,6 +21,22 @@
 #include "../../../../../Engine/ImGui/imgui.h"
 #include "../MoveComponents/Component_TackleMove.h"
 #include "../../../UI/CountDown.h"
+#include "../../../Camera/TPSCamera.h"
+#include "../../../../../Engine/SceneManager.h"
+
+namespace {
+    const int SHOOT_FRAME = 115;
+
+    bool IsXMVectorZero(XMVECTOR _vec) {
+		return XMVector3Equal(_vec, XMVectorZero());
+	}
+
+    bool IsWASDKey() {
+		return Input::IsKey(DIK_W) || Input::IsKey(DIK_A) || Input::IsKey(DIK_S) || Input::IsKey(DIK_D);
+	}
+}
+
+
 
 
 struct CompareDist {
@@ -45,9 +61,7 @@ void Component_PlayerBehavior::Initialize()
 
     // 子コンポーネントの追加
     if (FindChildComponent("InputMove") == false)AddChildComponent(CreateComponent("InputMove", WASDInputMove, holder_, this));
-    if (FindChildComponent("MeleeAttack") == false)AddChildComponent(CreateComponent("MeleeAttack", MeleeAttack, holder_, this));
     if (FindChildComponent("ShootAttack") == false)AddChildComponent(CreateComponent("ShootAttack", ShootAttack, holder_, this));
-    if (FindChildComponent("Timer") == false)AddChildComponent(CreateComponent("Timer", Timer, holder_, this));
     if (FindChildComponent("HealthGauge") == false)AddChildComponent(CreateComponent("PlayerHealthGauge", HealthGauge, holder_, this));
     if (FindChildComponent("PlayerMotion") == false)AddChildComponent(CreateComponent("PlayerMotion", PlayerMotion, holder_, this));
     if (FindChildComponent("TackleMove") == false)AddChildComponent(CreateComponent("TackleMove", TackleMove, holder_, this));
@@ -55,269 +69,224 @@ void Component_PlayerBehavior::Initialize()
 
 void Component_PlayerBehavior::Update()
 {
-    if(countDown == nullptr)
-    countDown = (CountDown*)(holder_->GetParent()->FindObject("CountDown"));
 
-    auto hm = dynamic_cast<Component_HealthGauge*>(GetChildComponent("PlayerHealthGauge"));
-    if (hm == nullptr)return;
+    static bool isGameStart = false;
+    // ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
+    // カウント制御されている場合の処理
+    // ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
+    CountDown* countDown = (CountDown*)(holder_->FindObject("CountDown"));
+    if (countDown != nullptr && isGameStart == false) {
 
-    // 進捗を0.0〜1.0の範囲で計算
-    float progress = hm->GetNow() / hm->GetMax();
+        // 移動コンポーネントの取得 & 有無の確認
+        Component_WASDInputMove* move = (Component_WASDInputMove*)(GetChildComponent("InputMove"));
+        if (GetChildComponent("InputMove") == nullptr)return;
 
-    if (ImGui::Button("dead"))hm->TakeDamage(1000);
+        // カウントダウンが終了した場合
+        if (countDown->IsFinished()) {
 
+            //移動を可能にする
+            move->Execute();
 
-
-    auto timer = dynamic_cast<Component_Timer*>(GetChildComponent("Timer"));
-    if (timer == nullptr) return;
-
-    auto melee = dynamic_cast<Component_MeleeAttack*>(GetChildComponent("MeleeAttack"));
-    if (melee == nullptr)return;
-
-    auto move = dynamic_cast<Component_WASDInputMove*>(GetChildComponent("InputMove"));
-    if (move == nullptr)return;
-
-    if (countDown->GetIsCountDown()) {
-        move->Stop();
+            // ゲームスタートフラグを立てる
+            isGameStart = true;
+        }
+        else {
+            // 移動を不可能にする
+            move->Stop();
+        }
     }
-    else {
-        move->Execute();
-    }
+    
+    // hp表示
+    Component_HealthGauge* hg = (Component_HealthGauge*)(GetChildComponent("PlayerHealthGauge"));
+    ImGui::Begin("Player");
+    ImGui::ProgressBar(static_cast<float>(hg->GetNow()) / hg->GetMax());
+    ImGui::End();
 
+    // ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
+    // 状態ごとの処理
+    // ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
     switch (nowState)
     {
-    case PSTATE_IDLE:
-        Idle();  break;
-    case PSTATE_WALK:
-        Walk();  break;
-    case PSTATE_WALKANDSHOOT:
-        WalkAndShoot(); break;
-    case PSTATE_MELEE:
-        Melee(); break;
-    case PSTATE_SHOOT:
-        Shoot(); break;
-    case PSTATE_DASH:
-		Dash(); break;
-    default:
-        break;
+    case PSTATE_IDLE:           Idle();         break;  // 現在の状態がIDLEの場合
+    case PSTATE_WALK:           Walk();         break;  // 現在の状態がWALKの場合
+    case PSTATE_SHOOT:          Shoot();        break;  // 現在の状態がSHOOTの場合
+    case PSTATE_DASH:           Dash();         break;  // 現在の状態がDASHの場合
     }
-
 }
 
 void Component_PlayerBehavior::Release()
 {
 }
 
-void Component_PlayerBehavior::DrawData()
+void Component_PlayerBehavior::Save(json& _saveObj)
 {
-    ImGui::Text("%f,%f,%f,%f", frontVec_.m128_f32);
-    auto timer = dynamic_cast<Component_Timer*>(GetChildComponent("Timer"));
-    if (timer == nullptr)return;
-    ImGui::Text("%f", timer->GetNowTime());
-
-    if (ImGui::Button("Idle")) SetState(PSTATE_IDLE);
-    if (ImGui::Button("Walk")) SetState(PSTATE_WALK);
-    if (ImGui::Button("WalkAndShoot")) SetState(PSTATE_WALKANDSHOOT);
-    if (ImGui::Button("Melee")) SetState(PSTATE_MELEE);
-    if (ImGui::Button("Shoot")) SetState(PSTATE_SHOOT);
-
+	_saveObj["shootHeight"] = shootHeight_;
 }
 
-void Component_PlayerBehavior::OnCollision(GameObject* _target, Collider* _collider)
+void Component_PlayerBehavior::Load(json& _loadObj)
 {
+    if (_loadObj.contains("shootHeight"))shootHeight_ = _loadObj["shootHeight"];
+}
+
+void Component_PlayerBehavior::DrawData()
+{
+    // 高さの設定
+    ImGui::DragFloat("ShootHeight", &shootHeight_, 0.1f);
+
+    ImGui::DragFloat("utyaka", &ScoreManager::g_Score);
+    
+    if (ImGui::Button("SceneChange")) {
+        SceneManager* sceneManager = (SceneManager*)holder_->GetParent()->FindObject("SceneManager");
+        sceneManager->ChangeScene(SCENE_ID_END, TID_BLACKOUT);
+    }
 }
 
 void Component_PlayerBehavior::Idle()
 {
-    auto move = dynamic_cast<Component_WASDInputMove*>(GetChildComponent("InputMove"));
+    // 移動コンポーネントの取得 & 有無の確認
+    Component_WASDInputMove* move = (Component_WASDInputMove*)(GetChildComponent("InputMove"));
     if (move == nullptr)return;
 
-    if (move->GetIsMove()) {
-        SetState(PSTATE_WALK);
-    }
-    else if (Input::IsMouseButton(1) && Input::IsMouseButtonDown(0) && nowState != PSTATE_WALK) {
-        SetState(PSTATE_SHOOT);
-    }
-    else if (Input::IsMouseButtonDown(0)) {
-        SetState(PSTATE_MELEE);
-    }
-    else if (Input::IsKeyDown(DIK_SPACE)) {
-		SetState(PSTATE_DASH);
-	}
-    ImGui::Text("idle");
+    // 状態優先度：歩行 > 射撃
+    // `InputMove`コンポーネントの移動フラグが立っていたら...歩行状態に遷移
+    if (move->IsMove()) SetState(PSTATE_WALK);
 
-    // 死んだら死
+    // マウスの左ボタンが押されていたかつ、マウスの右ボタンが押されてたら、射撃状態に遷移
+    else if (Input::IsMouseButtonDown(0)) SetState(PSTATE_SHOOT);
+
+    // スペースキーが押されていたら...ダッシュ状態に遷移
+    else if (Input::IsKeyDown(DIK_SPACE)) SetState(PSTATE_DASH);
 }
 
 void Component_PlayerBehavior::Walk()
 {
-    auto move = dynamic_cast<Component_WASDInputMove*>(GetChildComponent("InputMove"));
+    // 移動コンポーネントの取得 & 有無の確認
+    Component_WASDInputMove* move = (Component_WASDInputMove*)(GetChildComponent("InputMove"));
     if (move == nullptr)return;
 
-
-    static bool prevAnim = false;
-    if (move->GetIsMove() == true) {
-        ImGui::Text("Move");
-        if (Input::IsMouseButton(1) && Input::IsMouseButtonDown(0)) {
-            SetState(PSTATE_WALKANDSHOOT);
-        }
-        else if (Input::IsMouseButtonDown(0)) {
-            SetState(PSTATE_MELEE);
-        }
-        else if (Input::IsKeyDown(DIK_SPACE)) {
-	        SetState(PSTATE_DASH);
-    	}
-    }
-    else{
+    // 移動コンポーネントが移動していなかったら...IDLE状態に遷移
+    if (move->IsMove() == false) {
         SetState(PSTATE_IDLE);
+        return; // ここで処理を終了
     }
 
+    // 状態優先度：ダッシュ > 射撃
+    // スペースキーが押されていたら...ダッシュ状態に遷移
+    if (Input::IsKeyDown(DIK_SPACE)) SetState(PSTATE_DASH);
 
-    ImGui::Text("Walk");
-
-}
-
-void Component_PlayerBehavior::WalkAndShoot()
-{
-    ShootExe();
-    SetState(PSTATE_IDLE);
-    ImGui::Text("WalkAndShoot");
-}
-
-void Component_PlayerBehavior::WalkAndMelee()
-{
-}
-
-void Component_PlayerBehavior::Melee()
-{
-    auto move = dynamic_cast<Component_WASDInputMove*>(GetChildComponent("InputMove"));
-    if (move == nullptr)return;
-    auto melee = dynamic_cast<Component_MeleeAttack*>(GetChildComponent("MeleeAttack"));
-    if (melee == nullptr)return;
-
-    frontVec_ = move->GetMoveDirection();
-    melee->SetForward(frontVec_);
-    melee->Execute();
-
-    SetState(PSTATE_IDLE);
-    ImGui::Text("Melee");
+    // マウスの左ボタンが押されていたかつ、マウスの右ボタンが押されてたら、射撃状態に遷移
+    else if(Input::IsMouseButtonDown(0)) SetState(PSTATE_SHOOT);
 }
 
 void Component_PlayerBehavior::Shoot()
 {
-
-    auto motion = dynamic_cast<Component_PlayerMotion*>(GetChildComponent("PlayerMotion"));
+    // モーションコンポーネントの取得 & 有無の確認
+    Component_PlayerMotion* motion = (Component_PlayerMotion*)(GetChildComponent("PlayerMotion"));
     if (motion == nullptr)return;
 
+    // TPSカメラの方向を取得
+    TPSCamera* tpsCamera = (TPSCamera*)holder_->FindObject("TPSCamera");
+    if(tpsCamera != nullptr)holder_->SetRotateY(tpsCamera->GetAngle().y);
+
+    // 射撃モーションのアニメーションの現在の再生時間を取得
+    float nowFrame = motion->GetNowFrame();
+
+    // NOTE: 一度だけ射撃処理を実行するためのフラグ
     static bool isShoot = false;
 
-    if (isShoot == false) {
-        ShootExe();
+    // 現在のフレームが射撃アニメーションのちょうどいいタイミングを過ぎたら...
+    if (nowFrame >= SHOOT_FRAME && isShoot == false) {
+
+        // 発射オプションを設定
+        Component_ShootAttack* shoot = (Component_ShootAttack*)(GetChildComponent("ShootAttack"));
+        {
+            // 射撃コンポーネントの有無の確認
+            if (shoot == nullptr)return;
+
+            // 発射位置を設定
+            XMFLOAT3 shootPosition = holder_->GetPosition();
+            shootPosition.y += shootHeight_;
+            shoot->SetShootingPosition(shootPosition);
+            
+            // 発射方向を設定
+            shoot->SetShootingDirection(CalcShootDirection());
+        }
+
+        // 射撃処理を実行
+        shoot->Execute();
+
+        // 射撃フラグを立てる
         isShoot = true;
     }
-    // アニメーションが終わったらState変更
-    if (motion->IsEndAnimation()) {
+
+    // 移動コンポーネントの取得 & 有無の確認
+    Component_WASDInputMove* move = (Component_WASDInputMove*)(GetChildComponent("InputMove"));
+    if (move != nullptr) move->Stop();
+
+
+    // NOTE: 終了するためのフラグ
+    bool isEnd = false;
+
+    // スペースキーが押されていたら...ダッシュ状態に遷移
+    if (Input::IsKeyDown(DIK_SPACE)) { isEnd = true; SetState(PSTATE_DASH); }
+
+    // アニメーションが終わったら...
+    if (motion->IsEnd()) { isEnd = true; SetState(PSTATE_IDLE); }
+
+    if(isEnd == true){
+        // 射撃フラグをリセット
         isShoot = false;
-        SetState(PSTATE_IDLE);
+
+        // 移動コンポーネントの再開
+        if (move != nullptr) move->Execute();
     }
-    ImGui::Text("shoot");
 }
 
 void Component_PlayerBehavior::Dash()
 {
-    {
-        auto move = dynamic_cast<Component_WASDInputMove*>(GetChildComponent("InputMove"));
-        if (move == nullptr) return;
+    // NOTE: 一度だけダッシュ処理を実行するためのフラグ
+    static bool isDash = false;
+    
+    // 移動コンポーネントの取得 & 有無の確認
+    Component_WASDInputMove * move = (Component_WASDInputMove*)(GetChildComponent("InputMove"));
+    if (move == nullptr)return;
 
-        auto dash = dynamic_cast<Component_TackleMove*>(GetChildComponent("TackleMove"));
-        if (dash == nullptr) return;
+    // 突進コンポーネントの取得 & 有無の確認
+    Component_TackleMove* tackle = (Component_TackleMove*)(GetChildComponent("TackleMove"));
+    if (tackle != nullptr && isDash == false) {
 
-        frontVec_ = move->GetMoveDirection();
+        // 突進方向を設定
+        XMVECTOR dir{ 0,0,-1,0 }; {
+            // 移動を不可能にする
+            move->Stop();
 
-
-         if (XMVector3Equal(frontVec_, XMVectorZero())) {
-            frontVec_ = { 0,0,-1,0 };
-         }
-            dash->SetDirection(frontVec_);
-            dash->SetDistance(5.f);
-            dash->Execute();
-            
-            SetState(PSTATE_IDLE);
-            
-        ImGui::Text("Dash");
-    }
-
-}
-
-void Component_PlayerBehavior::ShootExe()
-{
-    auto shoot = dynamic_cast<Component_ShootAttack*>(GetChildComponent("ShootAttack"));
-    if (shoot == nullptr) return;
-
-    if (target_ == nullptr) target_ = (StageObject*)holder_->FindObject(targetName_);
-
-    XMVECTOR sightLine = Camera::GetSightLine();
-    XMFLOAT3 camPos = Camera::GetPosition();
-    // 枠内にいるENEMY属性を持ったStageObjectをターゲットにする
-
-    XMVECTOR shootDir = { 0, 0, 0, 0 };
-    Stage* pStage = ((Stage*)holder_->FindObject("Stage"));
-    if (pStage == nullptr) return;
-
-    auto stageObj = pStage->GetStageObjects();
-    StageObject* hitObject = nullptr;
-    XMFLOAT3 hitPosition{};
-    // すべてのオブジェクトに対してレイを飛ばす
-    for (auto obj : stageObj) {
-        if (obj->GetObjectName() == holder_->GetObjectName()) continue;
-
-        int hGroundModel = obj->GetModelHandle();
-        if (hGroundModel < 0) continue;
-
-        RayCastData data;
-        data.start = camPos;  // レイの発射位置 カメラの位置のためworld座標
-
-        XMStoreFloat3(&data.dir, XMVector3Normalize(sightLine)); // レイの方向 単位ベクトルのため、座標系に依存しないものと考える
-
-        Model::RayCast(obj->GetModelHandle(), &data);  // レイを発射
-
-        // レイが当たったら
-        if (data.hit) {
-            // 命中したオブジェクトが何か
-            // hitObject = obj;
-
-            XMVECTOR hitPosWorld = XMVector3TransformCoord(XMLoadFloat3(&data.pos), obj->GetWorldMatrix());
-
-            XMStoreFloat3(&data.pos, hitPosWorld);
-            rayHitObjectList_.push_back(data);
+            // 移動方向がゼロベクトルでなければ、移動方向を取得
+            if (IsXMVectorZero(move->GetMoveDirection()) == false)dir = move->GetMoveDirection();
         }
+		tackle->SetDirection(dir);
+
+		// 突進距離を設定
+		tackle->SetDistance(5.f);
+
+		// 突進処理を実行
+		tackle->Execute();
+
+        // ダッシュフラグを立てる
+        isDash = true;
     }
 
-    // リストが空なら
-    if (rayHitObjectList_.empty()) {
-        shootDir = sightLine;
-    }
-    else {
-        // 配列の中身を比較して最も近いものを取得
-        // プレイヤーの位置からの距離を計算し、shootDirに代入
-        auto min_iter = std::min_element(rayHitObjectList_.begin(), rayHitObjectList_.end(), CompareDist());
+    // 突進処理が終了していたら...
+    if (tackle->IsActived() == false) {
 
-        // イテレータが有効か確認して最小要素の dist を出力
-        if (min_iter != rayHitObjectList_.end()) {
-            XMFLOAT3 holderPos = holder_->GetPosition();
-            shootDir = XMVector3Normalize(XMLoadFloat3(&min_iter->pos) - XMLoadFloat3(&holderPos));
-        }
-        rayHitObjectList_.clear();
-    }
+        // ダッシュフラグをリセット
+		isDash = false;
 
-    // 発射位置を設定
-    XMFLOAT3 shootPosition = holder_->GetPosition();
-    shootPosition.y += shootHeight_;
-    shoot->SetShootingPosition(shootPosition);
-    shoot->SetShootingDirection(shootDir);
-    shoot->SetShootingSpeed(2.f);
-    shoot->Execute();
-    shootDir = {};
+        //移動を可能にする
+        move->Execute();
+
+        // 状態を遷移
+        IsWASDKey() ? SetState(PSTATE_WALK) : SetState(PSTATE_IDLE);
+    }
 }
 
 bool Component_PlayerBehavior::IsDead()
@@ -328,38 +297,61 @@ bool Component_PlayerBehavior::IsDead()
     return hg->IsDead();
 }
 
-//bool Component_PlayerBehavior::IsEnemyInRect(StageObject* _target)
-//{
-//
-//	if (_target == nullptr) return false;
-//	XMFLOAT3 pos = ConvertTo2DPos(_target);
-//
-//	float left = -0.8f;    // 左の境界
-//	float right = 0.8f;    // 右の境界
-//	float top = 0.8f;      // 上の境界
-//	float bottom = -0.8f;  // 下の境界
-//	if (_target->GetAttribute() == ENEMY && pos.x <= left && pos.x >= right && pos.y <= bottom && pos.y >= top)
-//		return true;
-//	
-//	return false;
-//
-//}
-//
-//XMFLOAT3 Component_PlayerBehavior::ConvertTo2DPos(StageObject* _target)
-//{
-//	int scWidth = Direct3D::screenWidth_;
-//	int scHeight = Direct3D::screenHeight_;
-//
-//#ifdef _DEBUG
-//	scWidth = scWidth * 0.7;
-//	scHeight = scHeight * 0.7;
-//#endif // _DEBUG
-//
-//	XMFLOAT3 targetPos = _target->GetPosition();
-//
-//	targetPos.x = (float)(targetPos.x * 2.0f) / (float)scWidth - 1.0f;
-//	targetPos.y = 1.0f - (float)(targetPos.y * 2.0f) / (float)scHeight;
-//	targetPos.z = 0.0f;
-//
-//	return targetPos;
-//}
+XMVECTOR Component_PlayerBehavior::CalcShootDirection()
+{
+    // ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
+    // 必要情報の取得
+    // ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
+
+    // レイキャストデータを作成
+    RayCastData data; {
+        // レイの発射位置 NOTE: ワールド座標系でのカメラの位置
+        data.start = Camera::GetPosition();
+
+        // レイの方向 NOTE: カメラの視線ベクトルを正規化したもの,座標系に依存しないものと考える
+        XMStoreFloat3(&data.dir, XMVector3Normalize(Camera::GetSightLine()));
+    }
+
+    // ヒットしたレイキャストデータを格納するリストを用意
+    vector<RayCastData> hitRayCastDatalist;
+
+    // ステージオブジェクトの取得
+    Stage* pStage = ((Stage*)holder_->FindObject("Stage"));
+    vector<StageObject*> objects = pStage != nullptr ? pStage->GetStageObjects() : vector<StageObject*>();
+
+    for (auto obj : objects) {
+
+        // 自分自身のオブジェクトだったらスキップ
+        if (obj->GetObjectName() == holder_->GetObjectName()) continue;
+
+        // レイキャストを実行
+        Model::RayCast(obj->GetModelHandle(), &data);
+
+        // レイが当たったら
+        if (data.hit) {
+
+            // レイキャストが当たった位置をワールド座標系に変換
+            XMStoreFloat3(&data.pos, XMVector3TransformCoord(XMLoadFloat3(&data.pos), obj->GetWorldMatrix()));
+
+            // レイキャストデータをリストに追加
+            hitRayCastDatalist.push_back(data);
+        }
+    }
+
+    // レイキャストデータリストが空でなければ
+    if (hitRayCastDatalist.empty() == false) {
+
+        // 配列の中身を比較して最も近いものを取得
+        // プレイヤーの位置からの距離を計算し、shootDirに代入
+        auto min_iter = std::min_element(rayHitObjectList_.begin(), rayHitObjectList_.end(), CompareDist());
+
+        // イテレータが有効か確認して最小要素の dist を出力
+        if (min_iter != rayHitObjectList_.end()) {
+            XMFLOAT3 holderPos = holder_->GetPosition();
+            return XMVector3Normalize(XMLoadFloat3(&min_iter->pos) - XMLoadFloat3(&holderPos));
+        }
+    }
+
+    // レイキャストデータリストが空だったら
+    return Camera::GetSightLine();
+}

@@ -9,7 +9,6 @@
 namespace {
 	static bool isShowAddComponentWindow_ = false; // コンポーネント追加ウィンドウの表示フラグ
 	static bool isShowSetComponentNameWindow_ = false; // コンポーネント追加ウィンドウの表示フラグ
-	const float MODEL_SCALE = 1.f; // モデルのスケール
 	static ComponentType selectComponentType_; // 選択されたコンポーネントタイプ
 
 	void DrawAddComponentWindow(StageObject* _holder)
@@ -57,7 +56,7 @@ namespace {
 
 StageObject::StageObject(string _name, string _modelFilePath, GameObject* _parent)
 	:GameObject(_parent, _name), modelFilePath_(_modelFilePath), modelHandle_(-1), myComponents_(), fallSpeed_(1), isOnGround_(false)
-	, isShadeVisible_(true)
+	,shaderType_(Direct3D::SHADER_3D)
 {
 }
 
@@ -125,28 +124,32 @@ bool StageObject::DeleteAllComponent()
 
 void StageObject::OnGround(float _fallSpeed)
 {
+	// 無効なら処理を抜ける
 	if (isOnGround_ == false)return;
 
+	// レイキャストデータを作成
+	RayCastData data; {
+		data.start = (transform_.position_ - onGroundOffset_); // レイの発射位置
+		data.dir = XMFLOAT3(0, -1, 0); // レイの方向
+	}
+
+	// ステージオブジェクトを取得
 	Stage* pStage = (Stage*)FindObject("Stage");
 	if (pStage == nullptr)return;
-	auto stageObj = pStage->GetStageObjects();
 
-	for (auto obj : stageObj) {
-		if (obj->GetObjectName() == this->objectName_)
-			continue;
+	// 全てのオブジェクトに対してレイキャストを行う
+	for (auto obj : pStage->GetStageObjects()) {
 
-		int hGroundModel = obj->modelHandle_;
-		if (hGroundModel < 0)continue;
+		// 自身のオブジェクト名と同じならスキップ
+		if (obj->GetObjectName() == this->objectName_)continue;
 
-		RayCastData data;
-		data.start = transform_.position_;   //レイの発射位置
-		data.dir = XMFLOAT3(0, -1, 0);       //レイの方向
-		Model::RayCast(hGroundModel, &data); //レイを発射
+		// レイキャストを行う
+		Model::RayCast(obj->GetModelHandle(), &data);
 
-		//レイが当たったら
+		// レイが当たったら
 		if (data.hit) {
 			//その分位置を下げる
-			transform_.position_.y -= (data.dist- (MODEL_SCALE/2)) * _fallSpeed;
+			transform_.position_.y -= data.dist * _fallSpeed;
 		}
 	}
 }
@@ -217,13 +220,13 @@ void StageObject::Update()
 
 void StageObject::Draw()
 {
-	if (isShadeVisible_ == false)Direct3D::SetShader(Direct3D::SHADER_SKY);
+	Direct3D::SetShader(shaderType_);
 
 	// モデルの描画
 	Model::SetTransform(modelHandle_, transform_);
 	Model::Draw(modelHandle_);
 
-	if (isShadeVisible_ == true)Direct3D::SetShader(Direct3D::SHADER_3D);
+	Direct3D::SetShader(Direct3D::SHADER_3D);
 }
 
 void StageObject::Release()
@@ -251,12 +254,13 @@ void StageObject::Save(json& _saveObj)
 	_saveObj["fallSpeed_"] = fallSpeed_;
 	_saveObj["isOnGround_"] = isOnGround_;
 	_saveObj["isCollisionWall_"] = isCollisionWall_;
+	_saveObj["onGroundOffset_"] = { REFERENCE_XMFLOAT3(onGroundOffset_) };
 	
 	// 自身のモデルのファイルパスを保存
 	_saveObj["modelFilePath_"] = modelFilePath_;
 
 	// 陰影の表示フラグを保存
-	_saveObj["isShadeVisible_"] = isShadeVisible_;
+	_saveObj["shaderType_"] = (int)shaderType_;
 
 	// 接地処理の情報を保存
 	_saveObj["isOnGround_"] = isOnGround_;
@@ -280,13 +284,13 @@ void StageObject::Load(json& _loadObj)
 	if (_loadObj.contains("fallSpeed_"))fallSpeed_ = _loadObj["fallSpeed_"];
 	if (_loadObj.contains("isOnGround_"))isOnGround_ = _loadObj["isOnGround_"];
 	if (_loadObj.contains("isCollisionWall_"))isCollisionWall_ = _loadObj["isCollisionWall_"];
-
+	if (_loadObj.contains("onGroundOffset_"))onGroundOffset_ = { _loadObj["onGroundOffset_"][0].get<float>(),_loadObj["onGroundOffset_"][1].get<float>(), _loadObj["onGroundOffset_"][2].get<float>() };
 
 	// モデルのファイルパスを読込
 	modelFilePath_ = _loadObj["modelFilePath_"];
 
 	// 陰影の表示フラグを読込
-	if(_loadObj.contains("isShadeVisible_"))isShadeVisible_ = _loadObj["isShadeVisible_"];
+	if(_loadObj.contains("shaderType_"))shaderType_ = _loadObj["shaderType_"];
 
 	// 接地処理の情報を読込
 	if (_loadObj.contains("isOnGround_"))isOnGround_ = _loadObj["isOnGround_"];
@@ -332,7 +336,7 @@ void StageObject::DrawData()
 		ImGui::SameLine();
 		ImGui::Checkbox("isCollisionWall", &isCollisionWall_);
 		ImGui::DragFloat("fallSpeed", &fallSpeed_, 0.1f, 0.f, 1.f);
-
+		ImGui::DragFloat3("onGroundOffset", &onGroundOffset_.x, 0.1f);
 		ImGui::TreePop();
 	}
 
@@ -340,7 +344,10 @@ void StageObject::DrawData()
 	// シェードの表示
 	// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
 	if (ImGui::TreeNode("shade")) {
-		ImGui::Checkbox("isShadeVisible", &isShadeVisible_);
+		
+		// fix: 存在しないシェーダーを入力可能なため修正が必要
+		// fix: シェーダータイプがint型で表示されるため修正が必要
+		ImGui::InputInt("shaderType_", (int*)& shaderType_);
 		ImGui::TreePop();
 	}
 

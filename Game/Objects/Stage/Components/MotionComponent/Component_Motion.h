@@ -6,7 +6,6 @@ class Component_Motion : public Component
 {
 protected:
 	std::map<PlayerState, int>motionModelMap_;
-	std::vector<int> modelHandleList_;
 
 public:
 	Component_Motion(string _name, StageObject* _holder,ComponentType _type, Component* _parent);

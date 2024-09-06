@@ -268,6 +268,7 @@ string ComponentTypeToString(ComponentType _type)
 	case WASDInputMove: return "WASDInputMoveComponent";
 	case PlayerMotion: return "PlayerMotionComponent";
 	case Teleporter: return "TeleporterComponent";
+		// その他コンポーネントを追加する時は上記のように追加
 
 	default: return "None";
 	}	

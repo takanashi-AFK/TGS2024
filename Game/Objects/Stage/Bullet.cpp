@@ -78,9 +78,9 @@ void Bullet::OnCollision(GameObject* _target, Collider* _collider)
 		((Component_HealthGauge*)hm)->TakeDamage(power_);
 		this->KillMe();
 
-		if (((Component_HealthGauge*)hm)->IsDead()) {
+		/*if (((Component_HealthGauge*)hm)->IsDead()) {
 			((Stage*)FindObject("Stage"))->DeleteStageObject((StageObject*)_target);
-		}
+		}*/
 	}
 
 }

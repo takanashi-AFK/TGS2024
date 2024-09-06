@@ -23,6 +23,20 @@ void Component_Motion::DrawData()
 {
 }
 
-void Component_Motion::PlayMotion(int _start, int _end, int _speed)
+MotionData::MotionData(string _filePath, int startFrame, int endFrame, int speed)
 {
+    // ファイルパスを設定
+    filePath = _filePath;
+
+    // モデルハンドルを設定
+    modelHandle = Model::Load(filePath);
+
+    // 開始フレームを設定
+    startFrame = startFrame;
+
+    // 終了フレームを設定
+    endFrame = endFrame;
+
+    // アニメーションスピードを設定
+    speed = speed;
 }

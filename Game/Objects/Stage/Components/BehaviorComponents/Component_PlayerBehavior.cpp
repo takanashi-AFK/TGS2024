@@ -36,31 +36,25 @@ namespace {
     bool IsWASDKey() {
 		return Input::IsKey(DIK_W) || Input::IsKey(DIK_A) || Input::IsKey(DIK_S) || Input::IsKey(DIK_D);
 	}
+
+    struct CompareDist {
+        bool operator()(const RayCastData& lhs, const RayCastData& rhs) const {
+            return lhs.dist < rhs.dist;
+        }
+    };
+
 }
 
-
-
-
-struct CompareDist {
-    bool operator()(const RayCastData& lhs, const RayCastData& rhs) const {
-        return lhs.dist < rhs.dist;
-    }
-};
-
-using namespace DirectX;
 Component_PlayerBehavior::Component_PlayerBehavior(string _name, StageObject* _holder, Component* _parent)
     : Component(_holder, _name, PlayerBehavior, _parent)
-    , shootHeight_(1.0f), isGameStart_(false), nowState(PSTATE_IDLE), prevState(PSTATE_IDLE)
+    , shootHeight_(1.0f), isGameStart_(false), nowState_(PSTATE_IDLE), prevState_(PSTATE_IDLE)
 {
 }
 
 void Component_PlayerBehavior::Initialize()
 {
-
     // コライダーの追加
     holder_->AddCollider(new BoxCollider(XMFLOAT3(0, 0, 0), XMFLOAT3(1, 1, 1)));
-
-    holder_->SetScale(XMFLOAT3(0.5f, 0.5f, 0.5f));
 
     // 子コンポーネントの追加
     if (FindChildComponent("InputMove") == false)AddChildComponent(CreateComponent("InputMove", WASDInputMove, holder_, this));
@@ -72,7 +66,6 @@ void Component_PlayerBehavior::Initialize()
 
 void Component_PlayerBehavior::Update()
 {
-
     // ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
     // カウント制御されている場合の処理
     // ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
@@ -99,7 +92,7 @@ void Component_PlayerBehavior::Update()
         }
     }
     
-    // HPバーの表示処理
+    // HP関連処理
     {
 		// プレイヤーのHPゲージコンポーネントを取得
 		Component_HealthGauge* hg = (Component_HealthGauge*)(GetChildComponent("PlayerHealthGauge"));
@@ -109,18 +102,21 @@ void Component_PlayerBehavior::Update()
 
 		// HPバーの値を設定
 		if (hpBar != nullptr && hg != nullptr)hpBar->SetProgress(&hg->now_, &hg->max_);
-    }
 
+        // HPが0以下になったら... DEAD状態に遷移
+        if (hg != nullptr)if (hg->IsDead() == true)SetState(PSATE_DEAD);
+    }
 
     // ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
     // 状態ごとの処理
     // ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
-    switch (nowState)
+    switch (nowState_)
     {
     case PSTATE_IDLE:           Idle();         break;  // 現在の状態がIDLEの場合
     case PSTATE_WALK:           Walk();         break;  // 現在の状態がWALKの場合
     case PSTATE_SHOOT:          Shoot();        break;  // 現在の状態がSHOOTの場合
-    case PSTATE_DASH:           Dash();         break;  // 現在の状態がDASHの場合
+    case PSTATE_DODGE:          Dodge();         break;  // 現在の状態がDASHの場合
+    case PSATE_DEAD:            Dead();         break;  // 現在の状態がDEADの場合
     }
 }
 
@@ -142,13 +138,6 @@ void Component_PlayerBehavior::DrawData()
 {
     // 高さの設定
     ImGui::DragFloat("ShootHeight", &shootHeight_, 0.1f);
-
-    ImGui::DragFloat("utyaka", &ScoreManager::g_Score);
-    
-    if (ImGui::Button("SceneChange")) {
-        SceneManager* sceneManager = (SceneManager*)holder_->GetParent()->FindObject("SceneManager");
-        sceneManager->ChangeScene(SCENE_ID_END, TID_BLACKOUT);
-    }
 }
 
 void Component_PlayerBehavior::Idle()
@@ -165,7 +154,7 @@ void Component_PlayerBehavior::Idle()
     else if (Input::IsMouseButtonDown(0)) SetState(PSTATE_SHOOT);
 
     // スペースキーが押されていたら...ダッシュ状態に遷移
-    else if (Input::IsKeyDown(DIK_SPACE)) SetState(PSTATE_DASH);
+    else if (Input::IsKeyDown(DIK_SPACE)) SetState(PSTATE_DODGE);
 }
 
 void Component_PlayerBehavior::Walk()
@@ -182,7 +171,7 @@ void Component_PlayerBehavior::Walk()
 
     // 状態優先度：ダッシュ > 射撃
     // スペースキーが押されていたら...ダッシュ状態に遷移
-    if (Input::IsKeyDown(DIK_SPACE)) SetState(PSTATE_DASH);
+    if (Input::IsKeyDown(DIK_SPACE)) SetState(PSTATE_DODGE);
 
     // マウスの左ボタンが押されていたかつ、マウスの右ボタンが押されてたら、射撃状態に遷移
     else if(Input::IsMouseButtonDown(0)) SetState(PSTATE_SHOOT);
@@ -238,7 +227,7 @@ void Component_PlayerBehavior::Shoot()
     bool isEnd = false;
 
     // スペースキーが押されていたら...ダッシュ状態に遷移
-    if (Input::IsKeyDown(DIK_SPACE)) { isEnd = true; SetState(PSTATE_DASH); }
+    if (Input::IsKeyDown(DIK_SPACE)) { isEnd = true; SetState(PSTATE_DODGE); }
 
     // アニメーションが終わったら...
     if (motion->IsEnd()) { isEnd = true; SetState(PSTATE_IDLE); }
@@ -252,7 +241,7 @@ void Component_PlayerBehavior::Shoot()
     }
 }
 
-void Component_PlayerBehavior::Dash()
+void Component_PlayerBehavior::Dodge()
 {
     // NOTE: 一度だけダッシュ処理を実行するためのフラグ
     static bool isDash = false;
@@ -299,19 +288,19 @@ void Component_PlayerBehavior::Dash()
     }
 }
 
-bool Component_PlayerBehavior::IsDead()
+void Component_PlayerBehavior::Dead()
 {
-    auto hg = dynamic_cast<Component_HealthGauge*>(GetChildComponent("PlayerHealthGauge"));
-    if (hg == nullptr)return false;
-
-    return hg->IsDead();
+	// 移動コンポーネントの取得 & 有無の確認後、移動を不可能にする
+	Component_WASDInputMove* move = (Component_WASDInputMove*)(GetChildComponent("InputMove"));
+    if (move != nullptr)move->Stop();
 }
 
 XMVECTOR Component_PlayerBehavior::CalcShootDirection()
 {
-    // ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
-    // 必要情報の取得
-    // ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
+    // FIX: 下記の処理が正常に動作しないため、カメラの視線ベクトルを返すように一時的に変更
+    return Camera::GetSightLine();
+
+
 
     // レイキャストデータを作成
     RayCastData data; {
@@ -353,10 +342,10 @@ XMVECTOR Component_PlayerBehavior::CalcShootDirection()
 
         // 配列の中身を比較して最も近いものを取得
         // プレイヤーの位置からの距離を計算し、shootDirに代入
-        auto min_iter = std::min_element(rayHitObjectList_.begin(), rayHitObjectList_.end(), CompareDist());
+        auto min_iter = std::min_element(hitRayCastDatalist.begin(), hitRayCastDatalist.end(), CompareDist());
 
         // イテレータが有効か確認して最小要素の dist を出力
-        if (min_iter != rayHitObjectList_.end()) {
+        if (min_iter != hitRayCastDatalist.end()) {
             XMFLOAT3 holderPos = holder_->GetPosition();
             return XMVector3Normalize(XMLoadFloat3(&min_iter->pos) - XMLoadFloat3(&holderPos));
         }

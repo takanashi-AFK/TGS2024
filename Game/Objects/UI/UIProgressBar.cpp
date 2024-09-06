@@ -8,53 +8,73 @@
 #include "../../../Game/Objects/Stage/StageObject.h"
 #include "../../../Game/Objects/Stage/Components/Component.h"
 
+namespace {
+    const string DEFAULT_FRAME_IMAGE = "Images/Bar_Frame.png";
+    const string DEFAULT_GAUGE_IMAGE = "Images/Bar_Gauge.png";
+}
 
 UIProgressBar::UIProgressBar(string _name, UIObject* parent,int _layerNum)
-    :UIObject(_name, UIType::UI_PROGRESSBAR, parent, _layerNum)
+    :UIObject(_name, UIType::UI_PROGRESSBAR, parent, _layerNum), max_(nullptr), now_(nullptr)
 {
 }
 
 void UIProgressBar::Initialize()
 {
-    // フレーム画像の読込
-    frameImage_.filePath_ = "Images/Bar_Frame.png";
-    frameImage_.handle_ = Image::Load(frameImage_.filePath_);
+    // フレームを設定
+    {
+        // フレーム画像を読み込む
+        frameImage_.Load(DEFAULT_FRAME_IMAGE);
 
-    // ゲージ画像の読込
-    gaugeImage_.filePath_ = "Images/Bar_Gauge.png";
-    gaugeImage_.handle_ = Image::Load(gaugeImage_.filePath_);
+        // フレームのtransformを設定 ※デフォルトの位置、回転、拡大縮小
+        frameImage_.transform_ = transform_;
+    }
+
+    // ゲージを設定
+    {
+        // ゲージ画像を読み込む
+        gaugeImage_.Load(DEFAULT_GAUGE_IMAGE);
+
+        // ゲージのtransformを設定 ※デフォルトの位置、回転、拡大縮小
+        gaugeImage_.transform_ = transform_;
+
+        // ゲージの色を設定
+        gaugeImage_.color_ = { 1.0f,1.0f,1.0f };
+    }
 }
 
 void UIProgressBar::Update()
 {
-    // 参照するゲージコンポーネントがいない場合は、処理を終了
-    if (referenceGauge_.this_ == nullptr) return;
-
-    // ゲージの最大値と現在値を取得
-    max_ = referenceGauge_.this_->GetMax();
-    now_ = referenceGauge_.this_->GetNow();
-
-    // ゲージのスケールを計算
-    gaugeImage_.transform_ = transform_;
-    gaugeImage_.transform_.scale_.x = (now_ / max_) * frameImage_.transform_.scale_.x;  
-
-    // フレームのスケールを設定
+    // 描画用transformをオブジェクトのtransformで更新
     frameImage_.transform_ = transform_;
+    gaugeImage_.transform_ = transform_;
+
+    // ゲージのスケールを参照した値を基に設定
+    {
+		// ゲージのスケールを設定 ※現在値/最大値
+        if (max_ != nullptr || now_ != nullptr)gaugeImage_.transform_.scale_.x = *now_ / *max_;
+
+		// ゲージのスケールが0以下の場合は、0に設定
+		if (gaugeImage_.transform_.scale_.x <= 0)gaugeImage_.transform_.scale_.x = 0;
+	}
 }
 
 void UIProgressBar::Draw()
 {
-    // フレーム画像とゲージ画像が読み込まれていない場合は、処理を終了
-    if (frameImage_.handle_ < 0)return;
-    if (gaugeImage_.handle_ < 0)return;
+    // ゲージ画像が読み込まれている場合
+    if (gaugeImage_.IsAvailable()) {
 
-    // ゲージの画像を描画
-    Image::SetTransform(gaugeImage_.handle_,gaugeImage_.transform_);
-    Image::Draw(gaugeImage_.handle_, Direct3D::SHADER_BAR, gaugeImage_.color_);
+		// ゲージの画像を描画
+        Image::SetTransform(gaugeImage_.handle_, gaugeImage_.transform_);
+        Image::Draw(gaugeImage_.handle_, Direct3D::SHADER_BAR, gaugeImage_.color_);
+    }
 
-    // フレームの画像を描画
-    Image::SetTransform(frameImage_.handle_, frameImage_.transform_);
-    Image::Draw(frameImage_.handle_);
+    // フレーム画像が読み込まれている場合
+    if (frameImage_.IsAvailable()) {
+
+        // フレームの画像を描画
+		Image::SetTransform(frameImage_.handle_, frameImage_.transform_);
+		Image::Draw(frameImage_.handle_);
+    }
 }
 
 void UIProgressBar::Release()
@@ -70,9 +90,6 @@ void UIProgressBar::Save(json& saveObj)
     
     // フレーム画像の情報を保存
     saveObj["frameImage_"]["filePath_"] = frameImage_.filePath_;
-
-    // 参照するゲージコンポーネントの情報を保存
-    saveObj["referenceGauge_"]["thisName_"] = referenceGauge_.this_->GetName();
 }
 
 void UIProgressBar::Load(json& loadObj)
@@ -80,156 +97,133 @@ void UIProgressBar::Load(json& loadObj)
     // ゲージ画像の情報を読込
     if (loadObj.contains("gaugeImage_")) {
 		
-        // ゲージ画像のファイルパスを取得
-        gaugeImage_.filePath_ = loadObj["gaugeImage_"]["filePath_"].get<string>();
-
         // ゲージ画像を読み込む
-        gaugeImage_.handle_ = Image::Load(gaugeImage_.filePath_);
+        if (loadObj["gaugeImage_"].contains("filePath_")) gaugeImage_.Load(loadObj["gaugeImage_"]["filePath_"].get<string>());
 
         // ゲージの色を取得
-		gaugeImage_.color_ = { loadObj["gaugeImage_"]["color_"][0].get<float>(),loadObj["gaugeImage_"]["color_"][1].get<float>(), loadObj["gaugeImage_"]["color_"][2].get<float>() };
+        if (loadObj["gaugeImage_"].contains("color_"))gaugeImage_.color_ = { loadObj["gaugeImage_"]["color_"][0].get<float>(),loadObj["gaugeImage_"]["color_"][1].get<float>(), loadObj["gaugeImage_"]["color_"][2].get<float>() };
 	}   
 
     // フレーム画像の情報を読込
     if (loadObj.contains("frameImage_")) {
 
-		// フレーム画像のファイルパスを取得
-		frameImage_.filePath_ = loadObj["frameImage_"]["filePath_"].get<string>();
-
-		// フレーム画像を読み込む
-		frameImage_.handle_ = Image::Load(frameImage_.filePath_);
-	}
-
-    // 参照するゲージコンポーネントの情報を読込
-    if (loadObj.contains("referenceGauge_")) {
-
-		// ゲージコンポーネントの名前を取得
-		referenceGauge_.thisName_ = loadObj["referenceGauge_"]["thisName_"].get<string>();
+        // フレーム画像を読み込む
+        if (loadObj["frameImage_"].contains("filePath_"))frameImage_.Load(loadObj["frameImage_"]["filePath_"].get<string>());
 	}
 }
 
 void UIProgressBar::DrawData()
 {
-    // ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
-    // プログレスバーのフレーム画像を設定
-    // ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
-    if (ImGui::TreeNode("frame_")) {
+    // 描画情報の設定
+    if (ImGui::TreeNode("draw")) {
+        
+        // フレームの設定
+        if(ImGui::TreeNode("frame")){
 
-        // 現在のファイルパスを表示
-        ImGui::Text("imageFilePath_:%s", frameImage_.filePath_.c_str());
-        ImGui::SameLine();
+			// フレーム画像の変更
+			ImGui::Text("image : %s", frameImage_.filePath_.c_str()); ImGui::SameLine();
+			if (ImGui::SmallButton("...")) {
 
-        // ファイルパスを取得
-        if (ImGui::SmallButton("...")) {
-            // 現在のカレントディレクトリを覚えておく
-            char defaultCurrentDir[MAX_PATH];
-            GetCurrentDirectory(MAX_PATH, defaultCurrentDir);
+                // 画像ファイルを選択して読み込む
+				string inputFilePath{};
+				if (GetImageFilePathFromExplorer(inputFilePath)) frameImage_.Load(inputFilePath);
+			}
 
-            // 「ファイルを開く」ダイアログの設定
-            OPENFILENAME ofn; {
-                TCHAR szFile[MAX_PATH] = {};
-                ZeroMemory(&ofn, sizeof(ofn));
-                ofn.lStructSize = sizeof(ofn);
-                ofn.lpstrFile = szFile;
-                ofn.lpstrFile[0] = '\0';
-                ofn.nMaxFile = sizeof(szFile);
-                ofn.lpstrFilter = TEXT("PNGファイル(*.fbx)\0*.png\0すべてのファイル(*.*)\0*.*\0");
-                ofn.nFilterIndex = 1;
-                ofn.Flags = OFN_PATHMUSTEXIST | OFN_FILEMUSTEXIST;
-                ofn.lpstrInitialDir = TEXT(".");
-            }
+			ImGui::TreePop();
+		}
 
-            // ファイル選択ダイアログの表示
-            if (GetOpenFileName(&ofn) == TRUE) {
-                // ファイルパスを取得
-                frameImage_.filePath_ = ofn.lpstrFile;
-                frameImage_.filePath_ = FileManager::GetAssetsRelativePath(frameImage_.filePath_);
-                FileManager::ReplaceBackslashes(frameImage_.filePath_);
-                SetCurrentDirectory(defaultCurrentDir);
+        // ゲージの設定
+        if (ImGui::TreeNode("gauge")) {
 
-                // フレーム画像を読み込む
-                frameImage_.handle_ = Image::Load(frameImage_.filePath_);
-            }
-            else {
-                ImGui::TreePop();
-                return;
-            }
-        }
+			// ゲージ画像の変更
+			ImGui::Text("image : %s", gaugeImage_.filePath_.c_str()); ImGui::SameLine();
+			if (ImGui::SmallButton("...")) {
+
+                // 画像ファイルを選択して読み込む
+                string inputFilePath{};
+                if (GetImageFilePathFromExplorer(inputFilePath)) gaugeImage_.Load(inputFilePath);
+			}
+
+			// ゲージの色を設定
+			ImGui::ColorEdit3("color", &gaugeImage_.color_.x);
+
+			ImGui::TreePop();
+		}
         ImGui::TreePop();
     }
 
-    if (ImGui::TreeNode("gauge_")) {
+    if (ImGui::TreeNode("value")) {
+        
+		// 最大値と現在値を設定
+		if(max_ != nullptr)ImGui::DragFloat("Max", max_);
+		if(now_ != nullptr)ImGui::DragFloat("Now", now_);
 
-        // ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
-        // ゲージ表示色を設定
-        // ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
-        ImVec4 inputCol = { REFERENCE_XMFLOAT3(gaugeImage_.color_),0 };
-        ImGui::ColorEdit4("Color", (float*)&inputCol);
-        gaugeImage_.color_ = { REFERENCE_XMFLOAT3(inputCol) };
-
-        // ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
-        // 参照ゲージコンポーネントを選択
-        // ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
-        vector<gauge> gauges;
-        vector<StageObject*> objects = ((Stage*)FindObject("Stage"))->GetStageObjects();
-
-        //ステージ内のオブジェクトを参照してすべてのゲージコンポーネントを取得
-        for (auto obj : objects) {
-            //HPゲージを探して取得
-            auto healthGaugeComp = obj->FindComponent(HealthGauge);
-            if (healthGaugeComp.empty() == false)
-                for (auto healthGaugeComp : healthGaugeComp) {
-                    //配列にオブジェクトとコンポーネントを一つにまとめて入れる？
-                    auto gaugeComp = dynamic_cast<Component_Gauge*>(healthGaugeComp);
-                    if (gaugeComp == nullptr)continue;
-                    gauges.push_back({ obj,gaugeComp,obj->GetObjectName(),gaugeComp->GetName() });
-                }
-            //技ゲージ...
-        }
-        static int select = 0;
-
-        // select の範囲をチェック
-        if (select >= gauges.size()) {
-            select = 0;
-        }
-
-        //コンボボックスでgaugeのコンテナにあるselect番目のコンポーネントを文字列に変換して受け取る？
-        if (gauges.empty() == false)
-            if (ImGui::BeginCombo("gauge_", referenceGauge_.thisName_.c_str())) {
-                for (int i = 0; i < gauges.size(); i++) {
-                    //selectが現在のインデックスiと等しいかどうかをチェック。
-                    bool is_selected = (select == i);
-                    //is_selectedがtrueなら要素名を表示する
-                    if (ImGui::Selectable(gauges[i].thisName_.c_str(), is_selected))
-                        select = i;
-                    if (is_selected)
-                        //選択されたアイテムにフォーカスをセット
-                        ImGui::SetItemDefaultFocus();
-                }
-                ImGui::EndCombo();
-
-                // select の範囲をチェックしてから設定
-                if (select < gauges.size()) {
-                    referenceGauge_ = gauges[select];
-                }
-            }
-
-        ImGui::TreePop();
+		ImGui::TreePop();
     }
-
-    // ゲージの制御
-    ImGui::DragFloat("Current Value", &now_, 1.f, max_);
-    ImGui::DragFloat("Max Value", &max_, 1.f);
-    ImGui::ProgressBar(now_ / max_, ImVec2(0.0f, 0.0f));
-
 }
 
-
-void UIProgressBar::SetGaugeMaxValue(float _maxValue)
+bool UIProgressBar::GetImageFilePathFromExplorer(string& _filePath) const
 {
-    max_ = _maxValue;
+    //現在のカレントディレクトリを覚えておく
+    char defaultCurrentDir[MAX_PATH];
+    GetCurrentDirectory(MAX_PATH, defaultCurrentDir);
+
+    // 追加するオブジェクトのモデルファイルパスを設定
+    string filePath{}; {
+        // 「ファイルを開く」ダイアログの設定用構造体を設定
+        OPENFILENAME ofn; {
+            TCHAR szFile[MAX_PATH] = {}; // ファイル名を格納するバッファ
+            ZeroMemory(&ofn, sizeof(ofn)); // 構造体の初期化
+            ofn.lStructSize = sizeof(ofn); // 構造体のサイズ
+            ofn.lpstrFile = szFile; // ファイル名を格納するバッファ
+            ofn.lpstrFile[0] = '\0'; // 初期化
+            ofn.nMaxFile = sizeof(szFile); // ファイル名バッファのサイズ
+            ofn.lpstrFilter = TEXT("PNGファイル(*.png)\0*.png\0すべてのファイル(*.*)\0*.*\0"); // フィルター（FBXファイルのみ表示）
+            ofn.nFilterIndex = 1; // 初期選択するフィルター
+            ofn.Flags = OFN_PATHMUSTEXIST | OFN_FILEMUSTEXIST; // フラグ（ファイルが存在すること、パスが存在することを確認）
+            ofn.lpstrInitialDir = TEXT("."); // カレントディレクトリを初期選択位置として設定
+        }
+
+        // ファイルを選択するダイアログの表示
+        if (GetOpenFileName(&ofn) == TRUE) {
+            // ファイルパスを取得
+            filePath = ofn.lpstrFile;
+
+            // カレントディレクトリからの相対パスを取得
+            filePath = FileManager::GetAssetsRelativePath(filePath);
+
+            // 文字列内の"\\"を"/"に置換
+            FileManager::ReplaceBackslashes(filePath);
+
+            // ディレクトリを戻す
+            SetCurrentDirectory(defaultCurrentDir);
+        }
+        else {
+            // ディレクトリを戻す
+			SetCurrentDirectory(defaultCurrentDir);
+			return false;
+        }
+    }
+
+    _filePath = filePath;
+    return true;
+
 }
 
-void UIProgressBar::SetGaugeCurrentValue(float _nowValue) {
-    now_ = _nowValue;
+bool ProgressBarImage::Load(string _filepath)
+{
+    // ファイルパスを設定
+    filePath_ = _filepath;
+
+    // 画像の読み込み
+    handle_ = Image::Load(_filepath);
+
+    // 画像の読み込みに成功したかどうかを返す
+    return handle_ >= 0;
+}
+
+bool ProgressBarImage::IsAvailable() const
+{
+    // 画像のハンドルが有効かどうかを返す
+	return handle_ >= 0;
 }

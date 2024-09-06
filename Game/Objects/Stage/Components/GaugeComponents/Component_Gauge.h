@@ -2,13 +2,14 @@
 //インクルード
 #include"../Component.h"
 
+class UIProgressBar;
 
 /// <summary>
 /// ゲージを管理するコンポーネント
 /// </summary>
 class Component_Gauge :public Component
 {
-protected:
+public:
 	float max_;	// 最大値
 	float now_;	// 現在値
 

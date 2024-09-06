@@ -23,6 +23,8 @@
 #include "../../../UI/CountDown.h"
 #include "../../../Camera/TPSCamera.h"
 #include "../../../../../Engine/SceneManager.h"
+#include "../../../Game/Objects/UI/UIProgressBar.h"
+#include "../../../Game/Objects/UI/UIPanel.h"
 
 namespace {
     const int SHOOT_FRAME = 115;
@@ -97,11 +99,18 @@ void Component_PlayerBehavior::Update()
         }
     }
     
-    // hp表示
-    Component_HealthGauge* hg = (Component_HealthGauge*)(GetChildComponent("PlayerHealthGauge"));
-    ImGui::Begin("Player");
-    ImGui::ProgressBar(static_cast<float>(hg->GetNow()) / hg->GetMax());
-    ImGui::End();
+    // HPバーの表示処理
+    {
+		// プレイヤーのHPゲージコンポーネントを取得
+		Component_HealthGauge* hg = (Component_HealthGauge*)(GetChildComponent("PlayerHealthGauge"));
+
+		// UIProgressBarを取得
+		UIProgressBar* hpBar = (UIProgressBar*)UIPanel::GetInstance()->FindObject("playerHPBar");
+
+		// HPバーの値を設定
+		if (hpBar != nullptr && hg != nullptr)hpBar->SetProgress(&hg->now_, &hg->max_);
+    }
+
 
     // ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
     // 状態ごとの処理

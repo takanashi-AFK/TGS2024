@@ -10,33 +10,25 @@
 using std::string;
 using std::vector;
 
+// プログレスバーの画像情報構造体
+struct ProgressBarImage{
+    string filePath_;       // ファイルパス
+    int handle_;            // ハンドル
+    Transform transform_;   // 位置、回転、拡大縮小
+    XMFLOAT3 color_;        // 色
+
+    bool Load(string _filepath);    // 画像の読み込み
+    bool IsAvailable() const;       // 画像が読み込まれているか
+};
+
 class UIProgressBar : public UIObject
 {
 private:
-    float max_, now_;  // 最大値と現在値を格納するメンバ変数
+    float* max_;    // 最大値
+    float* now_;	    // 現在値
 
-    struct FrameImage {
-        string filePath_;
-        int handle_;
-        Transform transform_;
-    }frameImage_;
-
-    struct GaugeImage {
-        string filePath_;
-        int handle_;
-        Transform transform_;
-        XMFLOAT3 color_;
-    }gaugeImage_;
-
-    Component_HealthGauge* healthGauge_; // HealthGaugeのポインタを追加
-
-    struct gauge {
-        StageObject* holder_;
-        Component_Gauge* this_;
-        string holderName_;
-        string thisName_;
-    }referenceGauge_;
-
+    ProgressBarImage frameImage_;   // フレーム画像
+    ProgressBarImage gaugeImage_;   // ゲージ画像
 public:
     UIProgressBar(std::string _name, UIObject* parent, int _layerNum);
     void Initialize() override;
@@ -48,8 +40,10 @@ public:
     void Load(json& loadObj) override;
     void DrawData() override;
 
-    void SetGaugeMaxValue(float _maxValue);
-    void SetGaugeCurrentValue(float _nowValue);
-   
-    void SetGauge(Component_HealthGauge* _gauge) { healthGauge_ = _gauge; }
+    void SetMax(float* _max) { max_ = _max; }
+    void SetNow(float* _now) { now_ = _now; }
+    void SetProgress(float* _now ,float* _max){ now_ = _now; max_ = _max; }
+
+private:
+    bool GetImageFilePathFromExplorer(string& _filePath) const;
 };

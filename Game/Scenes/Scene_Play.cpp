@@ -22,7 +22,10 @@ Scene_Play::Scene_Play(GameObject* parent)
 void Scene_Play::Initialize()
 {
 	UIPanel* panel_ = UIPanel::GetInstance();
-	//画像データのロード
+	json panelData;
+	if (JsonReader::Load("test_playerHPBar.json", panelData)) {
+		panel_->Load(panelData);
+	}
 
 	// スカイスフィアの生成
 	SkySphere* skySphere = Instantiate<SkySphere>(this);

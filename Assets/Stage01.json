@@ -16,7 +16,7 @@
           "HealthGauge": {
             "max_": 1000.0,
             "name_": "HealthGauge",
-            "now_": 300.0,
+            "now_": 1000.0,
             "type_": 6
           },
           "ShootAttack": {

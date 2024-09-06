@@ -199,7 +199,6 @@ void Component_BossBehavior::Shot()
     timer->SetTime(SHOT_TIME);
     timer->Start();
 
-
     angle_ += rotateSpeed_;
     holder_->SetRotateY(angle_);
 
@@ -227,6 +226,10 @@ void Component_BossBehavior::Shot()
         nowState_ = WAIT;
         timer->Reset();
         angle_ = 0;
+
+
+        // ‰ñ“]‘¬“x‚ğ 1.f‚©‚ç15.f‚Ì”ÍˆÍ‚Åƒ‰ƒ“ƒ_ƒ€‚Éİ’è
+        rotateSpeed_ = 1.f + (rand() % 15);
     }
 }
 

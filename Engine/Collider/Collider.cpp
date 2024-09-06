@@ -49,12 +49,12 @@ bool Collider::IsHitBoxVsCircle(BoxCollider* box, SphereCollider* sphere)
 
 
 
-	if (circlePos.x > boxPos.x - box->size_.x - sphere->size_.x &&
-		circlePos.x < boxPos.x + box->size_.x + sphere->size_.x &&
-		circlePos.y > boxPos.y - box->size_.y - sphere->size_.x &&
-		circlePos.y < boxPos.y + box->size_.y + sphere->size_.x &&
-		circlePos.z > boxPos.z - box->size_.z - sphere->size_.x &&
-		circlePos.z < boxPos.z + box->size_.z + sphere->size_.x )
+	if (circlePos.x > (boxPos.x - box->size_.x / 2.0f) - sphere->size_.x &&
+		circlePos.x < (boxPos.x + box->size_.x / 2.0f) + sphere->size_.x &&
+		circlePos.y >(boxPos.y - box->size_.y / 2.0f) - sphere->size_.x &&
+		circlePos.y < (boxPos.y + box->size_.y / 2.0f) + sphere->size_.x &&
+		circlePos.z >(boxPos.z - box->size_.z / 2.0f) - sphere->size_.x &&
+		circlePos.z < (boxPos.z + box->size_.z / 2.0f) + sphere->size_.x)
 	{
 		return true;
 	}

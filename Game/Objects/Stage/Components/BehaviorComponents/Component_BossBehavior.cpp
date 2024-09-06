@@ -55,12 +55,11 @@ void Component_BossBehavior::Update()
 {
     if (target_ == nullptr) target_ = (StageObject*)holder_->GetParent()->FindObject(targetName_);
 
-    static bool isGameStart = false;
     // ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
     // カウント制御されている場合の処理
     // ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
     CountDown* countDown = (CountDown*)(holder_->FindObject("CountDown"));
-    if (countDown != nullptr && isGameStart == false) {
+    if (countDown != nullptr && isGameStart_ == false) {
 
         // カウントダウンが終了した場合
         if (countDown->IsFinished()) {
@@ -69,11 +68,12 @@ void Component_BossBehavior::Update()
             isActive_ = true;
 
             // ゲームスタートフラグを立てる
-            isGameStart = true;
+            isGameStart_ = true;
         }
         else {
             // 移動を不可能にする
 			isActive_ = false;
+            return;
         }
     }
 

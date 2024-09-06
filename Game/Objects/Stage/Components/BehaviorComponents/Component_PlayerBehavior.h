@@ -27,6 +27,7 @@ private:
 	bool isAnimationNow_;
 
 	PlayerState nowState, prevState;
+	bool isGameStart_;
 public:
 	Component_PlayerBehavior(string _name,StageObject* _holder,Component* _parent);
 

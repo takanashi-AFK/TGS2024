@@ -48,6 +48,7 @@ struct CompareDist {
 using namespace DirectX;
 Component_PlayerBehavior::Component_PlayerBehavior(string _name, StageObject* _holder, Component* _parent)
     : Component(_holder, _name, PlayerBehavior, _parent)
+    , shootHeight_(1.0f), isGameStart_(false), nowState(PSTATE_IDLE), prevState(PSTATE_IDLE)
 {
 }
 
@@ -70,12 +71,11 @@ void Component_PlayerBehavior::Initialize()
 void Component_PlayerBehavior::Update()
 {
 
-    static bool isGameStart = false;
     // ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
     // カウント制御されている場合の処理
     // ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
     CountDown* countDown = (CountDown*)(holder_->FindObject("CountDown"));
-    if (countDown != nullptr && isGameStart == false) {
+    if (countDown != nullptr && isGameStart_ == false) {
 
         // 移動コンポーネントの取得 & 有無の確認
         Component_WASDInputMove* move = (Component_WASDInputMove*)(GetChildComponent("InputMove"));
@@ -88,11 +88,12 @@ void Component_PlayerBehavior::Update()
             move->Execute();
 
             // ゲームスタートフラグを立てる
-            isGameStart = true;
+            isGameStart_ = true;
         }
         else {
             // 移動を不可能にする
             move->Stop();
+            return;
         }
     }
     

@@ -27,6 +27,7 @@ private:
 	float shootHeight_;
 
 	bool isActive_;
+	bool isGameStart_;
 
 	// effekseer: •ÏŒ`s—ñ
 	std::shared_ptr<EFFEKSEERLIB::EFKTransform> mt;/*ššš*/

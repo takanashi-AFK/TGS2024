@@ -11,17 +11,18 @@ Component_PlayerMotion::Component_PlayerMotion(string _name, StageObject* _holde
 void Component_PlayerMotion::Initialize()
 {
     // モデルのハンドルリストにモデルを追加
-    modelHandleList_[PSTATE_WALK] = MotionData("Models/Player/Running.fbx", 0, 40, 1,true);
-    modelHandleList_[PSTATE_SHOOT] = MotionData("Models/Player/Fireball.fbx", 0, 150, 1,false);
-    modelHandleList_[PSTATE_IDLE] = MotionData("Models/Player/Silly Dancing.fbx", 0, 200, 1,true);
-    modelHandleList_[PSTATE_DODGE] = MotionData("Models/Player/Female Action Pose.fbx", 0, 60, 1,false);
-    modelHandleList_[PSATE_DEAD] = MotionData("Models/Player/Standing React Death Right.fbx", 0, 182, 1,false);
+    modelHandleList_[PLAYER_STATE_WALK] = MotionData("Models/Player/Running.fbx", 0, 40, 1,true);
+    modelHandleList_[PLAYER_STATE_SHOOT] = MotionData("Models/Player/Fireball.fbx", 0, 150, 1,false);
+    modelHandleList_[PLAYER_STATE_IDLE] = MotionData("Models/Player/Silly Dancing.fbx", 0, 200, 1,true);
+    modelHandleList_[PLAYER_STATE_DODGE] = MotionData("Models/Player/Female Action Pose.fbx", 0, 60, 1,false);
+    modelHandleList_[PLAYER_STATE_DEAD] = MotionData("Models/Player/Standing React Death Right.fbx", 0, 182, 1,false);
 }
+
 
 void Component_PlayerMotion::Update()
 {
     // プレイヤーの状態を取得 FIX: playerBehaviorが複数持たせないようにする
-    PlayerState state = PSTATE_MAX;
+    PlayerState state = PLAYER_STATE_MAX;
     for (auto playerBehavior : holder_->FindComponent(PlayerBehavior)) state = ((Component_PlayerBehavior*)playerBehavior)->GetState();
 
     // 現在のモデル番号が、現在の状態のモデル番号と一致していない時.
@@ -66,7 +67,7 @@ void Component_PlayerMotion::DrawData()
 int Component_PlayerMotion::GetNowFrame()
 {
     // プレイヤーの状態を取得 FIX: playerBehaviorが複数持たせないようにする
-    PlayerState state = PSTATE_MAX;
+    PlayerState state = PLAYER_STATE_MAX;
     for (auto playerBehavior : holder_->FindComponent(PlayerBehavior)) state = ((Component_PlayerBehavior*)playerBehavior)->GetState();
 
     return Model::GetAnimFrame(modelHandleList_[state].modelHandle);
@@ -75,7 +76,7 @@ int Component_PlayerMotion::GetNowFrame()
 bool Component_PlayerMotion::IsEnd()
 {
     // プレイヤーの状態を取得 FIX: playerBehaviorが複数持たせないようにする
-    PlayerState state = PSTATE_MAX;
+    PlayerState state = PLAYER_STATE_MAX;
     for (auto playerBehavior : holder_->FindComponent(PlayerBehavior)) state = ((Component_PlayerBehavior*)playerBehavior)->GetState();
 
     // アニメーションの終了フレームに達したら

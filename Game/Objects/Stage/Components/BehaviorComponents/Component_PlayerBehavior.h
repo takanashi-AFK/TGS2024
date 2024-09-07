@@ -5,17 +5,19 @@
 #include <vector>
 #include "../../../../../Engine/ResourceManager/Model.h"
 
+// 前方宣言
+class CountDown;
+
 // プレイヤーの状態
 enum PlayerState {
-	PSTATE_IDLE = 0,	/* 待機 */
-	PSTATE_WALK,		/* 歩行 */
-	PSTATE_SHOOT,		/* 射撃 */
-	PSTATE_DODGE,		/* 回避 */
-	PSATE_DEAD,			/* 死亡 */
-	PSTATE_MAX
+	PLAYER_STATE_IDLE = 0,	/* 待機 */
+	PLAYER_STATE_WALK,		/* 歩行 */
+	PLAYER_STATE_SHOOT,		/* 射撃 */
+	PLAYER_STATE_DODGE,		/* 回避 */
+	PLAYER_STATE_DEAD,		/* 死亡 */
+	PLAYER_STATE_MAX
 	};
 
-class CountDown;
 class Component_PlayerBehavior : public Component
 {
 private:
@@ -73,7 +75,7 @@ getter :*/
 /*
 predicate :*/
 	/// <returns> プレイヤーが死んでいるか </returns>
-	bool IsDead() const { return nowState_ == PSATE_DEAD; }
+	bool IsDead();
 
 private:
 	/// <summary> 射撃方向の計算 </summary>

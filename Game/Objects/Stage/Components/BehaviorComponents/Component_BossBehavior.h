@@ -6,98 +6,76 @@
 // effekseer: インクルード
 #include "../../../../../EffekseeLib/EffekseerVFX.h"
 
+enum BossState{
+	BOSS_STATE_IDLE = 0,
+	BOSS_STATE_SHOT,
+	BOSS_STATE_TACKLE,
+	BOSS_STATE_DEAD,
+	BOSS_STATE_MAX
+};
+
 class Component_BossBehavior : public Component
 {
 private:
+	BossState nowState_;	// 現在の状態
 
-	enum STATE { SHOT, TACKLE, SHOCK, WAIT, };	// 状態
-	STATE nowState_;							// 現在の状態	
-	STATE prevState_;							// １フレーム前の状態
+	StageObject* target_;	// 対象
+	string targetName_;		// 対象の名前
 
-	StageObject* target_;
-	string targetName_;
+	float shotInterval_;		// 射撃間隔
+	float stateChangeDelay_;	// 状態変更遅延
+	float shootHeight_;			// 射撃の高さ
+	bool isActive_;				// アクティブフラグ
+	bool isGameStart_;			// ゲーム開始フラグ
 
-	float shotrange_;
-	float tacklerange_;
-	float angle_;
+	std::shared_ptr<EFFEKSEERLIB::EFKTransform> mt; // effekseer: モデルの位置情報
 
-	float shotRate_;
-	float rotateSpeed_;
-	float nextStateTime_;
-	float shootHeight_;
-
-	bool isActive_;
-	bool isGameStart_;
-
-	// effekseer: 変形行列
-	std::shared_ptr<EFFEKSEERLIB::EFKTransform> mt;/*★★★*/
-
-
-	void RandomTransition(); // ランダム遷移のためのメソッド
 public:
-
-	/// <summary>
-	/// コンストラクタ
-	/// </summary>	
-	/// <param name="_holder">保有者</param>
+	/// <summary> コンストラクタ </summary>
 	Component_BossBehavior(string _name, StageObject* _holder, Component* _parent);
 
-	/// <summary>
-	/// 初期化
-	/// </summary>
+	/// <summary> 初期化 </summary>
 	void Initialize() override;
 
-	/// <summary>
-	/// 更新
-	/// </summary>
+	/// <summary> 更新 </summary>
 	void Update() override;
 
-	/// <summary>
-	/// 解放
-	/// </summary>
+	/// <summary> 解放 </summary>
 	void Release() override;
 
-	/// <summary>
-	/// 衝突処理
-	/// </summary>
+	/// <summary> 衝突処理 </summary>
 	void OnCollision(GameObject* _target, Collider* _collider) override;
 
-	/// <summary>
-	/// 保存
-	/// </summary>
-	/// <param name="_saveObj">保存情報</param>
+	/// <summary> 保存 </summary>
 	void Save(json& _saveObj) override;
 
-	/// <summary>
-	/// 読込
-	/// </summary>
-	/// <param name="_loadObj">読込情報</param>
+	/// <summary> 読込 </summary>
 	void Load(json& _loadObj) override;
 
-	/// <summary>
-	/// ImGuiパネル表示
-	/// </summary>
+	/// <summary> ImGuiパネル表示 </summary>
 	void DrawData() override;
 
-//------------ボスの行動メソッド----------------//
+/*
+setter :*/
+	/// <param name="_state"> ボスの状態 </param>
+	void SetState(BossState _state) { nowState_ = _state; }
+/*
+predicate:*/
+	bool IsDead();
 
-	/// <summary>
-	/// 射撃
-	/// </summary>
+private:
+	/// <summary> ランダムに状態を抽選する処理 </summary>
+	BossState RandomStatePick();
+
+	/// <summary> 射撃状態時の処理 </summary>
 	void Shot();
 
-	/// <summary>
-	/// 突進
-	/// </summary>
+	/// <summary> 突進状態時の処理 </summary>
 	void Tackle();
 
-	/// <summary>
-	/// 衝撃波(未実装) 浮かび上がり、急速に落下したときに発生する衝撃波ダメージの予定
-	/// </summary>
-	void Shock();
+	/// <summary> 待機状態時の処理 </summary>
+	void Idle();	
 
-	/// <summary>
-	/// 待機
-	/// </summary>
-	void Wait();					
+	/// <summary> 死亡状態時の処理 </summary>
+	void Dead();
 };

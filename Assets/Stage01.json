@@ -49,10 +49,10 @@
           }
         },
         "name_": "bossBehavior",
-        "nextStateTime_": 2.5,
+        "stateChangeDelay_": 2.5,
         "rotateSpeed_": 3.0,
         "shootHeight_": -1.2000000476837158,
-        "shotRate_": 0.05000000074505806,
+        "shotInterval_": 0.05000000074505806,
         "shotrange_": 10.0,
         "tacklerange_": 10.0,
         "target_": "00_player",

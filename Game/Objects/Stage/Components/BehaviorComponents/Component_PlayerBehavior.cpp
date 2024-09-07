@@ -47,7 +47,7 @@ namespace {
 
 Component_PlayerBehavior::Component_PlayerBehavior(string _name, StageObject* _holder, Component* _parent)
     : Component(_holder, _name, PlayerBehavior, _parent)
-    , shootHeight_(1.0f), isGameStart_(false), nowState_(PSTATE_IDLE), prevState_(PSTATE_IDLE)
+    , shootHeight_(1.0f), isGameStart_(false), nowState_(PLAYER_STATE_IDLE), prevState_(PLAYER_STATE_IDLE)
 {
 }
 
@@ -65,6 +65,7 @@ void Component_PlayerBehavior::Initialize()
 }
 
 void Component_PlayerBehavior::Update()
+
 {
     // ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
     // カウント制御されている場合の処理
@@ -104,7 +105,7 @@ void Component_PlayerBehavior::Update()
 		if (hpBar != nullptr && hg != nullptr)hpBar->SetProgress(&hg->now_, &hg->max_);
 
         // HPが0以下になったら... DEAD状態に遷移
-        if (hg != nullptr)if (hg->IsDead() == true)SetState(PSATE_DEAD);
+        if (hg != nullptr)if (hg->IsDead() == true)SetState(PLAYER_STATE_DEAD);
     }
 
     // ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
@@ -112,11 +113,11 @@ void Component_PlayerBehavior::Update()
     // ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
     switch (nowState_)
     {
-    case PSTATE_IDLE:           Idle();         break;  // 現在の状態がIDLEの場合
-    case PSTATE_WALK:           Walk();         break;  // 現在の状態がWALKの場合
-    case PSTATE_SHOOT:          Shoot();        break;  // 現在の状態がSHOOTの場合
-    case PSTATE_DODGE:          Dodge();         break;  // 現在の状態がDASHの場合
-    case PSATE_DEAD:            Dead();         break;  // 現在の状態がDEADの場合
+    case PLAYER_STATE_IDLE:           Idle();         break;  // 現在の状態がIDLEの場合
+    case PLAYER_STATE_WALK:           Walk();         break;  // 現在の状態がWALKの場合
+    case PLAYER_STATE_SHOOT:          Shoot();        break;  // 現在の状態がSHOOTの場合
+    case PLAYER_STATE_DODGE:          Dodge();         break;  // 現在の状態がDASHの場合
+    case PLAYER_STATE_DEAD:            Dead();         break;  // 現在の状態がDEADの場合
     }
 }
 
@@ -148,13 +149,13 @@ void Component_PlayerBehavior::Idle()
 
     // 状態優先度：歩行 > 射撃
     // `InputMove`コンポーネントの移動フラグが立っていたら...歩行状態に遷移
-    if (move->IsMove()) SetState(PSTATE_WALK);
+    if (move->IsMove()) SetState(PLAYER_STATE_WALK);
 
     // マウスの左ボタンが押されていたかつ、マウスの右ボタンが押されてたら、射撃状態に遷移
-    else if (Input::IsMouseButtonDown(0)) SetState(PSTATE_SHOOT);
+    else if (Input::IsMouseButtonDown(0)) SetState(PLAYER_STATE_SHOOT);
 
     // スペースキーが押されていたら...ダッシュ状態に遷移
-    else if (Input::IsKeyDown(DIK_SPACE)) SetState(PSTATE_DODGE);
+    else if (Input::IsKeyDown(DIK_SPACE)) SetState(PLAYER_STATE_DODGE);
 }
 
 void Component_PlayerBehavior::Walk()
@@ -165,16 +166,16 @@ void Component_PlayerBehavior::Walk()
 
     // 移動コンポーネントが移動していなかったら...IDLE状態に遷移
     if (move->IsMove() == false) {
-        SetState(PSTATE_IDLE);
+        SetState(PLAYER_STATE_IDLE);
         return; // ここで処理を終了
     }
 
     // 状態優先度：ダッシュ > 射撃
     // スペースキーが押されていたら...ダッシュ状態に遷移
-    if (Input::IsKeyDown(DIK_SPACE)) SetState(PSTATE_DODGE);
+    if (Input::IsKeyDown(DIK_SPACE)) SetState(PLAYER_STATE_DODGE);
 
     // マウスの左ボタンが押されていたかつ、マウスの右ボタンが押されてたら、射撃状態に遷移
-    else if(Input::IsMouseButtonDown(0)) SetState(PSTATE_SHOOT);
+    else if(Input::IsMouseButtonDown(0)) SetState(PLAYER_STATE_SHOOT);
 }
 
 void Component_PlayerBehavior::Shoot()
@@ -227,10 +228,10 @@ void Component_PlayerBehavior::Shoot()
     bool isEnd = false;
 
     // スペースキーが押されていたら...ダッシュ状態に遷移
-    if (Input::IsKeyDown(DIK_SPACE)) { isEnd = true; SetState(PSTATE_DODGE); }
+    if (Input::IsKeyDown(DIK_SPACE)) { isEnd = true; SetState(PLAYER_STATE_DODGE); }
 
     // アニメーションが終わったら...
-    if (motion->IsEnd()) { isEnd = true; SetState(PSTATE_IDLE); }
+    if (motion->IsEnd()) { isEnd = true; SetState(PLAYER_STATE_IDLE); }
 
     if(isEnd == true){
         // 射撃フラグをリセット
@@ -284,7 +285,7 @@ void Component_PlayerBehavior::Dodge()
         move->Execute();
 
         // 状態を遷移
-        IsWASDKey() ? SetState(PSTATE_WALK) : SetState(PSTATE_IDLE);
+        IsWASDKey() ? SetState(PLAYER_STATE_WALK) : SetState(PLAYER_STATE_IDLE);
     }
 }
 
@@ -293,6 +294,14 @@ void Component_PlayerBehavior::Dead()
 	// 移動コンポーネントの取得 & 有無の確認後、移動を不可能にする
 	Component_WASDInputMove* move = (Component_WASDInputMove*)(GetChildComponent("InputMove"));
     if (move != nullptr)move->Stop();
+}
+
+bool Component_PlayerBehavior::IsDead()
+{
+    Component_PlayerMotion* motion = (Component_PlayerMotion*)(GetChildComponent("PlayerMotion"));
+
+    if(motion!= nullptr) return motion->IsEnd() && nowState_ == PLAYER_STATE_DEAD;
+    return false;
 }
 
 XMVECTOR Component_PlayerBehavior::CalcShootDirection()

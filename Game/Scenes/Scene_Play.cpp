@@ -13,6 +13,7 @@
 #include "../../Engine/ResourceManager/Image.h"
 #include "../Objects/UI/CountDown.h"
 #include "../../Engine/DirectX/Input.h"
+#include "../Objects/Stage/Components/BehaviorComponents/Component_BossBehavior.h"
 
 
 Scene_Play::Scene_Play(GameObject* parent)
@@ -77,77 +78,36 @@ void Scene_Play::Update()
 		// カメラのアクティブ化
 		tpsCamera_->SetActive(true);
 
+		// ゲーム開始フラグを立てる
 		isGameStart_ = true;
 	}
 
+
 	// シーン切替処理
-	//{
-	//	bool isSceneChange = false;
-	//	StageObject* player = nullptr;
-	//	static Component* playerHealthGauge = nullptr;
-	//	static Component* bossHealthGauge = nullptr;
-	//	// プレイヤーが死んだらシーンを切り替える
-	//	{
-	//		// ステージ内にプレイヤーコンポーネントを持っているキャラクターが存在するかどうかを判定し取得
-	//		vector<Component*> comp_playerBehaviors = pStage_->FindComponents(ComponentType::PlayerBehavior);
+	{
+		// シーン切替フラグを用意
+		bool isSceneChange = false;
+		
+		// プレイヤーが死んだ場合、切替フラグを立てる
+		for (auto playerBehavior : pStage_->FindComponents(ComponentType::PlayerBehavior))isSceneChange = ((Component_PlayerBehavior*)playerBehavior)->IsDead();
+		
+		// ボスが死んだ場合、切替フラグを立てる
+		 for (auto bossBehavior : pStage_->FindComponents(ComponentType::BossBehavior))isSceneChange = ((Component_BossBehavior*)bossBehavior)->IsDead();
 
-	//		// ステージ内にボスコンポーネントを持っているキャラクターが存在するかどうかを判定し取得
-	//		vector<Component*> comp_bossBehaviors = pStage_->FindComponents(ComponentType::BossBehavior);
+		// シーン切替フラグが立っている場合
+		if (isSceneChange == true) {
 
-	//		// 範囲for文でボスコンポーネントの生存フラグを確認
-	//		for (auto comp : comp_bossBehaviors) {
+			// シーンを切り替える
+			SceneManager* sceneManager = (SceneManager*)FindObject("SceneManager");
+			sceneManager->ChangeScene(SCENE_ID_END, TID_BLACKOUT);
+		}
+	}
 
-	//			vector<Component*> bHealthGaugeList = comp->GetChildComponent(ComponentType::HealthGauge);
-
-	//			for (auto bhg : bHealthGaugeList) {
-	//				bossHealthGauge = bhg;
-	//			}
-	//		}
-
-
-	//		// 範囲for文でプレイヤーコンポーネントの生存フラグを確認
-	//		for (auto comp : comp_playerBehaviors) {
-
-	//			vector<Component*> pHealthGaugeList = comp->GetChildComponent(ComponentType::HealthGauge);
-
-	//			if (comp != nullptr && player == nullptr) {
-	//				player = comp->GetHolder();
-	//			}
-
-	//			for (auto hg : pHealthGaugeList) {
-	//				playerHealthGauge = hg;
-	//			}
-	//		}
-
-	//		if (((Component_HealthGauge*)playerHealthGauge)->IsDead() || ((Component_HealthGauge*)bossHealthGauge)->IsDead()) {
-	//			SceneManager* sceneManager = (SceneManager*)FindObject("SceneManager");
-	//			// シーンを切り替える
-	//			sceneManager->ChangeScene(SCENE_ID_END, TID_BLACKOUT);
-	//			player = nullptr;
-	//			isGameStart_ = false;
-	//		}
-
-
-	//		if (player != nullptr) {
-	//			tpsCamera_->SetTarget(player);
-	//		}
-	//	}
-	//	//// debug
-	//	//{
-	//	//	if (ImGui::Button("end")) {
-	//	//		g_score = 100;
-	//	//		isSceneChange = true;
-	//	//	}
-	//	//}
-
-	//	//// シーン切替処理
-	//	//if (isSceneChange) {
-	//	//	// シーンを切り替える
-	//	//	SceneManager* sceneManager = (SceneManager*)FindObject("SceneManager");
-	//	//	sceneManager->ChangeScene(SCENE_ID_END, TID_BLACKOUT);
-	//	//}
-	//}
-
+	// カメラの更新
+	{
+		// プレイヤーをカメラのターゲットに設定
+		for (auto playerBehavior : pStage_->FindComponents(ComponentType::PlayerBehavior))tpsCamera_->SetTarget(playerBehavior->GetHolder());
+	}
 }
 
 void Scene_Play::Draw()

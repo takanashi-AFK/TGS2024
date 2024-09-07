@@ -4,7 +4,7 @@
 #include "../../../../../Engine/ImGui/imgui.h"
 
 Component_PlayerMotion::Component_PlayerMotion(string _name, StageObject* _holder, Component* _parent)
-	:Component_Motion(_name, _holder, PlayerMotion, _parent), currentFrame_(0), animationEndFrame_(0), isAnimationEnd_(false)
+	:Component_Motion(_name, _holder, PlayerMotion, _parent)
 {
 }
 

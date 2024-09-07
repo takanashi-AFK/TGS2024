@@ -89,10 +89,10 @@ void Scene_Play::Update()
 		bool isSceneChange = false;
 		
 		// プレイヤーが死んだ場合、切替フラグを立てる
-		for (auto playerBehavior : pStage_->FindComponents(ComponentType::PlayerBehavior))isSceneChange = ((Component_PlayerBehavior*)playerBehavior)->IsDead();
+		for (auto playerBehavior : pStage_->FindComponents(ComponentType::PlayerBehavior))if (((Component_PlayerBehavior*)playerBehavior)->IsDead()) isSceneChange = true;
 		
 		// ボスが死んだ場合、切替フラグを立てる
-		 for (auto bossBehavior : pStage_->FindComponents(ComponentType::BossBehavior))isSceneChange = ((Component_BossBehavior*)bossBehavior)->IsDead();
+		 for (auto bossBehavior : pStage_->FindComponents(ComponentType::BossBehavior)) if(((Component_BossBehavior*)bossBehavior)->IsDead()) isSceneChange = true;
 
 		// シーン切替フラグが立っている場合
 		if (isSceneChange == true) {

@@ -32,22 +32,6 @@ getter :*/
 /*
 predicate :*/
 	/// <summary> アニメーションが終了したか </summary>
-	bool IsEnd() const { return isAnimationEnd_; }
-
-private:
-	/// <summary> 待機モーション </summary>
-	void IdleMotion();
-
-	/// <summary> 歩行モーション </summary>
-	void WalkMotion();
-	
-	/// <summary> 射撃モーション </summary>
-	void ShootMotion();
-	
-	/// <summary> 回避モーション </summary>
-	void DodgeMotion();
-	
-	/// <summary> 死亡モーション </summary>
-	void DeadMotion();
+	bool IsEnd();
 };
 

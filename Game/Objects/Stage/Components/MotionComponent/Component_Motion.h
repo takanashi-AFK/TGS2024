@@ -6,15 +6,16 @@
 struct MotionData {
     string filePath;    // ファイルパス
     int modelHandle;    // モデルハンドル
-    int startFrame;        // 開始フレーム
-    int endFrame;        // 終了フレーム
-    int speed;            // アニメーションスピード
+    int startFrame;     // 開始フレーム
+    int endFrame;       // 終了フレーム
+    int speed;          // アニメーションスピード
+    bool isLoop;        // ループするか
 
     /// <summary> コンストラクタ </summary>
-    MotionData(string _filePath, int startFrame, int endFrame, int speed);
+    MotionData(string _filePath, int _startFrame, int _endFrame, int _speed,bool _isLoop);
 
     /// <summary> デフォルトコンストラクタ </summary>
-    MotionData() :filePath(""), modelHandle(-1), startFrame(0), endFrame(0), speed(0) {}
+    MotionData() :filePath(""), modelHandle(-1), startFrame(0), endFrame(0), speed(0),isLoop(false) {}
 };
 
 class Component_Motion : public Component

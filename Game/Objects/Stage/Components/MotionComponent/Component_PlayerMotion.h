@@ -5,11 +5,6 @@
 
 class Component_PlayerMotion : public Component_Motion
 {
-private:
-	int animationEndFrame_ = 0;
-	int currentFrame_ = 0;
-	bool isAnimationEnd_ = false;
-	int previousFrame_ = 0;
 public:
 	/// <summary> コンストラクタ </summary>
 	Component_PlayerMotion(string _name, StageObject* _holder, Component* _parent);

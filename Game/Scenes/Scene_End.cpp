@@ -69,24 +69,33 @@ void Scene_End::Update()
 {
 	UIButton* button = (UIButton*)panel->GetUIObject("NextSceneButton");
 
+	// ボタンが押されたら
 	if (button->OnClick()) {
 		SceneManager* sceneManager = (SceneManager*)FindObject("SceneManager");
 		sceneManager->ChangeScene(SCENE_ID_TITLE, TID_BLACKOUT);
 	}
 
+	
+	// カメラの位置と注視点を取得
 	XMFLOAT3 camPos = Camera::GetPosition();
-	camPos.y = CAMERA_HEIGHT;
 	XMFLOAT3 camTarget = Camera::GetTarget();
+	// カメラの高さを固定
+	camPos.y = CAMERA_HEIGHT;
 
+	// 1fにつき回転する角度
 	static float angle = 0.01f;
+
 	// 回転行列を作成 (Y軸周りに回転)
 	XMMATRIX rotationMatrix = XMMatrixRotationY(angle);
 
+	// カメラの位置をベクトル化
 	XMVECTOR vCamPosition = XMLoadFloat3(&camPos);
 
+	// カメラの位置を座標回転
 	vCamPosition = XMVector3Transform(vCamPosition, rotationMatrix);
 	XMStoreFloat3(&camPos, vCamPosition);
 
+	// カメラの位置と注視点を設定
 	Camera::SetPosition(camPos.x ,camPos.y,camPos.z);
 	Camera::SetTarget(0,0,0);
 }

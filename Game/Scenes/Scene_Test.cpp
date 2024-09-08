@@ -8,6 +8,8 @@
 #include "../../Engine/GameObject/Camera.h"
 #include "../../Engine/Global.h"
 #include "../Objects/Camera/TPSCamera.h"
+#include "../../Engine/ImGui/imgui.h"
+#include "../../Engine/SceneManager.h"
 
 
 Scene_Test::Scene_Test(GameObject * parent)
@@ -59,6 +61,12 @@ if (JsonReader::Load("Datas/CameraLayouts/camera.json", camData)) {
 
 void Scene_Test::Update()
 {
+
+	if (ImGui::Button("to End")) {
+		SceneManager* sceneManager = (SceneManager*)FindObject("SceneManager");
+		sceneManager->ChangeScene(SCENE_ID_END, TID_BLACKOUT);
+	}
+
 }
 
 void Scene_Test::Draw()

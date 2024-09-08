@@ -1,1 +1,20 @@
-{"End-ScoreImage":{"imageFilePath_":"Images/EndScene/End-ScoreScene.png","layerNumber_":1,"objectName_":"End-ScoreImage","position_":[0.0,0.0,0.0],"rotate_":[0.0,0.0,0.0],"scale_":[0.5,0.5,1.0],"type_":2},"SceneChangeButton":{"imageFilePath_":"Images/PressToTitle.png","layerNumber_":2,"objectName_":"SceneChangeButton","position_":[0.0,-0.699999988079071,0.0],"rotate_":[0.0,0.0,0.0],"scale_":[1.0,1.0,1.0],"type_":1}}
+{
+  "End-ScoreImage": {
+    "imageFilePath_": "Images/EndScene/End-ScoreScene.png",
+    "layerNumber_": 1,
+    "objectName_": "End-ScoreImage",
+    "position_": [ 0.0, 0.0, 0.0 ],
+    "rotate_": [ 0.0, 0.0, 0.0 ],
+    "scale_": [ 0.5, 0.5, 1.0 ],
+    "type_": 2
+  },
+  "SceneChangeButton": {
+    "imageFilePath_": "Images/PressToTitle.png",
+    "layerNumber_": 2,
+    "objectName_": "SceneChangeButton",
+    "position_": [ 0.0, -0.699999988079071, 0.0 ],
+    "rotate_": [ 0.0, 0.0, 0.0 ],
+    "scale_": [ 1.0, 1.0, 1.0 ],
+    "type_": 1
+  }
+}

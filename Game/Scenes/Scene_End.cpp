@@ -20,6 +20,7 @@ Scene_End::Scene_End(GameObject* parent_)
 namespace {
 	const int CAMERA_HEIGHT = 25;
 }
+
 void Scene_End::Initialize()
 {
 	json loadData;
@@ -28,56 +29,45 @@ void Scene_End::Initialize()
 	// スカイスフィアの生成
 	SkySphere* skySphere = Instantiate<SkySphere>(this);
 
+		if (JsonReader::Load("Datas/UILayouts/ResultScene_layout.json", loadData)) {
 
-	if (JsonReader::Load("Datas/UILayouts/ResultScene_layout.json", loadData)) {
+			// UIパネルを取得
+			panel = UIPanel::GetInstance();
+			panel->Load(loadData);
+			UIText* text = (UIText*)panel->GetUIObject("ScoreNum");
 
+			text->SetText(&ScoreManager::g_Score);
 
-	// ステージを作成
-	Stage* pStage = Instantiate<Stage>(this); {
-		/*json stageData;
-		JsonReader::Load("Datas/StageLayouts/stage_beta_00.json", stageData);
-		pStage->Load(stageData);*/
-	}
+			// スプラッシュシーンのパネルlayoutを設定
+		}
 
-
-	if (JsonReader::Load("Datas/UILayouts/EndScene_layout.json", loadData)) {
-
-		// UIパネルを取得
-		panel = UIPanel::GetInstance();
-		panel->Load(loadData);
-		UIText* text = (UIText*)panel->GetUIObject("ScoreNum");
-		
-		text->SetText(&ScoreManager::g_Score);
-
-		// スプラッシュシーンのパネルlayoutを設定
-	}
-
-	// ステージを作成
-	Stage* pStage = Instantiate<Stage>(this); {
-		json stageData;
-		JsonReader::Load("Datas/StageLayouts/EndSceneStage.json", stageData);
-		pStage->Load(stageData);
-	}
+		// ステージを作成
+		Stage* pStage = Instantiate<Stage>(this); {
+			json stageData;
+			JsonReader::Load("Datas/StageLayouts/EndSceneStage.json", stageData);
+			pStage->Load(stageData);
+		}
 
 #ifdef _DEBUG
-	// ゲームエディターの生成
-	GameEditor* gameEditor = Instantiate<GameEditor>(this);
+		// ゲームエディターの生成
+		GameEditor* gameEditor = Instantiate<GameEditor>(this);
 
 
 
-	gameEditor->SetEditStage(pStage);
+		gameEditor->SetEditStage(pStage);
 
 
-	// UIパネルの生成
-	UIPanel* pUIPanel_ = UIPanel::GetInstance();
-	gameEditor->SetEditUIPanel(pUIPanel_);
+		// UIパネルの生成
+		UIPanel* pUIPanel_ = UIPanel::GetInstance();
+		gameEditor->SetEditUIPanel(pUIPanel_);
 
 #endif // _DEBUG
+	
 }
 
 void Scene_End::Update()
 {
-	UIButton* button = (UIButton*)panel->GetUIObject("SceneChangeButton");
+	UIButton* button = (UIButton*)panel->GetUIObject("NextSceneButton");
 
 	if (button->OnClick()) {
 		SceneManager* sceneManager = (SceneManager*)FindObject("SceneManager");

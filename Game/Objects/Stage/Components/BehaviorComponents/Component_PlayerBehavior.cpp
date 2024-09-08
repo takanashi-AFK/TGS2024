@@ -128,17 +128,24 @@ void Component_PlayerBehavior::Release()
 void Component_PlayerBehavior::Save(json& _saveObj)
 {
 	_saveObj["shootHeight"] = shootHeight_;
+
+    _saveObj["InvincibilityFrame"] = InvincibilityFrame_;
 }
 
 void Component_PlayerBehavior::Load(json& _loadObj)
 {
     if (_loadObj.contains("shootHeight"))shootHeight_ = _loadObj["shootHeight"];
+
+    if (_loadObj.contains("InvincibilityFrame"))InvincibilityFrame_ = _loadObj["InvincibilityFrame"];
 }
 
 void Component_PlayerBehavior::DrawData()
 {
     // 高さの設定
     ImGui::DragFloat("ShootHeight", &shootHeight_, 0.1f);
+
+    // 無敵フレームの設定
+    ImGui::DragInt("InvincibilityFrame", &InvincibilityFrame_, 1);
 }
 
 void Component_PlayerBehavior::Idle()
@@ -246,7 +253,12 @@ void Component_PlayerBehavior::Dodge()
 {
     // NOTE: 一度だけダッシュ処理を実行するためのフラグ
     static bool isDash = false;
+    static float frameCount = 0;
     
+    // プレイヤーのHPゲージコンポーネントを取得
+    Component_HealthGauge* hg = (Component_HealthGauge*)(GetChildComponent("PlayerHealthGauge"));
+    if(hg == nullptr)return;
+
     // 移動コンポーネントの取得 & 有無の確認
     Component_WASDInputMove * move = (Component_WASDInputMove*)(GetChildComponent("InputMove"));
     if (move == nullptr)return;
@@ -271,8 +283,18 @@ void Component_PlayerBehavior::Dodge()
 		// 突進処理を実行
 		tackle->Execute();
 
+        // 無敵へ変更
+        frameCount = 0;
+        hg->Lock();
+
         // ダッシュフラグを立てる
         isDash = true;
+    }
+
+    // nフレーム経過語に、無敵状態を解除
+    {
+        frameCount++;
+        if (frameCount >= InvincibilityFrame_) hg->Unlock();
     }
 
     // 突進処理が終了していたら...

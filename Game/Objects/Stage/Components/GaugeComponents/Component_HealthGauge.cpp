@@ -6,7 +6,7 @@
 
 
 Component_HealthGauge::Component_HealthGauge(string _name, StageObject* _holder, Component* _parent)
-	:Component_Gauge(_holder, _name, HealthGauge,_parent), prev_(now_), shaderChangeTime_(60)
+	:Component_Gauge(_holder, _name, HealthGauge,_parent), prev_(now_), shaderChangeTime_(60),isLock_(false)
 {
 
 }
@@ -40,6 +40,8 @@ void Component_HealthGauge::Release()
 
 void Component_HealthGauge::TakeDamage(float _damageValue)
 {
+	if(isLock_)return;
+
 	// ‘O‰ñ‚Ì‘Ì—Í‚ğ•Û‘¶
 	prev_ = now_;
 
@@ -51,6 +53,8 @@ void Component_HealthGauge::TakeDamage(float _damageValue)
 
 void Component_HealthGauge::Heal(float _healValue)
 {
+	if (isLock_)return;
+
 	//HP‚ªÅ‘å’l‚ğ’´‚¦‚È‚¢‚æ‚¤‚É‚·‚é
 	if (now_ + _healValue <= max_)now_ += _healValue;
 }

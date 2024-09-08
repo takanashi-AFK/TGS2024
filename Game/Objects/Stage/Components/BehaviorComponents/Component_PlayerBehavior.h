@@ -24,6 +24,7 @@ private:
 	PlayerState nowState_, prevState_;	// 現在の状態、前の状態
 	float shootHeight_;					// 射撃の高さ
 	bool isGameStart_;					// ゲーム開始フラグ
+	int InvincibilityFrame_;			// 無敵フレーム
 
 public:
 	/// <summary> コンストラクタ </summary>

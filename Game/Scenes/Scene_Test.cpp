@@ -61,12 +61,14 @@ if (JsonReader::Load("Datas/CameraLayouts/camera.json", camData)) {
 
 void Scene_Test::Update()
 {
-
-	if (ImGui::Button("to End")) {
+	if (ImGui::Button("SceneChange")) {
 		SceneManager* sceneManager = (SceneManager*)FindObject("SceneManager");
 		sceneManager->ChangeScene(SCENE_ID_END, TID_BLACKOUT);
 	}
 
+	// debug
+	ScoreManager::AddScore(1);
+	ImGui::Text("%d", ScoreManager::g_Score);
 }
 
 void Scene_Test::Draw()

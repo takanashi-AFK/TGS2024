@@ -5,7 +5,7 @@
 #include "../../../Engine/Global.h"
 
 UIText::UIText(string _name, UIObject* parent,int _layerNum)
-	: UIObject(_name, UI_TEXT, parent, _layerNum), pText_(nullptr), drawText_(""), size_(1.f), floatNum_(nullptr)
+	: UIObject(_name, UI_TEXT, parent, _layerNum), pText_(nullptr), drawText_(""), size_(1.f), intNum_(nullptr)
 {
 }
 
@@ -35,8 +35,8 @@ void UIText::Draw()
 	float drawY = (transform_.position_.y * (Direct3D::screenHeight_ / 2)) + (Direct3D::screenHeight_ / 2);
 	
 	// テキストを描画
-	if (floatNum_ == nullptr)pText_->Draw(drawX, drawY, drawText_.c_str());
-	else pText_->Draw(drawX, drawY,*floatNum_);
+	if (intNum_ == nullptr)pText_->Draw(drawX, drawY, drawText_.c_str());
+	else pText_->Draw(drawX, drawY,*intNum_);
 }
 
 void UIText::Release()
@@ -62,7 +62,7 @@ void UIText::DrawData()
 	// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
 	// 表示するテキストを変更
 	// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
-	if(floatNum_ == nullptr)
+	if(intNum_ == nullptr)
 	if (ImGui::TreeNode("TextString")) {
 		ImGui::Text("Current Text : %s", drawText_.c_str());
 		char buffer[256] = "";

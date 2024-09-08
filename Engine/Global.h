@@ -26,7 +26,7 @@ const float FPS = 60.0f;	// フレームレート
 // ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝ //
 
 namespace ScoreManager {
-	extern float g_Score;
+	extern int g_Score;
 
 	void AddScore(int score);
 	int GetScore();
@@ -52,8 +52,7 @@ namespace FileManager {
 /// 臨時のグローバル変数 fix: 本来はここに置くべきではない 
 /// スコアマネージャーを作成することで解決する
 
-// ゲームのスコア
-extern int g_score;
+
 
 // エフェクトデータ
 // fix: 本来はここに置くべきではない

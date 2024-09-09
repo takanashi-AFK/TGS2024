@@ -25,7 +25,6 @@ void Scene_End::Initialize()
 {
 	json loadData;
 
-
 	// スカイスフィアの生成
 	SkySphere* skySphere = Instantiate<SkySphere>(this);
 
@@ -34,11 +33,18 @@ void Scene_End::Initialize()
 			// UIパネルを取得
 			panel = UIPanel::GetInstance();
 			panel->Load(loadData);
-			UIText* text = (UIText*)panel->GetUIObject("ScoreNum");
+			UIText* scoreNum = (UIText*)panel->GetUIObject("ScoreNum");
 
-			text->SetText(&ScoreManager::g_Score);
+			scoreNum->SetText(&ScoreManager::g_Score);
 
-			// スプラッシュシーンのパネルlayoutを設定
+			UIText* timeNum = (UIText*)panel->GetUIObject("TimeNum");
+
+			// timeNum->SetText(&ScoreManager::g_Time);
+
+			UIText* hpNum = (UIText*)panel->GetUIObject("HPNum");
+
+			// hpNum->SetText(&ScoreManager::g_HP);
+
 		}
 
 		// ステージを作成
@@ -47,22 +53,6 @@ void Scene_End::Initialize()
 			JsonReader::Load("Datas/StageLayouts/EndSceneStage.json", stageData);
 			pStage->Load(stageData);
 		}
-
-#ifdef _DEBUG
-		// ゲームエディターの生成
-		GameEditor* gameEditor = Instantiate<GameEditor>(this);
-
-
-
-		gameEditor->SetEditStage(pStage);
-
-
-		// UIパネルの生成
-		UIPanel* pUIPanel_ = UIPanel::GetInstance();
-		gameEditor->SetEditUIPanel(pUIPanel_);
-
-#endif // _DEBUG
-	
 }
 
 void Scene_End::Update()

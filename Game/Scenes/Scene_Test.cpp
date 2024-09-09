@@ -63,7 +63,7 @@ void Scene_Test::Update()
 {
 	if (ImGui::Button("SceneChange")) {
 		SceneManager* sceneManager = (SceneManager*)FindObject("SceneManager");
-		sceneManager->ChangeScene(SCENE_ID_END, TID_BLACKOUT);
+		sceneManager->ChangeScene(SCENE_ID_RESULT, TID_BLACKOUT);
 	}
 
 	// debug

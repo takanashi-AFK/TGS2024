@@ -28,31 +28,31 @@ void Scene_End::Initialize()
 	// スカイスフィアの生成
 	SkySphere* skySphere = Instantiate<SkySphere>(this);
 
-		if (JsonReader::Load("Datas/UILayouts/ResultScene_layout.json", loadData)) {
+	if (JsonReader::Load("Datas/UILayouts/EndScene_layout.json", loadData)) {
 
-			// UIパネルを取得
-			panel = UIPanel::GetInstance();
-			panel->Load(loadData);
-			UIText* scoreNum = (UIText*)panel->GetUIObject("ScoreNum");
+		// UIパネルを取得
+		panel = UIPanel::GetInstance();
+		panel->Load(loadData);
+		UIText* scoreNum = (UIText*)panel->GetUIObject("ScoreNum");
 
-			scoreNum->SetText(&ScoreManager::g_Score);
+		scoreNum->SetText(&ScoreManager::g_Score);
 
-			UIText* timeNum = (UIText*)panel->GetUIObject("TimeNum");
+		UIText* timeNum = (UIText*)panel->GetUIObject("TimeNum");
 
-			// timeNum->SetText(&ScoreManager::g_Time);
+		// timeNum->SetText(&ScoreManager::g_Time);
 
-			UIText* hpNum = (UIText*)panel->GetUIObject("HPNum");
+		UIText* hpNum = (UIText*)panel->GetUIObject("HPNum");
 
-			// hpNum->SetText(&ScoreManager::g_HP);
+		// hpNum->SetText(&ScoreManager::g_HP);
 
-		}
+	}
 
-		// ステージを作成
-		Stage* pStage = Instantiate<Stage>(this); {
-			json stageData;
-			JsonReader::Load("Datas/StageLayouts/EndSceneStage.json", stageData);
-			pStage->Load(stageData);
-		}
+	// ステージを作成
+	Stage* pStage = Instantiate<Stage>(this); {
+		json stageData;
+		JsonReader::Load("Datas/StageLayouts/EndSceneStage.json", stageData);
+		pStage->Load(stageData);
+	}
 }
 
 void Scene_End::Update()

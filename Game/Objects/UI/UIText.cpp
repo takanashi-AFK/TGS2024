@@ -49,12 +49,25 @@ void UIText::Save(json& saveObj)
 {
 	saveObj["text"] = drawText_;
 	saveObj["size"] = size_;
+	saveObj["fontFilePath"] = fontFilePath_;
+	saveObj["charWidth"] = charWidth;
+	saveObj["charHeight"] = charHeight;
+	saveObj["rowLength"] = rowLength;
 }
 
 void UIText::Load(json& loadObj)
 {
 	if (loadObj.contains("text"))drawText_ = loadObj["text"].get<string>();
 	if (loadObj.contains("size"))size_ = loadObj["size"].get<float>();
+	if (loadObj.contains("fontFilePath"))fontFilePath_ = loadObj["fontFilePath"].get<string>();
+	if (loadObj.contains("charWidth"))charWidth = loadObj["charWidth"].get<int>();
+	if (loadObj.contains("charHeight"))charHeight = loadObj["charHeight"].get<int>();
+	if (loadObj.contains("rowLength"))rowLength = loadObj["rowLength"].get<int>();
+
+	if (fontFilePath_ != "") {
+		pText_ = new Text;
+		pText_->Initialize(fontFilePath_.c_str(), charWidth, charHeight, rowLength);
+	}
 }
 
 void UIText::DrawData()

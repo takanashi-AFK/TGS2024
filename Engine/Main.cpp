@@ -17,6 +17,7 @@
 #include "GameObject/Camera.h"
 #include "DirectX/Input.h"
 #include "ResourceManager/Audio.h"
+#include "../Game/Otheres/AudioController.h"
 #include "ResourceManager/VFX.h"
 #include "ResourceManager/Transition.h"
 
@@ -178,6 +179,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 				pUIPanel_->UpdateSub();
 
+				// オーディオの更新
+				AudioController::Update(pRootObject);
 
 				//カメラを更新
 				Camera::Update();

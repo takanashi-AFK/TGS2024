@@ -38,6 +38,25 @@ public:
 	void ChangeScene(SCENE_ID next, TRANSITION_ID _type);
 	void ChangeScene(SCENE_ID next);
 
+/*
+getter :*/
+	/// <summary> 現在のシーンIDを取得 </summary>
+	SCENE_ID GetCurrentSceneID() const { return currentSceneID_; }
+
+	/// <summary> 次のシーンIDを取得 </summary>
+	SCENE_ID GetNextSceneID() const { return nextSceneID_; }
+
+	/// <summary> 一時的なシーンIDを取得 </summary>
+	SCENE_ID GetTmpSceneID() const { return tmpID_; }
+
+/*
+predicate :*/
+	/// <summary> シーンが切り替わっているか </summary>
+	bool IsChanging() const { return currentSceneID_ != nextSceneID_; }
+
+	/// <summary> 現在のシーンが該当シーンか </summary>
+	bool IsCurrentScene(SCENE_ID _id) const { return currentSceneID_ == _id; }
+
 private:
 
 	SCENE_ID currentSceneID_;	//現在のシーン

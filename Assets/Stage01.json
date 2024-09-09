@@ -114,7 +114,7 @@
         },
         "name_": "PlayerBehavior",
         "shootHeight": 0.6000000238418579,
-        "InvincibilityFrame": 100,
+        "InvincibilityFrame": 20,
         "type_": 11
       }
     },

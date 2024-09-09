@@ -31,7 +31,19 @@ void Component_HealthGauge::Update()
 		}
 	}
 
+	// 各値のリセット
 	prev_ = now_;
+	isTakeDamage_ = false;
+
+	/* DEBUG:*/{
+		/*ImGui::Text("%s -> healthData", holder_->GetObjectName().c_str());
+		ImGui::Text("now : %f", now_);
+		ImGui::Text("prev : %f", prev_);
+		ImGui::Text("max : %f", max_);
+		ImGui::Text("shaderChangeTime : %d", shaderChangeTime_);
+		ImGui::Text("isLock : %d", isLock_);
+		ImGui::Separator();*/
+	}
 }
 
 void Component_HealthGauge::Release()
@@ -40,6 +52,9 @@ void Component_HealthGauge::Release()
 
 void Component_HealthGauge::TakeDamage(float _damageValue)
 {
+	// ダメージを受けたフラグを立てる
+	isTakeDamage_ = true;
+
 	if(isLock_)return;
 
 	// 前回の体力を保存

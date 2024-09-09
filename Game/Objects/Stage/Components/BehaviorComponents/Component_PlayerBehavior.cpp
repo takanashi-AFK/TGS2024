@@ -59,7 +59,7 @@ void Component_PlayerBehavior::Initialize()
     // 子コンポーネントの追加
     if (FindChildComponent("InputMove") == false)AddChildComponent(CreateComponent("InputMove", WASDInputMove, holder_, this));
     if (FindChildComponent("ShootAttack") == false)AddChildComponent(CreateComponent("ShootAttack", ShootAttack, holder_, this));
-    if (FindChildComponent("HealthGauge") == false)AddChildComponent(CreateComponent("PlayerHealthGauge", HealthGauge, holder_, this));
+    if (FindChildComponent("PlayerHealthGauge") == false)AddChildComponent(CreateComponent("PlayerHealthGauge", HealthGauge, holder_, this));
     if (FindChildComponent("PlayerMotion") == false)AddChildComponent(CreateComponent("PlayerMotion", PlayerMotion, holder_, this));
     if (FindChildComponent("TackleMove") == false)AddChildComponent(CreateComponent("TackleMove", TackleMove, holder_, this));
 }
@@ -294,7 +294,9 @@ void Component_PlayerBehavior::Dodge()
     // nフレーム経過語に、無敵状態を解除
     {
         frameCount++;
-        if (frameCount >= InvincibilityFrame_) hg->Unlock();
+        
+        if (frameCount >= InvincibilityFrame_) 
+            hg->Unlock();
     }
 
     // 突進処理が終了していたら...

@@ -11,6 +11,7 @@ private:
 	float prev_;	//前回の体力
 	float shaderChangeTime_;	//シェーダーを変更する時間
 	bool isLock_;	//ロックフラグ
+	bool isTakeDamage_;	//ダメージを受けたか
 public:
 	/// <summary> コンストラクタ </summary>
 	Component_HealthGauge(string _name, StageObject* _holder, Component* _parent);
@@ -43,4 +44,7 @@ predicate :*/
 
 	/// <summary> ロック中か </summary>
 	bool IsLock() const { return isLock_; }
+
+	/// <summary> ロック中かつ減少中か </summary>
+	bool IsLockAndReduce()const { return isLock_ && isTakeDamage_; }
 };

@@ -9,6 +9,7 @@
 namespace
 {
 	float speed = 0.1f;
+	const int EFFECT_RATE = 15;
 }
 
 Component_WASDInputMove::Component_WASDInputMove(string _name, StageObject* _holder, Component* _parent)
@@ -18,6 +19,8 @@ Component_WASDInputMove::Component_WASDInputMove(string _name, StageObject* _hol
 
 void Component_WASDInputMove::Initialize()
 {
+    // effekseer: :Effectの読み込み
+    EFFEKSEERLIB::gEfk->AddEffect("foot", "Effects/foot.efk");/*★★★*/
 }
 
 void Component_WASDInputMove::Update()
@@ -25,6 +28,7 @@ void Component_WASDInputMove::Update()
 
     // このコンポーネントがアクティブでない場合、処理を終了
     if (isActive_ == false) return;
+
     isMove_ = false;
     // 基本のベクトルを用意、初期化
     dir_ = XMVectorZero();
@@ -53,6 +57,22 @@ void Component_WASDInputMove::Update()
 
     // 新しい位置を設定
     holder_->SetPosition(pos);
+
+    static int count = 0;
+    count++;
+
+    if (isMove_ && count % EFFECT_RATE == 0) {
+        // effekseer: :Effectの再生情報の設定
+        EFFEKSEERLIB::EFKTransform t;/*★★★*/
+        DirectX::XMStoreFloat4x4(&(t.matrix), holder_->GetWorldMatrix());/*★★★*/
+        t.isLoop = false;/*★★★*/
+        t.maxFrame = 40;/*★★★*/
+        t.speed = 1.f;/*★★★*/
+        // effekseer: :Effectの再生
+        mt = EFFEKSEERLIB::gEfk->Play("foot", t);/*★★★*/
+        count = 0;
+
+    }
 }
 
 void Component_WASDInputMove::Release()

@@ -25,6 +25,7 @@
 #include "../../../../../Engine/SceneManager.h"
 #include "../../../Game/Objects/UI/UIProgressBar.h"
 #include "../../../Game/Objects/UI/UIPanel.h"
+#include "../../../UI/UIImage.h"
 
 namespace {
     const int SHOOT_FRAME = 115;
@@ -56,12 +57,17 @@ void Component_PlayerBehavior::Initialize()
     // コライダーの追加
     holder_->AddCollider(new BoxCollider(XMFLOAT3(0, 0, 0), XMFLOAT3(1, 1, 1)));
 
+    // effekseer: :Effectの読み込み
+    EFFEKSEERLIB::gEfk->AddEffect("shield", "Effects/Undine13.efk");/*★★★*/
+
     // 子コンポーネントの追加
     if (FindChildComponent("InputMove") == false)AddChildComponent(CreateComponent("InputMove", WASDInputMove, holder_, this));
     if (FindChildComponent("ShootAttack") == false)AddChildComponent(CreateComponent("ShootAttack", ShootAttack, holder_, this));
     if (FindChildComponent("PlayerHealthGauge") == false)AddChildComponent(CreateComponent("PlayerHealthGauge", HealthGauge, holder_, this));
     if (FindChildComponent("PlayerMotion") == false)AddChildComponent(CreateComponent("PlayerMotion", PlayerMotion, holder_, this));
     if (FindChildComponent("TackleMove") == false)AddChildComponent(CreateComponent("TackleMove", TackleMove, holder_, this));
+
+
 }
 
 void Component_PlayerBehavior::Update()
@@ -251,6 +257,10 @@ void Component_PlayerBehavior::Shoot()
 
 void Component_PlayerBehavior::Dodge()
 {
+    holder_->SetShader(Direct3D::SHADER_TYPE::SHADER_UNLIT);
+    UIPanel* panel_ = UIPanel::GetInstance();
+
+    UIImage* focus = (UIImage*)panel_->FindObject("focus");
     // NOTE: 一度だけダッシュ処理を実行するためのフラグ
     static bool isDash = false;
     static float frameCount = 0;
@@ -289,24 +299,33 @@ void Component_PlayerBehavior::Dodge()
 
         // ダッシュフラグを立てる
         isDash = true;
-    }
 
+
+        focus->SetEnable(true);
+    }
+ 
     // nフレーム経過語に、無敵状態を解除
     {
         frameCount++;
         
-        if (frameCount >= InvincibilityFrame_) 
+        if (frameCount >= InvincibilityFrame_) {
             hg->Unlock();
+        }
     }
 
     // 突進処理が終了していたら...
     if (tackle->IsActived() == false) {
+
+        holder_->SetShader(Direct3D::SHADER_TYPE::SHADER_3D);
+
+        focus->SetEnable(false);
 
         // ダッシュフラグをリセット
 		isDash = false;
 
         //移動を可能にする
         move->Execute();
+
 
         // 状態を遷移
         IsWASDKey() ? SetState(PLAYER_STATE_WALK) : SetState(PLAYER_STATE_IDLE);

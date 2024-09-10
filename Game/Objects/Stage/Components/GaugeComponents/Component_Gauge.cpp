@@ -4,7 +4,7 @@
 #include "../../../../../Engine/ImGui/imgui.h"
 
 Component_Gauge::Component_Gauge(StageObject* _holder, string _name, ComponentType _type, Component* _parent)
-	:Component(_holder, _name, _type, _parent), max_(0), now_(0)
+	:Component(_holder, _name, _type, _parent), max_(100), now_(100)
 {
 
 }

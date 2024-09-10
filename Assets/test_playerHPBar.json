@@ -1,1 +1,33 @@
-{"playerHPBar":{"frameImage_":{"filePath_":"Images/Bar_Frame.png"},"gaugeImage_":{"color_":[1.0,0.8823529481887817,0.0],"filePath_":"Images/Bar_Gauge.png"},"layerNumber_":2,"objectName_":"playerHPBar","position_":[-0.03999999910593033,-0.8299999833106995,0.0],"rotate_":[0.0,0.0,0.0],"scale_":[2.0,1.0,1.0],"type_":4},"playerHPBar_background":{"imageFilePath_":"Images/playerHPBarBackGrund.png","layerNumber_":1,"objectName_":"playerHPBar_background","position_":[0.44999998807907104,-0.75,0.0],"rotate_":[0.0,0.0,0.0],"scale_":[0.699999988079071,0.699999988079071,1.0],"type_":2}}
+{
+  "focus": {
+    "imageFilePath_": "Images/focus.png",
+    "layerNumber_": 3,
+    "objectName_": "focus",
+    "position_": [ 0.0, 0.0, 0.0 ],
+    "rotate_": [ 0.0, 0.0, 0.0 ],
+    "scale_": [ 1.0, 1.0, 1.0 ],
+    "type_": 2
+  },
+  "playerHPBar": {
+    "frameImage_": { "filePath_": "Images/Bar_Frame.png" },
+    "gaugeImage_": {
+      "color_": [ 1.0, 0.8823529481887817, 0.0 ],
+      "filePath_": "Images/Bar_Gauge.png"
+    },
+    "layerNumber_": 5,
+    "objectName_": "playerHPBar",
+    "position_": [ -0.03999999910593033, -0.8299999833106995, 0.0 ],
+    "rotate_": [ 0.0, 0.0, 0.0 ],
+    "scale_": [ 2.0, 1.0, 1.0 ],
+    "type_": 4
+  },
+  "playerHPBar_background": {
+    "imageFilePath_": "Images/playerHPBarBackGrund.png",
+    "layerNumber_": 4,
+    "objectName_": "playerHPBar_background",
+    "position_": [ 0.44999998807907104, -0.75, 0.0 ],
+    "rotate_": [ 0.0, 0.0, 0.0 ],
+    "scale_": [ 0.699999988079071, 0.699999988079071, 1.0 ],
+    "type_": 2
+  }
+}

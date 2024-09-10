@@ -71,6 +71,8 @@ void Bullet::OnCollision(GameObject* _target, Collider* _collider)
 	if (target->GetObjectName() == shooter_->GetObjectName())return;
 	auto list = target->FindComponent(HealthGauge);
 
+
+
 	if (list.empty()) return;
 	// ƒ_ƒ[ƒWˆ—
 	for (auto hm : list) {

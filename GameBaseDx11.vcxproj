@@ -219,6 +219,7 @@
     <ClCompile Include="Game\Objects\Camera\TPSCamera.cpp" />
     <ClCompile Include="Game\Objects\UI\UIText.cpp" />
     <ClCompile Include="Game\Scenes\Scene_End.cpp" />
+    <ClCompile Include="Game\Objects\UI\UITimer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game\Otheres\AudioController.h" />
@@ -303,6 +304,7 @@
     <ClInclude Include="Game\Objects\Camera\TPSCamera.h" />
     <ClInclude Include="Game\Objects\UI\UIText.h" />
     <ClInclude Include="Game\Scenes\Scene_End.h" />
+    <ClInclude Include="Game\Objects\UI\UITimer.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Assets\Shader\BillBoard.hlsl">

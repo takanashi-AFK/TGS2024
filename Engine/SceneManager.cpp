@@ -11,7 +11,8 @@
 #include "../Game/Scenes/Scene_Splash.h"
 #include"../Game/Scenes/Scene_Title.h"
 #include"../Game/Scenes/Scene_Play.h"
-#include"../Game/Scenes/Scene_End.h"
+#include"../Game/Scenes/Scene_Result.h"
+#include "../Game/Scenes/Scene_End.h"
 //コンストラクタ
 SceneManager::SceneManager(GameObject * parent)
 	: GameObject(parent, "SceneManager"),currentSceneID_(),nextSceneID_(),tmpID_()
@@ -61,7 +62,8 @@ void SceneManager::Update()
 		case SCENE_ID_SPLASH: Instantiate<Scene_Splash>(this); break;
 		case SCENE_ID_TITLE:Instantiate<Scene_Title>(this); break;
 		case SCENE_ID_PLAY:Instantiate<Scene_Play>(this); break;
-		case SCENE_ID_END:Instantiate<Scene_End>(this); break;
+		case SCENE_ID_RESULT:Instantiate<Scene_Result>(this); break;
+		case SCENE_ID_END: Instantiate<Scene_End>(this); break;
 		}
 		Audio::Initialize();
 		currentSceneID_ = nextSceneID_;

@@ -1,14 +1,15 @@
 #pragma once
-#pragma once
 #include"../../Engine/GameObject/GameObject.h"
 
-class Scene_End :public GameObject
+class UIPanel;
+class Scene_Result :public GameObject
 {
-private:	
-int imageHandle_;
+private:
+	UIPanel* panel;
+
 public:
 	//コンストラクタ
-	Scene_End(GameObject* parent_);
+	Scene_Result(GameObject* parent_);
 
 	//初期化
 	void Initialize() override;
@@ -23,5 +24,4 @@ public:
 	void Release() override;
 
 };
-
 

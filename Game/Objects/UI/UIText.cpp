@@ -5,7 +5,7 @@
 #include "../../../Engine/Global.h"
 
 UIText::UIText(string _name, UIObject* parent,int _layerNum)
-	: UIObject(_name, UI_TEXT, parent, _layerNum), pText_(nullptr), drawText_(""), size_(1.f), floatNum_(nullptr)
+	: UIObject(_name, UI_TEXT, parent, _layerNum), pText_(nullptr), drawText_(""), size_(1.f), intNum_(nullptr)
 {
 }
 
@@ -35,8 +35,8 @@ void UIText::Draw()
 	float drawY = (transform_.position_.y * (Direct3D::screenHeight_ / 2)) + (Direct3D::screenHeight_ / 2);
 	
 	// テキストを描画
-	if (floatNum_ == nullptr)pText_->Draw(drawX, drawY, drawText_.c_str());
-	else pText_->Draw(drawX, drawY,*floatNum_);
+	if (intNum_ == nullptr)pText_->Draw(drawX, drawY, drawText_.c_str());
+	else pText_->Draw(drawX, drawY,*intNum_);
 }
 
 void UIText::Release()
@@ -49,12 +49,25 @@ void UIText::Save(json& saveObj)
 {
 	saveObj["text"] = drawText_;
 	saveObj["size"] = size_;
+	saveObj["fontFilePath"] = fontFilePath_;
+	saveObj["charWidth"] = charWidth;
+	saveObj["charHeight"] = charHeight;
+	saveObj["rowLength"] = rowLength;
 }
 
 void UIText::Load(json& loadObj)
 {
 	if (loadObj.contains("text"))drawText_ = loadObj["text"].get<string>();
 	if (loadObj.contains("size"))size_ = loadObj["size"].get<float>();
+	if (loadObj.contains("fontFilePath"))fontFilePath_ = loadObj["fontFilePath"].get<string>();
+	if (loadObj.contains("charWidth"))charWidth = loadObj["charWidth"].get<int>();
+	if (loadObj.contains("charHeight"))charHeight = loadObj["charHeight"].get<int>();
+	if (loadObj.contains("rowLength"))rowLength = loadObj["rowLength"].get<int>();
+
+	if (fontFilePath_ != "") {
+		pText_ = new Text;
+		pText_->Initialize(fontFilePath_.c_str(), charWidth, charHeight, rowLength);
+	}
 }
 
 void UIText::DrawData()
@@ -62,7 +75,7 @@ void UIText::DrawData()
 	// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
 	// 表示するテキストを変更
 	// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
-	if(floatNum_ == nullptr)
+	if(intNum_ == nullptr)
 	if (ImGui::TreeNode("TextString")) {
 		ImGui::Text("Current Text : %s", drawText_.c_str());
 		char buffer[256] = "";

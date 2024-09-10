@@ -1,11 +1,5 @@
 #include "Scene_End.h"
-#include "../Objects/UI/UIPanel.h"
-#include "../../Engine/Global.h"
-#include "../../Engine/ImGui/imgui.h"
-#include "../Objects/UI/UIPanel.h"
-#include "../Objects/UI/UIObject.h"
-#include "../Objects/UI/UIText.h"
-#include "../Objects/UI/UIButton.h"
+#include "../../Engine/ResourceManager/Image.h"
 #include "../../Engine/SceneManager.h"
 
 Scene_End::Scene_End(GameObject* parent_)
@@ -14,33 +8,26 @@ Scene_End::Scene_End(GameObject* parent_)
 
 void Scene_End::Initialize()
 {
-	json loadData;
-
-	if (JsonReader::Load("Datas/UILayouts/ResultScene_layout.json", loadData)) {
-
-		// UIパネルを取得
-		panel = UIPanel::GetInstance();
-		panel->Load(loadData);
-		UIText* text = (UIText*)panel->GetUIObject("ScoreNum");
-
-		text->SetText(&ScoreManager::g_Score);
-
-		// スプラッシュシーンのパネルlayoutを設定
-	}
+	imageHandle_ = Image::Load("Images/EndScene/EndSceneImage.png");
+	assert(imageHandle_ >= -1);
 }
 
 void Scene_End::Update()
 {
-	UIButton* button = (UIButton*)panel->GetUIObject("NextSceneButton");
+	static int count = 0;
+	
 
-	if (button->OnClick()) {
+	if (count > 180) {
 		SceneManager* sceneManager = (SceneManager*)FindObject("SceneManager");
 		sceneManager->ChangeScene(SCENE_ID_TITLE, TID_BLACKOUT);
 	}
+	count++;
 }
 
 void Scene_End::Draw()
 {
+	Image::SetTransform(imageHandle_, transform_);
+	Image::Draw(imageHandle_);
 }
 
 void Scene_End::Release()

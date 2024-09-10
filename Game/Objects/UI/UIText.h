@@ -11,7 +11,7 @@ private:
 	float size_;
 	string fontFilePath_;
 
-	float* floatNum_;
+	int* intNum_;
 
 	int charWidth;
 	int charHeight;
@@ -31,7 +31,7 @@ public:
 	void DrawData() override;
 
 	void SetText(string _text) { drawText_ = _text; }
-	void SetText(float* _num) { floatNum_ = _num; }
+	void SetText(int* _num) { intNum_ = _num; }
 
 	void OpenChangeFontDialog();
 };

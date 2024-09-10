@@ -47,7 +47,7 @@ XMFLOAT3 operator-(XMFLOAT3& a, const XMFLOAT3& b)
 
 // ゲームのスコア
 namespace ScoreManager {
-	float g_Score = 0.f;
+	int g_Score;
 
 	void ScoreManager::AddScore(int score) {
 		g_Score += score; 

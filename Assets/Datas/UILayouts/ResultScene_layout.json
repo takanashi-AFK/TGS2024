@@ -1,40 +1,50 @@
 {
-  "BackGroundImage": {
-    "imageFilePath_": "Images/image1.png",
-    "layerNumber_": 1,
-    "objectName_": "BackGroundImage",
+  "ResultSceneImage": {
+    "imageFilePath_": "Images/ResultScene/ResultSceneImage.png",
+    "layerNumber_": 2,
+    "objectName_": "ResultSceneImage",
     "position_": [ 0.0, 0.0, 0.0 ],
     "rotate_": [ 0.0, 0.0, 0.0 ],
     "scale_": [ 1.0, 1.0, 1.0 ],
     "type_": 2
   },
+  "HPNum": {
+    "layerNumber_": 4,
+    "objectName_": "HPNum",
+    "position_": [ 0.20000000298023224, -0.10000000149011612, 0.0 ],
+    "rotate_": [ 0.0, 0.0, 0.0 ],
+    "scale_": [ 1.0, 1.0, 1.0 ],
+    "size": 1.649999976158142,
+    "text": "0123456789",
+    "type_": 3
+  },
   "NextSceneButton": {
-    "imageFilePath_": "Images/PressToTitle.png",
-    "layerNumber_": 2,
+    "imageFilePath_": "Images/ResultScene/clearTONEXTSCENE.png",
+    "layerNumber_": 1,
     "objectName_": "NextSceneButton",
-    "position_": [ 0.0, -0.6439999938011169, 0.0 ],
+    "position_": [ 0.0, 0.0, 0.0 ],
     "rotate_": [ 0.0, 0.0, 0.0 ],
     "scale_": [ 1.0, 1.0, 1.0 ],
     "type_": 1
   },
   "ScoreNum": {
-    "layerNumber_": 4,
+    "layerNumber_": 3,
     "objectName_": "ScoreNum",
-    "position_": [ -0.6000000238418579, 0.0, 0.0 ],
+    "position_": [ 0.20000000298023224, 0.30000001192092896, 0.0 ],
     "rotate_": [ 0.0, 0.0, 0.0 ],
     "scale_": [ 1.0, 1.0, 1.0 ],
-    "size": 1.0,
-    "text": "3333",
+    "size": 1.649999976158142,
+    "text": "012346789",
     "type_": 3
   },
-  "ScoreText": {
-    "layerNumber_": 3,
-    "objectName_": "ScoreText",
-    "position_": [ -0.800000011920929, 0.0, 0.0 ],
+  "TimeNum": {
+    "layerNumber_": 5,
+    "objectName_": "TimeNum",
+    "position_": [ 0.20000000298023224, -0.4000000059604645, 0.0 ],
     "rotate_": [ 0.0, 0.0, 0.0 ],
     "scale_": [ 1.0, 1.0, 1.0 ],
-    "size": 1.0,
-    "text": "Score:",
+    "size": 1.649999976158142,
+    "text": "0123456789",
     "type_": 3
   }
 }

@@ -3,6 +3,7 @@
 
 class Scene_Result :public GameObject
 {
+	int scoreNum_;
 public:
 	//コンストラクタ
 	Scene_Result(GameObject* parent_);

@@ -52,21 +52,5 @@ namespace ScoreManager {
 /*
 valeable :*/
 	int time;		// タイム
-	int playerHp;
-
-/*
-setter :*/
-	/// <summary> タイムを設定する </summary>
-	void SetTime(int _time){ time = _time; }
-
-	/// <summary> プレイヤーのHPを設定する </summary>
-	void SetPlayerHp(int _hp){ playerHp = _hp; }
-
-/*
-getter :*/
-	/// <summary> タイムを取得する </summary>
-	int GetTime(){ return ScoreManager::time; }
-	
-	/// <summary> プレイヤーのHPを取得する </summary>
-	int GetPlayerHp() { return ScoreManager::playerHp; }
+	int playerHp;	// プレイヤーのHP
 }

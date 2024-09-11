@@ -30,22 +30,6 @@ namespace ScoreManager {
 valeable :*/
 	extern int time;		// タイム
 	extern int playerHp;	// プレイヤーのHP
-
-/*
-setter :*/
-	/// <summary> タイムを設定する </summary>
-	inline void SetTime(int _time);
-
-	/// <summary> プレイヤーのHPを設定する </summary>
-	inline void SetPlayerHp(int _hp);
-
-/*
-getter :*/
-	/// <summary> タイムを取得する </summary>
-	inline int GetTime();
-
-	/// <summary> プレイヤーのHPを取得する </summary>
-	inline int GetPlayerHp();
 }
 
 // ファイル管理namespace

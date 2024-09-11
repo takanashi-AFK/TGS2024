@@ -31,6 +31,7 @@
 
 namespace {
 	const int SHOOT_FRAME = 115;
+	const float DODGE_DISTANCE = 5.0f;
 
 	bool IsXMVectorZero(XMVECTOR _vec) {
 		return XMVector3Equal(_vec, XMVectorZero());
@@ -266,6 +267,7 @@ void Component_PlayerBehavior::Dodge()
 	// NOTE: 一度だけダッシュ処理を実行するためのフラグ
 	static bool isDash = false;
 	static float frameCount = 0;
+	static float dodgeDistance = 5;
 	
 	// プレイヤーのHPゲージコンポーネントを取得
 	Component_HealthGauge* hg = (Component_HealthGauge*)(GetChildComponent("PlayerHealthGauge"));
@@ -289,8 +291,17 @@ void Component_PlayerBehavior::Dodge()
 		}
 		tackle->SetDirection(dir);
 
+
+		vector<float>rayDist =  holder_->GetRayDistances();
+
+		for (auto ray : rayDist) {
+			if (ray < dodgeDistance) {
+				dodgeDistance = ray;
+				break;
+			}
+		}
 		// 突進距離を設定
-		tackle->SetDistance(5.f);
+		tackle->SetDistance(dodgeDistance);
 
 		// 突進処理を実行
 		tackle->Execute();
@@ -323,16 +334,13 @@ void Component_PlayerBehavior::Dodge()
 
 	// 突進処理が終了していたら...
 	if (tackle->IsActived() == false) {
-
-
-
 		// ダッシュフラグをリセット
 		isDash = false;
 
 		//移動を可能にする
 		move->Execute();
 
-
+		dodgeDistance = 5;
 		// 状態を遷移
 		IsWASDKey() ? SetState(PLAYER_STATE_WALK) : SetState(PLAYER_STATE_IDLE);
 	}

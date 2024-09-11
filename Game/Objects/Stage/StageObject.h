@@ -5,7 +5,6 @@
 #include "Components/Component.h"
 #include "../../../Engine/DirectX/Direct3D.h"
 #include <vector>
-
 // using宣言
 using std::vector;
 
@@ -20,6 +19,7 @@ class StageObject : public GameObject
 {
 protected:
 	vector<Component*> myComponents_;   // 自身が保有するコンポーネント群
+	vector <float> rayDistances_;       // レイの距離
 	string modelFilePath_;              // モデルのファイルパス
 	int modelHandle_;                   // モデル番号
 	AttributeType attribute_;           // 属性
@@ -145,6 +145,8 @@ public:
 
 	void SetShader(Direct3D::SHADER_TYPE _type) { shaderType_ = _type; };
 	Direct3D::SHADER_TYPE GetShader() { return shaderType_; };
+
+	vector<float> GetRayDistances() { return rayDistances_; };
 };
 
 /// <summary>

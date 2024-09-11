@@ -157,7 +157,7 @@ void StageObject::OnGround(float _fallSpeed)
 void StageObject::CollisionWall()
 {
 	if (!isCollisionWall_) return;
-
+	rayDistances_.clear();
 	Stage* pStage = static_cast<Stage*>(FindObject("Stage"));
 	if (pStage == nullptr) return;
 	auto stageObj = pStage->GetStageObjects();
@@ -170,10 +170,10 @@ void StageObject::CollisionWall()
 		if (hGroundModel < 0) continue;
 
 		std::vector<XMFLOAT3> directions = {
-			XMFLOAT3(1, 0, 0),  // right
-			XMFLOAT3(-1, 0, 0), // left
-			XMFLOAT3(0, 0, 1),  // forward
-			XMFLOAT3(0, 0, -1)  // backward
+			XMFLOAT3(1, -0.5, 0),  // right
+			XMFLOAT3(-1, -0.5, 0), // left
+			XMFLOAT3(0, -0.5, 1),  // forward
+			XMFLOAT3(0, -0.5, -1)  // backward
 		};
 
 		for (const auto& dir : directions) {
@@ -181,6 +181,8 @@ void StageObject::CollisionWall()
 			data.start = transform_.position_; // レイの発射位置
 			data.dir = dir; // レイの方向
 			Model::RayCast(hGroundModel, &data); // レイを発射
+
+			rayDistances_.push_back(data.dist);
 
 			if (data.dist < 0.6f && data.dist > 0.0f) {
 				if (dir.x != 0) {

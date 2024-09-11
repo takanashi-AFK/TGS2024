@@ -1,12 +1,9 @@
 #pragma once
 #include"../../Engine/GameObject/GameObject.h"
 
-class UIPanel;
 class Scene_Result :public GameObject
 {
-private:
-	UIPanel* panel;
-
+	int scoreNum_;
 public:
 	//コンストラクタ
 	Scene_Result(GameObject* parent_);

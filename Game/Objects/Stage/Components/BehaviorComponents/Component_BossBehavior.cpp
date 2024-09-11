@@ -12,6 +12,8 @@
 #include <random>
 #include "../../../UI/CountDown.h"
 #include "../GaugeComponents/Component_HealthGauge.h"
+#include "../../../UI/UIPanel.h"
+#include "../../../UI/UIProgressBar.h"
 
 namespace
 {
@@ -81,14 +83,14 @@ void Component_BossBehavior::Update()
 
     // HP関連処理
     {
-        // プレイヤーのHPゲージコンポーネントを取得
+        // ボスのHPゲージコンポーネントを取得
         Component_HealthGauge* hg = (Component_HealthGauge*)(GetChildComponent("HealthGauge"));
 
         // UIProgressBarを取得
-        //UIProgressBar* hpBar = (UIProgressBar*)UIPanel::GetInstance()->FindObject("bossHPBar");
+        UIProgressBar* hpBar = (UIProgressBar*)UIPanel::GetInstance()->FindObject("HPBar_boss");
 
         // HPバーの値を設定
-        //if (hpBar != nullptr && hg != nullptr)hpBar->SetProgress(&hg->now_, &hg->max_);
+        if (hpBar != nullptr && hg != nullptr)hpBar->SetProgress(&hg->now_, &hg->max_);
 
         // HPが0以下になったら... DEAD状態に遷移
         if (hg != nullptr)if (hg->IsDead() == true)SetState(BOSS_STATE_DEAD);

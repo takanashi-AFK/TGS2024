@@ -3,11 +3,12 @@
 
 class Text
 {
+private:
 	int hPict_;
-
 	unsigned int width_, height_;	//1文字分の幅と高さ
 	char fileName_[MAX_PATH];
 	unsigned int rowLength_;
+
 
 public:
 	Text();
@@ -24,7 +25,6 @@ public:
 	//引数：rowLength	画像の中に横に何文字並んでいるか
 	//戻値：成功／失敗
 	HRESULT Initialize(const char* fileName, const unsigned int charWidth, const unsigned int charHeight, const unsigned int rowLength);
-
 
 	//描画（文字列）
 	//引数：x, y	表示位置（左上）

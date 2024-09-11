@@ -9,6 +9,7 @@
 #include "UIImage.h"
 #include "UIText.h"
 #include "UIProgressBar.h"
+#include "UITimer.h"
 
 UIObject::UIObject():
 	UIObject("",UI_NONE,nullptr,0)
@@ -277,6 +278,7 @@ UIObject* CreateUIObject(string _name, UIType _type,UIObject* _parent, int _laye
 		case UI_TEXT:obj = new UIText(_name, _parent, _layerNum); break;
 		case UI_PANEL:obj = UIPanel::GetInstance(); break;
 		case UI_PROGRESSBAR: obj = new UIProgressBar(_name, _parent, _layerNum); break;
+		case UI_TIMER:obj = new UITimer(_name, _parent, _layerNum); break;
         default:obj = nullptr; break;
 	}
 	// インスタンスが生成できなかった場合はnullptrを返す
@@ -301,6 +303,7 @@ string GetUITypeString(UIType _type)
 	case UI_TEXT:return "TEXT";
 	case UI_PANEL:return "";
 	case UI_PROGRESSBAR:return "PROGRESSBAR";
+	case UI_TIMER:return "TIMER";
 	default:return "UNKNOWN";
 	}
 }

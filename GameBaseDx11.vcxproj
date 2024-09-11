@@ -23,7 +23,7 @@
     <ProjectGuid>{D68FA256-14C6-4B85-B85F-EC93C87CD599}</ProjectGuid>
     <RootNamespace>BaseProjectDx112</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
-    <ProjectName>GameBaseDx11</ProjectName>
+    <ProjectName>PlantPlanet_TGS2024</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -219,6 +219,7 @@
     <ClCompile Include="Game\Objects\Camera\TPSCamera.cpp" />
     <ClCompile Include="Game\Objects\UI\UIText.cpp" />
     <ClCompile Include="Game\Scenes\Scene_End.cpp" />
+    <ClCompile Include="Game\Objects\UI\UITimer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game\Otheres\AudioController.h" />
@@ -303,6 +304,7 @@
     <ClInclude Include="Game\Objects\Camera\TPSCamera.h" />
     <ClInclude Include="Game\Objects\UI\UIText.h" />
     <ClInclude Include="Game\Scenes\Scene_End.h" />
+    <ClInclude Include="Game\Objects\UI\UITimer.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Assets\Shader\BillBoard.hlsl">

@@ -14,6 +14,7 @@
 #include "../Objects/UI/CountDown.h"
 #include "../../Engine/DirectX/Input.h"
 #include "../Objects/Stage/Components/BehaviorComponents/Component_BossBehavior.h"
+#include "../Objects/UI/UITimer.h"
 
 
 Scene_Play::Scene_Play(GameObject* parent)
@@ -22,6 +23,7 @@ Scene_Play::Scene_Play(GameObject* parent)
 
 void Scene_Play::Initialize()
 {
+	// パネルの生成
 	UIPanel* panel_ = UIPanel::GetInstance();
 	json panelData;
 	if (JsonReader::Load("test_playerHPBar.json", panelData)) {
@@ -57,8 +59,7 @@ void Scene_Play::Initialize()
 void Scene_Play::Update()
 {
 	TPSCamera* tpsCamera_ = (TPSCamera*)FindObject("TPSCamera");
-	if (tpsCamera_ == nullptr)return;
-
+	UITimer* uiTimer =  (UITimer*)UIPanel::GetInstance()->FindObject("Timer");
 
 	// カーソル固定化処理
 	static bool fixedCursorPos = false; {
@@ -82,6 +83,9 @@ void Scene_Play::Update()
 
 		// ゲーム開始フラグを立てる
 		isGameStart_ = true;
+
+		// タイマーの開始
+		if (uiTimer != nullptr)uiTimer->StartTimer();
 	}
 
 
@@ -94,14 +98,21 @@ void Scene_Play::Update()
 		for (auto playerBehavior : pStage_->FindComponents(ComponentType::PlayerBehavior))if (((Component_PlayerBehavior*)playerBehavior)->IsDead()) isSceneChange = true;
 		
 		// ボスが死んだ場合、切替フラグを立てる
-		 for (auto bossBehavior : pStage_->FindComponents(ComponentType::BossBehavior)) if(((Component_BossBehavior*)bossBehavior)->IsDead()) isSceneChange = true;
+		for (auto bossBehavior : pStage_->FindComponents(ComponentType::BossBehavior)) if (((Component_BossBehavior*)bossBehavior)->IsDead()){ScoreManager::isClear = true;isSceneChange = true;}
+		
+		// タイマーが終了した場合、切替フラグを立てる
+		
+		if(uiTimer != nullptr)if (uiTimer->IsEnd())isSceneChange = true;
 
 		// シーン切替フラグが立っている場合
 		if (isSceneChange == true) {
-
+			
+			// タイマーの最終値を取得
+			if (uiTimer != nullptr)ScoreManager::time = uiTimer->GetSeconds();
+			
 			// シーンを切り替える
 			SceneManager* sceneManager = (SceneManager*)FindObject("SceneManager");
-			sceneManager->ChangeScene(SCENE_ID_END, TID_BLACKOUT);
+			sceneManager->ChangeScene(SCENE_ID_RESULT, TID_BLACKOUT);
 		}
 	}
 

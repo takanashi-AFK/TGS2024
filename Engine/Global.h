@@ -26,10 +26,11 @@ const float FPS = 60.0f;	// フレームレート
 // ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝ //
 
 namespace ScoreManager {
-	extern int g_Score;
-
-	void AddScore(int score);
-	int GetScore();
+/*
+valeable :*/
+	extern int time;		// タイム
+	extern int playerHp;	// プレイヤーのHP
+	extern bool isClear;	// クリアしたかどうか
 }
 
 // ファイル管理namespace

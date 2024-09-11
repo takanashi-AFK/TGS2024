@@ -4,7 +4,7 @@
 #include "../../../Engine/ImGui/imgui.h"
 
 UIImage::UIImage(string _name, UIObject* parent, int _layerNum)
-	:UIObject(_name, UI_IMAGE, parent,_layerNum), imageHandle_(-1), imageFilePath_("")
+	:UIObject(_name, UI_IMAGE, parent,_layerNum), imageHandle_(-1), imageFilePath_(""), isDraw_(true)
 {
 }
 
@@ -19,7 +19,7 @@ void UIImage::Update()
 void UIImage::Draw()
 {
 	// ‰æ‘œ‚ª“Ç‚İ‚Ü‚ê‚Ä‚¢‚È‚¢ê‡‚Íˆ—‚ğs‚í‚È‚¢
-	if (imageHandle_ < 0)return;
+	if (imageHandle_ < 0 || isDraw_ == false )return;
 
     Image::SetTransform(imageHandle_, transform_);
     Image::Draw(imageHandle_);

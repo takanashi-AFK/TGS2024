@@ -20,6 +20,7 @@ namespace
     const float SHOT_RATE = 0.2f;
     const float SHOT_ANGLE = 15;
     const int SHOT_TIME = 5;
+	const float SMALL_VEROSITY = 0.05f;
     EFFEKSEERLIB::EFKTransform t;/*★★★*/
 }
 
@@ -44,6 +45,7 @@ void Component_BossBehavior::Initialize()
 
     // effekseer: :Effectの読み込み
     EFFEKSEERLIB::gEfk->AddEffect("sword", "Effects/Salamander12.efk");/*★★★*/
+	EFFEKSEERLIB::gEfk->AddEffect("fire", "Effects/Fire3.efk");/*★★★*/
 
     // コライダーの追加
     // fix: コライダーのサイズを今後データから読み込むように変更
@@ -102,6 +104,8 @@ void Component_BossBehavior::Update()
     case BOSS_STATE_TACKLE:Tackle(); break;
     case BOSS_STATE_DEAD:Dead(); break;
     }
+
+
 }
 
 void Component_BossBehavior::Release()
@@ -156,8 +160,7 @@ void Component_BossBehavior::Load(json& _loadObj)
 void Component_BossBehavior::DrawData()
 {
     // アクティブフラグを表示
-    if (ImGui::Checkbox("isActive_", &isActive_));
-    
+    ImGui::Checkbox("isActive_", &isActive_);
     // 対象を設定
     {
         // ステージ上に存在するオブジェクトの名前を全て取得
@@ -314,7 +317,7 @@ void Component_BossBehavior::Tackle()
 
 void Component_BossBehavior::Idle()
 {
-    // タイマーの取得 & nulllチェック
+    // タイマーの取得 & nullチェック
     Component_Timer* timer = (Component_Timer*)GetChildComponent("Timer");
     if (timer == nullptr) return;
 
@@ -340,10 +343,23 @@ void Component_BossBehavior::Idle()
 
 void Component_BossBehavior::Dead()
 {
+
+    Transform effectTransform;
+	effectTransform.position_ = holder_->GetPosition();
+
     // 大きさが０でない場合
-    if (holder_->GetScale().x >= 0) 
-
+    if (holder_->GetScale().x >= 0) {
     // キャラクターの大きさを徐々に小さくする
-    holder_->SetScale(holder_->GetScale().x - 0.01f);
+    holder_->SetScale(holder_->GetScale().x - SMALL_VEROSITY);
+    }
+    else {
+        // 情報の設定
+        DirectX::XMStoreFloat4x4(&(t.matrix), effectTransform.GetWorldMatrix());
+        t.isLoop = false;
+        t.maxFrame = 60;
+        t.speed = 1.0f;
 
+        // 再生
+        mt = EFFEKSEERLIB::gEfk->Play("fire", t);
+    }
 }

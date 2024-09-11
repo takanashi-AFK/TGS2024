@@ -4,6 +4,9 @@
 #include "../../StageObject.h"
 #include <vector>
 #include "../../../../../Engine/ResourceManager/Model.h"
+#include "../../../EffekseeLib/EffekseerVFX.h"/*★★★*/
+#include "../../../../../Engine/Global.h"
+
 
 // 前方宣言
 class CountDown;
@@ -24,7 +27,11 @@ private:
 	PlayerState nowState_, prevState_;	// 現在の状態、前の状態
 	float shootHeight_;					// 射撃の高さ
 	bool isGameStart_;					// ゲーム開始フラグ
-	int InvincibilityFrame_;			// 無敵フレーム
+	int invincibilityFrame_;			// 無敵フレーム
+
+	// effekseer: 変形行列
+	std::shared_ptr<EFFEKSEERLIB::EFKTransform> mt;/*★★★*/
+	EffectData data_;
 
 public:
 	/// <summary> コンストラクタ </summary>

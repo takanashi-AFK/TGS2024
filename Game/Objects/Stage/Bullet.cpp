@@ -23,6 +23,7 @@ void Bullet::Initialize()
 
 	// effekseer: :Effect‚Ì“Ç‚İ‚İ
 	EFFEKSEERLIB::gEfk->AddEffect(data_.name, data_.path);/*ššš*/
+	EFFEKSEERLIB::gEfk->AddEffect("Hit", "Effects/Attack_Impact.efk");/*ššš*/
 
 	// effekseer: :Effect‚ÌÄ¶î•ñ‚Ìİ’è
 	EFFEKSEERLIB::EFKTransform t;/*ššš*/
@@ -70,7 +71,6 @@ void Bullet::OnCollision(GameObject* _target, Collider* _collider)
 
 	if (target->GetObjectName() == shooter_->GetObjectName())return;
 	auto list = target->FindComponent(HealthGauge);
-
 	if (list.empty()) return;
 	// ƒ_ƒ[ƒWˆ—
 	for (auto hm : list) {

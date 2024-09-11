@@ -1,6 +1,9 @@
 #pragma once
 #include "../Component.h"
 #include <DirectXMath.h>
+#include "../../../EffekseeLib/EffekseerVFX.h"/*ššš*/
+#include "../../../../../Engine/Global.h"
+
 using namespace DirectX;
 
 class Component_WASDInputMove : public Component
@@ -8,6 +11,11 @@ class Component_WASDInputMove : public Component
 private:
 	bool isMove_;
 	XMVECTOR dir_;
+
+	// effekseer: •ÏŒ`s—ñ
+	std::shared_ptr<EFFEKSEERLIB::EFKTransform> mt;/*ššš*/
+	EffectData data_;
+
 public:
 	Component_WASDInputMove(string _name, StageObject* _holder, Component* _parent);
 	void Initialize() override;

@@ -2,6 +2,8 @@
 #include "UIObject.h"
 #include "../../../Engine/Global.h"
 
+class Text;
+
 class UITimer : public UIObject
 {
 private:
@@ -9,6 +11,9 @@ private:
 	float max_;		// 最大値
 
 	bool isActive_;	// タイマーが動いているか
+
+	Text* pText_;	// テキストオブジェクト
+	float size_;	// テキストのサイズ
 public:
 	/// <summary> コンストラクタ </summary>
 	UITimer(string _name, UIObject* parent, int _layerNum);
@@ -58,6 +63,9 @@ setter :*/
 getter :*/
 	/// <summary> タイマーの取得 </summary>
 	float GetTimer() const { return count_; }
+
+	/// <summary> 秒数の取得 </summary>
+	float GetSeconds() const { return count_ / FPS; }
 
 	/// <summary> 最大値の取得 </summary>
 	float GetMaxTimer() const { return max_; }

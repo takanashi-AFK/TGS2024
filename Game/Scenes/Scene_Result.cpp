@@ -47,6 +47,7 @@ void Scene_Result::Initialize()
 
 		// 上記の値値からスコアを計算
 		scoreNum_ = ScoreManager::playerHp * 100 + ScoreManager::time * 10;
+		if(ScoreManager::isClear)scoreNum_ *=2;
 
 		// テキストにスコアの値を設定
 		UIText* scoreNumText = (UIText*)uiPanel->GetUIObject("ScoreNum");

@@ -53,4 +53,5 @@ namespace ScoreManager {
 valeable :*/
 	int time;		// タイム
 	int playerHp;	// プレイヤーのHP
+	bool isClear;	// クリアしたかどうか
 }

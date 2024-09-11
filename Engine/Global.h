@@ -30,6 +30,7 @@ namespace ScoreManager {
 valeable :*/
 	extern int time;		// タイム
 	extern int playerHp;	// プレイヤーのHP
+	extern bool isClear;	// クリアしたかどうか
 }
 
 // ファイル管理namespace

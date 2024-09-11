@@ -62,6 +62,7 @@ void Component_HealthGauge::TakeDamage(float _damageValue)
 
 	//HP‚ðŒ¸‚ç‚·
 	now_ -= _damageValue;
+
 	//HP‚ª0ˆÈ‰º‚É‚È‚ç‚È‚¢‚æ‚¤‚É‚·‚é
 	if (now_ < 0)now_ = 0;
 }

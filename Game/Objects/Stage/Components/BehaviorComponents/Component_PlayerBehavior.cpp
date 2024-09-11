@@ -293,14 +293,9 @@ void Component_PlayerBehavior::Dodge()
 		// 無敵へ変更
 		frameCount = 0;
 		hg->Lock();
-	holder_->SetShader(Direct3D::SHADER_TYPE::SHADER_UNLIT);
 
 		// ダッシュフラグを立てる
 		isDash = true;
-
-
-
-
 	}
 		// effekseer: :Effectの再生情報の設定
 		EFFEKSEERLIB::EFKTransform t;/*★★★*/
@@ -324,7 +319,6 @@ void Component_PlayerBehavior::Dodge()
 	// 突進処理が終了していたら...
 	if (tackle->IsActived() == false) {
 
-		holder_->SetShader(Direct3D::SHADER_TYPE::SHADER_3D);
 
 
 		// ダッシュフラグをリセット

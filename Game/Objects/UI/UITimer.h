@@ -1,5 +1,6 @@
 #pragma once
 #include "UIObject.h"
+#include "../../../Engine/Global.h"
 
 class UITimer : public UIObject
 {
@@ -44,11 +45,15 @@ public:
 
 /*
 setter :*/
-	/// <summary> タイマーの設定 </summary>
-	void SetTimer(float _max) { max_ = _max; count_ = max_; }
+	/// <summary> タイマーの設定 ※秒 </summary>
+	void SetTimer(float _sec) { max_ = _sec * FPS; count_ = max_; }
 
 	/// <summary> タイマーのリセット </summary>
 	void ResetTimer() { count_ = max_; isActive_ = false; }
+
+	/// <summary> タイマーのリスタート </summary>
+	void RestartTimer() { count_ = max_; isActive_ = true; }
+
 /*
 getter :*/
 	/// <summary> タイマーの取得 </summary>

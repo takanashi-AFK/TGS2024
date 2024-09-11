@@ -77,29 +77,29 @@ void Scene_Result::Update()
 
 	// カメラの回転処理
 	{
-		// カメラの位置と注視点を取得
-		XMFLOAT3 camPos = Camera::GetPosition();
-		XMFLOAT3 camTarget = Camera::GetTarget();
+		//// カメラの位置と注視点を取得
+		//XMFLOAT3 camPos = Camera::GetPosition();
+		//XMFLOAT3 camTarget = Camera::GetTarget();
 
-		// カメラの高さを固定
-		camPos.y = CAMERA_HEIGHT;
+		//// カメラの高さを固定
+		//camPos.y = CAMERA_HEIGHT;
 
-		// 1fにつき回転する角度
-		static float angle = 0.005f;
+		//// 1fにつき回転する角度
+		//static float angle = 0.005f;
 
-		// 回転行列を作成 (Y軸周りに回転)
-		XMMATRIX rotationMatrix = XMMatrixRotationY(angle);
+		//// 回転行列を作成 (Y軸周りに回転)
+		//XMMATRIX rotationMatrix = XMMatrixRotationY(angle);
 
-		// カメラの位置をベクトル化
-		XMVECTOR vCamPosition = XMLoadFloat3(&camPos);
+		//// カメラの位置をベクトル化
+		//XMVECTOR vCamPosition = XMLoadFloat3(&camPos);
 
-		// カメラの位置を座標回転
-		vCamPosition = XMVector3Transform(vCamPosition, rotationMatrix);
-		XMStoreFloat3(&camPos, vCamPosition);
+		//// カメラの位置を座標回転
+		//vCamPosition = XMVector3Transform(vCamPosition, rotationMatrix);
+		//XMStoreFloat3(&camPos, vCamPosition);
 
-		// カメラの位置と注視点を設定
-		Camera::SetPosition(camPos);
-		Camera::SetTarget(0, 0, 0);
+		//// カメラの位置と注視点を設定
+		//Camera::SetPosition(camPos);
+		//Camera::SetTarget(0, 0, 0);
 	}
 }
 

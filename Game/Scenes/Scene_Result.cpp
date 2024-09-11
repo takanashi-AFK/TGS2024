@@ -23,71 +23,83 @@ namespace {
 
 void Scene_Result::Initialize()
 {
+	// jsonファイル読込用オブジェクトを用意
 	json loadData;
 
 	// スカイスフィアの生成
 	SkySphere* skySphere = Instantiate<SkySphere>(this);
 
-	if (JsonReader::Load("Datas/UILayouts/ResultScene_layout.json", loadData)) {
+	// UIパネルを取得
+	UIPanel* uiPanel = UIPanel::GetInstance();
 
-		// UIパネルを取得
-		panel = UIPanel::GetInstance();
-		panel->Load(loadData);
-		UIText* scoreNum = (UIText*)panel->GetUIObject("ScoreNum");
+	// UIパネル情報を読み込む
+	if (JsonReader::Load("Datas/UILayouts/ResultScene_layout.json", loadData)) uiPanel->Load(loadData);
 
-		scoreNum->SetText(&ScoreManager::g_Score);
+	// UIパネルの情報を取得・設定
+	{
+		// テキストにプレイヤーのHPの値を設定
+		UIText* hpNumText = (UIText*)uiPanel->GetUIObject("HPNum");
+		hpNumText->SetText(&ScoreManager::playerHp);
 
-		UIText* timeNum = (UIText*)panel->GetUIObject("TimeNum");
+		// テキストにタイムの値を設定
+		UIText* timeNumText = (UIText*)uiPanel->GetUIObject("TimeNum");
+		timeNumText->SetText(&ScoreManager::time);
 
-		// timeNum->SetText(&ScoreManager::g_Time);
+		// 上記の値値からスコアを計算
+		scoreNum_ = ScoreManager::playerHp * 100 + ScoreManager::time * 10;
 
-		UIText* hpNum = (UIText*)panel->GetUIObject("HPNum");
-
-		// hpNum->SetText(&ScoreManager::g_HP);
+		// テキストにスコアの値を設定
+		UIText* scoreNumText = (UIText*)uiPanel->GetUIObject("ScoreNum");
+		scoreNumText->SetText(&scoreNum_);
 
 	}
 
-	// ステージを作成
-	Stage* pStage = Instantiate<Stage>(this); {
-		json stageData;
-		JsonReader::Load("Datas/StageLayouts/EndSceneStage.json", stageData);
-		pStage->Load(stageData);
-	}
+	// ステージを作成 & 読み込み
+	Stage* pStage = Instantiate<Stage>(this);
+	if(JsonReader::Load("Datas/StageLayouts/EndSceneStage.json", loadData))pStage->Load(loadData);
+	
 }
 
 void Scene_Result::Update()
 {
-	UIButton* button = (UIButton*)panel->GetUIObject("NextSceneButton");
+	// シーン遷移ボタンの処理
+	{
+		// UIButtonの取得
+		UIButton* button = (UIButton*)UIPanel::GetInstance()->GetUIObject("NextSceneButton");
 
-	// ボタンが押されたら
-	if (button->OnClick()) {
-		SceneManager* sceneManager = (SceneManager*)FindObject("SceneManager");
-		sceneManager->ChangeScene(SCENE_ID_END, TID_BLACKOUT);
+		// ボタンが押されたら
+		if (button->OnClick()) {
+			SceneManager* sceneManager = (SceneManager*)FindObject("SceneManager");
+			sceneManager->ChangeScene(SCENE_ID_END, TID_BLACKOUT);
+		}
 	}
 
-	
-	// カメラの位置と注視点を取得
-	XMFLOAT3 camPos = Camera::GetPosition();
-	XMFLOAT3 camTarget = Camera::GetTarget();
-	// カメラの高さを固定
-	camPos.y = CAMERA_HEIGHT;
+	// カメラの回転処理
+	{
+		// カメラの位置と注視点を取得
+		XMFLOAT3 camPos = Camera::GetPosition();
+		XMFLOAT3 camTarget = Camera::GetTarget();
 
-	// 1fにつき回転する角度
-	static float angle = 0.01f;
+		// カメラの高さを固定
+		camPos.y = CAMERA_HEIGHT;
 
-	// 回転行列を作成 (Y軸周りに回転)
-	XMMATRIX rotationMatrix = XMMatrixRotationY(angle);
+		// 1fにつき回転する角度
+		static float angle = 0.005f;
 
-	// カメラの位置をベクトル化
-	XMVECTOR vCamPosition = XMLoadFloat3(&camPos);
+		// 回転行列を作成 (Y軸周りに回転)
+		XMMATRIX rotationMatrix = XMMatrixRotationY(angle);
 
-	// カメラの位置を座標回転
-	vCamPosition = XMVector3Transform(vCamPosition, rotationMatrix);
-	XMStoreFloat3(&camPos, vCamPosition);
+		// カメラの位置をベクトル化
+		XMVECTOR vCamPosition = XMLoadFloat3(&camPos);
 
-	// カメラの位置と注視点を設定
-	Camera::SetPosition(camPos);
-	Camera::SetTarget(0,0,0);
+		// カメラの位置を座標回転
+		vCamPosition = XMVector3Transform(vCamPosition, rotationMatrix);
+		XMStoreFloat3(&camPos, vCamPosition);
+
+		// カメラの位置と注視点を設定
+		Camera::SetPosition(camPos);
+		Camera::SetTarget(0, 0, 0);
+	}
 }
 
 void Scene_Result::Draw()

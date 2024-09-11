@@ -25,6 +25,7 @@
 #include "../../../../../Engine/SceneManager.h"
 #include "../../../Game/Objects/UI/UIProgressBar.h"
 #include "../../../Game/Objects/UI/UIPanel.h"
+#include "../../../Engine/Global.h"
 
 namespace {
     const int SHOOT_FRAME = 115;
@@ -100,6 +101,9 @@ void Component_PlayerBehavior::Update()
 
 		// UIProgressBarを取得
 		UIProgressBar* hpBar = (UIProgressBar*)UIPanel::GetInstance()->FindObject("HPBar_player");
+
+        // HPの値を移動
+        ScoreManager::playerHp = hg->now_;
 
 		// HPバーの値を設定
 		if (hpBar != nullptr && hg != nullptr)hpBar->SetProgress(&hg->now_, &hg->max_);

@@ -18,7 +18,7 @@ Scene_Result::Scene_Result(GameObject* parent_)
 }
 
 namespace {
-	const int CAMERA_HEIGHT = 25;
+	const int CAMERA_HEIGHT = 30;
 }
 
 void Scene_Result::Initialize()
@@ -86,7 +86,7 @@ void Scene_Result::Update()
 	XMStoreFloat3(&camPos, vCamPosition);
 
 	// ƒJƒƒ‰‚ÌˆÊ’u‚Æ’‹“_‚ğİ’è
-	Camera::SetPosition(camPos.x ,camPos.y,camPos.z);
+	Camera::SetPosition(camPos);
 	Camera::SetTarget(0,0,0);
 }
 

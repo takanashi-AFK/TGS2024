@@ -99,7 +99,7 @@ void Component_PlayerBehavior::Update()
 		Component_HealthGauge* hg = (Component_HealthGauge*)(GetChildComponent("PlayerHealthGauge"));
 
 		// UIProgressBarを取得
-		UIProgressBar* hpBar = (UIProgressBar*)UIPanel::GetInstance()->FindObject("playerHPBar");
+		UIProgressBar* hpBar = (UIProgressBar*)UIPanel::GetInstance()->FindObject("HPBar_player");
 
 		// HPバーの値を設定
 		if (hpBar != nullptr && hg != nullptr)hpBar->SetProgress(&hg->now_, &hg->max_);

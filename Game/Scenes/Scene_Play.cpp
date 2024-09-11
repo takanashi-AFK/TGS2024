@@ -99,7 +99,7 @@ void Scene_Play::Update()
 
 			// ƒV[ƒ“‚ðØ‚è‘Ö‚¦‚é
 			SceneManager* sceneManager = (SceneManager*)FindObject("SceneManager");
-			sceneManager->ChangeScene(SCENE_ID_END, TID_BLACKOUT);
+			sceneManager->ChangeScene(SCENE_ID_RESULT, TID_BLACKOUT);
 		}
 	}
 

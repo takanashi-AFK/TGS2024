@@ -28,8 +28,6 @@ void Scene_Play::Initialize()
 	json panelData;
 	if (JsonReader::Load("test_playerHPBar.json", panelData)) {
 		panel_->Load(panelData);
-
-		((UIImage*)panel_->FindObject("focus"))->SetEnable(false);
 	}
 
 	// スカイスフィアの生成

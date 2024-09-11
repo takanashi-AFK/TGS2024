@@ -33,7 +33,6 @@ private:
 	std::shared_ptr<EFFEKSEERLIB::EFKTransform> mt;/*★★★*/
 	EffectData data_;
 
-
 public:
 	/// <summary> コンストラクタ </summary>
 	Component_PlayerBehavior(string _name,StageObject* _holder,Component* _parent);

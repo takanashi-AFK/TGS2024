@@ -257,10 +257,7 @@ void Component_PlayerBehavior::Shoot()
 
 void Component_PlayerBehavior::Dodge()
 {
-	holder_->SetShader(Direct3D::SHADER_TYPE::SHADER_UNLIT);
-	UIPanel* panel_ = UIPanel::GetInstance();
 
-	UIImage* focus = (UIImage*)panel_->FindObject("focus");
 	// NOTE: 一度だけダッシュ処理を実行するためのフラグ
 	static bool isDash = false;
 	static float frameCount = 0;
@@ -296,12 +293,12 @@ void Component_PlayerBehavior::Dodge()
 		// 無敵へ変更
 		frameCount = 0;
 		hg->Lock();
+	holder_->SetShader(Direct3D::SHADER_TYPE::SHADER_UNLIT);
 
 		// ダッシュフラグを立てる
 		isDash = true;
 
-		// ワイヤーフレームへ変更
-		focus->SetEnable(true);
+
 
 
 	}
@@ -329,7 +326,6 @@ void Component_PlayerBehavior::Dodge()
 
 		holder_->SetShader(Direct3D::SHADER_TYPE::SHADER_3D);
 
-		focus->SetEnable(false);
 
 		// ダッシュフラグをリセット
 		isDash = false;

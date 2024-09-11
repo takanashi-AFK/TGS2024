@@ -47,13 +47,26 @@ XMFLOAT3 operator-(XMFLOAT3& a, const XMFLOAT3& b)
 
 // ゲームのスコア
 namespace ScoreManager {
-	int g_Score;
 
-	void ScoreManager::AddScore(int score) {
-		g_Score += score; 
-	}
+	// NOTE: シーン間で共有する変数はここに記述する
+/*
+valeable :*/
+	int time;		// タイム
+	int playerHp;
 
-	int ScoreManager::GetScore(){
-		return g_Score; 
-	}
+/*
+setter :*/
+	/// <summary> タイムを設定する </summary>
+	void SetTime(int _time){ time = _time; }
+
+	/// <summary> プレイヤーのHPを設定する </summary>
+	void SetPlayerHp(int _hp){ playerHp = _hp; }
+
+/*
+getter :*/
+	/// <summary> タイムを取得する </summary>
+	int GetTime(){ return ScoreManager::time; }
+	
+	/// <summary> プレイヤーのHPを取得する </summary>
+	int GetPlayerHp() { return ScoreManager::playerHp; }
 }

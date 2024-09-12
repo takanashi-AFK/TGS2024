@@ -121,11 +121,13 @@ bool StageObject::DeleteAllComponent()
 	// リスト内にある要素をすべて削除
 	myComponents_.clear();return true;
 }
-
 void StageObject::OnGround(float _fallSpeed)
 {
-	// オブジェクトが既に地面に設置されていないなら処理を抜ける
-	if (isOnGround_ == false) return;
+	// オブジェクトが既に地面に設置されているなら処理を抜ける
+	if (!isOnGround_) return;
+
+	float closestDist = FLT_MAX;  // 最短距離を保持
+	bool dataHit = false;         // レイが地面に当たったかどうか
 
 	// ステージオブジェクトを取得
 	Stage* pStage = (Stage*)FindObject("Stage");
@@ -135,7 +137,7 @@ void StageObject::OnGround(float _fallSpeed)
 
 	// モデルのサイズを考慮した足元位置（中心位置からモデル高さの半分下）
 	float modelHeight = 3.5f;  // モデルの高さ
-	XMFLOAT3 rayStart = transform_.position_;
+	XMFLOAT3 rayStart = transform_.position_ + onGroundOffset_;
 
 	// 全てのオブジェクトに対してレイキャストを行う
 	for (auto obj : stageObj) {
@@ -144,7 +146,6 @@ void StageObject::OnGround(float _fallSpeed)
 			continue;
 
 		int hGroundModel = obj->modelHandle_;
-		if (hGroundModel < 0) continue;
 
 		// レイキャストデータの準備
 		RayCastData data;
@@ -156,15 +157,20 @@ void StageObject::OnGround(float _fallSpeed)
 
 		// レイが地面に当たったら
 		if (data.hit) {
-			// 当たった距離から足元までの調整を行い、位置を下げる
-			float adjustedDist = data.dist;  // 足元からの距離そのまま使用
-			if (adjustedDist > 0) {
-				transform_.position_.y -= adjustedDist;
+			// 最短距離の地面に更新
+			if (data.dist < closestDist) {
+				closestDist = data.dist;
+				dataHit = true;
 			}
-			break;  // 1つの地面に当たったら処理を終了
 		}
 	}
+
+	// レイが地面に当たっていれば、最短距離に基づいて位置を調整
+	if (dataHit) {
+		transform_.position_.y -= (closestDist - modelHeight / 2);
+	}
 }
+
 
 
 void StageObject::CollisionWall()
@@ -194,6 +200,7 @@ void StageObject::CollisionWall()
 		for (const auto& dir : directions) {
 			RayCastData data;
 			data.start = transform_.position_; // レイの発射位置
+			data.start.y = transform_.position_.y + 0.5f;
 			data.dir = dir; // レイの方向
 			Model::RayCast(hGroundModel, &data); // レイを発射
 
@@ -347,6 +354,9 @@ void StageObject::DrawData()
 	// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
 	if (ImGui::TreeNode("OnGround")) {
 		ImGui::Checkbox("isOnGround", &isOnGround_);
+		isOnGround_ ? ImGui::Text("true"): ImGui::Text("false");
+
+
 		ImGui::SameLine();
 		ImGui::Checkbox("isCollisionWall", &isCollisionWall_);
 		ImGui::DragFloat("fallSpeed", &fallSpeed_, 0.1f, 0.f, 1.f);

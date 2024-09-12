@@ -314,8 +314,15 @@ void Component_PlayerBehavior::Dodge()
 			Model::RayCast(hGroundModel, &data); // レイを発射
 
 			if (data.hit && data.dist <= dodgeDistance) {
-				dodgeDistance = data.dist;
-				break;
+
+				if (data.dist <= 0.6) {
+					dodgeDistance = 0;
+					break;
+				}
+				else {
+					dodgeDistance = data.dist;
+					break;
+				}
 			}
 			else
 				dodgeDistance = 5;

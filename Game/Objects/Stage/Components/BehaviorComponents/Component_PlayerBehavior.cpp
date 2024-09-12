@@ -74,7 +74,6 @@ void Component_PlayerBehavior::Initialize()
 }
 
 void Component_PlayerBehavior::Update()
-
 {
 	// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
 	// カウント制御されている場合の処理
@@ -289,17 +288,43 @@ void Component_PlayerBehavior::Dodge()
 			// 移動方向がゼロベクトルでなければ、移動方向を取得
 			if (IsXMVectorZero(move->GetMoveDirection()) == false)dir = move->GetMoveDirection();
 		}
+
+		// 突進方向を設定
 		tackle->SetDirection(dir);
 
+		// ステージ情報を取得
+		Stage* pStage = (Stage*)(holder_->FindObject("Stage"));
+		if (pStage == nullptr) return;
+		auto stageObj = pStage->GetStageObjects();
 
-		vector<float>rayDist =  holder_->GetRayDistances();
+		// ステージオブジェクトすべてにレイを撃つ
+		for (auto obj : stageObj) {
+			// 自分自身のオブジェクトだったらスキップ
+			if (obj->GetObjectName() == holder_->GetObjectName())
+				continue;
 
-		for (auto ray : rayDist) {
-			if (ray < dodgeDistance) {
-				dodgeDistance = ray;
+			// モデルハンドルを取得
+			int hGroundModel = obj->GetModelHandle();
+			if (hGroundModel < 0) continue;
+
+			RayCastData data;
+			data.start = holder_->GetPosition(); // レイの発射位置
+			XMStoreFloat3(&data.dir, dir); // レイの方向
+			
+			Model::RayCast(hGroundModel, &data); // レイを発射
+
+			if (data.hit && data.dist <= dodgeDistance) {
+				dodgeDistance = data.dist;
 				break;
 			}
+			else
+				dodgeDistance = 5;
+			
+			
 		}
+
+
+
 		// 突進距離を設定
 		tackle->SetDistance(dodgeDistance);
 

@@ -12,6 +12,7 @@
 #include "../Otheres/GameEditor.h"
 #include "../Objects/Stage/SkySphere.h"
 #include "../../Engine/GameObject/Camera.h"
+#include "../Otheres/RankingManager.h"
 
 Scene_Result::Scene_Result(GameObject* parent_)
 {
@@ -52,7 +53,13 @@ void Scene_Result::Initialize()
 		// テキストにスコアの値を設定
 		UIText* scoreNumText = (UIText*)uiPanel->GetUIObject("ScoreNum");
 		scoreNumText->SetText(&scoreNum_);
+	}
 
+	// ランキングにスコアを追加
+	RankingManager* rm = &RankingManager::GetInstance(); {
+		rm->Load("ranking.csv");
+		rm->AddScore(scoreNum_);
+		rm->Save("ranking.csv");
 	}
 
 	// ステージを作成 & 読み込み

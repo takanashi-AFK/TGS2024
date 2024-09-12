@@ -76,6 +76,9 @@ void UIText::Load(json& loadObj)
 		if(loadObj["FontData"].contains("filePath"))fontData_.filePath = loadObj["FontData"]["filePath"].get<string>();
 		if (loadObj["FontData"].contains("charSize"))fontData_.charSize = { loadObj["FontData"]["charSize"][0].get<int>(),loadObj["FontData"]["charSize"][1].get<int>(), };
 		if (loadObj["FontData"].contains("rowLength"))fontData_.rowLength = loadObj["FontData"]["rowLength"].get<int>();
+
+		// フォントデータを設定
+		pText_->Initialize(fontData_.filePath.c_str(), fontData_.charSize.x, fontData_.charSize.y, fontData_.rowLength);
 	}
 }
 
@@ -106,12 +109,14 @@ void UIText::DrawData()
 		ImGui::Text("Current Text : %s", drawText_.c_str());
 		char buffer[256] = "";
 		if (ImGui::InputTextWithHint("##Input", "Input New Text...", buffer, IM_ARRAYSIZE(buffer)))this->drawText_ = buffer;
+
+		ImGui::TreePop();
 	}
 }
 
 void UIText::ChangeFontWindow()
 {
-	ImGui::Begin("ChangeFont"); {
+	ImGui::Begin("ChangeFont",&isOpenChangeFontWindow_); {
 
 		// フォントファイルを表示
 		static bool isFileExist = false;
@@ -126,15 +131,22 @@ void UIText::ChangeFontWindow()
 		if (ImGui::Button("select"))isFileExist = (GetFontFilePathFromExplorer(filePath));
 
 		// フォントのサイズを変更
-		ImGui::DragInt2("charSize", &fontData_.charSize.x, 1.0f, 1, 100);ImGui::SameLine();
+		ImGui::DragInt2("charSize", &fontData_.charSize.x, 1.0f, 1, 100);
 		ImGui::DragInt("rowLength", &fontData_.rowLength, 1.0f, 1, 100);
 
-		// フォントを変更
-		if (ImGui::Button("confirm")) {
-			if (isFileExist) {
-				fontData_.filePath = filePath;
-				pText_->Initialize(fontData_.filePath.c_str(), fontData_.charSize.x, fontData_.charSize.y, fontData_.rowLength);
-			}
+		// ファイルが存在する場合
+		if (isFileExist) if (ImGui::Button("confirm")) {
+
+			// フォントデータを設定
+			fontData_.filePath = filePath;
+			pText_->Initialize(fontData_.filePath.c_str(), fontData_.charSize.x, fontData_.charSize.y, fontData_.rowLength);
+
+			// ファイルが存在する場合はウィンドウを閉じる
+			isOpenChangeFontWindow_ = false;
+
+			// 静的変数を初期化
+			isFileExist = false;
+			filePath = "none";
 		}
 	}
 	ImGui::End();
@@ -185,74 +197,4 @@ bool UIText::GetFontFilePathFromExplorer(string& _filePath) const
 
 	_filePath = filePath;
 	return true;
-}
-
-void UIText::OpenChangeFontDialog()
-{
-	if(openChangeFontDialog_){
-		ImGui::Begin("ChangeFont");
-	
-
-		if (ImGui::Button("Select fontPath")) {
-			//現在のカレントディレクトリを覚えておく
-			char defaultCurrentDir[MAX_PATH];
-			GetCurrentDirectory(MAX_PATH, defaultCurrentDir);
-
-			// 追加するオブジェクトのモデルファイルパスを設定
-			{
-				// 「ファイルを開く」ダイアログの設定用構造体を設定
-				OPENFILENAME ofn; {
-					TCHAR szFile[MAX_PATH] = {}; // ファイル名を格納するバッファ
-					ZeroMemory(&ofn, sizeof(ofn)); // 構造体の初期化
-					ofn.lStructSize = sizeof(ofn); // 構造体のサイズ
-					ofn.lpstrFile = szFile; // ファイル名を格納するバッファ
-					ofn.lpstrFile[0] = '\0'; // 初期化
-					ofn.nMaxFile = sizeof(szFile); // ファイル名バッファのサイズ
-					ofn.lpstrFilter = TEXT("PNGファイル(*.png)\0*.png\0すべてのファイル(*.*)\0*.*\0"); // フィルター（FBXファイルのみ表示）
-					ofn.nFilterIndex = 1; // 初期選択するフィルター
-					ofn.Flags = OFN_PATHMUSTEXIST | OFN_FILEMUSTEXIST; // フラグ（ファイルが存在すること、パスが存在することを確認）
-					ofn.lpstrInitialDir = TEXT("."); // カレントディレクトリを初期選択位置として設定
-				}
-
-				// ファイルを選択するダイアログの表示
-				if (GetOpenFileName(&ofn) == TRUE) {
-					// ファイルパスを取得
-					fontFilePath_ = ofn.lpstrFile;
-
-					// カレントディレクトリからの相対パスを取得
-					fontFilePath_ = FileManager::GetAssetsRelativePath(fontFilePath_);
-
-					// 文字列内の"\\"を"/"に置換
-					FileManager::ReplaceBackslashes(fontFilePath_);
-
-					// ディレクトリを戻す
-					SetCurrentDirectory(defaultCurrentDir);
-
-
-				}
-				else {
-					return;
-				}
-			}
-		}
-			ImGui::Text("%s", fontFilePath_.c_str());
-			ImGui::DragInt("charWidth", &charWidth);
-			ImGui::DragInt("charHeight", &charHeight);
-			ImGui::DragInt("rowLength", &rowLength);
-
-			if (ImGui::Button("confirm")) {
-
-				if (fontFilePath_ == "") {
-					ImGui::TextColored(ImVec4(1, 0, 0, 1), "Please Select FilePath");
-				}
-				else {
-					pText_ = new Text;
-					pText_->Initialize(fontFilePath_.c_str(), charWidth, charHeight, rowLength);
-				}
-			}
-
-
-		ImGui::End();
-	}
-
 }

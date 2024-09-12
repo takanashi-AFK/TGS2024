@@ -30,21 +30,25 @@ void Scene_Title::Update()
 {
 	// シーン切替処理
 	{
-		// ボタンを取得
-		UIButton* button = (UIButton*)UIPanel::GetInstance()->GetUIObject("title_startButton");
+		UIButton* rankingScene_changeButton = (UIButton*)UIPanel::GetInstance()->GetUIObject("rankingScene_changeButton");
+		// ボタンが押されたらシーンを切り替える
+		if (rankingScene_changeButton != nullptr) if (rankingScene_changeButton->OnClick() == true) {
 
-		// ボタンが取得できたら
-		if (button != nullptr) {
-
-			// ボタンが押されたらシーンを切り替える
-			if (button->OnClick() == true) {
-
-				// シーンを切り替える
-				SceneManager* sceneManager = (SceneManager*)FindObject("SceneManager");
-				sceneManager->ChangeScene(SCENE_ID_PLAY, TID_BLACKOUT);
-				button = nullptr;
-			}
+			// シーンを切り替える
+			SceneManager* sceneManager = (SceneManager*)FindObject("SceneManager");
+			sceneManager->ChangeScene(SCENE_ID_RANKING, TID_BLACKOUT);
 		}
+
+		// ボタンを取得
+		UIButton* title_startButton = (UIButton*)UIPanel::GetInstance()->GetUIObject("title_startButton");
+		// ボタンが押されたらシーンを切り替える
+		if (title_startButton != nullptr) if (title_startButton->OnClick() == true) {
+
+			// シーンを切り替える
+			SceneManager* sceneManager = (SceneManager*)FindObject("SceneManager");
+			sceneManager->ChangeScene(SCENE_ID_PLAY, TID_BLACKOUT);
+		}	
+		
 	}
 }
 

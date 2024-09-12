@@ -3,7 +3,7 @@
 
 class Scene_Ranking : public GameObject
 {
-private:
+public:
 	/// <summary> コンストラクタ </summary>
 	Scene_Ranking(GameObject* _parent);
 

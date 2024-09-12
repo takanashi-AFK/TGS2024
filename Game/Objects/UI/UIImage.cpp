@@ -23,7 +23,6 @@ void UIImage::Draw()
 
     Image::SetTransform(imageHandle_, transform_);
     Image::Draw(imageHandle_);
-    
 }
 
 void UIImage::Release()

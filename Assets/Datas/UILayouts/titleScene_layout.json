@@ -1,1 +1,29 @@
-{"title_logo":{"imageFilePath_":"Images/title_logo.png","layerNumber_":1,"objectName_":"title_logo","position_":[0.0,0.0,0.0],"rotate_":[0.0,0.0,0.0],"scale_":[1.0,1.0,1.0],"type_":2},"title_startButton":{"imageFilePath_":"Images/title_startButton.png","layerNumber_":2,"objectName_":"title_startButton","position_":[0.0,0.0,0.0],"rotate_":[0.0,0.0,0.0],"scale_":[1.0,1.0,1.0],"type_":1}}
+{
+  "background": {
+    "imageFilePath_": "Images/title_backGround_02.png",
+    "layerNumber_": 1,
+    "objectName_": "background",
+    "position_": [ 0.0, 0.0, 0.0 ],
+    "rotate_": [ 0.0, 0.0, 0.0 ],
+    "scale_": [ 1.0, 1.0, 1.0 ],
+    "type_": 2
+  },
+  "rankingScene_changeButton": {
+    "imageFilePath_": "Images/BossIcon.png",
+    "layerNumber_": 3,
+    "objectName_": "rankingScene_changeButton",
+    "position_": [ 0.8799999952316284, -0.800000011920929, 0.0 ],
+    "rotate_": [ 0.0, 0.0, 0.0 ],
+    "scale_": [ 0.10000000149011612, 0.10000000149011612, 1.0 ],
+    "type_": 1
+  },
+  "title_startButton": {
+    "imageFilePath_": "Images/title_startButton.png",
+    "layerNumber_": 2,
+    "objectName_": "title_startButton",
+    "position_": [ 0.0, 0.0, 0.0 ],
+    "rotate_": [ 0.0, 0.0, 0.0 ],
+    "scale_": [ 1.0, 1.0, 1.0 ],
+    "type_": 1
+  }
+}

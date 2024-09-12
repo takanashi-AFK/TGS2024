@@ -262,7 +262,6 @@ void Component_PlayerBehavior::Shoot()
 
 void Component_PlayerBehavior::Dodge()
 {
-
 	// NOTE: 一度だけダッシュ処理を実行するためのフラグ
 	static bool isDash = false;
 	static float frameCount = 0;
@@ -345,16 +344,17 @@ void Component_PlayerBehavior::Dodge()
 		// ダッシュフラグを立てる
 		isDash = true;
 	}
-		// effekseer: :Effectの再生情報の設定
-		EFFEKSEERLIB::EFKTransform t;/*★★★*/
-		DirectX::XMStoreFloat4x4(&(t.matrix), holder_->GetWorldMatrix());/*★★★*/
-		t.isLoop = false;/*★★★*/
-		t.maxFrame = 60;/*★★★*/
-		t.speed = 1.f;/*★★★*/
-
-		// effekseer: :Effectの再生
-		mt = EFFEKSEERLIB::gEfk->Play("dodge", t);/*★★★*/
- 
+	
+	// エフェクトの再生処理
+	{
+		EFFEKSEERLIB::EFKTransform t;
+		DirectX::XMStoreFloat4x4(&(t.matrix), holder_->GetWorldMatrix());
+		t.isLoop = false;
+		t.maxFrame = 60;
+		t.speed = 1.f;
+		mt = EFFEKSEERLIB::gEfk->Play("dodge", t);
+	}
+	
 	// nフレーム経過語に、無敵状態を解除
 	{
 		frameCount++;
@@ -366,13 +366,16 @@ void Component_PlayerBehavior::Dodge()
 
 	// 突進処理が終了していたら...
 	if (tackle->IsActived() == false) {
+
 		// ダッシュフラグをリセット
 		isDash = false;
 
 		//移動を可能にする
 		move->Execute();
 
+
 		dodgeDistance = 5;
+
 		// 状態を遷移
 		IsWASDKey() ? SetState(PLAYER_STATE_WALK) : SetState(PLAYER_STATE_IDLE);
 	}

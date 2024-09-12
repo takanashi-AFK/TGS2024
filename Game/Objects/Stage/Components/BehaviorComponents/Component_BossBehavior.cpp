@@ -20,7 +20,7 @@ namespace
     const float SHOT_RATE = 0.2f;
     const float SHOT_ANGLE = 15;
     const int SHOT_TIME = 5;
-	const float SMALL_VEROSITY = 0.05f;
+	const float SMALL_VEROSITY = 0.02f;
     EFFEKSEERLIB::EFKTransform t;/*ÅöÅöÅö*/
 }
 

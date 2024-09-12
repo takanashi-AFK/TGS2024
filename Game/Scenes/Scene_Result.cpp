@@ -12,6 +12,7 @@
 #include "../Otheres/GameEditor.h"
 #include "../Objects/Stage/SkySphere.h"
 #include "../../Engine/GameObject/Camera.h"
+#include "../Otheres/RankingManager.h"
 
 Scene_Result::Scene_Result(GameObject* parent_)
 {
@@ -45,14 +46,19 @@ void Scene_Result::Initialize()
 		UIText* timeNumText = (UIText*)uiPanel->GetUIObject("TimeNum");
 		timeNumText->SetText(&ScoreManager::time);
 
-		// 上記の値値からスコアを計算
-		scoreNum_ = ScoreManager::playerHp * 100 + ScoreManager::time * 10;
-		if(ScoreManager::isClear)scoreNum_ *=2;
+		// スコアの計算
+		scoreNum_ = CalculateScore(ScoreManager::isClear, ScoreManager::time, ScoreManager::playerHp);
 
 		// テキストにスコアの値を設定
 		UIText* scoreNumText = (UIText*)uiPanel->GetUIObject("ScoreNum");
 		scoreNumText->SetText(&scoreNum_);
+	}
 
+	// ランキングにスコアを追加
+	RankingManager* rm = &RankingManager::GetInstance(); {
+		rm->Load("ranking.csv");
+		rm->AddScore(scoreNum_);
+		rm->Save("ranking.csv");
 	}
 
 	// ステージを作成 & 読み込み
@@ -77,29 +83,29 @@ void Scene_Result::Update()
 
 	// カメラの回転処理
 	{
-		// カメラの位置と注視点を取得
-		XMFLOAT3 camPos = Camera::GetPosition();
-		XMFLOAT3 camTarget = Camera::GetTarget();
+		//// カメラの位置と注視点を取得
+		//XMFLOAT3 camPos = Camera::GetPosition();
+		//XMFLOAT3 camTarget = Camera::GetTarget();
 
-		// カメラの高さを固定
-		camPos.y = CAMERA_HEIGHT;
+		//// カメラの高さを固定
+		//camPos.y = CAMERA_HEIGHT;
 
-		// 1fにつき回転する角度
-		static float angle = 0.005f;
+		//// 1fにつき回転する角度
+		//static float angle = 0.005f;
 
-		// 回転行列を作成 (Y軸周りに回転)
-		XMMATRIX rotationMatrix = XMMatrixRotationY(angle);
+		//// 回転行列を作成 (Y軸周りに回転)
+		//XMMATRIX rotationMatrix = XMMatrixRotationY(angle);
 
-		// カメラの位置をベクトル化
-		XMVECTOR vCamPosition = XMLoadFloat3(&camPos);
+		//// カメラの位置をベクトル化
+		//XMVECTOR vCamPosition = XMLoadFloat3(&camPos);
 
-		// カメラの位置を座標回転
-		vCamPosition = XMVector3Transform(vCamPosition, rotationMatrix);
-		XMStoreFloat3(&camPos, vCamPosition);
+		//// カメラの位置を座標回転
+		//vCamPosition = XMVector3Transform(vCamPosition, rotationMatrix);
+		//XMStoreFloat3(&camPos, vCamPosition);
 
-		// カメラの位置と注視点を設定
-		Camera::SetPosition(camPos);
-		Camera::SetTarget(0, 0, 0);
+		//// カメラの位置と注視点を設定
+		//Camera::SetPosition(camPos);
+		//Camera::SetTarget(0, 0, 0);
 	}
 }
 
@@ -109,4 +115,16 @@ void Scene_Result::Draw()
 
 void Scene_Result::Release()
 {
+}
+
+int Scene_Result::CalculateScore(bool isCleared, int remainingTime, int remainingHP)
+{
+	if (!isCleared) {
+		return 0; // クリアしていない場合のスコア
+	}
+	int clearBonus = 1000; // クリアボーナス (1000ポイント)
+	int timeBonus = remainingTime * 100; // 時間のボーナス（1秒あたり1000ポイント）
+	int hpBonus = remainingHP * 500;		// HPのボーナス（HP1あたり5000ポイント）
+
+	return clearBonus + timeBonus + hpBonus;
 }

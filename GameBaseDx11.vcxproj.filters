@@ -298,6 +298,7 @@
     <ClCompile Include="Game\Otheres\AudioController.cpp" />
     <ClCompile Include="Game\Scenes\Scene_Result.cpp" />
     <ClCompile Include="Game\Objects\UI\UITimer.cpp" />
+    <ClCompile Include="Game\Scenes\Scene_Ranking.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Collider\BoxCollider.h">
@@ -521,6 +522,7 @@
     <ClInclude Include="Game\Otheres\AudioController.h" />
     <ClInclude Include="Game\Scenes\Scene_Result.h" />
     <ClInclude Include="Game\Objects\UI\UITimer.h" />
+    <ClInclude Include="Game\Scenes\Scene_Ranking.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Assets\Shader\Simple2D.hlsl">

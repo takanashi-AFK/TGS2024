@@ -100,7 +100,7 @@ void Component_PlayerBehavior::Update()
 			return;
 		}
 	}
-	
+
 	// HP関連処理
 	{
 		// プレイヤーのHPゲージコンポーネントを取得
@@ -109,8 +109,8 @@ void Component_PlayerBehavior::Update()
 		// UIProgressBarを取得
 		UIProgressBar* hpBar = (UIProgressBar*)UIPanel::GetInstance()->FindObject("HPBar_player");
 
-        // HPの値を移動
-        ScoreManager::playerHp = hg->now_;
+		// HPの値を移動
+		ScoreManager::playerHp = hg->now_;
 
 		// HPバーの値を設定
 		if (hpBar != nullptr && hg != nullptr)hpBar->SetProgress(&hg->now_, &hg->max_);
@@ -193,7 +193,7 @@ void Component_PlayerBehavior::Walk()
 	if (Input::IsKeyDown(DIK_SPACE)) SetState(PLAYER_STATE_DODGE);
 
 	// マウスの左ボタンが押されていたかつ、マウスの右ボタンが押されてたら、射撃状態に遷移
-	else if(Input::IsMouseButtonDown(0)) SetState(PLAYER_STATE_SHOOT);
+	else if (Input::IsMouseButtonDown(0)) SetState(PLAYER_STATE_SHOOT);
 }
 
 void Component_PlayerBehavior::Shoot()
@@ -204,7 +204,7 @@ void Component_PlayerBehavior::Shoot()
 
 	// TPSカメラの方向を取得
 	TPSCamera* tpsCamera = (TPSCamera*)holder_->FindObject("TPSCamera");
-	if(tpsCamera != nullptr)holder_->SetRotateY(tpsCamera->GetAngle().y);
+	if (tpsCamera != nullptr)holder_->SetRotateY(tpsCamera->GetAngle().y);
 
 	// 射撃モーションのアニメーションの現在の再生時間を取得
 	float nowFrame = motion->GetNowFrame();
@@ -225,7 +225,7 @@ void Component_PlayerBehavior::Shoot()
 			XMFLOAT3 shootPosition = holder_->GetPosition();
 			shootPosition.y += shootHeight_;
 			shoot->SetShootingPosition(shootPosition);
-			
+
 			// 発射方向を設定
 			shoot->SetShootingDirection(CalcShootDirection());
 		}
@@ -251,7 +251,7 @@ void Component_PlayerBehavior::Shoot()
 	// アニメーションが終わったら...
 	if (motion->IsEnd()) { isEnd = true; SetState(PLAYER_STATE_IDLE); }
 
-	if(isEnd == true){
+	if (isEnd == true) {
 		// 射撃フラグをリセット
 		isShoot = false;
 
@@ -266,13 +266,13 @@ void Component_PlayerBehavior::Dodge()
 	static bool isDash = false;
 	static float frameCount = 0;
 	static float dodgeDistance = 5;
-	
+
 	// プレイヤーのHPゲージコンポーネントを取得
 	Component_HealthGauge* hg = (Component_HealthGauge*)(GetChildComponent("PlayerHealthGauge"));
-	if(hg == nullptr)return;
+	if (hg == nullptr)return;
 
 	// 移動コンポーネントの取得 & 有無の確認
-	Component_WASDInputMove * move = (Component_WASDInputMove*)(GetChildComponent("InputMove"));
+	Component_WASDInputMove* move = (Component_WASDInputMove*)(GetChildComponent("InputMove"));
 	if (move == nullptr)return;
 
 	// 突進コンポーネントの取得 & 有無の確認
@@ -308,13 +308,14 @@ void Component_PlayerBehavior::Dodge()
 
 			RayCastData data;
 			data.start = holder_->GetPosition(); // レイの発射位置
+			data.start.y += 0.5;
 			XMStoreFloat3(&data.dir, dir); // レイの方向
-			
+
 			Model::RayCast(hGroundModel, &data); // レイを発射
 
 			if (data.hit && data.dist <= dodgeDistance) {
 
-				if (data.dist <= 0.6) {
+				if (data.dist <= 0.7) {
 					dodgeDistance = 0;
 					break;
 				}
@@ -325,8 +326,8 @@ void Component_PlayerBehavior::Dodge()
 			}
 			else
 				dodgeDistance = 5;
-			
-			
+
+
 		}
 
 
@@ -344,7 +345,7 @@ void Component_PlayerBehavior::Dodge()
 		// ダッシュフラグを立てる
 		isDash = true;
 	}
-	
+
 	// エフェクトの再生処理
 	{
 		EFFEKSEERLIB::EFKTransform t;
@@ -354,11 +355,11 @@ void Component_PlayerBehavior::Dodge()
 		t.speed = 1.f;
 		mt = EFFEKSEERLIB::gEfk->Play("dodge", t);
 	}
-	
+
 	// nフレーム経過語に、無敵状態を解除
 	{
 		frameCount++;
-		
+
 		if (frameCount >= invincibilityFrame_) {
 			hg->Unlock();
 		}
@@ -392,7 +393,7 @@ bool Component_PlayerBehavior::IsDead()
 {
 	Component_PlayerMotion* motion = (Component_PlayerMotion*)(GetChildComponent("PlayerMotion"));
 
-	if(motion!= nullptr) return motion->IsEnd() && nowState_ == PLAYER_STATE_DEAD;
+	if (motion != nullptr) return motion->IsEnd() && nowState_ == PLAYER_STATE_DEAD;
 	return false;
 }
 

@@ -46,9 +46,8 @@ void Scene_Result::Initialize()
 		UIText* timeNumText = (UIText*)uiPanel->GetUIObject("TimeNum");
 		timeNumText->SetText(&ScoreManager::time);
 
-		// 上記の値値からスコアを計算
-		scoreNum_ = ScoreManager::playerHp * 100 + ScoreManager::time * 10;
-		if(ScoreManager::isClear)scoreNum_ *=2;
+		// スコアの計算
+		scoreNum_ = CalculateScore(ScoreManager::isClear, ScoreManager::time, ScoreManager::playerHp);
 
 		// テキストにスコアの値を設定
 		UIText* scoreNumText = (UIText*)uiPanel->GetUIObject("ScoreNum");
@@ -116,4 +115,16 @@ void Scene_Result::Draw()
 
 void Scene_Result::Release()
 {
+}
+
+int Scene_Result::CalculateScore(bool isCleared, int remainingTime, int remainingHP)
+{
+	if (!isCleared) {
+		return 0; // クリアしていない場合のスコア
+	}
+	int clearBonus = 1000; // クリアボーナス (1000ポイント)
+	int timeBonus = remainingTime * 100; // 時間のボーナス（1秒あたり1000ポイント）
+	int hpBonus = remainingHP * 500;		// HPのボーナス（HP1あたり5000ポイント）
+
+	return clearBonus + timeBonus + hpBonus;
 }

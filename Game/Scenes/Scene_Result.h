@@ -19,6 +19,8 @@ public:
 
 	//開放
 	void Release() override;
-
+	
+	//スコア計算
+	int CalculateScore(bool isCleared, int remainingTime, int remainingHP);
 };
 

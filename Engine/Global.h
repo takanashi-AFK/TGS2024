@@ -14,6 +14,7 @@
 #define REFERENCE_XMFLOAT3(p) p.x,p.y,p.z 
 #define REFERENCE_XMFLOAT4(p) p.x,p.y,p.z,p.w 
 #define REFERENCE_XMVECTOR3(p) XMVectorGetX(p),XMVectorGetY(p),XMVectorGetZ(p)
+#define REFERENCE_XMINT2(p) p.x,p.y
 
 // オペレーターのオーバーロード
 XMFLOAT3 operator+(XMFLOAT3& a, const XMFLOAT3& b);

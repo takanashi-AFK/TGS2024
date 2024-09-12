@@ -5,7 +5,6 @@
 #include "Components/Component.h"
 #include "../../../Engine/DirectX/Direct3D.h"
 #include <vector>
-
 // usingêÈåæ
 using std::vector;
 
@@ -145,6 +144,7 @@ public:
 
 	void SetShader(Direct3D::SHADER_TYPE _type) { shaderType_ = _type; };
 	Direct3D::SHADER_TYPE GetShader() { return shaderType_; };
+
 };
 
 /// <summary>

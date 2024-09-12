@@ -31,6 +31,7 @@
 
 namespace {
 	const int SHOOT_FRAME = 115;
+	const float DODGE_DISTANCE = 5.0f;
 
 	bool IsXMVectorZero(XMVECTOR _vec) {
 		return XMVector3Equal(_vec, XMVectorZero());
@@ -57,7 +58,7 @@ Component_PlayerBehavior::Component_PlayerBehavior(string _name, StageObject* _h
 void Component_PlayerBehavior::Initialize()
 {
 	// コライダーの追加
-	holder_->AddCollider(new BoxCollider(XMFLOAT3(0, 0, 0), XMFLOAT3(1, 1, 1)));
+	holder_->AddCollider(new BoxCollider(XMFLOAT3(0, 0.5, 0), XMFLOAT3(1, 1, 1)));
 
 	// effekseer: :Effectの読み込み
 	EFFEKSEERLIB::gEfk->AddEffect("dodge", "Effects/Lazer01.efk");/*★★★*/
@@ -73,7 +74,6 @@ void Component_PlayerBehavior::Initialize()
 }
 
 void Component_PlayerBehavior::Update()
-
 {
 	// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
 	// カウント制御されている場合の処理
@@ -265,6 +265,7 @@ void Component_PlayerBehavior::Dodge()
 	// NOTE: 一度だけダッシュ処理を実行するためのフラグ
 	static bool isDash = false;
 	static float frameCount = 0;
+	static float dodgeDistance = 5;
 	
 	// プレイヤーのHPゲージコンポーネントを取得
 	Component_HealthGauge* hg = (Component_HealthGauge*)(GetChildComponent("PlayerHealthGauge"));
@@ -286,10 +287,52 @@ void Component_PlayerBehavior::Dodge()
 			// 移動方向がゼロベクトルでなければ、移動方向を取得
 			if (IsXMVectorZero(move->GetMoveDirection()) == false)dir = move->GetMoveDirection();
 		}
+
+		// 突進方向を設定
 		tackle->SetDirection(dir);
 
+		// ステージ情報を取得
+		Stage* pStage = (Stage*)(holder_->FindObject("Stage"));
+		if (pStage == nullptr) return;
+		auto stageObj = pStage->GetStageObjects();
+
+		// ステージオブジェクトすべてにレイを撃つ
+		for (auto obj : stageObj) {
+			// 自分自身のオブジェクトだったらスキップ
+			if (obj->GetObjectName() == holder_->GetObjectName())
+				continue;
+
+			// モデルハンドルを取得
+			int hGroundModel = obj->GetModelHandle();
+			if (hGroundModel < 0) continue;
+
+			RayCastData data;
+			data.start = holder_->GetPosition(); // レイの発射位置
+			XMStoreFloat3(&data.dir, dir); // レイの方向
+			
+			Model::RayCast(hGroundModel, &data); // レイを発射
+
+			if (data.hit && data.dist <= dodgeDistance) {
+
+				if (data.dist <= 0.6) {
+					dodgeDistance = 0;
+					break;
+				}
+				else {
+					dodgeDistance = data.dist;
+					break;
+				}
+			}
+			else
+				dodgeDistance = 5;
+			
+			
+		}
+
+
+
 		// 突進距離を設定
-		tackle->SetDistance(5.f);
+		tackle->SetDistance(dodgeDistance);
 
 		// 突進処理を実行
 		tackle->Execute();
@@ -329,6 +372,9 @@ void Component_PlayerBehavior::Dodge()
 
 		//移動を可能にする
 		move->Execute();
+
+
+		dodgeDistance = 5;
 
 		// 状態を遷移
 		IsWASDKey() ? SetState(PLAYER_STATE_WALK) : SetState(PLAYER_STATE_IDLE);

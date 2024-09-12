@@ -121,38 +121,57 @@ bool StageObject::DeleteAllComponent()
 	// リスト内にある要素をすべて削除
 	myComponents_.clear();return true;
 }
-
 void StageObject::OnGround(float _fallSpeed)
 {
-	// 無効なら処理を抜ける
-	if (isOnGround_ == false)return;
+	// オブジェクトが既に地面に設置されているなら処理を抜ける
+	if (!isOnGround_) return;
 
-	// レイキャストデータを作成
-	RayCastData data; {
-		data.start = (transform_.position_ - onGroundOffset_); // レイの発射位置
-		data.dir = XMFLOAT3(0, -1, 0); // レイの方向
-	}
+	float closestDist = FLT_MAX;  // 最短距離を保持
+	bool dataHit = false;         // レイが地面に当たったかどうか
 
 	// ステージオブジェクトを取得
 	Stage* pStage = (Stage*)FindObject("Stage");
-	if (pStage == nullptr)return;
+	if (pStage == nullptr) return;
+
+	auto stageObj = pStage->GetStageObjects();
+
+	// モデルのサイズを考慮した足元位置（中心位置からモデル高さの半分下）
+	float modelHeight = 3.5f;  // モデルの高さ
+	XMFLOAT3 rayStart = transform_.position_ + onGroundOffset_;
 
 	// 全てのオブジェクトに対してレイキャストを行う
-	for (auto obj : pStage->GetStageObjects()) {
+	for (auto obj : stageObj) {
+		// 自分自身のオブジェクトをスキップ
+		if (obj->GetObjectName() == this->objectName_)
+			continue;
 
-		// 自身のオブジェクト名と同じならスキップ
-		if (obj->GetObjectName() == this->objectName_)continue;
+		int hGroundModel = obj->modelHandle_;
 
-		// レイキャストを行う
-		Model::RayCast(obj->GetModelHandle(), &data);
+		// レイキャストデータの準備
+		RayCastData data;
+		data.start = rayStart;             // レイの発射位置（足元）
+		data.dir = XMFLOAT3(0, -1, 0);     // レイの方向（下方向）
 
-		// レイが当たったら
+		// レイを発射して地面との距離を測定
+		Model::RayCast(hGroundModel, &data);
+
+		// レイが地面に当たったら
 		if (data.hit) {
-			//その分位置を下げる
-			transform_.position_.y -= data.dist * _fallSpeed;
+			// 最短距離の地面に更新
+			if (data.dist < closestDist) {
+				closestDist = data.dist;
+				dataHit = true;
+			}
 		}
 	}
+
+	// レイが地面に当たっていれば、最短距離に基づいて位置を調整
+	if (dataHit) {
+		transform_.position_.y -= (closestDist - modelHeight / 2);
+	}
 }
+
+
 
 void StageObject::CollisionWall()
 {
@@ -160,8 +179,10 @@ void StageObject::CollisionWall()
 
 	Stage* pStage = static_cast<Stage*>(FindObject("Stage"));
 	if (pStage == nullptr) return;
+
 	auto stageObj = pStage->GetStageObjects();
 
+	// 全てのオブジェクトに対して水平方向のレイキャストを行う
 	for (auto obj : stageObj) {
 		if (obj->GetObjectName() == this->objectName_)
 			continue;
@@ -179,6 +200,7 @@ void StageObject::CollisionWall()
 		for (const auto& dir : directions) {
 			RayCastData data;
 			data.start = transform_.position_; // レイの発射位置
+			data.start.y = transform_.position_.y + 0.5f;
 			data.dir = dir; // レイの方向
 			Model::RayCast(hGroundModel, &data); // レイを発射
 
@@ -193,7 +215,6 @@ void StageObject::CollisionWall()
 		}
 	}
 }
-
 void StageObject::PlayAnimation(int _start, int _end, float _speed)
 {
 	Model::SetAnimFrame(modelHandle_,_start, _end, _speed);
@@ -333,6 +354,9 @@ void StageObject::DrawData()
 	// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
 	if (ImGui::TreeNode("OnGround")) {
 		ImGui::Checkbox("isOnGround", &isOnGround_);
+		isOnGround_ ? ImGui::Text("true"): ImGui::Text("false");
+
+
 		ImGui::SameLine();
 		ImGui::Checkbox("isCollisionWall", &isCollisionWall_);
 		ImGui::DragFloat("fallSpeed", &fallSpeed_, 0.1f, 0.f, 1.f);

@@ -58,7 +58,7 @@ Component_PlayerBehavior::Component_PlayerBehavior(string _name, StageObject* _h
 void Component_PlayerBehavior::Initialize()
 {
 	// コライダーの追加
-	holder_->AddCollider(new BoxCollider(XMFLOAT3(0, 0, 0), XMFLOAT3(1, 1, 1)));
+	holder_->AddCollider(new BoxCollider(XMFLOAT3(0, 0.5, 0), XMFLOAT3(1, 1, 1)));
 
 	// effekseer: :Effectの読み込み
 	EFFEKSEERLIB::gEfk->AddEffect("dodge", "Effects/Lazer01.efk");/*★★★*/

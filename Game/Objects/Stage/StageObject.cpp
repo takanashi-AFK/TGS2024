@@ -124,43 +124,59 @@ bool StageObject::DeleteAllComponent()
 
 void StageObject::OnGround(float _fallSpeed)
 {
-	// 無効なら処理を抜ける
-	if (isOnGround_ == false)return;
-
-	// レイキャストデータを作成
-	RayCastData data; {
-		data.start = (transform_.position_ - onGroundOffset_); // レイの発射位置
-		data.dir = XMFLOAT3(0, -1, 0); // レイの方向
-	}
+	// オブジェクトが既に地面に設置されていないなら処理を抜ける
+	if (isOnGround_ == false) return;
 
 	// ステージオブジェクトを取得
 	Stage* pStage = (Stage*)FindObject("Stage");
-	if (pStage == nullptr)return;
+	if (pStage == nullptr) return;
+
+	auto stageObj = pStage->GetStageObjects();
+
+	// モデルのサイズを考慮した足元位置（中心位置からモデル高さの半分下）
+	float modelHeight = 3.5f;  // モデルの高さ
+	XMFLOAT3 rayStart = transform_.position_;
 
 	// 全てのオブジェクトに対してレイキャストを行う
-	for (auto obj : pStage->GetStageObjects()) {
+	for (auto obj : stageObj) {
+		// 自分自身のオブジェクトをスキップ
+		if (obj->GetObjectName() == this->objectName_)
+			continue;
 
-		// 自身のオブジェクト名と同じならスキップ
-		if (obj->GetObjectName() == this->objectName_)continue;
+		int hGroundModel = obj->modelHandle_;
+		if (hGroundModel < 0) continue;
 
-		// レイキャストを行う
-		Model::RayCast(obj->GetModelHandle(), &data);
+		// レイキャストデータの準備
+		RayCastData data;
+		data.start = rayStart;             // レイの発射位置（足元）
+		data.dir = XMFLOAT3(0, -1, 0);     // レイの方向（下方向）
 
-		// レイが当たったら
+		// レイを発射して地面との距離を測定
+		Model::RayCast(hGroundModel, &data);
+
+		// レイが地面に当たったら
 		if (data.hit) {
-			//その分位置を下げる
-			transform_.position_.y -= data.dist * _fallSpeed;
+			// 当たった距離から足元までの調整を行い、位置を下げる
+			float adjustedDist = data.dist;  // 足元からの距離そのまま使用
+			if (adjustedDist > 0) {
+				transform_.position_.y -= adjustedDist;
+			}
+			break;  // 1つの地面に当たったら処理を終了
 		}
 	}
 }
 
+
 void StageObject::CollisionWall()
 {
 	if (!isCollisionWall_) return;
+
 	Stage* pStage = static_cast<Stage*>(FindObject("Stage"));
 	if (pStage == nullptr) return;
+
 	auto stageObj = pStage->GetStageObjects();
 
+	// 全てのオブジェクトに対して水平方向のレイキャストを行う
 	for (auto obj : stageObj) {
 		if (obj->GetObjectName() == this->objectName_)
 			continue;
@@ -169,7 +185,7 @@ void StageObject::CollisionWall()
 		if (hGroundModel < 0) continue;
 
 		std::vector<XMFLOAT3> directions = {
-			XMFLOAT3(1,0, 0),  // right
+			XMFLOAT3(1, 0, 0),  // right
 			XMFLOAT3(-1, 0, 0), // left
 			XMFLOAT3(0, 0, 1),  // forward
 			XMFLOAT3(0, 0, -1)  // backward
@@ -192,7 +208,6 @@ void StageObject::CollisionWall()
 		}
 	}
 }
-
 void StageObject::PlayAnimation(int _start, int _end, float _speed)
 {
 	Model::SetAnimFrame(modelHandle_,_start, _end, _speed);

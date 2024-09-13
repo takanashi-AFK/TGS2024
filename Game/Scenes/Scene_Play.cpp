@@ -68,6 +68,7 @@ void Scene_Play::Update()
 		// カーソルの位置を中央に固定
 		if (fixedCursorPos) {
 			SetCursorPos(Direct3D::screenWidth_ / 2, Direct3D::screenHeight_ / 2);
+			ShowCursor(!fixedCursorPos);
 		}
 	}
 	

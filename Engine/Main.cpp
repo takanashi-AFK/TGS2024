@@ -34,13 +34,16 @@
 
 #pragma comment(lib,"Winmm.lib")
 
+
+bool isFullScreen = false;
+RECT windowRect = {};  // 元のウィンドウサイズを保存
 //定数宣言
 const char* WIN_CLASS_NAME = "SampleGame";	//ウィンドウクラス名
 
 //プロトタイプ宣言
 HWND InitApp(HINSTANCE hInstance, int screenWidth, int screenHeight, int nCmdShow);
 LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
-
+void ToggleFullScreen(HWND hWnd, bool& isFullScreen, RECT& windowRect);
 
 // エントリーポイント
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
@@ -155,8 +158,14 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 				lastUpdateTime = nowTime;	//現在の時間（最後に画面を更新した時間）を覚えておく
 				FPS++;						//画面更新回数をカウントする
 
+
 				//入力（キーボード、マウス、コントローラー）情報を更新
 				Input::Update();
+
+				if (Input::IsKeyDown(DIK_F4)) {
+					// 画面表示切替
+					ToggleFullScreen(hWnd, isFullScreen, windowRect);
+				}
 
 				//ImGuiの更新
 				ImGui_ImplDX11_NewFrame();
@@ -212,7 +221,6 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 				//トランジションの描画
 				Transition::Draw();
-
 #ifdef _DEBUG
 				ImGui::End();
 #endif // _DEBUG
@@ -224,6 +232,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 				//描画終了
 				Direct3D::EndDraw();
 				
+
+			
 				//ちょっと休ませる
 				Sleep(1);
 			}
@@ -322,4 +332,29 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 		return true;
 
 	return DefWindowProc(hWnd, msg, wParam, lParam);
+}
+
+// フルスクリーンモードとウィンドウモードを切り替える関数
+void ToggleFullScreen(HWND hWnd, bool& isFullScreen, RECT& windowRect) {
+	if (isFullScreen) {
+		// ウィンドウモードに戻す
+		SetWindowLong(hWnd, GWL_STYLE, WS_OVERLAPPEDWINDOW);
+		SetWindowPos(hWnd, HWND_NOTOPMOST, windowRect.left, windowRect.top,
+			windowRect.right - windowRect.left,
+			windowRect.bottom - windowRect.top,
+			SWP_FRAMECHANGED | SWP_NOZORDER | SWP_SHOWWINDOW);
+	}
+	else {
+		// フルスクリーンに切り替え
+		GetWindowRect(hWnd, &windowRect);  // 元のウィンドウサイズを保存
+		SetWindowLong(hWnd, GWL_STYLE, WS_POPUP);
+		MONITORINFO mi = { sizeof(mi) };
+		if (GetMonitorInfo(MonitorFromWindow(hWnd, MONITOR_DEFAULTTOPRIMARY), &mi)) {
+			SetWindowPos(hWnd, HWND_TOP, mi.rcMonitor.left, mi.rcMonitor.top,
+				mi.rcMonitor.right - mi.rcMonitor.left,
+				mi.rcMonitor.bottom - mi.rcMonitor.top,
+				SWP_FRAMECHANGED | SWP_NOZORDER | SWP_SHOWWINDOW);
+		}
+	}
+	isFullScreen = !isFullScreen;  // フルスクリーン状態を反転
 }

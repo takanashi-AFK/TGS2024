@@ -10,7 +10,6 @@
 
 // 前方宣言
 class CountDown;
-
 // プレイヤーの状態
 enum PlayerState {
 	PLAYER_STATE_IDLE = 0,	/* 待機 */

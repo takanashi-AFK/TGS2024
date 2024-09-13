@@ -55,6 +55,9 @@ public:
 	/// <summary> ImGuiパネル表示 </summary>
 	void DrawData() override;
 
+	/// <summary>ステートを返す</summary>
+	BossState GetState() { return nowState_; }
+
 /*
 setter :*/
 	/// <param name="_state"> ボスの状態 </param>

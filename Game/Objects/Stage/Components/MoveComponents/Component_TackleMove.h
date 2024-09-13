@@ -12,7 +12,6 @@ using namespace DirectX;
 class Component_TackleMove :public Component
 {
 private:
-	bool isActive_;				// 追従が有効かどうか
 	XMVECTOR direction_;		// 移動方向
 	float distance_;			// 移動距離
 	float speed_;				// 移動速度
@@ -72,9 +71,6 @@ public:
 	/// ImGuiパネル表示
 	/// </summary>
 	void DrawData()override;
-
-	void Execute() { isActive_ = true; }
-	void Stop() { isActive_ = false; }
 
 	/// <summary>
 	/// 実行されているかどうか

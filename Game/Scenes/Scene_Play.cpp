@@ -35,7 +35,7 @@ void Scene_Play::Initialize()
 
 	// stageLayout_jsonファイルを読み込む
 	json loadData;
-	if (JsonReader::Load("Stage01.json", loadData)) {
+	if (JsonReader::Load("Stage02.json", loadData)) {
 
 		// ステージを作成
 		pStage_ = Instantiate<Stage>(this);

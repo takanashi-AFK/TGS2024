@@ -326,8 +326,6 @@ void Component_PlayerBehavior::Dodge()
 			}
 			else
 				dodgeDistance = 5;
-
-
 		}
 
 

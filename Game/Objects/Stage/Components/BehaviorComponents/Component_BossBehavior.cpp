@@ -14,11 +14,14 @@
 #include "../GaugeComponents/Component_HealthGauge.h"
 #include "../../../UI/UIPanel.h"
 #include "../../../UI/UIProgressBar.h"
+#include "../../../../../Engine/ResourceManager/Model.h"
 
 namespace
 {
     const float SHOT_RATE = 0.2f;
     const float SHOT_ANGLE = 15;
+    const float MODEL_SIZE = 4.0f;
+    const float MODEL_SIZE_HALF = MODEL_SIZE / 2;
     const int SHOT_TIME = 5;
 	const float SMALL_VEROSITY = 0.02f;
     EFFEKSEERLIB::EFKTransform t;/*★★★*/
@@ -289,10 +292,18 @@ void Component_BossBehavior::Tackle()
 			XMFLOAT3 targetPos = target_->GetPosition();
 
 			// 突進方向を設定 
-			tackleMove->SetDirection(XMVectorSetY(XMVector3Normalize(XMLoadFloat3(&targetPos) - XMLoadFloat3(&holderPos)), 0));
+            XMVECTOR direction = XMVector3Normalize(XMLoadFloat3(&targetPos) - XMLoadFloat3(&holderPos));
+			tackleMove->SetDirection(XMVectorSetY(direction, 0));
+
+
+            // ステージ情報を取得
+            Stage* pStage = (Stage*)(holder_->FindObject("Stage"));
+            if (pStage == nullptr) return;
+            auto stageObj = pStage->GetStageObjects();
+            float dodgeDistance = XMVectorGetX(XMVector3Length(XMLoadFloat3(&targetPos) - XMLoadFloat3(&holderPos)));
 
 			// 距離を設定
-			tackleMove->SetDistance(XMVectorGetX(XMVector3Length(XMLoadFloat3(&targetPos) - XMLoadFloat3(&holderPos))));
+			tackleMove->SetDistance(dodgeDistance - MODEL_SIZE_HALF );
 
 			// 突進を実行
 			tackleMove->Execute();

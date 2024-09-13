@@ -18,6 +18,7 @@
 
 
 Scene_Play::Scene_Play(GameObject* parent)
+	:GameObject(parent,"Scene_Play"), pStage_(nullptr), tpsCamera_(nullptr), fixedCursorPos(true), cursorVisible(true)
 {
 }
 
@@ -51,31 +52,32 @@ void Scene_Play::Initialize()
 		tpsCamera_->SetActive(false);
 	}
 
+	ShowCursor(false);
 	countDown_ = Instantiate<CountDown>(this);
 }
 
 void Scene_Play::Update()
 {
 	TPSCamera* tpsCamera_ = (TPSCamera*)FindObject("TPSCamera");
-	UITimer* uiTimer =  (UITimer*)UIPanel::GetInstance()->FindObject("Timer");
+	UITimer* uiTimer = (UITimer*)UIPanel::GetInstance()->FindObject("Timer");
 
 	// カーソル固定化処理
-	static bool fixedCursorPos = false; {
-
+	
+	{
 		// 固定化の切り替え
-		if (Input::IsKeyDown(DIK_F3))fixedCursorPos = !fixedCursorPos;
-		
+		if (Input::IsKeyDown(DIK_F3)) {
+			fixedCursorPos = !fixedCursorPos;
+			cursorVisible = !fixedCursorPos;  // カーソルの表示状態を切り替える
+			ShowCursor(cursorVisible);
+		}
+
 		// カーソルの位置を中央に固定
 		if (fixedCursorPos) {
 			SetCursorPos(Direct3D::screenWidth_ / 2, Direct3D::screenHeight_ / 2);
-			ShowCursor(!fixedCursorPos);
 		}
 	}
-	
-	if (countDown_->IsFinished() && isGameStart_ == false) {
 
-		// カーソルの位置を中央に固定
-		fixedCursorPos = true;
+	if (countDown_->IsFinished() && isGameStart_ == false) {
 		
 		// カメラのアクティブ化
 		tpsCamera_->SetActive(true);
@@ -84,7 +86,7 @@ void Scene_Play::Update()
 		isGameStart_ = true;
 
 		// タイマーの開始
-		if (uiTimer != nullptr)uiTimer->StartTimer();
+		if (uiTimer != nullptr) uiTimer->StartTimer();
 	}
 
 

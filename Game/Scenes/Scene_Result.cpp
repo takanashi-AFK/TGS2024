@@ -24,6 +24,8 @@ namespace {
 
 void Scene_Result::Initialize()
 {
+	ShowCursor(true);
+
 	// jsonファイル読込用オブジェクトを用意
 	json loadData;
 

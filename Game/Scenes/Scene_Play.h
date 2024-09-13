@@ -19,6 +19,11 @@ private:
 	
 	bool isGameStart_ = false;
 
+	
+	bool fixedCursorPos;
+	bool cursorVisible;  // カーソルの表示状態を追跡するためのフラグ
+
+
 public:
 	//コンストラクタ
 	Scene_Play(GameObject* parent);

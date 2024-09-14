@@ -34,6 +34,7 @@ protected:
 		XMMATRIX	world;		// 頂点座標変換行列
 		XMMATRIX	uvTrans;	// テクスチャ座標変換行列
 		XMFLOAT4	color;		// テクスチャとの合成色
+		XMFLOAT2	angle;		// 回転角度
 	};
 
 	//【頂点バッファ】
@@ -76,7 +77,8 @@ public:
 
 	void Draw(Transform& transform, RECT rect, float alpha);
 	void Draw(Transform& transform, RECT rect, float alpha, Direct3D::SHADER_TYPE _shader);
-	void Draw(Transform& transform, RECT rect, float alpha, Direct3D::SHADER_TYPE _shader,XMFLOAT3 _color);
+	void Draw(Transform& transform, RECT rect, float alpha, Direct3D::SHADER_TYPE _shader, XMFLOAT3 _color);
+	void Draw(Transform& transform, RECT rect, float alpha,float startAngle,float endAngle);
 	
 	//画像サイズの取得
 	//戻値：画像サイズ

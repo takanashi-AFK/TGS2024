@@ -94,16 +94,16 @@ void Scene_Play::Update()
 	{
 		// シーン切替フラグを用意
 		bool isSceneChange = false;
-		
+
 		// プレイヤーが死んだ場合、切替フラグを立てる
-		for (auto playerBehavior : pStage_->FindComponents(ComponentType::PlayerBehavior))if (((Component_PlayerBehavior*)playerBehavior)->IsDead()) isSceneChange = true;
+		for (auto playerBehavior : pStage_->FindComponents(ComponentType::PlayerBehavior))if (((Component_PlayerBehavior*)playerBehavior)->IsDead()) {ScoreManager::isClear = false; isSceneChange = true;}
 		
 		// ボスが死んだ場合、切替フラグを立てる
 		for (auto bossBehavior : pStage_->FindComponents(ComponentType::BossBehavior)) if (((Component_BossBehavior*)bossBehavior)->IsDead()){ScoreManager::isClear = true;isSceneChange = true;}
 		
 		// タイマーが終了した場合、切替フラグを立てる
 		
-		if(uiTimer != nullptr)if (uiTimer->IsEnd())isSceneChange = true;
+		if (uiTimer != nullptr)if (uiTimer->IsEnd()) { ScoreManager::isClear = false; isSceneChange = true; }
 
 		// シーン切替フラグが立っている場合
 		if (isSceneChange == true) {

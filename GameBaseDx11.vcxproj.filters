@@ -299,6 +299,7 @@
     <ClCompile Include="Game\Scenes\Scene_Result.cpp" />
     <ClCompile Include="Game\Objects\UI\UITimer.cpp" />
     <ClCompile Include="Game\Scenes\Scene_Ranking.cpp" />
+    <ClCompile Include="Game\Otheres\RankingManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Collider\BoxCollider.h">
@@ -523,6 +524,7 @@
     <ClInclude Include="Game\Scenes\Scene_Result.h" />
     <ClInclude Include="Game\Objects\UI\UITimer.h" />
     <ClInclude Include="Game\Scenes\Scene_Ranking.h" />
+    <ClInclude Include="Game\Otheres\RankingManager.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Assets\Shader\Simple2D.hlsl">
@@ -547,6 +549,9 @@
       <Filter>02Shader</Filter>
     </FxCompile>
     <FxCompile Include="Assets\Shader\Damage.hlsl">
+      <Filter>02Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="Assets\Shader\Timer.hlsl">
       <Filter>02Shader</Filter>
     </FxCompile>
   </ItemGroup>

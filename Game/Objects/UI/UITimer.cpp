@@ -15,38 +15,30 @@ void UITimer::Initialize()
 	// テキストオブジェクトを生成＆初期化
 	pText_ = new Text();
 	pText_->Initialize();
+
+	// ゲージの画像を読み込む
+	circleGauge_.Load("Images/Timer_Gauge.png");
 }
 
 void UITimer::Update()
 {
-	// カウンターを更新
-	if(isActive_)count_--;
+	if (isActive_)count_--;  // カウントダウン
 
 	// カウンターが0になったら終了
-	if (count_ <= 0) EndTimer();
+	if (count_ <= 0)EndTimer();
+
+	// カウントダウンに応じてゲージの進行度を計算
+	float progress = (count_ > 0) ? (count_ / max_) : 0.0f;  // 進行割合を計算
+	circleGauge_.Update(progress);  // 進行割合を基にゲージを更新
 }
 
 void UITimer::Draw()
 {
-
-	// 表示位置を計算
-	float drawX = (transform_.position_.x * (Direct3D::screenWidth_ / 2)) + (Direct3D::screenWidth_ / 2);
-	float drawY = (transform_.position_.y * (Direct3D::screenHeight_ / 2)) + (Direct3D::screenHeight_ / 2);
-	
-	// 表示サイズを設定
-	pText_->SetScale(size_);
-
-	// 文字列を設定
-	string str{}; {
-		int totalSeconds = count_ / FPS;
-		int minutes = totalSeconds / 60;
-		int seconds = totalSeconds % 60;
-
-		str = std::to_string(minutes) + ":" + (seconds < 10 ? "0" : "") + std::to_string(seconds);
+	switch (drawType_)
+	{
+	case TEXT:DrawTextTimer(); break;
+	case CIRCLE_GAUGE:DrawCircleGaugeTimer(); break;
 	}
-
-	// テキストを描画
-	pText_->Draw(drawX, drawY,str.c_str());
 }
 
 void UITimer::Release()
@@ -60,6 +52,12 @@ void UITimer::Save(json& saveObj)
 
 	// テキストサイズの保存
 	saveObj["size"] = size_;
+
+	// 描画方法の保存
+	saveObj["drawType"] = drawType_;
+
+	// Circlegaugeのファイルパスを保存
+	saveObj["circleGaugeImage"] = circleGauge_.imageFilePath;
 }
 
 void UITimer::Load(json& loadObj)
@@ -70,17 +68,43 @@ void UITimer::Load(json& loadObj)
 
 	// テキストサイズの読み込み
 	if(loadObj.contains("size"))size_ = loadObj["size"];
+
+	// 描画方法の読み込み
+	if(loadObj.contains("drawType"))drawType_ = (TIMER_DRAW_TYPE)loadObj["drawType"];
+
+	// Circlegaugeのファイルパスを読み込み
+	if(loadObj.contains("circleGaugeImage"))circleGauge_.Load(loadObj["circleGaugeImage"]);
 }
 
 void UITimer::DrawData()
 {
 	// 描画の設定
 	if (ImGui::TreeNode("draw")) {
-		
-		// テキストの設定
-		ImGui::DragFloat("size", &size_, 0.01f, 0.1f, 10.f);
 
-		
+		// 描画タイプの設定
+		ImGui::Text("draw type");
+		ImGui::RadioButton("text", (int*)&drawType_, TEXT);
+		ImGui::SameLine();
+		ImGui::RadioButton("circle gauge", (int*)&drawType_, CIRCLE_GAUGE);
+
+		switch (drawType_)
+		{
+		case TEXT:
+			// テキストの設定
+			ImGui::DragFloat("size", &size_, 0.01f, 0.1f, 10.f);
+			break;
+		case CIRCLE_GAUGE:
+			// ゲージ画像の変更
+			ImGui::Text("image : %s", circleGauge_.imageFilePath.c_str()); ImGui::SameLine();
+			if (ImGui::SmallButton("...")) {
+
+				// 画像ファイルを選択して読み込む
+				string inputFilePath{};
+				if (GetImageFilePathFromExplorer(inputFilePath)) circleGauge_.Load(inputFilePath);
+			}
+			break;
+		}
+
 		ImGui::TreePop();
 	}
 
@@ -119,4 +143,104 @@ void UITimer::DrawData()
 		ImGui::Text("sec   : %f", count_ / FPS);
 		ImGui::TreePop();
 	}
+}
+
+void UITimer::DrawTextTimer()
+{
+	// 表示位置を計算
+	float drawX = (transform_.position_.x * (Direct3D::screenWidth_ / 2)) + (Direct3D::screenWidth_ / 2);
+	float drawY = (transform_.position_.y * (Direct3D::screenHeight_ / 2)) + (Direct3D::screenHeight_ / 2);
+
+	// 表示サイズを設定
+	pText_->SetScale(size_);
+
+	// 文字列を設定
+	string str{}; {
+		int totalSeconds = count_ / FPS;
+		int minutes = totalSeconds / 60;
+		int seconds = totalSeconds % 60;
+
+		str = std::to_string(minutes) + ":" + (seconds < 10 ? "0" : "") + std::to_string(seconds);
+	}
+
+	// テキストを描画
+	pText_->Draw(drawX, drawY, str.c_str());
+}
+
+void UITimer::DrawCircleGaugeTimer()
+{
+	// 画像を描画
+	circleGauge_.Draw(transform_);
+}
+
+bool UITimer::GetImageFilePathFromExplorer(string& _filePath) const
+{
+	//現在のカレントディレクトリを覚えておく
+	char defaultCurrentDir[MAX_PATH];
+	GetCurrentDirectory(MAX_PATH, defaultCurrentDir);
+
+	// 追加するオブジェクトのモデルファイルパスを設定
+	string filePath{}; {
+		// 「ファイルを開く」ダイアログの設定用構造体を設定
+		OPENFILENAME ofn; {
+			TCHAR szFile[MAX_PATH] = {}; // ファイル名を格納するバッファ
+			ZeroMemory(&ofn, sizeof(ofn)); // 構造体の初期化
+			ofn.lStructSize = sizeof(ofn); // 構造体のサイズ
+			ofn.lpstrFile = szFile; // ファイル名を格納するバッファ
+			ofn.lpstrFile[0] = '\0'; // 初期化
+			ofn.nMaxFile = sizeof(szFile); // ファイル名バッファのサイズ
+			ofn.lpstrFilter = TEXT("PNGファイル(*.png)\0*.png\0すべてのファイル(*.*)\0*.*\0"); // フィルター（FBXファイルのみ表示）
+			ofn.nFilterIndex = 1; // 初期選択するフィルター
+			ofn.Flags = OFN_PATHMUSTEXIST | OFN_FILEMUSTEXIST; // フラグ（ファイルが存在すること、パスが存在することを確認）
+			ofn.lpstrInitialDir = TEXT("."); // カレントディレクトリを初期選択位置として設定
+		}
+
+		// ファイルを選択するダイアログの表示
+		if (GetOpenFileName(&ofn) == TRUE) {
+			// ファイルパスを取得
+			filePath = ofn.lpstrFile;
+
+			// カレントディレクトリからの相対パスを取得
+			filePath = FileManager::GetAssetsRelativePath(filePath);
+
+			// 文字列内の"\\"を"/"に置換
+			FileManager::ReplaceBackslashes(filePath);
+
+			// ディレクトリを戻す
+			SetCurrentDirectory(defaultCurrentDir);
+		}
+		else {
+			// ディレクトリを戻す
+			SetCurrentDirectory(defaultCurrentDir);
+			return false;
+		}
+	}
+
+	_filePath = filePath;
+	return true;
+}
+
+bool CircleGauge::Load(string _imageFilePath)
+{
+	// 画像ファイルパスを設定
+	imageFilePath = _imageFilePath;
+
+	// ゲージの画像を読み込む
+	imageHandle = Image::Load(_imageFilePath);
+
+	// 読み込みに成功したか
+	return imageHandle >= 0;
+}
+
+void CircleGauge::Update(float progress)
+{
+	// Progressは0.0 ~ 1.0で渡され、ゲージの角度に反映される
+	startAngle = 0;  // 固定で開始角度を設定
+	endAngle = startAngle + (progress * 360.0f);  // Progressに基づく終了角度
+}
+
+void CircleGauge::Draw(Transform _transform)
+{
+	Image::SetTransform(imageHandle, _transform);
+	Image::Draw(imageHandle, startAngle, endAngle);
 }

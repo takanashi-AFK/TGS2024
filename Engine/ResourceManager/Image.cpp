@@ -92,6 +92,16 @@ namespace Image
 		_datas[handle]->pSprite->Draw(_datas[handle]->transform, _datas[handle]->rect, _datas[handle]->alpha, _type,_color);
 	}
 
+	void Draw(int handle, float _startAngle, float _endAngle)
+	{
+		if (handle < 0 || handle >= _datas.size() || _datas[handle] == nullptr)
+		{
+			return;
+		}
+		_datas[handle]->transform.Calclation();
+		_datas[handle]->pSprite->Draw(_datas[handle]->transform, _datas[handle]->rect, _datas[handle]->alpha, _startAngle, _endAngle);
+	}
+
 
 
 	//”CˆÓ‚Ì‰æ‘œ‚ðŠJ•ú

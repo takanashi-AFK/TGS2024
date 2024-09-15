@@ -336,6 +336,10 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 
 // フルスクリーンモードとウィンドウモードを切り替える関数
 void ToggleFullScreen(HWND hWnd, bool& isFullScreen, RECT& windowRect) {
+
+	int screenWidth;
+	int screenHeight;
+
 	if (isFullScreen) {
 		// ウィンドウモードに戻す
 		SetWindowLong(hWnd, GWL_STYLE, WS_OVERLAPPEDWINDOW); 
@@ -343,6 +347,10 @@ void ToggleFullScreen(HWND hWnd, bool& isFullScreen, RECT& windowRect) {
 			windowRect.right - windowRect.left,
 			windowRect.bottom - windowRect.top,
 			SWP_FRAMECHANGED | SWP_NOZORDER | SWP_SHOWWINDOW);
+
+		screenWidth = Direct3D::screenWidth_;
+		screenHeight = Direct3D::screenHeight_;
+
 	}
 	else {
 		// フルスクリーンに切り替え
@@ -355,6 +363,11 @@ void ToggleFullScreen(HWND hWnd, bool& isFullScreen, RECT& windowRect) {
 				mi.rcMonitor.bottom - mi.rcMonitor.top,
 				SWP_FRAMECHANGED | SWP_NOZORDER | SWP_SHOWWINDOW);
 		}
+		screenWidth = mi.rcMonitor.right - mi.rcMonitor.left;
+		screenHeight = mi.rcMonitor.bottom - mi.rcMonitor.top;
 	}
+
+	Direct3D::screenHeight_ = screenHeight;
+	Direct3D::screenWidth_ = screenWidth;
 	isFullScreen = !isFullScreen;  // フルスクリーン状態を反転
 }

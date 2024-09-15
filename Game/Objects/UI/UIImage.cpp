@@ -20,7 +20,6 @@ void UIImage::Draw()
 {
 	// ‰æ‘œ‚ª“Ç‚İ‚Ü‚ê‚Ä‚¢‚È‚¢ê‡‚Íˆ—‚ğs‚í‚È‚¢
 	if (imageHandle_ < 0 || isDraw_ == false )return;
-
     Image::SetTransform(imageHandle_, transform_);
     Image::Draw(imageHandle_);
 }

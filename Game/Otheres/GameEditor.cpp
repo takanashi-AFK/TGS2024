@@ -26,7 +26,7 @@ void GameEditor::Initialize()
 {
 	// カメラ画像のテクスチャを読み込む
 	pTexture_camera = new Texture();
-	pTexture_camera->Load("Images/GUI_Camera.png");
+	pTexture_camera->Load("Images/defaults/GUI_Camera.png");
 
 	// カメラの位置を取得
 	cameraPosition_ = Camera::GetPosition();

@@ -17,7 +17,7 @@ void UITimer::Initialize()
 	pText_->Initialize();
 
 	// ƒQ[ƒW‚Ì‰æ‘œ‚ğ“Ç‚İ‚Ş
-	circleGauge_.Load("Images/Timer_Gauge.png");
+	circleGauge_.Load("Images/defaults/Timer_Gauge.png");
 }
 
 void UITimer::Update()

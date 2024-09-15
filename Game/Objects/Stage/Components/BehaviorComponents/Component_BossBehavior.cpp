@@ -14,6 +14,9 @@
 #include "../GaugeComponents/Component_HealthGauge.h"
 #include "../../../UI/UIPanel.h"
 #include "../../../UI/UIProgressBar.h"
+#include "../../../../Constants.h"
+
+using namespace Constants;
 
 namespace
 {
@@ -87,7 +90,7 @@ void Component_BossBehavior::Update()
         Component_HealthGauge* hg = (Component_HealthGauge*)(GetChildComponent("HealthGauge"));
 
         // UIProgressBar‚ðŽæ“¾
-        UIProgressBar* hpBar = (UIProgressBar*)UIPanel::GetInstance()->FindObject("HPBar_boss");
+        UIProgressBar* hpBar = (UIProgressBar*)UIPanel::GetInstance()->FindObject(PLAY_SCENE_BOSS_HP_GAUGE_NAME);
 
         // HPƒo[‚Ì’l‚ðÝ’è
         if (hpBar != nullptr && hg != nullptr)hpBar->SetProgress(&hg->now_, &hg->max_);

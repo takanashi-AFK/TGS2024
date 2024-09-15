@@ -9,8 +9,8 @@
 #include "../../../Game/Objects/Stage/Components/Component.h"
 
 namespace {
-    const string DEFAULT_FRAME_IMAGE = "Images/Bar_Frame.png";
-    const string DEFAULT_GAUGE_IMAGE = "Images/Bar_Gauge.png";
+    const string DEFAULT_FRAME_IMAGE = "Images/defaults/Bar_Frame.png";
+    const string DEFAULT_GAUGE_IMAGE = "Images/defaults/Bar_Gauge.png";
 }
 
 UIProgressBar::UIProgressBar(string _name, UIObject* parent,int _layerNum)

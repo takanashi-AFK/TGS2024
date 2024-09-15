@@ -73,7 +73,7 @@ void Scene_Play::Update()
 		for (auto bossBehavior : pStage_->FindComponents(ComponentType::BossBehavior)) if (((Component_BossBehavior*)bossBehavior)->IsDead()){ScoreManager::isClear = true;isSceneChange = true;}
 		
 		// タイマーが終了した場合、切替フラグを立てる
-		if (uiTimer->IsEnd()) { ScoreManager::isClear = false; isSceneChange = true; }
+		if(uiTimer!=nullptr)if (uiTimer->IsEnd()) { ScoreManager::isClear = false; isSceneChange = true; }
 
 		// シーン切替フラグが立っている場合
 		if (isSceneChange == true) {

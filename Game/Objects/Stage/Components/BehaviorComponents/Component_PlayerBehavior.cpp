@@ -27,7 +27,9 @@
 #include "../../../Game/Objects/UI/UIPanel.h"
 #include "../../../UI/UIImage.h"
 #include "../../../Engine/Global.h"
+#include "../../../../Constants.h"
 
+using namespace Constants;
 
 namespace {
 	const int SHOOT_FRAME = 115;
@@ -107,7 +109,7 @@ void Component_PlayerBehavior::Update()
 		Component_HealthGauge* hg = (Component_HealthGauge*)(GetChildComponent("PlayerHealthGauge"));
 
 		// UIProgressBarを取得
-		UIProgressBar* hpBar = (UIProgressBar*)UIPanel::GetInstance()->FindObject("HPBar_player");
+		UIProgressBar* hpBar = (UIProgressBar*)UIPanel::GetInstance()->FindObject(PLAY_SCENE_PLAYER_HP_GAUGE_NAME);
 
 		// HPの値を移動
 		ScoreManager::playerHp = hg->now_;

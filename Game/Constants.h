@@ -14,22 +14,24 @@ namespace Constants {
 
 	/// タイトルシーン ///
 	const string TITLE_SCENE_LAYOUT_JSON = "Datas/UILayouts/titleScene_layout.json";
-	const string TITLE_SCENE_START_BUTTON_NAME = "title_startButton";
-	const string TITLE_SCENE_RANKING_BUTTON_NAME = "rankingScene_changeButton";
+	const string TITLE_SCENE_START_BUTTON_NAME = "startButton";
+	const string TITLE_SCENE_RANKING_BUTTON_NAME = "rankingButton";
 
 	/// プレイシーン ///
-	const string PLAY_SCENE_LAYOUT_JSON = "test_playerHPBar.json";
+	const string PLAY_SCENE_LAYOUT_JSON = "Datas/UILayouts/playScene_layout.json";
 	const string PLAY_SCENE_STAGE_LAYOUT_JSON = "Stage02.json";
 	const string PLAY_SCENE_CAMERA_LAYOUT_JSON = "Datas/CameraLayouts/TPSCamera.json";
-	const string PLAY_SCENE_TIMER_NAME = "Timer";
+	const string PLAY_SCENE_TIMER_NAME = "timer";
+	const string PLAY_SCENE_PLAYER_HP_GAUGE_NAME = "player_hpGauge";
+	const string PLAY_SCENE_BOSS_HP_GAUGE_NAME = "boss_hpGauge";
 
 	/// リザルトシーン ///
-	const string RESULT_SCENE_LAYOUT_JSON = "Datas/UILayouts/ResultScene_layout.json";
+	const string RESULT_SCENE_LAYOUT_JSON = "Datas/UILayouts/resultScene_layout.json";
 	const string RESULT_SCENE_STAGE_LAYOUT_JSON = "Datas/StageLayouts/EndSceneStage.json";
-	const string RESULT_SCENE_HP_TEXT_NAME = "HPNum";
-	const string RESULT_SCENE_TIME_TEXT_NAME = "TimeNum";
-	const string RESULT_SCENE_SCORE_TEXT_NAME = "ScoreNum";
-	const string RESULT_SCENE_NEXT_BUTTON_NAME = "NextSceneButton";
+	const string RESULT_SCENE_HP_TEXT_NAME = "hpNum";
+	const string RESULT_SCENE_TIME_TEXT_NAME = "timeNum";
+	const string RESULT_SCENE_SCORE_TEXT_NAME = "scoreNum";
+	const string RESULT_SCENE_NEXT_BUTTON_NAME = "nextButton";
 
 	/// エンドシーン ///
 	const string END_SCENE_LAYOUT_JSON = "Datas/UILayouts/endScene_layout.json";

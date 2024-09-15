@@ -100,7 +100,7 @@ void Component_BossBehavior::Update()
     }
 
     // ó‘Ô‚É‚æ‚Á‚Äˆ—‚ð•ªŠò
-    switch (nowState_)
+    switch (bNowState_)
     {
     case BOSS_STATE_IDLE:Idle(); break;
     case BOSS_STATE_SHOT:Shot(); break;
@@ -198,7 +198,7 @@ void Component_BossBehavior::DrawData()
 bool Component_BossBehavior::IsDead()
 {
     // ƒ{ƒX‚Ìó‘Ô‚ªDEAD‚Å‚ ‚èA‘å‚«‚³‚ª0ˆÈ‰º‚Ìê‡
-    return (nowState_ == BOSS_STATE_DEAD && holder_->GetScale().x <= 0);
+    return (bNowState_ == BOSS_STATE_DEAD && holder_->GetScale().x <= 0);
 }
 
 BossState Component_BossBehavior::RandomStatePick()

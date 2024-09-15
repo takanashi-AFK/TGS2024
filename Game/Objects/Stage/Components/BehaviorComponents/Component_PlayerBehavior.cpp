@@ -275,8 +275,14 @@ void Component_PlayerBehavior::Dodge()
 	if (move == nullptr)return;
 
 	BossState state = BOSS_STATE_MAX;
-	for (auto bossBehavior : holder_->FindComponent(BossBehavior))
-		state = (BossState)((Component_BossBehavior*)bossBehavior)->GetState();
+
+	vector<Component*> bb = (((Stage*)holder_->FindObject("Stage"))->FindComponents(BossBehavior));
+
+
+	for (auto boss : bb) {
+		bossBehavior = (Component_BossBehavior*)boss;
+		state = (BossState)((Component_BossBehavior*)boss)->GetState();
+	}
 
 	// 突進コンポーネントの取得 & 有無の確認
 	Component_TackleMove* tackle = (Component_TackleMove*)(GetChildComponent("TackleMove"));
@@ -367,6 +373,18 @@ void Component_PlayerBehavior::Dodge()
 
 
 	if(state == BossState::BOSS_STATE_TACKLE) {
+		if (bossBehavior == nullptr) {
+			int a = 0;
+			a = 0;
+		}
+			Component_TackleMove* a = (Component_TackleMove*)bossBehavior->GetChildComponent("TackleMove");
+
+		if (a == nullptr) {
+			int a = 0;
+			a = 0;
+		}
+		a->SetDistance(0);
+		
 		tackle->SetDistance(0);
 	}
 

@@ -10,6 +10,7 @@
 
 // 前方宣言
 class CountDown;
+class Component_BossBehavior;
 // プレイヤーの状態
 enum PlayerState {
 	PLAYER_STATE_IDLE = 0,	/* 待機 */
@@ -27,6 +28,7 @@ private:
 	float shootHeight_;					// 射撃の高さ
 	bool isGameStart_;					// ゲーム開始フラグ
 	int invincibilityFrame_;			// 無敵フレーム
+	Component_BossBehavior* bossBehavior;
 
 	// effekseer: 変形行列
 	std::shared_ptr<EFFEKSEERLIB::EFKTransform> mt;/*★★★*/

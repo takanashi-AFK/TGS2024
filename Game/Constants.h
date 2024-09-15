@@ -19,7 +19,7 @@ namespace Constants {
 
 	/// プレイシーン ///
 	const string PLAY_SCENE_LAYOUT_JSON = "Datas/UILayouts/playScene_layout.json";
-	const string PLAY_SCENE_STAGE_LAYOUT_JSON = "Stage02.json";
+	const string PLAY_SCENE_STAGE_LAYOUT_JSON = "Datas/StageLayouts/stage.json";
 	const string PLAY_SCENE_CAMERA_LAYOUT_JSON = "Datas/CameraLayouts/TPSCamera.json";
 	const string PLAY_SCENE_TIMER_NAME = "timer";
 	const string PLAY_SCENE_PLAYER_HP_GAUGE_NAME = "player_hpGauge";
@@ -27,7 +27,7 @@ namespace Constants {
 
 	/// リザルトシーン ///
 	const string RESULT_SCENE_LAYOUT_JSON = "Datas/UILayouts/resultScene_layout.json";
-	const string RESULT_SCENE_STAGE_LAYOUT_JSON = "Datas/StageLayouts/EndSceneStage.json";
+	const string RESULT_SCENE_STAGE_LAYOUT_JSON = "Datas/StageLayouts/resultStage.json";
 	const string RESULT_SCENE_HP_TEXT_NAME = "hpNum";
 	const string RESULT_SCENE_TIME_TEXT_NAME = "timeNum";
 	const string RESULT_SCENE_SCORE_TEXT_NAME = "scoreNum";
@@ -44,6 +44,6 @@ namespace Constants {
 	const string TEST_SCENE_CAMERA_LAYOUT_JSON = "Datas/CameraLayouts/camera.json";
 
 	// データ
-	const string RANKING_DATA_CSV = "ranking.csv";
+	const string RANKING_DATA_CSV = "Datas/ranking.csv";
 
 }

@@ -18,7 +18,6 @@ void Component_PlayerMotion::Initialize()
     modelHandleList_[PLAYER_STATE_DEAD] = MotionData("Models/Player/Standing React Death Right.fbx", 0, 182, 1,false);
 }
 
-
 void Component_PlayerMotion::Update()
 {
     // ƒvƒŒƒCƒ„[‚Ìó‘Ô‚ğæ“¾ FIX: playerBehavior‚ª•¡”‚½‚¹‚È‚¢‚æ‚¤‚É‚·‚é

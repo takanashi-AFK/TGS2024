@@ -309,6 +309,7 @@
     <ClInclude Include="Game\Objects\UI\UITimer.h" />
     <ClInclude Include="Game\Scenes\Scene_Ranking.h" />
     <ClInclude Include="Game\Otheres\RankingManager.h" />
+    <ClInclude Include="Game\Constants.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Assets\Shader\BillBoard.hlsl">

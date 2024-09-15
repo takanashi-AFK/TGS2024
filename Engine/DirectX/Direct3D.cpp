@@ -685,4 +685,27 @@ namespace Direct3D
 		}
 	}
 
+	void SetViewport(int width, int height)
+	{
+		// ビューポートの設定
+		//レンダリング結果を表示する範囲
+		float viewPortMagnification = 1.f;
+
+		//ビューポートの設定
+		D3D11_VIEWPORT vp; {
+			vp.Height = (float)height * viewPortMagnification;	//高さ
+			vp.Width = (float)width * viewPortMagnification;	//幅
+			vp.MinDepth = 0.0f;									//手前
+			vp.MaxDepth = 1.0f;									//奥
+			vp.TopLeftX = 0;									//左
+			vp.TopLeftY = 0;									//上
+		}
+		
+		// ビューポートをセット
+		pContext_->RSSetViewports(1, &vp);                  
+
+		//スクリーンサイズを保存
+		screenWidth_ = width;
+		screenHeight_ = height;
+	}
 }

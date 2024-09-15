@@ -51,6 +51,11 @@ void Camera::SetTarget(float x, float y, float z) { Camera::SetTarget(XMFLOAT3(x
 void Camera::SetPosition(XMFLOAT3 position) { _position = position; }
 void Camera::SetPosition(float x, float y, float z) { Camera::SetPosition(XMFLOAT3(x, y, z)); }
 
+//プロジェクション行列を設定
+void Camera::SetProjectionMatrix(XMMATRIX proj) { _proj = proj; }
+void Camera::SetProjectionMatrix(float fov, float aspect, float nearZ, float farZ) { SetProjectionMatrix(XMMatrixPerspectiveFovLH(fov, aspect, nearZ, farZ)); }
+void Camera::SetProjectionMatrix(float aspect) { SetProjectionMatrix(XM_PIDIV4, aspect, 0.1f, 1000.0f); }
+
 
 //焦点を取得
 XMFLOAT3 Camera::GetTarget() { return _target; }

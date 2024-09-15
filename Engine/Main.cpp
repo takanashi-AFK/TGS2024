@@ -338,7 +338,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 void ToggleFullScreen(HWND hWnd, bool& isFullScreen, RECT& windowRect) {
 	if (isFullScreen) {
 		// ウィンドウモードに戻す
-		SetWindowLong(hWnd, GWL_STYLE, WS_OVERLAPPEDWINDOW);
+		SetWindowLong(hWnd, GWL_STYLE, WS_OVERLAPPEDWINDOW); 
 		SetWindowPos(hWnd, HWND_NOTOPMOST, windowRect.left, windowRect.top,
 			windowRect.right - windowRect.left,
 			windowRect.bottom - windowRect.top,

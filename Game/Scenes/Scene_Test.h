@@ -3,37 +3,21 @@
 // インクルード
 #include "../../Engine/GameObject/GameObject.h"
 
-
-/// <summary>
-/// テストシーンを管理するクラス
-/// </summary>
 class Scene_Test : public GameObject
 {
-
 public:
-	/// <summary>
-	/// コンストラクタ
-	/// </summary>
-	/// <param name="parent">親オブジェクト</param>
+	/// <summary> コンストラクタ </summary>
 	Scene_Test(GameObject* parent);
 
-	/// <summary>
-	/// 初期化
-	/// </summary>
+	/// <summary> 初期化 </summary>
 	void Initialize() override;
 
-	/// <summary>
-	/// 更新
-	/// </summary>
+	/// <summary> 更新 </summary>
 	void Update() override;
 
-	/// <summary>
-	/// 描画
-	/// </summary>
+	/// <summary> 描画 </summary>
 	void Draw() override;
 
-	/// <summary>
-	/// 開放
-	/// </summary>
+	/// <summary> 解放 </summary>
 	void Release() override;
 };

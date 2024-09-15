@@ -2,10 +2,10 @@
 
 // インクルード
 #include"../../Engine/SceneManager.h"
-#include "../../Engine/DirectX/Input.h"
 #include "../Objects/UI/UIPanel.h"
 #include "../Objects/UI/UIButton.h"
-#include "../Objects/Stage/Stage.h"
+#include "../Constants.h"
+using namespace Constants;
 
 Scene_Title::Scene_Title(GameObject* parent)
 	: GameObject(parent, "Scene_Title")
@@ -14,41 +14,28 @@ Scene_Title::Scene_Title(GameObject* parent)
 
 void Scene_Title::Initialize()
 {
-	// UILayout_jsonファイルを読み込む
+	// UIパネル & レイアウトの読み込み
 	json loadData;
-	if (JsonReader::Load("Datas/UILayouts/titleScene_layout.json", loadData)) {
-
-		// UIパネルを取得
-		UIPanel* panel = UIPanel::GetInstance();
-
-		// スプラッシュシーンのパネルlayoutを設定
-		panel->Load(loadData);
-	}
+	if (JsonReader::Load(TITLE_SCENE_LAYOUT_JSON, loadData)) UIPanel::GetInstance()->Load(loadData);
 }
 
 void Scene_Title::Update()
 {
 	// シーン切替処理
 	{
-		UIButton* rankingScene_changeButton = (UIButton*)UIPanel::GetInstance()->GetUIObject("rankingScene_changeButton");
-		// ボタンが押されたらシーンを切り替える
-		if (rankingScene_changeButton != nullptr) if (rankingScene_changeButton->OnClick() == true) {
-
-			// シーンを切り替える
+		// ランキングシーンへの遷移
+		UIButton* rankingButton = (UIButton*)UIPanel::GetInstance()->GetUIObject(TITLE_SCENE_RANKING_BUTTON_NAME);
+		if (rankingButton->OnClick() == true) {
 			SceneManager* sceneManager = (SceneManager*)FindObject("SceneManager");
 			sceneManager->ChangeScene(SCENE_ID_RANKING, TID_BLACKOUT);
 		}
 
-		// ボタンを取得
-		UIButton* title_startButton = (UIButton*)UIPanel::GetInstance()->GetUIObject("title_startButton");
-		// ボタンが押されたらシーンを切り替える
-		if (title_startButton != nullptr) if (title_startButton->OnClick() == true) {
-
-			// シーンを切り替える
+		// プレイシーンへの遷移
+		UIButton* startButton = (UIButton*)UIPanel::GetInstance()->GetUIObject(TITLE_SCENE_START_BUTTON_NAME);
+		if (startButton->OnClick() == true) {
 			SceneManager* sceneManager = (SceneManager*)FindObject("SceneManager");
 			sceneManager->ChangeScene(SCENE_ID_PLAY, TID_BLACKOUT);
-		}	
-		
+		}
 	}
 }
 

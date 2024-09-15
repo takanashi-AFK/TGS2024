@@ -1,29 +1,31 @@
 #include "Scene_Result.h"
-#include "../Objects/UI/UIPanel.h"
+
+// インクルード
 #include "../../Engine/Global.h"
-#include "../../Engine/ImGui/imgui.h"
-#include "../Objects/UI/UIPanel.h"
-#include "../Objects/UI/UIObject.h"
-#include "../Objects/UI/UIText.h"
-#include "../Objects/UI/UIButton.h"
 #include "../../Engine/SceneManager.h"
-#include "../Objects/Stage/Stage.h"
-#include "../Objects/Camera/TPSCamera.h"
-#include "../Otheres/GameEditor.h"
+//#include "../../Engine/GameObject/Camera.h"
+#include "../Constants.h"
 #include "../Objects/Stage/SkySphere.h"
-#include "../../Engine/GameObject/Camera.h"
+#include "../Objects/Stage/Stage.h"
+#include "../Objects/UI/UIButton.h"
+#include "../Objects/UI/UIPanel.h"
+#include "../Objects/UI/UIText.h"
 #include "../Otheres/RankingManager.h"
 
-Scene_Result::Scene_Result(GameObject* parent_)
-{
-}
+using namespace Constants;
 
 namespace {
-	const int CAMERA_HEIGHT = 30;
+	const int CAMERA_HEIGHT = 30; // カメラの高さ
+}
+
+Scene_Result::Scene_Result(GameObject* parent_)
+	: GameObject(parent_, "Scene_Result"), scoreNum_(0)
+{
 }
 
 void Scene_Result::Initialize()
 {
+	// カーソルの表示
 	ShowCursor(true);
 
 	// jsonファイル読込用オブジェクトを用意
@@ -36,37 +38,36 @@ void Scene_Result::Initialize()
 	UIPanel* uiPanel = UIPanel::GetInstance();
 
 	// UIパネル情報を読み込む
-	if (JsonReader::Load("Datas/UILayouts/ResultScene_layout.json", loadData)) uiPanel->Load(loadData);
+	if (JsonReader::Load(RESULT_SCENE_LAYOUT_JSON, loadData)) uiPanel->Load(loadData);
 
 	// UIパネルの情報を取得・設定
 	{
 		// テキストにプレイヤーのHPの値を設定
-		UIText* hpNumText = (UIText*)uiPanel->GetUIObject("HPNum");
+		UIText* hpNumText = (UIText*)uiPanel->GetUIObject(RESULT_SCENE_HP_TEXT_NAME);
 		hpNumText->SetText(&ScoreManager::playerHp);
 
 		// テキストにタイムの値を設定
-		UIText* timeNumText = (UIText*)uiPanel->GetUIObject("TimeNum");
+		UIText* timeNumText = (UIText*)uiPanel->GetUIObject(RESULT_SCENE_TIME_TEXT_NAME);
 		timeNumText->SetText(&ScoreManager::time);
 
 		// スコアの計算
 		scoreNum_ = CalculateScore(ScoreManager::isClear, ScoreManager::time, ScoreManager::playerHp);
 
 		// テキストにスコアの値を設定
-		UIText* scoreNumText = (UIText*)uiPanel->GetUIObject("ScoreNum");
+		UIText* scoreNumText = (UIText*)uiPanel->GetUIObject(RESULT_SCENE_SCORE_TEXT_NAME);
 		scoreNumText->SetText(&scoreNum_);
 	}
 
 	// ランキングにスコアを追加
 	RankingManager* rm = &RankingManager::GetInstance(); {
-		rm->Load("ranking.csv");
+		rm->Load(RANKING_DATA_CSV);
 		rm->AddScore(scoreNum_);
-		rm->Save("ranking.csv");
+		rm->Save(RANKING_DATA_CSV);
 	}
 
 	// ステージを作成 & 読み込み
 	Stage* pStage = Instantiate<Stage>(this);
-	if(JsonReader::Load("Datas/StageLayouts/EndSceneStage.json", loadData))pStage->Load(loadData);
-	
+	if(JsonReader::Load(RESULT_SCENE_STAGE_LAYOUT_JSON, loadData))pStage->Load(loadData);
 }
 
 void Scene_Result::Update()
@@ -74,7 +75,7 @@ void Scene_Result::Update()
 	// シーン遷移ボタンの処理
 	{
 		// UIButtonの取得
-		UIButton* button = (UIButton*)UIPanel::GetInstance()->GetUIObject("NextSceneButton");
+		UIButton* button = (UIButton*)UIPanel::GetInstance()->GetUIObject(RESULT_SCENE_NEXT_BUTTON_NAME);
 
 		// ボタンが押されたら
 		if (button->OnClick()) {
@@ -124,9 +125,9 @@ int Scene_Result::CalculateScore(bool isCleared, int remainingTime, int remainin
 	if (!isCleared) {
 		return 0; // クリアしていない場合のスコア
 	}
-	int clearBonus = 1000; // クリアボーナス (1000ポイント)
-	int timeBonus = remainingTime * 100; // 時間のボーナス（1秒あたり1000ポイント）
-	int hpBonus = remainingHP * 500;		// HPのボーナス（HP1あたり5000ポイント）
+	int clearBonus = 1000;					// クリアボーナス (1000ポイント)
+	int timeBonus = remainingTime * 100;	// 時間のボーナス（1秒あたり100ポイント）
+	int hpBonus = remainingHP * 500;		// HPのボーナス（HP1あたり500ポイント）
 
 	return clearBonus + timeBonus + hpBonus;
 }

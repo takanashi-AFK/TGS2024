@@ -6,6 +6,9 @@
 #include "../Objects/UI/UIButton.h"
 #include "../../Engine/SceneManager.h"
 #include "../Objects/UI/UIText.h"
+#include "../Constants.h"
+
+using namespace Constants;
 
 Scene_Ranking::Scene_Ranking(GameObject* _parent)
 	: GameObject(_parent, "Scene_Ranking")
@@ -19,10 +22,10 @@ void Scene_Ranking::Initialize()
 	
 	// UILayout_jsonファイルを読み込む
 	json loadData;
-	if (JsonReader::Load("Datas/UILayouts/rankingScene_layout.json", loadData)) panel->Load(loadData);
+	if (JsonReader::Load(RANKING_SCENE_LAYOUT_JSON, loadData)) panel->Load(loadData);
 	
 	// ランキングデータを読み込む
-	RankingManager::GetInstance().Load("ranking.csv");
+	RankingManager::GetInstance().Load(RANKING_DATA_CSV);
 
 	// ランキングデータを表示
 	{
@@ -45,7 +48,7 @@ void Scene_Ranking::Initialize()
 
 void Scene_Ranking::Update()
 {
-	UIButton* returnButton = (UIButton*)UIPanel::GetInstance()->GetUIObject("returnButton");
+	UIButton* returnButton = (UIButton*)UIPanel::GetInstance()->GetUIObject(RANKING_SCENE_RETURN_BUTTON_NAME);
 	// ボタンが押されたらシーンを切り替える
 	if (returnButton != nullptr) if (returnButton->OnClick() == true) {
 

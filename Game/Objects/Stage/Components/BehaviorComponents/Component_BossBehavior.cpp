@@ -108,7 +108,6 @@ void Component_BossBehavior::Update()
     case BOSS_STATE_DEAD:Dead(); break;
     }
 
-
 }
 
 void Component_BossBehavior::Release()
@@ -282,6 +281,18 @@ void Component_BossBehavior::Tackle()
 		// 突進攻撃の初回フラグをfalseに設定
 		isFirst = false;
 
+        // プレイヤーの方向を向く
+		{
+			// 所有者の位置を取得
+            XMFLOAT3 holderPos = holder_->GetPosition();
+
+			// 対象の位置を取得
+			XMFLOAT3 targetPos = target_->GetPosition();
+
+			// 所有者の位置を対象の位置に向ける
+			holder_->SetRotateY(atan2f(targetPos.z - holderPos.z, targetPos.x - holderPos.x) * 180 / XM_PI);
+		}
+        
         // 突進攻撃を実行
         {
 			// 情報の取得

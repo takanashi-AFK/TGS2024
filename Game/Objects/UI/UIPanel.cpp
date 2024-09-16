@@ -104,3 +104,14 @@ UIObject* UIPanel::GetUIObject(std::string _name)
 	}
 	return nullptr;
 }
+
+vector<UIObject*> UIPanel::GetUIObject(UIType _type)
+{
+	// タイプでオブジェクトを検索
+	vector<UIObject*> result;
+	for (auto obj : childList_)
+	{
+		if (obj->GetType() == _type)result.push_back(obj);
+	}
+	return result;
+}

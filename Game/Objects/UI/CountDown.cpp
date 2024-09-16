@@ -26,6 +26,9 @@ void CountDown::Update()
 
 void CountDown::Draw()
 {
+	// カウントダウンが有効でないなら描画しない	
+	if (isActive_ = false) return;
+
 	// カウントが0以下なら描画しない
 	if(this->IsFinished())return;
 
@@ -45,4 +48,9 @@ void CountDown::Draw()
 
 void CountDown::Release()
 {
+}
+
+float CountDown::GetCount() const
+{
+	return count_ / FPS;
 }

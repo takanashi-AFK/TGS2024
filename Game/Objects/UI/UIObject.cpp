@@ -198,6 +198,11 @@ const std::string& UIObject::GetObjectName(void) const
 	return objectName_;
 }
 
+UIType UIObject::GetType(void) const
+{
+	return type_;
+}
+
 UIObject* UIObject::GetRootJob()
 {
 	if (GetParent() == nullptr)

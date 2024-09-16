@@ -35,6 +35,7 @@ void Scene_Play::Initialize()
 
 	// カウントダウンの生成
 	countDown_ = Instantiate<CountDown>(this);
+	countDown_->Start();
 
 	// カーソルの非表示化
 	ShowCursor(false);

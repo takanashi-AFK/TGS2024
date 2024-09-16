@@ -5,7 +5,6 @@
 #include "../../../../../Engine/Collider/BoxCollider.h"
 #include "../../../../../Engine/Collider/SphereCollider.h"
 
-
 using std::vector;
 
 enum UIType {
@@ -27,107 +26,131 @@ private:
 	bool isScaleLocked_;
 
 protected:
-	std::string objectName_; // オブジェクト名
-	Transform transform_; // 位置や向きなどを管理するオブジェクト
-	bool isEnable_;	// 有効かどうか
-	UIType type_;	// UIの種類
-	int layerNumber_; // レイヤー番号
+	string objectName_;		// オブジェクトの名前
+	UIType type_;			// オブジェクトの種類
+	int layerNumber_;		// レイヤー番号
+	Transform transform_;	// 位置、回転、拡大縮小
+	bool isEnable_;			// 描画するかどうか
+	UIObject* pParent_;		// 親オブジェクト
+
 	std::vector<UIObject*> childList_;  // 子オブジェクトのリスト
-	UIObject* pParent_;// 親オブジェクト
 
 	//フラグ
-	struct UI_STATE
-	{
+	struct UI_STATE{
 		unsigned initialized : 1;	//初期化済みか
 		unsigned entered : 1;		//更新するか
 		unsigned visible : 1;		//描画するか
 		unsigned dead : 1;			//削除するか
-	};
-	UI_STATE state_;
+	} state_;
 
 public:
-
-	//コンストラクタ
+	/// <summary> コンストラクタ </summary>
 	UIObject();
 	UIObject(UIObject* parent);
 	UIObject(string _name, UIType _type, UIObject* parent, int _layerNum);
 
-	//デストラクタ
+	/// <summary> デストラクタ </summary>
 	virtual ~UIObject();
 
-	//各オブジェクトで必ず作る関数
+	/// <summary> 初期化 </summary>
 	virtual void Initialize() {};
+
+	/// <summary> 更新 </summary>
 	virtual void Update() {};
+
+	/// <summary> 描画 </summary>
 	virtual void Draw() {};
+
+	/// <summary> 解放 </summary>
 	virtual void Release() {};
 
-	//自分の該当関数を読んだ後、子供の関数も呼ぶ
-	void UpdateSub();
-	void DrawSub();
-	void ReleaseSub();
-
-	bool IsDead(); //削除するかどうか
-
-
+	/// <summary> 保存 </summary>
 	virtual void Save(json& saveObj) {};
+
+	/// <summary> 読込 </summary>
 	virtual void Load(json& loadObj) {};
+
+	/// <summary> ImGui表示 </summary>
 	virtual void DrawData() {};
-	  
+	
+	/// <summary> 子オブジェクトの更新 </summary>
+	void UpdateSub();
+
+	/// <summary> 子オブジェクトの描画 </summary>
+	void DrawSub();
+
+	/// <summary> 子オブジェクトの解放 </summary>
+	void ReleaseSub();
+	
+	/// <summary> 子オブジェクトの保存 </summary>
 	void ChildSave(json& _saveObj);
+
+	/// <summary> 子オブジェクトの読込 </summary>
 	void ChildLoad(json& _loadObj);
+
+	/// <summary> 子オブジェクトのImGui表示 </summary>
 	void ChildDrawData();
 
-	void LockPosition() { isPositionLocked_ = true; }
-	void LockRotate() { isRotateLocked_ = true; }
-	void LockScale() { isScaleLocked_ = true; }
-
-	void UnlockPosition() { isPositionLocked_ = false; }
-	void UnlockRotate() { isRotateLocked_ = false; }
-	void UnlockScale() { isScaleLocked_ = false; }
-
-	void KillMe();	// 自分を削除する
-
-	//名前でオブジェクトを検索（対象は自分の子供以下）
-	//引数：name	検索する名前
-	//戻値：見つけたオブジェクトのアドレス（見つからなければnullptr）
-	UIObject* FindChildObject(const std::string& name);
-	UIObject* FindObject(const std::string& name){ return GetRootJob()->FindChildObject(name); }
-
-
-	//オブジェクトの名前を取得
-	//戻値：名前
-	const std::string& GetObjectName(void) const;
-
-	//Rootオブジェクトを取得(UIPanel)
-	UIObject* GetRootJob();
-
-	//親オブジェクトを取得
-	UIObject* GetParent();
-
-	/// <summary>
-	/// 子オブジェクトを追加(リストの最後へ)
-	/// </summary>
-	/// <param name="obj"></param>
+	/// <summary> オブジェクトの追加 </summary>
 	void PushBackChild(UIObject* obj);
 
-	/// <summary>
-	/// 新しいレイヤー番号を設定
-	/// </summary>
-	/// <param name="newLayerNumber_">新しいレイヤー番号</param>
-	void SetLayerNumber(int newLayerNumber_);
-	// Getter
-	int GetLayerNumber() { return layerNumber_; }
-
-	/// <summary>
-	/// レイヤーが重複しているかどうか
-	/// </summary>
-	/// <param name="newLayerNumber_"></param>
-	/// <returns></returns>
-	bool IsLayerNumberDuplicate(int newLayerNumber_);
-
-	//オブジェクトをレイヤー番号で比較するための関数
+	/// <summary> レイヤー番号を
 	static bool CompareLayerNumber(UIObject* _object1, UIObject* _object2);
+/*
+setter :*/
+	/// <summary> 位置の固定 </summary>
+	void LockPosition() { isPositionLocked_ = true; }
 
+	/// <summary> 位置の固定解除 </summary>
+	void UnlockPosition() { isPositionLocked_ = false; }
+	
+	/// <summary> 回転の固定 </summary>
+	void LockRotate() { isRotateLocked_ = true; }
+
+	/// <summary> 回転の固定解除 </summary>
+	void UnlockRotate() { isRotateLocked_ = false; }
+
+	/// <summary> 拡大縮小の固定 </summary>
+	void LockScale() { isScaleLocked_ = true; }
+
+	/// <summary> 拡大縮小の固定解除 </summary>
+	void UnlockScale() { isScaleLocked_ = false; }
+
+	/// <summary> 死亡フラグを立てる </summary>
+	void KillMe();
+
+	/// <summary> レイヤー番号を設定 </summary>
+	void SetLayerNumber(int newLayerNumber_);
+/*
+getter :*/
+	/// <summary> 子オブジェクトを取得 </summary>
+	UIObject* FindChildObject(const std::string& name);
+	
+	/// <summary> オブジェクトを取得 </summary>
+	UIObject* FindObject(const std::string& name){ return GetRootJob()->FindChildObject(name); }
+
+	/// <summary> オブジェクトの名前を取得 </summary>
+	const string& GetObjectName(void) const;
+
+	/// <summary> オブジェクトの種類を取得 </summary>
+	UIType GetType(void) const;
+
+	/// <summary> ルートオブジェクトを取得 </summary>
+	UIObject* GetRootJob();
+	
+	/// <summary> 親オブジェクトを取得 </summary>
+	UIObject* GetParent();
+	
+	/// <summary> レイヤー番号を取得 </summary>
+	int GetLayerNumber() const { return layerNumber_; }
+	
+/*
+predicate :*/
+	/// <summary> 削除フラグが立っているかどうか </summary>
+	bool IsDead();
+
+	/// <summary> レイヤー番号が重複しているかどうか </summary>
+	bool IsLayerNumberDuplicate(int newLayerNumber_);
 };
 
 UIObject* CreateUIObject(string _name, UIType _type, UIObject* _parent, int _layerNum);

@@ -101,4 +101,9 @@ void SceneManager::ChangeScene(SCENE_ID next, TRANSITION_ID _type, float _time)
 void SceneManager::ChangeScene(SCENE_ID next, TRANSITION_ID _type) { ChangeScene(next, _type, 2); }
 void SceneManager::ChangeScene(SCENE_ID next) { ChangeScene(next, TID_NONE); }
 
+bool SceneManager::IsChanging(SCENE_ID _prev, SCENE_ID _next)
+{
+	return currentSceneID_ == _prev && nextSceneID_ == _next;
+}
+
 

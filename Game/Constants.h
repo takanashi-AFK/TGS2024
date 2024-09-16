@@ -46,4 +46,10 @@ namespace Constants {
 	// データ
 	const string RANKING_DATA_CSV = "Datas/ranking.csv";
 
+	/// プレイヤーのモーション ///
+	const string PLAYER_STATE_WALK_FBX = "Models/Player/Running.fbx";
+	const string PLAYER_STATE_SHOOT_FBX = "Models/Player/Fireball.fbx";
+	const string PLAYER_STATE_IDLE_FBX = "Models/Player/Silly Dancing.fbx";
+	const string PLAYER_STATE_DODGE_FBX = "Models/Player/Female Action Pose.fbx";
+	const string PLAYER_STATE_DEAD_FBX = "Models/Player/Standing React Death Right.fbx";
 }

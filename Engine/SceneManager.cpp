@@ -14,6 +14,7 @@
 #include"../Game/Scenes/Scene_Result.h"
 #include "../Game/Scenes/Scene_End.h"
 #include "../Game/Scenes/Scene_Ranking.h"
+#include "../Game/Scenes/Scene_DifficultySelect.h"
 
 //コンストラクタ
 SceneManager::SceneManager(GameObject * parent)
@@ -63,6 +64,7 @@ void SceneManager::Update()
 		case SCENE_ID_TEST: Instantiate<Scene_Test>(this); break;
 		case SCENE_ID_SPLASH: Instantiate<Scene_Splash>(this); break;
 		case SCENE_ID_TITLE:Instantiate<Scene_Title>(this); break;
+		case SCENE_ID_DIFFICULTYSELECT: Instantiate<Scene_DifficultySelect>(this); break;
 		case SCENE_ID_PLAY:Instantiate<Scene_Play>(this); break;
 		case SCENE_ID_RESULT:Instantiate<Scene_Result>(this); break;
 		case SCENE_ID_END: Instantiate<Scene_End>(this); break;

@@ -115,7 +115,7 @@ void Scene_Play::InitStage()
 
 	// ステージデータの読み込み
 	json loadData;
-	if (JsonReader::Load(PLAY_SCENE_STAGE_LAYOUT_JSON, loadData)) {
+	if (JsonReader::Load(g_selectedStage, loadData)) {
 
 		// ステージを生成
 		pStage_ = Instantiate<Stage>(this);

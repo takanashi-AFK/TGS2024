@@ -1,0 +1,47 @@
+{
+  "difficultySelectImage": {
+    "imageFilePath_": "Images/difficultySelectScene/DifficultySelectImage.png",
+    "layerNumber_": 1,
+    "objectName_": "difficultySelectImage",
+    "position_": [ 0.0, 0.0, 0.0 ],
+    "rotate_": [ 0.0, 0.0, 0.0 ],
+    "scale_": [ 1.0, 1.0, 1.0 ],
+    "type_": 2
+  },
+  "easyButton": {
+    "imageFilePath_": "Images/difficultySelectScene/easyButton.png",
+    "layerNumber_": 2,
+    "objectName_": "easyButton",
+    "position_": [ -0.4000000059604645, 0.20000000298023224, 0.0 ],
+    "rotate_": [ 0.0, 0.0, 0.0 ],
+    "scale_": [ 0.30000001192092896, 0.30000001192092896, 1.0 ],
+    "type_": 1
+  },
+  "expertButton": {
+    "imageFilePath_": "Images/difficultySelectScene/expertButton.png",
+    "layerNumber_": 5,
+    "objectName_": "expertButton",
+    "position_": [ 0.4000000059604645, -0.5, 0.0 ],
+    "rotate_": [ 0.0, 0.0, 0.0 ],
+    "scale_": [ 0.30000001192092896, 0.30000001192092896, 1.0 ],
+    "type_": 1
+  },
+  "hardButton": {
+    "imageFilePath_": "Images/difficultySelectScene/hardButton.png",
+    "layerNumber_": 4,
+    "objectName_": "hardButton",
+    "position_": [ -0.4000000059604645, -0.5, 0.0 ],
+    "rotate_": [ 0.0, 0.0, 0.0 ],
+    "scale_": [ 0.30000001192092896, 0.30000001192092896, 1.0 ],
+    "type_": 1
+  },
+  "normalButton": {
+    "imageFilePath_": "Images/difficultySelectScene/normalButton.png",
+    "layerNumber_": 3,
+    "objectName_": "normalButton",
+    "position_": [ 0.4000000059604645, 0.20000000298023224, 0.0 ],
+    "rotate_": [ 0.0, 0.0, 0.0 ],
+    "scale_": [ 0.30000001192092896, 0.30000001192092896, 1.0 ],
+    "type_": 1
+  }
+}

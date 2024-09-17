@@ -37,7 +37,7 @@ void Scene_Title::Update()
 		UIButton* startButton = (UIButton*)UIPanel::GetInstance()->GetUIObject(TITLE_SCENE_START_BUTTON_NAME);
 		if (startButton->OnClick() == true) {
 			SceneManager* sceneManager = (SceneManager*)FindObject("SceneManager");
-			sceneManager->ChangeScene(SCENE_ID_PLAY, TID_BLACKOUT);
+			sceneManager->ChangeScene(SCENE_ID_DIFFICULTYSELECT, TID_BLACKOUT);
 		}
 	}
 }

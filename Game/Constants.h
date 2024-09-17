@@ -17,6 +17,13 @@ namespace Constants {
 	const string TITLE_SCENE_START_BUTTON_NAME = "startButton";
 	const string TITLE_SCENE_RANKING_BUTTON_NAME = "rankingButton";
 
+	/// 難易度選択シーン ///
+	const string DIFFICULTY_SELECT_SCENE_LAYOUT_JSON = "Datas/UILayouts/difficultySelectScene _layout.json";
+	const string DIFFICULTY_SELECT_SCENE_EASY_BUTTON_NAME = "easyButton";
+	const string DIFFICULTY_SELECT_SCENE_NORMAL_BUTTON_NAME = "normalButton";
+	const string DIFFICULTY_SELECT_SCENE_HARD_BUTTON_NAME = "hardButton";
+	const string DIFFICULTY_SELECT_SCENE_EXPERT_BUTTON_NAME = "expertButton";
+
 	/// プレイシーン ///
 	const string PLAY_SCENE_LAYOUT_JSON = "Datas/UILayouts/playScene_layout.json";
 	const string PLAY_SCENE_STAGE_LAYOUT_JSON = "Datas/StageLayouts/stage.json";
@@ -52,4 +59,10 @@ namespace Constants {
 	const string PLAYER_STATE_IDLE_FBX = "Models/Player/Silly Dancing.fbx";
 	const string PLAYER_STATE_DODGE_FBX = "Models/Player/Female Action Pose.fbx";
 	const string PLAYER_STATE_DEAD_FBX = "Models/Player/Standing React Death Right.fbx";
+
+	// 難易度事のステージ名
+	const string STAGE_EASY = "stage_easy.json";
+	const string STAGE_NORMAL = "stage_normal.json";
+	const string STAGE_HARD = "stage_hard.json";
+	const string STAGE_EXPERT = "stage_expert.json";
 }

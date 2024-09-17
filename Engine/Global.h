@@ -52,9 +52,7 @@ namespace FileManager {
 
 
 /// 臨時のグローバル変数 fix: 本来はここに置くべきではない 
-/// スコアマネージャーを作成することで解決する
-
-
+extern string g_selectedStage;	// 選択されたステージ
 
 // エフェクトデータ
 // fix: 本来はここに置くべきではない

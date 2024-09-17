@@ -55,3 +55,5 @@ valeable :*/
 	int playerHp;	// プレイヤーのHP
 	bool isClear;	// クリアしたかどうか
 }
+
+string g_selectedStage = "";

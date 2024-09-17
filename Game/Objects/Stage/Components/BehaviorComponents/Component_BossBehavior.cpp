@@ -34,7 +34,7 @@ namespace
 }
 
 Component_BossBehavior::Component_BossBehavior(string _name, StageObject* _holder, Component* _parent)
-    : Component(_holder, _name, BossBehavior, _parent)
+    : Component(_holder, _name, BossBehavior, _parent), bNowState_(BOSS_STATE_IDLE), target_(nullptr), targetName_(""), shotInterval_(0), stateChangeDelay_(0), shootHeight_(0), isActive_(false), isGameStart_(false), isDeadStart_(true)
 {
 #ifdef _DEBUG
     isActive_ = false;
@@ -381,13 +381,10 @@ void Component_BossBehavior::Dead()
     Transform effectTransform;
 	effectTransform.position_ = holder_->GetPosition();
 
-    // 初回フラグ
-    static bool isFirst = true;
-
     // 初回のみ処理を行う
-    if (isFirst) {
+    if (isDeadStart_) {
         // 初回フラグをfalseに設定
-        isFirst = false;
+        isDeadStart_ = false;
 
         // サウンドを再生
         Audio::Play(Audio::Load("Audios/DJのスクラッチ2.wav", false));

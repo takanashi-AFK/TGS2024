@@ -27,7 +27,7 @@ private:
 	float shootHeight_;			// 射撃の高さ
 	bool isActive_;				// アクティブフラグ
 	bool isGameStart_;			// ゲーム開始フラグ
-
+	bool isDeadStart_;			// 死亡開始フラグ
 	std::shared_ptr<EFFEKSEERLIB::EFKTransform> mt; // effekseer: モデルの位置情報
 
 public:

@@ -33,11 +33,9 @@ void Scene_DifficultySelect::Update()
 		UIButton* hardButton = (UIButton*)UIPanel::GetInstance()->GetUIObject(DIFFICULTY_SELECT_SCENE_HARD_BUTTON_NAME);
 		if (hardButton->OnClick() == true) { g_selectedStage = STAGE_HARD; isClicked = true; }
 
-		/*UIButton* expertButton = (UIButton*)UIPanel::GetInstance()->GetUIObject(DIFFICULTY_SELECT_SCENE_EXPERT_BUTTON_NAME);
-		if (expertButton->OnClick() == true) { g_selectedStage = STAGE_EXPERT; isClicked = true; }*/
+		UIButton* expertButton = (UIButton*)UIPanel::GetInstance()->GetUIObject(DIFFICULTY_SELECT_SCENE_EXPERT_BUTTON_NAME);
+		if (expertButton->OnClick() == true) { g_selectedStage = STAGE_EXPERT; isClicked = true; }
 	}
-
-	//g_selectedStage = PLAY_SCENE_STAGE_LAYOUT_JSON;
 
 	// ƒV[ƒ“Ø‘Öˆ—
 	if (isClicked == true) {

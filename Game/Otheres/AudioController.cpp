@@ -13,12 +13,14 @@
 namespace {
 	const string TITLE_BGM = "Audios/プレゼントコーナー.wav";
 	const string PLAY_BGM = "Audios/Fried_Chicken_Scramble.wav";
-	const string BUTTON_SE = "Audios/決定ボタンを押す2.wav";
 
+	const string BUTTON_SE = "Audios/決定ボタンを押す2.wav";
 	const string COUNTDOWN_SE = "Audios/Countdown03-2.wav";
 	const string DAMAGE_SE = "Audios/打撃1.wav";
-	const string DODGE_SE = "Audios/きらーん2.wav";
+	const string JUST_DODGE_SE = "Audios/きらーん2.wav";
+	const string DODGE_SE = "Audios/スライディング1.wav";
 	const string SHOOT_SE = "Audios/火炎魔法1.wav";
+	const string WALK_SE = "Audios/砂の上を走る.wav";
 }
 
 void AudioController::Update(GameObject* _root)
@@ -51,12 +53,23 @@ void AudioController::Update(GameObject* _root)
 		// ダメージを受けた時の音の再生
 		for (auto hg : stage->FindComponents(HealthGauge)) {
 			if (((Component_HealthGauge*)hg)->IsUnlockAndReduce()) Audio::Play(Audio::Load(DAMAGE_SE, false));
-			if (((Component_HealthGauge*)hg)->IsLockAndReduce()) Audio::Play(Audio::Load(DODGE_SE, false));
+			if (((Component_HealthGauge*)hg)->IsLockAndReduce()) Audio::Play(Audio::Load(JUST_DODGE_SE, false));
 		}
 
 		for (auto pb : stage->FindComponents(PlayerBehavior)) {
+			
+			// プレイヤーがシュートをした時の音の再生
 			if(((Component_PlayerBehavior*)pb)->IsShootStart()) Audio::Play(Audio::Load(SHOOT_SE, false));
+
+			// プレイヤーが回避をした時の音の再生
+			if(((Component_PlayerBehavior*)pb)->IsDodgeStart()) Audio::Play(Audio::Load(DODGE_SE, false));
+
+			// プレイヤーが歩いている時の音の再生
+			if(((Component_PlayerBehavior*)pb)->IsState(PLAYER_STATE_WALK)) Audio::Play(Audio::Load(WALK_SE, true));
+			else Audio::Stop(Audio::Load(WALK_SE, true));
 		}
+
+
 	}
 	else
 	{

@@ -34,6 +34,7 @@ private:
 	EffectData data_;
 
 	bool isShootStart_;					// 射撃開始フラグ
+	bool isDodgeStart_;					// 回避開始フラグ
 public:
 	/// <summary> コンストラクタ </summary>
 	Component_PlayerBehavior(string _name,StageObject* _holder,Component* _parent);
@@ -88,6 +89,11 @@ predicate :*/
 	/// <returns> 射撃を開始したか </returns>
 	bool IsShootStart() const { return isShootStart_; }
 
+	/// <returns> 回避を開始したか </returns>
+	bool IsDodgeStart() const { return isDodgeStart_; }
+
+	/// <returns> 現在の状態が指定した状態か </returns>
+	bool IsState(PlayerState _state) const { return nowState_ == _state; }
 private:
 	/// <summary> 射撃方向の計算 </summary>
 	/// <returns> 射撃方向 </returns>

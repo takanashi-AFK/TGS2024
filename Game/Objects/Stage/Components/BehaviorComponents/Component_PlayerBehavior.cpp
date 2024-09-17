@@ -261,8 +261,6 @@ void Component_PlayerBehavior::Shoot()
 
 void Component_PlayerBehavior::Dodge()
 {
-	// NOTE: 一度だけダッシュ処理を実行するためのフラグ
-	static bool isDash = false;
 	static float frameCount = 0;
 	static float dodgeDistance = 5;
 
@@ -276,7 +274,7 @@ void Component_PlayerBehavior::Dodge()
 
 	// 突進コンポーネントの取得 & 有無の確認
 	Component_TackleMove* tackle = (Component_TackleMove*)(GetChildComponent("TackleMove"));
-	if (tackle != nullptr && isDash == false) {
+	if (tackle != nullptr && isDodgeStart_ == false) {
 
 		// 突進方向を設定
 		XMVECTOR dir{ 0,0,-1,0 }; {
@@ -342,7 +340,7 @@ void Component_PlayerBehavior::Dodge()
 		hg->Lock();
 
 		// ダッシュフラグを立てる
-		isDash = true;
+		isDodgeStart_ = true;
 	}
 
 	// エフェクトの再生処理
@@ -368,7 +366,7 @@ void Component_PlayerBehavior::Dodge()
 	if (tackle->IsActived() == false) {
 
 		// ダッシュフラグをリセット
-		isDash = false;
+		isDodgeStart_ = false;
 
 		//移動を可能にする
 		move->Execute();

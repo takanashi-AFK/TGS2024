@@ -10,6 +10,8 @@
 #include "../Objects/Stage/Components/GaugeComponents/Component_HealthGauge.h"
 #include "../Objects/Stage/Components/BehaviorComponents/Component_PlayerBehavior.h"
 #include "../../Engine/ImGui/imgui.h"
+#include "../Objects/Stage/Components/BehaviorComponents/Component_BossBehavior.h"
+#include "../Objects/Stage/Components/AttackComponents/Component_ShootAttack.h"
 
 namespace {
 	const string TITLE_BGM = "Audios/プレゼントコーナー.wav";
@@ -22,6 +24,8 @@ namespace {
 	const string DODGE_SE = "Audios/スライディング1.wav";
 	const string SHOOT_SE = "Audios/火炎魔法1.wav";
 	const string WALK_SE = "Audios/砂の上を走る.wav";
+
+	const float VOLUME = 0.3f;
 }
 
 void AudioController::Update(GameObject* _root)
@@ -41,7 +45,7 @@ void AudioController::Update(GameObject* _root)
 	if (sceneManager->IsCurrentScene(SCENE_ID_PLAY)) {
 
 		// 背景音楽の再生
-		Audio::Play(Audio::Load(PLAY_BGM, true),0.3f);
+		Audio::Play(Audio::Load(PLAY_BGM, true), VOLUME);
 		Audio::Stop(Audio::Load(TITLE_BGM, true));
 
 		// カウントダウンの音の再生
@@ -73,7 +77,7 @@ void AudioController::Update(GameObject* _root)
 	else 
 	{
 		// タイトルシーン以外のシーンであれば、タイトルBGMを再生
-		if(!sceneManager->IsCurrentScene(SCENE_ID_SPLASH) && !sceneManager->IsCurrentScene(SCENE_ID_END))Audio::Play(Audio::Load(TITLE_BGM, true),0.3f);
+		if(!sceneManager->IsCurrentScene(SCENE_ID_SPLASH) && !sceneManager->IsCurrentScene(SCENE_ID_END))Audio::Play(Audio::Load(TITLE_BGM, true), VOLUME);
 		Audio::Stop(Audio::Load(PLAY_BGM, true));
 	}
 }

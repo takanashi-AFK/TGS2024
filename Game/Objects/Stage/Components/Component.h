@@ -182,6 +182,7 @@ public:
 	void Execute() { isActive_ = true; }
 	void Stop() { isActive_ = false; }
 
+	bool IsActive() const { return isActive_; }
 };
 
 /// <summary>

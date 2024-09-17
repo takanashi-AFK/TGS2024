@@ -15,6 +15,7 @@
 #include "../../../UI/UIPanel.h"
 #include "../../../UI/UIProgressBar.h"
 #include "../../../../Constants.h"
+#include "../../../../../Engine/ResourceManager/Audio.h"
 
 using namespace Constants;
 
@@ -248,6 +249,8 @@ void Component_BossBehavior::Shot()
 
         // 発射
         shoot->Execute();
+
+        Audio::Play(Audio::Load("Audios/風魔法1.wav",false));
     }
 
     // タイマーが終了した場合

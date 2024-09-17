@@ -30,8 +30,8 @@ void Scene_DifficultySelect::Update()
 		UIButton* normalButton = (UIButton*)UIPanel::GetInstance()->GetUIObject(DIFFICULTY_SELECT_SCENE_NORMAL_BUTTON_NAME);
 		if (normalButton->OnClick() == true) { g_selectedStage = STAGE_NORMAL; isClicked = true; }
 
-		/*UIButton* hardButton = (UIButton*)UIPanel::GetInstance()->GetUIObject(DIFFICULTY_SELECT_SCENE_HARD_BUTTON_NAME);
-		if (hardButton->OnClick() == true) { g_selectedStage = STAGE_HARD; isClicked = true; }*/
+		UIButton* hardButton = (UIButton*)UIPanel::GetInstance()->GetUIObject(DIFFICULTY_SELECT_SCENE_HARD_BUTTON_NAME);
+		if (hardButton->OnClick() == true) { g_selectedStage = STAGE_HARD; isClicked = true; }
 
 		/*UIButton* expertButton = (UIButton*)UIPanel::GetInstance()->GetUIObject(DIFFICULTY_SELECT_SCENE_EXPERT_BUTTON_NAME);
 		if (expertButton->OnClick() == true) { g_selectedStage = STAGE_EXPERT; isClicked = true; }*/

@@ -7,7 +7,7 @@
 using namespace Constants;
 
 Scene_DifficultySelect::Scene_DifficultySelect(GameObject* parent)
-	: GameObject(parent,"Scene_DifficultySelect")
+	: GameObject(parent, "Scene_DifficultySelect")
 {
 }
 
@@ -23,9 +23,9 @@ void Scene_DifficultySelect::Update()
 	bool isClicked = false;
 
 	// “ïˆÕ“x‚ð‘I‘ð
-	{	
-		/*UIButton* easyButton = (UIButton*)UIPanel::GetInstance()->GetUIObject(DIFFICULTY_SELECT_SCENE_EASY_BUTTON_NAME);
-		if (easyButton->OnClick() == true) { g_selectedStage = STAGE_EASY; isClicked = true; }*/
+	{
+		UIButton* easyButton = (UIButton*)UIPanel::GetInstance()->GetUIObject(DIFFICULTY_SELECT_SCENE_EASY_BUTTON_NAME);
+		if (easyButton->OnClick() == true) { g_selectedStage = STAGE_EASY; isClicked = true; }
 
 		UIButton* normalButton = (UIButton*)UIPanel::GetInstance()->GetUIObject(DIFFICULTY_SELECT_SCENE_NORMAL_BUTTON_NAME);
 		if (normalButton->OnClick() == true) { g_selectedStage = STAGE_NORMAL; isClicked = true; }

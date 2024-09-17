@@ -14,9 +14,9 @@
             "type_": 3
           },
           "HealthGauge": {
-            "max_": 1000.0,
+            "max_": 500.0,
             "name_": "HealthGauge",
-            "now_": 1000.0,
+            "now_": 500.0,
             "type_": 6
           },
           "ShootAttack": {
@@ -30,7 +30,7 @@
             "name_": "ShootAttack",
             "power_": 50,
             "shootingDirection_": [ 1.0, 0.0, 0.0 ],
-            "shootingSpeed_": 0.20000001788139343,
+            "shootingSpeed_": 0.15000001788139343,
             "type_": 17
           },
           "TackleMove": {
@@ -51,7 +51,7 @@
         "name_": "bossBehavior",
         "shootHeight_": -1.2000000476837158,
         "shotInterval_": 0.05000000074505806,
-        "stateChangeDelay_": 2.5,
+        "stateChangeDelay_": 3.0,
         "target_": "00_player",
         "type_": 0
       },
@@ -85,9 +85,9 @@
             "type_": 20
           },
           "PlayerHealthGauge": {
-            "max_": 1000.0,
+            "max_": 500.0,
             "name_": "PlayerHealthGauge",
-            "now_": 1000.0,
+            "now_": 500.0,
             "type_": 6
           },
           "PlayerMotion": {
@@ -103,7 +103,7 @@
             "bulletColliderRadius_": 0.20000000298023224,
             "bulletLifeTime_": 1.0,
             "name_": "ShootAttack",
-            "power_": 100,
+            "power_": 50,
             "shootingDirection_": [ 0.0, -50.0, 40.0 ],
             "shootingSpeed_": 0.20000000298023224,
             "type_": 17
@@ -117,7 +117,7 @@
             "type_": 18
           }
         },
-        "invincibilityFrame": 20,
+        "invincibilityFrame": 40,
         "name_": "PlayerBehavior",
         "shootHeight": 0.6000000238418579,
         "type_": 11

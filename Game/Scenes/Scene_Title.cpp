@@ -24,11 +24,6 @@ void Scene_Title::Initialize()
 
 void Scene_Title::Update()
 {
-
-	// マウスの座標を取得
-	XMFLOAT2 mousePos = { Input::GetMousePosition().x,Input::GetMousePosition().y };
-	ImGui::Text("MousePos: %f, %f", mousePos.x, mousePos.y);
-
 	// シーン切替処理
 	{
 		// ランキングシーンへの遷移

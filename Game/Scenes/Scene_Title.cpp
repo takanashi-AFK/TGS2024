@@ -8,6 +8,7 @@
 
 #include "../../Engine/DirectX/Input.h"
 #include "../../Engine/ImGui/imgui.h"
+#include "../Objects/UI/UIInputString.h"
 using namespace Constants;
 
 Scene_Title::Scene_Title(GameObject* parent)
@@ -36,6 +37,11 @@ void Scene_Title::Update()
 		// プレイシーンへの遷移
 		UIButton* startButton = (UIButton*)UIPanel::GetInstance()->GetUIObject(TITLE_SCENE_START_BUTTON_NAME);
 		if (startButton->OnClick() == true) {
+
+			// ここでユーザー名を取得する
+			UIInputString* input = (UIInputString*)UIPanel::GetInstance()->GetUIObject(TITLE_SCENE_USER_NAME_INPUT_NAME);
+			ScoreManager::userName = input->GetInputString();
+
 			SceneManager* sceneManager = (SceneManager*)FindObject("SceneManager");
 			sceneManager->ChangeScene(SCENE_ID_DIFFICULTYSELECT, TID_BLACKOUT);
 		}

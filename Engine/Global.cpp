@@ -54,6 +54,7 @@ valeable :*/
 	int time;		// タイム
 	int playerHp;	// プレイヤーのHP
 	bool isClear;	// クリアしたかどうか
+	string userName;	// ユーザー名
 }
 
 string g_selectedStage = "";

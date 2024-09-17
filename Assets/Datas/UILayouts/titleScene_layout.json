@@ -1,9 +1,28 @@
 {
+  "InputBoxImage": {
+    "imageFilePath_": "Images/titleScene/inputNameBox.png",
+    "layerNumber_": 4,
+    "objectName_": "InputBoxImage",
+    "position_": [ 0.0, -0.5, 0.0 ],
+    "rotate_": [ 0.0, 0.0, 0.0 ],
+    "scale_": [ 0.10000000149011612, 0.10000000149011612, 1.0 ],
+    "type_": 2
+  },
+  "userNameInput": {
+    "layerNumber_": 5,
+    "objectName_": "userNameInput",
+    "position_": [ -0.1599999964237213, 0.5, 0.0 ],
+    "rotate_": [ 0.0, 0.0, 0.0 ],
+    "scale_": [ 1.0, 1.0, 1.0 ],
+    "size": 1.0,
+    "text": "user01",
+    "type_": 7
+  },
   "rankingButton": {
     "imageFilePath_": "Images/titleScene/rankingButton.png",
     "layerNumber_": 3,
     "objectName_": "rankingButton",
-    "position_": [ 0.0, -0.699999988079071, 0.0 ],
+    "position_": [ 0.10000000149011612, -0.699999988079071, 0.0 ],
     "rotate_": [ 0.0, 0.0, 0.0 ],
     "scale_": [ 0.10000000149011612, 0.10000000149011612, 1.0 ],
     "type_": 1
@@ -12,7 +31,7 @@
     "imageFilePath_": "Images/titleScene/startButton.png",
     "layerNumber_": 2,
     "objectName_": "startButton",
-    "position_": [ 0.0, -0.5, 0.0 ],
+    "position_": [ -0.10000000149011612, -0.699999988079071, 0.0 ],
     "rotate_": [ 0.0, 0.0, 0.0 ],
     "scale_": [ 0.10000000149011612, 0.10000000149011612, 1.0 ],
     "type_": 1

@@ -32,15 +32,31 @@ void Scene_Ranking::Initialize()
 		// ランキングデータを取得 ※5位まで
 		for (int i = 1; i <= 5; i++) {
 
-			// UIテキスト名を取得
-			std::string name = "rank" + std::to_string(i) +"_scoreNum";
-			UIText* text = (UIText*)panel->GetUIObject(name);
+			// ユーザーネームを取得
+			{
+				// UIテキスト名を取得
+				std::string name = "rank" + std::to_string(i) + "_userName";
+				UIText* text = (UIText*)panel->GetUIObject(name);
 
-			// スコアを取得
-			string score = std::to_string(RankingManager::GetInstance().GetScore(i - 1));
+				// ユーザーネームを取得
+				string userName = RankingManager::GetInstance().GetUser(i - 1);
+
+				// テキストにユーザーネームを設定
+				if (text != nullptr) text->SetText(userName);
+			}
 			
-			// テキストにスコアを設定
-			if(text != nullptr) text->SetText(score);
+			// スコアを取得
+			{
+				// UIテキスト名を取得
+				std::string name = "rank" + std::to_string(i) + "_scoreNum";
+				UIText* text = (UIText*)panel->GetUIObject(name);
+
+				// スコアを取得
+				string score = std::to_string(RankingManager::GetInstance().GetScore(i - 1));
+
+				// テキストにスコアを設定
+				if (text != nullptr) text->SetText(score);
+			}
 		}
 	}
 

@@ -16,6 +16,7 @@ namespace Constants {
 	const string TITLE_SCENE_LAYOUT_JSON = "Datas/UILayouts/titleScene_layout.json";
 	const string TITLE_SCENE_START_BUTTON_NAME = "startButton";
 	const string TITLE_SCENE_RANKING_BUTTON_NAME = "rankingButton";
+	const string TITLE_SCENE_USER_NAME_INPUT_NAME = "userNameInput";
 
 	/// 難易度選択シーン ///
 	const string DIFFICULTY_SELECT_SCENE_LAYOUT_JSON = "Datas/UILayouts/difficultySelectScene _layout.json";

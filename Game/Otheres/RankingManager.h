@@ -2,18 +2,20 @@
 
 #include <vector>
 #include <string>
+#include <utility>
 
 using namespace std;
 
 class RankingManager
 {
 private:
-    std::vector<int> scores_;  // スコアのみを保存
+    // ユーザー名とスコアのペアを保存する
+    std::vector<std::pair<std::string, int>> scores_;
 
 public:
     /// <summary> シングルトンインスタンスを取得 </summary>
     static RankingManager& GetInstance();
-    
+
     /// <summary> 読込（CSV形式） </summary>
     bool Load(string _filePath);
 
@@ -21,18 +23,22 @@ public:
     bool Save(string _filePath);
 
     /// <summary> スコアを追加 </summary>
-    void AddScore(int _score) { scores_.push_back(_score); }
+    void AddScore(const std::string& _userName, int _score);
 
     /// <summary> スコアをソート </summary>
     void SortScores();
 
-/*
-getter :*/
+    /*
+    getter :
+    */
     /// <summary> 指定したランクのスコアを取得 </summary>
     int GetScore(int _rank) const;
 
-    /// <summary> スコアの数を取得 </summary>
-    vector<int> GetAllScores() const { return scores_; }
+    /// <summary> 指定したランクのユーザー名を取得 </summary>
+    std::string GetUser(int _rank) const;
+
+    /// <summary> 全てのスコアとユーザー名を取得 </summary>
+    std::vector<std::pair<std::string, int>> GetAllScores() const { return scores_; }
 
 private:
     // コンストラクタはプライベート
@@ -41,5 +47,4 @@ private:
     // コピーコンストラクタ・代入演算子を削除
     RankingManager(const RankingManager&) = delete;
     RankingManager& operator=(const RankingManager&) = delete;
-
 };

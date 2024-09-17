@@ -32,6 +32,7 @@ valeable :*/
 	extern int time;		// タイム
 	extern int playerHp;	// プレイヤーのHP
 	extern bool isClear;	// クリアしたかどうか
+	extern string userName;	// ユーザー名
 }
 
 // ファイル管理namespace

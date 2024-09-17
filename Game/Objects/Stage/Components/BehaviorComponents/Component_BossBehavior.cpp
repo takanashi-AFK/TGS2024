@@ -208,7 +208,7 @@ BossState Component_BossBehavior::RandomStatePick()
 
     // 状態を抽選　ただし、IDLEとDEADは除外
     do res = (BossState)(rand() % BOSS_STATE_MAX);
-    while (res == BOSS_STATE_IDLE || res == BOSS_STATE_DEAD);
+    while (res == BOSS_STATE_IDLE || res == BOSS_STATE_DEAD || res == BOSS_STATE_SHOT);
 
     // 抽選結果を返す
     return res;

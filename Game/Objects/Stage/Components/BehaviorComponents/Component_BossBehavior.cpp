@@ -1,4 +1,4 @@
-#include "Component_BossBehavior.h"
+﻿#include "Component_BossBehavior.h"
 
 // インクルード
 #include "../../StageObject.h"
@@ -211,9 +211,9 @@ BossState Component_BossBehavior::RandomStatePick()
     // 抽選結果を格納する変数を用意
     BossState res = BOSS_STATE_MAX;
 
-    // 状態を抽選　ただし、IDLEとDEADは除外
+    // 状態を抽選ただし、IDLEとDEADは除外
     do res = (BossState)(rand() % BOSS_STATE_MAX);
-    while (res == BOSS_STATE_IDLE || res == BOSS_STATE_DEAD || res == BOSS_STATE_SHOT);
+    while (res == BOSS_STATE_IDLE || res == BOSS_STATE_DEAD);
 
     // 抽選結果を返す
     return res;

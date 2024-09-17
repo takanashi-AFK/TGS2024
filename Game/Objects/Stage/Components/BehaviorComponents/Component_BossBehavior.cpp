@@ -357,7 +357,6 @@ void Component_BossBehavior::Idle()
 
 void Component_BossBehavior::Dead()
 {
-
     Transform effectTransform;
 	effectTransform.position_ = holder_->GetPosition();
 

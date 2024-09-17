@@ -28,6 +28,8 @@ void UIButton::Update()
     // マウスの座標を画像の座標に変換
     ConvertToImageCoordinates(mousePos);
 
+    ImGui::Text("cMousePos: %f, %f", mousePos.x, mousePos.y);
+
 	if (IsMouseOver(mousePos))
         Image::SetAlpha(imageHandle_, 192);
 	else 
@@ -148,7 +150,6 @@ bool UIButton::IsMouseOver(XMFLOAT2 _mousePosition)
     // 画像が読み込まれていない場合は処理を行わない
     if (imageHandle_ < 0)return false;
 
-
     // 画面のサイズを取得
     int scWidth = Direct3D::screenWidth_;
     int scHeight = Direct3D::screenHeight_;
@@ -206,6 +207,9 @@ void UIButton::ConvertToImageCoordinates(XMFLOAT2& _position)
 {
     int scWidth = Direct3D::screenWidth_;
     int scHeight = Direct3D::screenHeight_;
+
+    if (Direct3D::isFullScreen_)
+		Direct3D::GetFullScreenSize(scWidth, scHeight);
 
 #ifdef _DEBUG
     scWidth = scWidth * 0.7;

@@ -67,6 +67,10 @@ public:
 	/// <param name="_direction">•ûŒü</param>
 	void SetDistance(float _distance) { distance_ = _distance; }
 
+	void SetSpeed(float _speed) { speed_ = _speed; }
+
+	XMVECTOR GetDirection() { return direction_; }
+
 	/// <summary>
 	/// ImGuiƒpƒlƒ‹•\Ž¦
 	/// </summary>

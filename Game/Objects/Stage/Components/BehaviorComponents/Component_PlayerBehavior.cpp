@@ -63,6 +63,7 @@ void Component_PlayerBehavior::Initialize()
 
 	// effekseer: :Effectの読み込み
 	EFFEKSEERLIB::gEfk->AddEffect("dodge", "Effects/Lazer01.efk");/*★★★*/
+	EFFEKSEERLIB::gEfk->AddEffect("impact", "Effects/Attack_Impact.efk");/*★★★*/
 
 	// 子コンポーネントの追加
 	if (FindChildComponent("InputMove") == false)AddChildComponent(CreateComponent("InputMove", WASDInputMove, holder_, this));
@@ -370,22 +371,28 @@ void Component_PlayerBehavior::Dodge()
 		}
 	}
 
+	XMFLOAT3 holderPos = holder_->GetPosition();
+	XMFLOAT3 bossPos = bossBehavior->GetHolder()->GetPosition();
+	XMFLOAT3 bossToPlayer = bossPos - holderPos;
+	XMVECTOR vBossToPlayer = XMLoadFloat3(&bossToPlayer);
 
 
-	if(state == BossState::BOSS_STATE_TACKLE) {
-		if (bossBehavior == nullptr) {
-			int a = 0;
-			a = 0;
-		}
-			Component_TackleMove* a = (Component_TackleMove*)bossBehavior->GetChildComponent("TackleMove");
+	if (state == BossState::BOSS_STATE_TACKLE && XMVectorGetZ(XMVector3Length(vBossToPlayer)) < 2.f) {
 
-		if (a == nullptr) {
-			int a = 0;
-			a = 0;
-		}
+		Component_TackleMove* a = (Component_TackleMove*)bossBehavior->GetChildComponent("TackleMove");
 		a->SetDistance(0);
 		
 		tackle->SetDistance(0);
+
+		// エフェクトの再生処理
+		{
+			EFFEKSEERLIB::EFKTransform t;
+			DirectX::XMStoreFloat4x4(&(t.matrix), holder_->GetWorldMatrix());
+			t.isLoop = false;
+			t.maxFrame = 60;
+			t.speed = 1.f;
+			mt = EFFEKSEERLIB::gEfk->Play("impact", t);
+		}
 	}
 
 	// 突進処理が終了していたら...

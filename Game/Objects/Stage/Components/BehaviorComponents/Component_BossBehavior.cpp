@@ -302,6 +302,8 @@ void Component_BossBehavior::Tackle()
             auto stageObj = pStage->GetStageObjects();
             float dodgeDistance = XMVectorGetX(XMVector3Length(XMLoadFloat3(&targetPos) - XMLoadFloat3(&holderPos)));
 
+
+
 			// ‹——£‚ðÝ’è
 			tackleMove->SetDistance(dodgeDistance - MODEL_SIZE_HALF );
 

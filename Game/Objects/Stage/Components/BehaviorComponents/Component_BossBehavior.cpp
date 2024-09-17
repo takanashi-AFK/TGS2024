@@ -1,6 +1,6 @@
-#include "Component_BossBehavior.h"
+ï»¿#include "Component_BossBehavior.h"
 
-// ƒCƒ“ƒNƒ‹[ƒh
+// ã‚¤ãƒ³ã‚¯ãƒ«ãƒ¼ãƒ‰
 #include "../../StageObject.h"
 #include "../TimerComponent/Component_Timer.h"
 #include "../AttackComponents/Component_ShootAttack.h"
@@ -14,6 +14,9 @@
 #include "../GaugeComponents/Component_HealthGauge.h"
 #include "../../../UI/UIPanel.h"
 #include "../../../UI/UIProgressBar.h"
+
+#include "../../../../../Engine/ResourceManager/Model.h"
+
 #include "../../../../Constants.h"
 #include "../../../../../Engine/ResourceManager/Audio.h"
 
@@ -23,9 +26,11 @@ namespace
 {
     const float SHOT_RATE = 0.2f;
     const float SHOT_ANGLE = 15;
+    const float MODEL_SIZE = 4.0f;
+    const float MODEL_SIZE_HALF = MODEL_SIZE / 2;
     const int SHOT_TIME = 5;
 	const float SMALL_VEROSITY = 0.02f;
-    EFFEKSEERLIB::EFKTransform t;/*ššš*/
+    EFFEKSEERLIB::EFKTransform t;/*â˜…â˜…â˜…*/
 }
 
 Component_BossBehavior::Component_BossBehavior(string _name, StageObject* _holder, Component* _parent)
@@ -41,67 +46,67 @@ Component_BossBehavior::Component_BossBehavior(string _name, StageObject* _holde
 
 void Component_BossBehavior::Initialize()
 {
-    // •K—v‚ÈƒRƒ“ƒ|[ƒlƒ“ƒg‚ğ’Ç‰Á
+    // å¿…è¦ãªã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã‚’è¿½åŠ 
     if (!FindChildComponent("ShootAttack")) AddChildComponent(CreateComponent("ShootAttack", ShootAttack, holder_, this));
     if (!FindChildComponent("Timer")) AddChildComponent(CreateComponent("Timer", Timer, holder_, this));
     if (!FindChildComponent("TackleMove")) AddChildComponent(CreateComponent("TackleMove", TackleMove, holder_, this));
     if (!FindChildComponent("HealthGauge")) AddChildComponent(CreateComponent("HealthGauge", HealthGauge, holder_, this));
 
-    // effekseer: :Effect‚Ì“Ç‚İ‚İ
-    EFFEKSEERLIB::gEfk->AddEffect("sword", "Effects/Salamander12.efk");/*ššš*/
-	EFFEKSEERLIB::gEfk->AddEffect("fire", "Effects/Fire3.efk");/*ššš*/
+    // effekseer: :Effectã®èª­ã¿è¾¼ã¿
+    EFFEKSEERLIB::gEfk->AddEffect("sword", "Effects/Salamander12.efk");/*â˜…â˜…â˜…*/
+	EFFEKSEERLIB::gEfk->AddEffect("fire", "Effects/Fire3.efk");/*â˜…â˜…â˜…*/
 
-    // ƒRƒ‰ƒCƒ_[‚Ì’Ç‰Á
-    // fix: ƒRƒ‰ƒCƒ_[‚ÌƒTƒCƒY‚ğ¡Œãƒf[ƒ^‚©‚ç“Ç‚İ‚Ş‚æ‚¤‚É•ÏX
+    // ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼ã®è¿½åŠ 
+    // fix: ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼ã®ã‚µã‚¤ã‚ºã‚’ä»Šå¾Œãƒ‡ãƒ¼ã‚¿ã‹ã‚‰èª­ã¿è¾¼ã‚€ã‚ˆã†ã«å¤‰æ›´
     holder_->AddCollider(new BoxCollider({}, { 5.0f, 5.0f, 5.0f }));
 }
 
 void Component_BossBehavior::Update()
 {
-    // ƒ^[ƒQƒbƒg‚Ìæ“¾
+    // ã‚¿ãƒ¼ã‚²ãƒƒãƒˆã®å–å¾—
     if (target_ == nullptr) target_ = (StageObject*)holder_->FindObject(targetName_);
 
-    // ƒJƒEƒ“ƒg§Œä‚³‚ê‚Ä‚¢‚éê‡‚Ìˆ—
+    // ã‚«ã‚¦ãƒ³ãƒˆåˆ¶å¾¡ã•ã‚Œã¦ã„ã‚‹å ´åˆã®å‡¦ç†
     CountDown* countDown = (CountDown*)(holder_->FindObject("CountDown"));
     if (countDown != nullptr && isGameStart_ == false) {
 
-        // ƒJƒEƒ“ƒgƒ_ƒEƒ“‚ªI—¹‚µ‚½ê‡
+        // ã‚«ã‚¦ãƒ³ãƒˆãƒ€ã‚¦ãƒ³ãŒçµ‚äº†ã—ãŸå ´åˆ
         if (countDown->IsFinished()) {
 
-            //ˆÚ“®‚ğ‰Â”\‚É‚·‚é
+            //ç§»å‹•ã‚’å¯èƒ½ã«ã™ã‚‹
             isActive_ = true;
 
-            // ƒQ[ƒ€ƒXƒ^[ƒgƒtƒ‰ƒO‚ğ—§‚Ä‚é
+            // ã‚²ãƒ¼ãƒ ã‚¹ã‚¿ãƒ¼ãƒˆãƒ•ãƒ©ã‚°ã‚’ç«‹ã¦ã‚‹
             isGameStart_ = true;
         }
         else {
-            // ˆÚ“®‚ğ•s‰Â”\‚É‚·‚é
+            // ç§»å‹•ã‚’ä¸å¯èƒ½ã«ã™ã‚‹
             isActive_ = false;
             return;
         }
     }
 
-    // ‘ÎÛ‚ª‘¶İ‚µ‚È‚¢ ‚Ü‚½‚Í ƒAƒNƒeƒBƒu‚Å‚È‚¢ê‡‚Íˆ—‚ğs‚í‚È‚¢
+    // å¯¾è±¡ãŒå­˜åœ¨ã—ãªã„ ã¾ãŸã¯ ã‚¢ã‚¯ãƒ†ã‚£ãƒ–ã§ãªã„å ´åˆã¯å‡¦ç†ã‚’è¡Œã‚ãªã„
     if (target_ == nullptr || !isActive_) return;
 
 
-    // HPŠÖ˜Aˆ—
+    // HPé–¢é€£å‡¦ç†
     {
-        // ƒ{ƒX‚ÌHPƒQ[ƒWƒRƒ“ƒ|[ƒlƒ“ƒg‚ğæ“¾
+        // ãƒœã‚¹ã®HPã‚²ãƒ¼ã‚¸ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã‚’å–å¾—
         Component_HealthGauge* hg = (Component_HealthGauge*)(GetChildComponent("HealthGauge"));
 
-        // UIProgressBar‚ğæ“¾
+        // UIProgressBarã‚’å–å¾—
         UIProgressBar* hpBar = (UIProgressBar*)UIPanel::GetInstance()->FindObject(PLAY_SCENE_BOSS_HP_GAUGE_NAME);
 
-        // HPƒo[‚Ì’l‚ğİ’è
+        // HPãƒãƒ¼ã®å€¤ã‚’è¨­å®š
         if (hpBar != nullptr && hg != nullptr)hpBar->SetProgress(&hg->now_, &hg->max_);
 
-        // HP‚ª0ˆÈ‰º‚É‚È‚Á‚½‚ç... DEADó‘Ô‚É‘JˆÚ
+        // HPãŒ0ä»¥ä¸‹ã«ãªã£ãŸã‚‰... DEADçŠ¶æ…‹ã«é·ç§»
         if (hg != nullptr)if (hg->IsDead() == true)SetState(BOSS_STATE_DEAD);
     }
 
-    // ó‘Ô‚É‚æ‚Á‚Äˆ—‚ğ•ªŠò
-    switch (nowState_)
+    // çŠ¶æ…‹ã«ã‚ˆã£ã¦å‡¦ç†ã‚’åˆ†å²
+    switch (bNowState_)
     {
     case BOSS_STATE_IDLE:Idle(); break;
     case BOSS_STATE_SHOT:Shot(); break;
@@ -117,14 +122,14 @@ void Component_BossBehavior::Release()
 
 void Component_BossBehavior::OnCollision(GameObject* _target, Collider* _collider)
 {
-    // “ËiUŒ‚‚É‚æ‚éƒ_ƒ[ƒWˆ—
+    // çªé€²æ”»æ’ƒã«ã‚ˆã‚‹ãƒ€ãƒ¡ãƒ¼ã‚¸å‡¦ç†
     {
         for (auto tackleMove : GetChildComponent(ComponentType::TackleMove)){
 
-            // “ËiUŒ‚‚ªƒAƒNƒeƒBƒu‚Å‚È‚¢ ‚Ü‚½‚Í ‘ÎÛ‚ª‘¶İ‚µ‚È‚¢ê‡‚Íˆ—‚ğs‚í‚È‚¢
+            // çªé€²æ”»æ’ƒãŒã‚¢ã‚¯ãƒ†ã‚£ãƒ–ã§ãªã„ ã¾ãŸã¯ å¯¾è±¡ãŒå­˜åœ¨ã—ãªã„å ´åˆã¯å‡¦ç†ã‚’è¡Œã‚ãªã„
             if (!((Component_TackleMove*)tackleMove)->IsActived() || _target == nullptr) continue;
 
-            // ‘ÎÛ‚ÌHP‚ğŒ¸­
+            // å¯¾è±¡ã®HPã‚’æ¸›å°‘
             for (auto hg : ((StageObject*)_target)->FindComponent(HealthGauge))((Component_HealthGauge*)hg)->TakeDamage(30);
         }
     }
@@ -132,45 +137,45 @@ void Component_BossBehavior::OnCollision(GameObject* _target, Collider* _collide
 
 void Component_BossBehavior::Save(json& _saveObj)
 {
-    // ‘ÎÛ‚Ì–¼‘O‚ğ•Û‘¶
+    // å¯¾è±¡ã®åå‰ã‚’ä¿å­˜
     if (target_ != nullptr) _saveObj["target_"] = target_->GetObjectName();
     
-    // ”­ËŠÔ˜g‚ğ•Û‘¶
+    // ç™ºå°„é–“æ ã‚’ä¿å­˜
     _saveObj["shotInterval_"] = shotInterval_;
     
-    // ËŒ‚‚Ì‚‚³‚ğ•Û‘¶
+    // å°„æ’ƒã®é«˜ã•ã‚’ä¿å­˜
     _saveObj["shootHeight_"] = shootHeight_;
     
-    // ó‘Ô•ÏX’x‰„‚ğ•Û‘¶
+    // çŠ¶æ…‹å¤‰æ›´é…å»¶ã‚’ä¿å­˜
     _saveObj["stateChangeDelay_"] = stateChangeDelay_;
 }
 
 void Component_BossBehavior::Load(json& _loadObj)
 {
-    // ‘ÎÛ‚Ì–¼‘O‚ğ“Ç‚İ‚İ
+    // å¯¾è±¡ã®åå‰ã‚’èª­ã¿è¾¼ã¿
     if (_loadObj.contains("target_")) targetName_ = _loadObj["target_"];
     
-    // ”­ËŠÔŠu‚ğ“Ç‚İ‚İ
+    // ç™ºå°„é–“éš”ã‚’èª­ã¿è¾¼ã¿
     if (_loadObj.contains("shotInterval_")) shotInterval_ = _loadObj["shotInterval_"];
 
-    // ËŒ‚‚Ì‚‚³‚ğ“Ç‚İ‚İ
+    // å°„æ’ƒã®é«˜ã•ã‚’èª­ã¿è¾¼ã¿
     if(_loadObj.contains("shootHeight_")) shootHeight_ = _loadObj["shootHeight_"];
     
-    // ó‘Ô•ÏX’x‰„‚ğ“Ç‚İ‚İ
+    // çŠ¶æ…‹å¤‰æ›´é…å»¶ã‚’èª­ã¿è¾¼ã¿
     if (_loadObj.contains("stateChangeDelay_")) stateChangeDelay_ = _loadObj["stateChangeDelay_"];
 }
 
 void Component_BossBehavior::DrawData()
 {
-    // ƒAƒNƒeƒBƒuƒtƒ‰ƒO‚ğ•\¦
+    // ã‚¢ã‚¯ãƒ†ã‚£ãƒ–ãƒ•ãƒ©ã‚°ã‚’è¡¨ç¤º
     ImGui::Checkbox("isActive_", &isActive_);
-    // ‘ÎÛ‚ğİ’è
+    // å¯¾è±¡ã‚’è¨­å®š
     {
-        // ƒXƒe[ƒWã‚É‘¶İ‚·‚éƒIƒuƒWƒFƒNƒg‚Ì–¼‘O‚ğ‘S‚Äæ“¾
+        // ã‚¹ãƒ†ãƒ¼ã‚¸ä¸Šã«å­˜åœ¨ã™ã‚‹ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®åå‰ã‚’å…¨ã¦å–å¾—
         vector<string> nameList{};nameList.push_back("None");
         for (auto obj : ((Stage*)holder_->FindObject("Stage"))->GetStageObjects()) nameList.push_back(obj->GetObjectName());
 
-        // ƒRƒ“ƒ{ƒ{ƒbƒNƒX‚Å‘I‘ğ
+        // ã‚³ãƒ³ãƒœãƒœãƒƒã‚¯ã‚¹ã§é¸æŠ
         static int select = 0;
         if (ImGui::BeginCombo("target_", nameList[select].c_str())) {
             for (int i = 0; i < nameList.size(); i++) {
@@ -181,182 +186,192 @@ void Component_BossBehavior::DrawData()
             ImGui::EndCombo();
         }
 
-        // ‘I‘ğ‚³‚ê‚½–¼‘O‚©‚ç‘ÎÛ‚ğİ’è
+        // é¸æŠã•ã‚ŒãŸåå‰ã‹ã‚‰å¯¾è±¡ã‚’è¨­å®š
         if (select != 0) target_ = (StageObject*)holder_->FindObject(nameList[select]);
     }
 
-    // ”­ËŠÔŠu‚ğ•\¦
+    // ç™ºå°„é–“éš”ã‚’è¡¨ç¤º
     ImGui::DragFloat("shotInterval_", &shotInterval_);
     
-    // ËŒ‚‚Ì‚‚³‚ğ•\¦
+    // å°„æ’ƒã®é«˜ã•ã‚’è¡¨ç¤º
     ImGui::DragFloat("shootHeight_", &shootHeight_);
     
-    // ó‘Ô•ÏX’x‰„‚ğ•\¦
+    // çŠ¶æ…‹å¤‰æ›´é…å»¶ã‚’è¡¨ç¤º
     ImGui::DragFloat("stateChangeDelay_", &stateChangeDelay_);
 }
 
 bool Component_BossBehavior::IsDead()
 {
-    // ƒ{ƒX‚Ìó‘Ô‚ªDEAD‚Å‚ ‚èA‘å‚«‚³‚ª0ˆÈ‰º‚Ìê‡
-    return (nowState_ == BOSS_STATE_DEAD && holder_->GetScale().x <= 0);
+    // ãƒœã‚¹ã®çŠ¶æ…‹ãŒDEADã§ã‚ã‚Šã€å¤§ãã•ãŒ0ä»¥ä¸‹ã®å ´åˆ
+    return (bNowState_ == BOSS_STATE_DEAD && holder_->GetScale().x <= 0);
 }
 
 BossState Component_BossBehavior::RandomStatePick()
 {
-    // ’Š‘IŒ‹‰Ê‚ğŠi”[‚·‚é•Ï”‚ğ—pˆÓ
+    // æŠ½é¸çµæœã‚’æ ¼ç´ã™ã‚‹å¤‰æ•°ã‚’ç”¨æ„
     BossState res = BOSS_STATE_MAX;
 
-    // ó‘Ô‚ğ’Š‘I@‚½‚¾‚µAIDLE‚ÆDEAD‚ÍœŠO
+    // çŠ¶æ…‹ã‚’æŠ½é¸ãŸã ã—ã€IDLEã¨DEADã¯é™¤å¤–
     do res = (BossState)(rand() % BOSS_STATE_MAX);
     while (res == BOSS_STATE_IDLE || res == BOSS_STATE_DEAD);
 
-    // ’Š‘IŒ‹‰Ê‚ğ•Ô‚·
+    // æŠ½é¸çµæœã‚’è¿”ã™
     return res;
 }
 
 void Component_BossBehavior::Shot()
 {
-    // ËŒ‚UŒ‚ƒRƒ“ƒ|[ƒlƒ“ƒg‚Ìæ“¾ & nullƒ`ƒFƒbƒN
+    // å°„æ’ƒæ”»æ’ƒã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã®å–å¾— & nullãƒã‚§ãƒƒã‚¯
     Component_ShootAttack* shoot = (Component_ShootAttack*)GetChildComponent("ShootAttack");
 
-    // ƒ^ƒCƒ}[‚Ìæ“¾ & nullƒ`ƒFƒbƒN
+    // ã‚¿ã‚¤ãƒãƒ¼ã®å–å¾— & nullãƒã‚§ãƒƒã‚¯
     Component_Timer* timer = (Component_Timer*)GetChildComponent("Timer");
     if (timer == nullptr || shoot == nullptr) return;
 
-    // ƒ^ƒCƒ}[‚Ìİ’è & ŠJn
+    // ã‚¿ã‚¤ãƒãƒ¼ã®è¨­å®š & é–‹å§‹
     timer->SetTime(SHOT_TIME);
     timer->Start();
 
-    // Šp“x‚ğŠi”[‚·‚é•Ï”‚ğ—pˆÓ
+    // è§’åº¦ã‚’æ ¼ç´ã™ã‚‹å¤‰æ•°ã‚’ç”¨æ„
     static float angle = 0;
     static float rotateSpeed = 1.f + (rand() % 15);
 
-    // Š—LÒ‚ÌŠp“x‚ğXV
+    // æ‰€æœ‰è€…ã®è§’åº¦ã‚’æ›´æ–°
     angle += rotateSpeed;
     holder_->SetRotateY(angle);
 
-    // ƒ^ƒCƒ}[‚ªˆê’èŠÔŒo‰ß‚µ‚½ê‡
+    // ã‚¿ã‚¤ãƒãƒ¼ãŒä¸€å®šæ™‚é–“çµŒéã—ãŸå ´åˆ
     if (timer->IsIntervalTime(shotInterval_)) {
 
-        // ”­Ë•ûŒü‚ğİ’è
+        // ç™ºå°„æ–¹å‘ã‚’è¨­å®š
         XMVECTOR dir = { 0,0,1,0 };
         shoot->SetShootingDirection(XMVector3TransformCoord(dir, XMMatrixRotationY(XMConvertToRadians(holder_->GetRotate().y))));
 
-        // ”­ËˆÊ’u‚ğİ’è
+        // ç™ºå°„ä½ç½®ã‚’è¨­å®š
         XMFLOAT3 shootPosition = holder_->GetPosition();
         shootPosition.y += shootHeight_;
         shoot->SetShootingPosition(shootPosition);
 
-        // ”­Ë
+        // ç™ºå°„
         shoot->Execute();
-        Audio::Play(Audio::Load("Audios/•—–‚–@1.wav",false));
+        Audio::Play(Audio::Load("Audios/é¢¨é­”æ³•1.wav",false));
     }
 
-    // ƒ^ƒCƒ}[‚ªI—¹‚µ‚½ê‡
+    // ã‚¿ã‚¤ãƒãƒ¼ãŒçµ‚äº†ã—ãŸå ´åˆ
     if (timer->GetIsEnd()) {
         
-        // ‘Ò‹@ó‘Ô‚É‘JˆÚ
+        // å¾…æ©ŸçŠ¶æ…‹ã«é·ç§»
         SetState(BOSS_STATE_IDLE);
 
-        // ƒ^ƒCƒ}[‚ğƒŠƒZƒbƒg
+        // ã‚¿ã‚¤ãƒãƒ¼ã‚’ãƒªã‚»ãƒƒãƒˆ
         timer->Reset();
 
-        // Šp“x‚ğƒŠƒZƒbƒg
+        // è§’åº¦ã‚’ãƒªã‚»ãƒƒãƒˆ
         angle = 0;
 
-        // ‰ñ“]‘¬“x‚ğ 1.f‚©‚ç15.f‚Ì”ÍˆÍ‚Åƒ‰ƒ“ƒ_ƒ€‚Éİ’è
+        // å›è»¢é€Ÿåº¦ã‚’ 1.fã‹ã‚‰15.fã®ç¯„å›²ã§ãƒ©ãƒ³ãƒ€ãƒ ã«è¨­å®š
         rotateSpeed = 1.f + (rand() % 15);
     }
 }
 
 void Component_BossBehavior::Tackle()
 {
-    // ‰‰ñƒtƒ‰ƒO‚ğ—pˆÓ
+    // åˆå›ãƒ•ãƒ©ã‚°ã‚’ç”¨æ„
     static bool isFirst = true;
 
-    // “Ëis“®ƒRƒ“ƒ|[ƒlƒ“ƒg‚Ìæ“¾ & nullƒ`ƒFƒbƒN
+    // çªé€²è¡Œå‹•ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã®å–å¾— & nullãƒã‚§ãƒƒã‚¯
     Component_TackleMove* tackleMove = (Component_TackleMove*)GetChildComponent("TackleMove");
     if (tackleMove == nullptr) return;
 
-    // ‰‰ñ‚Ì‚İˆ—‚ğs‚¤
+    // åˆå›ã®ã¿å‡¦ç†ã‚’è¡Œã†
     if (isFirst) {
-		// “ËiUŒ‚‚Ì‰‰ñƒtƒ‰ƒO‚ğfalse‚Éİ’è
+		// çªé€²æ”»æ’ƒã®åˆå›ãƒ•ãƒ©ã‚°ã‚’falseã«è¨­å®š
 		isFirst = false;
 
-        // ƒvƒŒƒCƒ„[‚Ì•ûŒü‚ğŒü‚­
+        // ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®æ–¹å‘ã‚’å‘ã
 		{
-			// Š—LÒ‚ÌˆÊ’u‚ğæ“¾
+			// æ‰€æœ‰è€…ã®ä½ç½®ã‚’å–å¾—
             XMFLOAT3 holderPos = holder_->GetPosition();
 
-			// ‘ÎÛ‚ÌˆÊ’u‚ğæ“¾
+			// å¯¾è±¡ã®ä½ç½®ã‚’å–å¾—
 			XMFLOAT3 targetPos = target_->GetPosition();
 
-			// Š—LÒ‚ÌˆÊ’u‚ğ‘ÎÛ‚ÌˆÊ’u‚ÉŒü‚¯‚é
+			// æ‰€æœ‰è€…ã®ä½ç½®ã‚’å¯¾è±¡ã®ä½ç½®ã«å‘ã‘ã‚‹
 			holder_->SetRotateY(atan2f(targetPos.z - holderPos.z, targetPos.x - holderPos.x) * 180 / XM_PI);
 		}
         
-        // “ËiUŒ‚‚ğÀs
+        // çªé€²æ”»æ’ƒã‚’å®Ÿè¡Œ
         {
-			// î•ñ‚Ìæ“¾
-			// Š—LÒ‚ÌˆÊ’u‚ğæ“¾
+			// æƒ…å ±ã®å–å¾—
+			// æ‰€æœ‰è€…ã®ä½ç½®ã‚’å–å¾—
 			XMFLOAT3 holderPos = holder_->GetPosition();
 
-			// ‘ÎÛ‚ÌˆÊ’u‚ğæ“¾
+			// å¯¾è±¡ã®ä½ç½®ã‚’å–å¾—
 			XMFLOAT3 targetPos = target_->GetPosition();
 
-			// “Ëi•ûŒü‚ğİ’è 
-			tackleMove->SetDirection(XMVectorSetY(XMVector3Normalize(XMLoadFloat3(&targetPos) - XMLoadFloat3(&holderPos)), 0));
+			// çªé€²æ–¹å‘ã‚’è¨­å®š 
+            XMVECTOR direction = XMVector3Normalize(XMLoadFloat3(&targetPos) - XMLoadFloat3(&holderPos));
+			tackleMove->SetDirection(XMVectorSetY(direction, 0));
 
-			// ‹——£‚ğİ’è
-			tackleMove->SetDistance(XMVectorGetX(XMVector3Length(XMLoadFloat3(&targetPos) - XMLoadFloat3(&holderPos))));
 
-			// “Ëi‚ğÀs
+            // ã‚¹ãƒ†ãƒ¼ã‚¸æƒ…å ±ã‚’å–å¾—
+            Stage* pStage = (Stage*)(holder_->FindObject("Stage"));
+            if (pStage == nullptr) return;
+            auto stageObj = pStage->GetStageObjects();
+            float dodgeDistance = XMVectorGetX(XMVector3Length(XMLoadFloat3(&targetPos) - XMLoadFloat3(&holderPos)));
+
+
+
+			// è·é›¢ã‚’è¨­å®š
+			tackleMove->SetDistance(dodgeDistance - MODEL_SIZE_HALF );
+
+			// çªé€²ã‚’å®Ÿè¡Œ
 			tackleMove->Execute();
         }
 
-        // ƒTƒEƒ“ƒh‚ğÄ¶
-        Audio::Play(Audio::Load("Audios/‰Î‰Š–‚–@1.wav", false));
+        // ã‚µã‚¦ãƒ³ãƒ‰ã‚’å†ç”Ÿ
+        Audio::Play(Audio::Load("Audios/ç«ç‚é­”æ³•1.wav", false));
 
-        // ƒGƒtƒFƒNƒg‚ğÄ¶
+        // ã‚¨ãƒ•ã‚§ã‚¯ãƒˆã‚’å†ç”Ÿ
         {
-            // î•ñ‚Ìİ’è
+            // æƒ…å ±ã®è¨­å®š
             DirectX::XMStoreFloat4x4(&(t.matrix), holder_->GetWorldMatrix());
             t.isLoop = false;
             t.maxFrame = 60;
             t.speed = 1.0f;
 
-            // Ä¶
+            // å†ç”Ÿ
             mt = EFFEKSEERLIB::gEfk->Play("sword", t);
         }
 
 	}
 
-    // “ËiUŒ‚‚ªI—¹‚µ‚½ê‡
+    // çªé€²æ”»æ’ƒãŒçµ‚äº†ã—ãŸå ´åˆ
     if (tackleMove->IsActived() == false) { SetState(BOSS_STATE_IDLE); isFirst = true; }
 }
 
 void Component_BossBehavior::Idle()
 {
-    // ƒ^ƒCƒ}[‚Ìæ“¾ & nullƒ`ƒFƒbƒN
+    // ã‚¿ã‚¤ãƒãƒ¼ã®å–å¾— & nullãƒã‚§ãƒƒã‚¯
     Component_Timer* timer = (Component_Timer*)GetChildComponent("Timer");
     if (timer == nullptr) return;
 
-    // ƒ^ƒCƒ}[‚Ìİ’è
+    // ã‚¿ã‚¤ãƒãƒ¼ã®è¨­å®š
     {
-        // ó‘Ô‚ğ‘JˆÚ‚·‚é‚Ü‚Å‚ÌŠÔ‚ğİ’è
+        // çŠ¶æ…‹ã‚’é·ç§»ã™ã‚‹ã¾ã§ã®æ™‚é–“ã‚’è¨­å®š
         timer->SetTime(stateChangeDelay_);
 
-        // ƒ^ƒCƒ}[‚ğŠJn
+        // ã‚¿ã‚¤ãƒãƒ¼ã‚’é–‹å§‹
         timer->Start();
     }
 
-    // ƒ^ƒCƒ}[‚ªI—¹‚µ‚½ê‡
+    // ã‚¿ã‚¤ãƒãƒ¼ãŒçµ‚äº†ã—ãŸå ´åˆ
     if (timer->GetIsEnd()) {
 
-        // ƒ‰ƒ“ƒ_ƒ€‚Éó‘Ô‚ğ‘JˆÚ
+        // ãƒ©ãƒ³ãƒ€ãƒ ã«çŠ¶æ…‹ã‚’é·ç§»
         SetState(RandomStatePick());
 
-        // ƒ^ƒCƒ}[‚ğƒŠƒZƒbƒg
+        // ã‚¿ã‚¤ãƒãƒ¼ã‚’ãƒªã‚»ãƒƒãƒˆ
         timer->Reset();
     }
 }
@@ -366,34 +381,34 @@ void Component_BossBehavior::Dead()
     Transform effectTransform;
 	effectTransform.position_ = holder_->GetPosition();
 
-    // ‰‰ñƒtƒ‰ƒO
+    // åˆå›ãƒ•ãƒ©ã‚°
     static bool isFirst = true;
 
-    // ‰‰ñ‚Ì‚İˆ—‚ğs‚¤
+    // åˆå›ã®ã¿å‡¦ç†ã‚’è¡Œã†
     if (isFirst) {
-        // ‰‰ñƒtƒ‰ƒO‚ğfalse‚Éİ’è
+        // åˆå›ãƒ•ãƒ©ã‚°ã‚’falseã«è¨­å®š
         isFirst = false;
 
-        // ƒTƒEƒ“ƒh‚ğÄ¶
-        Audio::Play(Audio::Load("Audios/DJ‚ÌƒXƒNƒ‰ƒbƒ`2.wav", false));
+        // ã‚µã‚¦ãƒ³ãƒ‰ã‚’å†ç”Ÿ
+        Audio::Play(Audio::Load("Audios/DJã®ã‚¹ã‚¯ãƒ©ãƒƒãƒ2.wav", false));
     }
 
-    // ‘å‚«‚³‚ª‚O‚Å‚È‚¢ê‡
+    // å¤§ãã•ãŒï¼ã§ãªã„å ´åˆ
     if (holder_->GetScale().x >= 0) {
-    // ƒLƒƒƒ‰ƒNƒ^[‚Ì‘å‚«‚³‚ğ™X‚É¬‚³‚­‚·‚é
+    // ã‚­ãƒ£ãƒ©ã‚¯ã‚¿ãƒ¼ã®å¤§ãã•ã‚’å¾ã€…ã«å°ã•ãã™ã‚‹
     holder_->SetScale(holder_->GetScale().x - SMALL_VEROSITY);
     }
     else {
-        // î•ñ‚Ìİ’è
+        // æƒ…å ±ã®è¨­å®š
         DirectX::XMStoreFloat4x4(&(t.matrix), effectTransform.GetWorldMatrix());
         t.isLoop = false;
         t.maxFrame = 60;
         t.speed = 1.0f;
 
-        // Ä¶
+        // å†ç”Ÿ
         mt = EFFEKSEERLIB::gEfk->Play("fire", t);
         
-        // ƒTƒEƒ“ƒh‚ğÄ¶
-        Audio::Play(Audio::Load("Audios/”š”­1.wav", false));
+        // ã‚µã‚¦ãƒ³ãƒ‰ã‚’å†ç”Ÿ
+        Audio::Play(Audio::Load("Audios/çˆ†ç™º1.wav", false));
     }
 }

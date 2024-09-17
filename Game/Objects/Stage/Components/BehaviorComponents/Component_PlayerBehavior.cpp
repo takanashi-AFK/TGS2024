@@ -6,17 +6,30 @@
 #include "../../../../../Engine/DirectX/Direct3D.h"
 #include "../../../../../Engine/DirectX/Input.h"
 #include "../../../../../Engine/GameObject/Camera.h"
-#include <directxmath.h> 
+#include "../../../../../Engine/ImGui/imgui.h"
+#include "../../../../../Engine/SceneManager.h"
+#include "../../../../../Game/Objects/Stage/Components/GaugeComponents/Component_HealthGauge.h"
+#include "../../../Camera/TPSCamera.h"
+#include "../../../Engine/Global.h"
+#include "../../../Game/Objects/UI/UIPanel.h"
+#include "../../../Game/Objects/UI/UIProgressBar.h"
+#include "../../../UI/CountDown.h"
+#include "../../../UI/UIImage.h"
+#include "../../SkySphere.h"
 #include "../../Stage.h"
 #include "../../StageObject.h"
-#include "../../SkySphere.h"
 #include "../AttackComponents/Component_MeleeAttack.h"
 #include "../AttackComponents/Component_ShootAttack.h"
 #include "../GaugeComponents/Component_HealthGauge.h"
+#include "../MotionComponent/Component_PlayerMotion.h"
+#include "../MoveComponents/Component_TackleMove.h"
 #include "../MoveComponents/Component_WASDInputMove.h"
 #include "../TimerComponent/Component_Timer.h"
-#include "../MotionComponent/Component_PlayerMotion.h"
 #include <algorithm> 
+
+#include <directxmath.h> 
+#include "Component_BossBehavior.h"
+
 #include "../../../../../Game/Objects/Stage/Components/GaugeComponents/Component_HealthGauge.h"
 #include "../../../../../Engine/ImGui/imgui.h"
 #include "../MoveComponents/Component_TackleMove.h"
@@ -28,6 +41,7 @@
 #include "../../../UI/UIImage.h"
 #include "../../../Engine/Global.h"
 #include "../../../../Constants.h"
+
 
 using namespace Constants;
 
@@ -64,6 +78,7 @@ void Component_PlayerBehavior::Initialize()
 
 	// effekseer: :Effectの読み込み
 	EFFEKSEERLIB::gEfk->AddEffect("dodge", "Effects/Lazer01.efk");/*★★★*/
+	EFFEKSEERLIB::gEfk->AddEffect("impact", "Effects/Attack_Impact.efk");/*★★★*/
 
 	// 子コンポーネントの追加
 	if (FindChildComponent("InputMove") == false)AddChildComponent(CreateComponent("InputMove", WASDInputMove, holder_, this));
@@ -71,8 +86,6 @@ void Component_PlayerBehavior::Initialize()
 	if (FindChildComponent("PlayerHealthGauge") == false)AddChildComponent(CreateComponent("PlayerHealthGauge", HealthGauge, holder_, this));
 	if (FindChildComponent("PlayerMotion") == false)AddChildComponent(CreateComponent("PlayerMotion", PlayerMotion, holder_, this));
 	if (FindChildComponent("TackleMove") == false)AddChildComponent(CreateComponent("TackleMove", TackleMove, holder_, this));
-
-
 }
 
 void Component_PlayerBehavior::Update()
@@ -262,7 +275,7 @@ void Component_PlayerBehavior::Shoot()
 void Component_PlayerBehavior::Dodge()
 {
 	static float frameCount = 0;
-	static float dodgeDistance = 5;
+	static float dodgeDistance = DODGE_DISTANCE;
 
 	// プレイヤーのHPゲージコンポーネントを取得
 	Component_HealthGauge* hg = (Component_HealthGauge*)(GetChildComponent("PlayerHealthGauge"));
@@ -271,6 +284,16 @@ void Component_PlayerBehavior::Dodge()
 	// 移動コンポーネントの取得 & 有無の確認
 	Component_WASDInputMove* move = (Component_WASDInputMove*)(GetChildComponent("InputMove"));
 	if (move == nullptr)return;
+
+	BossState state = BOSS_STATE_MAX;
+
+	vector<Component*> bb = (((Stage*)holder_->FindObject("Stage"))->FindComponents(BossBehavior));
+
+
+	for (auto boss : bb) {
+		bossBehavior = (Component_BossBehavior*)boss;
+		state = (BossState)((Component_BossBehavior*)boss)->GetState();
+	}
 
 	// 突進コンポーネントの取得 & 有無の確認
 	Component_TackleMove* tackle = (Component_TackleMove*)(GetChildComponent("TackleMove"));
@@ -322,12 +345,8 @@ void Component_PlayerBehavior::Dodge()
 				}
 			}
 			else
-				dodgeDistance = 5;
-
-
+				dodgeDistance = DODGE_DISTANCE;
 		}
-
-
 
 		// 突進距離を設定
 		tackle->SetDistance(dodgeDistance);
@@ -359,6 +378,30 @@ void Component_PlayerBehavior::Dodge()
 
 		if (frameCount >= invincibilityFrame_) {
 			hg->Unlock();
+		}
+	}
+
+	XMFLOAT3 holderPos = holder_->GetPosition();
+	XMFLOAT3 bossPos = bossBehavior->GetHolder()->GetPosition();
+	XMFLOAT3 bossToPlayer = bossPos - holderPos;
+	XMVECTOR vBossToPlayer = XMLoadFloat3(&bossToPlayer);
+
+
+	if (state == BossState::BOSS_STATE_TACKLE && XMVectorGetZ(XMVector3Length(vBossToPlayer)) < 2.f) {
+
+		Component_TackleMove* a = (Component_TackleMove*)bossBehavior->GetChildComponent("TackleMove");
+		a->SetDistance(0);
+		
+		tackle->SetDistance(0);
+
+		// エフェクトの再生処理
+		{
+			EFFEKSEERLIB::EFKTransform t;
+			DirectX::XMStoreFloat4x4(&(t.matrix), holder_->GetWorldMatrix());
+			t.isLoop = false;
+			t.maxFrame = 60;
+			t.speed = 1.f;
+			mt = EFFEKSEERLIB::gEfk->Play("impact", t);
 		}
 	}
 

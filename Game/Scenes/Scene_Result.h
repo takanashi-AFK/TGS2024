@@ -3,24 +3,27 @@
 
 class Scene_Result :public GameObject
 {
-	int scoreNum_;
+private:
+	int scoreNum_;	// スコア
+
 public:
-	//コンストラクタ
+	/// <summary> コンストラクタ </summary>
 	Scene_Result(GameObject* parent_);
 
-	//初期化
+	/// <summary> 初期化 </summary>
 	void Initialize() override;
 
-	//更新
+	/// <summary> 更新 </summary>
 	void Update() override;
 
-	//描画
+	/// <summary> 描画 </summary>
 	void Draw() override;
 
-	//開放
+	/// <summary> 解放 </summary>
 	void Release() override;
 	
-	//スコア計算
+private:
+	/// <summary> スコアの計算 </summary>
 	int CalculateScore(bool isCleared, int remainingTime, int remainingHP);
 };
 

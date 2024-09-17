@@ -47,4 +47,10 @@ predicate :*/
 
 	/// <summary> ロック中かつ減少中か </summary>
 	bool IsLockAndReduce()const { return isLock_ && isTakeDamage_; }
+
+	/// <summary> アンロック中かつ減少中か </summary>
+	bool IsUnlockAndReduce()const { return !isLock_ && isTakeDamage_; }
+
+	/// <summary> ダメージを受けたか </summary>
+	bool IsTakeDamage() const { return isTakeDamage_; }
 };

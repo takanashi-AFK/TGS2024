@@ -164,6 +164,16 @@ void Audio::Play(int ID)
 			break;
 		}
 	}
+
+}
+
+void Audio::Play(int ID, float volume)
+{
+	// 再生
+	Play(ID);
+
+	// ボリューム設定
+	SetVolume(ID, volume);
 }
 
 
@@ -199,4 +209,21 @@ void Audio::AllRelease()
 		pMasteringVoice->DestroyVoice();
 	}
 	pXAudio->Release();
+}
+
+void Audio::SetVolume(int ID, float volume)
+{
+	for (int i = 0; i < audioDatas[ID].svNum; i++)
+	{
+		audioDatas[ID].pSourceVoice[i]->SetVolume(volume);
+	}
+}
+
+void Audio::SetPlaybackSpeed(int ID, float speed)
+{
+	for (int i = 0; i < audioDatas[ID].svNum; i++)
+	{
+		// 再生速度を変更
+		audioDatas[ID].pSourceVoice[i]->SetFrequencyRatio(speed);
+	}
 }

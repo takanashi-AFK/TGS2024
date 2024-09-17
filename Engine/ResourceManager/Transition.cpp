@@ -31,9 +31,9 @@ void Transition::Initialize()
 	{
 		pSprite_[i] = new Sprite;
 	}
-	pSprite_[TID_NONE]->Load("Images/transition_blackOut.png");
-	pSprite_[TID_BLACKOUT]->Load("Images/transition_blackOut.png");
-	pSprite_[TID_WHITEOUT]->Load("Images/transition_whiteOut.png");
+	pSprite_[TID_NONE]->Load("Images/defaults/transition_blackOut.png");
+	pSprite_[TID_BLACKOUT]->Load("Images/defaults/transition_blackOut.png");
+	pSprite_[TID_WHITEOUT]->Load("Images/defaults/transition_whiteOut.png");
 }
 
 void Transition::Update()

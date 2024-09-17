@@ -1,6 +1,9 @@
 #include "CountDown.h"
+
+// インクルード
 #include "../../../Engine/ResourceManager/Image.h"
 #include "../../../Engine/GameObject/Camera.h"
+
 namespace {
 	const int COUNT_DOWN_MAX = 240;		// カウントダウンの最大値
 	const int FPS = 60;					// フレームレート
@@ -14,8 +17,7 @@ CountDown::CountDown(GameObject* _parent):
 
 void CountDown::Initialize()
 {
-	for (int i = 0; i < COUNT_DOWN_IMAGE_NUM; i++) countDownImages_.push_back(Image::Load("Images/CountDown/count_" + std::to_string(i) + ".png"));
-	
+	for (int i = 0; i < COUNT_DOWN_IMAGE_NUM; i++) countDownImages_.push_back(Image::Load("Images/playScene/countDown/count_" + std::to_string(i) + ".png"));
 }
 
 void CountDown::Update()
@@ -24,6 +26,9 @@ void CountDown::Update()
 
 void CountDown::Draw()
 {
+	// カウントダウンが有効でないなら描画しない	
+	if (isActive_ = false) return;
+
 	// カウントが0以下なら描画しない
 	if(this->IsFinished())return;
 
@@ -43,4 +48,9 @@ void CountDown::Draw()
 
 void CountDown::Release()
 {
+}
+
+float CountDown::GetCount() const
+{
+	return count_ / FPS;
 }

@@ -4,6 +4,9 @@
 #include "../../Engine/Global.h"
 #include "../../Engine/SceneManager.h"
 #include "../Objects/UI/UIPanel.h"
+#include "../Constants.h"
+
+using namespace Constants;
 
 // 定数
 namespace {
@@ -17,16 +20,9 @@ Scene_Splash::Scene_Splash(GameObject* _parent)
 
 void Scene_Splash::Initialize()
 {
-	// jsonファイルを読み込む
+	// UIパネル & レイアウトの読み込み
 	json loadData;
-	if (JsonReader::Load("Datas/UILayouts/splashScene_layout.json", loadData)) {
-
-		// UIパネルを取得
-		UIPanel* panel = UIPanel::GetInstance();
-
-		// スプラッシュシーンのパネルlayoutを設定
-		panel->Load(loadData);
-	}
+	if (JsonReader::Load(SPLASH_SCENE_LAYOUT_JSON, loadData))UIPanel::GetInstance()->Load(loadData);
 }
 
 void Scene_Splash::Update()
@@ -39,13 +35,11 @@ void Scene_Splash::Update()
 			// シーンを切り替える
 			SceneManager* sceneManager = (SceneManager*)FindObject("SceneManager");
 			sceneManager->ChangeScene(SCENE_ID_TITLE,TID_BLACKOUT);
-
 		}
 
 		// 経過時間を加算
 		count_++;
 	}
-
 }
 
 void Scene_Splash::Draw()

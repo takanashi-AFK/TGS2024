@@ -4,16 +4,46 @@
 
 class Text;
 
+enum TIMER_DRAW_TYPE {
+	TEXT,
+	CIRCLE_GAUGE,
+};
+
+struct CircleGauge
+{
+/*
+value :*/
+	int imageHandle = -1;	// 画像ハンドル
+	string imageFilePath;	// 画像ファイルパス
+	float startAngle = 90;	// 開始角度
+	float endAngle = 90;	// 終了角度
+/*
+function :*/
+	/// <summary> 読込 </summary>
+	bool Load(string imageFilePath);
+
+	/// <summary> 更新 </summary>
+	void Update(float progress);
+
+	/// <summary> 描画 </summary>
+	void Draw(Transform _transform);
+};
+
 class UITimer : public UIObject
 {
 private:
-	float count_;	// 現在値
-	float max_;		// 最大値
+	float count_;				// 現在値
+	float max_;					// 最大値
 
-	bool isActive_;	// タイマーが動いているか
+	bool isActive_;				// タイマーが動いているか
+	
+	TIMER_DRAW_TYPE drawType_;	// 描画タイプ
+	Text* pText_;				// テキストオブジェクト
+	float size_;				// テキストのサイズ
+	
+	CircleGauge circleGauge_;	// ゲージ
 
-	Text* pText_;	// テキストオブジェクト
-	float size_;	// テキストのサイズ
+
 public:
 	/// <summary> コンストラクタ </summary>
 	UITimer(string _name, UIObject* parent, int _layerNum);
@@ -77,5 +107,15 @@ predicate :*/
 
 	/// <summary> タイマーが最大値か </summary>
 	bool IsMax() const { return count_ >= max_; }
+
+private:
+	/// <summary> テキストの描画 </summary>
+	void DrawTextTimer();
+
+	/// <summary> ゲージの描画 </summary>
+	void DrawCircleGaugeTimer();
+
+	/// <summary> ファイルパスから画像を取得 </summary>
+	bool GetImageFilePathFromExplorer(string& _filePath) const;
 };
 

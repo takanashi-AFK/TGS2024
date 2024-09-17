@@ -26,9 +26,24 @@
 #include "../MoveComponents/Component_WASDInputMove.h"
 #include "../TimerComponent/Component_Timer.h"
 #include <algorithm> 
+
 #include <directxmath.h> 
 #include "Component_BossBehavior.h"
 
+#include "../../../../../Game/Objects/Stage/Components/GaugeComponents/Component_HealthGauge.h"
+#include "../../../../../Engine/ImGui/imgui.h"
+#include "../MoveComponents/Component_TackleMove.h"
+#include "../../../UI/CountDown.h"
+#include "../../../Camera/TPSCamera.h"
+#include "../../../../../Engine/SceneManager.h"
+#include "../../../Game/Objects/UI/UIProgressBar.h"
+#include "../../../Game/Objects/UI/UIPanel.h"
+#include "../../../UI/UIImage.h"
+#include "../../../Engine/Global.h"
+#include "../../../../Constants.h"
+
+
+using namespace Constants;
 
 namespace {
 	const int SHOOT_FRAME = 115;
@@ -52,7 +67,7 @@ namespace {
 
 Component_PlayerBehavior::Component_PlayerBehavior(string _name, StageObject* _holder, Component* _parent)
 	: Component(_holder, _name, PlayerBehavior, _parent)
-	, shootHeight_(1.0f), isGameStart_(false), nowState_(PLAYER_STATE_IDLE), prevState_(PLAYER_STATE_IDLE)
+	, shootHeight_(1.0f), isGameStart_(false), nowState_(PLAYER_STATE_IDLE), prevState_(PLAYER_STATE_IDLE), invincibilityFrame_(60), isShootStart_(false)
 {
 }
 
@@ -107,7 +122,7 @@ void Component_PlayerBehavior::Update()
 		Component_HealthGauge* hg = (Component_HealthGauge*)(GetChildComponent("PlayerHealthGauge"));
 
 		// UIProgressBarを取得
-		UIProgressBar* hpBar = (UIProgressBar*)UIPanel::GetInstance()->FindObject("HPBar_player");
+		UIProgressBar* hpBar = (UIProgressBar*)UIPanel::GetInstance()->FindObject(PLAY_SCENE_PLAYER_HP_GAUGE_NAME);
 
 		// HPの値を移動
 		ScoreManager::playerHp = hg->now_;
@@ -209,11 +224,8 @@ void Component_PlayerBehavior::Shoot()
 	// 射撃モーションのアニメーションの現在の再生時間を取得
 	float nowFrame = motion->GetNowFrame();
 
-	// NOTE: 一度だけ射撃処理を実行するためのフラグ
-	static bool isShoot = false;
-
 	// 現在のフレームが射撃アニメーションのちょうどいいタイミングを過ぎたら...
-	if (nowFrame >= SHOOT_FRAME && isShoot == false) {
+	if (nowFrame >= SHOOT_FRAME && isShootStart_ == false) {
 
 		// 発射オプションを設定
 		Component_ShootAttack* shoot = (Component_ShootAttack*)(GetChildComponent("ShootAttack"));
@@ -234,7 +246,7 @@ void Component_PlayerBehavior::Shoot()
 		shoot->Execute();
 
 		// 射撃フラグを立てる
-		isShoot = true;
+		isShootStart_ = true;
 	}
 
 	// 移動コンポーネントの取得 & 有無の確認
@@ -253,7 +265,7 @@ void Component_PlayerBehavior::Shoot()
 
 	if (isEnd == true) {
 		// 射撃フラグをリセット
-		isShoot = false;
+		isShootStart_ = false;
 
 		// 移動コンポーネントの再開
 		if (move != nullptr) move->Execute();
@@ -262,8 +274,6 @@ void Component_PlayerBehavior::Shoot()
 
 void Component_PlayerBehavior::Dodge()
 {
-	// NOTE: 一度だけダッシュ処理を実行するためのフラグ
-	static bool isDash = false;
 	static float frameCount = 0;
 	static float dodgeDistance = DODGE_DISTANCE;
 
@@ -287,7 +297,7 @@ void Component_PlayerBehavior::Dodge()
 
 	// 突進コンポーネントの取得 & 有無の確認
 	Component_TackleMove* tackle = (Component_TackleMove*)(GetChildComponent("TackleMove"));
-	if (tackle != nullptr && isDash == false) {
+	if (tackle != nullptr && isDodgeStart_ == false) {
 
 		// 突進方向を設定
 		XMVECTOR dir{ 0,0,-1,0 }; {
@@ -349,7 +359,7 @@ void Component_PlayerBehavior::Dodge()
 		hg->Lock();
 
 		// ダッシュフラグを立てる
-		isDash = true;
+		isDodgeStart_ = true;
 	}
 
 	// エフェクトの再生処理
@@ -399,7 +409,7 @@ void Component_PlayerBehavior::Dodge()
 	if (tackle->IsActived() == false) {
 
 		// ダッシュフラグをリセット
-		isDash = false;
+		isDodgeStart_ = false;
 
 		//移動を可能にする
 		move->Execute();

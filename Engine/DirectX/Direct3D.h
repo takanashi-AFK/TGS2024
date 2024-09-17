@@ -35,7 +35,7 @@ namespace Direct3D
 
 
 	//■シェーダー関連で必要なセット
-	enum SHADER_TYPE{SHADER_3D, SHADER_2D, SHADER_UNLIT, SHADER_BILLBOARD,SHADER_SKY,SHADER_BAR,SHADER_DAMAGE, SHADER_MAX};	//3タイプ（3D用、2D用、当たり判定枠表示用）
+	enum SHADER_TYPE{SHADER_3D, SHADER_2D, SHADER_UNLIT, SHADER_BILLBOARD,SHADER_SKY,SHADER_BAR,SHADER_DAMAGE,SHADER_TIMER, SHADER_MAX};	//3タイプ（3D用、2D用、当たり判定枠表示用）
 	struct SHADER_BUNDLE
 	{
 		//【頂点入力レイアウト情報】
@@ -65,7 +65,9 @@ namespace Direct3D
 	//その他
 	extern int		screenWidth_;		//スクリーンの幅
 	extern int		screenHeight_;		//スクリーンの高さ
+	extern bool		isFullScreen_;		//フルスクリーンかどうか
 	extern bool		isDrawCollision_;	//コリジョンを表示するかフラグ
+	extern HWND 	hWnd_;				//ウィンドウハンドル
 
 	// イージング関数
 	extern map<string, function<double(double)>> EaseFunc;
@@ -110,5 +112,10 @@ namespace Direct3D
 	//Zバッファへの書き込みON/OFF
 	//引数：isWrite	  true=書き込みON／false=書き込みOFF
 	void SetDepthBafferWriteEnable(bool isWrite);
+
+	/// <summary> ビューポートの設定 </summary>
+	void SetViewport(int width, int height);
+
+	void GetFullScreenSize(int& width, int& height);
 };
 

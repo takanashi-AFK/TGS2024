@@ -1,0 +1,11 @@
+{
+  "endImage": {
+    "imageFilePath_": "Images/endScene/endImage02.png",
+    "layerNumber_": 1,
+    "objectName_": "endImage",
+    "position_": [ 0.0, 0.0, 0.0 ],
+    "rotate_": [ 0.0, 0.0, 0.0 ],
+    "scale_": [ 1.0, 1.0, 1.0 ],
+    "type_": 2
+  }
+}

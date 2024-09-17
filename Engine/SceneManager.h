@@ -55,6 +55,7 @@ getter :*/
 predicate :*/
 	/// <summary> シーンが切り替わっているか </summary>
 	bool IsChanging() const { return currentSceneID_ != nextSceneID_; }
+	bool IsChanging(SCENE_ID _prev, SCENE_ID _next);
 
 	/// <summary> 現在のシーンが該当シーンか </summary>
 	bool IsCurrentScene(SCENE_ID _id) const { return currentSceneID_ == _id; }

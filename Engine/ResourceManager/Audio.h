@@ -6,28 +6,33 @@
 //-----------------------------------------------------------
 namespace Audio
 {
-	//初期化
+	/// <summary> 初期化 </summary>
 	void Initialize();
 
-	//サウンドファイル(.wav）をロード
 	//すでに同じ名前のファイルをロード済みの場合は、既存のデータの番号を返す
-	//引数：fileName	ファイル名
-	//引数：isLoop		ループ再生させたいならtrue
-	//引数：svNum　		同時に鳴らす最大数（省略可）
-	//戻値：そのデータに割り当てられた番号
+	/// <summary> 読込 </summary>
+	/// <param name="fileName">ファイル名</param>
+	/// <param name="isLoop">ループ再生させたいならtrue</param>
+	/// <param name="svNum">同時に鳴らす最大数（省略可）</param>
+	/// <returns>そのデータに割り当てられた番号</returns>
 	int Load(std::string fileName, bool isLoop = false, int svNum = 1);
 
-	//再生
-	//引数：handle	鳴らしたいサウンドの番号
+	/// <summary> 再生 </summary>
 	void Play(int ID);
+	void Play(int ID,float volume);
 
-	//停止
-	//引数：handle	止めたいサウンドの番号
+	/// <summary> 停止 </summary>
 	void Stop(int ID);
 
-	//シーンごとの解放（ロードしたサウンドを解放）
+	/// <summary> 解放 </summary>
 	void Release();
 
-	//本体も解放
+	/// <summary> 全ての解放 </summary>
 	void AllRelease();
+
+	/// <summary> ボリューム設定 </summary>
+	void SetVolume(int ID, float volume);
+
+	/// <summary> 再生速度設定 </summary>
+	void SetPlaybackSpeed(int ID, float speed);
 };

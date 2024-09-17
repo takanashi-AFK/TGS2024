@@ -1,1 +1,11 @@
-{"splashImage":{"imageFilePath_":"Images/splash_Image_dungeon_Path.png","layerNumber_":1,"objectName_":"splashImage","position_":[0.0,0.0,0.0],"rotate_":[0.0,0.0,0.0],"scale_":[1.0,1.0,1.0],"type_":2}}
+{
+  "splashImage": {
+    "imageFilePath_": "Images/splashScene/splashImage.png",
+    "layerNumber_": 1,
+    "objectName_": "splashImage",
+    "position_": [ 0.0, 0.0, 0.0 ],
+    "rotate_": [ 0.0, 0.0, 0.0 ],
+    "scale_": [ 1.0, 1.0, 1.0 ],
+    "type_": 2
+  }
+}

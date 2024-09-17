@@ -1,1 +1,65 @@
-{"HPNum":{"FontData":{"charSize":[64,68],"filePath":"Fonts/QuizFont_number.png","rowLength":15},"layerNumber_":4,"objectName_":"HPNum","position_":[0.20000000298023224,-0.07999999821186066,0.0],"rotate_":[0.0,0.0,0.0],"scale_":[1.0,1.0,1.0],"size":0.699999988079071,"text":"023","type_":3},"NextSceneButton":{"imageFilePath_":"Images/ResultScene/clearTONEXTSCENE.png","layerNumber_":1,"objectName_":"NextSceneButton","position_":[0.0,0.0,0.0],"rotate_":[0.0,0.0,0.0],"scale_":[1.0,1.0,1.0],"type_":1},"ResultSceneImage":{"imageFilePath_":"Images/ResultScene/ResultSceneImage.png","layerNumber_":2,"objectName_":"ResultSceneImage","position_":[0.0,0.0,0.0],"rotate_":[0.0,0.0,0.0],"scale_":[1.0,1.0,1.0],"type_":2},"ScoreNum":{"FontData":{"charSize":[64,68],"filePath":"Fonts/QuizFont_number.png","rowLength":15},"layerNumber_":3,"objectName_":"ScoreNum","position_":[0.20000000298023224,0.2800000011920929,0.0],"rotate_":[0.0,0.0,0.0],"scale_":[1.0,1.0,1.0],"size":0.699999988079071,"text":"034","type_":3},"TimeNum":{"FontData":{"charSize":[64,68],"filePath":"Fonts/QuizFont_number.png","rowLength":15},"layerNumber_":5,"objectName_":"TimeNum","position_":[0.20000000298023224,-0.4300000071525574,0.0],"rotate_":[0.0,0.0,0.0],"scale_":[1.0,1.0,1.0],"size":0.699999988079071,"text":"012","type_":3}}
+{
+  "hpNum": {
+    "FontData": {
+      "charSize": [ 64, 68 ],
+      "filePath": "Fonts/QuizFont_number.png",
+      "rowLength": 15
+    },
+    "layerNumber_": 4,
+    "objectName_": "hpNum",
+    "position_": [ 0.20000000298023224, -0.07000000029802322, 0.0 ],
+    "rotate_": [ 0.0, 0.0, 0.0 ],
+    "scale_": [ 1.0, 1.0, 1.0 ],
+    "size": 0.800000011920929,
+    "text": "023",
+    "type_": 3
+  },
+  "nextButton": {
+    "imageFilePath_": "Images/resultScene/nextButton.png",
+    "layerNumber_": 2,
+    "objectName_": "nextButton",
+    "position_": [ 0.0, 0.0, 0.0 ],
+    "rotate_": [ 0.0, 0.0, 0.0 ],
+    "scale_": [ 1.0, 1.0, 1.0 ],
+    "type_": 1
+  },
+  "resultImage": {
+    "imageFilePath_": "Images/resultScene/resultImage.png",
+    "layerNumber_": 1,
+    "objectName_": "resultImage",
+    "position_": [ 0.0, 0.0, 0.0 ],
+    "rotate_": [ 0.0, 0.0, 0.0 ],
+    "scale_": [ 1.0, 1.0, 1.0 ],
+    "type_": 2
+  },
+  "scoreNum": {
+    "FontData": {
+      "charSize": [ 64, 68 ],
+      "filePath": "Fonts/QuizFont_number.png",
+      "rowLength": 15
+    },
+    "layerNumber_": 5,
+    "objectName_": "scoreNum",
+    "position_": [ 0.20000000298023224, 0.28999999165534973, 0.0 ],
+    "rotate_": [ 0.0, 0.0, 0.0 ],
+    "scale_": [ 1.0, 1.0, 1.0 ],
+    "size": 0.800000011920929,
+    "text": "234",
+    "type_": 3
+  },
+  "timeNum": {
+    "FontData": {
+      "charSize": [ 64, 68 ],
+      "filePath": "Fonts/QuizFont_number.png",
+      "rowLength": 15
+    },
+    "layerNumber_": 3,
+    "objectName_": "timeNum",
+    "position_": [ 0.20000000298023224, -0.4399999976158142, 0.0 ],
+    "rotate_": [ 0.0, 0.0, 0.0 ],
+    "scale_": [ 1.0, 1.0, 1.0 ],
+    "size": 0.800000011920929,
+    "text": "012",
+    "type_": 3
+  }
+}

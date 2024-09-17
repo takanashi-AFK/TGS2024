@@ -2,6 +2,8 @@
 #include "Component_PlayerMotion.h"
 #include "../../Stage.h"
 #include "../../../../../Engine/ImGui/imgui.h"
+#include "../../../../Constants.h"
+using namespace Constants;
 
 Component_PlayerMotion::Component_PlayerMotion(string _name, StageObject* _holder, Component* _parent)
 	:Component_Motion(_name, _holder, PlayerMotion, _parent)
@@ -11,13 +13,12 @@ Component_PlayerMotion::Component_PlayerMotion(string _name, StageObject* _holde
 void Component_PlayerMotion::Initialize()
 {
     // モデルのハンドルリストにモデルを追加
-    modelHandleList_[PLAYER_STATE_WALK] = MotionData("Models/Player/Running.fbx", 0, 40, 1,true);
-    modelHandleList_[PLAYER_STATE_SHOOT] = MotionData("Models/Player/Fireball.fbx", 0, 150, 1,false);
-    modelHandleList_[PLAYER_STATE_IDLE] = MotionData("Models/Player/Silly Dancing.fbx", 0, 200, 1,true);
-    modelHandleList_[PLAYER_STATE_DODGE] = MotionData("Models/Player/Female Action Pose.fbx", 0, 60, 1,false);
-    modelHandleList_[PLAYER_STATE_DEAD] = MotionData("Models/Player/Standing React Death Right.fbx", 0, 182, 1,false);
+    modelHandleList_[PLAYER_STATE_WALK] = MotionData(PLAYER_STATE_WALK_FBX, 0, 40, 1,true);
+    modelHandleList_[PLAYER_STATE_SHOOT] = MotionData(PLAYER_STATE_SHOOT_FBX, 0, 150, 1,false);
+    modelHandleList_[PLAYER_STATE_IDLE] = MotionData(PLAYER_STATE_IDLE_FBX, 0, 200, 1,true);
+    modelHandleList_[PLAYER_STATE_DODGE] = MotionData(PLAYER_STATE_DODGE_FBX, 0, 60, 1,false);
+    modelHandleList_[PLAYER_STATE_DEAD] = MotionData(PLAYER_STATE_DEAD_FBX, 0, 182, 1,false);
 }
-
 
 void Component_PlayerMotion::Update()
 {

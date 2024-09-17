@@ -40,6 +40,8 @@ namespace Direct3D
 	SHADER_BUNDLE			shaderBundle[SHADER_MAX] = { 0 };
 	int						screenWidth_ = 0;
 	int						screenHeight_ = 0;
+	bool					isFullScreen_ = false;
+	HWND 					hWnd_ = nullptr;
 
 	//イージング関数
 	map<string, function<double(double)>> EaseFunc{
@@ -84,6 +86,9 @@ namespace Direct3D
 	//初期化処理
 	HRESULT Direct3D::Initialize(HWND hWnd, int screenWidth, int screenHeight)
 	{
+		// ウィンドウハンドルを保存
+		hWnd_ = hWnd;
+
 		///////////////////////////いろいろ準備するための設定///////////////////////////////
 		//いろいろな設定項目をまとめた構造体
 		DXGI_SWAP_CHAIN_DESC scDesc;
@@ -425,6 +430,7 @@ namespace Direct3D
 			rdc.FrontCounterClockwise = FALSE;	//反時計回りは表面じゃない
 			pDevice_->CreateRasterizerState(&rdc, &shaderBundle[SHADER_SKY].pRasterizerState);
 		}
+
 		//BAR
 		{
 			// 頂点シェーダの作成（コンパイル）
@@ -492,6 +498,40 @@ namespace Direct3D
 			rdc.FillMode = D3D11_FILL_SOLID;
 			rdc.FrontCounterClockwise = FALSE;	//反時計回りは表面じゃない
 			pDevice_->CreateRasterizerState(&rdc, &shaderBundle[SHADER_DAMAGE].pRasterizerState);
+		}
+
+		// タイマー
+		{
+			// 頂点シェーダの作成（コンパイル）
+			ID3DBlob* pCompileVS = NULL;
+			D3DCompileFromFile(L"Shader/Timer.hlsl", nullptr, nullptr, "VS", "vs_5_0", NULL, 0, &pCompileVS, NULL);
+			pDevice_->CreateVertexShader(pCompileVS->GetBufferPointer(), pCompileVS->GetBufferSize(), NULL, &shaderBundle[SHADER_TIMER].pVertexShader);
+
+
+			// ピクセルシェーダの作成（コンパイル）
+			ID3DBlob* pCompilePS = NULL;
+			D3DCompileFromFile(L"Shader/Timer.hlsl", nullptr, nullptr, "PS", "ps_5_0", NULL, 0, &pCompilePS, NULL);
+			pDevice_->CreatePixelShader(pCompilePS->GetBufferPointer(), pCompilePS->GetBufferSize(), NULL, &shaderBundle[SHADER_TIMER].pPixelShader);
+
+
+			// 頂点レイアウトの作成（1頂点の情報が何のデータをどんな順番で持っているか）
+			D3D11_INPUT_ELEMENT_DESC layout[] = {
+				{ "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, vectorSize * 0, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+				{ "TEXCOORD", 0, DXGI_FORMAT_R32G32_FLOAT,    0, vectorSize * 1, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+			};
+			pDevice_->CreateInputLayout(layout, 2, pCompileVS->GetBufferPointer(), pCompileVS->GetBufferSize(), &shaderBundle[SHADER_TIMER].pVertexLayout);
+
+
+			//シェーダーが無事作成できたので、コンパイルしたやつはいらない
+			pCompileVS->Release();
+			pCompilePS->Release();
+
+			//ラスタライザ作成
+			D3D11_RASTERIZER_DESC rdc = {};
+			rdc.CullMode = D3D11_CULL_BACK;
+			rdc.FillMode = D3D11_FILL_SOLID;
+			rdc.FrontCounterClockwise = TRUE;
+			pDevice_->CreateRasterizerState(&rdc, &shaderBundle[SHADER_TIMER].pRasterizerState);
 		}
 	}
 
@@ -648,6 +688,36 @@ namespace Direct3D
 		{
 			pContext_->OMSetRenderTargets(1, &pRenderTargetView_, nullptr);
 		}
+	}
+
+	void SetViewport(int width, int height)
+	{
+		// ビューポートの設定
+		//レンダリング結果を表示する範囲
+		float viewPortMagnification = 1.f;
+
+		//ビューポートの設定
+		D3D11_VIEWPORT vp; {
+			vp.Height = (float)height * viewPortMagnification;	//高さ
+			vp.Width = (float)width * viewPortMagnification;	//幅
+			vp.MinDepth = 0.0f;									//手前
+			vp.MaxDepth = 1.0f;									//奥
+			vp.TopLeftX = 0;									//左
+			vp.TopLeftY = 0;									//上
+		}
+		
+		// ビューポートをセット
+		pContext_->RSSetViewports(1, &vp);                  
+
+		//スクリーンサイズを保存
+		screenWidth_ = width;
+		screenHeight_ = height;
+	}
+
+	void GetFullScreenSize(int& width, int& height) {
+
+		width = GetSystemMetrics(SM_CXSCREEN);
+		height = GetSystemMetrics(SM_CYSCREEN);
 	}
 
 }

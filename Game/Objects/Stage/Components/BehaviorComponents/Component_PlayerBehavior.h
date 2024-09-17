@@ -33,6 +33,7 @@ private:
 	std::shared_ptr<EFFEKSEERLIB::EFKTransform> mt;/*★★★*/
 	EffectData data_;
 
+	bool isShootStart_;					// 射撃開始フラグ
 public:
 	/// <summary> コンストラクタ </summary>
 	Component_PlayerBehavior(string _name,StageObject* _holder,Component* _parent);
@@ -79,11 +80,13 @@ getter :*/
 
 	/// <returns> ゲーム開始フラグ </returns>
 	bool GetGameStart() const { return isGameStart_; }
-
 /*
 predicate :*/
 	/// <returns> プレイヤーが死んでいるか </returns>
 	bool IsDead();
+
+	/// <returns> 射撃を開始したか </returns>
+	bool IsShootStart() const { return isShootStart_; }
 
 private:
 	/// <summary> 射撃方向の計算 </summary>

@@ -53,7 +53,7 @@ namespace {
 
 Component_PlayerBehavior::Component_PlayerBehavior(string _name, StageObject* _holder, Component* _parent)
 	: Component(_holder, _name, PlayerBehavior, _parent)
-	, shootHeight_(1.0f), isGameStart_(false), nowState_(PLAYER_STATE_IDLE), prevState_(PLAYER_STATE_IDLE)
+	, shootHeight_(1.0f), isGameStart_(false), nowState_(PLAYER_STATE_IDLE), prevState_(PLAYER_STATE_IDLE), invincibilityFrame_(60), isShootStart_(false)
 {
 }
 
@@ -211,11 +211,8 @@ void Component_PlayerBehavior::Shoot()
 	// 射撃モーションのアニメーションの現在の再生時間を取得
 	float nowFrame = motion->GetNowFrame();
 
-	// NOTE: 一度だけ射撃処理を実行するためのフラグ
-	static bool isShoot = false;
-
 	// 現在のフレームが射撃アニメーションのちょうどいいタイミングを過ぎたら...
-	if (nowFrame >= SHOOT_FRAME && isShoot == false) {
+	if (nowFrame >= SHOOT_FRAME && isShootStart_ == false) {
 
 		// 発射オプションを設定
 		Component_ShootAttack* shoot = (Component_ShootAttack*)(GetChildComponent("ShootAttack"));
@@ -236,7 +233,7 @@ void Component_PlayerBehavior::Shoot()
 		shoot->Execute();
 
 		// 射撃フラグを立てる
-		isShoot = true;
+		isShootStart_ = true;
 	}
 
 	// 移動コンポーネントの取得 & 有無の確認
@@ -255,7 +252,7 @@ void Component_PlayerBehavior::Shoot()
 
 	if (isEnd == true) {
 		// 射撃フラグをリセット
-		isShoot = false;
+		isShootStart_ = false;
 
 		// 移動コンポーネントの再開
 		if (move != nullptr) move->Execute();

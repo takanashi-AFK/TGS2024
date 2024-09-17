@@ -8,6 +8,7 @@
 #include "../Objects/UI/CountDown.h"
 #include "../Objects/Stage/Stage.h"
 #include "../Objects/Stage/Components/GaugeComponents/Component_HealthGauge.h"
+#include "../Objects/Stage/Components/BehaviorComponents/Component_PlayerBehavior.h"
 
 namespace {
 	const string TITLE_BGM = "Audios/プレゼントコーナー.wav";
@@ -17,6 +18,7 @@ namespace {
 	const string COUNTDOWN_SE = "Audios/Countdown03-2.wav";
 	const string DAMAGE_SE = "Audios/打撃1.wav";
 	const string DODGE_SE = "Audios/きらーん2.wav";
+	const string SHOOT_SE = "Audios/火炎魔法1.wav";
 }
 
 void AudioController::Update(GameObject* _root)
@@ -50,6 +52,10 @@ void AudioController::Update(GameObject* _root)
 		for (auto hg : stage->FindComponents(HealthGauge)) {
 			if (((Component_HealthGauge*)hg)->IsUnlockAndReduce()) Audio::Play(Audio::Load(DAMAGE_SE, false));
 			if (((Component_HealthGauge*)hg)->IsLockAndReduce()) Audio::Play(Audio::Load(DODGE_SE, false));
+		}
+
+		for (auto pb : stage->FindComponents(PlayerBehavior)) {
+			if(((Component_PlayerBehavior*)pb)->IsShootStart()) Audio::Play(Audio::Load(SHOOT_SE, false));
 		}
 	}
 	else

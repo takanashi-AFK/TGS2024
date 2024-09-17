@@ -148,11 +148,20 @@ bool UIButton::IsMouseOver(XMFLOAT2 _mousePosition)
     // 画像が読み込まれていない場合は処理を行わない
     if (imageHandle_ < 0)return false;
 
+
+    // 画面のサイズを取得
+    int scWidth = Direct3D::screenWidth_;
+    int scHeight = Direct3D::screenHeight_;
+
+    if (Direct3D::isFullScreen_)
+        Direct3D::GetFullScreenSize(scWidth, scHeight);
+
 	// マウスカーソルの座標を取得
     XMFLOAT2 imageSize = Image::GetSize(imageHandle_); {
         // 画像のサイズを画面サイズに合わせる
-        imageSize.x = imageSize.x / Direct3D::screenWidth_;
-        imageSize.y = imageSize.y / Direct3D::screenHeight_;
+
+        imageSize.x = imageSize.x / scWidth;
+        imageSize.y = imageSize.y / scHeight;
     }
 
     // 画像の半分のサイズを取得
@@ -171,6 +180,24 @@ bool UIButton::IsMouseOver(XMFLOAT2 _mousePosition)
     float left = center.x - (imageHelfWidth * 2.f * scale.x);       // 画像の中心から左に画像の幅の半分の距離
     float right = center.x + (imageHelfWidth * 2.f * scale.x);      // 画像の中心から右に画像の幅の半分の距離
     
+    if(ImGui::TreeNode(this->GetObjectName().c_str())){
+    ImGui::Text("imageSize: %f, %f", imageSize.x, imageSize.y);
+    ImGui::Text("imageHelfWidth: %f", imageHelfWidth);
+    ImGui::Text("imageHelfHeight: %f", imageHelfHeight);
+
+    ImGui::Text("sc: %d,%d",scWidth,scHeight);
+
+    ImGui::Text("scale: %f, %f", scale.x, scale.y);
+    ImGui::Text("center: %f, %f", center.x, center.y);
+    ImGui::Text("top: %f", top);
+    ImGui::Text("bottom: %f", bottom);
+    ImGui::Text("left: %f", left);
+    ImGui::Text("right: %f", right);
+    ImGui::Text("isOnMouse: %s", (_mousePosition.x >= left && _mousePosition.x <= right && _mousePosition.y >= top && _mousePosition.y <= bottom) ? "true" : "false");
+    ImGui::Separator();
+    ImGui::TreePop();
+	}
+
     // 判定範囲内にマウスカーソルが入っているかどうかを返す
     return (_mousePosition.x >= left && _mousePosition.x <= right && _mousePosition.y >= top && _mousePosition.y <= bottom);
 }

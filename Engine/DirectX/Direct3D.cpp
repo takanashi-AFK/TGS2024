@@ -40,6 +40,8 @@ namespace Direct3D
 	SHADER_BUNDLE			shaderBundle[SHADER_MAX] = { 0 };
 	int						screenWidth_ = 0;
 	int						screenHeight_ = 0;
+	bool					isFullScreen_ = false;
+	HWND 					hWnd_ = nullptr;
 
 	//イージング関数
 	map<string, function<double(double)>> EaseFunc{
@@ -84,6 +86,9 @@ namespace Direct3D
 	//初期化処理
 	HRESULT Direct3D::Initialize(HWND hWnd, int screenWidth, int screenHeight)
 	{
+		// ウィンドウハンドルを保存
+		hWnd_ = hWnd;
+
 		///////////////////////////いろいろ準備するための設定///////////////////////////////
 		//いろいろな設定項目をまとめた構造体
 		DXGI_SWAP_CHAIN_DESC scDesc;
@@ -708,4 +713,11 @@ namespace Direct3D
 		screenWidth_ = width;
 		screenHeight_ = height;
 	}
+
+	void GetFullScreenSize(int& width, int& height) {
+
+		width = GetSystemMetrics(SM_CXSCREEN);
+		height = GetSystemMetrics(SM_CYSCREEN);
+	}
+
 }

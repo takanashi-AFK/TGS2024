@@ -65,7 +65,9 @@ namespace Direct3D
 	//その他
 	extern int		screenWidth_;		//スクリーンの幅
 	extern int		screenHeight_;		//スクリーンの高さ
+	extern bool		isFullScreen_;		//フルスクリーンかどうか
 	extern bool		isDrawCollision_;	//コリジョンを表示するかフラグ
+	extern HWND 	hWnd_;				//ウィンドウハンドル
 
 	// イージング関数
 	extern map<string, function<double(double)>> EaseFunc;
@@ -113,5 +115,7 @@ namespace Direct3D
 
 	/// <summary> ビューポートの設定 </summary>
 	void SetViewport(int width, int height);
+
+	void GetFullScreenSize(int& width, int& height);
 };
 

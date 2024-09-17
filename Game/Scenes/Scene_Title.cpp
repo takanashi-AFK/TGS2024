@@ -5,6 +5,9 @@
 #include "../Objects/UI/UIPanel.h"
 #include "../Objects/UI/UIButton.h"
 #include "../Constants.h"
+
+#include "../../Engine/DirectX/Input.h"
+#include "../../Engine/ImGui/imgui.h"
 using namespace Constants;
 
 Scene_Title::Scene_Title(GameObject* parent)
@@ -21,6 +24,11 @@ void Scene_Title::Initialize()
 
 void Scene_Title::Update()
 {
+
+	// マウスの座標を取得
+	XMFLOAT2 mousePos = { Input::GetMousePosition().x,Input::GetMousePosition().y };
+	ImGui::Text("MousePos: %f, %f", mousePos.x, mousePos.y);
+
 	// シーン切替処理
 	{
 		// ランキングシーンへの遷移

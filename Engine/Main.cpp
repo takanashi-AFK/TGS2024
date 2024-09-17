@@ -34,8 +34,6 @@
 
 #pragma comment(lib,"Winmm.lib")
 
-
-bool isFullScreen = false;
 RECT windowRect = {};  // 元のウィンドウサイズを保存
 //定数宣言
 const char* WIN_CLASS_NAME = "SampleGame";	//ウィンドウクラス名
@@ -164,7 +162,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 				if (Input::IsKeyDown(DIK_F4)) {
 					// 画面表示切替
-					ToggleFullScreen(hWnd, isFullScreen, windowRect);
+					ToggleFullScreen(hWnd, Direct3D::isFullScreen_, windowRect);
 				}
 
 				//ImGuiの更新

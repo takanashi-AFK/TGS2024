@@ -26,7 +26,7 @@ namespace Constants {
 
 	/// プレイシーン ///
 	const string PLAY_SCENE_LAYOUT_JSON = "Datas/UILayouts/playScene_layout.json";
-	const string PLAY_SCENE_STAGE_LAYOUT_JSON = "Datas/StageLayouts/stage.json";
+	//const string PLAY_SCENE_STAGE_LAYOUT_JSON = "Datas/StageLayouts/stage.json";
 	const string PLAY_SCENE_CAMERA_LAYOUT_JSON = "Datas/CameraLayouts/TPSCamera.json";
 	const string PLAY_SCENE_TIMER_NAME = "timer";
 	const string PLAY_SCENE_PLAYER_HP_GAUGE_NAME = "player_hpGauge";
@@ -61,8 +61,8 @@ namespace Constants {
 	const string PLAYER_STATE_DEAD_FBX = "Models/Player/Standing React Death Right.fbx";
 
 	// 難易度事のステージ名
-	const string STAGE_EASY = "stage_easy.json";
-	const string STAGE_NORMAL = "stage_normal.json";
-	const string STAGE_HARD = "stage_hard.json";
-	const string STAGE_EXPERT = "stage_expert.json";
+	const string STAGE_EASY = "Datas/StageLayouts/stage_easy.json";
+	const string STAGE_NORMAL = "Datas/StageLayouts/stage_normal.json";
+	const string STAGE_HARD = "Datas/StageLayouts/stage_hard.json";
+	const string STAGE_EXPERT = "Datas/StageLayouts/stage_expert.json";
 }

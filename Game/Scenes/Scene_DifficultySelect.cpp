@@ -24,20 +24,20 @@ void Scene_DifficultySelect::Update()
 
 	// 難易度を選択
 	{	
-		UIButton* easyButton = (UIButton*)UIPanel::GetInstance()->GetUIObject(DIFFICULTY_SELECT_SCENE_EASY_BUTTON_NAME);
-		if (easyButton->OnClick() == true) { g_selectedStage = STAGE_EASY; isClicked = true; }
+		/*UIButton* easyButton = (UIButton*)UIPanel::GetInstance()->GetUIObject(DIFFICULTY_SELECT_SCENE_EASY_BUTTON_NAME);
+		if (easyButton->OnClick() == true) { g_selectedStage = STAGE_EASY; isClicked = true; }*/
 
 		UIButton* normalButton = (UIButton*)UIPanel::GetInstance()->GetUIObject(DIFFICULTY_SELECT_SCENE_NORMAL_BUTTON_NAME);
 		if (normalButton->OnClick() == true) { g_selectedStage = STAGE_NORMAL; isClicked = true; }
 
-		UIButton* hardButton = (UIButton*)UIPanel::GetInstance()->GetUIObject(DIFFICULTY_SELECT_SCENE_HARD_BUTTON_NAME);
-		if (hardButton->OnClick() == true) { g_selectedStage = STAGE_HARD; isClicked = true; }
+		/*UIButton* hardButton = (UIButton*)UIPanel::GetInstance()->GetUIObject(DIFFICULTY_SELECT_SCENE_HARD_BUTTON_NAME);
+		if (hardButton->OnClick() == true) { g_selectedStage = STAGE_HARD; isClicked = true; }*/
 
-		UIButton* expertButton = (UIButton*)UIPanel::GetInstance()->GetUIObject(DIFFICULTY_SELECT_SCENE_EXPERT_BUTTON_NAME);
-		if (expertButton->OnClick() == true) { g_selectedStage = STAGE_EXPERT; isClicked = true; }
+		/*UIButton* expertButton = (UIButton*)UIPanel::GetInstance()->GetUIObject(DIFFICULTY_SELECT_SCENE_EXPERT_BUTTON_NAME);
+		if (expertButton->OnClick() == true) { g_selectedStage = STAGE_EXPERT; isClicked = true; }*/
 	}
 
-	g_selectedStage = PLAY_SCENE_STAGE_LAYOUT_JSON;
+	//g_selectedStage = PLAY_SCENE_STAGE_LAYOUT_JSON;
 
 	// シーン切替処理
 	if (isClicked == true) {

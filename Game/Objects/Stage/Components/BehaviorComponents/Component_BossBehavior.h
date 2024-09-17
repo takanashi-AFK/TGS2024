@@ -17,7 +17,7 @@ enum BossState{
 class Component_BossBehavior : public Component
 {
 private:
-	BossState nowState_;	// 現在の状態
+	BossState bNowState_;	// 現在の状態
 
 	StageObject* target_;	// 対象
 	string targetName_;		// 対象の名前
@@ -55,10 +55,13 @@ public:
 	/// <summary> ImGuiパネル表示 </summary>
 	void DrawData() override;
 
+	/// <summary>ステートを返す</summary>
+	BossState GetState() const { return (BossState)bNowState_; }
+
 /*
 setter :*/
 	/// <param name="_state"> ボスの状態 </param>
-	void SetState(BossState _state) { nowState_ = _state; }
+	void SetState(BossState _state) { bNowState_ = _state; }
 /*
 predicate:*/
 	bool IsDead();

@@ -12,7 +12,7 @@ namespace {
 }
 
 Component_TackleMove::Component_TackleMove(string _name, StageObject* _holder, Component* _parent)
-	:Component(_holder, _name, TackleMove, _parent), isActive_(false), direction_(XMVectorSet(0, 0, 0, 0)), distance_(0), easingType_("Linear"), rate_(0), isFirstMove_(true), startPosition_(XMFLOAT3(0, 0, 0))
+	:Component(_holder, _name, TackleMove, _parent), direction_(XMVectorSet(0, 0, 0, 0)), distance_(0), easingType_("Linear"), rate_(0), isFirstMove_(true), startPosition_(XMFLOAT3(0, 0, 0))
 {
 }
 

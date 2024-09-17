@@ -32,4 +32,7 @@ namespace Audio
 
 	/// <summary> ƒ{ƒŠƒ…[ƒ€İ’è </summary>
 	void SetVolume(int ID, float volume);
+
+	/// <summary> Ä¶‘¬“xİ’è </summary>
+	void SetPlaybackSpeed(int ID, float speed);
 };

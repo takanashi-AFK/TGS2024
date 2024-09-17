@@ -249,7 +249,6 @@ void Component_BossBehavior::Shot()
 
         // 発射
         shoot->Execute();
-
         Audio::Play(Audio::Load("Audios/風魔法1.wav",false));
     }
 
@@ -315,6 +314,9 @@ void Component_BossBehavior::Tackle()
 			tackleMove->Execute();
         }
 
+        // サウンドを再生
+        Audio::Play(Audio::Load("Audios/火炎魔法1.wav", false));
+
         // エフェクトを再生
         {
             // 情報の設定
@@ -326,6 +328,7 @@ void Component_BossBehavior::Tackle()
             // 再生
             mt = EFFEKSEERLIB::gEfk->Play("sword", t);
         }
+
 	}
 
     // 突進攻撃が終了した場合
@@ -363,6 +366,18 @@ void Component_BossBehavior::Dead()
     Transform effectTransform;
 	effectTransform.position_ = holder_->GetPosition();
 
+    // 初回フラグ
+    static bool isFirst = true;
+
+    // 初回のみ処理を行う
+    if (isFirst) {
+        // 初回フラグをfalseに設定
+        isFirst = false;
+
+        // サウンドを再生
+        Audio::Play(Audio::Load("Audios/DJのスクラッチ2.wav", false));
+    }
+
     // 大きさが０でない場合
     if (holder_->GetScale().x >= 0) {
     // キャラクターの大きさを徐々に小さくする
@@ -377,5 +392,8 @@ void Component_BossBehavior::Dead()
 
         // 再生
         mt = EFFEKSEERLIB::gEfk->Play("fire", t);
+        
+        // サウンドを再生
+        Audio::Play(Audio::Load("Audios/爆発1.wav", false));
     }
 }

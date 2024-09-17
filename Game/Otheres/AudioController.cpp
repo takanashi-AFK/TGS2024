@@ -12,6 +12,7 @@
 #include "../../Engine/ImGui/imgui.h"
 #include "../Objects/Stage/Components/BehaviorComponents/Component_BossBehavior.h"
 #include "../Objects/Stage/Components/AttackComponents/Component_ShootAttack.h"
+#include "../Objects/UI/UITimer.h"
 
 namespace {
 	const string TITLE_BGM = "Audios/プレゼントコーナー.wav";
@@ -38,6 +39,10 @@ void AudioController::Update(GameObject* _root)
 	// ボタンがクリックされた時のSE再生処理
 	for (auto button : UIPanel::GetInstance()->GetUIObject(UI_BUTTON)) {
 		if (((UIButton*)button)->OnClick()) Audio::Play(Audio::Load(BUTTON_SE, false));
+	}
+
+	for (auto timer : uiPanel->GetUIObject(UI_TIMER)) {
+		if (((UITimer*)timer)->GetSeconds() <= 15.f) Audio::SetPlaybackSpeed(Audio::Load(PLAY_BGM, true), 1.2f);
 	}
 
 	// シーン切り替え時のBGM再生処理

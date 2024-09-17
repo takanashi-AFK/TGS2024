@@ -218,3 +218,12 @@ void Audio::SetVolume(int ID, float volume)
 		audioDatas[ID].pSourceVoice[i]->SetVolume(volume);
 	}
 }
+
+void Audio::SetPlaybackSpeed(int ID, float speed)
+{
+	for (int i = 0; i < audioDatas[ID].svNum; i++)
+	{
+		// Ä¶‘¬“x‚ð•ÏX
+		audioDatas[ID].pSourceVoice[i]->SetFrequencyRatio(speed);
+	}
+}

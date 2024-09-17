@@ -164,6 +164,16 @@ void Audio::Play(int ID)
 			break;
 		}
 	}
+
+}
+
+void Audio::Play(int ID, float volume)
+{
+	// Ä¶
+	Play(ID);
+
+	// ƒ{ƒŠƒ…[ƒ€Ý’è
+	SetVolume(ID, volume);
 }
 
 
@@ -199,4 +209,12 @@ void Audio::AllRelease()
 		pMasteringVoice->DestroyVoice();
 	}
 	pXAudio->Release();
+}
+
+void Audio::SetVolume(int ID, float volume)
+{
+	for (int i = 0; i < audioDatas[ID].svNum; i++)
+	{
+		audioDatas[ID].pSourceVoice[i]->SetVolume(volume);
+	}
 }

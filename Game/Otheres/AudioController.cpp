@@ -41,7 +41,7 @@ void AudioController::Update(GameObject* _root)
 	if (sceneManager->IsCurrentScene(SCENE_ID_PLAY)) {
 
 		// 背景音楽の再生
-		Audio::Play(Audio::Load(PLAY_BGM, true));
+		Audio::Play(Audio::Load(PLAY_BGM, true),0.3f);
 		Audio::Stop(Audio::Load(TITLE_BGM, true));
 
 		// カウントダウンの音の再生
@@ -68,13 +68,12 @@ void AudioController::Update(GameObject* _root)
 			// プレイヤーが歩いている時の音の再生
 			if(((Component_PlayerBehavior*)pb)->IsState(PLAYER_STATE_WALK)) Audio::Play(Audio::Load(WALK_SE, true));
 			else Audio::Stop(Audio::Load(WALK_SE, true));
-		
 		}
 	}
 	else 
 	{
 		// タイトルシーン以外のシーンであれば、タイトルBGMを再生
-		if(!sceneManager->IsCurrentScene(SCENE_ID_SPLASH) && !sceneManager->IsCurrentScene(SCENE_ID_END))Audio::Play(Audio::Load(TITLE_BGM, true));
+		if(!sceneManager->IsCurrentScene(SCENE_ID_SPLASH) && !sceneManager->IsCurrentScene(SCENE_ID_END))Audio::Play(Audio::Load(TITLE_BGM, true),0.3f);
 		Audio::Stop(Audio::Load(PLAY_BGM, true));
 	}
 }

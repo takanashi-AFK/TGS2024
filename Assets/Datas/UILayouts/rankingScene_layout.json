@@ -11,14 +11,14 @@
     "rotate_": [ 0.0, 0.0, 0.0 ],
     "scale_": [ 1.0, 1.0, 1.0 ],
     "size": 0.699999988079071,
-    "text": "012",
+    "text": "00",
     "type_": 3
   },
   "rank1_userName": {
     "FontData": {
-      "charSize": [ 0, 0 ],
-      "filePath": "",
-      "rowLength": 0
+      "charSize": [ 16, 32 ],
+      "filePath": "Fonts/char.png",
+      "rowLength": 16
     },
     "layerNumber_": 8,
     "objectName_": "rank1_userName",
@@ -26,7 +26,7 @@
     "rotate_": [ 0.0, 0.0, 0.0 ],
     "scale_": [ 1.0, 1.0, 1.0 ],
     "size": 1.5,
-    "text": "user1",
+    "text": "",
     "type_": 3
   },
   "rank2_scoreNum": {
@@ -41,14 +41,14 @@
     "rotate_": [ 0.0, 0.0, 0.0 ],
     "scale_": [ 1.0, 1.0, 1.0 ],
     "size": 0.699999988079071,
-    "text": "123",
+    "text": "00",
     "type_": 3
   },
   "rank2_userName": {
     "FontData": {
-      "charSize": [ 0, 0 ],
-      "filePath": "",
-      "rowLength": 0
+      "charSize": [ 16, 32 ],
+      "filePath": "Fonts/char.png",
+      "rowLength": 16
     },
     "layerNumber_": 9,
     "objectName_": "rank2_userName",
@@ -56,7 +56,7 @@
     "rotate_": [ 0.0, 0.0, 0.0 ],
     "scale_": [ 1.0, 1.0, 1.0 ],
     "size": 1.5,
-    "text": "gser2",
+    "text": "",
     "type_": 3
   },
   "rank3_scoreNum": {
@@ -71,14 +71,14 @@
     "rotate_": [ 0.0, 0.0, 0.0 ],
     "scale_": [ 1.0, 1.0, 1.0 ],
     "size": 0.699999988079071,
-    "text": "234",
+    "text": "00",
     "type_": 3
   },
   "rank3_userName": {
     "FontData": {
-      "charSize": [ 0, 0 ],
-      "filePath": "",
-      "rowLength": 0
+      "charSize": [ 16, 32 ],
+      "filePath": "Fonts/char.png",
+      "rowLength": 16
     },
     "layerNumber_": 11,
     "objectName_": "rank3_userName",
@@ -101,14 +101,14 @@
     "rotate_": [ 0.0, 0.0, 0.0 ],
     "scale_": [ 1.0, 1.0, 1.0 ],
     "size": 0.699999988079071,
-    "text": "345",
+    "text": "00",
     "type_": 3
   },
   "rank4_userName": {
     "FontData": {
-      "charSize": [ 0, 0 ],
-      "filePath": "",
-      "rowLength": 0
+      "charSize": [ 16, 32 ],
+      "filePath": "Fonts/char.png",
+      "rowLength": 16
     },
     "layerNumber_": 12,
     "objectName_": "rank4_userName",
@@ -116,7 +116,7 @@
     "rotate_": [ 0.0, 0.0, 0.0 ],
     "scale_": [ 1.0, 1.0, 1.0 ],
     "size": 1.5,
-    "text": "ggdgaha",
+    "text": "",
     "type_": 3
   },
   "rank5_scoreNum": {
@@ -131,14 +131,14 @@
     "rotate_": [ 0.0, 0.0, 0.0 ],
     "scale_": [ 1.0, 1.0, 1.0 ],
     "size": 0.699999988079071,
-    "text": "123456",
+    "text": "00",
     "type_": 3
   },
   "rank5_userName": {
     "FontData": {
-      "charSize": [ 0, 0 ],
-      "filePath": "",
-      "rowLength": 0
+      "charSize": [ 16, 32 ],
+      "filePath": "Fonts/char.png",
+      "rowLength": 16
     },
     "layerNumber_": 13,
     "objectName_": "rank5_userName",
@@ -146,7 +146,7 @@
     "rotate_": [ 0.0, 0.0, 0.0 ],
     "scale_": [ 1.0, 1.0, 1.0 ],
     "size": 1.5,
-    "text": "haha",
+    "text": "",
     "type_": 3
   },
   "rankingImage": {

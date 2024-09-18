@@ -1,13 +1,6 @@
 #include "RankingManager.h"
-#include "../../../Engine/ResourceManager/CsvReader.h"
-
-#include <filesystem>
-#include <fstream>
-#include <string>
-#include <vector>
-#include <algorithm>
+#include "../../Engine/Json/JsonReader.h"
 using namespace std;
-namespace fs = std::filesystem;
 
 RankingManager& RankingManager::GetInstance()
 {
@@ -17,21 +10,24 @@ RankingManager& RankingManager::GetInstance()
 
 bool RankingManager::Load(string _filePath)
 {
-    // csvリーダーを作成
-    CsvReader csvReader;
+    // jsonオブジェクトを作成
+    json loadData;
 
-    // ファイル読み込み
-    if (!csvReader.Load(_filePath)) return false;
+    // ファイル読込
+    if (!JsonReader::Load(_filePath, loadData)) return false;
 
     // スコア配列をクリアして再構築
     scores_.clear();
-    for (int y = 0; y < csvReader.GetHeight(); y++)
-    {
-        // csvの1列目にユーザー名、2列目にスコアがあると仮定
-        string userName = csvReader.GetString(1, y);
-        int score = csvReader.GetValue(2, y);
-        scores_.push_back(make_pair(userName, score));
-    }
+
+    // jsonの中身を取得
+    for (auto& obj : loadData) {
+        // jsonの中身がuserNameとscoreを持っているか確認
+		if(obj.contains("userName") && obj.contains("score"))
+		scores_.push_back(make_pair(obj["userName"],obj["score"]));
+	}
+
+    // スコアをソート
+    SortScores();
 
     // スコアが存在するかどうかを返す
     return !scores_.empty();
@@ -39,22 +35,20 @@ bool RankingManager::Load(string _filePath)
 
 bool RankingManager::Save(string _filePath)
 {
-    // ファイルを開く
-    ofstream ofs(_filePath);
-    if (!ofs.is_open()) return false;
+    // jsonオブジェクトを作成
+    json saveData;
 
     // スコアをソート
     SortScores();
 
-    // スコアを書き込む
+    // スコアをjsonに格納
     for (const auto& entry : scores_)
     {
-        ofs << entry.first << "," << entry.second << endl; // ユーザー名,スコアを保存
-    }
+		saveData.push_back({ {"userName", entry.first}, {"score", entry.second} });
+	}
 
     // ファイルを閉じる
-    ofs.close();
-    return true;
+    return (JsonReader::Save(_filePath, saveData));
 }
 
 void RankingManager::AddScore(const std::string& _userName, int _score)
@@ -68,7 +62,7 @@ void RankingManager::SortScores()
     // スコアを降順にソート
     sort(scores_.begin(), scores_.end(), [](const pair<string, int>& a, const pair<string, int>& b) {
         return a.second > b.second;
-        });
+    });
 }
 
 int RankingManager::GetScore(int _rank) const

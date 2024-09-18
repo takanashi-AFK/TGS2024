@@ -8,6 +8,8 @@
 #include "../Objects/UI/UIText.h"
 #include "../Constants.h"
 
+#include "../../Engine/ImGui/imgui.h"
+
 using namespace Constants;
 
 Scene_Ranking::Scene_Ranking(GameObject* _parent)
@@ -25,7 +27,7 @@ void Scene_Ranking::Initialize()
 	if (JsonReader::Load(RANKING_SCENE_LAYOUT_JSON, loadData)) panel->Load(loadData);
 	
 	// ランキングデータを読み込む
-	RankingManager::GetInstance().Load(RANKING_DATA_CSV);
+	RankingManager::GetInstance().Load(RANKING_DATA_JSON);
 
 	// ランキングデータを表示
 	{
@@ -60,6 +62,10 @@ void Scene_Ranking::Initialize()
 		}
 	}
 
+	for (auto& score : RankingManager::GetInstance().GetAllScores())
+	{
+		ImGui::Text("%s : %d", score.first.c_str(), score.second);
+	}
 }
 
 void Scene_Ranking::Update()

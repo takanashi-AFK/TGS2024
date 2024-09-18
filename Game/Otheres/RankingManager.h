@@ -28,9 +28,8 @@ public:
     /// <summary> スコアをソート </summary>
     void SortScores();
 
-    /*
-    getter :
-    */
+/*
+getter :*/
     /// <summary> 指定したランクのスコアを取得 </summary>
     int GetScore(int _rank) const;
 

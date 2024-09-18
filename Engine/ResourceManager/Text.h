@@ -4,18 +4,19 @@
 class Text
 {
 private:
-	int hPict_;
-	unsigned int width_, height_;	//1文字分の幅と高さ
-	char fileName_[MAX_PATH];
-	unsigned int rowLength_;
-
+	int hPict_;						// ピクチャハンドル
+	unsigned int width_, height_;	// 1文字分の幅と高さ
+	char fileName_[MAX_PATH];		// ファイル名
+	unsigned int rowLength_;		// 1行に並ぶ文字数
 
 public:
+	/// <summary> コンストラクタ </summary>
 	Text();
+
+	/// <summary> デストラクタ </summary>
 	~Text();
 
-	//初期化（デフォルトの設定）
-	//戻値：成功／失敗
+	/// <summary> 初期化 </summary>
 	HRESULT Initialize();
 
 	//初期化（オリジナルの画像を使いたい時）
@@ -36,10 +37,19 @@ public:
 	//引数：value	表示したい値
 	void Draw(int x, int y, int value);
 
-	//解放
+	///	<summary> 解放 </summary>
 	void Release();
 
+/*
+setter :*/
 	void SetScale(float sc) { scale = sc; }
+/*
+getter :*/
+	unsigned int GetWidth() const { return width_; }
+	unsigned int GetHeight()const  { return height_; }
+	string GetFileName()const { return fileName_; }
+	unsigned int GetRowLength()const { return rowLength_; }
+
 private:
 	float scale;
 };

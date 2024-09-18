@@ -60,9 +60,9 @@ void Scene_Result::Initialize()
 
 	// ランキングにスコアを追加
 	RankingManager* rm = &RankingManager::GetInstance(); {
-		rm->Load(RANKING_DATA_CSV);
+		rm->Load(RANKING_DATA_JSON);
 		rm->AddScore(ScoreManager::userName, scoreNum_);
-		rm->Save(RANKING_DATA_CSV);
+		rm->Save(RANKING_DATA_JSON);
 	}
 
 	// ステージを作成 & 読み込み

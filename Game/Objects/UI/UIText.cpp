@@ -15,6 +15,11 @@ void UIText::Initialize()
 	pText_ = new Text;
 	pText_->Initialize();
 
+	// フォントデータを初期化
+	fontData_.filePath = pText_->GetFileName();
+	fontData_.charSize = { (int)pText_->GetWidth(),(int)pText_->GetHeight()};
+	fontData_.rowLength = pText_->GetRowLength();
+
 	//テキストの変形をロック
 	LockScale(); /* & */ LockRotate();
 }

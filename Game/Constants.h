@@ -52,7 +52,7 @@ namespace Constants {
 	const string TEST_SCENE_CAMERA_LAYOUT_JSON = "Datas/CameraLayouts/camera.json";
 
 	// データ
-	const string RANKING_DATA_CSV = "Datas/ranking.csv";
+	const string RANKING_DATA_JSON = "Datas/ranking.json";
 
 	/// プレイヤーのモーション ///
 	const string PLAYER_STATE_WALK_FBX = "Models/Player/Running.fbx";

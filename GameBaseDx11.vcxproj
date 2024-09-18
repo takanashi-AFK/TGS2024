@@ -223,6 +223,8 @@
     <ClCompile Include="Game\Scenes\Scene_Ranking.cpp" />
     <ClCompile Include="Game\Otheres\RankingManager.cpp" />
     <ClCompile Include="Game\Scenes\Scene_DifficultySelect.cpp" />
+    <ClCompile Include="Game\Otheres\OptionMenu.cpp" />
+    <ClCompile Include="Game\Objects\UI\UIDragBar.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game\Otheres\AudioController.h" />
@@ -312,6 +314,8 @@
     <ClInclude Include="Game\Otheres\RankingManager.h" />
     <ClInclude Include="Game\Constants.h" />
     <ClInclude Include="Game\Scenes\Scene_DifficultySelect.h" />
+    <ClInclude Include="Game\Otheres\OptionMenu.h" />
+    <ClInclude Include="Game\Objects\UI\UIDragBar.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Assets\Shader\BillBoard.hlsl">

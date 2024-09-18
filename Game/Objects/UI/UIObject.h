@@ -15,6 +15,7 @@ enum UIType {
 	UI_PROGRESSBAR,
 	UI_PANEL,
 	UI_TIMER,
+	UI_DRAGBAR,
 	UI_MAX,
 };
 

@@ -20,6 +20,7 @@
 #include "../Game/Otheres/AudioController.h"
 #include "ResourceManager/VFX.h"
 #include "ResourceManager/Transition.h"
+#include "../Game/Otheres/OptionMenu.h"
 
 // effekseerのヘッダーをインクルード
 
@@ -165,63 +166,69 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 					ToggleFullScreen(hWnd, Direct3D::isFullScreen_, windowRect);
 				}
 
+				if (Input::IsKeyDown(DIK_ESCAPE)) {
+					// オプションメニューを開く
+					OptionMenu::isOptionMenu = !OptionMenu::isOptionMenu;
+				}
+
 				//ImGuiの更新
 				ImGui_ImplDX11_NewFrame();
 				ImGui_ImplWin32_NewFrame();
 				ImGui::NewFrame();
 
-#ifdef _DEBUG
 				// ImGuiで表示するウィンドウの設定を行う
-				ImGui::SetNextWindowPos(ImVec2(0, Direct3D::screenHeight_ * 0.7f));
-				ImGui::SetNextWindowSize(ImVec2(Direct3D::screenWidth_ * 0.7f, Direct3D::screenHeight_ * 0.3f));
+				ImGui::SetNextWindowPos(ImVec2(0, Direct3D::screenHeight_ ));
+				ImGui::SetNextWindowSize(ImVec2(Direct3D::screenWidth_, Direct3D::screenHeight_));
 
 				// ウィンドウを表示
 				ImGui::Begin("Debug", NULL,
 					ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoCollapse);
-#endif // _DEBUG
 
-				//全オブジェクトの更新処理
-				//ルートオブジェクトのUpdateを呼んだあと、自動的に子、孫のUpdateが呼ばれる
-				pRootObject->UpdateSub();
+				if(!OptionMenu::isOptionMenu){
+					//全オブジェクトの更新処理
+					//ルートオブジェクトのUpdateを呼んだあと、自動的に子、孫のUpdateが呼ばれる
+					pRootObject->UpdateSub();
 
-				pUIPanel_->UpdateSub();
+					pUIPanel_->UpdateSub();
 
-				// オーディオの更新
-				AudioController::Update(pRootObject);
+					// オーディオの更新
+					AudioController::Update(pRootObject);
 
-				//カメラを更新
-				Camera::Update();
+					//カメラを更新
+					Camera::Update();
 
-				// effekseerの更新
-				EFFEKSEERLIB::gEfk->Update(deltaTime / 1000.f);/*★★★*/
+					// effekseerの更新
+					EFFEKSEERLIB::gEfk->Update(deltaTime / 1000.f);/*★★★*/
 
-				// 遠藤先生作成エフェクトの更新
-				// VFX::Update();
+					// 遠藤先生作成エフェクトの更新
+					// VFX::Update();
 
-				//トランジションの更新
-				Transition::Update();
+					//トランジションの更新
+					Transition::Update();
 
-				//このフレームの描画開始
-				Direct3D::BeginDraw();
+					//このフレームの描画開始
+					Direct3D::BeginDraw();
 
-				//全オブジェクトを描画
-				//ルートオブジェクトのDrawを呼んだあと、自動的に子、孫のUpdateが呼ばれる
-				pRootObject->DrawSub();
+					//全オブジェクトを描画
+					//ルートオブジェクトのDrawを呼んだあと、自動的に子、孫のUpdateが呼ばれる
+					pRootObject->DrawSub();
 
-				pUIPanel_->DrawSub();
+					pUIPanel_->DrawSub();
 
+					// effekseerの描画
+					EFFEKSEERLIB::gEfk->Draw();/*★★★*/
+					
+					// 遠藤先生作成エフェクトの描画
+					// VFX::Draw();
 
-				// effekseerの描画
-				EFFEKSEERLIB::gEfk->Draw();/*★★★*/
-				
-				// 遠藤先生作成エフェクトの描画
-				// VFX::Draw();
+					//トランジションの描画
+					Transition::Draw();
 
-				//トランジションの描画
-				Transition::Draw();
-#ifdef _DEBUG
+				}
+			
+
 				ImGui::End();
-#endif // _DEBUG
+
 
 				//ImGuiの描画
 				ImGui::Render();
@@ -229,8 +236,10 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 				//描画終了
 				Direct3D::EndDraw();
-				
 
+
+
+			
 			
 				//ちょっと休ませる
 				Sleep(1);

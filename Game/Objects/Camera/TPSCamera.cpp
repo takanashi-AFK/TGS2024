@@ -7,7 +7,7 @@
 
 
 namespace {
-    const float DEF_SENSITIVITY = 0.3f;
+    const float DEF_SENSITIVITY = 15;
     const float SENSITIVITY_MAX = 1;
     const float SENSITIVITY_MIN = 0;
     const float ROTATE_UPPER_LIMIT = -80.f;
@@ -25,7 +25,7 @@ void TPSCamera::Initialize()
 
 void TPSCamera::Update()
 {
-	if (isActive_ == false)return;
+    if (isActive_ == false)return;
 
     if (pTarget_ == nullptr) pTarget_ = FindObject(targetName_);
     if (pTarget_ == nullptr) return;
@@ -44,8 +44,18 @@ void TPSCamera::Update()
         //ImGui::SliderFloat("sensitivity", &sensitivity_, SENSITIVITY_MIN, SENSITIVITY_MAX);
 #endif // _DEBUG
         XMFLOAT3 mouseMove = Input::GetMouseMove();
+
+        XMFLOAT3 padMove = Input::GetPadStickR();
+
+
         angle_.x += mouseMove.y * sensitivity_;
         angle_.y += mouseMove.x * sensitivity_;
+
+
+        angle_.x -= padMove.y * sensitivity_;
+        angle_.y += padMove.x * sensitivity_;
+
+
         // ｘ軸回転の上限・下限を設定し回転を制限
         {
             float upperlimit = ROTATE_UPPER_LIMIT;
@@ -111,8 +121,8 @@ void TPSCamera::Update()
         XMVECTOR origin_To_camPosition = XMLoadFloat3(&center) + newCenter_To_camPosition;
         XMStoreFloat3(&camPosition, origin_To_camPosition);
 
-        if(!XMVector3Equal(axis, XMVectorZero()))
-        prevAxis_ = axis;
+        if (!XMVector3Equal(axis, XMVectorZero()))
+            prevAxis_ = axis;
     }
 
     Camera::SetTarget(camTarget);

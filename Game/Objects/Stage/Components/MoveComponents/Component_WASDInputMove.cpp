@@ -5,15 +5,17 @@
 #include "../../../../../Engine/GameObject/Camera.h"
 #include "../../../../../Engine/GameObject/GameObject.h"
 #include "../../../Camera/TPSCamera.h"
+#include <cmath>
 
 namespace
 {
-	float speed = 0.1f;
-	const int EFFECT_RATE = 15;
+    float speed = 0.1f;
+    const int EFFECT_RATE = 15;
 }
 
+
 Component_WASDInputMove::Component_WASDInputMove(string _name, StageObject* _holder, Component* _parent)
-	:Component(_holder, _name, WASDInputMove, _parent), isMove_(false)
+    :Component(_holder, _name, WASDInputMove, _parent), isMove_(false)
 {
 }
 
@@ -28,8 +30,8 @@ void Component_WASDInputMove::Update()
 
     // このコンポーネントがアクティブでない場合、処理を終了
     if (isActive_ == false) return;
-
     isMove_ = false;
+
     // 基本のベクトルを用意、初期化
     dir_ = XMVectorZero();
 
@@ -43,17 +45,52 @@ void Component_WASDInputMove::Update()
     sightLine = XMVectorSetY(sightLine, 0);
     sightLine = XMVector3Normalize(sightLine);
 
-    // 入力に応じて方向ベクトルを設定
-    if (Input::IsKey(DIK_W)) { dir_ += sightLine; isMove_ = true; holder_->SetRotateY(angle.y - 25); }
-    if (Input::IsKey(DIK_A)) { dir_ += XMVector3Transform(sightLine, XMMatrixRotationY(XMConvertToRadians(-90))); isMove_ = true; holder_->SetRotateY((angle.y - 25) - 90); }
-    if (Input::IsKey(DIK_S)) { dir_ += -sightLine; isMove_ = true; holder_->SetRotateY((angle.y - 25) + 180); }
-    if (Input::IsKey(DIK_D)) { dir_ += XMVector3Transform(sightLine, XMMatrixRotationY(XMConvertToRadians(90))); isMove_ = true; holder_->SetRotateY((angle.y - 25) + 90);}
+    // 入力に応じて方向ベクトルを設定 (キーボードのWASDキー)
+    if (Input::IsKey(DIK_W)) {
+        dir_ += sightLine;
+        isMove_ = true;
+        holder_->SetRotateY(angle.y - 25);
+    }
+    if (Input::IsKey(DIK_A)) {
+        dir_ += XMVector3Transform(sightLine, XMMatrixRotationY(XMConvertToRadians(-90)));
+        isMove_ = true;
+        holder_->SetRotateY((angle.y - 25) - 90);
+    }
+    if (Input::IsKey(DIK_S)) {
+        dir_ += -sightLine;
+        isMove_ = true;
+        holder_->SetRotateY((angle.y - 25) + 180);
+    }
+    if (Input::IsKey(DIK_D)) {
+        dir_ += XMVector3Transform(sightLine, XMMatrixRotationY(XMConvertToRadians(90)));
+        isMove_ = true;
+        holder_->SetRotateY((angle.y - 25) + 90);
+    }
+
+    // コントローラ入力 (ゲームパッドの左スティック) を取得
+    XMFLOAT3 padMove = Input::GetPadStickL();
+    XMVECTOR padDir = XMVectorSet(padMove.x, 0, padMove.y, 0);
+
+    if (!XMVector3Equal(padDir, XMVectorZero())) {
+        // パッド入力ベクトルをカメラの向きに合わせて回転させる
+        XMVECTOR rotatedPadDir = XMVector3Transform(padDir, XMMatrixRotationY(XMConvertToRadians(angle.y)));
+
+        dir_ = XMVector3Normalize(rotatedPadDir);
+
+        // 新しい回転角度を計算し、キャラクターのY軸回転に反映
+        float newAngle = std::atan2(XMVectorGetX(dir_), XMVectorGetZ(dir_));
+        holder_->SetRotateY(XMConvertToDegrees(newAngle  + 25));
+
+        isMove_ = true;
+    }
+
+    // 移動ベクトルを正規化し、速度を掛け合わせる
     dir_ = XMVector3Normalize(dir_);
     XMVECTOR move = dir_ * speed;
 
-    // 移動ベクトルをXMFLOAT3に変換
-	XMFLOAT3 pos = holder_->GetPosition();
-    XMStoreFloat3(&pos,XMLoadFloat3(&pos)+move);
+    // 移動ベクトルをXMFLOAT3に変換し、キャラクターの新しい位置を設定
+    XMFLOAT3 pos = holder_->GetPosition();
+    XMStoreFloat3(&pos, XMLoadFloat3(&pos) + move);
 
     // 新しい位置を設定
     holder_->SetPosition(pos);
@@ -73,6 +110,7 @@ void Component_WASDInputMove::Update()
         count = 0;
 
     }
+
 }
 
 void Component_WASDInputMove::Release()
@@ -81,25 +119,25 @@ void Component_WASDInputMove::Release()
 
 void Component_WASDInputMove::DrawData()
 {
-	ImGui::Checkbox("Active", &isActive_);
-	ImGui::SliderFloat("Speed", &speed, 0.01f, 1.0f);
+    ImGui::Checkbox("Active", &isActive_);
+    ImGui::SliderFloat("Speed", &speed, 0.01f, 1.0f);
 }
 
 void Component_WASDInputMove::Save(json& _saveObj)
 {
-	_saveObj["isActive_"] = isActive_;
-	_saveObj["speed_"] = speed;
+    _saveObj["isActive_"] = isActive_;
+    _saveObj["speed_"] = speed;
 }
 
 void Component_WASDInputMove::Load(json& _loadObj)
 {
-	if(_loadObj.contains("isActive_"))isActive_ = _loadObj["isActive_"];
-    if(_loadObj.contains("speed_"))speed = _loadObj["speed_"];
+    if (_loadObj.contains("isActive_"))isActive_ = _loadObj["isActive_"];
+    if (_loadObj.contains("speed_"))speed = _loadObj["speed_"];
 }
 
 void Component_WASDInputMove::Move(XMVECTOR _dir, float _speed)
 {
-	XMFLOAT3 pos = holder_->GetPosition();
-	XMStoreFloat3(&pos, XMLoadFloat3(&pos) + _dir * _speed);
-	holder_->SetPosition(pos);
+    XMFLOAT3 pos = holder_->GetPosition();
+    XMStoreFloat3(&pos, XMLoadFloat3(&pos) + _dir * _speed);
+    holder_->SetPosition(pos);
 }

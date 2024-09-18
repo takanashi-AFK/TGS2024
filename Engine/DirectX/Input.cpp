@@ -266,13 +266,13 @@ namespace Input
 	}
 
 	//左トリガーの押し込み具合を取得
-	float GetPadTrrigerL(int padID)
+	float GetPadTriggerL(int padID)
 	{
 		return GetAnalogValue(controllerState_[padID].Gamepad.bLeftTrigger, 255, XINPUT_GAMEPAD_TRIGGER_THRESHOLD);
 	}
 
 	//右トリガーの押し込み具合を取得
-	float GetPadTrrigerR(int padID)
+	float GetPadTriggerR(int padID)
 	{
 		return GetAnalogValue(controllerState_[padID].Gamepad.bRightTrigger, 255, XINPUT_GAMEPAD_TRIGGER_THRESHOLD);
 	}

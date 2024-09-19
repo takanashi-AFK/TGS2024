@@ -12,12 +12,12 @@ struct FontData {
 class UIText : public UIObject
 {
 private:
-	Text* pText_;	// テキストインスタンス
-	string drawText_;	// 描画する文字列
-	int* intNum_;		// 描画する数字
+	Text* pText_;					// テキストインスタンス
+	string drawText_;				// 描画する文字列
+	int* intNum_;					// 描画する数字
 	
-	float size_;		// テキストサイズ
-	FontData fontData_;	// フォントデータ
+	float size_;					// テキストサイズ
+	FontData fontData_;				// フォントデータ
 
 	bool isOpenChangeFontWindow_;	// フォント変更ウィンドウを開くかどうか
 
@@ -69,8 +69,10 @@ getter :*/
 	float GetSize() const { return size_; }
 
 private:
+	/// <summary> フォント変更ウィンドウ </summary>
 	void ChangeFontWindow();
 
+	/// <summary> フォントファイルパスをエクスプローラから取得 </summary>
 	bool GetFontFilePathFromExplorer(string& _filePath) const;
 };
 

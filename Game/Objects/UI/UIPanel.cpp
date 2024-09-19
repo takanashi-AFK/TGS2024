@@ -88,7 +88,6 @@ void UIPanel::DeleteAllUIObject()
 	childList_.clear();
 }
 
-
 void UIPanel::SortUIObject()
 {
 	// レイヤー番号でソート

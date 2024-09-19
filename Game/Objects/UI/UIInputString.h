@@ -7,12 +7,12 @@ class Text;
 class UIInputString : public UIObject
 {
 private:
-	string currentInput;     // 入力された文字列
-	bool isComplete = false;      // 入力完了フラグ
-	std::map<int, char> keyToCharMap; // スキャンコードと対応する文字
+	string currentInput;				// 入力された文字列
+	bool isComplete = false;			// 入力完了フラグ
+	std::map<int, char> keyToCharMap;	// スキャンコードと対応する文字
 
-	Text* pText_;				// テキストオブジェクト
-	float size_;				// テキストのサイズ
+	Text* pText_;						// テキストオブジェクト
+	float size_;						// テキストのサイズ
 
 public:
 	/// <summary> コンストラクタ </summary>

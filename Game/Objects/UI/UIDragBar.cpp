@@ -21,6 +21,7 @@ void UIDragBar::Update()
 
 	// マウスの座標を取得
 	XMFLOAT2 mousePos = { Input::GetMousePosition().x,Input::GetMousePosition().y };
+	float barWidth = Image::GetSize(barImageHandle_).x;
 
 	// マウスの座標を画像の座標に変換
 	ConvertToImageCoordinates(mousePos);
@@ -30,10 +31,11 @@ void UIDragBar::Update()
 			// マウスの座標が画像の範囲内にあるか
 			if (IsMouseOver(mousePos)){
 
-				// 左右にぐりぐりできるように
-				cursorTransform_.position_.x = mousePos.x /2;
+				// マウスの座標をバーの範囲に制限
+				float barLeft = transform_.position_.x - (barWidth / 2.0f);
+				float barRight = transform_.position_.x + (barWidth / 2.0f);
 
-				//n以上だったらなんとか
+				cursorTransform_.position_.x = (std::max)(barLeft, (std::min)(mousePos.x, barRight));
 			}
 		}
 	}
@@ -75,6 +77,8 @@ void UIDragBar::Load(json& loadObj)
 
 void UIDragBar::DrawData()
 {
+	ImGui::Text("Value: %f", sliderValue);
+
 	if (ImGui::Button("SetBarIMG")) {
 		//現在のカレントディレクトリを覚えておく
 		char currentDir[256];
@@ -177,7 +181,6 @@ bool UIDragBar::IsMouseOver(XMFLOAT2 _mousePosition)
 	// 画像が読み込まれていない場合は処理を行わない
 	if (cursorImageHandle_ < 0)return false;
 
-
 	// 画面のサイズを取得
 	int scWidth = Direct3D::screenWidth_;
 	int scHeight = Direct3D::screenHeight_;
@@ -185,7 +188,6 @@ bool UIDragBar::IsMouseOver(XMFLOAT2 _mousePosition)
 	// マウスカーソルの座標を取得
 	XMFLOAT2 imageSize = Image::GetSize(cursorImageHandle_); {
 		// 画像のサイズを画面サイズに合わせる
-
 		imageSize.x = imageSize.x / scWidth;
 		imageSize.y = imageSize.y / scHeight;
 	}

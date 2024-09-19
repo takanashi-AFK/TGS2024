@@ -11,6 +11,7 @@ class UIDragBar : public UIObject
 	int cursorImageHandle_;
 
 	int value_;
+	float sliderValue;
 
 public:
 	UIDragBar(string _name, UIObject* parent, int _layerNum);

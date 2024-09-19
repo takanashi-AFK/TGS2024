@@ -97,7 +97,6 @@ predicate :*/
 	bool IsState(PlayerState _state) const { return nowState_ == _state; }
 private:
 	/// <summary> ËŒ‚•ûŒü‚ÌŒvZ </summary>
-	/// <returns> ËŒ‚•ûŒü </returns>
 	XMVECTOR CalcShootDirection();
 
 	/// <summary> ‘Ò‹@ó‘Ô‚Ìˆ— </summary>

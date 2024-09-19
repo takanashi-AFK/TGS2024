@@ -22,7 +22,7 @@ void Scene_End::Initialize()
 {
 	// UIパネル & レイアウトの読み込み
 	json loadData;
-	if(JsonReader::Load(END_SCENE_LAYOUT_JSON,loadData))UIPanel::GetInstance()->Load(loadData);
+	if(JsonReader::Load(END_SCENE_UI_LAYOUT_JSON,loadData))UIPanel::GetInstance()->Load(loadData);
 }
 
 void Scene_End::Update()

@@ -105,7 +105,7 @@ void Scene_Play::InitUIPanel()
 {
 	// UIパネル & レイアウトの読み込み
 	json loadData;
-	if (JsonReader::Load(PLAY_SCENE_LAYOUT_JSON, loadData)) UIPanel::GetInstance()->Load(loadData);
+	if (JsonReader::Load(PLAY_SCENE_UI_LAYOUT_JSON, loadData)) UIPanel::GetInstance()->Load(loadData);
 }
 
 void Scene_Play::InitStage()

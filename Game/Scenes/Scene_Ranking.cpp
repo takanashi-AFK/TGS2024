@@ -24,7 +24,7 @@ void Scene_Ranking::Initialize()
 	
 	// UILayout_jsonファイルを読み込む
 	json loadData;
-	if (JsonReader::Load(RANKING_SCENE_LAYOUT_JSON, loadData)) panel->Load(loadData);
+	if (JsonReader::Load(RANKING_SCENE_UI_LAYOUT_JSON, loadData)) panel->Load(loadData);
 	
 	// ランキングデータを読み込む
 	RankingManager::GetInstance().Load(RANKING_DATA_JSON);

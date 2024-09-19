@@ -7,15 +7,24 @@
 
 
 namespace {
-    const float DEF_SENSITIVITY = 15;
-    const float SENSITIVITY_MAX = 1;
-    const float SENSITIVITY_MIN = 0;
-    const float ROTATE_UPPER_LIMIT = -80.f;
-    const float ROTATE_LOWER_LIMIT = 80.f;
+    const float DEFAULT_SENSITIVITY = 15.f;     // 規定感度
+    const float DEFAULT_TARGET_HEIGHT = 4.f;    // 規定カメラの高さ
+    const float DEFAULT_TARGET_DISTANCE = 7.f;  // 規定カメラの距離
+    const float SENSITIVITY_MAX = 1.f;         // 感度の最大値
+    const float SENSITIVITY_MIN = 0.f;          // 感度の最小値
+    const float ROTATE_UPPER_LIMIT = -80.f;     // 回転の上限
+    const float ROTATE_LOWER_LIMIT = 80.f;      // 回転の下限
 }
 
 TPSCamera::TPSCamera(GameObject* parent)
-	:GameObject(parent, "TPSCamera"), angle_({ 0,0 }), sensitivity_(DEF_SENSITIVITY), pTarget_(nullptr), isActive_(true), targetHeight_(4.f), targetDistance_(7.f), prevAxis_({ 1,0,0,0 })
+	:GameObject(parent, "TPSCamera"), 
+    angle_(),                                   /* 回転角度 */
+    sensitivity_(DEFAULT_SENSITIVITY),          /* 感度 */
+    pTarget_(),                                 /* ターゲット */
+    isActive_(true),                            /* 有効無効 */
+    targetHeight_(DEFAULT_TARGET_HEIGHT),       /* カメラの高さ */
+    targetDistance_(DEFAULT_TARGET_DISTANCE),   /* カメラの距離 */
+    prevAxis_()                                 /* 前回の軸 */
 {
 }
 
@@ -25,109 +34,31 @@ void TPSCamera::Initialize()
 
 void TPSCamera::Update()
 {
-    if (isActive_ == false)return;
+    // カメラが有効でない場合は処理を行わない
+    if (IsActive() == false)return;
 
-    if (pTarget_ == nullptr) pTarget_ = FindObject(targetName_);
-    if (pTarget_ == nullptr) return;
+    // ターゲットが存在しない場合は探す
+    if (IsTarget() == false) pTarget_ = FindObject(targetName_);
+    
+    // 探してもターゲットが存在しない場合は処理を行わない
+    if (IsTarget() == false) return;
+
+    //debug: 回転感度の設定
+    //ImGui::SliderFloat("sensitivity", &sensitivity_, SENSITIVITY_MIN, SENSITIVITY_MAX);
+
+    // 回転角度を計算 ※マウスとパッドの移動量を元に行う
+    CalcRotateAngle(Input::GetMouseMove(), Input::GetPadStickR());
 
     // カメラの焦点・位置を格納する変数を用意
     XMFLOAT3 camTarget{};
     XMFLOAT3 camPosition{};
 
-    // 回転の中心を設定１⃣
-    XMFLOAT3 center = pTarget_->GetPosition();
-    center.y += targetHeight_;
-
-    // 回転のための情報を取得
-    {
-#ifdef _DEBUG
-        //ImGui::SliderFloat("sensitivity", &sensitivity_, SENSITIVITY_MIN, SENSITIVITY_MAX);
-#endif // _DEBUG
-        XMFLOAT3 mouseMove = Input::GetMouseMove();
-
-        XMFLOAT3 padMove = Input::GetPadStickR();
-
-
-        angle_.x += mouseMove.y * sensitivity_;
-        angle_.y += mouseMove.x * sensitivity_;
-
-
-        angle_.x -= padMove.y * sensitivity_;
-        angle_.y += padMove.x * sensitivity_;
-
-
-        // ｘ軸回転の上限・下限を設定し回転を制限
-        {
-            float upperlimit = ROTATE_UPPER_LIMIT;
-            if (angle_.x < upperlimit)angle_.x -= mouseMove.y * sensitivity_;
-            float lowerlimit = ROTATE_LOWER_LIMIT;
-            if (angle_.x > lowerlimit)angle_.x -= mouseMove.y * sensitivity_;
-        }
-    }
-    // ｙ軸の回転を行うs
-    {
-        // 回転行列を作成
-        XMMATRIX rotateY = XMMatrixRotationY(XMConvertToRadians(angle_.y));
-
-        // ↑の行列を元に回転
-        XMVECTOR center_To_camTarget = { 0,0,1,0 };
-        center_To_camTarget = XMVector3Transform(center_To_camTarget, rotateY);
-
-        // 長さを加える
-        float center_To_camTargetDistance = targetDistance_;
-        center_To_camTarget *= center_To_camTargetDistance;
-
-        // 原点からの位置を求めて、カメラの焦点を設定
-        XMVECTOR origin_To_camTarget = XMLoadFloat3(&center) + center_To_camTarget;
-        XMStoreFloat3(&camTarget, origin_To_camTarget);
-
-        // center_To_camTargetの逆ベクトルを用意
-        XMVECTOR center_To_camPosition = -center_To_camTarget;
-
-        // ちょっと回転させる
-        float littleAngle = -30.f;
-        center_To_camPosition = XMVector3Transform(center_To_camPosition, XMMatrixRotationY(XMConvertToRadians(littleAngle)));
-
-        // 原点からの位置を求めて、カメラの位置を設定
-        XMVECTOR origin_To_camPosition = XMLoadFloat3(&center) + center_To_camPosition;
-        XMStoreFloat3(&camPosition, origin_To_camPosition);
-    }
-
-    // ｘ軸の回転を行う
-    {
-        // 中心を移動
-        XMVECTOR newCenter = (XMLoadFloat3(&camPosition) + XMLoadFloat3(&camTarget)) * 0.5f;
-        XMFLOAT3 prevCenter = center;
-        XMStoreFloat3(&center, newCenter);
-
-        // 縦回転の軸を作成
-        XMVECTOR axis = XMLoadFloat3(&center) - XMLoadFloat3(&prevCenter);
-
-        if (XMVector3Equal(axis, XMVectorZero())) {
-            axis = prevAxis_;
-        }
-
-        //// 回転行列を作成
-        XMMATRIX rotateAxis = XMMatrixRotationAxis(axis, XMConvertToRadians(angle_.x));
-
-        //　焦点を設定 
-        XMVECTOR newCenter_To_camTarget = XMLoadFloat3(&camTarget) - XMLoadFloat3(&center);
-        newCenter_To_camTarget = XMVector3Transform(newCenter_To_camTarget, rotateAxis);
-        XMVECTOR origin_To_camTarget = XMLoadFloat3(&center) + newCenter_To_camTarget;
-        XMStoreFloat3(&camTarget, origin_To_camTarget);
-
-        // 位置を設定
-        XMVECTOR newCenter_To_camPosition = -newCenter_To_camTarget;
-        XMVECTOR origin_To_camPosition = XMLoadFloat3(&center) + newCenter_To_camPosition;
-        XMStoreFloat3(&camPosition, origin_To_camPosition);
-
-        if (!XMVector3Equal(axis, XMVectorZero()))
-            prevAxis_ = axis;
-    }
-
+    // カメラの位置と焦点を計算
+    CalcCameraPositionAndTarget(camPosition, camTarget);
+    
+    // カメラの位置と焦点を設定
     Camera::SetTarget(camTarget);
     Camera::SetPosition(camPosition);
-
 }
 
 void TPSCamera::Draw()
@@ -143,18 +74,14 @@ void TPSCamera::DrawData()
 	// カメラの有効無効 //////////////////////////////////////////////
 	ImGui::Checkbox("isActive", &isActive_);
 
-
 	// カメラの感度 //////////////////////////////////////////////
 	ImGui::DragFloat("sensitivity", &sensitivity_, 0.1f,SENSITIVITY_MIN, SENSITIVITY_MAX);
-
 
 	// カメラの高さ //////////////////////////////////////////////
 	ImGui::DragFloat("targetHeight", &targetHeight_,0.1f);
 
-
 	// カメラの距離 //////////////////////////////////////////////
 	ImGui::DragFloat("targetDistance", &targetDistance_, 0.1f);
-
 
 	// 対象の選択 //////////////////////////////////////////////
     std::vector<string> objNames;
@@ -164,7 +91,6 @@ void TPSCamera::DrawData()
         objNames.push_back(obj->GetObjectName());
 
     static int select = 0;
-
     if (select >= objNames.size())return;
 
     if (ImGui::BeginCombo("target_", objNames[select].c_str())) {
@@ -177,6 +103,86 @@ void TPSCamera::DrawData()
     }
 
     targetName_ = objNames[select];
+}
+
+void TPSCamera::CalcRotateAngle(XMFLOAT3 _mouseMove, XMFLOAT3 _padMove)
+{
+    // マウスの移動量を元に回転角度を加算
+    angle_.x += _mouseMove.y * sensitivity_;
+    angle_.y += _mouseMove.x * sensitivity_;
+
+    // パッドの移動量を元に回転角度を加算
+    angle_.x -= _padMove.y * (sensitivity_ * 10);
+    angle_.y += _padMove.x * (sensitivity_ * 10);
+
+    // ｘ軸回転の上限・下限を設定し回転を制限
+	if (angle_.x < ROTATE_UPPER_LIMIT)angle_.x -= _mouseMove.y * sensitivity_;
+	if (angle_.x > ROTATE_LOWER_LIMIT)angle_.x -= _mouseMove.y * sensitivity_;
+}
+
+void TPSCamera::CalcCameraPositionAndTarget(XMFLOAT3& _cameraPosition, XMFLOAT3& _camaraTarget)
+{
+    // 回転の中心を設定１⃣
+    XMFLOAT3 center = pTarget_->GetPosition();
+    center.y += targetHeight_;
+
+    // ｙ軸の回転を行うs
+    {
+        // 回転行列を作成
+        XMMATRIX rotateY = XMMatrixRotationY(XMConvertToRadians(angle_.y));
+
+        // ↑の行列を元に回転
+        XMVECTOR center_To_camTarget = { 0,0,1,0 };
+        center_To_camTarget = XMVector3Transform(center_To_camTarget, rotateY);
+
+        // 長さを加える
+        float center_To_camTargetDistance = targetDistance_;
+        center_To_camTarget *= center_To_camTargetDistance;
+
+        // 原点からの位置を求めて、カメラの焦点を設定
+        XMVECTOR origin_To_camTarget = XMLoadFloat3(&center) + center_To_camTarget;
+        XMStoreFloat3(&_camaraTarget, origin_To_camTarget);
+
+        // center_To_camTargetの逆ベクトルを用意
+        XMVECTOR center_To_camPosition = -center_To_camTarget;
+
+        // ちょっと回転させる
+        float littleAngle = -30.f;
+        center_To_camPosition = XMVector3Transform(center_To_camPosition, XMMatrixRotationY(XMConvertToRadians(littleAngle)));
+
+        // 原点からの位置を求めて、カメラの位置を設定
+        XMVECTOR origin_To_camPosition = XMLoadFloat3(&center) + center_To_camPosition;
+        XMStoreFloat3(&_cameraPosition, origin_To_camPosition);
+    }
+
+    // ｘ軸の回転を行う
+    {
+        // 中心を移動
+        XMVECTOR newCenter = (XMLoadFloat3(&_cameraPosition) + XMLoadFloat3(&_camaraTarget)) * 0.5f;
+        XMFLOAT3 prevCenter = center;
+        XMStoreFloat3(&center, newCenter);
+
+        // 縦回転の軸を作成
+        XMVECTOR axis = XMLoadFloat3(&center) - XMLoadFloat3(&prevCenter);
+
+        if (XMVector3Equal(axis, XMVectorZero())) axis = prevAxis_;
+        
+        //// 回転行列を作成
+        XMMATRIX rotateAxis = XMMatrixRotationAxis(axis, XMConvertToRadians(angle_.x));
+
+        //　焦点を設定 
+        XMVECTOR newCenter_To_camTarget = XMLoadFloat3(&_camaraTarget) - XMLoadFloat3(&center);
+        newCenter_To_camTarget = XMVector3Transform(newCenter_To_camTarget, rotateAxis);
+        XMVECTOR origin_To_camTarget = XMLoadFloat3(&center) + newCenter_To_camTarget;
+        XMStoreFloat3(&_camaraTarget, origin_To_camTarget);
+
+        // 位置を設定
+        XMVECTOR newCenter_To_camPosition = -newCenter_To_camTarget;
+        XMVECTOR origin_To_camPosition = XMLoadFloat3(&center) + newCenter_To_camPosition;
+        XMStoreFloat3(&_cameraPosition, origin_To_camPosition);
+
+        if (!XMVector3Equal(axis, XMVectorZero()))prevAxis_ = axis;
+    }
 }
 
 void TPSCamera::Save(json& saveObj)

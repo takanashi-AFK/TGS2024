@@ -38,7 +38,7 @@ void Scene_Result::Initialize()
 	UIPanel* uiPanel = UIPanel::GetInstance();
 
 	// UIパネル情報を読み込む
-	if (JsonReader::Load(RESULT_SCENE_LAYOUT_JSON, loadData)) uiPanel->Load(loadData);
+	if (JsonReader::Load(RESULT_SCENE_UI_LAYOUT_JSON, loadData)) uiPanel->Load(loadData);
 
 	// UIパネルの情報を取得・設定
 	{
@@ -67,7 +67,7 @@ void Scene_Result::Initialize()
 
 	// ステージを作成 & 読み込み
 	Stage* pStage = Instantiate<Stage>(this);
-	if(JsonReader::Load(RESULT_SCENE_STAGE_LAYOUT_JSON, loadData))pStage->Load(loadData);
+	if(JsonReader::Load(STAGE_BACKGROUND_JSON, loadData))pStage->Load(loadData);
 }
 
 void Scene_Result::Update()

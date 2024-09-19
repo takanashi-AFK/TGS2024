@@ -171,6 +171,11 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 					OptionMenu::isOptionMenu = !OptionMenu::isOptionMenu;
 				}
 
+				if (Controller::IsControllerConnected(0)) {
+					Controller::g_isConnectController = true;
+				}
+
+
 				//ImGuiÇÃçXêV
 				ImGui_ImplDX11_NewFrame();
 				ImGui_ImplWin32_NewFrame();
@@ -228,7 +233,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 				else {
 					OptionMenu::Draw(pRootObject);
 				}
-			
+				
+				
 
 				ImGui::End();
 

@@ -49,7 +49,11 @@ namespace FileManager {
 	std::string GetFileNameWithoutExtension(const std::string& path);
 }
 
+namespace Controller {
+extern bool g_isConnectController;	// コントローラーが接続されているかどうか
+bool IsControllerConnected(int controllerIndex);
 
+}
 
 /// 臨時のグローバル変数 fix: 本来はここに置くべきではない 
 extern string g_selectedStage;	// 選択されたステージ

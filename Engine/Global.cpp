@@ -1,4 +1,6 @@
 #include "Global.h"
+#include <Xinput.h>
+#pragma comment(lib, "Xinput.lib")
 
 void FileManager::ReplaceBackslashes(string& str)
 {
@@ -62,3 +64,20 @@ valeable :*/
 }
 
 string g_selectedStage = "";
+
+namespace Controller{
+
+	bool g_isConnectController = false;
+	
+	bool Controller::IsControllerConnected(int controllerIndex)
+	{
+		XINPUT_STATE state;
+		ZeroMemory(&state, sizeof(XINPUT_STATE));
+
+		// コントローラの状態を取得
+		DWORD result = XInputGetState(controllerIndex, &state);
+
+		// 結果がERROR_SUCCESSであれば、コントローラは接続されている
+		return (result == ERROR_SUCCESS);
+	}
+}

@@ -2,7 +2,9 @@
 #include "../../../Engine/ResourceManager/Image.h"
 #include "../../../Engine/DirectX/Input.h"
 #include "../../../Engine/ImGui/imgui.h"
-\
+
+
+
 UIDragBar::UIDragBar(string _name, UIObject* parent, int _layerNum)
 	: UIObject(_name, UIType::UI_DRAGBAR, parent, _layerNum), barImageHandle_(-1), barImageFilePath_(), cursorImageHandle_(-1), cursorImageFilePath_()
 {

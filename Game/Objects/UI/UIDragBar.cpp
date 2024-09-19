@@ -26,19 +26,27 @@ void UIDragBar::Update()
 	// マウスの座標を画像の座標に変換
 	ConvertToImageCoordinates(mousePos);
 
-	if (IsMouseOver(mousePos)){
-		if (Input::IsMouseButton(0)){
+	if (IsMouseOver(mousePos)) {
+		if (Input::IsMouseButton(0)) {
 			// マウスの座標が画像の範囲内にあるか
-			if (IsMouseOver(mousePos)){
+			if (IsMouseOver(mousePos)) {
 
 				// マウスの座標をバーの範囲に制限
 				float barLeft = transform_.position_.x - (barWidth / 2.0f);
 				float barRight = transform_.position_.x + (barWidth / 2.0f);
 
+				if (barLeft >= 0.f || barRight <= 1.f) {
+					barRight = barLeft+barRight;
+					barLeft = barLeft- barLeft;
+				}
+
 				cursorTransform_.position_.x = (std::max)(barLeft, (std::min)(mousePos.x, barRight));
 			}
 		}
 	}
+	// 1足して2で割る
+	// 最低値を0にする(0.25~0.75の場合: 最低値-最低値 最高値+最低値)で0～1にclamp
+	sliderValue = ((cursorTransform_.position_.x + 1) / 2);
 }
 
 void UIDragBar::Draw()

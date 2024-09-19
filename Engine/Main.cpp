@@ -225,6 +225,9 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 					Transition::Draw();
 
 				}
+				else {
+					OptionMenu::Draw(pRootObject);
+				}
 			
 
 				ImGui::End();

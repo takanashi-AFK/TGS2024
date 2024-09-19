@@ -74,5 +74,8 @@ public:
 	/// </summary>
 	/// <returns>‰ñ“]Šp“x</returns>
 	XMFLOAT2 GetAngle() { return angle_; }
+
+	void SetSensitivity(float sensitivity) { sensitivity_ = sensitivity; }
+	float GetSensitivity() {return sensitivity_; }
 };
 

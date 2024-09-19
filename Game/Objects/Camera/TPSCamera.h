@@ -5,77 +5,96 @@
 class TPSCamera : public GameObject
 {
 private:
-	XMFLOAT2 angle_;
-	float sensitivity_;
-	GameObject* pTarget_;
-	string targetName_;
-	bool isActive_;
-	float targetHeight_;
-	float targetDistance_;
-	XMVECTOR prevAxis_;
+	XMFLOAT2 angle_;		// 回転角度
+	float sensitivity_;		// 感度
+	GameObject* pTarget_;	// ターゲット
+	string targetName_;		// ターゲット名
+	bool isActive_;			// 有効無効
+	float targetHeight_;	// カメラの高さ
+	float targetDistance_;	// カメラの距離
+	XMVECTOR prevAxis_;		// 前回の軸
+
 public:
-	/// <summary>
-	/// コンストラクタ
-	/// </summary>
-	/// <param name="parent">親オブジェクト</param>
+	/// <summary> コンストラクタ </summary>
 	TPSCamera(GameObject* parent);
 
-	/// <summary>
-	/// 初期化
-	/// </summary>
+	/// <summary> 初期化 </summary>
 	void Initialize() override;
-	
-	/// <summary>
-	/// 更新
-	/// </summary>
+
+	/// <summary> 更新 </summary>
 	void Update() override;
-	
-	/// <summary>
-	/// 描画
-	/// </summary>
+
+	/// <summary> 描画 </summary>
 	void Draw() override;
-	
-	/// <summary>
-	/// 解放
-	/// </summary>
+
+	/// <summary> 解放 </summary>
 	void Release() override;
 
-	/// <summary>
-	/// ImGui表示
-	/// </summary>
-	void DrawData();
-
-	/// <summary>
-	/// 保存
-	/// </summary>
-	/// <param name="saveObj">保存オブジェクト</param>
+	/// <summary>　保存 </summary>
 	void Save(json& saveObj);
 
-	/// <summary>
-	/// 読込
-	/// </summary>
-	/// <param name="loadObj">読込オブジェクト</param>
+	/// <summary>　読込 </summary>
 	void Load(json& loadObj);
 
-	/// <summary>
-	/// 実行状態の設定
-	/// </summary>
-	/// <param name="isActive"></param>
-	void SetActive(bool isActive) { isActive_ = isActive; }
-	
-	/// <summary>
-	/// 対象オブジェクトの設定
-	/// </summary>
-	/// <param name="target">対象オブジェクト</param>
-	void SetTarget(GameObject* target) { pTarget_ = target; }
-	
-	/// <summary>
-	/// 回転角度の取得
-	/// </summary>
-	/// <returns>回転角度</returns>
-	XMFLOAT2 GetAngle() { return angle_; }
+	/// <summary> ImGui表示 </summary>
+	void DrawData();
 
+	/*
+	setter :*/
+	/// <summary> カメラの有効無効の設定 </summary>
+	void SetActive(bool isActive) { isActive_ = isActive; }
+
+	/// <summary> カメラの感度の設定 </summary>
 	void SetSensitivity(float sensitivity) { sensitivity_ = sensitivity; }
-	float GetSensitivity() {return sensitivity_; }
+
+	/// <summary> カメラの高さの設定 </summary>
+	void SetTargetHeight(float targetHeight) { targetHeight_ = targetHeight; }
+
+	/// <summary> カメラの距離の設定 </summary>
+	void SetTargetDistance(float targetDistance) { targetDistance_ = targetDistance; }
+
+	/// <summary> ターゲットの設定 </summary>
+	void SetTarget(GameObject* target) { pTarget_ = target; }
+
+	/// <summary> ターゲット名の設定 </summary>
+	void SetTargetName(string targetName) { targetName_ = targetName; }
+
+	/// <summary> 回転角度の設定 </summary>
+	void SetAngle(XMFLOAT2 angle) { angle_ = angle; }
+
+	/*
+	getter :*/
+	/// <summary> カメラの感度の取得 </summary>
+	float GetSensitivity() const { return sensitivity_; }
+
+	/// <summary> カメラの高さの取得 </summary>
+	float GetTargetHeight() const { return targetHeight_; }
+
+	/// <summary> カメラの距離の取得 </summary>
+	float GetTargetDistance() const { return targetDistance_; }
+
+	/// <summary> ターゲットの取得 </summary>
+	GameObject* GetTarget() const { return pTarget_; }
+
+	/// <summary> ターゲット名の取得 </summary>
+	string GetTargetName() const { return targetName_; }
+
+	/// <summary> 回転角度の取得 </summary>
+	XMFLOAT2 GetAngle() const { return angle_; }
+
+	/*
+	predicate :*/
+	/// <summary> カメラが有効かどうか </summary>
+	bool IsActive() const { return isActive_; }
+
+	/// <summary> ターゲットが設定されているかどうか </summary>
+	bool IsTarget() const { return pTarget_ != nullptr; }
+
+private:
+	/// <summary> 回転角度の計算 </summary>
+	void CalcRotateAngle(XMFLOAT3 _mouseMove, XMFLOAT3 _padMove);
+
+	/// <summary> カメラの位置と注視点の計算 </summary>
+	void CalcCameraPositionAndTarget(XMFLOAT3& _cameraPosition, XMFLOAT3& _camaraTarget);
 };
 

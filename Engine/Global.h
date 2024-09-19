@@ -19,7 +19,7 @@
 // オペレーターのオーバーロード
 XMFLOAT3 operator+(XMFLOAT3& a, const XMFLOAT3& b);
 XMFLOAT3 operator-(XMFLOAT3& a, const XMFLOAT3& b);
-
+bool operator == (XMFLOAT3& a, const XMFLOAT3& b);
 // ＝＝ 定数 ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝ //
 
 const float FPS = 60.0f;	// フレームレート

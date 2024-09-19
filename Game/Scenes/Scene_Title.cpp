@@ -23,10 +23,13 @@ void Scene_Title::Initialize()
 	if (JsonReader::Load(TITLE_SCENE_UI_LAYOUT_JSON, loadData)) UIPanel::GetInstance()->Load(loadData);
 
 	if (Input::IsPadConnected(0))ShowCursor(false);
+	else ShowCursor(true);
+
 }
 
 void Scene_Title::Update()
 {
+
 	// シーン切替処理
 	{
 		// ランキングシーンへの遷移

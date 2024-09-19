@@ -106,8 +106,9 @@ namespace Input
 	//振動させる
 	void SetPadVibration(int l, int r, int padID = 0);
 
-
-
+	//コントローラーが接続されているか調べる
+	bool IsPadConnected(int padID);
+	
 
 	//開放
 	void Release();

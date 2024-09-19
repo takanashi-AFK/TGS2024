@@ -9,6 +9,7 @@
 #include "../Constants.h"
 
 #include "../../Engine/ImGui/imgui.h"
+#include "../../Engine/DirectX/Input.h"
 
 using namespace Constants;
 
@@ -72,7 +73,7 @@ void Scene_Ranking::Update()
 {
 	UIButton* returnButton = (UIButton*)UIPanel::GetInstance()->GetUIObject(RANKING_SCENE_RETURN_BUTTON_NAME);
 	// ボタンが押されたらシーンを切り替える
-	if (returnButton != nullptr) if (returnButton->OnClick() == true) {
+	if (returnButton != nullptr) if (returnButton->OnClick() == true || Input::IsPadButtonDown(XINPUT_GAMEPAD_B)) {
 
 		// シーンを切り替える
 		SceneManager* sceneManager = (SceneManager*)FindObject("SceneManager");

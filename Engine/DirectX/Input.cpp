@@ -287,4 +287,16 @@ namespace Input
 		XInputSetState(padID, &vibration);
 	}
 
+	bool IsPadConnected(int padID)
+	{
+		XINPUT_STATE state;
+		ZeroMemory(&state, sizeof(XINPUT_STATE));
+
+		// コントローラの状態を取得
+		DWORD result = XInputGetState(padID, &state);
+
+		// 結果がERROR_SUCCESSであれば、コントローラは接続されている
+		return (result == ERROR_SUCCESS);
+	}
+
 }

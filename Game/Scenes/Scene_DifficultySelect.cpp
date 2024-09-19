@@ -4,6 +4,7 @@
 #include "../Objects/UI/UIButton.h"
 #include "../../Engine/Global.h"
 #include "../../Engine/SceneManager.h"
+#include "../../Engine/DirectX/Input.h"
 
 using namespace Constants;
 
@@ -26,16 +27,16 @@ void Scene_DifficultySelect::Update()
 	// 難易度を選択
 	{
 		UIButton* easyButton = (UIButton*)UIPanel::GetInstance()->GetUIObject(DIFFICULTY_SELECT_SCENE_EASY_BUTTON_NAME);
-		if (easyButton->OnClick() == true) { g_selectedStage = STAGE_EASY_JSON; isClicked = true; }
+		if (easyButton->OnClick() == true || Input::IsPadButtonDown(XINPUT_GAMEPAD_A)) { g_selectedStage = STAGE_EASY_JSON; isClicked = true; }
 
 		UIButton* normalButton = (UIButton*)UIPanel::GetInstance()->GetUIObject(DIFFICULTY_SELECT_SCENE_NORMAL_BUTTON_NAME);
-		if (normalButton->OnClick() == true) { g_selectedStage = STAGE_NORMAL_JSON; isClicked = true; }
+		if (normalButton->OnClick() == true || Input::IsPadButtonDown(XINPUT_GAMEPAD_X)) { g_selectedStage = STAGE_NORMAL_JSON; isClicked = true; }
 
 		UIButton* hardButton = (UIButton*)UIPanel::GetInstance()->GetUIObject(DIFFICULTY_SELECT_SCENE_HARD_BUTTON_NAME);
-		if (hardButton->OnClick() == true) { g_selectedStage = STAGE_HARD_JSON; isClicked = true; }
+		if (hardButton->OnClick() == true || Input::IsPadButtonDown(XINPUT_GAMEPAD_Y)) { g_selectedStage = STAGE_HARD_JSON; isClicked = true; }
 
 		UIButton* expertButton = (UIButton*)UIPanel::GetInstance()->GetUIObject(DIFFICULTY_SELECT_SCENE_EXPERT_BUTTON_NAME);
-		if (expertButton->OnClick() == true) { g_selectedStage = STAGE_EXPERT_JSON; isClicked = true; }
+		if (expertButton->OnClick() == true || Input::IsPadButtonDown(XINPUT_GAMEPAD_B)) { g_selectedStage = STAGE_EXPERT_JSON; isClicked = true; }
 	}
 
 	// シーン切替処理

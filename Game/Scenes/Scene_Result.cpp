@@ -11,6 +11,7 @@
 #include "../Objects/UI/UIPanel.h"
 #include "../Objects/UI/UIText.h"
 #include "../Otheres/RankingManager.h"
+#include "../../Engine/DirectX/Input.h"
 
 using namespace Constants;
 
@@ -26,7 +27,8 @@ Scene_Result::Scene_Result(GameObject* parent_)
 void Scene_Result::Initialize()
 {
 	// カーソルの表示
-	ShowCursor(true);
+	if(Input::IsPadConnected(0))ShowCursor(false);
+	else ShowCursor(true);
 
 	// jsonファイル読込用オブジェクトを用意
 	json loadData;
@@ -78,7 +80,7 @@ void Scene_Result::Update()
 		UIButton* button = (UIButton*)UIPanel::GetInstance()->GetUIObject(RESULT_SCENE_NEXT_BUTTON_NAME);
 
 		// ボタンが押されたら
-		if (button->OnClick()) {
+		if (button->OnClick() || Input::IsPadButtonDown(XINPUT_GAMEPAD_A)) {
 			SceneManager* sceneManager = (SceneManager*)FindObject("SceneManager");
 			sceneManager->ChangeScene(SCENE_ID_END, TID_BLACKOUT);
 		}

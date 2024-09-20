@@ -21,10 +21,6 @@ void Scene_Title::Initialize()
 	// UIパネル & レイアウトの読み込み
 	json loadData;
 	if (JsonReader::Load(TITLE_SCENE_UI_LAYOUT_JSON, loadData)) UIPanel::GetInstance()->Load(loadData);
-
-	if (Input::IsPadConnected(0))ShowCursor(false);
-	else ShowCursor(true);
-
 }
 
 void Scene_Title::Update()

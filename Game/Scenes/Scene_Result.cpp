@@ -26,9 +26,7 @@ Scene_Result::Scene_Result(GameObject* parent_)
 
 void Scene_Result::Initialize()
 {
-	// カーソルの表示
-	if(Input::IsPadConnected(0))ShowCursor(false);
-	else ShowCursor(true);
+	ShowCursor(true);
 
 	// jsonファイル読込用オブジェクトを用意
 	json loadData;

@@ -1,5 +1,6 @@
 {
   "00_Cactan": {
+    "isColliding_": true,
     "fallSpeed_": 1.0,
     "isCollisionWall_": false,
     "isOnGround_": false,
@@ -30,7 +31,7 @@
             "name_": "ShootAttack",
             "power_": 25,
             "shootingDirection_": [ 1.0, 0.0, 0.0 ],
-            "shootingSpeed_": 0.15000001788139343,
+            "shootingSpeed_": 0.15000002086162567,
             "type_": 17
           },
           "TackleMove": {
@@ -71,6 +72,7 @@
     "shaderType_": 4
   },
   "00_player": {
+    "isColliding_": true,
     "fallSpeed_": 1.0,
     "isCollisionWall_": true,
     "isOnGround_": true,
@@ -104,7 +106,7 @@
             "bulletLifeTime_": 1.0,
             "name_": "ShootAttack",
             "power_": 50,
-            "shootingDirection_": [ 0.0, -50.0, 40.0 ],
+            "shootingDirection_": [ 22.0, -24.0, 40.0 ],
             "shootingSpeed_": 0.20000000298023224,
             "type_": 17
           },
@@ -124,12 +126,13 @@
       }
     },
     "onGroundOffset_": [ 0.0, 1.7000000476837158, 0.0 ],
-    "position_": [ -0.16649441421031952, -0.4500000476837158, -12.141969680786133 ],
-    "rotate_": [ 0.0, 162.00001525878906, 0.0 ],
+    "position_": [ -0.16649441421031952, 0.04999995231628418, -12.141969680786133 ],
+    "rotate_": [ 0.0, 0.0, 0.0 ],
     "scale_": [ 0.5, 0.5, 0.5 ],
     "shaderType_": 4
   },
   "cliff_cornerInnerTop_rock01": {
+    "isColliding_": true,
     "fallSpeed_": 1.0,
     "isCollisionWall_": false,
     "isOnGround_": false,
@@ -141,6 +144,7 @@
     "shaderType_": 0
   },
   "cliff_cornerInnerTop_rock02": {
+    "isColliding_": true,
     "fallSpeed_": 1.0,
     "isCollisionWall_": false,
     "isOnGround_": false,
@@ -152,6 +156,7 @@
     "shaderType_": 0
   },
   "cliff_cornerInnerTop_rock03": {
+    "isColliding_": true,
     "fallSpeed_": 1.0,
     "isCollisionWall_": false,
     "isOnGround_": false,
@@ -163,6 +168,7 @@
     "shaderType_": 0
   },
   "cliff_cornerInnerTop_rock04": {
+    "isColliding_": true,
     "fallSpeed_": 1.0,
     "isCollisionWall_": false,
     "isOnGround_": false,
@@ -174,6 +180,7 @@
     "shaderType_": 0
   },
   "cliff_cornerInnerTop_rock05": {
+    "isColliding_": true,
     "fallSpeed_": 1.0,
     "isCollisionWall_": false,
     "isOnGround_": false,
@@ -185,6 +192,7 @@
     "shaderType_": 0
   },
   "cliff_cornerInnerTop_rock06": {
+    "isColliding_": true,
     "fallSpeed_": 1.0,
     "isCollisionWall_": false,
     "isOnGround_": false,
@@ -196,6 +204,7 @@
     "shaderType_": 0
   },
   "cliff_cornerInnerTop_rock07": {
+    "isColliding_": true,
     "fallSpeed_": 1.0,
     "isCollisionWall_": false,
     "isOnGround_": false,
@@ -207,6 +216,7 @@
     "shaderType_": 0
   },
   "cliff_cornerInnerTop_rock08": {
+    "isColliding_": true,
     "fallSpeed_": 1.0,
     "isCollisionWall_": false,
     "isOnGround_": false,
@@ -218,6 +228,7 @@
     "shaderType_": 0
   },
   "cliff_cornerTop_rock01": {
+    "isColliding_": true,
     "fallSpeed_": 1.0,
     "isCollisionWall_": false,
     "isOnGround_": false,
@@ -229,6 +240,7 @@
     "shaderType_": 0
   },
   "cliff_cornerTop_rock02": {
+    "isColliding_": true,
     "fallSpeed_": 1.0,
     "isCollisionWall_": false,
     "isOnGround_": false,
@@ -240,6 +252,7 @@
     "shaderType_": 0
   },
   "cliff_cornerTop_rock03": {
+    "isColliding_": true,
     "fallSpeed_": 1.0,
     "isCollisionWall_": false,
     "isOnGround_": false,
@@ -251,6 +264,7 @@
     "shaderType_": 0
   },
   "cliff_cornerTop_rock04": {
+    "isColliding_": true,
     "fallSpeed_": 1.0,
     "isCollisionWall_": false,
     "isOnGround_": false,
@@ -262,6 +276,7 @@
     "shaderType_": 0
   },
   "cliff_top_rock01": {
+    "isColliding_": true,
     "fallSpeed_": 1.0,
     "isCollisionWall_": false,
     "isOnGround_": false,
@@ -273,6 +288,7 @@
     "shaderType_": 0
   },
   "cliff_top_rock02": {
+    "isColliding_": true,
     "fallSpeed_": 1.0,
     "isCollisionWall_": false,
     "isOnGround_": false,
@@ -284,6 +300,7 @@
     "shaderType_": 0
   },
   "cliff_top_rock03": {
+    "isColliding_": true,
     "fallSpeed_": 1.0,
     "isCollisionWall_": false,
     "isOnGround_": false,
@@ -295,6 +312,7 @@
     "shaderType_": 0
   },
   "cliff_top_rock04": {
+    "isColliding_": true,
     "fallSpeed_": 1.0,
     "isCollisionWall_": false,
     "isOnGround_": false,
@@ -306,6 +324,7 @@
     "shaderType_": 0
   },
   "cliff_top_rock05": {
+    "isColliding_": true,
     "fallSpeed_": 1.0,
     "isCollisionWall_": false,
     "isOnGround_": false,
@@ -317,6 +336,7 @@
     "shaderType_": 0
   },
   "cliff_top_rock06": {
+    "isColliding_": true,
     "fallSpeed_": 1.0,
     "isCollisionWall_": false,
     "isOnGround_": false,
@@ -328,6 +348,7 @@
     "shaderType_": 0
   },
   "cliff_top_rock07": {
+    "isColliding_": true,
     "fallSpeed_": 1.0,
     "isCollisionWall_": false,
     "isOnGround_": false,
@@ -339,6 +360,7 @@
     "shaderType_": 0
   },
   "cliff_top_rock08": {
+    "isColliding_": true,
     "fallSpeed_": 1.0,
     "isCollisionWall_": false,
     "isOnGround_": false,
@@ -350,6 +372,7 @@
     "shaderType_": 0
   },
   "cliff_top_rock09": {
+    "isColliding_": true,
     "fallSpeed_": 1.0,
     "isCollisionWall_": false,
     "isOnGround_": false,
@@ -361,6 +384,7 @@
     "shaderType_": 0
   },
   "cliff_top_rock10": {
+    "isColliding_": true,
     "fallSpeed_": 1.0,
     "isCollisionWall_": false,
     "isOnGround_": false,
@@ -372,6 +396,7 @@
     "shaderType_": 0
   },
   "cliff_waterfallTop_rock01": {
+    "isColliding_": true,
     "fallSpeed_": 1.0,
     "isCollisionWall_": false,
     "isOnGround_": false,
@@ -383,6 +408,7 @@
     "shaderType_": 0
   },
   "cliff_waterfallTop_rock02": {
+    "isColliding_": true,
     "fallSpeed_": 1.0,
     "isCollisionWall_": false,
     "isOnGround_": false,
@@ -394,6 +420,7 @@
     "shaderType_": 0
   },
   "ground_grass00": {
+    "isColliding_": true,
     "fallSpeed_": 1.0,
     "isCollisionWall_": false,
     "isOnGround_": false,
@@ -405,6 +432,7 @@
     "shaderType_": 0
   },
   "ground_grass01": {
+    "isColliding_": true,
     "fallSpeed_": 1.0,
     "isCollisionWall_": false,
     "isOnGround_": false,
@@ -416,6 +444,7 @@
     "shaderType_": 0
   },
   "ground_grass02": {
+    "isColliding_": true,
     "fallSpeed_": 1.0,
     "isCollisionWall_": false,
     "isOnGround_": false,
@@ -427,6 +456,7 @@
     "shaderType_": 0
   },
   "ground_grass03": {
+    "isColliding_": true,
     "fallSpeed_": 1.0,
     "isCollisionWall_": false,
     "isOnGround_": false,
@@ -438,6 +468,7 @@
     "shaderType_": 0
   },
   "ground_grass04": {
+    "isColliding_": true,
     "fallSpeed_": 1.0,
     "isCollisionWall_": false,
     "isOnGround_": false,
@@ -449,6 +480,7 @@
     "shaderType_": 0
   },
   "ground_grass05": {
+    "isColliding_": true,
     "fallSpeed_": 1.0,
     "isCollisionWall_": false,
     "isOnGround_": false,
@@ -460,6 +492,7 @@
     "shaderType_": 0
   },
   "ground_grass06": {
+    "isColliding_": true,
     "fallSpeed_": 1.0,
     "isCollisionWall_": false,
     "isOnGround_": false,
@@ -471,6 +504,7 @@
     "shaderType_": 0
   },
   "ground_grass07": {
+    "isColliding_": true,
     "fallSpeed_": 1.0,
     "isCollisionWall_": false,
     "isOnGround_": false,
@@ -482,6 +516,7 @@
     "shaderType_": 0
   },
   "ground_grass08": {
+    "isColliding_": true,
     "fallSpeed_": 1.0,
     "isCollisionWall_": false,
     "isOnGround_": false,
@@ -493,6 +528,7 @@
     "shaderType_": 0
   },
   "ground_grass09": {
+    "isColliding_": true,
     "fallSpeed_": 1.0,
     "isCollisionWall_": false,
     "isOnGround_": false,
@@ -504,6 +540,7 @@
     "shaderType_": 0
   },
   "ground_grass10": {
+    "isColliding_": true,
     "fallSpeed_": 1.0,
     "isCollisionWall_": false,
     "isOnGround_": false,
@@ -515,6 +552,7 @@
     "shaderType_": 0
   },
   "ground_grass11": {
+    "isColliding_": true,
     "fallSpeed_": 1.0,
     "isCollisionWall_": false,
     "isOnGround_": false,
@@ -526,6 +564,7 @@
     "shaderType_": 0
   },
   "ground_grass12": {
+    "isColliding_": true,
     "fallSpeed_": 1.0,
     "isCollisionWall_": false,
     "isOnGround_": false,
@@ -537,6 +576,7 @@
     "shaderType_": 0
   },
   "ground_grass13": {
+    "isColliding_": true,
     "fallSpeed_": 1.0,
     "isCollisionWall_": false,
     "isOnGround_": false,
@@ -548,6 +588,7 @@
     "shaderType_": 0
   },
   "ground_grass14": {
+    "isColliding_": true,
     "fallSpeed_": 1.0,
     "isCollisionWall_": false,
     "isOnGround_": false,
@@ -559,6 +600,7 @@
     "shaderType_": 0
   },
   "ground_grass15": {
+    "isColliding_": true,
     "fallSpeed_": 1.0,
     "isCollisionWall_": false,
     "isOnGround_": false,
@@ -570,6 +612,7 @@
     "shaderType_": 0
   },
   "ground_grass16": {
+    "isColliding_": true,
     "fallSpeed_": 1.0,
     "isCollisionWall_": false,
     "isOnGround_": false,
@@ -581,6 +624,7 @@
     "shaderType_": 0
   },
   "ground_grass17": {
+    "isColliding_": true,
     "fallSpeed_": 1.0,
     "isCollisionWall_": false,
     "isOnGround_": false,
@@ -592,6 +636,7 @@
     "shaderType_": 0
   },
   "ground_grass18": {
+    "isColliding_": true,
     "fallSpeed_": 1.0,
     "isCollisionWall_": false,
     "isOnGround_": false,
@@ -603,6 +648,7 @@
     "shaderType_": 0
   },
   "ground_grass19": {
+    "isColliding_": true,
     "fallSpeed_": 1.0,
     "isCollisionWall_": false,
     "isOnGround_": false,
@@ -614,6 +660,7 @@
     "shaderType_": 0
   },
   "ground_grass20": {
+    "isColliding_": true,
     "fallSpeed_": 1.0,
     "isCollisionWall_": false,
     "isOnGround_": false,
@@ -625,6 +672,7 @@
     "shaderType_": 0
   },
   "ground_riverCorner01": {
+    "isColliding_": true,
     "fallSpeed_": 1.0,
     "isCollisionWall_": false,
     "isOnGround_": false,
@@ -636,6 +684,7 @@
     "shaderType_": 0
   },
   "ground_riverCorner02": {
+    "isColliding_": true,
     "fallSpeed_": 1.0,
     "isCollisionWall_": false,
     "isOnGround_": false,
@@ -647,6 +696,7 @@
     "shaderType_": 0
   },
   "ground_riverCorner03": {
+    "isColliding_": true,
     "fallSpeed_": 1.0,
     "isCollisionWall_": false,
     "isOnGround_": false,
@@ -658,6 +708,7 @@
     "shaderType_": 0
   },
   "ground_riverCorner04": {
+    "isColliding_": true,
     "fallSpeed_": 1.0,
     "isCollisionWall_": false,
     "isOnGround_": false,
@@ -669,6 +720,7 @@
     "shaderType_": 0
   },
   "ground_riverCornerSmall01": {
+    "isColliding_": true,
     "fallSpeed_": 1.0,
     "isCollisionWall_": false,
     "isOnGround_": false,
@@ -680,6 +732,7 @@
     "shaderType_": 0
   },
   "ground_riverCornerSmall02": {
+    "isColliding_": true,
     "fallSpeed_": 1.0,
     "isCollisionWall_": false,
     "isOnGround_": false,
@@ -691,6 +744,7 @@
     "shaderType_": 0
   },
   "ground_riverCornerSmall03": {
+    "isColliding_": true,
     "fallSpeed_": 1.0,
     "isCollisionWall_": false,
     "isOnGround_": false,
@@ -702,6 +756,7 @@
     "shaderType_": 0
   },
   "ground_riverCornerSmall04": {
+    "isColliding_": true,
     "fallSpeed_": 1.0,
     "isCollisionWall_": false,
     "isOnGround_": false,
@@ -713,6 +768,7 @@
     "shaderType_": 0
   },
   "ground_riverCornerSmall05": {
+    "isColliding_": true,
     "fallSpeed_": 1.0,
     "isCollisionWall_": false,
     "isOnGround_": false,
@@ -724,6 +780,7 @@
     "shaderType_": 0
   },
   "ground_riverCornerSmall06": {
+    "isColliding_": true,
     "fallSpeed_": 1.0,
     "isCollisionWall_": false,
     "isOnGround_": false,
@@ -735,6 +792,7 @@
     "shaderType_": 0
   },
   "ground_riverCornerSmall07": {
+    "isColliding_": true,
     "fallSpeed_": 1.0,
     "isCollisionWall_": false,
     "isOnGround_": false,
@@ -746,6 +804,7 @@
     "shaderType_": 0
   },
   "ground_riverCornerSmall08": {
+    "isColliding_": true,
     "fallSpeed_": 1.0,
     "isCollisionWall_": false,
     "isOnGround_": false,
@@ -757,6 +816,7 @@
     "shaderType_": 0
   },
   "ground_riverSide01": {
+    "isColliding_": true,
     "fallSpeed_": 1.0,
     "isCollisionWall_": false,
     "isOnGround_": false,
@@ -768,6 +828,7 @@
     "shaderType_": 0
   },
   "ground_riverSide02": {
+    "isColliding_": true,
     "fallSpeed_": 1.0,
     "isCollisionWall_": false,
     "isOnGround_": false,
@@ -779,6 +840,7 @@
     "shaderType_": 0
   },
   "ground_riverSide03": {
+    "isColliding_": true,
     "fallSpeed_": 1.0,
     "isCollisionWall_": false,
     "isOnGround_": false,
@@ -790,6 +852,7 @@
     "shaderType_": 0
   },
   "ground_riverSide04": {
+    "isColliding_": true,
     "fallSpeed_": 1.0,
     "isCollisionWall_": false,
     "isOnGround_": false,
@@ -801,6 +864,7 @@
     "shaderType_": 0
   },
   "ground_riverSide05": {
+    "isColliding_": true,
     "fallSpeed_": 1.0,
     "isCollisionWall_": false,
     "isOnGround_": false,
@@ -812,6 +876,7 @@
     "shaderType_": 0
   },
   "ground_riverSide06": {
+    "isColliding_": true,
     "fallSpeed_": 1.0,
     "isCollisionWall_": false,
     "isOnGround_": false,
@@ -823,6 +888,7 @@
     "shaderType_": 0
   },
   "ground_riverSide07": {
+    "isColliding_": true,
     "fallSpeed_": 1.0,
     "isCollisionWall_": false,
     "isOnGround_": false,
@@ -834,6 +900,7 @@
     "shaderType_": 0
   },
   "ground_riverSide08": {
+    "isColliding_": true,
     "fallSpeed_": 1.0,
     "isCollisionWall_": false,
     "isOnGround_": false,
@@ -845,6 +912,7 @@
     "shaderType_": 0
   },
   "ground_riverSide10": {
+    "isColliding_": true,
     "fallSpeed_": 1.0,
     "isCollisionWall_": false,
     "isOnGround_": false,
@@ -856,6 +924,7 @@
     "shaderType_": 0
   },
   "ground_riverSide11": {
+    "isColliding_": true,
     "fallSpeed_": 1.0,
     "isCollisionWall_": false,
     "isOnGround_": false,
@@ -867,6 +936,7 @@
     "shaderType_": 0
   },
   "ground_riverSide12": {
+    "isColliding_": true,
     "fallSpeed_": 1.0,
     "isCollisionWall_": false,
     "isOnGround_": false,
@@ -878,6 +948,7 @@
     "shaderType_": 0
   },
   "ground_riverSide13": {
+    "isColliding_": true,
     "fallSpeed_": 1.0,
     "isCollisionWall_": false,
     "isOnGround_": false,
@@ -889,6 +960,7 @@
     "shaderType_": 0
   },
   "tree_thin_dark01": {
+    "isColliding_": true,
     "fallSpeed_": 1.0,
     "isCollisionWall_": false,
     "isOnGround_": false,
@@ -900,6 +972,7 @@
     "shaderType_": 0
   },
   "tree_thin_dark02": {
+    "isColliding_": true,
     "fallSpeed_": 1.0,
     "isCollisionWall_": false,
     "isOnGround_": false,
@@ -911,6 +984,7 @@
     "shaderType_": 0
   },
   "tree_thin_fall01": {
+    "isColliding_": true,
     "fallSpeed_": 1.0,
     "isCollisionWall_": false,
     "isOnGround_": false,
@@ -922,6 +996,7 @@
     "shaderType_": 0
   },
   "tree_thin_fall02": {
+    "isColliding_": true,
     "fallSpeed_": 1.0,
     "isCollisionWall_": false,
     "isOnGround_": false,

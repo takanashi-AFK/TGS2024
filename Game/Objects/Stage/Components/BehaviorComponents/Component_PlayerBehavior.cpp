@@ -319,7 +319,7 @@ void Component_PlayerBehavior::Dodge()
 		// ステージオブジェクトすべてにレイを撃つ
 		for (auto obj : stageObj) {
 			// 自分自身のオブジェクトだったらスキップ
-			if (obj->GetObjectName() == holder_->GetObjectName())
+			if (obj->GetObjectName() == holder_->GetObjectName() || !obj->GetIsColliding())
 				continue;
 
 			// モデルハンドルを取得

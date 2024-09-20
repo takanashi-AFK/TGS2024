@@ -24,6 +24,7 @@ protected:
 	AttributeType attribute_;           // 属性
 	bool isOnGround_;                   // 地面に設置するかどうか
 	bool isCollisionWall_;              // 壁に当たったかどうか
+	bool isColliding_;                  // ほかのオブジェクトと衝突するかどうか
 	float fallSpeed_;                   // 落下速度
 
 	Direct3D::SHADER_TYPE shaderType_;   // シェーダータイプ
@@ -145,6 +146,7 @@ public:
 	void SetShader(Direct3D::SHADER_TYPE _type) { shaderType_ = _type; };
 	Direct3D::SHADER_TYPE GetShader() { return shaderType_; };
 
+	bool GetIsColliding() { return isColliding_; }
 };
 
 /// <summary>

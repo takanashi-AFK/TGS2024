@@ -40,7 +40,21 @@ public:
 	void DrawData() override;
 
 /*
+setter :*/
+	/// <summary> テキストのサイズを設定 </summary>
+	void SetSize(float size) { size_ = size; }
+
+	/// <summary> 入力完了フラグを設定 </summary>
+	void SetComplete(bool isComplete) { this->isComplete = isComplete; }
+
+	/// <summary> 入力された文字列を設定 </summary>
+	void SetInputString(string input) { currentInput = input; }
+
+/*
 getter :*/
+	/// <summary> テキストのサイズを取得 </summary>
+	float GetSize() const { return size_; }
+
 	/// <summary> 入力された文字列を取得 </summary>
 	string GetInputString() const { return currentInput; }
 

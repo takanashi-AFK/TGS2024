@@ -21,6 +21,10 @@ void Scene_Title::Initialize()
 	// UIパネル & レイアウトの読み込み
 	json loadData;
 	if (JsonReader::Load(TITLE_SCENE_UI_LAYOUT_JSON, loadData)) UIPanel::GetInstance()->Load(loadData);
+
+	// ユーザー名の初期化
+	UIInputString* input = (UIInputString*)UIPanel::GetInstance()->GetUIObject(TITLE_SCENE_USER_NAME_INPUT_NAME);
+	input->SetInputString(ScoreManager::userName);
 }
 
 void Scene_Title::Update()

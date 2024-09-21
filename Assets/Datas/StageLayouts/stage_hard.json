@@ -28,7 +28,7 @@
             "bulletColliderRadius_": 0.10000000894069672,
             "bulletLifeTime_": 3.0,
             "name_": "ShootAttack",
-            "power_": 750,
+            "power_": 300,
             "shootingDirection_": [ 1.0, 0.0, 0.0 ],
             "shootingSpeed_": 0.3000001788139343,
             "type_": 17
@@ -50,9 +50,9 @@
         },
         "name_": "bossBehavior",
         "shootHeight_": -1.2000000476837158,
-        "shotInterval_": 0.05000000074505806,
+        "shotInterval_": 0.06000000074505806,
         "stateChangeDelay_": 1.5,
-        "tackleDamage_": 700,
+        "tackleDamage_": 600,
         "target_": "00_player",
         "type_": 0
       },

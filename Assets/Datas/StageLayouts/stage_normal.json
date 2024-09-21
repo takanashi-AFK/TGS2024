@@ -28,9 +28,9 @@
             "bulletColliderRadius_": 0.10000000894069672,
             "bulletLifeTime_": 3.0,
             "name_": "ShootAttack",
-            "power_": 200,
+            "power_": 120,
             "shootingDirection_": [ 1.0, 0.0, 0.0 ],
-            "shootingSpeed_": 0.20000001788139343,
+            "shootingSpeed_": 0.150000001788139343,
             "type_": 17
           },
           "TackleMove": {
@@ -52,7 +52,7 @@
         "shootHeight_": -1.2000000476837158,
         "shotInterval_": 0.08000000074505806,
         "stateChangeDelay_": 3,
-        "tackleDamage_": 250,
+        "tackleDamage_": 180,
         "target_": "00_player",
         "type_": 0
       },

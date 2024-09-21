@@ -51,6 +51,7 @@
         "name_": "bossBehavior",
         "shootHeight_": -1.2000000476837158,
         "shotInterval_": 0.1000000074505806,
+        "tackleDamage_": 30,
         "stateChangeDelay_": 5.0,
         "target_": "00_player",
         "type_": 0

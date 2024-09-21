@@ -52,6 +52,7 @@
         "shootHeight_": -1.2000000476837158,
         "shotInterval_": 0.03000000074505806,
         "stateChangeDelay_": 1,
+        "tackleDamage_": 1000,
         "target_": "00_player",
         "type_": 0
       },

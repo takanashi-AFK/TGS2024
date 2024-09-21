@@ -130,7 +130,7 @@ void Component_BossBehavior::OnCollision(GameObject* _target, Collider* _collide
             if (!((Component_TackleMove*)tackleMove)->IsActived() || _target == nullptr) continue;
 
             // 対象のHPを減少
-            for (auto hg : ((StageObject*)_target)->FindComponent(HealthGauge))((Component_HealthGauge*)hg)->TakeDamage(30);
+            for (auto hg : ((StageObject*)_target)->FindComponent(HealthGauge))((Component_HealthGauge*)hg)->TakeDamage(tackleDamage_);
         }
     }
 }
@@ -148,6 +148,9 @@ void Component_BossBehavior::Save(json& _saveObj)
     
     // 状態変更遅延を保存
     _saveObj["stateChangeDelay_"] = stateChangeDelay_;
+
+    // 突進のダメージを保存
+    _saveObj["tackleDamage_"] = tackleDamage_;
 }
 
 void Component_BossBehavior::Load(json& _loadObj)
@@ -163,6 +166,9 @@ void Component_BossBehavior::Load(json& _loadObj)
     
     // 状態変更遅延を読み込み
     if (_loadObj.contains("stateChangeDelay_")) stateChangeDelay_ = _loadObj["stateChangeDelay_"];
+
+    // 突進のダメージを読み込み
+    if (_loadObj.contains("tackleDamage_")) tackleDamage_ = _loadObj["tackleDamage_"];
 }
 
 void Component_BossBehavior::DrawData()
@@ -198,6 +204,9 @@ void Component_BossBehavior::DrawData()
     
     // 状態変更遅延を表示
     ImGui::DragFloat("stateChangeDelay_", &stateChangeDelay_);
+
+    // 突進のダメージを表示
+    ImGui::DragFloat("tackleDamage_", &tackleDamage_);
 }
 
 bool Component_BossBehavior::IsDead()

@@ -25,9 +25,14 @@ private:
 	float shotInterval_;		// 射撃間隔
 	float stateChangeDelay_;	// 状態変更遅延
 	float shootHeight_;			// 射撃の高さ
+	float tackleDamage_;		// 突進のダメージ
+
 	bool isActive_;				// アクティブフラグ
 	bool isGameStart_;			// ゲーム開始フラグ
 	bool isDeadStart_;			// 死亡開始フラグ
+
+
+
 	std::shared_ptr<EFFEKSEERLIB::EFKTransform> mt; // effekseer: モデルの位置情報
 
 public:

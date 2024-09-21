@@ -13,7 +13,7 @@
 #include "../Objects/Stage/Components/BehaviorComponents/Component_BossBehavior.h"
 #include "../Objects/Stage/Components/AttackComponents/Component_ShootAttack.h"
 #include "../Objects/UI/UITimer.h"
-
+#include "../../Engine/DirectX/Input.h"
 namespace {
 	const string TITLE_BGM = "Audios/プレゼントコーナー.wav";
 	const string PLAY_BGM = "Audios/Fried_Chicken_Scramble.wav";
@@ -32,6 +32,7 @@ namespace {
 void AudioController::Update(GameObject* _root)
 {
 	// 条件を未術し、満たした時に音楽を再生したり、停止したりする処理を記述
+
 
 	// UIパネルを取得
 	UIPanel* uiPanel = UIPanel::GetInstance();
@@ -84,5 +85,7 @@ void AudioController::Update(GameObject* _root)
 		// タイトルシーン以外のシーンであれば、タイトルBGMを再生
 		if(!sceneManager->IsCurrentScene(SCENE_ID_SPLASH) && !sceneManager->IsCurrentScene(SCENE_ID_END))Audio::Play(Audio::Load(TITLE_BGM, true), VOLUME);
 		Audio::Stop(Audio::Load(PLAY_BGM, true));
+
+		if(Input::IsPadButtonDown()) Audio::Play(Audio::Load(BUTTON_SE, false));
 	}
 }

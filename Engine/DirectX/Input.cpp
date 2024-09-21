@@ -192,6 +192,32 @@ namespace Input
 		return false; //押してない
 	}
 
+	bool IsPadButton()
+	{
+		// ボタンコード、パッドIDを指定しない場合は、全てのパッドのボタンを調べる
+		for (int i = 0; i < MAX_PAD_NUM; i++)
+		{
+			if (controllerState_[i].Gamepad.wButtons)
+			{
+				return true; //押してる
+			}
+		}
+		return false; //押してない
+	}
+
+	bool IsPrevPadButton()
+	{
+		// ボタンコード、パッドIDを指定しない場合は、全てのパッドのボタンを調べる
+		for (int i = 0; i < MAX_PAD_NUM; i++)
+		{
+			if (prevControllerState_[i].Gamepad.wButtons)
+			{
+				return true; //押してる
+			}
+		}
+		return false; //押してない
+	}
+
 	//コントローラーのボタンを今押したか調べる（押しっぱなしは無効）
 	bool IsPadButtonDown(int buttonCode, int padID)
 	{
@@ -203,11 +229,31 @@ namespace Input
 		return false;
 	}
 
+	bool IsPadButtonDown()
+	{
+		// ボタンコード、パッドIDを指定しない場合は、全てのパッドのボタンを調べる
+		if(IsPadButton() && !IsPrevPadButton())
+		{
+			return true;
+		}
+		return false;
+	}
+
 	//コントローラーのボタンを今放したか調べる
 	bool IsPadButtonUp(int buttonCode, int padID)
 	{
 		//今押してなくて、前回は押してる
 		if (!IsPadButton(buttonCode, padID) && prevControllerState_[padID].Gamepad.wButtons & buttonCode)
+		{
+			return true;
+		}
+		return false;
+	}
+
+	bool IsPadButtonUp()
+	{
+		// ボタンコード、パッドIDを指定しない場合は、全てのパッドのボタンを調べる
+		if (!IsPadButton() && IsPrevPadButton())
 		{
 			return true;
 		}

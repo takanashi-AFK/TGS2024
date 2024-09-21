@@ -76,16 +76,20 @@ namespace Input
 	//引数：buttonCode	調べたいボタンの番号
 	//戻値：押されていればtrue
 	bool IsPadButton(int buttonCode, int padID = 0);
+	bool IsPadButton();
+	bool IsPrevPadButton();
 
 	//コントローラーのボタンを今押したか調べる（押しっぱなしは無効）
 	//引数：buttonCode	調べたいボタンの番号
 	//戻値：押した瞬間だったらtrue
 	bool IsPadButtonDown(int buttonCode, int padID = 0);
+	bool IsPadButtonDown();
 
 	//コントローラーのボタンを今放したか調べる
 	//引数：buttonCode	調べたいボタンの番号
 	//戻値：放した瞬間だったらtrue
 	bool IsPadButtonUp(int buttonCode, int padID = 0);
+	bool IsPadButtonUp();
 
 	//左スティックの傾きを取得
 	//戻値:傾き具合（-1～1）

@@ -30,7 +30,7 @@
             "name_": "ShootAttack",
             "power_": 50,
             "shootingDirection_": [ 1.0, 0.0, 0.0 ],
-            "shootingSpeed_": 0.15000001788139343,
+            "shootingSpeed_": 0.1000001788139343,
             "type_": 17
           },
           "TackleMove": {

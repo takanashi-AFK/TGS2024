@@ -33,21 +33,21 @@ void Component_CactanBehavior::Update()
 	if (target_ == nullptr)target_ = (StageObject*)holder_->FindObject(targetName_);
 	if (target_ == nullptr)return;
 
-	auto detector = dynamic_cast<Component_CircleRangeDetector*>(GetChildComponent("CircleRangeDetector"));
+	Component_CircleRangeDetector* detector = (Component_CircleRangeDetector*)(GetChildComponent("CircleRangeDetector"));
 	if (detector == nullptr)return;
 
 	// 範囲内にプレイヤーがいる場合
 	if (detector->IsContains()){
 
 		// タイマーを開始
-		auto timer = dynamic_cast<Component_Timer*>(GetChildComponent("Timer"));
+		Component_Timer* timer = (Component_Timer*)(GetChildComponent("Timer"));
 		if (timer == nullptr)return;
 		timer->Start();
 		
 		// 3秒ごとにシュートアタックを実行
 		if (timer->IsIntervalTime(3.f)){
 
-			auto shoot = dynamic_cast<Component_ShootAttack*>(GetChildComponent("ShootAttack"));
+			Component_ShootAttack* shoot = (Component_ShootAttack*)(GetChildComponent("ShootAttack"));
 			if (shoot == nullptr)return;
 
 			// 撃ち放つ方向を設定
@@ -63,7 +63,7 @@ void Component_CactanBehavior::Update()
 
 		
 		// タイマーを停止
-		auto timer = dynamic_cast<Component_Timer*>(GetChildComponent("Timer"));
+		Component_Timer* timer = (Component_Timer*)(GetChildComponent("Timer"));
 		if (timer == nullptr)return;
 		timer->Stop();
 	}

@@ -19,7 +19,7 @@ private:
 
 	bool isShootPositionSet_;		// 発射位置が設定されているか
 	float bulletLifeTime_;				// 弾の生存時間
-	EffectData data_;				// エフェクトデータ
+	EffectData effectData;				// エフェクトデータ
 	float bulletColliderRadius_;	// 弾の当たり判定の半径
 
 public:
@@ -73,7 +73,7 @@ setter :*/
 	void SetShootingPosition(XMFLOAT3 _position) { shootingPosition_ = _position; isShootPositionSet_ = true;}
 	
 	/// <param name="_data"> エフェクトデータ</param>
-	void SetEffectData(EffectData _data) { data_ = _data; }
+	void SetEffectData(EffectData _data) { effectData = _data; }
 	
 	/// <param name="_time"> 弾の生存時間</param>
 	void SetBulletLifeTime(float _time) { bulletLifeTime_ = _time; }

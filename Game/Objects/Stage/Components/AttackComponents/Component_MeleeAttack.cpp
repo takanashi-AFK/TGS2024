@@ -28,7 +28,7 @@ void Component_MeleeAttack::Update()
 	if (!isActive_) return;
 
 
-	Collider* collider = dynamic_cast<BoxCollider*>(holder_->GetCollider(0));
+	Collider* collider = (BoxCollider*)(holder_->GetCollider(0));
 	if (!collider) return;
 
 	{
@@ -77,7 +77,7 @@ void Component_MeleeAttack::DrawData()
 
 bool Component_MeleeAttack::AutoDelete(float _time)
 {
-	auto timer = dynamic_cast<Component_Timer*>(GetChildComponent("Timer"));
+	Component_Timer* timer =(Component_Timer*)(GetChildComponent("Timer"));
 	if (!timer) return false;
 	timer->SetTime(_time);
 	timer->Start();
@@ -92,7 +92,7 @@ void Component_MeleeAttack::OnCollision(GameObject* _target, Collider* _collider
 {
 	if (!isActive_ || isHit_) return;
 
-	StageObject* target = dynamic_cast<StageObject*>(_target);
+	StageObject* target = (StageObject*)(_target);
 	if (!target) return;
 
 	for (auto hm : target->FindComponent(HealthGauge)) {

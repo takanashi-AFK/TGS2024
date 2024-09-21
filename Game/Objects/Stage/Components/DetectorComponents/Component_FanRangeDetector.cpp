@@ -6,8 +6,12 @@
 #include "../../StageObject.h"
 
 Component_FanRangeDetector::Component_FanRangeDetector(string _name, StageObject* _holder, Component* _parent)
-	: Component(_holder, _name, FanRangeDetector,_parent)
-	, target_(nullptr), length_(0), angle_(0), direction_(XMVectorSet(0, 0, 0, 0)), isContains_(false)
+	: Component(_holder, _name, FanRangeDetector,_parent),
+	target_(nullptr),
+	length_(0), 
+	angle_(0), 
+	direction_(XMVectorSet(0, 0, 0, 0)), 
+	isContains_(false)
 {
 }
 

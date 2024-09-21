@@ -46,7 +46,7 @@ void GameEditor::Draw()
 	DrawDatails();
 
 	// UIオブジェクト作成ウィンドウを描画
-	if(isShowCreateUIObjectWindow_)UIObjectClreateWindow();
+	if(isShowCreateUIObjectWindow_)UIObjectCreateWindow();
 }
 
 void GameEditor::Release()
@@ -250,7 +250,7 @@ void GameEditor::DrawDatalsCamera()
 	}
 }
 
-void GameEditor::UIObjectClreateWindow()
+void GameEditor::UIObjectCreateWindow()
 {
 	static char nameBuffer[256] = "";
 	if (isShowCreateUIObjectWindow_) {

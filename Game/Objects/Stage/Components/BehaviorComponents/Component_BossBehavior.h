@@ -33,7 +33,8 @@ private:
 
 
 
-	std::shared_ptr<EFFEKSEERLIB::EFKTransform> mt; // effekseer: モデルの位置情報
+	std::shared_ptr<EFFEKSEERLIB::EFKTransform> effectModelTransform_; // effekseer: モデルの位置情報
+	EFFEKSEERLIB::EFKTransform effekseerTransform;// effekseer: エフェクトの位置情報
 
 public:
 	/// <summary> コンストラクタ </summary>

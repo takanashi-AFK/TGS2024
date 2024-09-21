@@ -39,7 +39,7 @@ void Component_Teleporter::Initialize()
 	if (FindChildComponent("CircleRangeDetector") == false)AddChildComponent(CreateComponent("CircleRangeDetector", CircleRangeDetector, holder_, this));
 	if (FindChildComponent("Timer") == false)AddChildComponent(CreateComponent("Timer", Timer, holder_, this));
 
-	auto detector = dynamic_cast<Component_CircleRangeDetector*>(GetChildComponent("CircleRangeDetector"));
+	Component_CircleRangeDetector* detector = (Component_CircleRangeDetector*)(GetChildComponent("CircleRangeDetector"));
 	if (detector == nullptr)return;
 
 	
@@ -53,9 +53,9 @@ void Component_Teleporter::Update()
 
 	if (!isActive_)return;
 
-	auto detector = dynamic_cast<Component_CircleRangeDetector*>(GetChildComponent("CircleRangeDetector"));
+	Component_CircleRangeDetector* detector = (Component_CircleRangeDetector*)(GetChildComponent("CircleRangeDetector"));
 	if (detector == nullptr)return;
-	auto timer = dynamic_cast<Component_Timer*>(GetChildComponent("Timer"));
+	Component_Timer* timer = (Component_Timer*)(GetChildComponent("Timer"));
 	if (timer == nullptr)return;
 	
 	// 検出対象の設定
@@ -74,7 +74,7 @@ void Component_Teleporter::Update()
 		if (timer->GetIsEnd()) {
 			// ターゲットのWASDを探す(2個以上ついていない想定)
 			if (target_ != nullptr) {
-				auto inputMove = target_->FindComponent(WASDInputMove);
+				std::vector<Component*> inputMove = target_->FindComponent(WASDInputMove);
 				if (inputMove.empty())return;
 				for (auto iMove : inputMove) {
 					iMove->Execute();
@@ -227,7 +227,7 @@ void Component_Teleporter::DrawData()
 
 void Component_Teleporter::Teleport()
 {
-	auto timer = dynamic_cast<Component_Timer*>(GetChildComponent("Timer"));
+	Component_Timer* timer = (Component_Timer*)(GetChildComponent("Timer"));
 	if (timer == nullptr)return;
 	static bool isEffectEnd = false;
 	static bool isEffectNow = false;
@@ -241,7 +241,7 @@ void Component_Teleporter::Teleport()
 
 		// ターゲットのWASDを探す
 		if (target_ != nullptr) {
-			auto inputMove = target_->FindComponent(WASDInputMove);
+			std::vector<Component*> inputMove = target_->FindComponent(WASDInputMove);
 			if (inputMove.empty())return;
 			for (auto iMove : inputMove) {
 				iMove->Stop();

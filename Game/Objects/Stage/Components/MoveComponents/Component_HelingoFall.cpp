@@ -27,10 +27,10 @@ void Component_HelingoFall::Initialize()
 // 更新
 void Component_HelingoFall::Update()
 {   
-	auto fall = dynamic_cast<Component_Fall*>(GetChildComponent("Fall"));
+	Component_Fall* fall = (Component_Fall*)(GetChildComponent("Fall"));
 	if (fall == nullptr) return;
 
-	auto rise = dynamic_cast<Component_Rise*>(GetChildComponent("Rise"));
+	Component_Rise* rise =(Component_Rise*)(GetChildComponent("Rise"));
 	if (rise == nullptr) return;
 
 	// 実行したかどうか
@@ -42,7 +42,7 @@ void Component_HelingoFall::Update()
 		case FALL:
 			fall->Execute(); 
 			if (fall->IsActive()) {
-				auto timer = dynamic_cast<Component_Timer*>(GetChildComponent("Timer"));
+				Component_Timer* timer = (Component_Timer*)(GetChildComponent("Timer"));
 				timer->Reset();
 				SetState(WAIT);
 			}
@@ -51,7 +51,7 @@ void Component_HelingoFall::Update()
 		case RISE:
 			rise->Execute();
 			if (rise->IsEnd()) {
-				auto timer = dynamic_cast<Component_Timer*>(GetChildComponent("Timer"));
+				Component_Timer* timer = (Component_Timer*)(GetChildComponent("Timer"));
 				timer->Reset();
 				Stop();
 				SetState(WAIT);
@@ -131,7 +131,7 @@ void Component_HelingoFall::FallMove(float& _height)
 	// 高さが一定の高さに達したら...
 	else {
 		// タイマーをリセット
-		auto timer = dynamic_cast<Component_Timer*>(GetChildComponent("Timer"));
+		Component_Timer* timer = (Component_Timer*)(GetChildComponent("Timer"));
 		timer->Reset();
 
 		// 目標の高さに設定
@@ -156,7 +156,7 @@ void Component_HelingoFall::RiseMove(float& _height)
 	}
 	else {
 		// タイマーをリセット
-		auto timer = dynamic_cast<Component_Timer*>(GetChildComponent("Timer"));
+		Component_Timer* timer = (Component_Timer*)(GetChildComponent("Timer"));
 		timer->Reset();
 
 		// 目標の高さに設定
@@ -173,7 +173,7 @@ void Component_HelingoFall::RiseMove(float& _height)
 void Component_HelingoFall::Wait()
 {
 	// タイマーを取得
-	auto timer = dynamic_cast<Component_Timer*>(GetChildComponent("Timer"));
+	Component_Timer* timer = (Component_Timer*)(GetChildComponent("Timer"));
 	
 	if (prevState_ == FALL) {
 
@@ -181,7 +181,7 @@ void Component_HelingoFall::Wait()
 		timer->SetTime(riseWaitTime_);
 		timer->Start();
 
-		auto rise = dynamic_cast<Component_Rise*>(GetChildComponent("Rise"));
+		Component_Rise* rise = (Component_Rise*)(GetChildComponent("Rise"));
 		if (rise == nullptr) return;
 		rise->SetIsEnd(false);
 

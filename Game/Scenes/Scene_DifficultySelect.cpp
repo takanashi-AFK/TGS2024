@@ -36,7 +36,7 @@ void Scene_DifficultySelect::Update()
 		if (hardButton->OnClick() == true || Input::IsPadButtonDown(XINPUT_GAMEPAD_Y)) { g_selectedStage = STAGE_HARD_JSON; isClicked = true; }
 
 		UIButton* expertButton = (UIButton*)UIPanel::GetInstance()->GetUIObject(DIFFICULTY_SELECT_SCENE_EXPERT_BUTTON_NAME);
-		if (expertButton->OnClick() == true || Input::IsPadButtonDown(XINPUT_GAMEPAD_B)) { g_selectedStage = STAGE_EXPERT_JSON; isClicked = true; }
+		if (expertButton->OnClick() == true || Input::IsPadButtonDown(XINPUT_GAMEPAD_B)) { g_selectedStage = ScoreManager::userName == "insane" ? STAGE_EXPERT_JSON : STAGE_INSANE_JSON; isClicked = true; }
 	}
 
 	// ƒV[ƒ“Ø‘Öˆ—

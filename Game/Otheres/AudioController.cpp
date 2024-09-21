@@ -26,7 +26,7 @@ namespace {
 	const string SHOOT_SE = "Audios/火炎魔法1.wav";
 	const string WALK_SE = "Audios/砂の上を走る.wav";
 
-	const float VOLUME = 0.3f;
+	const float VOLUME = 0.2f;
 }
 
 void AudioController::Update(GameObject* _root)
@@ -51,7 +51,7 @@ void AudioController::Update(GameObject* _root)
 	if (sceneManager->IsCurrentScene(SCENE_ID_PLAY)) {
 
 		// 背景音楽の再生
-		Audio::Play(Audio::Load(PLAY_BGM, true), VOLUME);
+		Audio::Play(Audio::Load(ScoreManager::userName != "insane" ? PLAY_BGM : "Audios/ここは通さねえぜ！.wav", true), VOLUME);
 		Audio::Stop(Audio::Load(TITLE_BGM, true));
 
 		// カウントダウンの音の再生

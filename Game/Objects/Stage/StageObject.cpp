@@ -133,7 +133,7 @@ void StageObject::OnGround(float _fallSpeed)
 	Stage* pStage = (Stage*)FindObject("Stage");
 	if (pStage == nullptr) return;
 
-	auto stageObj = pStage->GetStageObjects();
+	vector<StageObject*> stageObj = pStage->GetStageObjects();
 
 	// モデルのサイズを考慮した足元位置（中心位置からモデル高さの半分下）
 	float modelHeight = 3.5f;  // モデルの高さ
@@ -180,7 +180,7 @@ void StageObject::CollisionWall()
 	Stage* pStage = static_cast<Stage*>(FindObject("Stage"));
 	if (pStage == nullptr) return;
 
-	auto stageObj = pStage->GetStageObjects();
+	vector<StageObject*> stageObj = pStage->GetStageObjects();
 
 	// 全てのオブジェクトに対して水平方向のレイキャストを行う
 	for (auto obj : stageObj) {
@@ -215,9 +215,9 @@ void StageObject::CollisionWall()
 		}
 	}
 }
-void StageObject::PlayAnimation(int _start, int _end, float _speed)
+void StageObject::PlayAnimation(int _startFrame, int _endFrame, float _speed)
 {
-	Model::SetAnimFrame(modelHandle_,_start, _end, _speed);
+	Model::SetAnimFrame(modelHandle_,_startFrame, _endFrame, _speed);
 
 }
 
@@ -410,12 +410,9 @@ void StageObject::DrawData()
 		ImGui::TreePop();
 	}
 
-
-
 	// コンポーネント追加ウィンドウを描画
 	if (isShowAddComponentWindow_)DrawAddComponentWindow(this);
 	if (isShowSetComponentNameWindow_)DrawSetComponentNameWindow(this);
-
 
 }
 

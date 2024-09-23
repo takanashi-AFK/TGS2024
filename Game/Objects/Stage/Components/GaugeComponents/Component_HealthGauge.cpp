@@ -24,7 +24,7 @@ void Component_HealthGauge::Initialize()
 
 void Component_HealthGauge::Update()
 {
-	static int prevShaderType = (int)holder_->GetShader();
+	static int prevShaderType = (int)holder_->GetShaderType();
 	// ダメージをくらったらシェーダーを変更
 	if (prev_ > now_) {
 		holder_->SetShader(Direct3D::SHADER_DAMAGE);

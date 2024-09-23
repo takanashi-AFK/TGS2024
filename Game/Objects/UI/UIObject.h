@@ -31,8 +31,8 @@ protected:
 	UIType type_;			// オブジェクトの種類
 	int layerNumber_;		// レイヤー番号
 	Transform transform_;	// 位置、回転、拡大縮小
-	bool isEnable_;			// 描画するかどうか
 	UIObject* pParent_;		// 親オブジェクト
+	bool isVisible_;		// 描画するか
 
 	std::vector<UIObject*> childList_;  // 子オブジェクトのリスト
 
@@ -122,6 +122,9 @@ setter :*/
 
 	/// <summary> レイヤー番号を設定 </summary>
 	void SetLayerNumber(int newLayerNumber_);
+
+	/// <summary> 可視化を設定 </summary>
+	void SetVisible(bool _visible) { isVisible_ = _visible; }
 /*
 getter :*/
 	/// <summary> 子オブジェクトを取得 </summary>

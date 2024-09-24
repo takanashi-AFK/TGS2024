@@ -20,6 +20,7 @@ protected:
 
 	bool isOnGround_;                   // 地面に設置するかどうか
 	bool isCollisionWall_;              // 壁に当たったかどうか
+	bool isColliding_;                  // ほかのオブジェクトと衝突するかどうか
 	XMFLOAT3 onGroundOffset_;           // 地面に設置する際のオフセット
 	float fallSpeed_;                   // 落下速度
 
@@ -83,6 +84,9 @@ getter :*/
 
 	/// <summary> シェーダータイプの取得 </summary>
 	Direct3D::SHADER_TYPE GetShaderType() const { return shaderType_; }
+
+	/// <summary> 衝突するかどうかを取得 </summary>
+	bool GetIsColliding() { return isColliding_; }
 /*
 setter :*/
 	/// <summary> モデル番号の設定 </summary>

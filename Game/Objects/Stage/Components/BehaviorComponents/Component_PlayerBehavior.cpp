@@ -308,6 +308,7 @@ void Component_PlayerBehavior::Dodge()
 
 			// 移動方向がゼロベクトルでなければ、移動方向を取得
 			if (IsXMVectorZero(move->GetMoveDirection()) == false)dir = move->GetMoveDirection();
+			else dir = XMVector3Normalize(Camera::GetSightLine());
 		}
 
 		// 突進方向を設定

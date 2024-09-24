@@ -86,7 +86,7 @@ void Component_WASDInputMove::Update()
 
 		// V‚µ‚¢‰ñ“]Šp“x‚ðŒvŽZ‚µAƒLƒƒƒ‰ƒNƒ^[‚ÌYŽ²‰ñ“]‚É”½‰f
 		float newAngle = std::atan2(XMVectorGetX(dir_), XMVectorGetZ(dir_));
-		holder_->SetRotateY(XMConvertToDegrees(newAngle  + ROTATE_OFFSET));
+		holder_->SetRotateY(XMConvertToDegrees(newAngle));
 
 		isMove_ = true;
 	}

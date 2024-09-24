@@ -80,7 +80,7 @@ void Component_WASDInputMove::Update()
 
 	if (!XMVector3Equal(padDir, XMVectorZero())) {
 		// パッド入力ベクトルをカメラの向きに合わせて回転させる
-		XMVECTOR rotatedPadDir = XMVector3Transform(padDir, XMMatrixRotationY(XMConvertToRadians(angle.y)));
+		XMVECTOR rotatedPadDir = XMVector3Transform(padDir, XMMatrixRotationY(XMConvertToRadians(angle.y - ROTATE_OFFSET)));
 
 		dir_ = XMVector3Normalize(rotatedPadDir);
 

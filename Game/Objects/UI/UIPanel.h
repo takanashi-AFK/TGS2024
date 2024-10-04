@@ -46,6 +46,7 @@ public:
 	/// <summary> オブジェクトのソート </summary>
 	void SortUIObject();
 
+
 /*
 getter :*/
 	/// <summary> オブジェクトの取得 </summary>
@@ -57,6 +58,10 @@ getter :*/
 	/// <summary> オブジェクトリストの取得 </summary>
 	vector<UIObject*> GetUIObjects() { return childList_; };
 
+/*
+setter :*/
+	/// <summary> オブジェクトの可視化を設定 </summary>
+	void SetVisible(string _name, bool _visible);
 private:
 	/// <summary> コンストラクタ </summary>
 	UIPanel();

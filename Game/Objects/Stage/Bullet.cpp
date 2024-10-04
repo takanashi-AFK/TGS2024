@@ -8,7 +8,7 @@
 #include "Stage.h"
 
 Bullet::Bullet(GameObject* _parent)
-	:StageObject("Bullet", "Models/DebugCollision/SphereCollider.fbx", _parent), isActive_(false), frame_(), speed_(), direction_(), shooter_(), mt(), data_(), lifeTime_(2.f), power_(20)
+	:StageObject("Bullet", "Models/DebugCollision/SphereCollider.fbx", _parent), isActive_(false), frame_(), speed_(), direction_(), shooter_(), effectModelTransform_(), data_(), lifeTime_(2.f), power_(20)
 {
 }
 
@@ -22,18 +22,18 @@ void Bullet::Initialize()
 	assert(modelHandle_ >= 0);
 
 	// effekseer: :Effectの読み込み
-	EFFEKSEERLIB::gEfk->AddEffect(data_.name, data_.path);/*★★★*/
-	EFFEKSEERLIB::gEfk->AddEffect("Hit", "Effects/Attack_Impact.efk");/*★★★*/
+	EFFEKSEERLIB::gEfk->AddEffect(data_.name, data_.path);
+	EFFEKSEERLIB::gEfk->AddEffect("Hit", "Effects/Attack_Impact.efk");
 
 	// effekseer: :Effectの再生情報の設定
-	EFFEKSEERLIB::EFKTransform t;/*★★★*/
-	DirectX::XMStoreFloat4x4(&(t.matrix), transform_.GetWorldMatrix());/*★★★*/
-	t.isLoop = false;/*★★★*/
-	t.maxFrame = 180;/*★★★*/
-	t.speed = 1.f;/*★★★*/
+	EFFEKSEERLIB::EFKTransform effectTransform;
+	DirectX::XMStoreFloat4x4(&(effectTransform.matrix), transform_.GetWorldMatrix());
+	effectTransform.isLoop = false;
+	effectTransform.maxFrame = 180;
+	effectTransform.speed = 1.f;
 
 	// effekseer: :Effectの再生
-	mt = EFFEKSEERLIB::gEfk->Play(data_.name, t);/*★★★*/
+	effectModelTransform_ = EFFEKSEERLIB::gEfk->Play(data_.name, effectTransform);
 }
 
 void Bullet::Update()
@@ -51,7 +51,7 @@ void Bullet::Update()
 	// effekseer: :Effectの再生情報の更新
 	Transform effectTrans = transform_;
 	effectTrans.scale_ = data_.scale;
-	DirectX::XMStoreFloat4x4(&(mt->matrix), effectTrans.GetWorldMatrix());/*★★★*/
+	DirectX::XMStoreFloat4x4(&(effectModelTransform_->matrix), effectTrans.GetWorldMatrix());
 }
 
 void Bullet::Draw()
@@ -66,21 +66,17 @@ void Bullet::OnCollision(GameObject* _target, Collider* _collider)
 	if (isActive_ == false)return;
 
 	// ターゲットがStageObjectでない場合は処理を行わない
-	StageObject* target = dynamic_cast<StageObject*>(_target);
+	StageObject* target = (StageObject*)(_target);
 	if (!target) return;
 
 	if (target->GetObjectName() == shooter_->GetObjectName())return;
-	auto list = target->FindComponent(HealthGauge);
+	std::vector<Component*> list = target->FindComponent(HealthGauge);
 	if (list.empty()) return;
 	// ダメージ処理
 	for (auto hm : list) {
 
 		((Component_HealthGauge*)hm)->TakeDamage(power_);
 		this->KillMe();
-
-		/*if (((Component_HealthGauge*)hm)->IsDead()) {
-			((Stage*)FindObject("Stage"))->DeleteStageObject((StageObject*)_target);
-		}*/
 	}
 
 }

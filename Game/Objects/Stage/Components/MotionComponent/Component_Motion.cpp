@@ -11,8 +11,6 @@ void Component_Motion::Initialize()
 
 void Component_Motion::Update()
 {
-
-
 }
 
 void Component_Motion::Release()

@@ -8,7 +8,14 @@
 using namespace FileManager;
 
 Component_ShootAttack::Component_ShootAttack(string _name, StageObject* _holder, Component* _parent):
-	Component_Attack(_holder, _name, ShootAttack,_parent),shootingSpeed_(),shootingDirection_()
+	Component_Attack(_holder, _name, ShootAttack,_parent),
+	shootingSpeed_(0),
+	shootingDirection_({0,0,0,0}),
+	shootingPosition_({0,0,0}),
+	isShootPositionSet_(false),
+	bulletLifeTime_(0),
+	effectData({}),
+	bulletColliderRadius_(0)
 {
 }
 
@@ -21,7 +28,7 @@ void Component_ShootAttack::Update()
 	if (isActive_ == false)return;
 
 	// 撃ち放つプレハブを生成
-	Bullet* bulletPrefab = CreateBullet(holder_->GetParent(), data_,bulletColliderRadius_); {
+	Bullet* bulletPrefab = CreateBullet(holder_->GetParent(), effectData,bulletColliderRadius_); {
 
 		// 弾を撃ち放ったオブジェクトを設定
 		bulletPrefab->SetShooter(holder_);
@@ -41,7 +48,6 @@ void Component_ShootAttack::Update()
 		// 撃ち放つ位置を設定
 		if (isShootPositionSet_ == true)bulletPrefab->SetPosition(shootingPosition_);
 		else bulletPrefab->SetPosition(holder_->GetPosition());
-
 	}
 	
 	// 撃ち放つ
@@ -72,12 +78,12 @@ void Component_ShootAttack::Save(json& _saveObj)
 
 	// エフェクトデータの保存
 	_saveObj["EffectData"] = {
-		{"name",data_.name},
-		{"path",data_.path},
+		{"name",effectData.name},
+		{"path",effectData.path},
 	};
 
 	// エフェクトのスケールの保存
-	_saveObj["EffectData"]["scale"] = { REFERENCE_XMFLOAT3(data_.scale)};
+	_saveObj["EffectData"]["scale"] = { REFERENCE_XMFLOAT3(effectData.scale)};
 }
 
 void Component_ShootAttack::Load(json& _loadObj)
@@ -97,9 +103,9 @@ void Component_ShootAttack::Load(json& _loadObj)
 
 	// エフェクトデータの読み込み
 	if (_loadObj.contains("EffectData")) {
-		if(_loadObj["EffectData"].contains("name")) data_.name = _loadObj["EffectData"]["name"];
-		if(_loadObj["EffectData"].contains("path")) data_.path = _loadObj["EffectData"]["path"];
-		if(_loadObj["EffectData"].contains("scale"))data_.scale = { _loadObj["EffectData"]["scale"][0].get<float>(),_loadObj["EffectData"]["scale"][1].get<float>(), _loadObj["EffectData"]["scale"][2].get<float>() };
+		if(_loadObj["EffectData"].contains("name")) effectData.name = _loadObj["EffectData"]["name"];
+		if(_loadObj["EffectData"].contains("path")) effectData.path = _loadObj["EffectData"]["path"];
+		if(_loadObj["EffectData"].contains("scale"))effectData.scale = { _loadObj["EffectData"]["scale"][0].get<float>(),_loadObj["EffectData"]["scale"][1].get<float>(), _loadObj["EffectData"]["scale"][2].get<float>() };
 	}
 }
 
@@ -127,9 +133,9 @@ void Component_ShootAttack::DrawData()
 	if(ImGui::TreeNode("Effect Data")) {
 
 		// エフェクトの名前
-		ImGui::Text("Name: %s", data_.name.c_str());
+		ImGui::Text("Name: %s", effectData.name.c_str());
 		// エフェクトのパス
-		ImGui::Text("Path: %s", data_.path.c_str());
+		ImGui::Text("Path: %s", effectData.path.c_str());
 		ImGui::SameLine();
 
 		// エフェクトの設定
@@ -157,13 +163,13 @@ void Component_ShootAttack::DrawData()
 				// ファイルを選択するダイアログの表示
 				if (GetOpenFileName(&ofn) == TRUE) {
 					// ファイルパスを取得
-					data_.path = ofn.lpstrFile;
+					effectData.path = ofn.lpstrFile;
 
 					// カレントディレクトリからの相対パスを取得
-					data_.path = GetAssetsRelativePath(data_.path);
+					effectData.path = GetAssetsRelativePath(effectData.path);
 
 					// 文字列内の"\\"を"/"に置換
-					ReplaceBackslashes(data_.path);
+					ReplaceBackslashes(effectData.path);
 
 					// ディレクトリを戻す
 					SetCurrentDirectory(defaultCurrentDir);
@@ -174,11 +180,11 @@ void Component_ShootAttack::DrawData()
 			}
 
 			// エフェクトの名前を設定
-			data_.name = GetFileNameWithoutExtension(data_.path);
+			effectData.name = GetFileNameWithoutExtension(effectData.path);
 		}
 
 		// エフェクトのスケール
-		ImGui::DragFloat3("Scale", (float*)&data_.scale, 0.1f);
+		ImGui::DragFloat3("Scale", (float*)&effectData.scale, 0.1f);
 
 		ImGui::TreePop();
 	}

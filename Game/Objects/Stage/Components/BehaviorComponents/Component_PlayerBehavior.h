@@ -31,8 +31,8 @@ private:
 	Component_BossBehavior* bossBehavior;
 
 	// effekseer: 変形行列
-	std::shared_ptr<EFFEKSEERLIB::EFKTransform> mt;/*★★★*/
-	EffectData data_;
+	std::shared_ptr<EFFEKSEERLIB::EFKTransform> effectModelTransform;/*★★★*/
+	EffectData effectData_;
 
 	bool isShootStart_;					// 射撃開始フラグ
 	bool isDodgeStart_;					// 回避開始フラグ

@@ -25,6 +25,7 @@ namespace Constants {
 	const string STAGE_NORMAL_JSON = "Datas/StageLayouts/stage_normal.json";
 	const string STAGE_HARD_JSON = "Datas/StageLayouts/stage_hard.json";
 	const string STAGE_EXPERT_JSON = "Datas/StageLayouts/stage_expert.json";
+	const string STAGE_INSANE_JSON = "Datas/StageLayouts/stage_insane.json";
 	const string STAGE_BACKGROUND_JSON = "Datas/StageLayouts/resultStage.json";
 
 	// カメラレイアウト

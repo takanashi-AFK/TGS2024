@@ -24,7 +24,7 @@ UIObject::UIObject(UIObject* parent):
 }
 
 UIObject::UIObject(string _name, UIType _type, UIObject* parent, int _layerNum)
-	:objectName_(_name), type_(_type), pParent_(parent), layerNumber_(_layerNum), isEnable_(true)
+	:objectName_(_name), type_(_type), pParent_(parent), layerNumber_(_layerNum), isVisible_(true), isPositionLocked_(false), isRotateLocked_(false), isScaleLocked_(false)
 {
 
 	childList_.clear();
@@ -50,6 +50,9 @@ void UIObject::ChildSave(json& _saveObj)
 	// レイヤー番号を保存
 	_saveObj["layerNumber_"] = layerNumber_;
 
+	// 描画フラグを保存
+	_saveObj["isVisible_"] = isVisible_;
+
 	// 自身の変形行列情報を保存
 	_saveObj["position_"] = { REFERENCE_XMFLOAT3(transform_.position_) };
 	_saveObj["rotate_"] = { REFERENCE_XMFLOAT3(transform_.rotate_) };
@@ -69,6 +72,9 @@ void UIObject::ChildLoad(json& _loadObj)
 
 	// レイヤー番号を読込
 	if (_loadObj.contains("layerNumber_"))layerNumber_ = _loadObj["layerNumber_"].get<int>();
+
+	// 描画フラグを読込
+	if (_loadObj.contains("isVisible_"))isVisible_ = _loadObj["isVisible_"].get<bool>();
 
 	// 変形行列情報を読込
 	if (_loadObj.contains("position_"))transform_.position_ = { _loadObj["position_"][0].get<float>(),_loadObj["position_"][1].get<float>(), _loadObj["position_"][2].get<float>() };
@@ -113,6 +119,9 @@ void UIObject::ChildDrawData()
 		if(isScaleLocked_ == false)ImGui::DragFloat3("scale_", &transform_.scale_.x, 0.1f, 0.f, LONG_MAX);
 		ImGui::TreePop();
 	}
+
+	// 描画フラグを描画
+	ImGui::Checkbox("isVisible_", &isVisible_);
 
 	// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
 	// レイヤー番号を描画
@@ -328,6 +337,8 @@ void UIObject::UpdateSub()
 
 void UIObject::DrawSub()
 {
+	if(isVisible_ == false) return;
+		
 	Draw();
 
 	for (auto it = childList_.begin(); it != childList_.end(); it++)

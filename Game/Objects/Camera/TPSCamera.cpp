@@ -14,6 +14,11 @@ namespace {
     const float SENSITIVITY_MIN = 0.f;          // 感度の最小値
     const float ROTATE_UPPER_LIMIT = -80.f;     // 回転の上限
     const float ROTATE_LOWER_LIMIT = 80.f;      // 回転の下限
+	const float ROTATE_LITTLE_ANGLE = 30.f;     // 回転の少しの角度
+	const float ROTATE_Y = 0.5f;                // 回転の感度
+	const int   CONTROLLER_MAGUNIFICATION = 10;   // コントローラーの倍率
+	const XMVECTOR INITIALIZE_AXIS_Z = { 0,0,1,0 };         // 初期軸
+
 }
 
 TPSCamera::TPSCamera(GameObject* parent)
@@ -42,9 +47,6 @@ void TPSCamera::Update()
     
     // 探してもターゲットが存在しない場合は処理を行わない
     if (IsTarget() == false) return;
-
-    //debug: 回転感度の設定
-    //ImGui::SliderFloat("sensitivity", &sensitivity_, SENSITIVITY_MIN, SENSITIVITY_MAX);
 
     // 回転角度を計算 ※マウスとパッドの移動量を元に行う
     CalcRotateAngle(Input::GetMouseMove(), Input::GetPadStickR());
@@ -112,8 +114,8 @@ void TPSCamera::CalcRotateAngle(XMFLOAT3 _mouseMove, XMFLOAT3 _padMove)
     angle_.y += _mouseMove.x * sensitivity_;
 
     // パッドの移動量を元に回転角度を加算
-    angle_.x -= _padMove.y * (sensitivity_ * 10);
-    angle_.y += _padMove.x * (sensitivity_ * 10);
+    angle_.x -= _padMove.y * (sensitivity_ * CONTROLLER_MAGUNIFICATION);
+    angle_.y += _padMove.x * (sensitivity_ * CONTROLLER_MAGUNIFICATION);
 
     // ｘ軸回転の上限・下限を設定し回転を制限
 	if (angle_.x < ROTATE_UPPER_LIMIT)angle_.x -= _mouseMove.y * sensitivity_;
@@ -132,7 +134,7 @@ void TPSCamera::CalcCameraPositionAndTarget(XMFLOAT3& _cameraPosition, XMFLOAT3&
         XMMATRIX rotateY = XMMatrixRotationY(XMConvertToRadians(angle_.y));
 
         // ↑の行列を元に回転
-        XMVECTOR center_To_camTarget = { 0,0,1,0 };
+        XMVECTOR center_To_camTarget = INITIALIZE_AXIS_Z;
         center_To_camTarget = XMVector3Transform(center_To_camTarget, rotateY);
 
         // 長さを加える
@@ -147,8 +149,7 @@ void TPSCamera::CalcCameraPositionAndTarget(XMFLOAT3& _cameraPosition, XMFLOAT3&
         XMVECTOR center_To_camPosition = -center_To_camTarget;
 
         // ちょっと回転させる
-        float littleAngle = -30.f;
-        center_To_camPosition = XMVector3Transform(center_To_camPosition, XMMatrixRotationY(XMConvertToRadians(littleAngle)));
+        center_To_camPosition = XMVector3Transform(center_To_camPosition, XMMatrixRotationY(XMConvertToRadians(-ROTATE_LITTLE_ANGLE)));
 
         // 原点からの位置を求めて、カメラの位置を設定
         XMVECTOR origin_To_camPosition = XMLoadFloat3(&center) + center_To_camPosition;
@@ -158,7 +159,7 @@ void TPSCamera::CalcCameraPositionAndTarget(XMFLOAT3& _cameraPosition, XMFLOAT3&
     // ｘ軸の回転を行う
     {
         // 中心を移動
-        XMVECTOR newCenter = (XMLoadFloat3(&_cameraPosition) + XMLoadFloat3(&_camaraTarget)) * 0.5f;
+        XMVECTOR newCenter = (XMLoadFloat3(&_cameraPosition) + XMLoadFloat3(&_camaraTarget)) * ROTATE_Y;
         XMFLOAT3 prevCenter = center;
         XMStoreFloat3(&center, newCenter);
 

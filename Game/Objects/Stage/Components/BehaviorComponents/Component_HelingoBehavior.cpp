@@ -37,17 +37,17 @@ void Component_HelingoBehavior::Update()
 	if (target_ == nullptr) target_ = (StageObject*)holder_->FindObject(targetName_);
 	if (target_ == nullptr) return;
 
-	auto detector = dynamic_cast<Component_CircleRangeDetector*>(GetChildComponent("CircleRangeDetector"));
+	Component_CircleRangeDetector* detector = (Component_CircleRangeDetector*)(GetChildComponent("CircleRangeDetector"));
 	if (detector == nullptr) return;
 
-	auto fall = dynamic_cast<Component_HelingoFall*>(GetChildComponent("HelingoFall"));
+	Component_HelingoFall* fall = (Component_HelingoFall*)(GetChildComponent("HelingoFall"));
 	if (fall == nullptr)return;
 
 	// 検知範囲の設定
 	detector->SetRadius(discoveryrange_);
 
 	if (!fall->IsActived()&&detector->IsContains()) {
-		auto chase = dynamic_cast<Component_Chase*>(GetChildComponent("Chase"));
+		Component_Chase* chase = (Component_Chase*)(GetChildComponent("Chase"));
 		if (chase == nullptr) return;
 
 		// 追跡ターゲットの設定、追跡開始
@@ -68,7 +68,7 @@ void Component_HelingoBehavior::Update()
 		}
 	}
 	else {
-		auto chase = dynamic_cast<Component_Chase*>(GetChildComponent("Chase"));
+		Component_Chase* chase = (Component_Chase*)(GetChildComponent("Chase"));
 		if (chase == nullptr) return;
 		chase->Stop();
 	}
@@ -90,10 +90,10 @@ void Component_HelingoBehavior::OnCollision(GameObject* _target, Collider* _coll
 		if (hm == nullptr)return;
 
 		// プレイヤーのHPを減らす
-		auto helingoFall = dynamic_cast<Component_HelingoFall*>(GetChildComponent("HelingoFall"));
+		Component_HelingoFall* helingoFall = (Component_HelingoFall*)(GetChildComponent("HelingoFall"));
 		if (helingoFall == nullptr) return;
 
-		auto fall = dynamic_cast<Component_Fall*>(helingoFall->GetChildComponent("Fall"));
+		Component_Fall* fall = (Component_Fall*)(helingoFall->GetChildComponent("Fall"));
 		if (fall == nullptr)return;
 
 		if (fall->IsActive() && oneHit_ == false) {

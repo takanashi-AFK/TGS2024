@@ -2,22 +2,24 @@
 
 // インクルード
 #include "../../../../../Engine/Collider/BoxCollider.h"
-#include "../../../../../Engine/Collider/SphereCollider.h"
 #include "../../../../../Engine/DirectX/Direct3D.h"
 #include "../../../../../Engine/DirectX/Input.h"
-#include "../../../../../Engine/GameObject/Camera.h"
 #include "../../../../../Engine/ImGui/imgui.h"
-#include "../../../../../Engine/SceneManager.h"
 #include "../../../../../Game/Objects/Stage/Components/GaugeComponents/Component_HealthGauge.h"
+#include "../../../../Constants.h"
 #include "../../../Camera/TPSCamera.h"
+#include "../../../Engine/Global.h"
 #include "../../../Engine/Global.h"
 #include "../../../Game/Objects/UI/UIPanel.h"
 #include "../../../Game/Objects/UI/UIProgressBar.h"
 #include "../../../UI/CountDown.h"
-#include "../../../UI/UIImage.h"
-#include "../../SkySphere.h"
 #include "../../Stage.h"
 #include "../../StageObject.h"
+#include "Component_BossBehavior.h"
+#include <algorithm> 
+#include <directxmath.h> 
+
+// child components include
 #include "../AttackComponents/Component_MeleeAttack.h"
 #include "../AttackComponents/Component_ShootAttack.h"
 #include "../GaugeComponents/Component_HealthGauge.h"
@@ -25,29 +27,20 @@
 #include "../MoveComponents/Component_TackleMove.h"
 #include "../MoveComponents/Component_WASDInputMove.h"
 #include "../TimerComponent/Component_Timer.h"
-#include <algorithm> 
-
-#include <directxmath.h> 
-#include "Component_BossBehavior.h"
-
-#include "../../../../../Game/Objects/Stage/Components/GaugeComponents/Component_HealthGauge.h"
-#include "../../../../../Engine/ImGui/imgui.h"
-#include "../MoveComponents/Component_TackleMove.h"
-#include "../../../UI/CountDown.h"
-#include "../../../Camera/TPSCamera.h"
-#include "../../../../../Engine/SceneManager.h"
-#include "../../../Game/Objects/UI/UIProgressBar.h"
-#include "../../../Game/Objects/UI/UIPanel.h"
-#include "../../../UI/UIImage.h"
-#include "../../../Engine/Global.h"
-#include "../../../../Constants.h"
-
 
 using namespace Constants;
 
 namespace {
 	const int SHOOT_FRAME = 115;
 	const float DODGE_DISTANCE = 5.0f;
+	const XMFLOAT3 PLAYER_COLLIDER_SIZE = { 1,1,1 };
+	const XMFLOAT3 PLAYER_COLLIDER_POSITION = { 0,0.5,0 };
+	const XMVECTOR INITIALIZE_DIRECTION_Z = { 0,0,1,0 };
+	const float DODGE_RAY_OFFSET = 0.5f;
+	const float DODGE_DISTANCE_LIMIT = 0.7;
+	const int EFFECT_FRAME = 60;
+	const int EFFECT_SPEED = 1;
+	const float BOSS_TACKLE_DISTANCE = 2.0f;
 
 	bool IsXMVectorZero(XMVECTOR _vec) {
 		return XMVector3Equal(_vec, XMVectorZero());
@@ -66,15 +59,24 @@ namespace {
 }
 
 Component_PlayerBehavior::Component_PlayerBehavior(string _name, StageObject* _holder, Component* _parent)
-	: Component(_holder, _name, PlayerBehavior, _parent)
-	, shootHeight_(1.0f), isGameStart_(false), nowState_(PLAYER_STATE_IDLE), prevState_(PLAYER_STATE_IDLE), invincibilityFrame_(60), isShootStart_(false)
+	: Component(_holder, _name, PlayerBehavior, _parent),
+	shootHeight_(1.0f), 
+	isGameStart_(false),
+	nowState_(PLAYER_STATE_IDLE),
+	prevState_(PLAYER_STATE_IDLE), 
+	invincibilityFrame_(60), 
+	isShootStart_(false),
+	isDodgeStart_(false),
+	bossBehavior(nullptr),
+	effectModelTransform(nullptr),
+	effectData_()
 {
 }
 
 void Component_PlayerBehavior::Initialize()
 {
 	// コライダーの追加
-	holder_->AddCollider(new BoxCollider(XMFLOAT3(0, 0.5, 0), XMFLOAT3(1, 1, 1)));
+	holder_->AddCollider(new BoxCollider(PLAYER_COLLIDER_POSITION, PLAYER_COLLIDER_SIZE));
 
 	// effekseer: :Effectの読み込み
 	EFFEKSEERLIB::gEfk->AddEffect("dodge", "Effects/Lazer01.efk");/*★★★*/
@@ -125,7 +127,7 @@ void Component_PlayerBehavior::Update()
 		UIProgressBar* hpBar = (UIProgressBar*)UIPanel::GetInstance()->FindObject(PLAY_SCENE_PLAYER_HP_GAUGE_NAME);
 
 		// HPの値を移動
-		ScoreManager::playerHp = hg->now_;
+		ScoreManager::playerHp = (int)hg->now_;
 
 		// HPバーの値を設定
 		if (hpBar != nullptr && hg != nullptr)hpBar->SetProgress(&hg->now_, &hg->max_);
@@ -285,14 +287,14 @@ void Component_PlayerBehavior::Dodge()
 	Component_WASDInputMove* move = (Component_WASDInputMove*)(GetChildComponent("InputMove"));
 	if (move == nullptr)return;
 
-	BossState state = BOSS_STATE_MAX;
+	BossState bossState = BOSS_STATE_MAX;
 
 	vector<Component*> bb = (((Stage*)holder_->FindObject("Stage"))->FindComponents(BossBehavior));
 
 
 	for (auto boss : bb) {
 		bossBehavior = (Component_BossBehavior*)boss;
-		state = (BossState)((Component_BossBehavior*)boss)->GetState();
+		bossState = (BossState)((Component_BossBehavior*)boss)->GetState();
 	}
 
 	// 突進コンポーネントの取得 & 有無の確認
@@ -300,12 +302,13 @@ void Component_PlayerBehavior::Dodge()
 	if (tackle != nullptr && isDodgeStart_ == false) {
 
 		// 突進方向を設定
-		XMVECTOR dir{ 0,0,-1,0 }; {
+		XMVECTOR dir = -INITIALIZE_DIRECTION_Z; {
 			// 移動を不可能にする
 			move->Stop();
 
 			// 移動方向がゼロベクトルでなければ、移動方向を取得
 			if (IsXMVectorZero(move->GetMoveDirection()) == false)dir = move->GetMoveDirection();
+			else dir = XMVector3Normalize(XMVectorSetY(Camera::GetSightLine(),0));
 		}
 
 		// 突進方向を設定
@@ -314,33 +317,36 @@ void Component_PlayerBehavior::Dodge()
 		// ステージ情報を取得
 		Stage* pStage = (Stage*)(holder_->FindObject("Stage"));
 		if (pStage == nullptr) return;
-		auto stageObj = pStage->GetStageObjects();
+		std::vector<StageObject*> stageObj = pStage->GetStageObjects();
 
 		// ステージオブジェクトすべてにレイを撃つ
 		for (auto obj : stageObj) {
 			// 自分自身のオブジェクトだったらスキップ
-			if (obj->GetObjectName() == holder_->GetObjectName())
+			if (obj->GetObjectName() == holder_->GetObjectName() || !obj->GetIsColliding())
 				continue;
 
 			// モデルハンドルを取得
 			int hGroundModel = obj->GetModelHandle();
 			if (hGroundModel < 0) continue;
 
-			RayCastData data;
-			data.start = holder_->GetPosition(); // レイの発射位置
-			data.start.y += 0.5;
-			XMStoreFloat3(&data.dir, dir); // レイの方向
+			// 正面方向にレイを発射
+			RayCastData tackleRayData; {
+				tackleRayData.start = holder_->GetPosition(); // レイの発射位置
+				tackleRayData.start.y += DODGE_RAY_OFFSET;
+				XMStoreFloat3(&tackleRayData.dir, dir); // レイの方向
+				Model::RayCast(hGroundModel, &tackleRayData); // レイを発射
+			}
 
-			Model::RayCast(hGroundModel, &data); // レイを発射
+			// レイが何かに当たったら且つ、その距離が突進距離以下だったら突進距離の再設定
+			if (tackleRayData.hit && tackleRayData.dist <= dodgeDistance) {
 
-			if (data.hit && data.dist <= dodgeDistance) {
-
-				if (data.dist <= 0.7) {
+				// 近すぎたら0にする
+				if (tackleRayData.dist <= DODGE_DISTANCE_LIMIT) {
 					dodgeDistance = 0;
 					break;
 				}
 				else {
-					dodgeDistance = data.dist;
+					dodgeDistance = tackleRayData.dist;
 					break;
 				}
 			}
@@ -367,9 +373,9 @@ void Component_PlayerBehavior::Dodge()
 		EFFEKSEERLIB::EFKTransform t;
 		DirectX::XMStoreFloat4x4(&(t.matrix), holder_->GetWorldMatrix());
 		t.isLoop = false;
-		t.maxFrame = 60;
-		t.speed = 1.f;
-		mt = EFFEKSEERLIB::gEfk->Play("dodge", t);
+		t.maxFrame = EFFECT_FRAME;
+		t.speed = EFFECT_SPEED;
+		effectModelTransform = EFFEKSEERLIB::gEfk->Play("dodge", t);
 	}
 
 	// nフレーム経過語に、無敵状態を解除
@@ -387,7 +393,8 @@ void Component_PlayerBehavior::Dodge()
 	XMVECTOR vBossToPlayer = XMLoadFloat3(&bossToPlayer);
 
 
-	if (state == BossState::BOSS_STATE_TACKLE && XMVectorGetZ(XMVector3Length(vBossToPlayer)) < 2.f) {
+	// ボスが突進してきたら且つ、ボスとプレイヤーの距離が2以下だったら跳ね返る
+	if (bossState == BossState::BOSS_STATE_TACKLE && XMVectorGetZ(XMVector3Length(vBossToPlayer)) < BOSS_TACKLE_DISTANCE) {
 
 		Component_TackleMove* a = (Component_TackleMove*)bossBehavior->GetChildComponent("TackleMove");
 		a->SetDistance(0);
@@ -396,12 +403,12 @@ void Component_PlayerBehavior::Dodge()
 
 		// エフェクトの再生処理
 		{
-			EFFEKSEERLIB::EFKTransform t;
-			DirectX::XMStoreFloat4x4(&(t.matrix), holder_->GetWorldMatrix());
-			t.isLoop = false;
-			t.maxFrame = 60;
-			t.speed = 1.f;
-			mt = EFFEKSEERLIB::gEfk->Play("impact", t);
+			EFFEKSEERLIB::EFKTransform effectTransform;
+			DirectX::XMStoreFloat4x4(&(effectTransform.matrix), holder_->GetWorldMatrix());
+			effectTransform.isLoop = false;
+			effectTransform.maxFrame = EFFECT_FRAME;
+			effectTransform.speed = EFFECT_SPEED;
+			effectModelTransform = EFFEKSEERLIB::gEfk->Play("impact", effectTransform);
 		}
 	}
 
@@ -415,7 +422,7 @@ void Component_PlayerBehavior::Dodge()
 		move->Execute();
 
 
-		dodgeDistance = 5;
+		dodgeDistance = DODGE_DISTANCE;
 
 		// 状態を遷移
 		IsWASDKey() ? SetState(PLAYER_STATE_WALK) : SetState(PLAYER_STATE_IDLE);
@@ -441,8 +448,6 @@ XMVECTOR Component_PlayerBehavior::CalcShootDirection()
 {
 	// FIX: 下記の処理が正常に動作しないため、カメラの視線ベクトルを返すように一時的に変更
 	return Camera::GetSightLine();
-
-
 
 	// レイキャストデータを作成
 	RayCastData data; {

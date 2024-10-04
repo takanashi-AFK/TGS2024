@@ -13,7 +13,7 @@
 #include "../Objects/Stage/Components/BehaviorComponents/Component_BossBehavior.h"
 #include "../Objects/Stage/Components/AttackComponents/Component_ShootAttack.h"
 #include "../Objects/UI/UITimer.h"
-
+#include "../../Engine/DirectX/Input.h"
 namespace {
 	const string TITLE_BGM = "Audios/プレゼントコーナー.wav";
 	const string PLAY_BGM = "Audios/Fried_Chicken_Scramble.wav";
@@ -26,12 +26,13 @@ namespace {
 	const string SHOOT_SE = "Audios/火炎魔法1.wav";
 	const string WALK_SE = "Audios/砂の上を走る.wav";
 
-	const float VOLUME = 0.3f;
+	const float VOLUME = 0.2f;
 }
 
 void AudioController::Update(GameObject* _root)
 {
 	// 条件を未術し、満たした時に音楽を再生したり、停止したりする処理を記述
+
 
 	// UIパネルを取得
 	UIPanel* uiPanel = UIPanel::GetInstance();
@@ -50,7 +51,7 @@ void AudioController::Update(GameObject* _root)
 	if (sceneManager->IsCurrentScene(SCENE_ID_PLAY)) {
 
 		// 背景音楽の再生
-		Audio::Play(Audio::Load(PLAY_BGM, true), VOLUME);
+		Audio::Play(Audio::Load(ScoreManager::userName != "insane" ? PLAY_BGM : "Audios/ここは通さねえぜ！.wav", true), VOLUME);
 		Audio::Stop(Audio::Load(TITLE_BGM, true));
 
 		// カウントダウンの音の再生
@@ -84,5 +85,7 @@ void AudioController::Update(GameObject* _root)
 		// タイトルシーン以外のシーンであれば、タイトルBGMを再生
 		if(!sceneManager->IsCurrentScene(SCENE_ID_SPLASH) && !sceneManager->IsCurrentScene(SCENE_ID_END))Audio::Play(Audio::Load(TITLE_BGM, true), VOLUME);
 		Audio::Stop(Audio::Load(PLAY_BGM, true));
+
+		if(Input::IsPadButtonDown()) Audio::Play(Audio::Load(BUTTON_SE, false));
 	}
 }

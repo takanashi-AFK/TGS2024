@@ -114,3 +114,12 @@ vector<UIObject*> UIPanel::GetUIObject(UIType _type)
 	}
 	return result;
 }
+
+void UIPanel::SetVisible(string _name, bool _visible)
+{
+	// 名前でオブジェクトを検索
+	for (auto obj : childList_)
+	{
+		if (obj->GetObjectName() == _name)obj->SetVisible(_visible);
+	}
+}

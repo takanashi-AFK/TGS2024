@@ -56,7 +56,7 @@ namespace {
 
 StageObject::StageObject(string _name, string _modelFilePath, GameObject* _parent)
 	:GameObject(_parent, _name), modelFilePath_(_modelFilePath), modelHandle_(-1), myComponents_(), fallSpeed_(1), isOnGround_(false)
-	,shaderType_(Direct3D::SHADER_3D)
+	,shaderType_(Direct3D::SHADER_3D), isColliding_(true)
 {
 }
 
@@ -133,7 +133,7 @@ void StageObject::OnGround(float _fallSpeed)
 	Stage* pStage = (Stage*)FindObject("Stage");
 	if (pStage == nullptr) return;
 
-	auto stageObj = pStage->GetStageObjects();
+	vector<StageObject*> stageObj = pStage->GetStageObjects();
 
 	// モデルのサイズを考慮した足元位置（中心位置からモデル高さの半分下）
 	float modelHeight = 3.5f;  // モデルの高さ
@@ -142,7 +142,7 @@ void StageObject::OnGround(float _fallSpeed)
 	// 全てのオブジェクトに対してレイキャストを行う
 	for (auto obj : stageObj) {
 		// 自分自身のオブジェクトをスキップ
-		if (obj->GetObjectName() == this->objectName_)
+		if (obj->GetObjectName() == this->objectName_ || !obj->isColliding_)
 			continue;
 
 		int hGroundModel = obj->modelHandle_;
@@ -180,11 +180,11 @@ void StageObject::CollisionWall()
 	Stage* pStage = static_cast<Stage*>(FindObject("Stage"));
 	if (pStage == nullptr) return;
 
-	auto stageObj = pStage->GetStageObjects();
+	vector<StageObject*> stageObj = pStage->GetStageObjects();
 
 	// 全てのオブジェクトに対して水平方向のレイキャストを行う
 	for (auto obj : stageObj) {
-		if (obj->GetObjectName() == this->objectName_)
+		if (obj->GetObjectName() == this->objectName_ || !obj->isColliding_)
 			continue;
 
 		int hGroundModel = obj->modelHandle_;
@@ -215,9 +215,9 @@ void StageObject::CollisionWall()
 		}
 	}
 }
-void StageObject::PlayAnimation(int _start, int _end, float _speed)
+void StageObject::PlayAnimation(int _startFrame, int _endFrame, float _speed)
 {
-	Model::SetAnimFrame(modelHandle_,_start, _end, _speed);
+	Model::SetAnimFrame(modelHandle_,_startFrame, _endFrame, _speed);
 
 }
 
@@ -276,6 +276,7 @@ void StageObject::Save(json& _saveObj)
 	_saveObj["isOnGround_"] = isOnGround_;
 	_saveObj["isCollisionWall_"] = isCollisionWall_;
 	_saveObj["onGroundOffset_"] = { REFERENCE_XMFLOAT3(onGroundOffset_) };
+	_saveObj["isColliding_"] = isColliding_;
 	
 	// 自身のモデルのファイルパスを保存
 	_saveObj["modelFilePath_"] = modelFilePath_;
@@ -306,7 +307,7 @@ void StageObject::Load(json& _loadObj)
 	if (_loadObj.contains("isOnGround_"))isOnGround_ = _loadObj["isOnGround_"];
 	if (_loadObj.contains("isCollisionWall_"))isCollisionWall_ = _loadObj["isCollisionWall_"];
 	if (_loadObj.contains("onGroundOffset_"))onGroundOffset_ = { _loadObj["onGroundOffset_"][0].get<float>(),_loadObj["onGroundOffset_"][1].get<float>(), _loadObj["onGroundOffset_"][2].get<float>() };
-
+	if (_loadObj.contains("isColliding_"))isColliding_ = _loadObj["isColliding_"];
 	// モデルのファイルパスを読込
 	modelFilePath_ = _loadObj["modelFilePath_"];
 
@@ -354,11 +355,9 @@ void StageObject::DrawData()
 	// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
 	if (ImGui::TreeNode("OnGround")) {
 		ImGui::Checkbox("isOnGround", &isOnGround_);
-		isOnGround_ ? ImGui::Text("true"): ImGui::Text("false");
-
-
 		ImGui::SameLine();
-		ImGui::Checkbox("isCollisionWall", &isCollisionWall_);
+		ImGui::Checkbox("isCollisionWall",&isCollisionWall_);
+		ImGui::Checkbox("isColliding_" ,&isColliding_);
 		ImGui::DragFloat("fallSpeed", &fallSpeed_, 0.1f, 0.f, 1.f);
 		ImGui::DragFloat3("onGroundOffset", &onGroundOffset_.x, 0.1f);
 		ImGui::TreePop();
@@ -410,12 +409,9 @@ void StageObject::DrawData()
 		ImGui::TreePop();
 	}
 
-
-
 	// コンポーネント追加ウィンドウを描画
 	if (isShowAddComponentWindow_)DrawAddComponentWindow(this);
 	if (isShowSetComponentNameWindow_)DrawSetComponentNameWindow(this);
-
 
 }
 

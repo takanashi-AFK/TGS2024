@@ -22,7 +22,7 @@ private:
 	int power_;
 
 	// effekseer: •ÏŒ`s—ñ
-	std::shared_ptr<EFFEKSEERLIB::EFKTransform> mt;/*ššš*/
+	std::shared_ptr<EFFEKSEERLIB::EFKTransform> effectModelTransform_;/*ššš*/
 	EffectData data_;
 
 	float lifeTime_;	// ¶‘¶ŠÔ

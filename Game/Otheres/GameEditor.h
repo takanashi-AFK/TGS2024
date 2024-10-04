@@ -79,6 +79,6 @@ private:
 
 	void DrawDatalsCamera();
 
-	void UIObjectClreateWindow();
+	void UIObjectCreateWindow();
 };
 

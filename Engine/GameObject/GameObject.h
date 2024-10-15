@@ -165,10 +165,10 @@ private:
 	//フラグ
 	struct OBJECT_STATE
 	{
-		unsigned initialized : 1;	//初期化済みか
-		unsigned entered : 1;		//更新するか
-		unsigned visible : 1;		//描画するか
-		unsigned dead : 1;			//削除するか
+		bool initialized : 1;	//初期化済みか
+		bool entered : 1;		//更新するか
+		bool visible : 1;		//描画するか
+		bool dead : 1;			//削除するか
 	};
 	OBJECT_STATE state_;
 

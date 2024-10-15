@@ -41,7 +41,8 @@ void Stage::Load(json& _loadObj)
 		
 		// オブジェクトのインスタンスを生成
 		StageObject* obj = CreateStageObject(it.key(), it.value()["modelFilePath_"], this);
-		
+		auto k = it.key();
+		auto v = it.value();
 		// オブジェクト情報を読込
 		obj->Load(it.value());
 

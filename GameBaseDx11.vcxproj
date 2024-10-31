@@ -139,6 +139,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Game\Objects\UI\EasingInformation_forUI.cpp" />
     <ClCompile Include="Engine\DirectX\Easing.cpp" />
     <ClCompile Include="Game\Otheres\AudioController.cpp" />
     <ClCompile Include="Game\Objects\UI\CountDown.cpp" />
@@ -227,6 +228,8 @@
     <ClCompile Include="Game\Objects\UI\UIInputString.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Game\Objects\UI\EasingInformation_forUI.h" />
+    <ClInclude Include="Engine\DirectX\EasingInformation.h" />
     <ClInclude Include="Engine\DirectX\Easing.h" />
     <ClInclude Include="Game\Otheres\AudioController.h" />
     <ClInclude Include="Game\Objects\UI\CountDown.h" />

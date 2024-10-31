@@ -303,6 +303,7 @@
     <ClCompile Include="Game\Scenes\Scene_DifficultySelect.cpp" />
     <ClCompile Include="Game\Objects\UI\UIInputString.cpp" />
     <ClCompile Include="Engine\DirectX\Easing.cpp" />
+    <ClCompile Include="Game\Objects\UI\EasingInformation_forUI.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Collider\BoxCollider.h">
@@ -532,6 +533,8 @@
     <ClInclude Include="Game\Scenes\Scene_DifficultySelect.h" />
     <ClInclude Include="Game\Objects\UI\UIInputString.h" />
     <ClInclude Include="Engine\DirectX\Easing.h" />
+    <ClInclude Include="Engine\DirectX\EasingInformation.h" />
+    <ClInclude Include="Game\Objects\UI\EasingInformation_forUI.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Assets\Shader\Simple2D.hlsl">

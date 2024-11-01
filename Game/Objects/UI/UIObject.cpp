@@ -58,8 +58,8 @@ void UIObject::ChildSave(json& _saveObj)
 	_saveObj["position_"] = { REFERENCE_XMFLOAT3(transform_.position_) };
 	_saveObj["rotate_"] = { REFERENCE_XMFLOAT3(transform_.rotate_) };
 	_saveObj["scale_"] = { REFERENCE_XMFLOAT3(transform_.scale_) };
-
-	if (easing_)	easing_->Save(_saveObj);
+	
+	if (easing_.get())	easing_.get()->Save(_saveObj);
 
 	// Ž©g‚ÌŒÅ—Lî•ñ‚ð•Û‘¶
 	this->Save(_saveObj);
@@ -84,7 +84,8 @@ void UIObject::ChildLoad(json& _loadObj)
 	if (_loadObj.contains("rotate_"))transform_.rotate_ = { _loadObj["rotate_"][0].get<float>(),_loadObj["rotate_"][1].get<float>(), _loadObj["rotate_"][2].get<float>() };
 	if (_loadObj.contains("scale_"))transform_.scale_ = { _loadObj["scale_"][0].get<float>(),_loadObj["scale_"][1].get<float>(), _loadObj["scale_"][2].get<float>() };
 
-	if (easing_)	easing_->Load(_loadObj);
+	if (easing_.get())	easing_.get()->Load(_loadObj);
+
 	// ŒÅ—Lî•ñ‚ð“Çž
 	this->Load(_loadObj);
 }

@@ -12,10 +12,11 @@
 #include "UITimer.h"
 #include "UIInputString.h"
 
-UIObject::UIObject():
-	UIObject("",UI_NONE,nullptr,0)
-{
+#include "Easing_ForUI.h"
 
+UIObject::UIObject():
+	UIObject("", UI_NONE, nullptr, 0)
+{
 }
 
 UIObject::UIObject(UIObject* parent):
@@ -58,6 +59,8 @@ void UIObject::ChildSave(json& _saveObj)
 	_saveObj["rotate_"] = { REFERENCE_XMFLOAT3(transform_.rotate_) };
 	_saveObj["scale_"] = { REFERENCE_XMFLOAT3(transform_.scale_) };
 
+	if (easing_)	easing_->Save(_saveObj);
+
 	// 自身の固有情報を保存
 	this->Save(_saveObj);
 }
@@ -81,6 +84,7 @@ void UIObject::ChildLoad(json& _loadObj)
 	if (_loadObj.contains("rotate_"))transform_.rotate_ = { _loadObj["rotate_"][0].get<float>(),_loadObj["rotate_"][1].get<float>(), _loadObj["rotate_"][2].get<float>() };
 	if (_loadObj.contains("scale_"))transform_.scale_ = { _loadObj["scale_"][0].get<float>(),_loadObj["scale_"][1].get<float>(), _loadObj["scale_"][2].get<float>() };
 
+	if (easing_)	easing_->Load(_loadObj);
 	// 固有情報を読込
 	this->Load(_loadObj);
 }
@@ -118,6 +122,23 @@ void UIObject::ChildDrawData()
 		if(isRotateLocked_ == false)ImGui::DragFloat3("rotate_", &transform_.rotate_.x, 1.f, -360.f, 360.f);
 		if(isScaleLocked_ == false)ImGui::DragFloat3("scale_", &transform_.scale_.x, 0.1f, 0.f, LONG_MAX);
 		ImGui::TreePop();
+	}
+
+	if(this->easing_.get()){
+		if (ImGui::TreeNode("Easing Data")) {
+			auto& eas = *easing_.get();
+
+			ImGui::DragFloat3("2nd Pos", &eas.secTransform_.position_.x, 0.1f);
+			ImGui::DragFloat3("2nd Rot", &eas.secTransform_.rotate_.x, 0.1f);
+			ImGui::DragFloat3("2nd Scale", &eas.secTransform_.scale_.x, 0.1f);
+
+			ImGui::DragFloat("Ratio now", &eas.GetEasing()->pile_, 0.005f,.0f,1.0f);
+			ImGui::DragFloat("Ratio/Frame", &eas.GetEasing()->ratio_, 0.005f ,-1.0f,1.0f);
+
+			ImGui::Checkbox(":Stop Easing", &eas.GetEasing()->isStop);
+
+			ImGui::TreePop();
+		}
 	}
 
 	// 描画フラグを描画
@@ -282,7 +303,12 @@ bool UIObject::CompareLayerNumber(UIObject* _object1, UIObject* _object2)
 	return _object1->GetLayerNumber() < _object2->GetLayerNumber();
 }
 
-UIObject* CreateUIObject(string _name, UIType _type,UIObject* _parent, int _layerNum)
+void UIObject::CreateEasing()
+{
+	easing_ = std::make_unique<Easing_ForUI>(this);
+}
+
+UIObject* UIObject::CreateUIObject(string _name, UIType _type,UIObject* _parent, int _layerNum )
 {
 	// インスタンスを生成する
 	UIObject* obj = nullptr;
@@ -302,15 +328,12 @@ UIObject* CreateUIObject(string _name, UIType _type,UIObject* _parent, int _laye
 
 	// 親オブジェクトの子オブジェクトとして登録する
 	if (_parent != nullptr)_parent->PushBackChild(obj);
-	
-	// 初期化を行う
-	obj->Initialize();
 
 	// 生成したオブジェクトを返す
 	return obj;
 }
 
-string GetUITypeString(UIType _type)
+string UIObject::GetUITypeString(UIType _type)
 {
 	switch (_type)
 	{
@@ -323,6 +346,13 @@ string GetUITypeString(UIType _type)
 	case UI_INPUTSTRING:return "INPUTSTRING";
 	default:return "UNKNOWN";
 	}
+}
+
+Transform UIObject::GetCalcTransform()
+{
+	if (this->easing_.get()) return this->easing_.get()->GetValue();
+
+	return this->GetTransform();
 }
 
 void UIObject::UpdateSub()
@@ -363,5 +393,10 @@ void UIObject::ReleaseSub()
 bool UIObject::IsDead()
 {
 	return (state_.dead != 0);
+}
+
+Easing_ForUI* UIObject::GetEasing()
+{
+	return this->easing_.get();
 }
 

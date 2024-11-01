@@ -269,12 +269,12 @@ void GameEditor::UIObjectCreateWindow()
 
 			if (ImGui::BeginCombo(":seting type", type.c_str())) {
 				for (int i = 0; i < UIType::UI_MAX; i++) {
-					std::string uiTypeString = GetUITypeString((UIType)i);
+					std::string uiTypeString = UIObject::GetUITypeString((UIType)i);
 					if (uiTypeString.empty()) continue; // 空文字列を無視
 
-					bool isSelected = (type == GetUITypeString((UIType)i));
-					if (ImGui::Selectable(GetUITypeString((UIType)i).c_str(), isSelected)) {
-						type = GetUITypeString((UIType)i);
+					bool isSelected = (type == UIObject::GetUITypeString((UIType)i));
+					if (ImGui::Selectable(UIObject::GetUITypeString((UIType)i).c_str(), isSelected)) {
+						type = UIObject::GetUITypeString((UIType)i);
 						uitype = (UIType)i;
 					}
 					if (isSelected) {
@@ -283,7 +283,8 @@ void GameEditor::UIObjectCreateWindow()
 				}
 				ImGui::EndCombo();
 			}
-
+			static bool isEasing = false;
+			ImGui::Checkbox(":Is using Easing?",&isEasing);
 
 			//レイヤー番号を入力
 			static int beforeLayerNumber = -1; //直前のレイヤー番号
@@ -309,7 +310,14 @@ void GameEditor::UIObjectCreateWindow()
 			// 生成ボタン
 			if (ImGui::Button("Create") && !isLayerNumberDuplicate) {
 				// UIオブジェクトを作成・追加
-				UIObject* obj = CreateUIObject(nameBuffer, uitype, editUIPanel_,layerNumberCount_);
+				UIObject* obj = UIObject::CreateUIObject(nameBuffer, uitype, editUIPanel_,layerNumberCount_);
+
+				//イージングの生成
+				if (isEasing)	obj->CreateEasing();
+
+				// 初期化を行う
+				obj->Initialize();
+
 				if (obj != nullptr) {
 					isShowCreateUIObjectWindow_ = false;
 					//レイヤー番号の更新

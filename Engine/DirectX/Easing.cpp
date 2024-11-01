@@ -10,38 +10,17 @@ float Easing::GetValue(float v0, float v1, float ratio, Easing::TYPE type)
 	return func(v0, v1, ratio);
 }
 
-Easing::Easing(float v0, float v1, float addRatio):val0_(v0),val1_(v1),ratio_(addRatio),pile_(.0f)
+Easing::Easing(float v0, float v1, float addRatio) :val0_(v0), val1_(v1), ratio_(addRatio), pile_(.0f), isStop(false)
 {
 }
 
 float Easing::GetValue(Easing::TYPE type)
 {
 	auto func = GetCalcFunction(type);
-	pile_ += ratio_;
+
+	if(!isStop)	pile_ += ratio_;
+
 	return func(val0_, val1_, pile_);
-}
-
-void Easing::SetValue0(float val)
-{
-	val0_ = val;
-}
-
-void Easing::SetValue1(float val)
-{
-	val1_ = val;
-}
-
-void Easing::SetValue(float v0, float v1)
-{
-	val0_ = v0;
-	val1_ = v1;
-}
-
-void Easing::SetRatio(float r, bool isReset)
-{
-	ratio_ = r;
-
-	if (isReset)	pile_ = .0f;
 }
 
 auto Check = [](float& v0, float& v1, float& ratio)

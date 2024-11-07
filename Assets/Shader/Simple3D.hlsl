@@ -1,3 +1,5 @@
+#include<Alpha.hlsli>
+
 //───────────────────────────────────────
  // テクスチャ＆サンプラーデータのグローバル変数定義
 //───────────────────────────────────────
@@ -69,6 +71,21 @@ VS_OUT VS(float4 pos : POSITION, float4 Normal : NORMAL, float2 Uv : TEXCOORD)
 //───────────────────────────────────────
 float4 PS(VS_OUT inData) : SV_Target
 {
+    float4 diffuse;
+	//テクスチャ有無
+    if (g_isTexture == true)
+    {
+		//テクスチャの色
+        diffuse = g_texture.Sample(g_sampler, inData.uv);
+    }
+    else
+    {
+		//マテリアルの色
+        diffuse = g_vecDiffuse;
+    }
+	
+    Dithering(inData.pos.xy, diffuse.a);
+	
 	//ライトの向き
 	float4 lightDir = g_vecLightDir;	//グルーバル変数は変更できないので、いったんローカル変数へ
 	lightDir = normalize(lightDir);	//向きだけが必要なので正規化
@@ -81,19 +98,6 @@ float4 PS(VS_OUT inData) : SV_Target
 	//法線と光のベクトルの内積が、そこの明るさになる
 	float4 shade = saturate(dot(inData.normal, -lightDir));
 	shade.a = 1;	//暗いところが透明になるので、強制的にアルファは1
-
-	float4 diffuse;
-	//テクスチャ有無
-	if (g_isTexture == true)
-	{
-		//テクスチャの色
-		diffuse = g_texture.Sample(g_sampler, inData.uv);
-	}
-	else
-	{
-		//マテリアルの色
-		diffuse = g_vecDiffuse;
-	}
 
 	//環境光（アンビエント）
 	//これはMaya側で指定し、グローバル変数で受け取ったものをそのまま

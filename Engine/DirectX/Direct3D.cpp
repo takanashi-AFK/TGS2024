@@ -2,6 +2,8 @@
 #include "Direct3D.h"
 #include "../Global.h"
 #include "../GameObject/Transform.h"
+#include<fstream>
+#include<filesystem>
 
 //画面の描画に関する処理
 namespace Direct3D
@@ -261,15 +263,17 @@ namespace Direct3D
 
 		//3D
 		{
+			HLSLInclude::DefaultInclude inc = {};
+
 			// 頂点シェーダの作成（コンパイル）
 			ID3DBlob *pCompileVS = NULL;
-			D3DCompileFromFile(L"Shader/Simple3D.hlsl", nullptr, nullptr, "VS", "vs_5_0", NULL, 0, &pCompileVS, NULL);
+			auto res = D3DCompileFromFile(L"Shader/Simple3D.hlsl", nullptr, &inc, "VS", "vs_5_0", NULL, 0, &pCompileVS, NULL);
 			pDevice_->CreateVertexShader(pCompileVS->GetBufferPointer(), pCompileVS->GetBufferSize(), NULL, &shaderBundle[SHADER_3D].pVertexShader);
 
 
 			// ピクセルシェーダの作成（コンパイル）
 			ID3DBlob *pCompilePS = NULL;
-			D3DCompileFromFile(L"Shader/Simple3D.hlsl", nullptr, nullptr, "PS", "ps_5_0", NULL, 0, &pCompilePS, NULL);
+			res = D3DCompileFromFile(L"Shader/Simple3D.hlsl", nullptr, &inc, "PS", "ps_5_0", NULL, 0, &pCompilePS, NULL);
 			pDevice_->CreatePixelShader(pCompilePS->GetBufferPointer(), pCompilePS->GetBufferSize(), NULL, &shaderBundle[SHADER_3D].pPixelShader);
 
 
@@ -364,6 +368,9 @@ namespace Direct3D
 
 		//BillBoard
 		{
+			ID3DInclude* inc ;
+			
+
 			// 頂点シェーダの作成（コンパイル）
 			ID3DBlob* pCompileVS = NULL;
 			D3DCompileFromFile(L"Shader/BillBoard.hlsl", nullptr, nullptr, "VS", "vs_5_0", NULL, 0, &pCompileVS, NULL);
@@ -720,4 +727,25 @@ namespace Direct3D
 		height = GetSystemMetrics(SM_CYSCREEN);
 	}
 
+}
+
+HRESULT HLSLInclude::DefaultInclude::Open(D3D_INCLUDE_TYPE IncludeType, LPCSTR pFileName, LPCVOID pParentData, LPCVOID* ppData, UINT* pBytes)
+{
+	std::string file = pFileName;
+	std::string dir = "../Assets/Shader/"; 
+	auto temp = (dir + file);
+
+	std::ifstream istr((dir+file).c_str());
+	std::string fileContent((std::istreambuf_iterator<char>(istr)), std::istreambuf_iterator<char>());
+	
+	*ppData = _strdup(fileContent.c_str());
+
+	return S_OK;
+}
+
+HRESULT HLSLInclude::DefaultInclude::Close(LPCVOID pData)
+{
+	free((void*)pData);
+
+	return S_OK;
 }

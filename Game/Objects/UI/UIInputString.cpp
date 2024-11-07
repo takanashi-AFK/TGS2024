@@ -48,8 +48,10 @@ void UIInputString::Draw()
     pText_->SetScale(size_);
 
     // 表示位置を計算
-    float drawX = (transform_.position_.x * (Direct3D::screenWidth_ / 2)) + (Direct3D::screenWidth_ / 2);
-    float drawY = (transform_.position_.y * (Direct3D::screenHeight_ / 2)) + (Direct3D::screenHeight_ / 2);
+    auto t = GetCalcTransform();
+
+    float drawX = (t.position_.x * (Direct3D::screenWidth_ / 2)) + (Direct3D::screenWidth_ / 2);
+    float drawY = (t.position_.y * (Direct3D::screenHeight_ / 2)) + (Direct3D::screenHeight_ / 2);
 
     // テキストを描画
     pText_->Draw(drawX, drawY, currentInput.c_str());

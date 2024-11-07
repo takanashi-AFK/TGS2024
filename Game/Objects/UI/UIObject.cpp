@@ -330,6 +330,8 @@ UIObject* UIObject::CreateUIObject(string _name, UIType _type,UIObject* _parent,
 	// 親オブジェクトの子オブジェクトとして登録する
 	if (_parent != nullptr)_parent->PushBackChild(obj);
 
+	obj->Initialize();
+
 	// 生成したオブジェクトを返す
 	return obj;
 }
@@ -351,9 +353,10 @@ string UIObject::GetUITypeString(UIType _type)
 
 Transform UIObject::GetCalcTransform()
 {
+	easing_.get()->GetEasing()->val1_ = 1;
 	if (this->easing_.get()) return this->easing_.get()->GetValue();
 
-	return this->GetTransform();
+	return transform_;
 }
 
 void UIObject::UpdateSub()

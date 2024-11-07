@@ -15,6 +15,7 @@ public:
 	Easing* GetEasing();
 
 	Transform secTransform_;
+	Easing::TYPE easing_type;
 
 private:
 	Easing easing_;

@@ -3,6 +3,7 @@
 #include<algorithm>
 #include<numbers>
 #include<cmath>
+#include<utility>
 
 float Easing::GetValue(float v0, float v1, float ratio, Easing::TYPE type)
 {
@@ -14,19 +15,21 @@ Easing::Easing(float v0, float v1, float addRatio) :val0_(v0), val1_(v1), ratio_
 {
 }
 
+auto Check = [](float v0, float v1, float& ratio)
+	{
+		ratio = std::clamp(ratio, .0f, 1.0f);
+	};
+
 float Easing::GetValue(Easing::TYPE type)
 {
 	auto func = GetCalcFunction(type);
 
 	if(!isStop)	pile_ += ratio_;
 
+	Check(.0f, 1.0f, pile_);
 	return func(val0_, val1_, pile_);
 }
 
-auto Check = [](float& v0, float& v1, float& ratio)
-	{
-		ratio = std::clamp(ratio, .0f, 1.0f);
-	};
 
 float Easing::CalcStraight(float v0, float v1, float ratio)
 {

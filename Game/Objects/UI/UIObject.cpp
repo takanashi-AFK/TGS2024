@@ -84,7 +84,11 @@ void UIObject::ChildLoad(json& _loadObj)
 	if (_loadObj.contains("rotate_"))transform_.rotate_ = { _loadObj["rotate_"][0].get<float>(),_loadObj["rotate_"][1].get<float>(), _loadObj["rotate_"][2].get<float>() };
 	if (_loadObj.contains("scale_"))transform_.scale_ = { _loadObj["scale_"][0].get<float>(),_loadObj["scale_"][1].get<float>(), _loadObj["scale_"][2].get<float>() };
 
-	if (easing_.get())	easing_.get()->Load(_loadObj);
+	if (_loadObj.contains("Easing_Type"))
+	{
+		easing_ = std::make_unique<Easing_ForUI>(this);
+		easing_.get()->Load(_loadObj);
+	}
 
 	// ŒÅ—Lî•ñ‚ð“Çž
 	this->Load(_loadObj);
@@ -137,6 +141,10 @@ void UIObject::ChildDrawData()
 			ImGui::DragFloat("Ratio/Frame", &eas.GetEasing()->ratio_, 0.005f ,-1.0f,1.0f);
 
 			ImGui::Checkbox(":Stop Easing", &eas.GetEasing()->isStop);
+
+			ImGui::RadioButton("Sin", reinterpret_cast<int*>(&eas.easing_type), static_cast<int>(Easing::TYPE::SIN));	ImGui::SameLine();
+			ImGui::RadioButton("Cos", reinterpret_cast<int*>(&eas.easing_type), static_cast<int>(Easing::TYPE::COS));	ImGui::SameLine();
+			ImGui::RadioButton("Straight", reinterpret_cast<int*>(&eas.easing_type), static_cast<int>(Easing::TYPE::STRAIGHT));
 
 			ImGui::TreePop();
 		}
@@ -353,9 +361,11 @@ string UIObject::GetUITypeString(UIType _type)
 
 Transform UIObject::GetCalcTransform()
 {
-	easing_.get()->GetEasing()->val1_ = 1;
-	if (this->easing_.get()) return this->easing_.get()->GetValue();
-
+	if (this->easing_.get())
+	{
+		easing_.get()->GetEasing()->val1_ = 1;
+		return this->easing_.get()->GetValue();
+	}
 	return transform_;
 }
 

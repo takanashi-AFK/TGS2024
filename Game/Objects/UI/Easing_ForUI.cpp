@@ -1,6 +1,6 @@
 #include "Easing_ForUI.h"
 
-Easing_ForUI::Easing_ForUI(UIObject* p) :easing_(0, 0, 0),p_ui(p)
+Easing_ForUI::Easing_ForUI(UIObject* p) :easing_(0, 0, 0),p_ui(p),easing_type(Easing::TYPE::COS)
 {
 }
 
@@ -21,10 +21,11 @@ void Easing_ForUI::Save(json& _saveObj)
 	}
 
 	{
-		_saveObj["Easing_Start"] = { easing_.val0_};
-		_saveObj["Easing_Goal"] = { easing_.val1_ };
-		_saveObj["Easing_Ratio"] = { easing_.ratio_ };
-		_saveObj["Easing_Pile"] = { easing_.pile_ };
+		_saveObj["Easing_Start"] =  easing_.val0_ ;
+		_saveObj["Easing_Goal"] =  easing_.val1_ ;
+		_saveObj["Easing_Ratio"] =  easing_.ratio_ ;
+		_saveObj["Easing_Pile"] =  easing_.pile_ ;
+		_saveObj["Easing_Type"] =  static_cast<int>(this->easing_type ) ;
 	}
 }
 
@@ -42,6 +43,12 @@ void Easing_ForUI::Load(json& _loadObj)
 			if (_loadObj.contains(index)) data = _loadObj[index].get<float>();
 		};
 
+	auto SetInt = [&](string index, int& data)
+		{
+			data = {};
+			if (_loadObj.contains(index)) data = _loadObj[index].get<int>();
+		};
+
 	{
 		auto& t = this->secTransform_;
 		SetFloat3("Second_position_", t.position_);
@@ -53,6 +60,11 @@ void Easing_ForUI::Load(json& _loadObj)
 		SetFloat("Easing_Goal", e.val1_);
 		SetFloat("Easing_Ratio", e.ratio_);
 		SetFloat("Easing_Pile",e.pile_);
+
+		int temp = NULL;
+		SetInt("Easing_Type",temp);
+
+		easing_type = static_cast<Easing::TYPE>(temp);
 	}
 }
 

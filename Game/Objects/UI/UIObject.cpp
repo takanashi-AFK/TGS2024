@@ -142,10 +142,9 @@ void UIObject::ChildDrawData()
 
 			ImGui::Checkbox(":Stop Easing", &eas.GetEasing()->isStop);
 
-			ImGui::RadioButton("Sin", reinterpret_cast<int*>(&eas.easing_type), static_cast<int>(Easing::TYPE::SIN));	ImGui::SameLine();
-			ImGui::RadioButton("Cos", reinterpret_cast<int*>(&eas.easing_type), static_cast<int>(Easing::TYPE::COS));	ImGui::SameLine();
-			ImGui::RadioButton("Straight", reinterpret_cast<int*>(&eas.easing_type), static_cast<int>(Easing::TYPE::STRAIGHT));
-
+			for (auto i = 0u; i < static_cast<int>(Easing::TYPE::AMOUNT); i++) {
+				ImGui::RadioButton(Easing::GetEnumName(static_cast<Easing::TYPE>(i)).c_str(), reinterpret_cast<int*>(&eas.easing_type), i);	ImGui::SameLine();
+			}
 			ImGui::TreePop();
 		}
 	}

@@ -40,6 +40,32 @@ float Easing::CalcStraight(float v0, float v1, float ratio)
 	return ((ratio * v0) + (invRatio * v1));
 }
 
+std::string Easing::GetEnumName(Easing::TYPE t)
+{
+	switch (t)
+	{
+	case TYPE::STRAIGHT:return "Straight";
+
+	case TYPE::SIN:		return "Sin";
+
+	case TYPE::COS:		return "Cos";
+
+	case TYPE::EaseIO:	return "EaseIO";
+
+	default: return "None";
+	}
+}
+
+float Easing::CalsEaseIO(float v0, float v1, float ratio)
+{
+	Check(v0, v1, ratio);
+
+	ratio = .5f + (std::sin(std::numbers::pi * (ratio - 0.5))) * .5f;
+	float invRatio = 1 - ratio;
+
+	return ((ratio * v0) + (invRatio * v1));
+}
+
 float Easing::CalcSin(float v0, float v1, float ratio)
 {
 	Check(v0, v1, ratio);
@@ -70,6 +96,9 @@ float(*Easing::GetCalcFunction(Easing::TYPE type))(float, float, float)
 		return Easing::CalcSin;
 	case Easing::TYPE::COS:
 		return Easing::CalcCos;
+	case Easing::TYPE::EaseIO:
+		return Easing::CalsEaseIO;
+
 	default:
 		return Easing::CalcStraight;
 	}

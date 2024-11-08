@@ -73,7 +73,7 @@ Transform Easing_ForUI::GetValue()
 	Transform t = {};
 	auto CalcFloat3 = [&](XMFLOAT3 ui, XMFLOAT3 me)->XMFLOAT3
 		{
-			float left = easing_.GetValue(Easing::TYPE::SIN);
+			float left = easing_.GetValue(easing_type);
 			float right = 1 - left;
 
 			float x = left * ui.x + right * me.x;

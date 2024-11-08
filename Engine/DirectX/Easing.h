@@ -1,4 +1,6 @@
 #pragma once
+#include<string>
+
 class Easing
 {
 public :
@@ -7,7 +9,10 @@ public :
 	{
 		STRAIGHT,
 		SIN,
-		COS
+		COS,
+		EaseIO,
+
+		AMOUNT
 	};
 
 	Easing(float v0,float v1,float addRatio);
@@ -21,11 +26,14 @@ public :
 	float val1_;
 	bool isStop;
 
+	static std::string GetEnumName(Easing::TYPE t);
+
 private:
 
 	static float CalcStraight(float v0, float v1, float ratio);
 	static float CalcSin(float v0, float v1, float ratio);
 	static float CalcCos(float v0, float v1, float ratio);
+	static float CalsEaseIO(float v0, float v1, float ratio);
 
 	static float (*GetCalcFunction(Easing::TYPE type))(float, float, float);
 };

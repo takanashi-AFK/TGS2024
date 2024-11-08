@@ -118,6 +118,7 @@ namespace Direct3D
 
 
 		///////////////////////////上記設定をもとにデバイス、コンテキスト、スワップチェインを作成///////////////////////////////
+
 		D3D_FEATURE_LEVEL level;
 		HRESULT  hr;
 		hr = D3D11CreateDeviceAndSwapChain(
@@ -166,6 +167,7 @@ namespace Direct3D
 		float viewPortMagnification = 1.f;
 #ifdef _DEBUG
 		viewPortMagnification = 0.7f;
+
 #endif // _DEBUG
 
 		D3D11_VIEWPORT vp;
@@ -267,7 +269,9 @@ namespace Direct3D
 
 			// 頂点シェーダの作成（コンパイル）
 			ID3DBlob *pCompileVS = NULL;
-			auto res = D3DCompileFromFile(L"Shader/Simple3D.hlsl", nullptr, &inc, "VS", "vs_5_0", NULL, 0, &pCompileVS, NULL);
+			auto res = D3DCompileFromFile(L"Shader/Simple3D.hlsl", nullptr, &inc, "VS", "vs_5_0", D3DCOMPILE_DEBUG | D3DCOMPILE_SKIP_OPTIMIZATION, 0, &pCompileVS,NULL);
+
+
 			pDevice_->CreateVertexShader(pCompileVS->GetBufferPointer(), pCompileVS->GetBufferSize(), NULL, &shaderBundle[SHADER_3D].pVertexShader);
 
 
@@ -301,15 +305,17 @@ namespace Direct3D
 
 		//2D
 		{
+			HLSLInclude::DefaultInclude inc = {};
+
 			// 頂点シェーダの作成（コンパイル）
 			ID3DBlob *pCompileVS = NULL;
-			D3DCompileFromFile(L"Shader/Simple2D.hlsl", nullptr, nullptr, "VS", "vs_5_0", NULL, 0, &pCompileVS, NULL);
+			D3DCompileFromFile(L"Shader/Simple2D.hlsl", nullptr, &inc, "VS", "vs_5_0", NULL, 0, &pCompileVS, NULL);
 			pDevice_->CreateVertexShader(pCompileVS->GetBufferPointer(), pCompileVS->GetBufferSize(), NULL, &shaderBundle[SHADER_2D].pVertexShader);
 
 
 			// ピクセルシェーダの作成（コンパイル）
 			ID3DBlob *pCompilePS = NULL;
-			D3DCompileFromFile(L"Shader/Simple2D.hlsl", nullptr, nullptr, "PS", "ps_5_0", NULL, 0, &pCompilePS, NULL);
+			D3DCompileFromFile(L"Shader/Simple2D.hlsl", nullptr, &inc, "PS", "ps_5_0", NULL, 0, &pCompilePS, NULL);
 			pDevice_->CreatePixelShader(pCompilePS->GetBufferPointer(), pCompilePS->GetBufferSize(), NULL, &shaderBundle[SHADER_2D].pPixelShader);
 
 
@@ -335,15 +341,17 @@ namespace Direct3D
 
 		//DEBUG用
 		{
+			HLSLInclude::DefaultInclude inc = {};
+
 			// 頂点シェーダの作成（コンパイル）
 			ID3DBlob *pCompileVS = NULL;
-			D3DCompileFromFile(L"Shader/Debug3D.hlsl", nullptr, nullptr, "VS", "vs_5_0", NULL, 0, &pCompileVS, NULL);
+			D3DCompileFromFile(L"Shader/Debug3D.hlsl", nullptr, &inc, "VS", "vs_5_0", NULL, 0, &pCompileVS, NULL);
 			pDevice_->CreateVertexShader(pCompileVS->GetBufferPointer(), pCompileVS->GetBufferSize(), NULL, &shaderBundle[SHADER_UNLIT].pVertexShader);
 
 
 			// ピクセルシェーダの作成（コンパイル）
 			ID3DBlob *pCompilePS = NULL;
-			D3DCompileFromFile(L"Shader/Debug3D.hlsl", nullptr, nullptr, "PS", "ps_5_0", NULL, 0, &pCompilePS, NULL);
+			D3DCompileFromFile(L"Shader/Debug3D.hlsl", nullptr, &inc, "PS", "ps_5_0", NULL, 0, &pCompilePS, NULL);
 			pDevice_->CreatePixelShader(pCompilePS->GetBufferPointer(), pCompilePS->GetBufferSize(), NULL, &shaderBundle[SHADER_UNLIT].pPixelShader);
 
 
@@ -368,18 +376,17 @@ namespace Direct3D
 
 		//BillBoard
 		{
-			ID3DInclude* inc ;
-			
+			HLSLInclude::DefaultInclude inc = {};
 
 			// 頂点シェーダの作成（コンパイル）
 			ID3DBlob* pCompileVS = NULL;
-			D3DCompileFromFile(L"Shader/BillBoard.hlsl", nullptr, nullptr, "VS", "vs_5_0", NULL, 0, &pCompileVS, NULL);
+			D3DCompileFromFile(L"Shader/BillBoard.hlsl", nullptr, &inc, "VS", "vs_5_0", NULL, 0, &pCompileVS, NULL);
 			pDevice_->CreateVertexShader(pCompileVS->GetBufferPointer(), pCompileVS->GetBufferSize(), NULL, &shaderBundle[SHADER_BILLBOARD].pVertexShader);
 
 
 			// ピクセルシェーダの作成（コンパイル）
 			ID3DBlob* pCompilePS = NULL;
-			D3DCompileFromFile(L"Shader/BillBoard.hlsl", nullptr, nullptr, "PS", "ps_5_0", NULL, 0, &pCompilePS, NULL);
+			D3DCompileFromFile(L"Shader/BillBoard.hlsl", nullptr, &inc, "PS", "ps_5_0", NULL, 0, &pCompilePS, NULL);
 			pDevice_->CreatePixelShader(pCompilePS->GetBufferPointer(), pCompilePS->GetBufferSize(), NULL, &shaderBundle[SHADER_BILLBOARD].pPixelShader);
 
 
@@ -405,15 +412,17 @@ namespace Direct3D
 
 		//SKY
 		{
+			HLSLInclude::DefaultInclude inc = {};
+
 			// 頂点シェーダの作成（コンパイル）
 			ID3DBlob* pCompileVS = NULL;
-			D3DCompileFromFile(L"Shader/Sky.hlsl", nullptr, nullptr, "VS", "vs_5_0", NULL, 0, &pCompileVS, NULL);
+			D3DCompileFromFile(L"Shader/Sky.hlsl", nullptr, &inc, "VS", "vs_5_0", NULL, 0, &pCompileVS, NULL);
 			pDevice_->CreateVertexShader(pCompileVS->GetBufferPointer(), pCompileVS->GetBufferSize(), NULL, &shaderBundle[SHADER_SKY].pVertexShader);
 
 
 			// ピクセルシェーダの作成（コンパイル）
 			ID3DBlob* pCompilePS = NULL;
-			D3DCompileFromFile(L"Shader/Sky.hlsl", nullptr, nullptr, "PS", "ps_5_0", NULL, 0, &pCompilePS, NULL);
+			D3DCompileFromFile(L"Shader/Sky.hlsl", nullptr, &inc, "PS", "ps_5_0", NULL, 0, &pCompilePS, NULL);
 			pDevice_->CreatePixelShader(pCompilePS->GetBufferPointer(), pCompilePS->GetBufferSize(), NULL, &shaderBundle[SHADER_SKY].pPixelShader);
 
 
@@ -440,15 +449,17 @@ namespace Direct3D
 
 		//BAR
 		{
+			HLSLInclude::DefaultInclude inc = {};
+
 			// 頂点シェーダの作成（コンパイル）
 			ID3DBlob* pCompileVS = NULL;
-			D3DCompileFromFile(L"Shader/Progress.hlsl", nullptr, nullptr, "VS", "vs_5_0", NULL, 0, &pCompileVS, NULL);
+			D3DCompileFromFile(L"Shader/Progress.hlsl", nullptr, &inc, "VS", "vs_5_0", NULL, 0, &pCompileVS, NULL);
 			pDevice_->CreateVertexShader(pCompileVS->GetBufferPointer(), pCompileVS->GetBufferSize(), NULL, &shaderBundle[SHADER_BAR].pVertexShader);
 
 
 			// ピクセルシェーダの作成（コンパイル）
 			ID3DBlob* pCompilePS = NULL;
-			D3DCompileFromFile(L"Shader/Progress.hlsl", nullptr, nullptr, "PS", "ps_5_0", NULL, 0, &pCompilePS, NULL);
+			D3DCompileFromFile(L"Shader/Progress.hlsl", nullptr, &inc, "PS", "ps_5_0", NULL, 0, &pCompilePS, NULL);
 			pDevice_->CreatePixelShader(pCompilePS->GetBufferPointer(), pCompilePS->GetBufferSize(), NULL, &shaderBundle[SHADER_BAR].pPixelShader);
 
 
@@ -474,15 +485,17 @@ namespace Direct3D
 
 		//DAMAGE
 		{
+			HLSLInclude::DefaultInclude inc = {};
+
 			// 頂点シェーダの作成（コンパイル）
 			ID3DBlob* pCompileVS = NULL;
-			D3DCompileFromFile(L"Shader/Damage.hlsl", nullptr, nullptr, "VS", "vs_5_0", NULL, 0, &pCompileVS, NULL);
+			D3DCompileFromFile(L"Shader/Damage.hlsl", nullptr, &inc, "VS", "vs_5_0", NULL, 0, &pCompileVS, NULL);
 			pDevice_->CreateVertexShader(pCompileVS->GetBufferPointer(), pCompileVS->GetBufferSize(), NULL, &shaderBundle[SHADER_DAMAGE].pVertexShader);
 
 
 			// ピクセルシェーダの作成（コンパイル）
 			ID3DBlob* pCompilePS = NULL;
-			D3DCompileFromFile(L"Shader/Damage.hlsl", nullptr, nullptr, "PS", "ps_5_0", NULL, 0, &pCompilePS, NULL);
+			D3DCompileFromFile(L"Shader/Damage.hlsl", nullptr, &inc, "PS", "ps_5_0", NULL, 0, &pCompilePS, NULL);
 			pDevice_->CreatePixelShader(pCompilePS->GetBufferPointer(), pCompilePS->GetBufferSize(), NULL, &shaderBundle[SHADER_DAMAGE].pPixelShader);
 
 
@@ -509,15 +522,17 @@ namespace Direct3D
 
 		// タイマー
 		{
+			HLSLInclude::DefaultInclude inc = {};
+
 			// 頂点シェーダの作成（コンパイル）
 			ID3DBlob* pCompileVS = NULL;
-			D3DCompileFromFile(L"Shader/Timer.hlsl", nullptr, nullptr, "VS", "vs_5_0", NULL, 0, &pCompileVS, NULL);
+			D3DCompileFromFile(L"Shader/Timer.hlsl", nullptr, &inc, "VS", "vs_5_0", NULL, 0, &pCompileVS, NULL);
 			pDevice_->CreateVertexShader(pCompileVS->GetBufferPointer(), pCompileVS->GetBufferSize(), NULL, &shaderBundle[SHADER_TIMER].pVertexShader);
 
 
 			// ピクセルシェーダの作成（コンパイル）
 			ID3DBlob* pCompilePS = NULL;
-			D3DCompileFromFile(L"Shader/Timer.hlsl", nullptr, nullptr, "PS", "ps_5_0", NULL, 0, &pCompilePS, NULL);
+			D3DCompileFromFile(L"Shader/Timer.hlsl", nullptr, &inc, "PS", "ps_5_0", NULL, 0, &pCompilePS, NULL);
 			pDevice_->CreatePixelShader(pCompilePS->GetBufferPointer(), pCompilePS->GetBufferSize(), NULL, &shaderBundle[SHADER_TIMER].pPixelShader);
 
 
@@ -734,18 +749,28 @@ HRESULT HLSLInclude::DefaultInclude::Open(D3D_INCLUDE_TYPE IncludeType, LPCSTR p
 	std::string file = pFileName;
 	std::string dir = "../Assets/Shader/"; 
 	auto temp = (dir + file);
+	std::ifstream istr((dir+file),std::ios::binary);
+	istr.seekg(0,std::ios::end);
 
-	std::ifstream istr((dir+file).c_str());
-	std::string fileContent((std::istreambuf_iterator<char>(istr)), std::istreambuf_iterator<char>());
+	*pBytes = istr.tellg();
+
+	*ppData = new char[*pBytes];
 	
-	*ppData = _strdup(fileContent.c_str());
+	istr.seekg(0,std::ios::beg);
+
+	char* buf = const_cast<char*>(static_cast<const char*>(*ppData));
+	istr.read(buf, *pBytes);
+	char c[1133];
+	for (auto i = 0u; i < 1133; ++i) {
+		c[i] = buf[i];
+	}
 
 	return S_OK;
 }
 
 HRESULT HLSLInclude::DefaultInclude::Close(LPCVOID pData)
 {
-	free((void*)pData);
+	delete[] static_cast<const char*>(pData);
 
 	return S_OK;
 }

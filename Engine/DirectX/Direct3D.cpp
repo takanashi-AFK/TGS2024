@@ -269,7 +269,7 @@ namespace Direct3D
 
 			// 頂点シェーダの作成（コンパイル）
 			ID3DBlob *pCompileVS = NULL;
-			auto res = D3DCompileFromFile(L"Shader/Simple3D.hlsl", nullptr, &inc, "VS", "vs_5_0", D3DCOMPILE_DEBUG | D3DCOMPILE_SKIP_OPTIMIZATION, 0, &pCompileVS,NULL);
+			auto res = D3DCompileFromFile(L"Shader/Simple3D.hlsl", nullptr, &inc, "VS", "vs_5_0", NULL, 0, &pCompileVS,NULL);
 
 			pDevice_->CreateVertexShader(pCompileVS->GetBufferPointer(), pCompileVS->GetBufferSize(), NULL, &shaderBundle[SHADER_3D].pVertexShader);
 

@@ -142,8 +142,11 @@ void UIObject::ChildDrawData()
 
 			ImGui::Checkbox(":Stop Easing", &eas.GetEasing()->isStop);
 
+			auto settable_in_Line = 4u;
+
 			for (auto i = 0u; i < static_cast<int>(Easing::TYPE::AMOUNT); i++) {
-				ImGui::RadioButton(Easing::GetEnumName(static_cast<Easing::TYPE>(i)).c_str(), reinterpret_cast<int*>(&eas.easing_type), i);	ImGui::SameLine();
+				ImGui::RadioButton(Easing::GetEnumName(static_cast<Easing::TYPE>(i)).c_str(), reinterpret_cast<int*>(&eas.easing_type), i);	
+				if((i < static_cast<int>(Easing::TYPE::AMOUNT) -1) && (i+1)%settable_in_Line)ImGui::SameLine();
 			}
 			ImGui::TreePop();
 		}

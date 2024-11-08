@@ -745,23 +745,22 @@ namespace Direct3D
 HRESULT HLSLInclude::DefaultInclude::Open(D3D_INCLUDE_TYPE IncludeType, LPCSTR pFileName, LPCVOID pParentData, LPCVOID* ppData, UINT* pBytes)
 {
 	std::string file = pFileName;
-	std::string dir = "../Assets/Shader/"; 
-	auto temp = (dir + file);
-	std::ifstream istr((dir+file),std::ios::binary);
-	istr.seekg(0,std::ios::end);
+	std::string dir = "../Assets/Shader/"; //exeファイルからhlsliまでのディレクトリ
 
-	*pBytes = istr.tellg();
+#ifdef _DEBUG
+	auto temp = (dir + file);			   //テスト用。ちゃんと正しいファイル名になっているか確認してね
+#endif
+
+	std::ifstream istr((dir+file),std::ios::binary);//バイナリじゃないと大変なことになる。具体的には領域外を参照する
+	istr.seekg(0,std::ios::end);
+	*pBytes = istr.tellg();	
 
 	*ppData = new char[*pBytes];
 	
-	istr.seekg(0,std::ios::beg);
+	istr.seekg(0,std::ios::beg);			//読み込みのために場所を最初に戻す
 
-	char* buf = const_cast<char*>(static_cast<const char*>(*ppData));
-	istr.read(buf, *pBytes);
-	char c[1133];
-	for (auto i = 0u; i < 1133; ++i) {
-		c[i] = buf[i];
-	}
+	char* buf = const_cast<char*>(static_cast<const char*>(*ppData));//はじめてコンストキャスト使った
+	istr.read(buf, *pBytes);				//バッファへコピー
 
 	return S_OK;
 }

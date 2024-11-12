@@ -15,6 +15,7 @@
 #include "../Game/Scenes/Scene_End.h"
 #include "../Game/Scenes/Scene_Ranking.h"
 #include "../Game/Scenes/Scene_DifficultySelect.h"
+#include "../Game/Scenes/Scene_EasingTest.h"
 
 //コンストラクタ
 SceneManager::SceneManager(GameObject * parent)
@@ -33,7 +34,7 @@ void SceneManager::Initialize()
 #else
 	currentSceneID_ = SCENE_ID_SPLASH;
 	nextSceneID_ = currentSceneID_;
-	Instantiate<Scene_Splash>(this);
+	Instantiate<Scene_EasingTest>(this);
 #endif // _DEBUG
 
 }

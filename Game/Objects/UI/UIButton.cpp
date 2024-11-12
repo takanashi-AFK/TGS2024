@@ -167,10 +167,12 @@ bool UIButton::IsMouseOver(XMFLOAT2 _mousePosition)
     float imageHelfHeight = imageSize.y /2.f;
 
     // 画像の中心座標を取得
-    XMFLOAT2 center = { transform_.position_.x,transform_.position_.y };
+    auto&& calcform = GetCalcTransform();
+
+    XMFLOAT2 center = { calcform.position_.x,calcform.position_.y };
 
     // 画像の拡大率を取得
-    XMFLOAT2 scale = { transform_.scale_.x,transform_.scale_.y };
+    XMFLOAT2 scale = { calcform.scale_.x,calcform.scale_.y };
 
     // 判定用の範囲の値を取得
     float top = center.y - (imageHelfHeight * 2.f * scale.y);       // 画像の中心から上に画像の高さの半分の距離

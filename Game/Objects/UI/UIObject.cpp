@@ -12,7 +12,7 @@
 #include "UITimer.h"
 #include "UIInputString.h"
 
-#include "Easing_ForUI.h"
+#include "Component/Component_UIEasing.h"
 
 UIObject::UIObject():
 	UIObject("", UI_NONE, nullptr, 0)
@@ -58,7 +58,7 @@ void UIObject::ChildSave(json& _saveObj)
 	_saveObj["position_"] = { REFERENCE_XMFLOAT3(transform_.position_) };
 	_saveObj["rotate_"] = { REFERENCE_XMFLOAT3(transform_.rotate_) };
 	_saveObj["scale_"] = { REFERENCE_XMFLOAT3(transform_.scale_) };
-	
+
 	if (easing_.get())	easing_.get()->Save(_saveObj);
 
 	// ©g‚ÌŒÅ—Lî•ñ‚ğ•Û‘¶
@@ -86,7 +86,7 @@ void UIObject::ChildLoad(json& _loadObj)
 
 	if (_loadObj.contains("Easing_Type"))
 	{
-		easing_ = std::make_unique<Easing_ForUI>(this);
+		easing_ = std::make_unique<Component_UIEasing>(this);
 		easing_.get()->Load(_loadObj);
 	}
 
@@ -316,7 +316,7 @@ bool UIObject::CompareLayerNumber(UIObject* _object1, UIObject* _object2)
 
 void UIObject::CreateEasing()
 {
-	easing_ = std::make_unique<Easing_ForUI>(this);
+	easing_ = std::make_unique<Component_UIEasing>(this);
 }
 
 UIObject* UIObject::CreateUIObject(string _name, UIType _type,UIObject* _parent, int _layerNum )
@@ -411,7 +411,7 @@ bool UIObject::IsDead()
 	return (state_.dead != 0);
 }
 
-Easing_ForUI* UIObject::GetEasing()
+Component_UIEasing* UIObject::GetEasing()
 {
 	return this->easing_.get();
 }

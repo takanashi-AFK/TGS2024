@@ -1,14 +1,14 @@
-#include "Easing_ForUI.h"
+#include "Component_UIEasing.h"
 
-Easing_ForUI::Easing_ForUI(UIObject* p) :easing_(0, 0, 0),p_ui(p),easing_type(Easing::TYPE::COS)
+Component_UIEasing::Component_UIEasing(UIObject* p) :easing_(0, 0, 0),p_ui(p),easing_type(Easing::TYPE::COS)
 {
 }
 
-Easing_ForUI::~Easing_ForUI()
+Component_UIEasing::~Component_UIEasing()
 {
 }
 
-void Easing_ForUI::Save(json& _saveObj)
+void Component_UIEasing::Save(json& _saveObj)
 {
 	{
 		auto& pos = secTransform_.position_;
@@ -29,7 +29,7 @@ void Easing_ForUI::Save(json& _saveObj)
 	}
 }
 
-void Easing_ForUI::Load(json& _loadObj)
+void Component_UIEasing::Load(json& _loadObj)
 {
 	auto SetFloat3 = [&](string index, XMFLOAT3& data)
 		{
@@ -68,7 +68,7 @@ void Easing_ForUI::Load(json& _loadObj)
 	}
 }
 
-Transform Easing_ForUI::GetValue()
+Transform Component_UIEasing::GetValue()
 {
 	Transform t = {};
 	auto CalcFloat3 = [&](XMFLOAT3 ui, XMFLOAT3 me)->XMFLOAT3
@@ -91,7 +91,7 @@ Transform Easing_ForUI::GetValue()
 	return t;
 }
 
-Easing* Easing_ForUI::GetEasing()
+Easing* Component_UIEasing::GetEasing()
 {
 	return &easing_;
 }

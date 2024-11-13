@@ -1,12 +1,12 @@
 #pragma once
-#include "UIObject.h"
+#include "../UIObject.h"
 #include "../../../Engine/DirectX/Easing.h"
 
-class Easing_ForUI
+class Component_UIEasing
 {
 public:
-	Easing_ForUI(UIObject* p);
-	~Easing_ForUI();
+	Component_UIEasing(UIObject* p);
+	~Component_UIEasing();
 
 	void Save(json& _saveObj);
 	void Load(json& _loadObj);

@@ -8,7 +8,7 @@
 
 using std::vector;
 
-class Easing_ForUI;
+class Component_UIEasing;
 
 enum UIType {
 	UI_NONE,
@@ -30,7 +30,7 @@ private:
 	bool isScaleLocked_;
 
 protected:
-	std::unique_ptr<Easing_ForUI> easing_;
+	std::unique_ptr<Component_UIEasing> easing_;
 
 protected:
 	string objectName_;		// オブジェクトの名前
@@ -158,7 +158,7 @@ getter :*/
 	/// <summary> レイヤー番号を取得 </summary>
 	int GetLayerNumber() const { return layerNumber_; }
 
-	Easing_ForUI* GetEasing();
+	Component_UIEasing* GetEasing();
 
 	inline Transform GetTransform() { return this->transform_; }
 

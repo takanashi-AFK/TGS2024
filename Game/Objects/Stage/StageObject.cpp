@@ -374,7 +374,20 @@ void StageObject::DrawData()
 		
 		// fix: 存在しないシェーダーを入力可能なため修正が必要
 		// fix: シェーダータイプがint型で表示されるため修正が必要
-		ImGui::InputInt("shaderType_", (int*)& shaderType_);
+
+		constexpr uint8_t shader3d_MAX = Direct3D::SHADER_TYPE::SHADER_MAX;
+
+#ifdef _DEBUG
+		mutex_.lock();
+		{
+			ImGui::InputInt("shaderType_", (int*)&shaderType_);
+			shaderType_ = shaderType_ < 0 ?static_cast<Direct3D::SHADER_TYPE>( Direct3D::SHADER_MAX-1) :static_cast<Direct3D::SHADER_TYPE>(shaderType_ % shader3d_MAX);
+		}
+		mutex_.unlock();
+
+
+#endif
+
 		ImGui::TreePop();
 	}
 

@@ -6,6 +6,10 @@
 #include "Components/Component.h"
 #include <vector>
 
+#ifdef _DEBUG
+#include<mutex>
+#endif
+
 // using宣言
 using std::vector;
 
@@ -25,6 +29,11 @@ protected:
 	float fallSpeed_;                   // 落下速度
 
 	Direct3D::SHADER_TYPE shaderType_;   // シェーダータイプ
+
+#ifdef _DEBUG
+	std::mutex mutex_;
+#endif
+
 public:
 	/// <summary> コンストラクタ </summary>
 	StageObject(string _name,string _modelFilePath,GameObject* _parent);

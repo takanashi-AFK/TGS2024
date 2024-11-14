@@ -31,6 +31,7 @@ VS_OUT VS(float4 pos : POSITION, float4 Normal : NORMAL, float2 Uv : TEXCOORD)
 	//UV「座標
 	outData.uv = Uv;	//そのままピクセルシェーダーへ
 
+    outData.localPos = mul(pos, g_matWorld);
 
 	//まとめて出力
 	return outData;

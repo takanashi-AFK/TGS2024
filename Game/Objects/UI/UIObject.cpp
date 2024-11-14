@@ -12,7 +12,7 @@
 #include "UITimer.h"
 #include "UIInputString.h"
 
-#include "Component/Component_UIEasing.h"
+#include "Components/Component_UIEasing.h"
 
 UIObject::UIObject():
 	UIObject("", UI_NONE, nullptr, 0)

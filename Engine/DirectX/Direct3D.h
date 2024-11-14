@@ -35,7 +35,19 @@ namespace Direct3D
 
 
 	//■シェーダー関連で必要なセット
-	enum SHADER_TYPE{SHADER_3D, SHADER_2D, SHADER_UNLIT, SHADER_BILLBOARD,SHADER_SKY,SHADER_BAR,SHADER_DAMAGE,SHADER_TIMER, SHADER_MAX};	//3タイプ（3D用、2D用、当たり判定枠表示用）
+	enum SHADER_TYPE
+	{
+		SHADER_3D,
+		SHADER_2D,
+		SHADER_UNLIT,
+		SHADER_BILLBOARD,
+		SHADER_SKY,
+		SHADER_BAR,
+		SHADER_DAMAGE,
+		SHADER_TIMER,
+		SHADER_BOSS,
+		SHADER_MAX
+	};	//3タイプ（3D用、2D用、当たり判定枠表示用）
 	struct SHADER_BUNDLE
 	{
 		//【頂点入力レイアウト情報】
@@ -119,3 +131,18 @@ namespace Direct3D
 	void GetFullScreenSize(int& width, int& height);
 };
 
+namespace HLSLInclude
+{
+	class DefaultInclude : public ID3DInclude
+	{
+	public :
+		HRESULT Open(D3D_INCLUDE_TYPE IncludeType,
+			LPCSTR pFileName,
+			LPCVOID pParentData,
+			LPCVOID* ppData,
+			UINT* pBytes) override;
+
+		HRESULT Close(LPCVOID pData) override;
+	private:
+	};
+}

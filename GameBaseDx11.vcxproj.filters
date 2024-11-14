@@ -300,6 +300,10 @@
     <ClCompile Include="Game\Objects\UI\UITimer.cpp" />
     <ClCompile Include="Game\Scenes\Scene_Ranking.cpp" />
     <ClCompile Include="Game\Otheres\RankingManager.cpp" />
+    <ClCompile Include="Game\Scenes\Scene_DifficultySelect.cpp" />
+    <ClCompile Include="Game\Objects\UI\UIInputString.cpp" />
+    <ClCompile Include="Engine\DirectX\Easing.cpp" />
+    <ClCompile Include="Game\Objects\UI\Components\Component_UIEasing.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Collider\BoxCollider.h">
@@ -526,6 +530,10 @@
     <ClInclude Include="Game\Scenes\Scene_Ranking.h" />
     <ClInclude Include="Game\Otheres\RankingManager.h" />
     <ClInclude Include="Game\Constants.h" />
+    <ClInclude Include="Game\Scenes\Scene_DifficultySelect.h" />
+    <ClInclude Include="Game\Objects\UI\UIInputString.h" />
+    <ClInclude Include="Engine\DirectX\Easing.h" />
+    <ClInclude Include="Game\Objects\UI\Components\Component_UIEasing.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Assets\Shader\Simple2D.hlsl">
@@ -558,5 +566,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <None Include="Assets\Shader\CB3D.hlsli" />
   </ItemGroup>
 </Project>

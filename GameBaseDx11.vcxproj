@@ -139,6 +139,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Game\Objects\UI\Components\Component_UIEasing.cpp" />
+    <ClCompile Include="Engine\DirectX\Easing.cpp" />
     <ClCompile Include="Game\Otheres\AudioController.cpp" />
     <ClCompile Include="Game\Objects\UI\CountDown.cpp" />
     <ClCompile Include="Game\Objects\Stage\Components\TeleporterComponent\Component_Teleporter.cpp" />
@@ -226,6 +228,8 @@
     <ClCompile Include="Game\Objects\UI\UIInputString.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Game\Objects\UI\Components\Component_UIEasing.h" />
+    <ClInclude Include="Engine\DirectX\Easing.h" />
     <ClInclude Include="Game\Otheres\AudioController.h" />
     <ClInclude Include="Game\Objects\UI\CountDown.h" />
     <ClInclude Include="Game\Objects\Stage\Components\TeleporterComponent\Component_Teleporter.h" />
@@ -371,6 +375,7 @@
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Assets\Shader\CB3D.hlsli" />
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -21,7 +21,8 @@ void UIImage::Draw()
 	// ‰æ‘œ‚ª“Ç‚İ‚Ü‚ê‚Ä‚¢‚È‚¢ê‡‚Íˆ—‚ğs‚í‚È‚¢
 	if (imageHandle_ < 0 || isDraw_ == false )return;
 
-    Image::SetTransform(imageHandle_, transform_);
+    auto t = GetCalcTransform();
+    Image::SetTransform(imageHandle_, t);
     Image::Draw(imageHandle_);
 }
 

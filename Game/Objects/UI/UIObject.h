@@ -1,11 +1,14 @@
 #pragma once
 #include <vector>
+#include<memory>
 #include "../../../Engine/Json/JsonReader.h"
 #include "../../../../../Engine/GameObject/Transform.h"
 #include "../../../../../Engine/Collider/BoxCollider.h"
 #include "../../../../../Engine/Collider/SphereCollider.h"
 
 using std::vector;
+
+class Component_UIEasing;
 
 enum UIType {
 	UI_NONE,
@@ -25,6 +28,9 @@ private:
 	bool isPositionLocked_;
 	bool isRotateLocked_;
 	bool isScaleLocked_;
+
+protected:
+	std::unique_ptr<Component_UIEasing> easing_;
 
 protected:
 	string objectName_;		// オブジェクトの名前
@@ -97,6 +103,8 @@ public:
 
 	/// <summary> レイヤー番号を
 	static bool CompareLayerNumber(UIObject* _object1, UIObject* _object2);
+
+	void CreateEasing();
 /*
 setter :*/
 	/// <summary> 位置の固定 </summary>
@@ -125,6 +133,8 @@ setter :*/
 
 	/// <summary> 可視化を設定 </summary>
 	void SetVisible(bool _visible) { isVisible_ = _visible; }
+
+	inline void SetTrasform(Transform t) { this->transform_ = t; }
 /*
 getter :*/
 	/// <summary> 子オブジェクトを取得 </summary>
@@ -147,7 +157,13 @@ getter :*/
 	
 	/// <summary> レイヤー番号を取得 </summary>
 	int GetLayerNumber() const { return layerNumber_; }
-	
+
+	Component_UIEasing* GetEasing();
+
+	inline Transform GetTransform() { return this->transform_; }
+
+	Transform GetCalcTransform();
+
 /*
 predicate :*/
 	/// <summary> 削除フラグが立っているかどうか </summary>
@@ -155,8 +171,9 @@ predicate :*/
 
 	/// <summary> レイヤー番号が重複しているかどうか </summary>
 	bool IsLayerNumberDuplicate(int newLayerNumber_);
-};
 
-UIObject* CreateUIObject(string _name, UIType _type, UIObject* _parent, int _layerNum);
-string GetUITypeString(UIType _type);
+	static UIObject* CreateUIObject(string _name, UIType _type, UIObject* _parent, int _layerNum);
+	static string GetUITypeString(UIType _type);
+
+};
 

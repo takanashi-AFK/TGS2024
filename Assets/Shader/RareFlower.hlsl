@@ -82,16 +82,18 @@ float4 PS(VS_OUT inData) : SV_Target
         speculer = pow(saturate(dot(R, inData.eye)), g_shuniness) * g_vecSpeculer; //ハイライトを求める
     }
     
-    //独特のボスカラー
+    //独特の線
     
-    float wv = frac(sin(inData.localPos.y) * 4);
-    
-    float m = frac(pow(frac((wv + (frac(val1 * 0.05)))), 18));
-   // m += frac(pow(frac(inData.localPos.y + frac(val1 * 0.2)), 18));
-    //m += frac(pow(frac(inData.localPos.z + frac(val1 * 0.1)), 18));
+    float m = frac(pow(frac((inData.localPos.x + (frac(val1 * 0.05)))), 3));
+    m += frac(pow(frac(inData.localPos.y + frac(val1 * 0.2)), 3));
+    m += frac(pow(frac(inData.localPos.z + frac(val1 * 0.35)), 3));
     m /= 3;
-
-    float4 bcol = float4(abs(inData.localPos.xyz), 1);
+    
+    float invm = 1 - m;
+    
+    float4 bcol = abs(inData.localPos);
+    bcol.r = (bcol.r * sin(val1) * invm) + (bcol.r * m);
+    bcol.g = (bcol.g * cos(val1) * invm) + (bcol.g * m);
 
 	//最終的な色
 	
@@ -103,14 +105,7 @@ float4 PS(VS_OUT inData) : SV_Target
 	
     th = min(th, 1);
     
-    float cr = sin(frac(bcol.r));
-    float cg = sin(frac(bcol.g));
-    float cb = sin(frac(bcol.b));
-    
-    bcol = float4(cr,cg,cb, 1);
-    bcol = pow(bcol, 0.8)*1.2;
-    
-    return (float4(diffuse.rgb * th, 1) *0.65) + (float4(m * 0.6, 0, 0, 0) * (1 * (0.7 + sin(val1)*0.5)) + bcol*0.25);
+    return (float4(diffuse.rgb * th, 1) * 0.5) + (bcol * 0.5);
     //return diffuse * (shade + ambient + speculer);
     
 }

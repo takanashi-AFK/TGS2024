@@ -69,7 +69,6 @@ HRESULT FbxParts::Init(FbxNode* pNode)
 	return E_NOTIMPL;
 }
 
-
 //頂点バッファ準備
 void FbxParts::InitVertex(fbxsdk::FbxMesh* mesh)
 {
@@ -417,7 +416,7 @@ void FbxParts::IntConstantBuffer()
 }
 
 //描画
-void FbxParts::Draw(Transform& transform)
+void FbxParts::Draw(Transform& transform,float v0, float v1)
 {
 	//今から描画する頂点情報をシェーダに伝える
 	UINT stride = sizeof(VERTEX);
@@ -428,10 +427,6 @@ void FbxParts::Draw(Transform& transform)
 	Direct3D::pContext_->VSSetConstantBuffers(0, 1, &pConstantBuffer_);
 	Direct3D::pContext_->PSSetConstantBuffers(0, 1, &pConstantBuffer_);
 
-
-
-
-
 	//シェーダーのコンスタントバッファーに各種データを渡す
 	for (DWORD i = 0; i < materialCount_; i++)
 	{
@@ -439,12 +434,6 @@ void FbxParts::Draw(Transform& transform)
 		UINT    stride = sizeof(int);
 		UINT    offset = 0;
 		Direct3D::pContext_->IASetIndexBuffer(ppIndexBuffer_[i], DXGI_FORMAT_R32_UINT, 0);
-
-		static float v0 = 0;
-		static float v1 = 0;
-
-		v0 += 0.1f; 
-		v1 += 0.01f;;
 
 		// パラメータの受け渡し
 		D3D11_MAPPED_SUBRESOURCE pdata;
@@ -545,7 +534,7 @@ void FbxParts::DrawSkinAnime(Transform& transform, FbxTime time)
 	}
 
 
-	Draw(transform);
+	Draw(transform,0,0);
 
 }
 
@@ -564,7 +553,7 @@ void FbxParts::DrawMeshAnime(Transform& transform, FbxTime time, FbxScene* scene
 	//	}
 	//}
 
-	Draw(transform);
+	Draw(transform,0,0);
 }
 
 bool FbxParts::GetBonePosition(std::string boneName, XMFLOAT3* position)
